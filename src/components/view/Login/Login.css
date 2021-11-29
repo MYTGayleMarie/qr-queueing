@@ -1,0 +1,19 @@
+.login-container {
+    margin: 40% 0% 0% 10%;
+}
+.welcome {
+    color: #000000;
+    margin-top: 5%;
+}
+.sign-in-sign {
+    color: #C7C0C0;
+    font-size: 1.7em;
+}
+.login-clinic {
+    position: relative;
+    width: 120%;
+    margin-top: 30vh;
+}
+.logo {
+    width: 30%;
+}
