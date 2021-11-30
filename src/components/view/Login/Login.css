@@ -1,9 +1,12 @@
+.row > * {
+    padding-left: 0 !important;
+}
 .login-container {
-    margin: 40% 0% 0% 10%;
+    margin: 20% 0% 0% 16%;
 }
 .welcome {
     color: #000000;
-    margin-top: 5%;
+    margin-top: 7%;
 }
 .sign-in-sign {
     color: #C7C0C0;
@@ -17,3 +20,58 @@
 .logo {
     width: 30%;
 }
+.forgot-pass {
+    color: #419EA3;
+    font-weight: bold;
+    padding-bottom: 5%;
+    margin-right: 5%;
+    cursor: pointer;
+}
+.login-input {
+    text-indent: 10px;
+    width: 95%;
+    padding: 2%;
+    outline: none;
+    border: 1px solid #bbb;
+    margin-bottom: 4%;
+}
+.login-btn {
+    border: none;
+    color: #ffff;
+    font-weight: bold;
+    background-color: #419EA3;
+    width: 95%;
+    margin-left: -5%;
+    padding: 1.4%;
+}
+.login-btn:hover {
+    background-color: #255b5e;
+}
+.details-label {
+    font-weight: bold;
+    font-size: 1.1em;
+    padding-top: 5%;
+}
+.password-wrapper {
+    float: left !important;
+}
+.eye-icon {
+    display: inline;
+    width: 5%;
+    margin-left: -10%;
+    color: #c7c0c0;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+    .login-clinic {
+        margin-top: 1vh;
+    }
+    .logo {
+        margin-top: -5vh;
+    }
+    .login-btn {
+        margin-bottom: 10%;
+    }
+}
+
