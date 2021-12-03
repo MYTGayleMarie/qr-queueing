@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import reactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //css
