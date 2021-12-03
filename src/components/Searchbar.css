@@ -1,0 +1,38 @@
+.searchbar-header {
+    font-family: 'Lato-Bold';
+    color: #419EA3;
+    padding: 4%;
+    padding-top: 10%;
+    margin-left: 12%;
+}
+
+.searchContainer {
+    margin-top: 11%;
+    height: 30%;
+    width: 50%;
+    margin-right: 10%;
+    display: inline-flex;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .searchIcon {
+    padding: 4%;
+  }
+  
+  .searchBox {
+    border: 0;
+    padding: 0.8rem 0.8rem 0.8rem 0;
+    flex: 1;
+    border: none;
+  }
+
+  .searchBox:focus, .searchBox:hover {
+    outline: none;
+    color: #000000;
+  }
+
+  
+ 
