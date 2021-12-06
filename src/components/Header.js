@@ -14,12 +14,12 @@ function Header({type, title, buttons, tableData}) {
         btn = buttons.map((button) => {
 
             if(button === 'download') {
-                return <button class="download"><CSVLink data={tableData} filename={title}>DOWNLOAD</CSVLink></button>
+                return <button class="download"><CSVLink data={tableData} filename={title} class="download-btn">DOWNLOAD</CSVLink></button>
             }
     
             if (button.includes("add-")) {
                 const addBtn = button.split("-");
-                return <Link to="/addPayment"><button class={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
+                return <Link to={button}><button class={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
             }
     
         });

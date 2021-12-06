@@ -12,6 +12,15 @@
     max-height: 50px !important;
 }
 
+a {
+    text-decoration: none !important;
+}
+
+.link {
+    color: #55073A !important;
+}
+  
+
 .link:hover {
     color: #419EA3 !important;
 }

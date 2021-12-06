@@ -2,12 +2,14 @@
   padding: 0.5rem;
   background-color: #55073A0F;
   margin-bottom: 1rem;
+  overflow:hidden;
 }
 
 .thick {
   padding: 1.4rem;
   background-color: #55073A0F;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .header-title {
@@ -17,7 +19,7 @@
     color: #419EA3;
 }
 
-a {
+.download-btn {
   color: #55073A !important;
   text-decoration: none !important;
 }
@@ -28,12 +30,12 @@ a {
   margin-top: 0.5rem;
   margin-left: 1rem;
   width: 15%;
-  font-size: 1rem;
+  font-size: 40%;
   color: #55073A;
   border: 1px solid #55073A;
   box-sizing: border-box;
   background-color: transparent;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 11px;
-  
+  overflow: hidden;
 }

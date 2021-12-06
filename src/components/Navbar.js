@@ -28,7 +28,7 @@ function Navbar() {
                 <div class="d-flex justify-content-center">
                     <img src={logo} alt={"logo"} class="navbar-logo"></img>
                 </div>
-                <NavLink to="registration" activeClassName="active">
+                <NavLink to="registration" activeClassName="active" class="link">
                 <li href="#" class="nav-link registration-nav">
                         <img src={registrationIcon} alt={"registration"} class="registration icon"></img>
                         <span class="mx-2">Registration</span>
@@ -40,7 +40,7 @@ function Navbar() {
                         <span class="mx-2">Cashier</span>
                     </Link>
                     <ul class="sub-menu">
-                        <Link to="addPayment"><li class="sub-list">Add Payment Cash</li></Link>
+                        <Link to="cashier/add-payment" class="link"><li class="sub-list">Add Payment Cash</li></Link>
                         <li class="sub-list">Add Payment Check</li>
                     </ul>
                 </li>
