@@ -10,6 +10,7 @@ import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 
+const buttons = ['download','add-patient'];
 
 const patientData = [
     {
@@ -41,7 +42,7 @@ function Cashier() {
         <div class="active-cont">
             <Fragment>
             <Searchbar title='CASHIER'/>
-            <Header title='BOOKING MANAGER'/>
+            <Header title='BOOKING MANAGER' buttons={buttons} tableData={patientData}/>
             <Table
                 type={'no-action'}
                 tableData={patientData}

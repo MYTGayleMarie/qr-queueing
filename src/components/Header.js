@@ -2,11 +2,27 @@ import React from 'react'
 
 //css
 import './Header.css';
+import {CSVLink, CSVDownload} from 'react-csv';
 
-function Header({title}) {
+
+function Header({title, buttons, tableData}) {
+
+    const btn = buttons.map((button) => {
+
+        if(button === 'download') {
+            return <button class="download"><CSVLink data={tableData} filename={title}>DOWNLOAD</CSVLink></button>
+        }
+
+        if (button.includes("add-")) {
+            const addBtn = button.split("-");
+            return <button class={button}> ADD {addBtn[1].toUpperCase()}</button>
+        }
+
+    });
+
     return (
         <div class={title, 'header'}>
-            <h1 class="header-title">{title}</h1>
+            <div class="header-title">{title}{btn}</div>
         </div>
     )
 }
