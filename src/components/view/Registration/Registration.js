@@ -1,14 +1,14 @@
 import React, {useState, Fragment} from 'react';
 
 //css
-import './Cashier.css';
+import './Registration.css';
 
 //components
 import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 
-const buttons = ['download'];
+const buttons = ['download','add-patient'];
 
 const patientData = [
     {
@@ -27,30 +27,29 @@ const patientData = [
         payment: 'PENDING',
         paymentMethod: 'CREDIT',
     },
-      
+    
 ];
 
-function Cashier() {
+function Registration() {
 
     return (
-        <>
-        <Fragment>
-        <Searchbar title='CASHIER'/>
-        <Header 
-            type='thick'
-            title='BOOKING MANAGER' 
-            buttons={buttons} 
-            tableData={patientData}
-        />
-        <Table
-            type={'no-action'}
-            tableData={patientData}
-            headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING TIME', 'SERVICE TYPE', 'PAYMENT', 'PAYMENT METHOD']}
-        />
-        </Fragment>
-        
-        </>
+        <div>
+            <Fragment>
+            <Searchbar title='REGISTRATION'/>
+            <Header 
+                type='thick'
+                title='BOOKING MANAGER' 
+                buttons={buttons} 
+                tableData={patientData}
+            />
+            <Table
+                type={'no-action'}
+                tableData={patientData}
+                headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING TIME', 'SERVICE TYPE', 'PAYMENT', 'PAYMENT METHOD']}
+            />
+            </Fragment>
+        </div>
     )
 }
 
-export default Cashier
+export default Registration

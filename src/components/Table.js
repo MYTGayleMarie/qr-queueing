@@ -7,19 +7,6 @@ import './Table.scss'
 function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
     let tableClass = 'table-container__table';
 
-    //Search Function
-    // const [search, setSearch] = useState(false);
-
-    // const handleSearch = () => {
-    //     setSearch(this.value);
-    // };
-
-    // const data = {
-    //     nodes: nodes.filter((item) =>
-    //     item.name.includes(search)
-    //     ),
-    // };
-
     if(breakOn === 'small') {
         tableClass += ' table-container__table--break-sm';
     } else if(breakOn === 'medium') {
@@ -54,7 +41,11 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
                 <div class="search-table-container d-flex justify-content-end">
                     <input type="date" class="from-date search" name="from_date"/>
                     <input type="date" class="to-date search" name="to_date"/>
-                    <input type="text" class="service-type search " name="service_type" placeholder="SERVICE TYPE"/>
+                    <select name="service_type">
+                        <option value="" selected disabled hidden>CHOOSE SERVICE</option>
+                        <option value="HOME SERVICE">HOME SERVICE</option>
+                        <option value="CLINIC SERVICE">CLINIC SERVICE</option>
+                    </select>
                 </div>
                 <table class={tableClass}>
                     <thead>

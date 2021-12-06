@@ -4,6 +4,18 @@
     margin-bottom: 20%;
 }
 
+.active {
+    background-color: #55073A21;
+}
+
+.registration-nav:hover {
+    max-height: 50px !important;
+}
+
+.link:hover {
+    color: #419EA3 !important;
+}
+
 .nav-link {
  color: #000000 !important;
  font-family: 'Lato-Bold';
@@ -23,6 +35,30 @@
     background: url('../images/backgrounds/navbar-bg.png');
     object-fit: cover;
     transition: 0.5s;
+}
+
+
+.nav-link:hover .sub-menu {
+    display: block;
+    max-height: 200px;
+    color: #55073A;
+}
+
+.sub-menu {
+    overflow: hidden;
+    max-height: 0;
+    list-style: none;
+}
+
+.sub-list {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.sub-list:hover {
+    color: #419EA3;
+    width: 110%;
 }
 
 .nav-link:active,

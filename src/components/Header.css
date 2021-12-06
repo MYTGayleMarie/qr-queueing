@@ -1,6 +1,12 @@
-.header {
+.thin {
+  padding: 0.5rem;
   background-color: #55073A0F;
+  margin-bottom: 1rem;
+}
+
+.thick {
   padding: 1.4rem;
+  background-color: #55073A0F;
   margin-bottom: 1rem;
 }
 
@@ -17,7 +23,7 @@ a {
 }
 
 
-.add-patient, .add-items, .add-supplier, .download {
+.add-patient, .add-items, .add-supplier, .add-payment, .download {
   float: right;
   margin-top: 0.5rem;
   margin-left: 1rem;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //css
@@ -28,13 +28,21 @@ function Navbar() {
                 <div class="d-flex justify-content-center">
                     <img src={logo} alt={"logo"} class="navbar-logo"></img>
                 </div>
+                <NavLink to="registration" activeClassName="active">
                 <li href="#" class="nav-link registration-nav">
-                    <img src={registrationIcon} alt={"registration"} class="registration icon"></img>
-                    <span class="mx-2">Registration</span>
+                        <img src={registrationIcon} alt={"registration"} class="registration icon"></img>
+                        <span class="mx-2">Registration</span>
                 </li>
+                </NavLink>
                 <li href="#" class="nav-link cashier-nav">
-                    <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
-                    <span class="mx-2">Cashier</span>
+                    <Link to="cashier" class="link">
+                        <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
+                        <span class="mx-2">Cashier</span>
+                    </Link>
+                    <ul class="sub-menu">
+                        <Link to="addPayment"><li class="sub-list">Add Payment Cash</li></Link>
+                        <li class="sub-list">Add Payment Check</li>
+                    </ul>
                 </li>
                 <li href="#" class="nav-link extraction-nav">
                     <img src={extractionIcon} alt={"extraction"} class="extraction icon"></img>

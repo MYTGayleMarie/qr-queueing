@@ -1,27 +1,32 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 //css
 import './Header.css';
-import {CSVLink, CSVDownload} from 'react-csv';
+import {CSVLink} from 'react-csv';
 
 
-function Header({title, buttons, tableData}) {
+function Header({type, title, buttons, tableData}) {
 
-    const btn = buttons.map((button) => {
+    var btn = [];
 
-        if(button === 'download') {
-            return <button class="download"><CSVLink data={tableData} filename={title}>DOWNLOAD</CSVLink></button>
-        }
+    if(buttons) {
+        btn = buttons.map((button) => {
 
-        if (button.includes("add-")) {
-            const addBtn = button.split("-");
-            return <button class={button}> ADD {addBtn[1].toUpperCase()}</button>
-        }
-
-    });
+            if(button === 'download') {
+                return <button class="download"><CSVLink data={tableData} filename={title}>DOWNLOAD</CSVLink></button>
+            }
+    
+            if (button.includes("add-")) {
+                const addBtn = button.split("-");
+                return <Link to="/addPayment"><button class={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
+            }
+    
+        });
+    }
 
     return (
-        <div class={title, 'header'}>
+        <div class={title, 'header', type}>
             <div class="header-title">{title}{btn}</div>
         </div>
     )
