@@ -6,6 +6,7 @@ import './Registration.css';
 //components
 import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
+import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download','add-patient'];
@@ -34,20 +35,23 @@ function Registration() {
 
     return (
         <div>
-            <Fragment>
-            <Searchbar title='REGISTRATION'/>
-            <Header 
-                type='thick'
-                title='BOOKING MANAGER' 
-                buttons={buttons} 
-                tableData={patientData}
-            />
-            <Table
-                type={'no-action'}
-                tableData={patientData}
-                headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING TIME', 'SERVICE TYPE', 'PAYMENT', 'PAYMENT METHOD']}
-            />
-            </Fragment>
+            <Navbar/>
+            <div className="active-cont">
+                <Fragment>
+                <Searchbar title='REGISTRATION'/>
+                <Header 
+                    type='thick'
+                    title='BOOKING MANAGER' 
+                    buttons={buttons} 
+                    tableData={patientData}
+                />
+                <Table
+                    type={'no-action'}
+                    tableData={patientData}
+                    headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING TIME', 'SERVICE TYPE', 'PAYMENT', 'PAYMENT METHOD']}
+                />
+                </Fragment>
+            </div>
         </div>
     )
 }

@@ -6,15 +6,15 @@ import './Searchbar.css'
 
 function Searchbar({title}) {
     return (
-        <div class="searchbar-container">
-            <div class="row">
-                <div class="col">
-                    <h1 class="searchbar-header">{title}</h1>
+        <div className="searchbar-container">
+            <div className="row">
+                <div className="col">
+                    <h1 className="searchbar-header">{title}</h1>
                 </div>
-                <div class="col d-flex justify-content-end">
-                <div class="searchContainer">
-                <i class="fa fa-search searchIcon fa-flip-horizontal"></i>
-                <input class="searchBox" type="search" name="search"/>
+                <div className="col d-flex justify-content-end">
+                <div className="searchContainer">
+                <i className="fa fa-search searchIcon fa-flip-horizontal"></i>
+                <input className="searchBox" type="search" name="search"/>
                 </div>
                 </div>
             </div>

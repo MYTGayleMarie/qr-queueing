@@ -5,6 +5,7 @@ import './Cashier.css';
 
 //components
 import Searchbar from '../../Searchbar.js';
+import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 
@@ -34,6 +35,8 @@ function Cashier() {
 
     return (
         <>
+        <Navbar/>
+        <div className="active-cont">
         <Fragment>
         <Searchbar title='CASHIER'/>
         <Header 
@@ -48,7 +51,7 @@ function Cashier() {
             headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING TIME', 'SERVICE TYPE', 'PAYMENT', 'PAYMENT METHOD']}
         />
         </Fragment>
-        
+        </div>
         </>
     )
 }

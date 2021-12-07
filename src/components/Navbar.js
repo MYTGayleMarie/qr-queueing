@@ -28,19 +28,19 @@ function Navbar() {
                 <div class="d-flex justify-content-center">
                     <img src={logo} alt={"logo"} class="navbar-logo"></img>
                 </div>
-                <NavLink to="registration" activeClassName="active" class="link">
+                <NavLink to="/registration" activeClassName="active" class="link">
                 <li href="#" class="nav-link registration-nav">
                         <img src={registrationIcon} alt={"registration"} class="registration icon"></img>
                         <span class="mx-2">Registration</span>
                 </li>
                 </NavLink>
                 <li href="#" class="nav-link cashier-nav">
-                    <Link to="cashier" class="link">
+                    <Link to="/cashier" class="main-link">
                         <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
                         <span class="mx-2">Cashier</span>
                     </Link>
                     <ul class="sub-menu">
-                        <Link to="cashier/add-payment" class="link"><li class="sub-list">Add Payment Cash</li></Link>
+                        <Link to="/add-payment" class="sub-link"><li class="sub-list">Add Payment Cash</li></Link>
                         <li class="sub-list">Add Payment Check</li>
                     </ul>
                 </li>

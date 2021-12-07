@@ -16,7 +16,11 @@ a {
     text-decoration: none !important;
 }
 
-.link {
+.main-link {
+    color: #000000!important;
+}
+
+.sub-link {
     color: #55073A !important;
 }
   

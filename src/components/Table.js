@@ -31,23 +31,23 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
     
             return <tr key={index}>
                 {rowData.map((data, index) => 
-                <td key={index} data-heading={data.key} class={data.val}>{data.val}</td>)}
+                <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         });
 
     
         return(
-            <div class="table-container">
-                <div class="search-table-container d-flex justify-content-end">
-                    <input type="date" class="from-date search" name="from_date"/>
-                    <input type="date" class="to-date search" name="to_date"/>
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date"/>
+                    <input type="date" className="to-date search" name="to_date"/>
                     <select name="service_type">
                         <option value="" selected disabled hidden>CHOOSE SERVICE</option>
                         <option value="HOME SERVICE">HOME SERVICE</option>
                         <option value="CLINIC SERVICE">CLINIC SERVICE</option>
                     </select>
                 </div>
-                <table class={tableClass}>
+                <table className={tableClass}>
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
