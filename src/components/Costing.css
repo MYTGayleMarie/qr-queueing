@@ -1,0 +1,38 @@
+.summary-label {
+    font-family: 'Montserrat-Italic';
+    font-size: 1.8rem;
+    margin: 4% 0 0 3%;
+    color: #BFBC4B
+}
+
+.summary-services {
+    margin: 2% 0 0 4%;
+}
+
+.summary-total {
+    margin: 2% 0 0 4%;
+}
+
+.quantity {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+}
+
+.service {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+}
+
+.total-price {
+    font-family: 'Montserrat-Regular';
+    color: #55073A;
+}
+
+.summary-total-label {
+    font-family: 'Montserrat-Bold';
+}
+
+.amount {
+    font-family: 'Montserrat-Bold';
+    color: #55073A;
+}

@@ -3,9 +3,9 @@ import React from 'react';
 //css
 import './PersonalDetails.css';
 
-function PersonalDetails(data) {
+function PersonalDetails({data}) {
 
-    const patient = data.data
+    const patient = data
 
     return (
         <div>

@@ -1,0 +1,46 @@
+.payment-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    font-size: 2rem;
+    margin-left: 2%;
+}
+
+.method-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    font-size: 1.3rem;
+    margin-left: 2%;
+    margin-right: 10%;
+}
+
+.method {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+    margin-left: 2%;
+    margin-right: 7%;
+}
+
+.pay-cash-cont {
+    margin-top: 1%;
+    margin-left: 4%;
+}
+
+.pay {
+    width: 50% !important;
+}
+
+.amount-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+}
+
+.save-btn {
+    background-color: #094b5b;
+    color: white;
+    border: none;
+    width: 15% !important;
+    border-radius: 1em;
+    padding:  0.5%;
+    margin-top: 10%;
+    margin-right: 5%;
+}

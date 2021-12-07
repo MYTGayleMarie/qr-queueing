@@ -39,10 +39,10 @@ function Navbar() {
                         <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
                         <span class="mx-2">Cashier</span>
                     </Link>
-                    <ul class="sub-menu">
+                    {/* <ul class="sub-menu">
                         <Link to="/add-payment" class="sub-link"><li class="sub-list">Add Payment Cash</li></Link>
                         <li class="sub-list">Add Payment Check</li>
-                    </ul>
+                    </ul> */}
                 </li>
                 <li href="#" class="nav-link extraction-nav">
                     <img src={extractionIcon} alt={"extraction"} class="extraction icon"></img>

@@ -9,7 +9,7 @@ import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 
-const buttons = ['download'];
+const buttons = ['download','add-payment'];
 
 const patientData = [
     {
