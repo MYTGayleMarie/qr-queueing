@@ -89,6 +89,7 @@ a {
 }
 
 .active-cont {
+    overflow-x:hidden;
     margin-left: 230px;
 }
 

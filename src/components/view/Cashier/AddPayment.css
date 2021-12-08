@@ -29,9 +29,20 @@
     width: 50% !important;
 }
 
+.check {
+    width: 40%;
+    margin-left: 3%;
+}
+
 .amount-label {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;
+}
+
+.check-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    margin-left: 1.5%;
 }
 
 .save-btn {

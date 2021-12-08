@@ -45,8 +45,10 @@ function Navbar() {
                     </ul> */}
                 </li>
                 <li href="#" class="nav-link extraction-nav">
-                    <img src={extractionIcon} alt={"extraction"} class="extraction icon"></img>
-                    <span class="mx-2">Extraction</span>
+                    <Link to="/extraction" class="main-link">
+                        <img src={extractionIcon} alt={"extraction"} class="extraction icon"></img>
+                        <span class="mx-2">Extraction</span>
+                    </Link>
                 </li>
                 <li href="#" class="nav-link imaging-nav">
                     <img src={imagingIcon} alt={"imaging"} class="imaging icon"></img>

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState } from "react";
 //css
 import './AddPayment.css'
 
@@ -34,9 +33,46 @@ const costingData = [
         totalPrice: '430.00'
     },
 ];
+
+function cashForm() {
+    return (
+        <div class="pay-cash-cont">
+                <div className="row">
+                    <div className="col-sm-6">
+                         <div className="row">
+                            <span class="amount-label">AMOUNT</span>
+                        </div>
+                        <div className="row">
+                            <input type="number" id="payAmount" name="payAmount" class="cash-input pay" placeholder="P"/>
+                        </div>
+                    </div>
+                    <div className="col-sm-6">
+                        <div className="row">
+                            <span class="amount-label">CHANGE</span>
+                        </div>
+                        <div className="row">
+                            <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay"  placeholder="P"/>
+                        </div>
+                    </div>
+                </div>
+         </div>       
+        )
+    }
+
+function checkForm () {
+    return (
+    <div class="pay-check-cont">
+        <span class="check-label">CARD NUMBER</span>
+        <input type="number" id="check" name="check" class="check"/>
+    </div>
+    )
+}
     
 
 function AddPayment() {
+
+    const [payment, setPayment] = useState("");
+
     return (
         <div>
             <Navbar/>
@@ -56,35 +92,19 @@ function AddPayment() {
                     <h1 className="payment-label">PAYMENT</h1>
 
                     <span className="method-label">METHOD</span>
-                    <input type="radio" id="cash" name="cash" value="cash"/>
+                    <input type="radio" id="cash" name="payment_method" value="cash" onClick={()=> setPayment('cash')}/>
                     <span className="cash method">CASH</span>
-                    <input type="radio" id="check" name="check" value="check"/>
+                    <input type="radio" id="check" name="payment_method" value="check" onClick={()=> setPayment('check')}/>
                     <span className="check method">CHECK</span>
 
-                    <div class="pay-cash-cont">
-                        <div className="row">
-                            <div className="col-sm-6">
-                                <div className="row">
-                                    <span class="amount-label">AMOUNT:</span>
-                                </div>
-                                <div className="row">
-                                    <input type="number" id="payAmount" name="payAmount" class="cash-input pay" placeholder="P"/>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                            <div className="row">
-                                    <span class="amount-label">CHANGE:</span>
-                                </div>
-                                <div className="row">
-                                    <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" placeholder="P"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <form>
+                        <p>{payment === 'cash' && cashForm()}</p>
+                        <p>{payment === 'check' && checkForm()}</p>
 
-                    <div className="row d-flex justify-content-end">
-                        <button className="save-btn">SAVE BOOKING</button>
-                    </div>
+                        <div className="row d-flex justify-content-end">
+                            <button className="save-btn">SAVE BOOKING</button>
+                        </div>
+                    </form>
                     
                 </div>
 

@@ -10,11 +10,12 @@
   background-color: #55073A0F;
   margin-bottom: 1rem;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .header-title {
     margin-left: 2rem;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
     color: #419EA3;
 }
