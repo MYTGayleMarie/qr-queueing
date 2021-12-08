@@ -8,8 +8,12 @@
     background-color: #55073A21;
 }
 
-.registration-nav:hover {
+.registration-nav:hover, .cashier-nav:hover, .extraction-nav:hover {
     max-height: 54px !important;
+}
+
+.cashier-nav, .extraction-nav {
+    height: 54px; 
 }
 
 a {

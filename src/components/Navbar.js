@@ -34,22 +34,22 @@ function Navbar() {
                         <span class="mx-2">Registration</span>
                 </li>
                 </NavLink>
+                <NavLink to="/cashier" activeClassName="active" class="link">
                 <li href="#" class="nav-link cashier-nav">
-                    <Link to="/cashier" class="main-link">
                         <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
                         <span class="mx-2">Cashier</span>
-                    </Link>
                     {/* <ul class="sub-menu">
                         <Link to="/add-payment" class="sub-link"><li class="sub-list">Add Payment Cash</li></Link>
                         <li class="sub-list">Add Payment Check</li>
                     </ul> */}
                 </li>
-                <li href="#" class="nav-link extraction-nav">
-                    <Link to="/extraction" class="main-link">
+                </NavLink>
+                <NavLink to="/extraction" activeClassName="active" class="link">   
+                <li href="#" class="nav-link extraction-nav">  
                         <img src={extractionIcon} alt={"extraction"} class="extraction icon"></img>
-                        <span class="mx-2">Extraction</span>
-                    </Link>
+                        <span class="mx-2">Extraction</span>                 
                 </li>
+                </NavLink>   
                 <li href="#" class="nav-link imaging-nav">
                     <img src={imagingIcon} alt={"imaging"} class="imaging icon"></img>
                     <span class="mx-2">Imaging</span>

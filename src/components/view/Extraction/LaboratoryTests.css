@@ -1,0 +1,51 @@
+.laboratory-header {
+    font-family: 'Montserrat-Italic';
+    color: #bfbc4b;
+    font-size:2.3em;
+    margin-top: 4rem;
+    margin-left: 2rem;
+}       
+
+.laboratory-list {
+    margin-top: 2rem;
+    margin-left: 10rem;
+}
+
+.test-label {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+    margin: 8% 0% 0 0;
+}
+
+.laboratory-input {
+    width: 100% !important;
+}
+
+.start-btn {
+    background-color: #55073A;
+    font-family: 'Montserrat-Bold';
+    color: white;
+    border: none;
+    width: 20% !important;
+    border-radius: 1em;
+    margin-top: 5% !important;
+    text-align: center !important; 
+    line-height: 50px;
+}
+
+.save-details-btn {
+    background-color: #BFBC4B;
+    font-family: 'Montserrat-Bold';
+    color: white;
+    border: none;
+    width: 20% !important;
+    border-radius: 1em;
+    margin-top: 5% !important;
+    text-align: center !important; 
+    line-height: 50px;
+    letter-spacing: 2px;
+}
+
+.row > * {
+    padding-left: 0.5rem !important;
+}

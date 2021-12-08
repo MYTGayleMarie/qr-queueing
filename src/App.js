@@ -11,6 +11,8 @@ import AddPatient2 from './components/View/Registration/Add Patient/Form2';
 import Cashier from './components/View/Cashier/Cashier';
 import AddPayment from './components/View/Cashier/AddPayment';
 import Extraction from './components/View/Extraction/Extraction';
+import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
+import Imaging from './components/View/Imaging/Imaging';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
           <Route path='/cashier' element={<Cashier/>}/>
           <Route path='/add-payment' element={<AddPayment/>}/>
           <Route path='/extraction' element={<Extraction/>}/>
+          <Route path='/laboratory-test' element={<LaboratoryTests/>}/>
+          <Route path='/imaging' element={<Imaging/>}/>
         </Routes>
     </Router>
   );
