@@ -50,10 +50,12 @@ function Navbar() {
                         <span class="mx-2">Extraction</span>                 
                 </li>
                 </NavLink>   
+                <NavLink to="/imaging" activeClassName="active" class="link"> 
                 <li href="#" class="nav-link imaging-nav">
                     <img src={imagingIcon} alt={"imaging"} class="imaging icon"></img>
                     <span class="mx-2">Imaging</span>
                 </li>
+                </NavLink>
                 <li href="#" class="nav-link medTech-nav">
                     <img src={medTechIcon} alt={"medTech"} class="medTech icon"></img>
                     <span class="mx-2">Medical Technology</span>

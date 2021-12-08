@@ -13,6 +13,7 @@ import AddPayment from './components/View/Cashier/AddPayment';
 import Extraction from './components/View/Extraction/Extraction';
 import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
 import Imaging from './components/View/Imaging/Imaging';
+import ImagingTests from './components/View/Imaging/ImagingTests';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/extraction' element={<Extraction/>}/>
           <Route path='/laboratory-test' element={<LaboratoryTests/>}/>
           <Route path='/imaging' element={<Imaging/>}/>
+          <Route path='/imaging-test' element={<ImagingTests/>}/>
         </Routes>
     </Router>
   );

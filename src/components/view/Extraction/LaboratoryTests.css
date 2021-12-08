@@ -1,4 +1,4 @@
-.laboratory-header {
+.test-header {
     font-family: 'Montserrat-Italic';
     color: #bfbc4b;
     font-size:2.3em;
@@ -6,7 +6,7 @@
     margin-left: 2rem;
 }       
 
-.laboratory-list {
+.test-list {
     margin-top: 2rem;
     margin-left: 10rem;
 }
@@ -17,7 +17,7 @@
     margin: 8% 0% 0 0;
 }
 
-.laboratory-input {
+.test-input {
     width: 100% !important;
 }
 

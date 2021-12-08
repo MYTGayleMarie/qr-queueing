@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
 //css
-import './LaboratoryTests.css';
+import './ImagingTests.css';
 
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import PersonalDetails from '../../PersonalDetails';
-
 
 const patientData = 
     {
@@ -24,17 +23,16 @@ const patientData =
 
 function testInput() {
     return (
-        <input type="text" className="laboratory-input" name="laboratory_test_1"/>
+        <input type="text" className="test-input" name="imaging_test_1"/>
     )
 }
+    
+function ImagingTests() {
 
+    const [inputBox, setImaging] = useState(false);
 
-function LaboratoryTests() {
-
-    const [inputBox, setExtraction] = useState(false);
-
-    const toggleExtraction = () => {
-        setExtraction(!inputBox);
+    const toggleImaging= () => {
+        setImaging(!inputBox);
     };
 
     return (
@@ -43,12 +41,12 @@ function LaboratoryTests() {
         <div className="active-cont">
             <Header 
                 type='thin'
-                title='LABORATORY TESTS' 
+                title='IMAGING TESTS' 
             />
             <PersonalDetails
                 data={patientData}
             />
-            <h1 className="test-header">LABORATORY TESTS</h1>
+            <h1 className="test-header">IMAGING TESTS</h1>
 
             <div class="test-list">
                 <div className="row">
@@ -94,8 +92,8 @@ function LaboratoryTests() {
             </div>
 
             <div className="row d-flex justify-content-center">        
-                {inputBox === false && <button className="start-btn" onClick={toggleExtraction}>START EXTRACTION</button>}  
-                {inputBox === true && <button className="save-details-btn" onClick={toggleExtraction}>SAVE DETAILS</button>}     
+                {inputBox === false && <button className="start-btn" onClick={toggleImaging}>START EXTRACTION</button>}  
+                {inputBox === true && <button className="save-details-btn" onClick={toggleImaging}>SAVE DETAILS</button>}     
             </div>
 
         </div>
@@ -104,4 +102,4 @@ function LaboratoryTests() {
     )
 }
 
-export default LaboratoryTests
+export default ImagingTests
