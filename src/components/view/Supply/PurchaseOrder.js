@@ -9,39 +9,45 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
-const buttons = ['download','add-release'];
+const buttons = ['download','add-purchase'];
 
 const patientData = [
     {
-        items: '0199201',
-        requistioner: 'JUAN DELA CRUZ',
-        purpose: 'LABORATORY',
-        remarks: '',
+        printingOrderID: '0199201',
+        itemID: '1',
+        itemName: 'LABORATORY',
+        requested: ' ',
+        actual: ' ',
         action: ' ',
     },
     {
-        items: '0199201',
-        requistioner: 'JUAN DELA CRUZ',
-        purpose: 'LABORATORY',
-        remarks: '',
+        printingOrderID: '0199201',
+        itemID: '1',
+        itemName: 'LABORATORY',
+        requested: ' ',
+        actual: ' ',
         action: ' ',
     },
     {
-        items: '0199201',
-        requistioner: 'JUAN DELA CRUZ',
-        purpose: 'LABORATORY',
-        remarks: '',
+        printingOrderID: '0199201',
+        itemID: '1',
+        itemName: 'LABORATORY',
+        requested: ' ',
+        actual: ' ',
         action: ' ',
     },
 ];
 
-function ReleaseItems() {
+
+function PurchaseOrder() {
+    
     return (
+        <div>
         <div>
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='RELEASE ITEMS'/>
+            <Searchbar title='PURCHASE ORDER'/>
             <Header 
                 type='thick'
                 title='SUPPLIES RELEASING MANAGER' 
@@ -51,12 +57,13 @@ function ReleaseItems() {
             <Table
                 type={'no-action'}
                 tableData={patientData}
-                headingColumns={['ITEMS', 'REQUISTIONER', 'PURPOSE', 'REMARKS', 'ACTION']}
+                headingColumns={['PRINTING ORDER ID', 'ITEM ID', 'ITEM NAME', 'REQUESTED', 'ACTUAL', 'ACTION']}
             />
             </Fragment>
+        </div>
         </div>
         </div>
     )
 }
 
-export default ReleaseItems
+export default PurchaseOrder

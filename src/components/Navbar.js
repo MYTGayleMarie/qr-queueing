@@ -73,7 +73,9 @@ function Navbar() {
                         <Link to="/release-item" class="sub-link">
                             <li class="sub-list">RELEASE ITEMS</li>
                         </Link>
-                        <li class="sub-list">PURCHASE ORDER</li>
+                        <Link to="/purchase-order" class="sub-link">
+                            <li class="sub-list">PURCHASE ORDER</li>
+                        </Link>
                         <li class="sub-list">ITEMS</li>
                         <li class="sub-list">SUPPLIERS</li>
                     </ul>

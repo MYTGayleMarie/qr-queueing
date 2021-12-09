@@ -16,6 +16,8 @@ import Imaging from './components/View/Imaging/Imaging';
 import ImagingTests from './components/View/Imaging/ImagingTests';
 import ReleaseItems from './components/View/Supply/ReleaseItems';
 import AddItems from './components/View/Supply/AddItems';
+import PurchaseOrder from './components/View/Supply/PurchaseOrder';
+import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
 
 function App() {
 
@@ -33,7 +35,9 @@ function App() {
           <Route path='/imaging' element={<Imaging/>}/>
           <Route path='/imaging-test' element={<ImagingTests/>}/>
           <Route path='/release-item' element={<ReleaseItems/>}/>
-          <Route path='/add-items' element={<AddItems/>}/>
+          <Route path='/add-release' element={<AddItems/>}/>
+          <Route path='/purchase-order' element={<PurchaseOrder/>}/>
+          <Route path='/add-purchase' element={<AddPurchaseOrder/>}/>
         </Routes>
     </Router>
   );

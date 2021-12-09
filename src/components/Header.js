@@ -20,6 +20,14 @@ function Header({type, title, buttons, tableData}) {
             if (button.includes("add-")) {
                 const addBtn = button.split("-");
                 const linkTo = "/" + button;
+
+                if(button === "add-release") {
+                    return <Link to={linkTo}><button className="add-items"> ADD ITEMS</button></Link>
+                } 
+                else if (button === "add-purchase") {
+                    return <Link to={linkTo}><button className="add-items"> ADD ITEMS</button></Link>
+                }
+
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
             }
     
