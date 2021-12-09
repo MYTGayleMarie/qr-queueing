@@ -1,0 +1,55 @@
+.item-details-cont, .add-items-cont {
+    margin: 1.5rem;
+}
+
+.item-header {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    font-size: 1.5rem;
+    margin: 1.5rem;
+}
+
+.date-label, .requistioner-label, .remarks-label {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+    ;
+}
+
+.date-input, .requistioner-input, .remarks-input {
+    width: 80%;
+}
+
+.left {
+    margin-left: -0.1rem;
+}
+
+.items-item, .quantity-item {
+    width: 90%;
+}
+
+.quantity-item, .items-item {
+    border: 1px solid #55073A;
+    border-radius: 0.5rem;
+}
+
+.add-items-btn, .delete-items-btn, .save-items-btn {
+    color: white;
+    border: none;
+    width: 20% !important;
+    border-radius: 1em;
+    padding:  0.5%;
+    margin-top: 2%;
+    margin-right: 5%;
+}
+
+.add-items-btn {
+    background-color: #bfbc4b;
+}
+
+.delete-items-btn {
+    background-color: #449da3;
+}
+
+.save-items-btn {
+    background-color: #55073A;
+}

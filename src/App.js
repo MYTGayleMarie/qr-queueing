@@ -14,6 +14,8 @@ import Extraction from './components/View/Extraction/Extraction';
 import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
 import Imaging from './components/View/Imaging/Imaging';
 import ImagingTests from './components/View/Imaging/ImagingTests';
+import ReleaseItems from './components/View/Supply/ReleaseItems';
+import AddItems from './components/View/Supply/AddItems';
 
 function App() {
 
@@ -30,6 +32,8 @@ function App() {
           <Route path='/laboratory-test' element={<LaboratoryTests/>}/>
           <Route path='/imaging' element={<Imaging/>}/>
           <Route path='/imaging-test' element={<ImagingTests/>}/>
+          <Route path='/release-item' element={<ReleaseItems/>}/>
+          <Route path='/add-items' element={<AddItems/>}/>
         </Routes>
     </Router>
   );

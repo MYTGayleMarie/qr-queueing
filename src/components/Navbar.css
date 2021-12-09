@@ -9,7 +9,7 @@
 }
 
 .registration-nav:hover, .cashier-nav:hover, .extraction-nav:hover {
-    max-height: 54px !important;
+    max-height: 53px !important;
 }
 
 .cashier-nav, .extraction-nav, .imaging-nav {
@@ -55,17 +55,17 @@ a {
 }
 
 
-/* .nav-link:hover .sub-menu {
+.nav-link:hover .sub-menu {
     display: block;
     max-height: 200px;
     color: #55073A;
-} */
+} 
 
-/* .sub-menu {
+.sub-menu {
     overflow: hidden;
     max-height: 0;
     list-style: none;
-} */
+} 
 
 .sub-list {
     margin-top: 1rem;

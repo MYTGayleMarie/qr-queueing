@@ -38,10 +38,6 @@ function Navbar() {
                 <li href="#" class="nav-link cashier-nav">
                         <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
                         <span class="mx-2">Cashier</span>
-                    {/* <ul class="sub-menu">
-                        <Link to="/add-payment" class="sub-link"><li class="sub-list">Add Payment Cash</li></Link>
-                        <li class="sub-list">Add Payment Check</li>
-                    </ul> */}
                 </li>
                 </NavLink>
                 <NavLink to="/extraction" activeClassName="active" class="link">   
@@ -73,6 +69,14 @@ function Navbar() {
                 <li href="#" class="nav-link supply-nav">
                     <img src={supplyIcon} alt={"supply"} class="supply icon"></img>
                     <span class="mx-2">Supply</span>
+                    <ul class="sub-menu">
+                        <Link to="/release-item" class="sub-link">
+                            <li class="sub-list">RELEASE ITEMS</li>
+                        </Link>
+                        <li class="sub-list">PURCHASE ORDER</li>
+                        <li class="sub-list">ITEMS</li>
+                        <li class="sub-list">SUPPLIERS</li>
+                    </ul>
                 </li>
                 <li href="#" class="nav-link report-nav">
                 <img src={reportIcon} alt={"report"} class="report icon"></img>
