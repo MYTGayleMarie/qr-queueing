@@ -111,7 +111,7 @@ label {
 
 
   
-  label::before {
+  /* label::before {
     background-color: white;
     color: white;
     content: " ";
@@ -149,7 +149,7 @@ label {
     transform: scale(0.9);
     box-shadow: 0 0 30px #333;
     z-index: -1;
-  }
+  } */
 
   @media screen and (max-width: 620px) {
     .radio-label {
