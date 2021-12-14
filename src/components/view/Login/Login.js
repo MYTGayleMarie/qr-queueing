@@ -7,6 +7,8 @@ import '../Login/Login.css'
 //images
 import clinic from '../../../images/clinic.png';
 import logo  from '../../../images/logo.png';
+import axios from "axios";
+
 
 function Login() {
 
@@ -15,6 +17,39 @@ function Login() {
     const togglePassword = () => {
         setShowPassword(!showPassword);
     };
+
+    const url= "http://localhost:8080/login";
+    const api_key = "Y5QubbhTOb";
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+    });
+
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+    }
+
+    function submit(e) {
+        e.preventDefault();
+        axios.post(url, {
+            api_key: api_key,
+            email: data.email,
+            password: data.password
+        }, axiosConfig)
+        .then(res=>{
+            console.log(res.data)
+        })
+    }
+
+    function handle(e) {
+        const newData= {...data}
+        newData[e.target.id] = e.target.value
+        setData(newData)
+        console.log(newData)
+    }
 
     return (
         <>
@@ -40,13 +75,14 @@ function Login() {
                             <h1 className="sign-in-sign">Sign In to Manager</h1>
                         </div>
                     </div>
+                    <form onSubmit={(e) => submit(e)}>
                     <div className="row">
                     <label for="details" className="form-label details-label">Enter Details</label><br />
                        <div className="username-wrapper">
-                            <input type="text" className="login-input" id="username" name="username" placeholder="Username" /><br />
+                            <input onChange= {(e) => handle(e)} id="email" value= {data.email} type="text" className="login-input" id="email" name="email" placeholder="Email" /><br />
                        </div>
                        <div className="password-wrapper">
-                            <input className="login-input" type={showPassword ? "text" : "password"} placeholder="Password"/>
+                            <input onChange= {(e) => handle(e)} id="password" value= {data.password} className="login-input" type={showPassword ? "text" : "password"} placeholder="Password"/>
                             <div className="eye-icon">
                                 <FontAwesomeIcon icon={showPassword ? "eye" : "eye-slash"} alt={"eye"} aria-hidden="true" onClick={togglePassword}/>
                             </div>
@@ -59,9 +95,10 @@ function Login() {
                     </div>
                     <div className="row">
                         <div className="col-sm-12 d-flex justify-content-center">
-                        <button type="button" className="login-btn">Login</button>
+                        <button type="submit" className="login-btn">Login</button>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

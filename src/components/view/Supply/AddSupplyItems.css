@@ -1,0 +1,31 @@
+.item-header {
+    margin-top: 6%;
+    margin-left: 4%;
+}
+
+.beginning-balance-label, .description-label {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+}
+
+.item-name-input, .beginning-balance-input {
+    width: 90%;
+    margin-left: -5%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
+.remarks-items-input, .description-input {
+    width: 95%;
+    border-color: #55073A;
+}
+
+.add-item-btn {
+    color: #ffff;
+    width: 200px;
+    height: 54px;
+    background: #55073A;
+    border: 1px solid #55073A;
+    box-sizing: border-box;
+    border-radius: 23px;
+}

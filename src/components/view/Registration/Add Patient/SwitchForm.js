@@ -3,7 +3,7 @@ import { useForm, useStep } from "react-hooks-helper";
 import Form1 from './Form1'
 import Form2 from './Form2';
 
-const defaultData = {
+const personalData = {
     fname: "",
     lname: "", 
     mname: "", 
@@ -15,7 +15,17 @@ const defaultData = {
     serviceLocation: "", 
     result: "", 
     dateOfTesting: "",
-    clinicalServices: "",
+}
+
+const serviceData = {
+    //CLINICAL MICROSCOPY 
+    Urinalysis1: false,
+    UrineKetone1: false,
+    UrineRBCMorphology1: false,
+    Fecalysis1: false,
+    FecalOccultBlood1: false,
+    PregnancyTest1: false,
+    SpermAnalysis1: false,
 }
 
 const steps = [
@@ -25,26 +35,26 @@ const steps = [
 
 function SwitchForm() {
 
-    const [formData, setForm] = useForm(defaultData);
+    const [customer, setPersonal] = useForm(personalData);
+    const [service, setServices] = useForm(serviceData);
     const { step, navigation } = useStep({
       steps,
       initialStep: 0,
     });
-    console.log(step)
 
-    const props = { formData, setForm, navigation };
+    const personalProps = { customer, setPersonal, navigation };
+    const serviceProps = { service, customer, setServices, navigation };
 
     switch (step.id) {
         case "customer":
-            return <Form1 { ...props }/>    
+            return <Form1 { ...personalProps }/>    
         case "services":
-            return <Form2 { ...props }/>
+            return <Form2 { ...serviceProps }/>
     }
 
 
     return (
         <div>
-            <h1>Hello</h1>
         </div>
     )
 }

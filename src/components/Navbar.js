@@ -76,7 +76,9 @@ function Navbar() {
                         <Link to="/purchase-order" class="sub-link">
                             <li class="sub-list">PURCHASE ORDER</li>
                         </Link>
-                        <li class="sub-list">ITEMS</li>
+                        <Link to="/items" class="sub-link">
+                            <li class="sub-list">ITEMS</li>
+                        </Link>
                         <li class="sub-list">SUPPLIERS</li>
                     </ul>
                 </li>

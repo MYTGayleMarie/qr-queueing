@@ -11,7 +11,7 @@ import Table from '../../Table.js';
 
 const buttons = ['download','add-purchase'];
 
-const patientData = [
+const purchaseData = [
     {
         printingOrderID: '0199201',
         itemID: '1',
@@ -52,11 +52,11 @@ function PurchaseOrder() {
                 type='thick'
                 title='SUPPLIES RELEASING MANAGER' 
                 buttons={buttons} 
-                tableData={patientData}
+                tableData={purchaseData}
             />
             <Table
                 type={'no-action'}
-                tableData={patientData}
+                tableData={purchaseData}
                 headingColumns={['PRINTING ORDER ID', 'ITEM ID', 'ITEM NAME', 'REQUESTED', 'ACTUAL', 'ACTION']}
             />
             </Fragment>

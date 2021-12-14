@@ -17,6 +17,8 @@ import ReleaseItems from './components/View/Supply/ReleaseItems';
 import AddItems from './components/View/Supply/AddItems';
 import PurchaseOrder from './components/View/Supply/PurchaseOrder';
 import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
+import Items from './components/View/Supply/Items';
+import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
           <Route path='/add-release' element={<AddItems/>}/>
           <Route path='/purchase-order' element={<PurchaseOrder/>}/>
           <Route path='/add-purchase' element={<AddPurchaseOrder/>}/>
+          <Route path='/items' element={<Items/>}/>
+          <Route path='/add-supply-items' element={<AddSupplyItems/>}/>
         </Routes>
     </Router>
   );

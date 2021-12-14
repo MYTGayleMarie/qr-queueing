@@ -5,4 +5,6 @@
 
 .item-id-input, .item-name-input {
     width: 80%;
+    border-width: 1px;
+    border-color: #55073A;
 }
