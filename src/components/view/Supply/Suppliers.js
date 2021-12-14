@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 
 //css
-import './Items.css';
+import './Suppliers.css';
 
 //components
 import Searchbar from '../../Searchbar.js';
@@ -9,38 +9,40 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
-const buttons = ['download','add-supply-items'];
+const buttons = ['download','add-supplier'];
 
-const itemsData = [
+const supplierData = [
     {
-        itemID: '1',
-        itemName: 'Hotplate Stirrer',
-        itemDescription: 'none',
-        beginningBalance: '1000',
-        remarks: ' ',
+        supplierID: '1',
+        companyName: 'SAMPLE COMPANY',
+        address: 'Cebu City, Cebu',
+        phone: '221-1234',
+        email: 'sample@gmail.com',
+        tin: '0000',
+        remarks: 'none',
         action: ' ',
     },
 ];
 
 
-function Items() {
+function Suppliers() {
     return (
         <div>
         <div>
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='ITEMS'/>
+            <Searchbar title='SUPPLIER'/>
             <Header 
                 type='thick'
                 title='SUPPLIES RELEASING MANAGER' 
                 buttons={buttons} 
-                tableData={itemsData}
+                tableData={supplierData}
             />
             <Table
                 type={'no-action'}
-                tableData={itemsData}
-                headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'REMARKS', 'ACTION']}
+                tableData={supplierData}
+                headingColumns={['SUPPLIER ID', 'COMPANY NAME', 'ADDRESS', 'PHONE', 'EMAIL', 'TIN', 'REMARKS', 'ACTION']}
             />
             </Fragment>
         </div>
@@ -49,4 +51,4 @@ function Items() {
     )
 }
 
-export default Items
+export default Suppliers

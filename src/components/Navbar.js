@@ -70,16 +70,18 @@ function Navbar() {
                     <img src={supplyIcon} alt={"supply"} class="supply icon"></img>
                     <span class="mx-2">Supply</span>
                     <ul class="sub-menu">
-                        <Link to="/release-item" class="sub-link">
+                        <Link to="/release-item" className="sub-link">
                             <li class="sub-list">RELEASE ITEMS</li>
                         </Link>
-                        <Link to="/purchase-order" class="sub-link">
+                        <Link to="/purchase-order" className="sub-link">
                             <li class="sub-list">PURCHASE ORDER</li>
                         </Link>
-                        <Link to="/items" class="sub-link">
+                        <Link to="/items" className="sub-link">
                             <li class="sub-list">ITEMS</li>
                         </Link>
-                        <li class="sub-list">SUPPLIERS</li>
+                        <Link to="/suppliers" className="sub-link">
+                            <li class="sub-list">SUPPLIERS</li>
+                        </Link>
                     </ul>
                 </li>
                 <li href="#" class="nav-link report-nav">
