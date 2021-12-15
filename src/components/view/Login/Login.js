@@ -18,7 +18,7 @@ function Login() {
         setShowPassword(!showPassword);
     };
 
-    const url= "http://localhost:8080/login";
+    const url= "https://blue.qrdiagnosticsph.com/login";
     const api_key = "Y5QubbhTOb";
     const [data, setData] = useState({
         email: "",

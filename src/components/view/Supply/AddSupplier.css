@@ -1,0 +1,45 @@
+.supplier-header {
+    margin-top: 6%;
+    margin-left: 4%;
+    color: #BFBC4B;
+    font-family: 'Montserrat-Italic';
+
+}
+
+.supplier-name-label, .tin-label, .phone-name-label, .email-label, .company-address-label {
+    font-family: 'Montserrat-Bold';
+    color: #419EA3;
+}
+
+.tin-input, .phone-input, .email-input {
+    width: 85%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
+.company-name-input, .phone-input {
+    width: 100%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
+.company-address-input {
+    width: 95%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
+.remarks-items-input, .description-input {
+    width: 95%;
+    border-color: #55073A;
+}
+
+.add-item-btn {
+    color: #ffff;
+    width: 200px;
+    height: 54px;
+    background: #55073A;
+    border: 1px solid #55073A;
+    box-sizing: border-box;
+    border-radius: 23px;
+}

@@ -6,7 +6,6 @@ import './AddSupplyItems.css';
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
-import Items from './Items';
 
 function AddSupplyItems() {
     return (
