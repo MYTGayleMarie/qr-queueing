@@ -1,0 +1,32 @@
+.card-container {
+    border: solid 1px #000000;
+    margin: 10%;
+    width: 100%;
+}
+
+.card-head {
+    height: 20px;
+}
+
+.maroon {
+    background-color: #55073A;
+}
+
+.report-card {
+    margin-top: 48%;
+    width: 55%;
+    height: 46%;
+}
+
+.card-data {
+    font-family: 'Lato-Bold';
+    font-size: 30px;
+    padding-right: 5%;
+}
+
+.card-title {
+    color: #A59F9F;
+    font-family: 'Lato-Regular';
+    font-size: 12px;
+    padding-right: 5%;
+}

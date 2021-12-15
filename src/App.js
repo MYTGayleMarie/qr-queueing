@@ -21,6 +21,7 @@ import Items from './components/View/Supply/Items';
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
+import Reports from './components/View/Reports/Reports';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
           <Route path='/add-supply-items' element={<AddSupplyItems/>}/>
           <Route path='/suppliers' element={<Suppliers/>}/>
           <Route path='/add-supplier' element={<AddSupplier/>}/>
+          <Route path='/reports' element={<Reports/>}/>
         </Routes>
     </Router>
   );
