@@ -33,7 +33,45 @@ function Reports() {
                         color='maroon'
                     />
                 </div>
+                <div className="col-sm-4">
+                    <Card 
+                        data={amount}
+                        title='Total number of Clinic Service'
+                        color='maroon'
+                    />
+                </div>
+                <div className="col-sm-4">
+                    <Card 
+                        data={amount}
+                        title='Total number of Home Service'
+                        color='maroon'
+                    />
+                </div>
             </div>
+            <div className="row">
+                <div className="col-sm-4">
+                    <Card 
+                        data={amount}
+                        title='Total number of Extraction'
+                        color='blue'
+                    />
+                </div>
+                <div className="col-sm-4">
+                    <Card 
+                        data={amount}
+                        title='Total number of Imaging'
+                        color='blue'
+                    />
+                </div>
+                <div className="col-sm-4">
+                    <Card 
+                        data={amount}
+                        title='Total number of Email Results'
+                        color='blue'
+                    />
+                </div>
+            </div>
+
 
             </Fragment>
         </div>

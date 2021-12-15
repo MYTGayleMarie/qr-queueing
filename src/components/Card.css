@@ -1,21 +1,27 @@
 .card-container {
     border: solid 1px #000000;
     margin: 10%;
-    width: 100%;
+    width:80%;
 }
 
 .card-head {
     height: 20px;
 }
 
+/**Card Header Color Options**/
+
 .maroon {
     background-color: #55073A;
 }
 
+.blue {
+    background-color: #419EA3;;
+}
+
 .report-card {
-    margin-top: 48%;
-    width: 55%;
-    height: 46%;
+    margin-top: 20px;
+    width: 30px;
+    height: 35px;
 }
 
 .card-data {
