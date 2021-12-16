@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
 //css
 import './Form2.css';
@@ -131,7 +131,7 @@ const hematology = [
 
 //VARIABLES
 var itemDetails; 
-
+const token = localStorage.getItem('token');
 
 function getDetails(categoryItems, checkedItem) {
 
@@ -164,6 +164,36 @@ function getDetails(categoryItems, checkedItem) {
 //     })
 // }
 
+function submit(e, customer) {
+
+    e.preventDefault();
+    axios({
+        method: 'post',
+        url: window.$link + 'customers/create',
+        withCredentials: false, 
+        params: {
+            token: token,
+            api_key: window.$api_key, 
+            first_name: customer.fname,
+            last_name: customer.lname,
+            middle_name: customer.mname, 
+            suffix: '',
+            birthdate: customer.birthDate,
+            contact_no: customer.contactNum,
+            email: customer.email,
+            gender: customer.sex, 
+            address: customer.address,
+            emergency_contact: '',
+            emergency_contact_no: '',
+            relation_w_contact: '',
+            remarks: '',
+            added_by: '1',
+        }
+    }).then(function (response) {
+        console.log(response.data);
+    })
+}
+
 
 /*********************************
  * RENDER VIEW
@@ -187,8 +217,6 @@ function Form2({ service, customer, setServices, navigation }) {
     });
 
     console.log(customer);
-    console.log(checkedServicesDetails);
-
 
     return (
         <div>
@@ -199,7 +227,7 @@ function Form2({ service, customer, setServices, navigation }) {
             title="ADD PATIENT"
             />
             <div className="booking-form">
-            <form className="needs-validation">
+            <form className="needs-validation" onSubmit={(e) => submit(e, customer)}>
             <div className="row clinical-services-container">
                 <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import "./components/FontAwesomeIcons";
@@ -23,12 +23,13 @@ import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import Reports from './components/View/Reports/Reports';
 
-function App() {
 
+function App() { 
+  
   return (
     <Router>
         <Routes>
-          <Route exact path='/' element={<Login/>}/>
+          <Route path='/' element={<Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/add-patient' element={<SwitchForm/>}/>
           <Route path='/cashier' element={<Cashier/>}/>

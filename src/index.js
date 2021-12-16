@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
+//GLOBAL VARIABLES
+window.$link= "https://blue.qrdiagnosticsph.com/";
+window.$api_key = "Y5QubbhTOb";
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

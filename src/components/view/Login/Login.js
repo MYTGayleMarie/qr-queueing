@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
+import  { Navigate } from 'react-router-dom';
 
 //css
 import '../Login/Login.css'
@@ -10,7 +12,7 @@ import logo  from '../../../images/logo.png';
 import axios from "axios";
 
 
-function Login() {
+function Login({setToken}) {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -18,37 +20,31 @@ function Login() {
         setShowPassword(!showPassword);
     };
 
-    const url= "https://blue.qrdiagnosticsph.com/login";
-    const api_key = "Y5QubbhTOb";
     const [data, setData] = useState({
         email: "",
         password: "",
     });
 
-    let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*",
-        }
-    }
-
     function submit(e) {
         e.preventDefault();
-        axios.post(url, {
-            api_key: api_key,
-            email: data.email,
-            password: data.password
-        }, axiosConfig)
-        .then(res=>{
-            console.log(res.data)
-        })
+        axios({
+            method: 'post',
+            url: window.$link + 'login',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                email: data.email,
+                password: data.password
+            }
+        }).then(function (response) {
+            localStorage.setItem('token', JSON.stringify(response.data.token));
+        });
     }
 
     function handle(e) {
         const newData= {...data}
         newData[e.target.id] = e.target.value
         setData(newData)
-        console.log(newData)
     }
 
     return (
@@ -102,9 +98,13 @@ function Login() {
                 </div>
             </div>
         </div>
-</div>
+    </div>
         </>
     )
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
 
 export default Login
