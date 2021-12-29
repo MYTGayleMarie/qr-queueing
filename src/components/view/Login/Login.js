@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import  { Navigate } from 'react-router-dom';
+import { setUserSession } from "../../../utilities/Common";
+import { Redirect } from 'react-router';
+
 
 //css
 import '../Login/Login.css'
@@ -12,7 +14,7 @@ import logo  from '../../../images/logo.png';
 import axios from "axios";
 
 
-function Login({setToken}) {
+function Login() {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -37,7 +39,11 @@ function Login({setToken}) {
                 password: data.password
             }
         }).then(function (response) {
+            console.log(response);
             localStorage.setItem('token', JSON.stringify(response.data.token));
+            
+        }).catch(function (error) {
+            console.log("error");
         });
     }
 
