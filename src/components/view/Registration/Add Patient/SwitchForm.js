@@ -17,16 +17,7 @@ const personalData = {
     dateOfTesting: "",
 }
 
-const serviceData = {
-    //CLINICAL MICROSCOPY 
-    Urinalysis1: false,
-    UrineKetone1: false,
-    UrineRBCMorphology1: false,
-    Fecalysis1: false,
-    FecalOccultBlood1: false,
-    PregnancyTest1: false,
-    SpermAnalysis1: false,
-}
+const serviceData = {}
 
 const steps = [
     {id: "customer"},
