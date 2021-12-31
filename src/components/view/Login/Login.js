@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import { setUserSession } from "../../../utilities/Common";
-import { Redirect } from 'react-router';
-
+import { Navigate } from 'react-router';
 
 //css
 import '../Login/Login.css'
@@ -12,7 +10,6 @@ import '../Login/Login.css'
 import clinic from '../../../images/clinic.png';
 import logo  from '../../../images/logo.png';
 import axios from "axios";
-
 
 function Login() {
 
@@ -41,7 +38,7 @@ function Login() {
         }).then(function (response) {
             console.log(response);
             localStorage.setItem('token', JSON.stringify(response.data.token));
-            
+        
         }).catch(function (error) {
             console.log("error");
         });
@@ -51,6 +48,12 @@ function Login() {
         const newData= {...data}
         newData[e.target.id] = e.target.value
         setData(newData)
+    }
+
+    if(window.$userToken != null) {
+        return (
+            <Navigate to = "/registration"/>
+        )
     }
 
     return (

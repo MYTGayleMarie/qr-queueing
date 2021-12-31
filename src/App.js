@@ -25,8 +25,6 @@ import Reports from './components/View/Reports/Reports';
 
 
 function App() { 
-
-  const [authenticated, setAuthentication] = useState(false);
   
   return (
     <Router>

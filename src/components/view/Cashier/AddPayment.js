@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
+
 //css
 import './AddPayment.css'
 
@@ -35,6 +37,13 @@ const costingData = [
 ];
 
 function cashForm() {
+
+    if(window.$userToken == null) {
+        return (
+            <Navigate to="/"/>
+        )
+    }
+
     return (
         <div class="pay-cash-cont">
                 <div className="row">

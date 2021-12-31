@@ -1,4 +1,5 @@
-import React, {useState, Fragment} from 'react';
+import React, {Fragment} from 'react';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Cashier.css';
@@ -32,6 +33,12 @@ const patientData = [
 ];
 
 function Cashier() {
+
+    if(window.$userToken == null) {
+        return (
+            <Navigate to="/"/>
+        )
+    }
 
     return (
         <>

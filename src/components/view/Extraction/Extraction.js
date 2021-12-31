@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Extraction.css';
@@ -33,6 +34,13 @@ const pendingData = [
 ];
 
 function Extraction() {
+
+    if(window.$userToken == null) {
+        return (
+            <Navigate to="/"/>
+        )
+    }
+
     return (
         <div>
             <Navbar/>

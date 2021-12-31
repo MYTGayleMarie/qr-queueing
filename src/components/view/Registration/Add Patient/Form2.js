@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
+import { Button, Modal } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Form2.css';
@@ -57,25 +59,33 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
 
-function getDetails(categoryItems, checkedItem) {
+/*********************************
+ * RENDER VIEW
+ ********************************/
 
-   categoryItems.map((data, index) => {
-        if(data.key == checkedItem) {
+function Form2({ service, customer, setServices, navigation }) {
 
-            itemDetails = {
-                name: data.name,
-                categoryId: data.categoryId,
-                labTestId: data.labTestId,
-                price: data.price,
-            }
-            return itemDetails;
-        }
-    });
-}
+    //functions
+    function getDetails(categoryItems, checkedItem) {
 
-function submit(e, customer, services) {
-    e.preventDefault();
-    axios({
+        categoryItems.map((data, index) => {
+             if(data.key == checkedItem) {
+     
+                 itemDetails = {
+                     name: data.name,
+                     categoryId: data.categoryId,
+                     labTestId: data.labTestId,
+                     price: data.price,
+                 }
+                 return itemDetails;
+             }
+         });
+     }
+
+    function submit(e, customer, services) {
+        e.preventDefault();
+ 
+        axios({
         method: 'post',
         url: window.$link + 'customers/create',
         withCredentials: false, 
@@ -98,6 +108,7 @@ function submit(e, customer, services) {
             added_by: '1',
         }
     }).then(function (response) {
+        console.log(response.data);
         services.map((service, index) => {
             axios({
                 method: 'post',
@@ -112,20 +123,28 @@ function submit(e, customer, services) {
                     remarks: '',
                     added_by: 1, 
                 }
-            }).then(function (response) {
+                }).then(function (response) {
                 console.log(response.data);
-            })
-        });
-    })
-}
+                handleClose();
+                 })
+            });
+        })
+    }
 
+    //Modal
+    const [show, setShow] = useState(false);
 
-/*********************************
- * RENDER VIEW
- ********************************/
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-function Form2({ service, customer, setServices, navigation }) {
+    if(window.$userToken == null) {
+        return (
+            <Navigate to="/"/>
+        )
+    }
 
+    //Checked Services
+    var totalPrice = 0;
     const asArray = Object.entries(service)
     const checkedServices = asArray.filter(([key,value]) => value == true);
     var checkedServicesDetails = [];
@@ -214,7 +233,12 @@ function Form2({ service, customer, setServices, navigation }) {
         }
     });
 
+    checkedServicesDetails.map((data, index) => {
+        totalPrice += parseInt(data.price);
+    });
+
     console.log(checkedServicesDetails);
+    
     return (
         <div>
         <Navbar/>
@@ -365,6 +389,7 @@ function Form2({ service, customer, setServices, navigation }) {
 
 
                 </div>
+
                 {/* <div className="row large-gap">
                     <h3 className="form-categories-header italic">PACKAGES</h3>
 
@@ -381,18 +406,25 @@ function Form2({ service, customer, setServices, navigation }) {
                 <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
 
-                    <div className="row">
-                        <div className="col-2">
-                            1
-                        </div>
-                        <div className="col">
-                            <p className="item">UNIRARY TEST</p>
-                        </div>
-                        <div className="col d-flex justify-content-end">
-                            <span className="price"><span className="currency">P</span> 430.00</span>
-                        </div>
+                    {checkedServicesDetails.map((data, index) => (
+                        <div className="row">
+                           <div className="col-2">
+                               {index + 1}
+                           </div>
+                           <div className="col">
+                               <p className="item">{data.name}</p>
+                           </div>
+                           <div className="col d-flex justify-content-end">
+                               <span className="price"><span className="currency">P</span> {data.price}</span>
+                           </div>
+                       </div>
+                    ))}
+                </div>
+                
+                <div className="row">
+                    <div className="col d-flex justify-content-end">
+                        <span className="total-price"><b>TOTAL </b>P {totalPrice}</span>
                     </div>
-              
                 </div>
 
                 <div className="row">
@@ -403,10 +435,25 @@ function Form2({ service, customer, setServices, navigation }) {
                     </div>
                     <div className="col-sm-6">
                         <div className="d-flex justify-content-end">
-                        <button className="proceed-btn">SAVE BOOKING</button>
+                        <button type='button' className="proceed-btn" onClick={handleShow}>SAVE BOOKING</button>
                         </div>
                     </div>
                 </div>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>SUBMIT</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to submit the form?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button type="submit" variant="primary" onClick={(e) => submit(e, customer, checkedServicesDetails)}>
+                        Submit
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
 
             </form>
             </div>
