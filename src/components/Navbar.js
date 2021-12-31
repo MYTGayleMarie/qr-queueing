@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { removeUserSession } from '../utilities/Common';
 
 //css
 import './Navbar.css';
@@ -13,6 +14,7 @@ import medTechIcon from '../images/icons/med-tech-icon.png';
 import chiefIcon from '../images/icons/chief-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';
 import reportIcon from '../images/icons/report-icon.png';
+import logoutIcon from '../images/icons/logout.png';
 
 //logo image
 import logo  from '../images/logo.png';
@@ -89,6 +91,12 @@ function Navbar() {
                     <span class="mx-2">Reports</span>
                 </li>
                 </NavLink>
+
+                <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+                <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+                    <span class="mx-2">Log Out</span>
+                </li>
+
             </ul>
         </div>
         </>
