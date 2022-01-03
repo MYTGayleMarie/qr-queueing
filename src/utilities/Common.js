@@ -2,6 +2,10 @@ import React from 'react';
 
 //Common Utility Functions
 
+export const refreshPage = () => {
+    window.location.reload();
+}
+
 
 /***************************
  * Local Storage Utilities

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 //css
 import './LaboratoryTests.css';
@@ -37,12 +36,6 @@ function LaboratoryTests() {
     const toggleExtraction = () => {
         setExtraction(!inputBox);
     };
-
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
 
     return (
         <div>

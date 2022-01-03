@@ -7,7 +7,7 @@ const personalData = {
     fname: "",
     lname: "", 
     mname: "", 
-    sex: "", 
+    sex: "female", 
     birthDate: "", 
     email: "", 
     contactNum: "", 

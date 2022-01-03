@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import { Navigate } from "react-router-dom"; 
 
 //css
 import './Registration.css';
@@ -33,12 +32,6 @@ const patientData = [
 ];
 
 function Registration() {
-
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
 
     return (
         <div>
