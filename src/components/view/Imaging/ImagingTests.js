@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 //css
 import './ImagingTests.css';
@@ -35,12 +34,6 @@ function ImagingTests() {
     const toggleImaging= () => {
         setImaging(!inputBox);
     };
-
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
 
     return (
         <div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 //css
 import './Form1.css';
@@ -11,12 +10,6 @@ import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
 function AddPatient({ customer, setPersonal, navigation  }) {
-
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
 
     const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting } = customer;
 

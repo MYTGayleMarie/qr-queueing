@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom';
 
 //css
 import './Form2.css';
@@ -136,12 +135,6 @@ function Form2({ service, customer, setServices, navigation }) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
 
     //Checked Services
     var totalPrice = 0;

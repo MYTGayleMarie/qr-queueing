@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router';
+import { refreshPage } from "../../../utilities/Common";
 
 //css
 import '../Login/Login.css'
@@ -36,9 +37,8 @@ function Login() {
                 password: data.password
             }
         }).then(function (response) {
-            console.log(response);
             localStorage.setItem('token', JSON.stringify(response.data.token));
-        
+            refreshPage();
         }).catch(function (error) {
             console.log("error");
         });

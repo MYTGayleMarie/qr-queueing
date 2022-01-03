@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Navigate } from 'react-router-dom';
 
 //css
 import './Imaging.css';
@@ -35,12 +34,6 @@ const pendingData = [
 
 function Imaging() {
 
-    if(window.$userToken == null) {
-        return (
-            <Navigate to="/"/>
-        )
-    }
-    
     return (
         <div>
             <Navbar/>

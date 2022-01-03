@@ -22,10 +22,18 @@ import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import Reports from './components/View/Reports/Reports';
+import { Navigate } from 'react-router';
 
 
 function App() { 
-  
+
+
+  if(window.$userToken == null) {
+    return (
+        <Navigate to="/"/>
+    )
+  }
+
   return (
     <Router>
         <Routes>
