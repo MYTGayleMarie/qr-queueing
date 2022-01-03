@@ -78,14 +78,14 @@ const Hematology = [
         price: '180'
     },   
     {
-        key: 'Hematocrit,PLT_2',
+        key: 'HematocritPLT_2',
         name: 'Hematocrit, PLT',
         categoryId: '2',
         labTestId: '10', 
         price: '180'
     }, 
     {
-        key: 'Hemoglobin,Hematocrit_2',
+        key: 'HemoglobinHematocrit_2',
         name: 'Hemoglobin, Hematocrit',
         categoryId: '2',
         labTestId: '11', 
@@ -113,7 +113,7 @@ const Hematology = [
         price: '420'
     }, 
     {
-        key: 'Clotting&BleedingTime_2',
+        key: 'ClottingBleedingTime_2',
         name: 'Clotting & Bleeding Time',
         categoryId: '2',
         labTestId: '15', 
@@ -212,7 +212,7 @@ const GlucoseTests = [
         price: '720',
     },  
     {
-        key: '2hrsPPBS_5',
+        key: 'TwohrsPPBS_5',
         name: '2 hrs PPBS',
         categoryId: '5',
         labTestId: '28', 
@@ -315,14 +315,14 @@ const PancreaticTest = [
 
 const LiverFunctionTests = [
     {
-        key: 'ALT/SGPT_9',
+        key: 'ALTSGPT_9',
         name: 'ALT/SGPT',
         categoryId: '9',
         labTestId: '41', 
         price: '180',
     }, 
     {
-        key: 'AST/SGOT_9',
+        key: 'ASTSGOT_9',
         name: 'AST/SGOT',
         categoryId: '9',
         labTestId: '42', 
@@ -375,7 +375,7 @@ const Immunology = [
         price: '1300',
     }, 
     {
-        key: 'Syphilis/RPS/VDRL_11',
+        key: 'SyphilisRPSVDRL_11',
         name: 'Syphilis/RPS/VDRL',
         categoryId: '11',
         labTestId: '49', 
@@ -468,7 +468,7 @@ const TumorMarkers = [
         price: '1300',
     }, 
     {
-        key: 'CA-125_14',
+        key: 'CA125_14',
         name: 'CA-125 (Ovarian)',
         categoryId: '14',
         labTestId: '61', 
@@ -551,7 +551,7 @@ const Xray = [
         price: '190',
     }, 
     {
-        key: 'ChestPAL/APL_18',
+        key: 'ChestPALAPL_18',
         name: 'Chest PAL/APL',
         categoryId: '18',
         labTestId: '71', 
@@ -635,7 +635,7 @@ const Xray = [
         price: '530',
     }, 
     {
-        key: 'Lumbo-SacralAPL_18',
+        key: 'LumboSacralAPL_18',
         name: 'Lumbo-Sacral APL',
         categoryId: '18',
         labTestId: '83', 
@@ -691,7 +691,7 @@ const Xray = [
         price: '530',
     }, 
     {
-        key: 'Thoraco-LumbarAPL_18',
+        key: 'ThoracoLumbarAPL_18',
         name: 'Thorace-Lumber APL',
         categoryId: '18',
         labTestId: '91', 

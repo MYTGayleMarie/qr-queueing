@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
 
 //css
-import './Imaging.css';
+import '../Imaging/Imaging.css';
 
 //components
 import Searchbar from '../../Searchbar.js';
@@ -56,4 +56,4 @@ function MedTech() {
   );
 }
 
-export default Imaging;
+export default MedTech;

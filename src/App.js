@@ -18,7 +18,7 @@ import AddItems from './components/View/Supply/AddItems';
 import PurchaseOrder from './components/View/Supply/PurchaseOrder';
 import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
 import Items from './components/View/Supply/Items';
-import MedTech from './components/View/Medtech/Medtech';
+import MedTech from './components/View/MedTech/MedTech';
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
