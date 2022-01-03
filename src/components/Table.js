@@ -15,26 +15,27 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
         tableClass += ' table-container_table--break-lg';
     }
 
+    const data = tableData.map((row, index) => {
+
+        let rowData = [];
+        let i = 0;
+        
+        for(const key in row) {
+            rowData.push({
+                key: headingColumns[i],
+                val: row[key]
+            });
+            i++;
+        }
+
+        return <tr key={index}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+        </tr>
+    });
+
+
     if(type === 'no-action') {
-        const data = tableData.map((row, index) => {
-
-            let rowData = [];
-            let i = 0;
-            
-            for(const key in row) {
-                rowData.push({
-                    key: headingColumns[i],
-                    val: row[key]
-                });
-                i++;
-            }
-    
-            return <tr key={index}>
-                {rowData.map((data, index) => 
-                <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
-            </tr>
-        });
-
     
         return(
             <div className="table-container">
@@ -62,6 +63,32 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
              </div>
         );
     }
+    else if (type === "report") {
+        return(
+            <div className="report-table-container">
+            <table className={tableClass}>
+                <thead>
+                    <tr>
+                        {headingColumns.map((col,index) => (
+                            <th key={index} className="report-table-th-top">{col}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        {headingColumns.map((col,index) => (
+                            <th key={index} className="report-table-th">{col}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data}
+                </tbody>
+            </table>
+         </div>
+        );
+    }
+   
 
 }
 

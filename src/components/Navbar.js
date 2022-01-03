@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { removeUserSession } from '../utilities/Common';
+import { refreshPage, removeUserSession } from '../utilities/Common';
 
 //css
 import './Navbar.css';
@@ -51,10 +51,12 @@ function Navbar() {
               <span class="mx-2">Imaging</span>
             </li>
           </NavLink>
+          <NavLink to="/medtech" activeClassName="active" class="link">
           <li href="/medtech" class="nav-link medTech-nav">
             <img src={medTechIcon} alt={'medTech'} class="medTech icon"></img>
             <span class="mx-2">Medical Technology</span>
           </li>
+          </NavLink>
           <li href="#" class="nav-link chief-nav">
             <div class="row">
               <div class="col-3">
@@ -90,7 +92,7 @@ function Navbar() {
             </li>
           </NavLink>
 
-          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <li href="#" class="nav-link logout-nav" onClick={removeUserSession, refreshPage}>
             <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
           </li>

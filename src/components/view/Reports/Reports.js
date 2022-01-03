@@ -7,9 +7,25 @@ import './Reports.css';
 import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
+import Table from '../../Table';
 import Card from '../../Card';
 
 var amount = 100; 
+
+
+const patientData = [
+    {
+        bookId: '0199201',
+        patientName: 'Juan Dela Cruz',
+        bookingTime: 'November 11, 2021 4:00PM',
+    },
+    {
+        bookId: '0199201',
+        patientName: 'Juan Dela Cruz',
+        bookingTime: 'November 11, 2021 4:00PM',
+    },
+    
+];
 
 function Reports() {
     return (
@@ -70,6 +86,13 @@ function Reports() {
                         color='blue'
                     />
                 </div>
+            </div>
+            <div className="row">
+                <Table
+                    type={'report'}
+                    tableData={patientData}
+                    headingColumns={['NAME OF TEST', 'CLINIC SERVICE', 'HOME SERVICE']}
+                />
             </div>
 
 
