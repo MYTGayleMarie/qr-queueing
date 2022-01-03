@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import './Form2.css';
@@ -57,7 +59,6 @@ const cardiology = getCardiology();
 const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
-
 /*********************************
  * RENDER VIEW
  ********************************/
@@ -81,7 +82,7 @@ function Form2({ service, customer, setServices, navigation }) {
          });
      }
 
-    function submit(e, customer, services) {
+    function submit(e, customer, services, totalPrice) {
         e.preventDefault();
  
         axios({
@@ -107,26 +108,35 @@ function Form2({ service, customer, setServices, navigation }) {
             added_by: '1',
         }
     }).then(function (response) {
-        console.log(response.data);
+        toast.success(response.data.message.success);
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/create',
+            withCredentials: false, 
+            params: {
+                token: userToken,
+                api_key: window.$api_key, 
+                customer: response.data.data.customer_id,
+                booking_time: Date().toLocaleString(),
+                company_contract_id: '',
+                type: 'lab',
+                total_amount: totalPrice,
+                discount: '0',
+                grand_total: totalPrice,
+                discount_code: '',
+                status: 'For Examination',
+                reference_code: '',
+                payment_type: 'cash',
+                remarks: '',
+                added_by: 1, 
+            }
+        }).then(function (response) {
+            console.log(response.data);
+        })
+
         services.map((service, index) => {
-            axios({
-                method: 'post',
-                url: window.$link + 'lab_tests/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    name: service.name,
-                    category: service.categoryId,
-                    price: service.price,
-                    remarks: '',
-                    added_by: 1, 
-                }
-                }).then(function (response) {
-                console.log(response.data);
-                handleClose();
-                 })
-            });
+        });
+        handleClose();
         })
     }
 
@@ -229,8 +239,6 @@ function Form2({ service, customer, setServices, navigation }) {
     checkedServicesDetails.map((data, index) => {
         totalPrice += parseInt(data.price);
     });
-
-    console.log(checkedServicesDetails);
     
     return (
         <div>
@@ -243,7 +251,7 @@ function Form2({ service, customer, setServices, navigation }) {
             />
 
             <div className="booking-form">
-            <form className="needs-validation" onSubmit={(e) => submit(e, customer, checkedServicesDetails)}>
+            <form className="needs-validation" onSubmit={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}>
             <div className="row clinical-services-container">
                 <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
 
@@ -429,6 +437,7 @@ function Form2({ service, customer, setServices, navigation }) {
                     <div className="col-sm-6">
                         <div className="d-flex justify-content-end">
                         <button type='button' className="proceed-btn" onClick={handleShow}>SAVE BOOKING</button>
+                        <ToastContainer/>
                         </div>
                     </div>
                 </div>
@@ -442,7 +451,7 @@ function Form2({ service, customer, setServices, navigation }) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button type="submit" variant="primary" onClick={(e) => submit(e, customer, checkedServicesDetails)}>
+                    <Button type="submit" variant="primary" onClick={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}>
                         Submit
                     </Button>
                     </Modal.Footer>
