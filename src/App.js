@@ -28,35 +28,31 @@ import { Navigate } from 'react-router';
 
 function App() { 
 
-
-  if(window.$userToken == null) {
-    return (
-        <Navigate to="/"/>
-    )
-  }
+  const [token, setAuthentication] = useState(window.$userToken);
+  
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/add-patient" element={<SwitchForm />} />
-        <Route path="/cashier" element={<Cashier />} />
-        <Route path="/add-payment" element={<AddPayment />} />
-        <Route path="/extraction" element={<Extraction />} />
-        <Route path="/laboratory-test" element={<LaboratoryTests />} />
-        <Route path="/imaging" element={<Imaging />} />
-        <Route path="/imaging-test" element={<ImagingTests />} />
-        <Route path="/release-item" element={<ReleaseItems />} />
-        <Route path="/add-release" element={<AddItems />} />
-        <Route path="/medtech" element={<MedTech />} />
-        <Route path="/purchase-order" element={<PurchaseOrder />} />
-        <Route path="/add-purchase" element={<AddPurchaseOrder />} />
-        <Route path="/items" element={<Items />} />
-        <Route path="/add-supply-items" element={<AddSupplyItems />} />
-        <Route path="/suppliers" element={<Suppliers />} />
-        <Route path="/add-supplier" element={<AddSupplier />} />
-        <Route path="/reports" element={<Reports />} />
+        <Route path="/registration" element={token ? <Registration />  : <Navigate to = "/"/> } />
+        <Route path="/add-patient" element={token ? <SwitchForm/>  : <Navigate to = "/"/> } />
+        <Route path="/cashier" element={token ? <Cashier/>  : <Navigate to = "/"/> } />
+        <Route path="/add-payment" element={token ? <AddPayment/>  : <Navigate to = "/"/> } />
+        <Route path="/extraction" element={token ? <Extraction/>  : <Navigate to = "/"/> } />
+        <Route path="/laboratory-test" element={token ? <LaboratoryTests/>  : <Navigate to = "/"/> } />
+        <Route path="/imaging" element={token ? <Imaging/>  : <Navigate to = "/"/> } />
+        <Route path="/imaging-test" element={token ? <ImagingTests/>  : <Navigate to = "/"/> } />
+        <Route path="/release-item" element={token ? <ReleaseItems/>  : <Navigate to = "/"/> } />
+        <Route path="/add-release" element={token ? <AddItems/>  : <Navigate to = "/"/> } />
+        <Route path="/medtech" element={token ? <MedTech/>  : <Navigate to = "/"/> } />
+        <Route path="/purchase-order" element={token ? <PurchaseOrder/>  : <Navigate to = "/"/> } />
+        <Route path="/add-purchase" element={token ? <AddPurchaseOrder/>  : <Navigate to = "/"/> } />
+        <Route path="/items" element={token ? <Items/>  : <Navigate to = "/"/> } />
+        <Route path="/add-supply-items" element={token ? <AddSupplyItems/>  : <Navigate to = "/"/> } />
+        <Route path="/suppliers" element={token ? <Suppliers/>  : <Navigate to = "/"/> } />
+        <Route path="/add-supplier" element={token ? <AddSupplier/>  : <Navigate to = "/"/> } />
+        <Route path="/reports" element={token ? <Reports/>  : <Navigate to = "/"/> } />
       </Routes>
     </Router>
   );

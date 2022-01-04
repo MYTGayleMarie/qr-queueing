@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router';
 import { refreshPage } from "../../../utilities/Common";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import '../Login/Login.css'
@@ -40,7 +42,7 @@ function Login() {
             localStorage.setItem('token', JSON.stringify(response.data.token));
             refreshPage();
         }).catch(function (error) {
-            console.log("error");
+            toast.error("Invalid Login");
         });
     }
 
@@ -102,6 +104,7 @@ function Login() {
                         <div className="col-sm-12 d-flex justify-content-center">
                         <button type="submit" className="login-btn">Login</button>
                         </div>
+                        <ToastContainer hideProgressBar={true}/>
                     </div>
                     </form>
                 </div>

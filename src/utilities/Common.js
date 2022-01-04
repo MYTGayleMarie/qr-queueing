@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 //Common Utility Functions
 
@@ -28,6 +29,7 @@ export const getToken = () => {
 export const removeUserSession = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    refreshPage();
 }
 
 //set the token and user from session storage
