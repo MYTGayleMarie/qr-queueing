@@ -8,34 +8,27 @@ function TestDetails({ data }) {
 
   return (
     <div>
-      <h3 className="form-categories-header italic">TEST DETAILS</h3>
+      <br></br><br></br>
+      <h4 className="form-categories-header italic">TEST DETAILS</h4>
 
-      <div className="personal-data-cont">
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="first-name label">BOOKING ID</span>
-            <span className="first-name detail">{patient.bookingId}</span>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="age label">BARCODE NO.</span>
-            <span className="age detail">{patient.barcodeNo}</span>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="contact-number label">TEST</span>
-            <span className="contact-number detail">{patient.testName.toUpperCase()}</span>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <span className="address label">STATUS</span>
-            <span className="address detail">{patient.status.toUpperCase()}</span>
-          </div>
-        </div>
-      </div>
+      <table className="personal-data-cont">
+        <tr>
+          <td className="first-name label">BOOKING ID</td>
+          <td className="first-name detail">{patient.bookingId}</td>
+        </tr>
+        <tr>
+          <td className="age label">BARCODE NO.</td>
+          <td className="age detail col-sm-8">{patient.examinationStarted}</td>
+        </tr>
+        <tr>
+          <td className="contact-number label">TEST</td>
+          <td className="contact-number detail">{patient.testName.toUpperCase()}</td>
+        </tr>
+        <tr>
+          <td className="address label">STATUS</td>
+          <td className="address detail">{patient.status.toUpperCase()}</td>
+        </tr>
+      </table>
     </div>
   );
 }
