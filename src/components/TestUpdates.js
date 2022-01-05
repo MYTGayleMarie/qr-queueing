@@ -1,35 +1,31 @@
 import React from 'react';
 
 //css
-import './PersonalDetails.css';
+import './View/ChiefMedTech/ChiefTests.css';
 
 function TestUpdates({ data }) {
   const patient = data;
 
+  
   return (
     <div>
-      <h3 className="form-categories-header italic">UPDATES</h3>
+      <br></br><br></br>
+      <h4 className="form-categories-header italic">UPDATES</h4>
 
-      <div className="personal-data-cont">
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="first-name label">EXTRACTION COMPLETED</span>
-            <span className="first-name detail">{patient.extractionCompleted}</span>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="age label">EXAMINATION STARTED</span>
-            <span className="age detail">{patient.examinationStarted}</span>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <span className="contact-number label">EXAMINATION COMPLETED</span>
-            <span className="contact-number detail">{patient.examinationCompleted.toUpperCase()}</span>
-          </div>
-        </div>
-      </div>
+      <table className="personal-data-cont">
+        <tr>
+          <td className="first-name label">EXTRACTION COMPLETED</td>
+          <td className="first-name detail">{patient.extractionCompleted}</td>
+        </tr>
+        <tr>
+          <td className="age label col-sm-4">EXAMINATION STARTED</td>
+          <td className="age detail col-sm-8">{patient.examinationStarted}</td>
+        </tr>
+        <tr>
+          <td className="contact-number label col-sm-4">EXAMINATION COMPLETED</td>
+          <td className="contact-number detail col-sm-8">{patient.examinationCompleted.toUpperCase()}</td>
+        </tr>
+      </table>
     </div>
   );
 }

@@ -1,0 +1,41 @@
+.personal-data-cont {
+    margin: 2% 0% 0% 4%;
+    width: 100%;
+}
+
+.label {
+    color: #419EA3;
+    font-family: 'Montserrat-Bold';
+    height: 50px;
+}
+
+.detail {
+    margin-left: 8%;
+    font-family: 'Montserrat-Regular';
+
+}
+
+.row {
+    margin-bottom: 2%;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+  
+  }
+  
+  /* Clear floats after the columns */
+.row2:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+@media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+}
