@@ -24,9 +24,9 @@ import AddSupplyItems from './components/view/Supply/AddSupplyItems';
 import Suppliers from './components/view/Supply/Suppliers';
 import AddSupplier from './components/view/Supply/AddSupplier';
 import Reports from './components/view/Reports/Reports';
-import Chief from './components/View/ChiefMedTech/ChiefMedTech';
-import ChiefTests from './components/View/ChiefMedTech/ChiefTests';
-import ChiefTests2 from './components/View/ChiefMedTech/ChiefTests2';
+import Chief from './components/view/ChiefMedTech/ChiefMedTech';
+import ChiefTests from './components/view/ChiefMedTech/ChiefTests';
+import ChiefTests2 from './components/view/ChiefMedTech/ChiefTests2';
 import { Navigate } from 'react-router';
 
 function App() {

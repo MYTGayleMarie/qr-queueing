@@ -1,15 +1,15 @@
 import React from 'react';
 
 //css
-import './View/ChiefMedTech/ChiefTests.css';
+import './view/ChiefMedTech/ChiefTests.css';
 
 function TestUpdates({ data }) {
   const patient = data;
 
-  
   return (
     <div>
-      <br></br><br></br>
+      <br></br>
+      <br></br>
       <h4 className="form-categories-header italic">UPDATES</h4>
 
       <table className="personal-data-cont">
