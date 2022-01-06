@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import DateTimePicker from 'react-datetime-picker';
 
 //css
 import './Form1.css';
@@ -9,9 +9,46 @@ import './Form1.css';
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
-function AddPatient({ customer, setPersonal, navigation  }) {
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting } = customer;
+function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
+
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const [activation, setActive] = useState(false);
+
+    function turnActive() {
+        setActive(true);
+    }
+
+    function sinceLastMeal() {
+        var presentDate = new Date();
+        let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
+        
+        //calculate days
+        const days = Math.floor(diffInMilliSeconds / 86400);
+        diffInMilliSeconds -= days * 86400;
+        console.log('calculated days', days);
+    
+        // calculate hours
+        const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+        diffInMilliSeconds -= hours * 3600;
+        console.log('calculated hours', hours);
+    
+        // calculate minutes
+        const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+        diffInMilliSeconds -= minutes * 60;
+        console.log('minutes', minutes);
+
+        let difference = '';
+        if (days > 0) {
+          difference += (days === 1) ? `${days} day, ` : `${days} days, `;
+        }
+    
+        difference += (hours === 0 || hours === 1) ? `${hours} hour, ` : `${hours} hours, `;
+    
+        difference += (minutes === 0 || hours === 1) ? `${minutes} minutes` : `${minutes} minutes`; 
+        console.log(difference);
+        return difference;
+    }
 
     return (
         <div>
@@ -97,12 +134,16 @@ function AddPatient({ customer, setPersonal, navigation  }) {
                             <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
                         </div>
                         <div className="col-sm-4">
-                            <label for="date" className="form-label">LAST MEAL<i>(required)</i></label><br />
-                            <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
+                            <label for="last_meal" className="form-label">LAST MEAL<i>(required)</i></label><br />
+                            <DateTimePicker
+                                onChange={setLastMeal}
+                                value={lastMeal}
+                            />
                         </div>
                         <div className="col-sm-4">
                         <label for="date" className="form-label">SINCE LAST MEAL</label><br />
-                            <span className="since-lastmeal">1 day 1 hour</span>
+                            <span className="since-lastmeal">{sinceLastMeal()}</span>
+
                         </div>
                     </div>
 

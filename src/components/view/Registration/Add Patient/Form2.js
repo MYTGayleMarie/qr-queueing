@@ -75,8 +75,8 @@ const ultrasound = getUltrasound();
  * RENDER VIEW
  ********************************/
 
-function Form2({ service, customer, setServices, navigation }) {
-
+function Form2({ service, customer, setServices, lastMeal, navigation }) {
+  
     //functions
     function getDetails(categoryItems, checkedItem) {
 
@@ -117,6 +117,7 @@ function Form2({ service, customer, setServices, navigation }) {
             emergency_contact: '',
             emergency_contact_no: '',
             relation_w_contact: '',
+            last_meal: lastMeal,
             remarks: '',
             added_by: '1',
         }

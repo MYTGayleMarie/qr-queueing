@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useForm, useStep } from "react-hooks-helper";
 import Form1 from './Form1'
 import Form2 from './Form2';
+
 
 const personalData = {
     fname: "",
@@ -15,6 +16,7 @@ const personalData = {
     serviceLocation: "", 
     result: "", 
     dateOfTesting: "",
+    lastmeal: "",
 }
 
 const serviceData = {}
@@ -27,14 +29,15 @@ const steps = [
 function SwitchForm() {
 
     const [customer, setPersonal] = useForm(personalData);
+    const [lastMeal, setLastMeal] = useState(new Date());
     const [service, setServices] = useForm(serviceData);
     const { step, navigation } = useStep({
       steps,
       initialStep: 0,
     });
 
-    const personalProps = { customer, setPersonal, navigation };
-    const serviceProps = { service, customer, setServices, navigation };
+    const personalProps = { customer, setPersonal, lastMeal, setLastMeal, navigation };
+    const serviceProps = { service, customer, setServices, lastMeal, navigation };
 
     switch (step.id) {
         case "customer":

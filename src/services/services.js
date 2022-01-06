@@ -231,19 +231,11 @@ const Hematology = [
 
 const Electrocytes = [
     {
-        key: 'Sodium_4',
-        name: 'Sodium',
-        categoryId: '4',
-        labTestId: '17', 
-        price: '',
-        type: 'lab',
-    },  
-    {
-        key: 'Potassium_4',
-        name: 'Potassium',
-        categoryId: '4',
-        labTestId: '18', 
-        price: '',
+        key: 'SodiumPotassiumChloride_4',
+        name: 'Electrolytes (NaKCl,iCA)',
+        categoryId: '3',
+        labTestId: '114', 
+        price: '900',
         type: 'lab',
     },  
     {
@@ -251,25 +243,9 @@ const Electrocytes = [
         name: 'Ionized Calcium',
         categoryId: '4',
         labTestId: '19', 
-        price: '',
+        price: '450',
         type: 'lab',
-    },  
-    {
-        key: 'TotalCalcium_4',
-        name: 'Total Calcium',
-        categoryId: '4',
-        labTestId: '20', 
-        price: '',
-        type: 'lab',
-    },  
-    {
-        key: 'Chloride_4',
-        name: 'Chloride',
-        categoryId: '4',
-        labTestId: '21', 
-        price: '',
-        type: 'lab',
-    },  
+    },   
     {
         key: 'Magnesium_4',
         name: 'Magnesium',
@@ -653,7 +629,7 @@ const CovidRapidTests = [
         name: 'Antibody Titer (Blood)',
         categoryId: '16',
         labTestId: '65', 
-        price: '',
+        price: '1000',
         type: 'lab',
     }, 
 ];
@@ -946,7 +922,7 @@ const UltraSound = [
     },
     {
         key: 'CongenitalScreening_21',
-        name: 'Abdominal Prostate',
+        name: 'Congential Screening',
         categoryId: '21',
         labTestId: '100', 
         price: '',
