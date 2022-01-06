@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './ReleaseItems.css';
@@ -10,6 +11,11 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download','add-release'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+  };
 
 const patientData = [
     {
@@ -36,6 +42,9 @@ const patientData = [
 ];
 
 function ReleaseItems() {
+
+    const [filteredData, setFilter] = useForm(filterData);
+
     return (
         <div>
         <Navbar/>
@@ -52,6 +61,8 @@ function ReleaseItems() {
                 type={'no-action'}
                 tableData={patientData}
                 headingColumns={['ITEMS', 'REQUISTIONER', 'PURPOSE', 'REMARKS', 'ACTION']}
+                filteredData={filteredData}
+                setFilter={setFilter}
             />
             </Fragment>
         </div>

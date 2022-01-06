@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './Imaging.css';
@@ -10,6 +11,11 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+};
 
 const pendingData = [
     {
@@ -34,6 +40,8 @@ const pendingData = [
 
 function Imaging() {
 
+    const [filteredData, setFilter] = useForm(filterData);
+
     return (
         <div>
             <Navbar/>
@@ -50,6 +58,8 @@ function Imaging() {
                     type={'no-action'}
                     tableData={pendingData}
                     headingColumns={['BOOKING ID', 'PATIENT NAME', 'BIRTHDATE', 'GENDER']}
+                    filteredData={filteredData}
+                    setFilter={setFilter}
                 />
                 </Fragment>
             </div>

@@ -1,4 +1,7 @@
 import React, {Fragment} from 'react';
+import { useForm } from "react-hooks-helper";
+
+
 
 //css
 import './Suppliers.css';
@@ -10,6 +13,11 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download','add-supplier'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+};
 
 const supplierData = [
     {
@@ -26,6 +34,9 @@ const supplierData = [
 
 
 function Suppliers() {
+
+    const [filteredData, setFilter] = useForm(filterData);
+
     return (
         <div>
         <div>
@@ -43,6 +54,8 @@ function Suppliers() {
                 type={'no-action'}
                 tableData={supplierData}
                 headingColumns={['SUPPLIER ID', 'COMPANY NAME', 'ADDRESS', 'PHONE', 'EMAIL', 'TIN', 'REMARKS', 'ACTION']}
+                filteredData={filteredData}
+                setFilter={setFilter}
             />
             </Fragment>
         </div>

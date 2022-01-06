@@ -29,7 +29,7 @@
     width: 50% !important;
 }
 
-.check {
+.check, .cash-input {
     width: 40%;
     margin-left: 3%;
 }
@@ -39,7 +39,7 @@
     color: #BFBC4B;
 }
 
-.check-label {
+.check-label, .amount-label {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;
     margin-left: 1.5%;

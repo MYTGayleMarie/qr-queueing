@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
+import { Link, NavLink } from 'react-router-dom';
 
 //css 
-import './Table.scss'
+import './Table.scss';
+import { useNavigate } from "react-router-dom";
 
-function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link}) {
+
     let tableClass = 'table-container__table';
 
     if(breakOn === 'small') {
@@ -14,6 +17,7 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
     } else if(breakOn === 'large') {
         tableClass += ' table-container_table--break-lg';
     }
+
 
     const data = tableData.map((row, index) => {
 
@@ -28,25 +32,35 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
             i++;
         }
 
-        return <tr key={index}>
+        if(clickable == false) {
+            return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
-        </tr>
+            </tr>
+        } else {
+            return <tr key={row.id} onClick={() => link(row.id)}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            </tr>
+        }
     });
 
-
     if(type === 'no-action') {
+
+        const {from_date, to_date, done} = filteredData;
     
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
-                    <input type="date" className="from-date search" name="from_date"/>
-                    <input type="date" className="to-date search" name="to_date"/>
-                    <select name="service_type">
+                <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    {/* <select name="service_type">
                         <option value="" selected disabled hidden>CHOOSE SERVICE</option>
                         <option value="HOME SERVICE">HOME SERVICE</option>
                         <option value="CLINIC SERVICE">CLINIC SERVICE</option>
-                    </select>
+                    </select> */}
+                    <button className="filter-btn" onClick={filter}>SAVE SETTINGS</button>
+                    <button className="filter-btn" name="done" onClick={setFilter}>FILTER</button>
                 </div>
                 <table className={tableClass}>
                     <thead>
@@ -88,7 +102,6 @@ function Table({ type, tableData, headingColumns, breakOn = 'medium'}) {
          </div>
         );
     }
-   
 
 }
 

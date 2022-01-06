@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './Items.css';
@@ -10,6 +11,11 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download','add-supply-items'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+};
 
 const itemsData = [
     {
@@ -24,6 +30,9 @@ const itemsData = [
 
 
 function Items() {
+
+    const [filteredData, setFilter] = useForm(filterData);
+
     return (
         <div>
         <div>
@@ -41,6 +50,9 @@ function Items() {
                 type={'no-action'}
                 tableData={itemsData}
                 headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'REMARKS', 'ACTION']}
+                filteredData={filteredData}
+                setFilter={setFilter}
+                
             />
             </Fragment>
         </div>

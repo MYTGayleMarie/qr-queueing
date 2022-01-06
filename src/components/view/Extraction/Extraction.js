@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './Extraction.css';
@@ -10,6 +11,12 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+};
+
 
 const pendingData = [
     {
@@ -33,6 +40,8 @@ const pendingData = [
 ];
 
 function Extraction() {
+
+    const [filteredData, setFilter] = useForm(filterData);
     
     return (
         <div>
@@ -50,6 +59,8 @@ function Extraction() {
                     type={'no-action'}
                     tableData={pendingData}
                     headingColumns={['BOOKING ID', 'PATIENT NAME', 'BIRTHDATE', 'GENDER']}
+                    filteredData={filteredData}
+                    setFilter={setFilter}
                 />
                 </Fragment>
             </div>

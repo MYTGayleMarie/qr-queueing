@@ -11,8 +11,12 @@ import './Form2.css';
 import Navbar from '../../../Navbar';
 import Header from '../../../Header.js';
 import ServiceItems from '../../../ServiceItems';
-import { getToken } from '../../../../utilities/Common';
-import { getClinicalMicroscopy,
+import { getToken, refreshPage } from '../../../../utilities/Common';
+import { getAnnualWellnessPackageBasic,
+         getPregnancyLabPackage,
+         getPreEmploymentDiscount,
+         getPreEmploymentBasic,
+         getClinicalMicroscopy,
          getHematology, 
          getElectrolytes, 
          getGlucoseTests, 
@@ -39,6 +43,14 @@ import { getClinicalMicroscopy,
 //VARIABLES
 var itemDetails; 
 const userToken = getToken();
+
+//Package
+const preEmploymentPackageBasic = getPreEmploymentBasic();
+const preEmploymentPackageDiscount = getPreEmploymentDiscount();
+const pregnancyLabPackage = getPregnancyLabPackage();
+const annualWellnessPackageBasic = getAnnualWellnessPackageBasic();
+
+//Lab Services
 const clincalMicroscopy = getClinicalMicroscopy();
 const hematology = getHematology();
 const electrolytes = getElectrolytes();
@@ -76,6 +88,7 @@ function Form2({ service, customer, setServices, navigation }) {
                      categoryId: data.categoryId,
                      labTestId: data.labTestId,
                      price: data.price,
+                     type: data.type,
                  }
                  return itemDetails;
              }
@@ -109,6 +122,21 @@ function Form2({ service, customer, setServices, navigation }) {
         }
     }).then(function (response) {
         toast.success(response.data.message.success);
+        var testId = [];
+        var prices = [];
+        var types = [];
+
+        services.map((data, index) => {
+            testId.push(data.labTestId);
+            prices.push(data.price);
+            types.push(data.type);
+        })
+
+        var extractedDates = [];
+        var testStarts = [];
+        var testFinishes = [];
+        var resultDates = []; 
+
         axios({
             method: 'post',
             url: window.$link + 'bookings/create',
@@ -117,25 +145,31 @@ function Form2({ service, customer, setServices, navigation }) {
                 token: userToken,
                 api_key: window.$api_key, 
                 customer: response.data.data.customer_id,
-                booking_time: Date().toLocaleString(),
+                booking_time: customer.dateOfTesting,
                 company_contract_id: '',
-                type: 'lab',
+                type: customer.serviceLocation,
+                result: customer.result,
                 total_amount: totalPrice,
                 discount: '0',
                 grand_total: totalPrice,
                 discount_code: '',
                 status: 'For Examination',
                 reference_code: '',
-                payment_type: 'cash',
-                remarks: '',
+                payment_type: 'PENDING',
+                lab_tests: testId,
+                prices: prices,
+                status: '',
+                extracted_dates: extractedDates,
+                test_starts: testStarts,
+                test_finishes: testFinishes,
+                result_dates: resultDates,
+                remarks: 'testing',
                 added_by: 1, 
             }
         }).then(function (response) {
             console.log(response.data);
+            toast.success(response.data.message.success);
         })
-
-        services.map((service, index) => {
-        });
         handleClose();
         })
     }
@@ -155,7 +189,29 @@ function Form2({ service, customer, setServices, navigation }) {
     checkedServices.map((data, index) => {
         var categoryDetails = data[0].split("_");
         var categoryId = parseInt(categoryDetails[1]);
-        
+
+        //servies
+        switch(categoryDetails[1]) {
+            case "package1":
+                getDetails(preEmploymentPackageBasic, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package2":
+                getDetails(preEmploymentPackageDiscount, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package3":
+                getDetails(pregnancyLabPackage, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package4":
+                getDetails(annualWellnessPackageBasic, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+        }
+
+
+       //lab
         switch(categoryId) {
             case 1:
                 getDetails(clincalMicroscopy, data[0])
@@ -234,8 +290,10 @@ function Form2({ service, customer, setServices, navigation }) {
                 checkedServicesDetails.push(itemDetails);
             break;
         }
+
     });
 
+    console.log(checkedServicesDetails);
     checkedServicesDetails.map((data, index) => {
         totalPrice += parseInt(data.price);
     });
@@ -387,22 +445,40 @@ function Form2({ service, customer, setServices, navigation }) {
                 formData={service}
                 setForm={setServices}
                 />
+{/* 
+                <h3 className="form-categories-header italic">PACKAGES</h3>
+
+                <ServiceItems 
+                category='PRE EMPLOYMENT PACKAGE'
+                items={preEmploymentPackageBasic} 
+                formData={service}
+                setForm={setServices}
+                />
+
+                <ServiceItems 
+                category='PRE EMPLOYMENT PACKAGE (Group Discounts 15 pax or more)'
+                items={preEmploymentPackageDiscount} 
+                formData={service}
+                setForm={setServices}
+                />
+
+                <ServiceItems 
+                category='PREGNANCY LAB PACKAGE'
+                items={pregnancyLabPackage} 
+                formData={service}
+                setForm={setServices}
+                />
+
+                <ServiceItems 
+                category='ANNUAL WELLNESS PACKAGE'
+                items={annualWellnessPackageBasic} 
+                formData={service}
+                setForm={setServices}
+                /> */}
+
 
 
                 </div>
-
-                {/* <div className="row large-gap">
-                    <h3 className="form-categories-header italic">PACKAGES</h3>
-
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <input type="checkbox" id="thyroid_package" name="thyroid_package" value="thyroid package"/><label for="thyroid_package" className="package-item">THYROID PACKAGE</label>
-                        </div>
-                        <div className="col-sm-6 d-flex justify-content-end">
-                            <span className="price">P 430</span>
-                        </div>
-                    </div>
-                </div> */}
 
                 <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>

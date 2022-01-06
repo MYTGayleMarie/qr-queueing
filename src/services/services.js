@@ -10,55 +10,145 @@ import React from 'react';
  * SERVICES
  ********************************/
 
+ const PreEmploymentPackageBasic = [
+     {
+        key: 'EmploymentA_package1',
+        name: 'Employment A (CBC, Urinalysis, Chest PA(Xray))',
+        services: 'CBC, Urinalysis, Chest PA(Xray)',
+        price: '390',
+        type: 'package'
+     },
+     {
+        key: 'EmploymentB_package1',
+        name: 'Employment B (CBC, Urinalysis, Chest PA(Xray), HBsAg(Hep B Screening))',
+        services: 'CBC, Urinalysis, Chest PA(Xray), HBsAg(Hep B Screening)',
+        price: '690',
+        type: 'package'
+     },
+     {
+        key: 'EmploymentC_package1',
+        name: 'Employment C (CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg)',
+        services: 'CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg',
+        price: '1600',
+        type: 'package'
+     }
+ ];
+
+ const PreEmploymentPackageDiscount = [
+    {
+        key: 'EmploymentA_package2',
+        name: 'Employment A (CBC, Urinalysis, Chest PA(Xray))',
+        services: 'CBC, Urinalysis, Chest PA(Xray)',
+        price: '320',
+        type: 'package'
+     },
+     {
+        key: 'EmploymentB_package2',
+        name: 'Employment B (CBC, Urinalysis, Chest PA(Xray), HBsAg(Hep B Screening))',
+        services: 'CBC, Urinalysis, Chest PA(Xray), HBsAg(Hep B Screening)',
+        price: '525',
+        type: 'package'
+     },
+     {
+        key: 'EmploymentC_package2',
+        name: 'Employment C (CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg)',
+        services: 'CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg',
+        price: '1450',
+        type: 'package'
+     }
+ ];
+
+ const PregnancyLabPackage = [
+    {
+        key: 'Pregnancy_package3',
+        name: 'Pregnancy Lab Package',
+        services: 'CBC, Urinalysis, Blood Typing, OGTT(75g, 2hrs), HIV test, HBsAG, VDRL/RPR',
+        price: '1500',
+        type: 'package'
+     }
+ ];
+
+ const AnnualWellnessPackageBasic = [
+    {
+        key: 'AnnualA_package4',
+        name: 'Annual A (FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT CBC, Urinalysis)',
+        services: 'FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT CBC, Urinalysis',
+        price: '1800',
+        type: 'package'
+     },
+     {
+        key: 'AnnualB_package4',
+        name: 'Annual B (FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT, Electrolytes CBC, Urinalysis)',
+        services: 'FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT, Electrolytes CBC, Urinalysis',
+        price: '2650',
+        type: 'package'
+     },
+     {
+        key: 'AnnualC_package4',
+        name: 'Annual C (FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT, HbAiC, Electrolytes CBC, Urinalysis)',
+        services: 'FBS,BUN,Creatinine, Uric Acid, Lipid Panel, SGPT, SGOT, HbAiC, Electrolytes CBC, Urinalysis',
+        price: '3650',
+        type: 'package'
+     }
+ ];
+
+
  const ClincalMicroscopy = [
     {   
         key: 'Urinalysis_1',
         name: 'Urinalysis',
         categoryId: '1',
         labTestId: '1', 
-        price: '70'
+        price: '70',
+        type: 'lab',
     },    
     {
         key: 'UrineKetone_1',
         name: 'Urine Ketone',
         categoryId: '1',
         labTestId: '2', 
-        price: '70'
+        price: '70',
+        type: 'lab',
     },  
     {
         key: 'UrineRBCMorphology_1',
         name: 'Urine RBC Morphology',
         categoryId: '1',
         labTestId: '3', 
-        price: '150'
+        price: '150',
+        type: 'lab',
     },  
     {
         key: 'Fecalysis_1',
         name: 'Fecalysis',
         categoryId: '1',
         labTestId: '4', 
-        price: '50'
+        price: '50',
+        type: 'lab',
     },  
     {
         key: 'FecalOccultBlood_1',
         name: 'Fecal Occult Blood',
         categoryId: '1',
         labTestId: '5', 
-        price: '350'
+        price: '350',
+        type: 'lab',
     },  
     {
         key: 'PregnacyTest_1',
         name: 'Pregnancy Test (RPK-Lateral Flow)',
         categoryId: '1',
         labTestId: '6', 
-        price: '140'
+        price: '140',
+        type: 'lab',
     },  
     {
         key: 'SpermAnalysis_1',
         name: 'Sperm Analysis',
         categoryId: '1',
         labTestId: '7', 
-        price: '350'
+        price: '350',
+        type: 'lab',
     },  
 ];
 
@@ -68,63 +158,72 @@ const Hematology = [
         name: 'CBC with Platelet',
         categoryId: '2',
         labTestId: '8', 
-        price: '200'
+        price: '200',
+        type: 'lab',
     },   
     {
         key: 'WBCDifferential_2',
         name: 'WBC Differential',
         categoryId: '2',
         labTestId: '9', 
-        price: '180'
+        price: '180',
+        type: 'lab',
     },   
     {
         key: 'HematocritPLT_2',
         name: 'Hematocrit, PLT',
         categoryId: '2',
         labTestId: '10', 
-        price: '180'
+        price: '180',
+        type: 'lab',
     }, 
     {
         key: 'HemoglobinHematocrit_2',
         name: 'Hemoglobin, Hematocrit',
         categoryId: '2',
         labTestId: '11', 
-        price: '180'
+        price: '180',
+        type: 'lab',
     }, 
     {
         key: 'BloodTyping_2',
         name: 'Forward and reverse ABO group (Blood Typing)',
         categoryId: '2',
         labTestId: '12', 
-        price: '150'
+        price: '150',
+        type: 'lab',
     }, 
     {
         key: 'ESR_2',
         name: 'Erythrocyte Sedimentation Rate (ESR)',
         categoryId: '2',
         labTestId: '13', 
-        price: '170'
+        price: '170',
+        type: 'lab',
     }, 
     {
         key: 'PeripheralBloodSmear_2',
         name: 'Peripheral Blood Smear/Special Hematology',
         categoryId: '2',
         labTestId: '14', 
-        price: '420'
+        price: '420',
+        type: 'lab',
     }, 
     {
         key: 'ClottingBleedingTime_2',
         name: 'Clotting & Bleeding Time',
         categoryId: '2',
         labTestId: '15', 
-        price: '180'
+        price: '180',
+        type: 'lab',
     }, 
     {
         key: 'ReticulocyteCount_2',
         name: 'Reticulocyte Count/Retics',
         categoryId: '2',
         labTestId: '16', 
-        price: '300'
+        price: '300',
+        type: 'lab',
     }, 
 ];
 
@@ -137,6 +236,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '17', 
         price: '',
+        type: 'lab',
     },  
     {
         key: 'Potassium_4',
@@ -144,6 +244,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '18', 
         price: '',
+        type: 'lab',
     },  
     {
         key: 'IonizedCalcium_4',
@@ -151,6 +252,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '19', 
         price: '',
+        type: 'lab',
     },  
     {
         key: 'TotalCalcium_4',
@@ -158,6 +260,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '20', 
         price: '',
+        type: 'lab',
     },  
     {
         key: 'Chloride_4',
@@ -165,6 +268,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '21', 
         price: '',
+        type: 'lab',
     },  
     {
         key: 'Magnesium_4',
@@ -172,6 +276,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '22', 
         price: '600',
+        type: 'lab',
     },  
     {
         key: 'Phosphorus_4',
@@ -179,6 +284,7 @@ const Electrocytes = [
         categoryId: '4',
         labTestId: '23', 
         price: '500',
+        type: 'lab',
     },  
 ];
 
@@ -189,6 +295,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '24', 
         price: '125',
+        type: 'lab',
     },  
     {
         key: 'RandomBloodSugar_5',
@@ -196,6 +303,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '25', 
         price: '125',
+        type: 'lab',
     }, 
     {
         key: 'OGTT2Extractions_5',
@@ -203,6 +311,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '26', 
         price: '450',
+        type: 'lab',
     },   
     {
         key: 'OGTT3Extractions_5',
@@ -210,6 +319,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '27', 
         price: '720',
+        type: 'lab',
     },  
     {
         key: 'TwohrsPPBS_5',
@@ -217,6 +327,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '28', 
         price: '200',
+        type: 'lab',
     }, 
     {
         key: 'HbA1c_5',
@@ -224,6 +335,7 @@ const GlucoseTests = [
         categoryId: '5',
         labTestId: '29', 
         price: '880',
+        type: 'lab',
     },   
 ];
 
@@ -234,6 +346,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '30', 
         price: '140',
+        type: 'lab',
     },   
     {
         key: 'BloodUreaNitrogen_6',
@@ -241,6 +354,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '31', 
         price: '125',
+        type: 'lab',
     },   
     {
         key: 'BloodUricAcid_6',
@@ -248,6 +362,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '32', 
         price: '125',
+        type: 'lab',
     },   
     {
         key: 'TPAG_6',
@@ -255,6 +370,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '33', 
         price: '350',
+        type: 'lab',
     },   
     {
         key: 'TotalProteinOnly_6',
@@ -262,6 +378,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '34', 
         price: '200',
+        type: 'lab',
     },   
     {
         key: 'AlbuminOnly_6',
@@ -269,6 +386,7 @@ const KidneyFunctionTests = [
         categoryId: '6',
         labTestId: '35', 
         price: '180',
+        type: 'lab',
     },   
 ];
 
@@ -279,6 +397,7 @@ const LipidProfile = [
         categoryId: '7',
         labTestId: '36', 
         price: '600',
+        type: 'lab',
     },  
     {
         key: 'TotalCholesterolOnly_7',
@@ -286,6 +405,7 @@ const LipidProfile = [
         categoryId: '7',
         labTestId: '37', 
         price: '190',
+        type: 'lab',
     },  
     {
         key: 'HDLOnly_7',
@@ -293,6 +413,7 @@ const LipidProfile = [
         categoryId: '7',
         labTestId: '38', 
         price: '280',
+        type: 'lab',
     }, 
     {
         key: 'Triglycerides_7',
@@ -300,6 +421,7 @@ const LipidProfile = [
         categoryId: '7',
         labTestId: '39', 
         price: '200',
+        type: 'lab',
     },   
 ];
 
@@ -310,6 +432,7 @@ const PancreaticTest = [
         categoryId: '8',
         labTestId: '40', 
         price: '350',
+        type: 'lab',
     },  
 ];
 
@@ -320,6 +443,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '41', 
         price: '180',
+        type: 'lab',
     }, 
     {
         key: 'ASTSGOT_9',
@@ -327,6 +451,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '42', 
         price: '180',
+        type: 'lab',
     },  
     {
         key: 'ALP_9',
@@ -334,6 +459,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '43', 
         price: '200',
+        type: 'lab',
     }, 
     {
         key: 'BilirubinPanel_9',
@@ -341,6 +467,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '44', 
         price: '140',
+        type: 'lab',
     }, 
     {
         key: 'DirectBilirubin_9',
@@ -348,6 +475,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '45', 
         price: '90',
+        type: 'lab',
     }, 
     {
         key: 'IndirectBilirubin_9',
@@ -355,6 +483,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '46', 
         price: '90',
+        type: 'lab',
     }, 
     {
         key: 'LDH_9',
@@ -362,6 +491,7 @@ const LiverFunctionTests = [
         categoryId: '9',
         labTestId: '47', 
         price: '580',
+        type: 'lab',
     }, 
 ];
 
@@ -373,6 +503,7 @@ const Immunology = [
         categoryId: '11',
         labTestId: '48', 
         price: '1300',
+        type: 'lab',
     }, 
     {
         key: 'SyphilisRPSVDRL_11',
@@ -380,6 +511,7 @@ const Immunology = [
         categoryId: '11',
         labTestId: '49', 
         price: '250',
+        type: 'lab',
     }, 
     {
         key: 'HIVScreening_11',
@@ -387,6 +519,7 @@ const Immunology = [
         categoryId: '11',
         labTestId: '50', 
         price: '600',
+        type: 'lab',
     },   
 ];
 
@@ -397,6 +530,7 @@ const HepatitisProfileScreening = [
         categoryId: '12',
         labTestId: '51', 
         price: '290',
+        type: 'lab',
     },   
     {
         key: 'AntiHBs_12',
@@ -404,6 +538,7 @@ const HepatitisProfileScreening = [
         categoryId: '12',
         labTestId: '52', 
         price: '500',
+        type: 'lab',
     },   
     {
         key: 'AntiHCV_12',
@@ -411,6 +546,7 @@ const HepatitisProfileScreening = [
         categoryId: '12',
         labTestId: '53', 
         price: '530',
+        type: 'lab',
     }, 
     {
         key: 'AntiHAV_12',
@@ -418,6 +554,7 @@ const HepatitisProfileScreening = [
         categoryId: '12',
         labTestId: '54', 
         price: '750',
+        type: 'lab',
     },    
 ];
 
@@ -428,6 +565,7 @@ const ThyroidProfile = [
         categoryId: '13',
         labTestId: '55', 
         price: '900',
+        type: 'lab',
     },  
     {
         key: 'FT4_13',
@@ -435,6 +573,7 @@ const ThyroidProfile = [
         categoryId: '13',
         labTestId: '56', 
         price: '750',
+        type: 'lab',
     },   
     {
         key: 'FT3_13',
@@ -442,6 +581,7 @@ const ThyroidProfile = [
         categoryId: '13',
         labTestId: '57', 
         price: '750',
+        type: 'lab',
     }, 
     {
         key: 'T4_13',
@@ -449,6 +589,7 @@ const ThyroidProfile = [
         categoryId: '13',
         labTestId: '58', 
         price: '750',
+        type: 'lab',
     }, 
     {
         key: 'T3_13',
@@ -456,6 +597,7 @@ const ThyroidProfile = [
         categoryId: '13',
         labTestId: '59', 
         price: '750',
+        type: 'lab',
     }, 
 ];
 
@@ -466,6 +608,7 @@ const TumorMarkers = [
         categoryId: '14',
         labTestId: '60', 
         price: '1300',
+        type: 'lab',
     }, 
     {
         key: 'CA125_14',
@@ -473,6 +616,7 @@ const TumorMarkers = [
         categoryId: '14',
         labTestId: '61', 
         price: '1500',
+        type: 'lab',
     }, 
 ];
 
@@ -483,6 +627,7 @@ const Histophatology = [
         categoryId: '15',
         labTestId: '62', 
         price: '300',
+        type: 'lab',
     }, 
 ];
 
@@ -493,6 +638,7 @@ const CovidRapidTests = [
         categoryId: '16',
         labTestId: '63', 
         price: '750',
+        type: 'lab',
     }, 
     {
         key: 'AntibodyRapidTest_16',
@@ -500,6 +646,7 @@ const CovidRapidTests = [
         categoryId: '16',
         labTestId: '64', 
         price: '600',
+        type: 'lab',
     }, 
     {
         key: 'AntibodyTiter_16',
@@ -507,6 +654,7 @@ const CovidRapidTests = [
         categoryId: '16',
         labTestId: '65', 
         price: '',
+        type: 'lab',
     }, 
 ];
 
@@ -517,6 +665,7 @@ const Microbiology = [
         categoryId: '17',
         labTestId: '66', 
         price: '350',
+        type: 'lab',
     }, 
     {
         key: 'KOH_17',
@@ -524,6 +673,7 @@ const Microbiology = [
         categoryId: '17',
         labTestId: '67', 
         price: '300',
+        type: 'lab',
     }, 
 ];
 
@@ -535,6 +685,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '68', 
         price: '750',
+        type: 'lab',
     }, 
     {
         key: 'AnkleAPL_18',
@@ -542,6 +693,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '69', 
         price: '500',
+        type: 'lab',
     }, 
     {
         key: 'ChestPA_18',
@@ -549,6 +701,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '70', 
         price: '190',
+        type: 'lab',
     }, 
     {
         key: 'ChestPALAPL_18',
@@ -556,6 +709,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '71', 
         price: '360',
+        type: 'lab',
     }, 
     {
         key: 'ChestBucky_18',
@@ -563,6 +717,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '72', 
         price: '190',
+        type: 'lab',
     }, 
     {
         key: 'CervicalAPL_18',
@@ -570,6 +725,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '73', 
         price: '370',
+        type: 'lab',
     }, 
     {
         key: 'Elbow_18',
@@ -577,6 +733,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '74', 
         price: '530',
+        type: 'lab',
     }, 
     {
         key: 'FemurAPL_18',
@@ -584,6 +741,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '75', 
         price: '650',
+        type: 'lab',
     }, 
     {
         key: 'FlatPlateUpright_18',
@@ -591,6 +749,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '76', 
         price: '450',
+        type: 'lab',
     }, 
     {
         key: 'ForearmAPL_18',
@@ -598,6 +757,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '77', 
         price: '640',
+        type: 'lab',
     }, 
     {
         key: 'FootAPOL_18',
@@ -605,6 +765,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '78', 
         price: '525',
+        type: 'lab',
     }, 
     {
         key: 'HandAPOL_18',
@@ -612,6 +773,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '79', 
         price: '525',
+        type: 'lab',
     }, 
     {
         key: 'HumerusAPL_18',
@@ -619,6 +781,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '80', 
         price: '420',
+        type: 'lab',
     }, 
     {
         key: 'KUB_18',
@@ -626,6 +789,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '81', 
         price: '210',
+        type: 'lab',
     }, 
     {
         key: 'KneeAPL_18',
@@ -633,6 +797,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '82', 
         price: '530',
+        type: 'lab',
     }, 
     {
         key: 'LumboSacralAPL_18',
@@ -640,6 +805,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '83', 
         price: '850',
+        type: 'lab',
     }, 
     {
         key: 'LegAPL_18',
@@ -647,6 +813,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '84', 
         price: '650',
+        type: 'lab',
     },
     {
         key: 'MastoidSeries_18',
@@ -654,6 +821,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '85', 
         price: '1300',
+        type: 'lab',
     }, 
     {
         key: 'ParanasalSinusesComplete_18',
@@ -661,6 +829,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '86', 
         price: '450',
+        type: 'lab',
     },  
     {
         key: 'PelvisAP_18',
@@ -668,6 +837,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '87', 
         price: '530',
+        type: 'lab',
     }, 
     {
         key: 'ScolioticSeries_18',
@@ -675,6 +845,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '88', 
         price: '1320',
+        type: 'lab',
     }, 
     {
         key: 'ShoulderAP_18',
@@ -682,6 +853,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '89', 
         price: '370',
+        type: 'lab',
     }, 
     {
         key: 'SkullAPL_18',
@@ -689,6 +861,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '90', 
         price: '530',
+        type: 'lab',
     }, 
     {
         key: 'ThoracoLumbarAPL_18',
@@ -696,6 +869,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '91', 
         price: '1320',
+        type: 'lab',
     }, 
     {
         key: 'WristAPOL_18',
@@ -703,6 +877,7 @@ const Xray = [
         categoryId: '18',
         labTestId: '92', 
         price: '530',
+        type: 'lab',
     }, 
 ];
 
@@ -713,6 +888,7 @@ const Cardiology = [
         categoryId: '19',
         labTestId: '93', 
         price: '3000',
+        type: 'lab',
     }, 
     {
         key: 'ECG_19',
@@ -720,6 +896,7 @@ const Cardiology = [
         categoryId: '19',
         labTestId: '94', 
         price: '140',
+        type: 'lab',
     }, 
 ];
 
@@ -730,6 +907,7 @@ const MedicalCertificate = [
         categoryId: '20',
         labTestId: '95', 
         price: '300',
+        type: 'lab',
     }, 
 ];
 
@@ -740,6 +918,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '96', 
         price: '1650',
+        type: 'lab',
     },
     {
         key: 'AbdominalProstate_21',
@@ -747,6 +926,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '97', 
         price: '2100',
+        type: 'lab',
     },
     {
         key: 'AbdominalPelvic_21',
@@ -754,6 +934,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '98', 
         price: '2100',
+        type: 'lab',
     },
     {
         key: 'Breast_21',
@@ -761,6 +942,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '99', 
         price: '1200',
+        type: 'lab',
     },
     {
         key: 'CongenitalScreening_21',
@@ -768,6 +950,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '100', 
         price: '',
+        type: 'lab',
     },
     {
         key: 'Cranial_21',
@@ -775,6 +958,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '101', 
         price: '800',
+        type: 'lab',
     },
     {
         key: 'HepatobiliaryTree_21',
@@ -782,6 +966,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '102', 
         price: '800',
+        type: 'lab',
     },
     {
         key: 'InguinalArea_21',
@@ -789,6 +974,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '103', 
         price: '700',
+        type: 'lab',
     },
     {
         key: 'KUBRenal_21',
@@ -796,6 +982,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '104', 
         price: '900',
+        type: 'lab',
     },
     {
         key: 'KUBProstate_21',
@@ -803,6 +990,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '105', 
         price: '1300',
+        type: 'lab',
     },
     {
         key: 'LowerAbdominal_21',
@@ -810,6 +998,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '106', 
         price: '1300',
+        type: 'lab',
     },
     {
         key: 'Pelvic_21',
@@ -817,6 +1006,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '107', 
         price: '750',
+        type: 'lab',
     },
     {
         key: 'ProstateGland_21',
@@ -824,6 +1014,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '108', 
         price: '500',
+        type: 'lab',
     },
     {
         key: 'Scrotal_21',
@@ -831,6 +1022,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '109', 
         price: '1200',
+        type: 'lab',
     },
     {
         key: 'SmallPartsUtz_21',
@@ -838,6 +1030,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '110', 
         price: '650',
+        type: 'lab',
     },
     {
         key: 'Thyroid_21',
@@ -845,6 +1038,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '111', 
         price: '750',
+        type: 'lab',
     },
     {
         key: 'Transvaginal_21',
@@ -852,6 +1046,7 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '112', 
         price: '800',
+        type: 'lab',
     },
     {
         key: 'UpperAbdominal_21',
@@ -859,10 +1054,32 @@ const UltraSound = [
         categoryId: '21',
         labTestId: '113', 
         price: '850',
+        type: 'lab',
     },
 ];
 
+/*********************************
+ * GET PACKAGE SERVICES
+ ********************************/
+//Pre Employment Basic
+export const getPreEmploymentBasic = () => {
+    return PreEmploymentPackageBasic;
+}
 
+//Pre Employment (Group Discounts 15 pax or more)
+export const getPreEmploymentDiscount = () => {
+    return PreEmploymentPackageDiscount;
+}
+
+//Pregnancy Lab Package
+export const getPregnancyLabPackage = () => {
+    return PregnancyLabPackage;
+}
+
+//Pregnancy Lab Package
+export const getAnnualWellnessPackageBasic = () => {
+    return AnnualWellnessPackageBasic;
+}
 
 /*********************************
  * GET LABORATORY SERVICES

@@ -15,7 +15,7 @@ export const refreshPage = () => {
 
 //return user data from session storage
 export const getUser = () => {
-    const userStr = localStorage.getItem('name');
+    const userStr = localStorage.getItem('user');
     if(userStr) return JSON.parse(userStr);
     else return null;
 }

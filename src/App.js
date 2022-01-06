@@ -36,9 +36,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/registration" element={token ? <Registration />  : <Navigate to = "/"/> } />
-        <Route path="/add-patient" element={token ? <SwitchForm/>  : <Navigate to = "/"/> } />
+        <Route path="/add-new-patient" element={token ? <SwitchForm/>  : <Navigate to = "/"/> } />
         <Route path="/cashier" element={token ? <Cashier/>  : <Navigate to = "/"/> } />
-        <Route path="/add-payment" element={token ? <AddPayment/>  : <Navigate to = "/"/> } />
+        <Route path="/add-payment/:id" element={token ? <AddPayment/>  : <Navigate to = "/"/> } />
         <Route path="/extraction" element={token ? <Extraction/>  : <Navigate to = "/"/> } />
         <Route path="/laboratory-test" element={token ? <LaboratoryTests/>  : <Navigate to = "/"/> } />
         <Route path="/imaging" element={token ? <Imaging/>  : <Navigate to = "/"/> } />

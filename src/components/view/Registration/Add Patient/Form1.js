@@ -92,8 +92,18 @@ function AddPatient({ customer, setPersonal, navigation  }) {
                         </div>
                     </div>
                     <div className="row date-of-testing-container large-gap">
-                        <label for="date" className="form-label">DATE OF TESTING<i>(required)</i></label><br />
-                        <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
+                        <div className="col-sm-4">
+                            <label for="date" className="form-label">DATE OF TESTING<i>(required)</i></label><br />
+                            <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
+                        </div>
+                        <div className="col-sm-4">
+                            <label for="date" className="form-label">LAST MEAL<i>(required)</i></label><br />
+                            <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
+                        </div>
+                        <div className="col-sm-4">
+                        <label for="date" className="form-label">SINCE LAST MEAL</label><br />
+                            <span className="since-lastmeal">1 day 1 hour</span>
+                        </div>
                     </div>
 
                     <div className="d-flex justify-content-end">

@@ -40,6 +40,7 @@ function Login() {
             }
         }).then(function (response) {
             localStorage.setItem('token', JSON.stringify(response.data.token));
+            localStorage.setItem('user', JSON.stringify(response.data.id));
             refreshPage();
         }).catch(function (error) {
             toast.error("Invalid Login");
@@ -95,11 +96,7 @@ function Login() {
                             </div>
                        </div>
                     </div>
-                    <div className="row">
-                        <div className="col-sm-12 d-flex justify-content-end">
-                            <span className="forgot-pass">Forgot Password?</span>
-                        </div>
-                    </div>
+
                     <div className="row">
                         <div className="col-sm-12 d-flex justify-content-center">
                         <button type="submit" className="login-btn">Login</button>

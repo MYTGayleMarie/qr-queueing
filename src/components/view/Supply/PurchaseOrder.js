@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './ReleaseItems.css';
@@ -10,6 +11,11 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download','add-purchase'];
+
+const filterData = {
+    from_date: "",
+    to_date: "",
+};
 
 const purchaseData = [
     {
@@ -40,6 +46,8 @@ const purchaseData = [
 
 
 function PurchaseOrder() {
+
+    const [filteredData, setFilter] = useForm(filterData);
     
     return (
         <div>
@@ -58,6 +66,8 @@ function PurchaseOrder() {
                 type={'no-action'}
                 tableData={purchaseData}
                 headingColumns={['PRINTING ORDER ID', 'ITEM ID', 'ITEM NAME', 'REQUESTED', 'ACTUAL', 'ACTION']}
+                filteredData={filteredData}
+                setFilter={setFilter}
             />
             </Fragment>
         </div>

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useForm } from "react-hooks-helper";
 
 //css
 import '../Imaging/Imaging.css';
@@ -11,6 +12,12 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 const buttons = ['download'];
+
+const filterData = {
+  from_date: "",
+  to_date: "",
+};
+
 
 const pendingData = [
   {
@@ -34,9 +41,8 @@ const pendingData = [
 ];
 
 function MedTech() {
-  if (window.$userToken == null) {
-    return <Navigate to="/" />;
-  }
+
+  const [filteredData, setFilter] = useForm(filterData);
 
   return (
     <div>
@@ -49,6 +55,8 @@ function MedTech() {
             type={'no-action'}
             tableData={pendingData}
             headingColumns={['BOOKING ID', 'BARCODE NO.', 'TEST', 'STATUS']}
+            filteredData={filteredData}
+            setFilter={setFilter}
           />
         </Fragment>
       </div>
