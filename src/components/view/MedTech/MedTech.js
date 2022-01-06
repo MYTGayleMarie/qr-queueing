@@ -24,19 +24,19 @@ const pendingData = [
     bookId: '0199201',
     barcodeNo: '90042091',
     test: 'Test 1',
-    Status: 'START',
+    Status: 'FOR EXAMINATION',
   },
   {
     bookId: '0199201',
     barcodeNo: '90042091',
     test: 'Test 1',
-    Status: 'START',
+    Status: 'FOR EXAMINATION',
   },
   {
     bookId: '0199201',
     barcodeNo: '90042091',
     test: 'Test 1',
-    Status: 'START',
+    Status: 'FOR EXAMINATION',
   },
 ];
 
