@@ -4,7 +4,6 @@ import DateTimePicker from 'react-datetime-picker';
 //css
 import './Form1.css';
 
-
 //components
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
@@ -45,8 +44,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
     
         difference += (hours === 0 || hours === 1) ? `${hours} hour, ` : `${hours} hours, `;
     
-        difference += (minutes === 0 || hours === 1) ? `${minutes} minutes` : `${minutes} minutes`; 
-        console.log(difference);
+        difference += (minutes === 0 || hours === 1) ? `${minutes} minutes ago` : `${minutes} minutes ago`; 
         return difference;
     }
 

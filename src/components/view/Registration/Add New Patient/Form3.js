@@ -5,17 +5,21 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //css
-import './Form2.css';
+import './Form3.css';
 
 //components
 import Navbar from '../../../Navbar';
 import Header from '../../../Header.js';
 import ServiceItems from '../../../ServiceItems';
-import { getToken, refreshPage } from '../../../../utilities/Common';
+import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { getAnnualWellnessPackageBasic,
          getPregnancyLabPackage,
          getPreEmploymentDiscount,
          getPreEmploymentBasic,
+         getLiverFunctionTestPackage,
+         getAnnualWellnessPackagePremium,
+         getDiabetesandCholesterolPackage,
+         getThyroidTestPackage,
          getClinicalMicroscopy,
          getHematology, 
          getElectrolytes, 
@@ -43,12 +47,17 @@ import { getAnnualWellnessPackageBasic,
 //VARIABLES
 var itemDetails; 
 const userToken = getToken();
+const userId = getUser();
 
-//Package
+//Packages
 const preEmploymentPackageBasic = getPreEmploymentBasic();
 const preEmploymentPackageDiscount = getPreEmploymentDiscount();
 const pregnancyLabPackage = getPregnancyLabPackage();
 const annualWellnessPackageBasic = getAnnualWellnessPackageBasic();
+const thyroidTestPackage = getThyroidTestPackage();
+const annualWellnessPackagePremium = getAnnualWellnessPackagePremium();
+const liverFunctionTest = getLiverFunctionTestPackage();
+const diabetesAndCholesterolPackage = getDiabetesandCholesterolPackage();
 
 //Lab Services
 const clincalMicroscopy = getClinicalMicroscopy();
@@ -119,16 +128,23 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
             relation_w_contact: '',
             last_meal: lastMeal,
             remarks: '',
-            added_by: '1',
+            added_by: userId,
         }
     }).then(function (response) {
         toast.success(response.data.message.success);
+        var packageId = [];
         var testId = [];
         var prices = [];
         var types = [];
 
         services.map((data, index) => {
-            testId.push(data.labTestId);
+
+            if(data.type == 'lab') {
+                testId.push(data.labTestId);
+            }
+            else if (data.type == 'package') {
+                packageId.push(data.labTestId);
+            }
             prices.push(data.price);
             types.push(data.type);
         })
@@ -158,6 +174,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 reference_code: '',
                 payment_type: 'PENDING',
                 lab_tests: testId,
+                package_tests: packageId,
                 prices: prices,
                 status: '',
                 extracted_dates: extractedDates,
@@ -165,7 +182,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 test_finishes: testFinishes,
                 result_dates: resultDates,
                 remarks: 'testing',
-                added_by: 1, 
+                added_by: userId, 
             }
         }).then(function (response) {
             console.log(response.data);
@@ -207,6 +224,22 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
             break;
             case "package4":
                 getDetails(annualWellnessPackageBasic, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package5":
+                getDetails(thyroidTestPackage, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package6":
+                getDetails(annualWellnessPackagePremium, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package7":
+                getDetails(liverFunctionTest, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case "package8":
+                getDetails(diabetesAndCholesterolPackage, data[0])
                 checkedServicesDetails.push(itemDetails);
             break;
         }
@@ -296,7 +329,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
 
     console.log(checkedServicesDetails);
     checkedServicesDetails.map((data, index) => {
-        totalPrice += parseInt(data.price);
+        totalPrice += parseFloat(data.price);
     });
     
     return (
@@ -501,7 +534,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>TOTAL </b>P {totalPrice}</span>
+                        <span className="total-price"><b>TOTAL </b>P {parseFloat(totalPrice).toFixed(2)}</span>
                     </div>
                 </div>
 

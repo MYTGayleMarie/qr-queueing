@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useForm, useStep } from "react-hooks-helper";
-import Form1 from './Form1'
-import Form2 from './Form2';
+import { useParams } from "react-router-dom";
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
+import OldPatientForm1 from "./OldPatientForm1";
+import OldPatientForm2 from "./OldPatientForm2";
+import OldPatientForm3 from "./OldPatientForm3";
+
+const userToken = getToken();
+const userId = getUser();
 
 
 const personalData = {
@@ -23,10 +29,11 @@ const serviceData = {}
 
 const steps = [
     {id: "customer"},
+    {id: "packages"},
     {id: "services"},
 ]
 
-function SwitchForm() {
+function SwitchForm2() {
 
     const [customer, setPersonal] = useForm(personalData);
     const [lastMeal, setLastMeal] = useState(new Date());
@@ -41,11 +48,12 @@ function SwitchForm() {
 
     switch (step.id) {
         case "customer":
-            return <Form1 { ...personalProps }/>    
+            return <OldPatientForm1 { ...personalProps }/>   
+        case "packages":
+            return <OldPatientForm2 { ...serviceProps}/> 
         case "services":
-            return <Form2 { ...serviceProps }/>
+            return <OldPatientForm3 { ...serviceProps }/>
     }
-
 
     return (
         <div>
@@ -53,4 +61,4 @@ function SwitchForm() {
     )
 }
 
-export default SwitchForm
+export default SwitchForm2

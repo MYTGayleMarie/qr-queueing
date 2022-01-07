@@ -7,6 +7,7 @@ import './Navbar.css';
 
 //icon images
 import registrationIcon from '../images/icons/registration-icon.png';
+import patientIcon from '../images/icons/patient-icon.png';
 import cashierIcon from '../images/icons/cashier-icon.png';
 import extractionIcon from '../images/icons/extraction-icon.png';
 import imagingIcon from '../images/icons/imaging-icon.png';
@@ -28,9 +29,15 @@ function Navbar() {
             <img src={logo} alt={'logo'} class="navbar-logo"></img>
           </div>
           <NavLink to="/registration" activeClassName="active" class="link">
-            <li href="#" class="nav-link registration-nav">
+            <li href="#" class="nav-link cashier-nav">
               <img src={registrationIcon} alt={'registration'} class="registration icon"></img>
               <span class="mx-2">Registration</span>
+            </li>
+          </NavLink>
+          <NavLink to="/add-old-patient" activeClassName="active" class="link">
+            <li href="#" class="nav-link cashier-nav">
+              <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+              <span class="mx-2">Patient</span>
             </li>
           </NavLink>
           <NavLink to="/cashier" activeClassName="active" class="link">

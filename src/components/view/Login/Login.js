@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //css
-import '../Login/Login.css'
+import './Login.css'
 
 //images
 import clinic from '../../../images/clinic.png';

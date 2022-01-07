@@ -9,21 +9,24 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Registration.css';
 
 //components
-import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
-import Cashier from '../Cashier/Cashier';
+
 
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
+var presentDate = new Date();
+
 
 const filterData = {
-    from_date: "",
-    to_date: "",
+    from_date: presentDate,
+    to_date: presentDate,
     done: false,
 };
+
+console.log(filterData);
 
 var patientData = [];
 

@@ -47,6 +47,7 @@ var serviceData = [];
 
 function AddPayment() {
 
+
     const [payment, setPayment] = useState("");
     const [total, setTotal] = useState(0);
     const [pay, setPay] = useState(0);
@@ -100,7 +101,7 @@ function AddPayment() {
 
         axios({
             method: 'post',
-            url: window.$link + 'customers/show/' + userId,
+            url: window.$link + 'customers/show/' + response.data.customer_id,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
