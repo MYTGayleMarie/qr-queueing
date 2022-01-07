@@ -88,7 +88,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
   
     //functions
     function getDetails(categoryItems, checkedItem) {
-
+        window.scrollTo(0, 0);
         categoryItems.map((data, index) => {
              if(data.key == checkedItem) {
      
@@ -133,21 +133,24 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
     }).then(function (response) {
         toast.success(response.data.message.success);
         var packageId = [];
+        var packagePrices = [];
         var testId = [];
-        var prices = [];
-        var types = [];
+        var labPrices = [];
 
         services.map((data, index) => {
 
             if(data.type == 'lab') {
                 testId.push(data.labTestId);
+                labPrices.push(data.price);
             }
             else if (data.type == 'package') {
                 packageId.push(data.labTestId);
+                packagePrices.push(data.price);
             }
-            prices.push(data.price);
-            types.push(data.type);
         })
+
+        var prices = labPrices.concat(packagePrices);
+ 
 
         var extractedDates = [];
         var testStarts = [];
@@ -181,7 +184,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 test_starts: testStarts,
                 test_finishes: testFinishes,
                 result_dates: resultDates,
-                remarks: 'testing',
+                remarks: '',
                 added_by: userId, 
             }
         }).then(function (response) {
@@ -534,7 +537,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>TOTAL </b>P {parseFloat(totalPrice).toFixed(2)}</span>
+                        <span className="total-price"><b>TOTAL P {parseFloat(totalPrice).toFixed(2)}</b></span>
                     </div>
                 </div>
 

@@ -42,18 +42,13 @@ const CheckPaymentDetails = {
     check_date: "",
 }
 
-var serviceData = [];
-
-
 function AddPayment() {
 
 
     const [payment, setPayment] = useState("");
     const [total, setTotal] = useState(0);
     const [pay, setPay] = useState(0);
-    const [discount, setDiscount] = useState(0);
-    const [customer, setCustomer] = useState("");
-    const [type, setType] = useState("");
+    const [remarks, setRemarks] = useState("");
     const {id} = useParams();
 
     //customer details
@@ -82,54 +77,68 @@ function AddPayment() {
     const [cardExpiry, setCardExpiry] = useState("");
     const [cardBank, setCardBank] = useState("");
 
+    //others states
+    const [source, setSource] = useState("");
+    const [reference, setReference] = useState("");
+
     var amount = 0;
 
-    axios({
-        method: 'post',
-        url: window.$link + 'bookings/show/' + id,
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        setTotal(response.data.total_amount);
-        setDiscount(response.data.discount);
-        setCustomer(response.data.customer_id);
-        setType(response.data.type);
+    React.useEffect(() => {
+        var totalAmount;
+        var discount;
+        var customer;
+        var type;
 
         axios({
             method: 'post',
-            url: window.$link + 'customers/show/' + response.data.customer_id,
+            url: window.$link + 'bookings/show/' + id,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
                 token: userToken.replace(/['"]+/g, ''),
                 requester: userId,
             }
-        }).then(function (customer) {
-            var presentDate = new Date();
-            var birthDate = new Date(customer.data.birthdate);
-            const age = presentDate.getFullYear() - birthDate.getFullYear();
-            setFirstName(customer.data.first_name);
-            setMiddleName(customer.data.middle_name);
-            setLastName(customer.data.last_name);
-            setBirthDate(birthDate.toDateString());
-            setGender(customer.data.gender);
-            setAge(age);
-            setContactNo(customer.data.contact_no);
-            setEmail(customer.data.email);
-            setAddress(customer.data.address);
+        }).then(function (response) {
+            setTotal(response.data.total_amount);
+   
+            totalAmount = response.data.total_amount;
+            discount = response.data.discount;
+            customer = response.data.customer_id;
+            type = response.data.type;
 
+    
+            axios({
+                method: 'post',
+                url: window.$link + 'customers/show/' + response.data.customer_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (customer) {
+                var presentDate = new Date();
+                var birthDate = new Date(customer.data.birthdate);
+                const age = presentDate.getFullYear() - birthDate.getFullYear();
+                setFirstName(customer.data.first_name);
+                setMiddleName(customer.data.middle_name);
+                setLastName(customer.data.last_name);
+                setBirthDate(birthDate.toDateString());
+                setGender(customer.data.gender);
+                setAge(age);
+                setContactNo(customer.data.contact_no);
+                setEmail(customer.data.email);
+                setAddress(customer.data.address);
+    
+            }).catch(function (error) {
+                console.log(error);
+            });
         }).catch(function (error) {
             console.log(error);
         });
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-    function showCosting() {
+    }, []);
+   
+    React.useEffect(() => {
         axios({
             method: 'post',
             url: window.$link + 'bookings/getBookingDetails/' + id,
@@ -140,12 +149,12 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            
+            console.log(booking.data)
+            setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
         });
-
-    }
+    }, []);
 
 
     function submit (e) {
@@ -160,35 +169,19 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: total,
-                    remarks: 'testing',
-                    added_by: 1,
+                    amount: pay,
+                    remarks: remarks,
+                    added_by: userId,
                 }
             }).then(function (response) {
-
-                var date = new Date();
-
-                // axios({
-                //     method: 'post',
-                //     url: window.$link + 'bookings/update',
-                //     withCredentials: false,
-                //     params: {
-                //         token: userToken.replace(/['"]+/g, ''),
-                //         api_key: window.$api_key, 
-                //         customer_id: customer,
-                //         payment_type: payment,
-                //         type: type,
-                //         remarks: 'testing',
-                //         updated_by: date,
-                //     }
-                // }).then (function (message) {
-                //     console.log(message);
-                // })
-                
+                var date = new Date();                
                 toast.success("Payment Successful!");
                 setTimeout(function() {
                     refreshPage();
                 }, 3000)
+            }).catch(function (error) {
+                console.log(error);
+                toast.error("Payment Unsuccessful!");
             });
         }
         if(payment === 'check') {
@@ -201,12 +194,12 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: pay,
+                    amount: total,
                     check_no: checkNo,
                     check_bank: checkBank,
                     check_date: checkDate,
-                    remarks: 'testing',
-                    added_by: 1,
+                    remarks: remarks,
+                    added_by: userId,
                 }
             }).then(function (response) {
                 console.log(response);
@@ -214,6 +207,9 @@ function AddPayment() {
                 setTimeout(function() {
                     refreshPage();
                 }, 3000)
+            }).catch(function (error) {
+                console.log(error);
+                toast.error("Payment Unsuccessful!");
             });
         }
         if(payment === 'card') {
@@ -226,14 +222,14 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: pay,
+                    amount: total,
                     cardName: cardName,
                     card_no: cardNo,
                     card_type: cardType,
                     card_expiry: cardExpiry,
                     card_bank: cardBank,
-                    remarks: 'testing',
-                    added_by: 1,
+                    remarks: remarks,
+                    added_by: userId,
                 }
             }).then(function (response) {
                 console.log(response);
@@ -241,6 +237,36 @@ function AddPayment() {
                 setTimeout(function() {
                     refreshPage();
                 }, 3000)
+            }).catch(function (error) {
+                console.log(error);
+                toast.error("Payment Unsuccessful!");
+            });
+        }
+        if(payment === 'others') {
+            axios({
+                method: 'post',
+                url: window.$link + 'payments/create',
+                withCredentials: false, 
+                params: {
+                    token: userToken,
+                    api_key: window.$api_key, 
+                    booking: id,
+                    type: payment,
+                    amount: total,
+                    other_source: source,
+                    other_reference_no: reference,
+                    remarks: remarks,
+                    added_by: userId,
+                }
+            }).then(function (response) {
+                console.log(response);
+                toast.success("Payment Successful!");
+                setTimeout(function() {
+                    refreshPage();
+                }, 3000)
+            }).catch(function (error) {
+                console.log(error);
+                toast.error("Payment Unsuccessful!");
             });
         }
     }
@@ -264,6 +290,16 @@ function AddPayment() {
                             </div>
                             <div className="row">
                                 <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(total-pay).toFixed(2)}  placeholder="P"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="remarks-payment-label">REMARKS</span>
+                            </div>
+                            <div className="row">
+                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                             </div>
                         </div>
                     </div>
@@ -293,6 +329,16 @@ function AddPayment() {
                 <div className="col-sm-8">
                     <span class="check-label">CHECK DATE</span>
                     <input type="date" id="check" name="check_date" class="check" onChange={(e) => setCheckDate(e.target.value)}/>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="row">
+                        <span class="remarks-payment-label">REMARKS</span>
+                    </div>
+                    <div className="row">
+                        <textarea id="remarks" name="remarks" className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    </div>
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
@@ -325,12 +371,61 @@ function AddPayment() {
                 <span class="check-label">CARD BANK</span>
                 <input type="text" id="card" name="card_bank" class="check" onChange={(e) => setCardBank(e.target.value)}/>
             </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="row">
+                        <span class="remarks-payment-label">REMARKS</span>
+                    </div>
+                    <div className="row">
+                        <textarea id="remarks" name="remarks" rows="4" className="remarks-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    </div>
+                </div>
+            </div>
             <div className="row d-flex justify-content-end">
                 <button className="save-btn">SAVE BOOKING</button>
             </div>
         </div>
         )
     }
+
+    function othersForm() {
+
+        return (
+            <div class="pay-cash-cont">
+                <div className="row">
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">SOURCE</span>
+                            </div>
+                            <div className="row">
+                                <input type="text" id="payAmount" name="source" class="cash-input pay" onChange={(e) => setSource(e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="amount-label">REFERENCE NUMBER</span>
+                            </div>
+                            <div className="row">
+                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setRemarks(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="remarks-payment-label">REMARKS</span>
+                            </div>
+                            <div className="row">
+                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row d-flex justify-content-end">
+                        <button className="save-btn">SAVE BOOKING</button>
+                    </div>
+             </div>       
+            )
+        }
 
     return (
         <div>
@@ -391,45 +486,12 @@ function AddPayment() {
         </div>
 
 
-                {/* <Costing
-                    data={costingData}
-                /> */}
+        <Costing
+            data={services}
+         />
 
-            <div className="summary-total">
-            <div className="row">
-                    <div className="col-sm-4">
-                        <span class="summary-total-label">BOOKING ID</span>
-                    </div>
-                    <div className="col-sm-4">
-
-                    </div>
-                    <div className="col-sm-4">
-                        <span className="amount">{id}</span>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-4">
-                        <span class="summary-total-label">DISCOUNT</span>
-                    </div>
-                    <div className="col-sm-4">
-
-                    </div>
-                    <div className="col-sm-4">
-                        <span className="amount">P {discount}</span>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-4">
-                        <span class="summary-total-label">TOTAL AMOUNT </span>
-                    </div>
-                    <div className="col-sm-4">
-
-                    </div>
-                    <div className="col-sm-4">
-                        <span className="amount">P {total}</span>
-                    </div>
-                </div>
-            </div>
+    
+           
 
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
@@ -441,11 +503,14 @@ function AddPayment() {
                     <span className="check method">CHECK</span>
                     <input type="radio" id="card" name="payment_method" value="card" onClick={()=> setPayment('card')}/>
                     <span className="check method">CARD</span>
+                    <input type="radio" id="others" name="payment_method" value="others" onClick={()=> setPayment('others')}/>
+                    <span className="check method">OTHERS</span>
 
                     <form onSubmit={(e) => submit(e)}>
                         <p>{payment === 'cash' && cashForm()}</p>
                         <p>{payment === 'check' && checkForm()}</p>
                         <p>{payment === 'card' && cardForm()}</p>
+                        <p>{payment === 'others' && othersForm()}</p>
                     </form>
 
                     <ToastContainer hideProgressBar={true}/>

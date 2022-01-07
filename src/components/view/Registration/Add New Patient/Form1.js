@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import DateTimePicker from 'react-datetime-picker';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import './Form1.css';
@@ -16,6 +18,26 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
 
     function turnActive() {
         setActive(true);
+    }
+
+    function proceed() {
+        console.log("here")
+        console.log(customer)
+        if(fname != "" && lname != "" && mname != "" && sex != "" && birthDate != "" && email != "" && contactNum != "" && address != "" && serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "") {
+            console.log("why");
+            return (
+                <div className="d-flex justify-content-end">
+                <button 
+                    className="proceed-btn" 
+                    onClick={() => navigation.next()}
+                >
+                PROCEED
+                </button>
+                </div>
+            );
+        } else {
+            console.log("Incomplete");
+        }
     }
 
     function sinceLastMeal() {
@@ -145,16 +167,10 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
                         </div>
                     </div>
 
-                    <div className="d-flex justify-content-end">
-                    <button 
-                        className="proceed-btn" 
-                        onClick={() => navigation.next()}
-                    >
-                    PROCEED
-                    </button>
-                    </div>
+                    <div>{proceed()}</div>
 
                 </form>
+                <ToastContainer/>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment,useState} from 'react';
 import axios from 'axios';
 import { getToken, getUser, refreshPage  } from '../../../utilities/Common';
 import { useForm } from "react-hooks-helper";
@@ -33,8 +33,8 @@ var patientData = [];
 function Registration() {
 
     const [filteredData, setFilter] = useForm(filterData);
-    
-    function filter() {
+    const [render, setRender] = useState([]);
+    React.useEffect(() => {
         patientData = [];
         axios({
             method: 'post',
@@ -73,11 +73,14 @@ function Registration() {
                 }).catch(function (error) {
                     console.log(error);
                 });
+                setRender(patientData);
             });
-            toast.success("Settings Saved!");
         }).catch(function (error) {
             console.log(error);
         });
+    },[filteredData]);
+    
+    function filter() {
     }
 
     return (
@@ -99,6 +102,7 @@ function Registration() {
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
+                    render={setRender}
                 />
                 <ToastContainer hideProgressBar={true}/>
             

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { getToken, getUser, refreshPage } from '../../../utilities/Common';
+import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,10 +18,11 @@ import Table from '../../Table.js';
 
 const userToken = getToken();
 const userId = getUser();
+const presentDate = new Date();
 
 const filterData = {
-  from_date: '',
-  to_date: '',
+  from_date: presentDate,
+  to_date: presentDate,
 };
 
 const cashCountData = {
@@ -43,28 +44,111 @@ var id = '';
 var patientData = [];
 
 function Cashier() {
+
   //Cash Count
   const [cashCount, setCashCount] = useForm(cashCountData);
+  const [cashSales, setCashSales] = useState(0);
 
-  //Modal
+  //Cash Count Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   //filteredData
   const [filteredData, setFilter] = useForm(filterData);
+  const [bookingDetails, setBookingDetails] = useState([]);
   const [redirect, setRedirect] = useState(false);
+  const [finalPatientData, setFinalPatientData] = useState([]);
 
   function addPayment(customerId) {
     id = customerId;
     setRedirect(true);
   }
 
-  if (redirect == true) {
-    var link = '/add-payment/' + id;
-    console.log(link);
-    return <Navigate to={link} />;
-  }
+  React.useEffect(() => {
+    axios({
+    method: 'post',
+    url: window.$link + 'reports/cashSales/',
+    withCredentials: false,
+    params: {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ''),
+      requester: userId,
+    },
+  }).then(function (response) {
+    setCashSales(response.data.data.total_cash_sales);
+  });
+
+  }, []);
+
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getAll',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+        date_from: filteredData.from_date,
+        date_to: filteredData.to_date,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+        setBookingDetails(response.data.bookings);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  
+  React.useEffect(() => {
+    patientData.length = 0;
+    bookingDetails.map((booking, index) => {
+      axios({
+        method: 'post',
+        url: window.$link + 'customers/show/' + booking.customer_id,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+        },
+      })
+        .then(function (customer) {
+          var formatBookingTime = new Date(booking.booking_time);
+          var formatAddedOn = new Date(booking.added_on);
+          var bookingDetails = {};
+          bookingDetails.id = booking.id;
+          bookingDetails.name =
+          customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+          bookingDetails.bookingTime = formatBookingTime.toDateString();
+          bookingDetails.serviceType = booking.type;
+          bookingDetails.amount = booking.grand_total;
+
+          //fully paid or not
+          if (booking.paid_amount == booking.grand_total) {
+            bookingDetails.payment = 'PAID';
+          } else if (booking.paid_amount < booking.grand_total) {
+            bookingDetails.payment = 'PENDING';
+            console.log("here");
+          }
+
+          bookingDetails.addedOn = formatAddedOn.toDateString();
+          if(bookingDetails.payment == 'PENDING') {
+            patientData.push(bookingDetails);
+            setFinalPatientData(patientData);
+          }
+          console.log(bookingDetails);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+  });
+
 
   function calculate() {
 
@@ -97,70 +181,28 @@ function Cashier() {
     return totalAmount.toFixed(2);
   }
 
-  console.log(calculate())
+  function logOut() {
+    var cashCount = calculate();
 
-  function filter() {
-    console.log('here');
-    patientData = [];
-    axios({
-      method: 'post',
-      url: window.$link + 'bookings/getAll',
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
-        date_from: filteredData.from_date,
-        date_to: filteredData.to_date,
-      },
-    })
-      .then(function (response) {
-        console.log(response);
-        response.data.bookings.map((booking, index) => {
-          axios({
-            method: 'post',
-            url: window.$link + 'customers/show/' + booking.customer_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          })
-            .then(function (customer) {
-              var formatBookingTime = new Date(booking.booking_time);
-              var formatAddedOn = new Date(booking.added_on);
-              var bookingDetails = {};
-              bookingDetails.id = booking.id;
-              bookingDetails.name =
-                customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-              bookingDetails.bookingTime = formatBookingTime.toDateString();
-              bookingDetails.serviceType = booking.type;
-              bookingDetails.amount = booking.grand_total;
-
-              //fully paid or not
-              if (booking.paid_amount == booking.grand_total) {
-                bookingDetails.payment = 'PAID';
-              } else if (booking.paid_amount < booking.grand_total) {
-                bookingDetails.payment = 'PENDING';
-              }
-
-              bookingDetails.addedOn = formatAddedOn.toDateString();
-
-              patientData.push(bookingDetails);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        });
-        toast.success('Settings Saved!');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (cashCount == cashSales) {
+      removeUserSession();
+    } else {
+      toast.warning("Cash count does not match with cash sales");
+    }
   }
 
-  console.log(cashCount)
+  function filter() {
+   
+  }
+
+
+
+  if (redirect == true) {
+    var link = '/add-payment/' + id;
+    console.log(link);
+    return <Navigate to={link} />;
+  }
+
 
   return (
     <>
@@ -179,8 +221,8 @@ function Cashier() {
           </div>
           <Header type="thick" title="BOOKING MANAGER" tableData={patientData} />
           <Table
-            type={'no-filter'}
-            tableData={patientData}
+            type={'cashier'}
+            tableData={finalPatientData}
             headingColumns={[
               'BOOKING ID',
               'PATIENT NAME',
@@ -222,7 +264,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 0.10</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="tenCentavos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="tenCentavos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -231,7 +273,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 0.25</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="twentyfiveCentavos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="twentyfiveCentavos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -240,7 +282,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 1.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="onePesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="onePesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -249,7 +291,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 5.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="fivePesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="fivePesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -258,7 +300,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 10.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="tenPesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="tenPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -267,7 +309,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 20.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="twentyPesosCoin" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="twentyPesosCoin" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -281,7 +323,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 20.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="twentyPesosBill" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="twentyPesosBill" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -290,7 +332,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 50.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="fiftyPesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="fiftyPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -299,7 +341,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 100.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="onehundredPesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="onehundredPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -308,7 +350,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 500.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="fivehundredPesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="fivehundredPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 
@@ -317,7 +359,7 @@ function Cashier() {
                           <div className='cash-count-amount text-center'>P 1000.00</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input name="onethousandPesos" className='cash-count-input' onChange={setCashCount}/>
+                          <input type="number" name="onethousandPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
                     </div>
@@ -338,7 +380,7 @@ function Cashier() {
                       <div className='cash-count-sub-header text-start'>TOTAL CASH SALES</div>
                     </div>
                     <div className='col-sm-6'>
-                      <div className='amount text-center'>P 0.00</div>
+                      <div className='amount text-center'>P {cashSales}</div>
                     </div>
                   </div>
 
@@ -348,11 +390,14 @@ function Cashier() {
                     <button className='close-btn' onClick={handleClose}>
                         Close
                     </button>
-                    <button type="submit" className='save-btn'>
+                    <button type="submit" className='save-btn' onClick={logOut}>
                        SAVE
                     </button>
                    </Modal.Footer>
         </Modal>
+
+        <ToastContainer/>
+        
       </div>
     </>
   );

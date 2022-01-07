@@ -30,7 +30,7 @@
 }
 
 .check, .cash-input {
-    width: 40%;
+    width: 40% !important;
     margin-left: 3%;
 }
 
@@ -54,4 +54,14 @@
     padding:  0.5%;
     margin-top: 10%;
     margin-right: 5%;
+}
+
+.remarks-input {
+    margin-left: 5%;
+}
+
+.remarks-payment-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    margin-left: 3%;
 }

@@ -1,21 +1,35 @@
-import React from 'react';
+import React, { useState } from "react";
+import { getToken, getUser } from "../utilities/Common";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 //css
-import './Costing.css'
+import './Costing.css';
+
+//icons
+import cancelIcon from '../images/cancel.png';
+
+const userToken = getToken();
+const userId = getUser();
 
 function Costing({data}) {
 
     var totalCost = 0;
 
+    function deleteService(serviceId) {
+
+    }
+
     const summary = data.map((row, index) => {
 
-        totalCost += parseFloat(row.totalPrice);
+        totalCost += parseFloat(row.price);        
 
         return (
+            
             <div class="row">
-                <div className="col-sm-4 quantity">{row.quantity}</div>
-                <div className="col-sm-4 service">{row.service.toUpperCase()}</div>
-                <div className="col-sm-4 total-price">{row.totalPrice}</div>
+                {/* <div className="col-sm-4 "><button className="delete-btn" onClick={deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div> */}
+                <div className="col-sm-4 service">{row.booking_id}</div>
+                <div className="col-sm-4 total-price">{row.price}</div>
             </div>
         )
     });

@@ -87,6 +87,15 @@ label {
   margin-top: 10%;
 }
 
+.skip-btn {
+  background-color: #094b5b;
+  color: white;
+  border: none;
+  width: 30% !important;
+  border-radius: 1em;
+  padding:  0.5%;
+}
+
 .proceed-link {
   color: #ffff !important;
   text-decoration: none !important;

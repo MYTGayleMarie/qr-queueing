@@ -18,7 +18,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         tableClass += ' table-container_table--break-lg';
     }
 
-
     const data = tableData.map((row, index) => {
 
         let rowData = [];
@@ -54,6 +53,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
     });
 
+    const [render, setRender] = useState(false);
+
     if(type === 'no-action') {
 
         const {from_date, to_date, done} = filteredData;
@@ -63,9 +64,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <div className="search-table-container d-flex justify-content-end">
                 <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                 <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
-
-                    <button className="filter-btn" onClick={filter}>SAVE SETTINGS</button>
-                    <button className="filter-btn" name="done" onClick={setFilter}>FILTER</button>
+                    <button className="filter-btn" name="done" onClick={() => setRender(!render)}>FILTER</button>
                 </div>
                 <table className={tableClass}>
                     <thead>
@@ -82,13 +81,11 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'no-filter') {
-
-        const {from_date, to_date, done} = filteredData;
-    
+    else if(type === 'cashier') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
+
                 </div>
                 <table className={tableClass}>
                     <thead>
@@ -104,6 +101,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 </table>
              </div>
         );
+
     }
     else if (type === "report") {
         return(

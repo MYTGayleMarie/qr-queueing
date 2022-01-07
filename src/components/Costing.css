@@ -36,3 +36,13 @@
     font-family: 'Montserrat-Bold';
     color: #55073A;
 }
+
+.delete-icon {
+    color: #419EA3;
+}
+
+.delete-btn {
+    background-color: white;
+    border: none;
+
+}
