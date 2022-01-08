@@ -41,6 +41,7 @@ function Login() {
         }).then(function (response) {
             localStorage.setItem('token', JSON.stringify(response.data.token));
             localStorage.setItem('user', JSON.stringify(response.data.id));
+            localStorage.setItem('role_id', JSON.stringify(response.data.role_id));
             refreshPage();
         }).catch(function (error) {
             toast.error("Invalid Login");

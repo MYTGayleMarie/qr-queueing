@@ -20,6 +20,11 @@ export const getUser = () => {
     else return null;
 }
 
+//return role id from session storage
+export const getRoleId = () => {
+    return localStorage.getItem('role_id') || null;
+}
+
 //return token from session storage
 export const getToken = () => {
     return localStorage.getItem('token') || null;
