@@ -68,7 +68,7 @@ const ultrasound = getUltrasound();
 
 
 function OldPatientForm2({service, customer, setServices, lastMeal, navigation}) {
-
+    document.body.style = 'background: white;';
      //functions
      function getDetails(categoryItems, checkedItem) {
 

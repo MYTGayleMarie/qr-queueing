@@ -71,7 +71,7 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
 function OldPatientForm3({ service, customer, setServices, lastMeal, navigation }) {
-
+    document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
     const [middleName, setMiddleName] = useState("");

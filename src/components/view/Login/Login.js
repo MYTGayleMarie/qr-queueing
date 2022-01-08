@@ -59,6 +59,8 @@ function Login() {
         )
     }
 
+    document.body.style = 'background: white;';
+
     return (
         <>
         <div className="container">

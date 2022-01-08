@@ -67,7 +67,7 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
 function Form2({service, customer, setServices, lastMeal, navigation}) {
-
+        document.body.style = 'background: white;';
         //functions
         function getDetails(categoryItems, checkedItem) {
             window.scrollTo(0, 0);

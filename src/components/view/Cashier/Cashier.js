@@ -387,12 +387,9 @@ function Cashier() {
 
                   </Modal.Body>
                     <Modal.Footer>
-                    <button className='close-btn' onClick={handleClose}>
-                        Close
-                    </button>
-                    <button type="submit" className='save-btn' onClick={logOut}>
-                       SAVE
-                    </button>
+                        <button type="submit" className='save-btn' onClick={logOut}>
+                          SAVE
+                        </button>
                    </Modal.Footer>
         </Modal>
 

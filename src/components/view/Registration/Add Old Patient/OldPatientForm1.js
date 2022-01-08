@@ -12,7 +12,7 @@ const userToken = getToken();
 const userId = getUser();
 
 function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
-
+    document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
     const [middleName, setMiddleName] = useState("");

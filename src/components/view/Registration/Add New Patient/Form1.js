@@ -12,7 +12,7 @@ import Navbar from '../../../Navbar';
 
 
 function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
-
+    document.body.style = 'background: white;';
     const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
 
