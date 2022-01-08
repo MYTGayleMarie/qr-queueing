@@ -63,6 +63,7 @@ function AddPayment() {
     const [contactNo, setContactNo] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
+    const [seniorPwdId, setID] = useState("");
 
     //services
     const [services, setServices] = useState([]);
@@ -89,9 +90,19 @@ function AddPayment() {
 
     //Modal
     const [show, setShow] = useState(false);
+    const [showRemove, setShowRemove] = useState(false);
+    const [serviceId, setServiceId] = useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleRemoveClose = () => setShowRemove(false);
+    const handleRemoveShow = () => setShowRemove(true);
+
+    function handleRemove(service_id) {
+        handleRemoveShow();
+        setServiceId(service_id);
+    }
 
     var amount = 0;
 
@@ -168,8 +179,7 @@ function AddPayment() {
         });
     }, []);
 
-    function removeService(serviceId) {
-       
+    function removeService() {
         axios({
             method: 'post',
             url: window.$link + 'Bookingdetails/delete/' + serviceId,
@@ -181,8 +191,25 @@ function AddPayment() {
                 booking: id,
             }
         }).then(function (booking) {
+            console.log(booking.data);
+            handleRemoveClose();
+        }).catch(function (error) {
+            console.log(error);
+            handleRemoveClose();
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getBookingDetails/' + id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (booking) {
             console.log(booking.data)
-            setServices();
+            setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
         });
@@ -230,43 +257,35 @@ function AddPayment() {
         )
     }
 
-    console.log(test.split("_"));
-
     function addService() {
-        console.log("hereee")
         const key = test.split("_");
         const testId = key[0];
         const price = key[1];
-        const type = key[3];
+        const type = key[2];
 
-        if (type == 'lab') {
-            axios({
-                method: 'post',
-                url: window.$link + 'Bookingdetails/add/' + id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    type: type, 
-                    lab_tests: testId,
-                    price: price,
-                    status: 'PENDING',
-                    extracted_on: '',
-                    test_start: '',
-                    test_finish: '', 
-                    result_on: '',
-                    file_result: '',
-                    added_by: userId,
-                }
-            }).then(function (booking) {
-                console.log(booking);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        } 
-        else if (type == 'package') {
-
-        }
+        axios({
+            method: 'post',
+            url: window.$link + 'Bookingdetails/add/' + id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                type: type, 
+                lab_tests: [testId],
+                price: price,
+                status: 'PENDING',
+                extracted_on: '',
+                test_start: '',
+                test_finish: '', 
+                result_on: '',
+                file_result: '',
+                added_by: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
 
 
@@ -601,18 +620,32 @@ function AddPayment() {
 
         <Costing
             data={services}
-            deleteService={removeService}
+            deleteService={handleRemove}
+            withDiscount={seniorPwdId}
+            setTotal={setTotal}
          />
+
 
         <div className="row">
             <div className="col-sm-9 d-flex justify-content-end">
                 <button className="add-tests-btn" onClick={handleShow}>ADD TESTS</button>
             </div>
         </div>
-           
 
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
+
+                    <div className="row">
+                        <div className="col-sm-3">
+                            <span className="senior-pwd-header method-label">SENIOR/PWD ID</span>
+                        </div>
+
+                        <div className="col-sm-9">
+                            <input type="text" id="senior_pwd_id" name="senior_pwd_id" className="senior-pwd-id-input" onChange={(e) => setID(e.target.value)} />
+                        </div>
+                    </div>
+
+                    <br/>
 
                     <span className="method-label">METHOD</span>
                     <input type="radio" id="cash" name="payment_method" value="cash" onClick={()=> setPayment('cash')}/>
@@ -633,6 +666,20 @@ function AddPayment() {
 
                     <ToastContainer hideProgressBar={true}/>
 
+                <Modal show={showRemove} onHide={handleRemoveClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>SUBMIT</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to remove service?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleRemoveClose}>
+                        Close
+                    </Button>
+                    <Button type="submit" variant="primary" onClick={removeService}>
+                        Submit
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
 
                 <Modal show={show} onHide={handleClose} size="xl">
                     <Modal.Header closeButton>
