@@ -21,10 +21,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
     }
 
     function proceed() {
-        console.log("here")
-        console.log(customer)
         if(fname != "" && lname != "" && mname != "" && sex != "" && birthDate != "" && email != "" && contactNum != "" && address != "" && serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "") {
-            console.log("why");
             return (
                 <div className="d-flex justify-content-end">
                 <button 
@@ -143,7 +140,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
                                     <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={setPersonal}/><label for="email" className="radio-label">EMAIL</label>
                                 </div>
                                 <div className="col">
-                                    <input type="radio" id="result" name="result" value="print with pickup" checked={serviceLocation === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
+                                    <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
                                 </div>
                             </div>
                         </div>

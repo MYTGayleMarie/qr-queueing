@@ -72,6 +72,8 @@ const ultrasound = getUltrasound();
 
 function OldPatientForm3({ service, customer, setServices, lastMeal, navigation }) {
     document.body.style = 'background: white;';
+    window.scrollTo(0, 0);
+
     //customer details
     const [firstName, setFirstName] = useState("");
     const [middleName, setMiddleName] = useState("");
@@ -111,7 +113,6 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
 
      //functions
      function getDetails(categoryItems, checkedItem) {
-
         categoryItems.map((data, index) => {
              if(data.key == checkedItem) {
      
@@ -535,7 +536,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>TOTAL </b>P {totalPrice}</span>
+                        <span className="total-price"><b>TOTAL P {totalPrice}</b></span>
                     </div>
                 </div>
 

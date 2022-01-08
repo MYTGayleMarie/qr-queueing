@@ -69,9 +69,9 @@ const ultrasound = getUltrasound();
 
 function OldPatientForm2({service, customer, setServices, lastMeal, navigation}) {
     document.body.style = 'background: white;';
+    window.scrollTo(0, 0);
      //functions
      function getDetails(categoryItems, checkedItem) {
-
         categoryItems.map((data, index) => {
              if(data.key == checkedItem) {
      
@@ -233,7 +233,19 @@ checkedServices.map((data, index) => {
             <div className="booking-form">
             <form className="needs-validation">
             <div className="row clinical-services-container">
-                <h3 className="form-categories-header italic">PACKAGES</h3>
+                <div className='col-sm-6'>
+                    <h3 className="form-categories-header italic">PACKAGES</h3>
+                </div>
+                <div className='col-sm-6'>
+                    <div className="d-flex justify-content-end">
+                        <button 
+                            className="skip-btn" 
+                            onClick={() => navigation.next()}
+                        >
+                        SKIP
+                        </button>
+                    </div>
+                </div>
 
                 <ServiceItems 
                 category='PRE EMPLOYMENT PACKAGE'
@@ -313,7 +325,7 @@ checkedServices.map((data, index) => {
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>TOTAL </b>P {parseFloat(totalPrice).toFixed(2)}</span>
+                        <span className="total-price"><b>TOTAL P {parseFloat(totalPrice).toFixed(2)}</b></span>
                     </div>
                 </div>
 

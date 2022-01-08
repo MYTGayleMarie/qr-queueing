@@ -59,6 +59,23 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         setActive(true);
     }
 
+    function proceed() {
+        if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "") {
+            return (
+                <div className="d-flex justify-content-end">
+                <button 
+                    className="proceed-btn" 
+                    onClick={() => navigation.next()}
+                >
+                PROCEED
+                </button>
+                </div>
+            );
+        } else {
+            console.log("Incomplete");
+        }
+    }
+
     function sinceLastMeal() {
         var presentDate = new Date();
         let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
@@ -169,7 +186,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                                  <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={setPersonal}/><label for="email" className="radio-label">EMAIL</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="result" name="result" value="print with pickup" checked={serviceLocation === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
+                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
                              </div>
                          </div>
                      </div>
@@ -193,14 +210,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                      </div>
                  </div>
 
-                 <div className="d-flex justify-content-end">
-                 <button 
-                     className="proceed-btn" 
-                     onClick={() => navigation.next()}
-                 >
-                 PROCEED
-                 </button>
-                 </div>
+                 <div>{proceed()}</div>
 
              </form>
              </div>

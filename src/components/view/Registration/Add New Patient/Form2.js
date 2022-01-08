@@ -68,9 +68,9 @@ const ultrasound = getUltrasound();
 
 function Form2({service, customer, setServices, lastMeal, navigation}) {
         document.body.style = 'background: white;';
+        window.scrollTo(0, 0);
         //functions
         function getDetails(categoryItems, checkedItem) {
-            window.scrollTo(0, 0);
             categoryItems.map((data, index) => {
                  if(data.key == checkedItem) {
          
