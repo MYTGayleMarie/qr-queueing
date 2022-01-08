@@ -190,7 +190,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                customer: response.data.data.customer_id,
+                customer: id,
                 booking_time: customer.dateOfTesting,
                 company_contract_id: '',
                 type: customer.serviceLocation,

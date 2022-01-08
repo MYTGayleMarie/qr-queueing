@@ -172,8 +172,22 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data)
+            // console.log("------------")
+            // console.log(booking.data)
             setServices(booking.data);
+            // console.log(id);
+            // axios({
+            //     method: 'post',
+            //     url: window.$link + 'bookings/getBookingDetails/' + 11,
+            //     withCredentials: false, 
+            //     params: {
+            //         api_key: window.$api_key,
+            //         token: userToken.replace(/['"]+/g, ''),
+            //         requester: userId,
+            //     }
+            // }).then(function (packageResponse) {
+            //     console.log(packageResponse);
+            // })
         }).catch(function (error) {
             console.log(error);
         });
