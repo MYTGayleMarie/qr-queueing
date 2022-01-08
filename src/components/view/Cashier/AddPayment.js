@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import axios from 'axios';
+import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllLabServices, getAllPackages } from "../../../services/services";
 
 //css
 import './AddPayment.css'
@@ -81,6 +83,16 @@ function AddPayment() {
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
 
+    //add Test states
+    const [addTestType, setAddTestType] = useState("");
+    const [test, setTest] = useState("");
+
+    //Modal
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     var amount = 0;
 
     React.useEffect(() => {
@@ -155,6 +167,107 @@ function AddPayment() {
             console.log(error);
         });
     }, []);
+
+    function removeService(serviceId) {
+       
+        axios({
+            method: 'post',
+            url: window.$link + 'Bookingdetails/delete/' + serviceId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                updated_by: userId,
+                booking: id,
+            }
+        }).then(function (booking) {
+            console.log(booking.data)
+            setServices();
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    function showAvailableLab() {
+        const labServices = getAllLabServices();
+        const orderedServices = labServices.sort(function(a, b) {
+            var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        return (
+            <div>
+                <label for="input-label">TEST:</label>
+                <select className="input-select" id="test" name="test" onChange={(e) => setTest(e.target.value)}>
+                    <option value="" selected disabled hidden>CHOOSE CLINICAL SERVICE</option>
+                    {orderedServices.map((option,index) => (
+                        <option value={option.labTestId + "_" + option.price + "_" + option.type}>{option.name}</option>
+                    ))}
+                </select> 
+            </div> 
+        )
+    }
+
+    function showAvailablePackages() {
+        const packages = getAllPackages();
+        const orderedServices = packages.sort(function(a, b) {
+            var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        return (
+                <div>
+                <label for="input-label">TEST:</label>
+                <select className="input-select" id="test" name="test" onChange={(e) => setTest(e.target.value)}>
+                    <option value="" selected disabled hidden>CHOOSE PACKAGE</option>
+                    {orderedServices.map((option,index) => (
+                        <option value={option.labTestId + "_" + option.price + "_" + option.type}>{option.name}</option>
+                    ))}
+                </select>  
+                </div>
+        )
+    }
+
+    console.log(test.split("_"));
+
+    function addService() {
+        console.log("hereee")
+        const key = test.split("_");
+        const testId = key[0];
+        const price = key[1];
+        const type = key[3];
+
+        if (type == 'lab') {
+            axios({
+                method: 'post',
+                url: window.$link + 'Bookingdetails/add/' + id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    type: type, 
+                    lab_tests: testId,
+                    price: price,
+                    status: 'PENDING',
+                    extracted_on: '',
+                    test_start: '',
+                    test_finish: '', 
+                    result_on: '',
+                    file_result: '',
+                    added_by: userId,
+                }
+            }).then(function (booking) {
+                console.log(booking);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        } 
+        else if (type == 'package') {
+
+        }
+    }
 
 
     function submit (e) {
@@ -488,9 +601,14 @@ function AddPayment() {
 
         <Costing
             data={services}
+            deleteService={removeService}
          />
 
-    
+        <div className="row">
+            <div className="col-sm-9 d-flex justify-content-end">
+                <button className="add-tests-btn" onClick={handleShow}>ADD TESTS</button>
+            </div>
+        </div>
            
 
                 <div className="payment-cont">
@@ -514,6 +632,37 @@ function AddPayment() {
                     </form>
 
                     <ToastContainer hideProgressBar={true}/>
+
+
+                <Modal show={show} onHide={handleClose} size="xl">
+                    <Modal.Header closeButton>
+                    <Modal.Title className='w-100 add-test-header'>ADD TESTS</Modal.Title>
+                    </Modal.Header>
+                    <form>
+                    <Modal.Body>
+                    <label for="input-label">SERVICE:</label>
+
+                    <select className="input-select" id="service" name="service" onChange={(e) => setAddTestType(e.target.value)}>
+                    <option value="" selected disabled hidden>CHOOSE TYPE</option>
+                    <option value="CLINICAL SERVICES">CLINICAL SERVICES</option>
+                    <option value="PACKAGES">PACKAGES</option>
+                    </select>
+                    
+                    <br/>
+                   
+                    <p>{addTestType === 'CLINICAL SERVICES' && showAvailableLab()}</p>
+                    <p>{addTestType === 'PACKAGES' && showAvailablePackages()}</p>
+                  
+
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <button type="submit" className="add-tests-btn" onClick={() => addService()}>
+                        Submit
+                    </button>
+                    </Modal.Footer>
+                    </form>
+                </Modal>
                     
                 </div>
 

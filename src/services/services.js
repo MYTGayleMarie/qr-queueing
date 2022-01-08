@@ -7,7 +7,7 @@ import React from 'react';
 
 
 /*********************************
- * SERVICES
+ * PACKAGES
  ********************************/
 
  const PreEmploymentPackageBasic = [
@@ -145,6 +145,21 @@ const DiabetesandCholesterolPackage = [
        type: 'package',
     }
 ];
+
+const allPackages = PreEmploymentPackageBasic.concat(
+    PreEmploymentPackageDiscount,
+    PregnancyLabPackage,
+    AnnualWellnessPackageBasic,
+    ThyroidTestPackage,
+    AnnualWellnessPackagePremium,
+    LiverFunctionTestPackage,
+    DiabetesandCholesterolPackage
+);
+
+
+/*********************************
+ * SERVICES
+ ********************************/
 
  const ClincalMicroscopy = [
     {   
@@ -1087,9 +1102,35 @@ const UltraSound = [
     },
 ];
 
+const allLabServices = ClincalMicroscopy.concat(
+    Hematology,
+    Electrocytes,
+    GlucoseTests,
+    KidneyFunctionTests,
+    LipidProfile,
+    PancreaticTest,
+    LiverFunctionTests,
+    Immunology,
+    HepatitisProfileScreening, 
+    ThyroidProfile,
+    TumorMarkers,
+    Histophatology,
+    CovidRapidTests,
+    Microbiology,
+    Xray,
+    Cardiology,
+    MedicalCertificate,
+    UltraSound,
+);
+
 /*********************************
  * GET PACKAGE SERVICES
  ********************************/
+//All Packages
+export const getAllPackages = () => {
+    return allPackages;
+}
+
 //Pre Employment Basic
 export const getPreEmploymentBasic = () => {
     return PreEmploymentPackageBasic;
@@ -1129,6 +1170,11 @@ export const getDiabetesandCholesterolPackage = () => {
 /*********************************
  * GET LABORATORY SERVICES
  ********************************/
+
+//All
+export const getAllLabServices = () => {
+    return allLabServices;
+}
 
 //Clinical Microscopy
 export const getClinicalMicroscopy = () => {

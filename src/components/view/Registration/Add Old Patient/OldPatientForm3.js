@@ -43,7 +43,7 @@ var itemDetails;
 const userToken = getToken();
 const userId = getUser();
 
-//Package
+//Packages
 const preEmploymentPackageBasic = getPreEmploymentBasic();
 const preEmploymentPackageDiscount = getPreEmploymentDiscount();
 const pregnancyLabPackage = getPregnancyLabPackage();
@@ -158,15 +158,25 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
     }).then(function (response) {
         console.log(response);
         toast.success(response.data.message.success);
+        var packageId = [];
+        var packagePrices = [];
         var testId = [];
-        var prices = [];
-        var types = [];
+        var labPrices = [];
 
         services.map((data, index) => {
-            testId.push(data.labTestId);
-            prices.push(data.price);
-            types.push(data.type);
+
+            if(data.type == 'lab') {
+                testId.push(data.labTestId);
+                labPrices.push(data.price);
+            }
+            else if (data.type == 'package') {
+                packageId.push(data.labTestId);
+                packagePrices.push(data.price);
+            }
         })
+
+        var prices = labPrices.concat(packagePrices);
+ 
 
         var extractedDates = [];
         var testStarts = [];
@@ -180,7 +190,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                customer: id,
+                customer: response.data.data.customer_id,
                 booking_time: customer.dateOfTesting,
                 company_contract_id: '',
                 type: customer.serviceLocation,
@@ -193,13 +203,14 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 reference_code: '',
                 payment_type: 'PENDING',
                 lab_tests: testId,
+                package_tests: packageId,
                 prices: prices,
                 status: '',
                 extracted_dates: extractedDates,
                 test_starts: testStarts,
                 test_finishes: testFinishes,
                 result_dates: resultDates,
-                remarks: 'testing',
+                remarks: '',
                 added_by: userId, 
             }
         }).then(function (response) {

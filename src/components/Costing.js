@@ -12,13 +12,9 @@ import cancelIcon from '../images/cancel.png';
 const userToken = getToken();
 const userId = getUser();
 
-function Costing({data}) {
+function Costing({data, deleteService}) {
 
     var totalCost = 0;
-
-    function deleteService(serviceId) {
-
-    }
 
     const summary = data.map((row, index) => {
 
@@ -27,8 +23,8 @@ function Costing({data}) {
         return (
             
             <div class="row">
-                {/* <div className="col-sm-4 "><button className="delete-btn" onClick={deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div> */}
-                <div className="col-sm-4 service">{row.booking_id}</div>
+                <div className="col-sm-1 "><button className="delete-btn" onClick={() => deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div>
+                <div className="col-sm-7 service">{row.lab_test ? row.lab_test : row.package_test }</div>
                 <div className="col-sm-4 total-price">{row.price}</div>
             </div>
         )
