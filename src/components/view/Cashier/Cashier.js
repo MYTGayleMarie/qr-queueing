@@ -56,10 +56,9 @@ function Cashier() {
 
   //filteredData
   const [filteredData, setFilter] = useForm(filterData);
-  const [bookingDetails, setBookingDetails] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [finalPatientData, setFinalPatientData] = useState([]);
-
+ 
   function addPayment(customerId) {
     id = customerId;
     setRedirect(true);
@@ -82,6 +81,7 @@ function Cashier() {
   }, []);
 
   React.useEffect(() => {
+    finalPatientData.length = 0;
     axios({
       method: 'post',
       url: window.$link + 'bookings/getAll',
@@ -96,58 +96,52 @@ function Cashier() {
     })
       .then(function (response) {
         console.log(response);
-        setBookingDetails(response.data.bookings);
+        response.data.bookings.map((booking, index) => {
+          axios({
+            method: 'post',
+            url: window.$link + 'customers/show/' + booking.customer_id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          })
+            .then(function (customer) {
+              var formatBookingTime = new Date(booking.booking_time);
+              var formatAddedOn = new Date(booking.added_on);
+              var bookingDetails = {};
+              bookingDetails.id = booking.id;
+              bookingDetails.name =
+              customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+              bookingDetails.bookingTime = formatBookingTime.toDateString();
+              bookingDetails.serviceType = booking.type;
+              bookingDetails.amount = booking.grand_total;
+    
+              //fully paid or not
+              if (booking.paid_amount == booking.grand_total) {
+                bookingDetails.payment = 'PAID';
+              } else if (booking.paid_amount < booking.grand_total) {
+                bookingDetails.payment = 'PENDING';
+              }
+    
+              bookingDetails.addedOn = formatAddedOn.toDateString();
+              if(bookingDetails.payment == 'PENDING') {
+                setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
+              }
+              console.log(bookingDetails);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
-  
-  React.useEffect(() => {
-    patientData.length = 0;
-    bookingDetails.map((booking, index) => {
-      axios({
-        method: 'post',
-        url: window.$link + 'customers/show/' + booking.customer_id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-        },
-      })
-        .then(function (customer) {
-          var formatBookingTime = new Date(booking.booking_time);
-          var formatAddedOn = new Date(booking.added_on);
-          var bookingDetails = {};
-          bookingDetails.id = booking.id;
-          bookingDetails.name =
-          customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-          bookingDetails.bookingTime = formatBookingTime.toDateString();
-          bookingDetails.serviceType = booking.type;
-          bookingDetails.amount = booking.grand_total;
 
-          //fully paid or not
-          if (booking.paid_amount == booking.grand_total) {
-            bookingDetails.payment = 'PAID';
-          } else if (booking.paid_amount < booking.grand_total) {
-            bookingDetails.payment = 'PENDING';
-            console.log("here");
-          }
-
-          bookingDetails.addedOn = formatAddedOn.toDateString();
-          if(bookingDetails.payment == 'PENDING') {
-            patientData.push(bookingDetails);
-            setFinalPatientData(patientData);
-          }
-          console.log(bookingDetails);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    });
-  });
 
 
   function calculate() {
