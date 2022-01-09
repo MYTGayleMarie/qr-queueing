@@ -24,6 +24,7 @@ function SearchPatient() {
     const [redirect, setRedirect] = useState(false);
 
     function search() {
+        patients.length = 0;
         axios({
             method: 'post',
             url: window.$link + 'customers/search/',

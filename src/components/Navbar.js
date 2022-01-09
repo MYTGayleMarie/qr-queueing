@@ -159,13 +159,6 @@ function adminNavbar() {
   )
 }
 
-// if (user === '5') {
- 
-// } else if (user === '4') {
-
-// } else {
-
-// }
 
 function Navbar() {
   const [user, setUser] = useState("");
