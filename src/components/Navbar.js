@@ -34,10 +34,6 @@ function cashierNavbar() {
             <span class="mx-2">Cashier</span>
           </li>
         </NavLink>
-        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
-          <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
-          <span class="mx-2">Log Out</span>
-        </li>
       </ul>
     </div>
   )

@@ -223,7 +223,7 @@ function Cashier() {
               'BOOKING DATE',
               'SERVICE TYPE',
               'PAYMENT',
-              'TOTAL PAYMENT',
+              'PAYMENT STATUS',
               'ADDED ON',
             ]}
             filteredData={filteredData}

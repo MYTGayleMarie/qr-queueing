@@ -172,8 +172,8 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            // console.log("------------")
-            // console.log(booking.data)
+            console.log("------------")
+            console.log(booking.data)
             setServices(booking.data);
             // console.log(id);
             // axios({

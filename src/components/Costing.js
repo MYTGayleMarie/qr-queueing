@@ -19,7 +19,11 @@ function Costing({data, deleteService, withDiscount, setTotal}) {
 
     const summary = data.map((row, index) => {
 
-        totalCost += parseFloat(row.price);  
+        if(row.price == null) {
+            totalCost += parseFloat(0);  
+        } else {
+            totalCost += parseFloat(row.price); 
+        } 
         
         if(row.type == "lab") {
             labTotal += parseFloat(row.price);
@@ -31,8 +35,8 @@ function Costing({data, deleteService, withDiscount, setTotal}) {
             
             <div class="row">
                 <div className="col-sm-1 "><button className="delete-btn" onClick={() => deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div>
-                <div className="col-sm-7 service">{row.lab_test ? row.lab_test : row.package_test }</div>
-                <div className="col-sm-4 total-price">{row.price}</div>
+                <div className="col-sm-7 service">{row.lab_test ? row.lab_test : row.package }</div>
+                <div className="col-sm-4 total-price">P {row.price ? row.price : "0.00"}</div>
             </div>
         )
     });

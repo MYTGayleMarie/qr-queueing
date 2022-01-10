@@ -31,6 +31,7 @@ var patientData = [];
 function Registration() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
+  
   React.useEffect(() => {
     patientData = [];
     axios({
