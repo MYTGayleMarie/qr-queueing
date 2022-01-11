@@ -33,6 +33,7 @@ import { Navigate } from 'react-router';
 
 function App() {
   const [token, setAuthentication] = useState(window.$userToken);
+  document.title = "QR Diagnostics System"
 
   return (
     <Router>

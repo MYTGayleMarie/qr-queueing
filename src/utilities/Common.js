@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
 //Common Utility Functions
 
@@ -30,10 +31,24 @@ export const getToken = () => {
     return localStorage.getItem('token') || null;
 }
 
+//log logout session
+export const logOut = () => {
+    axios({
+        method: 'post',
+        url: window.$link + 'logout/index/' + window.$userId,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+        }
+    }).then(function (message) {
+    });
+}
+
 //remove token from local storage
 export const removeUserSession = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    logOut();
     refreshPage();
 }
 

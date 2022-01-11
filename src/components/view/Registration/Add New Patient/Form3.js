@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Form3.css';
@@ -87,6 +88,10 @@ const ultrasound = getUltrasound();
 function Form2({ service, customer, setServices, lastMeal, navigation }) {
     document.body.style = 'background: white;';
     window.scrollTo(0, 0);
+
+    //Redirection
+    const [redirect, setRedirect] = useState(false);
+
     //functions
     function getDetails(categoryItems, checkedItem) {
         categoryItems.map((data, index) => {
@@ -151,11 +156,11 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
 
         var prices = labPrices.concat(packagePrices);
  
-
         var extractedDates = [];
         var testStarts = [];
         var testFinishes = [];
         var resultDates = []; 
+        var fileResults = [];
 
         axios({
             method: 'post',
@@ -178,18 +183,28 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 payment_type: 'PENDING',
                 lab_tests: testId,
                 package_tests: packageId,
-                prices: prices,
+                lab_prices: labPrices,
+                package_prices: packagePrices,
                 status: '',
-                extracted_dates: extractedDates,
-                test_starts: testStarts,
-                test_finishes: testFinishes,
-                result_dates: resultDates,
+                lab_extracted_dates: extractedDates,
+                lab_test_starts: testStarts,
+                lab_test_finishes: testFinishes,
+                lab_result_dates: resultDates,
+                lab_file_result: fileResults,
+                package_extracted_dates: extractedDates,
+                package_test_starts: testStarts,
+                package_test_finishes: testFinishes,
+                package_result_dates: resultDates,
+                package_file_result: fileResults,
                 remarks: '',
                 added_by: userId, 
             }
         }).then(function (response) {
             console.log(response.data);
             toast.success(response.data.message.success);
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         })
         handleClose();
         })
@@ -334,6 +349,11 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
     checkedServicesDetails.map((data, index) => {
         totalPrice += parseFloat(data.price);
     });
+
+    if (redirect == true) {
+        return <Navigate to="/registration" />;
+      }
+        
     
     return (
         <div>

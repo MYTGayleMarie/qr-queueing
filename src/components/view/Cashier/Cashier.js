@@ -26,6 +26,7 @@ const filterData = {
 };
 
 const cashCountData = {
+  oneCentavos: '',
   fiveCentavos: '',
   tenCentavos: '',
   twentyfiveCentavos: '',
@@ -36,6 +37,7 @@ const cashCountData = {
   twentyPesosBill: '',
   fiftyPesos: '',
   onehundredPesos: '',
+  twohundredPesos: '',
   fivehundredPesos: '',
   onethousandPesos: '',
 };
@@ -67,7 +69,7 @@ function Cashier() {
   React.useEffect(() => {
     axios({
     method: 'post',
-    url: window.$link + 'reports/cashSales/',
+    url: window.$link + 'reports/cashSales',
     withCredentials: false,
     params: {
       api_key: window.$api_key,
@@ -95,7 +97,7 @@ function Cashier() {
       },
     })
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         response.data.bookings.map((booking, index) => {
           axios({
             method: 'post',
@@ -117,19 +119,20 @@ function Cashier() {
               bookingDetails.bookingTime = formatBookingTime.toDateString();
               bookingDetails.serviceType = booking.type;
               bookingDetails.amount = booking.grand_total;
+              bookingDetails.payment = booking.payment_status;
     
-              //fully paid or not
-              if (booking.paid_amount == booking.grand_total) {
-                bookingDetails.payment = 'PAID';
-              } else if (booking.paid_amount < booking.grand_total) {
-                bookingDetails.payment = 'PENDING';
-              }
+              // //fully paid or not
+              // if (booking.paid_amount == booking.grand_total || booking.paid_amount > booking.grand_total) {
+              //   bookingDetails.payment = 'PAID';
+              // } else if (booking.paid_amount < booking.grand_total) {
+              //   bookingDetails.payment = 'PENDING';
+              // }
     
               bookingDetails.addedOn = formatAddedOn.toDateString();
-              if(bookingDetails.payment == 'PENDING') {
+              if(bookingDetails.payment == 'unpaid') {
+                bookingDetails.payment = "PENDING";
                 setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
               }
-              console.log(bookingDetails);
             })
             .catch(function (error) {
               console.log(error);
@@ -146,6 +149,7 @@ function Cashier() {
 
   function calculate() {
 
+    var oneCentavoTotal =  parseFloat(0.01 * cashCount.oneCentavos);
     var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
     var tenCentavoTotal = parseFloat(0.10 * cashCount.tenCentavos);
     var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
@@ -155,11 +159,13 @@ function Cashier() {
     var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
     var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
     var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
+    var twohundredPesosTotal = parseFloat(200.00 * cashCount.twohundredPesos);
     var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
     var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
     var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
 
-    var totalAmount = fiveCentavoTotal 
+    var totalAmount = oneCentavoTotal
+                      + fiveCentavoTotal 
                       + tenCentavoTotal
                       + twentyfiveCentavoTotal
                       + onePesoTotal
@@ -175,11 +181,56 @@ function Cashier() {
     return totalAmount.toFixed(2);
   }
 
-  function logOut() {
+  function logOut() {  
+    var oneCentavoTotal =  parseFloat(0.01 * cashCount.oneCentavos);
+    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
+    var tenCentavoTotal = parseFloat(0.10 * cashCount.tenCentavos);
+    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
+    var onePesoTotal = parseFloat(1.00 * cashCount.onePesos);
+    var fivePesoTotal = parseFloat(5.00 * cashCount.fivePesos);
+    var tenPesoTotal = parseFloat(10.00 * cashCount.tenPesos);
+    var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
+    var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
+    var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
+    var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
+    var twohundredPesosTotal = parseFloat(200.00 * cashCount.twohundredPesos);
+    var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
+    var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
     var cashCount = calculate();
 
     if (cashCount == cashSales) {
-      removeUserSession();
+
+      axios({
+        method: 'post',
+        url: window.$link + 'bookings/getAll',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          added_by: userId,
+          physical_count: cashCount,
+          bill_1000: onethousandPesoTotal,
+          bill_500: fivehundredPesoTotal,
+          bill_200: twohundredPesosTotal,
+          bill_100: onehundredPesoTotal,
+          bill_50: fiftyPesoTotal,
+          bill_20: twentyPesoBillTotal,
+          coin_20: twentyPesoCoinTotal,
+          coin_10: tenPesoTotal,
+          coin_5: fivePesoTotal,
+          coin_1: onePesoTotal,
+          cent_25: twentyfiveCentavoTotal,
+          cent_10: tenCentavoTotal,
+          cent_5: fiveCentavoTotal,
+          cent_1: oneCentavoTotal,
+        },
+      })
+        .then(function (response) {
+          removeUserSession();
+        }).catch(function (error) {
+          toast.error("Oops! Something wrong with the server");
+        });
+      
     } else {
       toast.warning("Cash count does not match with cash sales");
     }
@@ -243,6 +294,15 @@ function Cashier() {
                   <div className='row'>
                     <div className='col-sm-6'>
                       <div className='cash-count-sub-header text-center'>COINS</div>
+
+                      <div className='row'>
+                        <div className='col-sm-3'>
+                          <div className='cash-count-amount text-center'>P 0.01</div>
+                        </div>
+                        <div className='col-sm-6'>
+                          <input type="number" name="oneCentavos" className='cash-count-input' onChange={setCashCount}/>
+                        </div>
+                      </div>
 
                       <div className='row'>
                         <div className='col-sm-3'>
@@ -336,6 +396,15 @@ function Cashier() {
                         </div>
                         <div className='col-sm-6'>
                           <input type="number" name="onehundredPesos" className='cash-count-input' onChange={setCashCount}/>
+                        </div>
+                      </div>
+
+                      <div className='row'>
+                        <div className='col-sm-3'>
+                          <div className='cash-count-amount text-center'>P 200.00</div>
+                        </div>
+                        <div className='col-sm-6'>
+                          <input type="number" name="twohundredPesos" className='cash-count-input' onChange={setCashCount}/>
                         </div>
                       </div>
 

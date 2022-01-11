@@ -58,6 +58,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     if(type === 'no-action') {
 
         const {from_date, to_date, done} = filteredData;
+
+        console.log(filteredData)
     
         return(
             <div className="table-container">

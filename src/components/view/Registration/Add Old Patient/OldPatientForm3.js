@@ -5,6 +5,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 //components
 import Navbar from '../../../Navbar';
@@ -85,6 +86,10 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
     const [homeaddress, setAddress] = useState("");
     const {id} = useParams();
 
+    //Redirection
+    const [redirect, setRedirect] = useState(false);
+
+
     axios({
         method: 'post',
         url: window.$link + 'customers/show/' + id,
@@ -163,6 +168,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
         var testId = [];
         var labPrices = [];
 
+        console.log(services)
         services.map((data, index) => {
 
             if(data.type == 'lab') {
@@ -175,13 +181,11 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
             }
         })
 
-        var prices = labPrices.concat(packagePrices);
- 
-
         var extractedDates = [];
         var testStarts = [];
         var testFinishes = [];
         var resultDates = []; 
+        var fileResults = [];
 
         axios({
             method: 'post',
@@ -204,18 +208,28 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 payment_type: 'PENDING',
                 lab_tests: testId,
                 package_tests: packageId,
-                prices: prices,
+                lab_prices: labPrices,
+                package_prices: packagePrices,
                 status: '',
-                extracted_dates: extractedDates,
-                test_starts: testStarts,
-                test_finishes: testFinishes,
-                result_dates: resultDates,
+                lab_extracted_dates: extractedDates,
+                lab_test_starts: testStarts,
+                lab_test_finishes: testFinishes,
+                lab_result_dates: resultDates,
+                lab_file_result: fileResults,
+                package_extracted_dates: extractedDates,
+                package_test_starts: testStarts,
+                package_test_finishes: testFinishes,
+                package_result_dates: resultDates,
+                package_file_result: fileResults,
                 remarks: '',
                 added_by: userId, 
             }
         }).then(function (response) {
             console.log(response.data);
             toast.success(response.data.message.success);
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         })
         handleClose();
         })
@@ -344,6 +358,11 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
     checkedServicesDetails.map((data, index) => {
         totalPrice += parseInt(data.price);
     });
+
+
+  if (redirect == true) {
+    return <Navigate to="/registration" />;
+  }
     
     return (
         <div>

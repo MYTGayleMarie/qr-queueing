@@ -27,7 +27,7 @@ function SearchPatient() {
         patients.length = 0;
         axios({
             method: 'post',
-            url: window.$link + 'customers/search/',
+            url: window.$link + 'customers/search',
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,

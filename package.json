@@ -1,6 +1,7 @@
 {
   "name": "qr-diagnostics-erp",
   "version": "0.1.0",
+  "http": "https://system.qrdiagnosticsph.com/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

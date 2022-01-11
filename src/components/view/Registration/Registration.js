@@ -17,10 +17,11 @@ const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
+var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
-  from_date: presentDate,
-  to_date: presentDate,
+  from_date: formattedPresentData,
+  to_date: formattedPresentData,
   done: false,
 };
 
@@ -33,7 +34,7 @@ function Registration() {
   const [render, setRender] = useState([]);
   
   React.useEffect(() => {
-    patientData = [];
+    patientData.length = 0;
     axios({
       method: 'post',
       url: window.$link + 'bookings/getAll',

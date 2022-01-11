@@ -220,6 +220,7 @@ checkedServices.map((data, index) => {
         totalPrice += parseFloat(data.price);
     });
 
+    console.log(checkedServicesDetails)
     return (
     <div>
         <Navbar/>

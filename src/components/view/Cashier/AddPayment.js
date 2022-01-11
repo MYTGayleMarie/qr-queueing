@@ -6,6 +6,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllLabServices, getAllPackages } from "../../../services/services";
+import { Navigate } from 'react-router-dom';
 
 //css
 import './AddPayment.css'
@@ -49,8 +50,10 @@ function AddPayment() {
 
     const [payment, setPayment] = useState("");
     const [total, setTotal] = useState(0);
+    const [grandTotal, setGrandTotal] = useState(0);
     const [pay, setPay] = useState(0);
     const [remarks, setRemarks] = useState("");
+    const [discount, setDiscount] = useState(0);
     const {id} = useParams();
 
     //customer details
@@ -83,6 +86,7 @@ function AddPayment() {
     //others states
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
     //add Test states
     const [addTestType, setAddTestType] = useState("");
@@ -122,8 +126,10 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log("----")
+            console.log(response.data.total_amount);
             setTotal(response.data.total_amount);
-   
+            setGrandTotal(response.data.total_amount);
             totalAmount = response.data.total_amount;
             discount = response.data.discount;
             customer = response.data.customer_id;
@@ -172,22 +178,8 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log("------------")
             console.log(booking.data)
             setServices(booking.data);
-            // console.log(id);
-            // axios({
-            //     method: 'post',
-            //     url: window.$link + 'bookings/getBookingDetails/' + 11,
-            //     withCredentials: false, 
-            //     params: {
-            //         api_key: window.$api_key,
-            //         token: userToken.replace(/['"]+/g, ''),
-            //         requester: userId,
-            //     }
-            // }).then(function (packageResponse) {
-            //     console.log(packageResponse);
-            // })
         }).catch(function (error) {
             console.log(error);
         });
@@ -206,6 +198,8 @@ function AddPayment() {
             }
         }).then(function (booking) {
             console.log(booking.data);
+            setServices(services);
+            setTotal(total);
             handleRemoveClose();
         }).catch(function (error) {
             console.log(error);
@@ -277,29 +271,64 @@ function AddPayment() {
         const price = key[1];
         const type = key[2];
 
-        axios({
-            method: 'post',
-            url: window.$link + 'Bookingdetails/add/' + id,
-            withCredentials: false, 
-            params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ''),
-                type: type, 
-                lab_tests: [testId],
-                price: price,
-                status: 'PENDING',
-                extracted_on: '',
-                test_start: '',
-                test_finish: '', 
-                result_on: '',
-                file_result: '',
-                added_by: userId,
-            }
-        }).then(function (booking) {
-            console.log(booking);
-        }).catch(function (error) {
-            console.log(error);
-        });
+        var extractedDates = [];
+        var testStarts = [];
+        var testFinishes = [];
+        var resultDates = []; 
+        var fileResults = [];
+
+        console.log(price);
+
+        if (type == "lab") {
+            axios({
+                method: 'post',
+                url: window.$link + 'Bookingdetails/add/' + id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    type: type, 
+                    lab_tests: [testId],
+                    lab_prices: [price],
+                    status: 'PENDING',
+                    lab_extracted_dates: [],
+                    lab_test_starts: [],
+                    lab_test_finishes: [],
+                    lab_result_dates: [],
+                    lab_file_results: [],
+                    added_by: userId,
+                }
+            }).then(function (booking) {
+                console.log(booking);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+        else if (type == "package") {
+            axios({
+                method: 'post',
+                url: window.$link + 'Bookingdetails/add/' + id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    type: type, 
+                    package_tests: [testId],
+                    package_prices: [price],
+                    status: 'PENDING',
+                    package_extracted_dates: [],
+                    package_test_starts: [],
+                    package_test_finishes: [],
+                    package_result_dates: [],
+                    package_file_results: [],
+                    added_by: userId,
+                }
+            }).then(function (booking) {
+                console.log(booking);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 
 
@@ -315,7 +344,10 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: pay,
+                    amount: grandTotal,
+                    senior_pwd_id: seniorPwdId,
+                    discount: discount,
+                    grand_total: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
@@ -323,8 +355,8 @@ function AddPayment() {
                 var date = new Date();                
                 toast.success("Payment Successful!");
                 setTimeout(function() {
-                    refreshPage();
-                }, 3000)
+                    setRedirect(true);
+                }, 2000)
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -340,10 +372,13 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: total,
+                    amount: grandTotal,
                     check_no: checkNo,
                     check_bank: checkBank,
                     check_date: checkDate,
+                    senior_pwd_id: seniorPwdId,
+                    discount: discount,
+                    grandTotal: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
@@ -351,8 +386,8 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setTimeout(function() {
-                    refreshPage();
-                }, 3000)
+                    setRedirect(true);
+                }, 2000)
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -368,12 +403,15 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: total,
+                    amount: grandTotal,
                     cardName: cardName,
                     card_no: cardNo,
                     card_type: cardType,
                     card_expiry: cardExpiry,
                     card_bank: cardBank,
+                    senior_pwd_id: seniorPwdId,
+                    discount: discount,
+                    grandTotal: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
@@ -381,7 +419,7 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setTimeout(function() {
-                    refreshPage();
+                    setRedirect(true);
                 }, 3000)
             }).catch(function (error) {
                 console.log(error);
@@ -398,9 +436,12 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: total,
+                    amount: grandTotal,
                     other_source: source,
                     other_reference_no: reference,
+                    senior_pwd_id: seniorPwdId,
+                    discount: discount,
+                    grandTotal: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
@@ -408,8 +449,8 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setTimeout(function() {
-                    refreshPage();
-                }, 3000)
+                    setRedirect(true);
+                }, 2000)
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -435,7 +476,7 @@ function AddPayment() {
                                 <span class="amount-label">CHANGE</span>
                             </div>
                             <div className="row">
-                                <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(total-pay).toFixed(2)}  placeholder="P"/>
+                                <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(pay-grandTotal).toFixed(2)}  placeholder="P"/>
                             </div>
                         </div>
                     </div>
@@ -573,6 +614,13 @@ function AddPayment() {
             )
         }
 
+        if(redirect == true) {
+            return (
+                <Navigate to = "/cashier"/>
+            )
+        }    
+
+
     return (
         <div>
             <Navbar/>
@@ -636,7 +684,11 @@ function AddPayment() {
             data={services}
             deleteService={handleRemove}
             withDiscount={seniorPwdId}
+            total={total}
             setTotal={setTotal}
+            grandTotal={grandTotal}
+            setGrandTotal={setGrandTotal}
+            setDiscount={setDiscount}
          />
 
 
@@ -680,10 +732,13 @@ function AddPayment() {
 
                     <ToastContainer hideProgressBar={true}/>
 
+                    
+
                 <Modal show={showRemove} onHide={handleRemoveClose}>
                     <Modal.Header closeButton>
                     <Modal.Title>SUBMIT</Modal.Title>
                     </Modal.Header>
+                    <form>
                     <Modal.Body>Are you sure you want to remove service?</Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleRemoveClose}>
@@ -693,6 +748,7 @@ function AddPayment() {
                         Submit
                     </Button>
                     </Modal.Footer>
+                    </form>
                 </Modal>
 
                 <Modal show={show} onHide={handleClose} size="xl">
