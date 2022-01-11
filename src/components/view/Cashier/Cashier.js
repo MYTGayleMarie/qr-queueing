@@ -159,7 +159,7 @@ function Cashier() {
     var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
     var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
     var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
-    var twohundredPesosTotal = parseFloat(200.00 * cashCount.twohundredPesos);
+    var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
     var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
     var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
     var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
@@ -175,6 +175,7 @@ function Cashier() {
                       + twentyPesoBillTotal
                       + fiftyPesoTotal
                       + onehundredPesoTotal
+                      + twohundredPesoTotal
                       + fivehundredPesoTotal
                       + onethousandPesoTotal;
 
@@ -193,7 +194,7 @@ function Cashier() {
     var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
     var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
     var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
-    var twohundredPesosTotal = parseFloat(200.00 * cashCount.twohundredPesos);
+    var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
     var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
     var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
     var cashCount = calculate();
@@ -211,7 +212,7 @@ function Cashier() {
           physical_count: cashCount,
           bill_1000: onethousandPesoTotal,
           bill_500: fivehundredPesoTotal,
-          bill_200: twohundredPesosTotal,
+          bill_200: twohundredPesoTotal,
           bill_100: onehundredPesoTotal,
           bill_50: fiftyPesoTotal,
           bill_20: twentyPesoBillTotal,
