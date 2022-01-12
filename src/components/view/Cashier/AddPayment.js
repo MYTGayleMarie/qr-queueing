@@ -47,6 +47,7 @@ const CheckPaymentDetails = {
 
 function AddPayment() {
 
+    document.body.style = 'background: white;';
 
     const [payment, setPayment] = useState("");
     const [total, setTotal] = useState(0);
@@ -126,8 +127,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log("----")
-            console.log(response.data.total_amount);
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.total_amount);
             totalAmount = response.data.total_amount;
@@ -276,8 +275,6 @@ function AddPayment() {
         var testFinishes = [];
         var resultDates = []; 
         var fileResults = [];
-
-        console.log(price);
 
         if (type == "lab") {
             axios({

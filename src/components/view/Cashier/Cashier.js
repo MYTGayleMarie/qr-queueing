@@ -61,8 +61,8 @@ function Cashier() {
   const [redirect, setRedirect] = useState(false);
   const [finalPatientData, setFinalPatientData] = useState([]);
  
-  function addPayment(customerId) {
-    id = customerId;
+  function addPayment(bookingId) {
+    id = bookingId;
     setRedirect(true);
   }
 

@@ -25,8 +25,6 @@ const filterData = {
   done: false,
 };
 
-console.log(filterData);
-
 var patientData = [];
 
 function Registration() {

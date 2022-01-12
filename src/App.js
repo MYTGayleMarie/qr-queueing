@@ -46,9 +46,9 @@ function App() {
         <Route path="/cashier" element={token ? <Cashier /> : <Navigate to="/" />} />
         <Route path="/add-payment/:id" element={token ? <AddPayment /> : <Navigate to="/" />} />
         <Route path="/extraction" element={token ? <Extraction /> : <Navigate to="/" />} />
-        <Route path="/laboratory-test" element={token ? <LaboratoryTests /> : <Navigate to="/" />} />
+        <Route path="/laboratory-test/:id" element={token ? <LaboratoryTests /> : <Navigate to="/" />} />
         <Route path="/imaging" element={token ? <Imaging /> : <Navigate to="/" />} />
-        <Route path="/imaging-test" element={token ? <ImagingTests /> : <Navigate to="/" />} />
+        <Route path="/imaging-test/:id" element={token ? <ImagingTests /> : <Navigate to="/" />} />
         <Route path="/release-item" element={token ? <ReleaseItems /> : <Navigate to="/" />} />
         <Route path="/add-release" element={token ? <AddItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
