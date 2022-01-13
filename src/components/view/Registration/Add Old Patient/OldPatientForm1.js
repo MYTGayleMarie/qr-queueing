@@ -52,7 +52,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         console.log(error);
     });
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
@@ -167,7 +167,11 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
              <div className="booking-form">
              <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
              <form className="needs-validation">
-                 <div className="row small-gap">
+             <div className="row">
+                <label for="address" className="form-label">REFERRAL</label><br />
+                <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
+            </div>
+                    <div className="row small-gap">
                      <div className="col-sm-6">
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />

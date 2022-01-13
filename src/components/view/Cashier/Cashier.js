@@ -26,20 +26,20 @@ const filterData = {
 };
 
 const cashCountData = {
-  oneCentavos: '',
-  fiveCentavos: '',
-  tenCentavos: '',
-  twentyfiveCentavos: '',
-  onePesos: '', 
-  fivePesos: '', 
-  tenPesos: '',
-  twentyPesosCoin: '',
-  twentyPesosBill: '',
-  fiftyPesos: '',
-  onehundredPesos: '',
-  twohundredPesos: '',
-  fivehundredPesos: '',
-  onethousandPesos: '',
+  oneCentavos: 0,
+  fiveCentavos: 0,
+  tenCentavos: 0,
+  twentyfiveCentavos: 0,
+  onePesos: 0, 
+  fivePesos: 0, 
+  tenPesos: 0,
+  twentyPesosCoin: 0,
+  twentyPesosBill: 0,
+  fiftyPesos: 0,
+  onehundredPesos: 0,
+  twohundredPesos: 0,
+  fivehundredPesos: 0,
+  onethousandPesos: 0,
 };
 
 var id = '';
@@ -197,19 +197,19 @@ function Cashier() {
     var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
     var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
     var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
-    var cashCount = calculate();
+    var cashCounts = calculate();
 
-    if (cashCount == cashSales) {
+    if (cashCounts == cashSales) {
 
       axios({
         method: 'post',
-        url: window.$link + 'bookings/getAll',
+        url: window.$link + 'cash_counts/create',
         withCredentials: false,
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
           added_by: userId,
-          physical_count: cashCount,
+          physical_count: cashCounts,
           bill_1000: onethousandPesoTotal,
           bill_500: fivehundredPesoTotal,
           bill_200: twohundredPesoTotal,

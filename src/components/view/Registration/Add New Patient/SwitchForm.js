@@ -14,6 +14,7 @@ const personalData = {
     email: "", 
     contactNum: "", 
     address: "", 
+    referral: "",
     serviceLocation: "", 
     result: "", 
     dateOfTesting: "",

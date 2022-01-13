@@ -13,7 +13,7 @@ import Navbar from '../../../Navbar';
 
 function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
     document.body.style = 'background: white;';
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
@@ -120,6 +120,10 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
                     <div className="row">
                         <label for="address" className="form-label">ADDRESS <i>(required)</i></label><br />
                         <input type="text" className="form-control full" id="address" name="address" value={address} onChange={setPersonal} required/><br />
+                    </div>
+                    <div className="row">
+                        <label for="address" className="form-label">REFERRAL</label><br />
+                        <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
                     </div>
                     <div className="row small-gap">
                         <div className="col-sm-6">

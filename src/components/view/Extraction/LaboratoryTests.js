@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getToken, getUser} from "../../../utilities/Common";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import './LaboratoryTests.css';
@@ -11,6 +13,7 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import PersonalDetails from '../../PersonalDetails';
 
+const presentDate = new Date();
 const userToken = getToken();
 const userId = getUser();
 const xrayId = 18;
@@ -46,6 +49,77 @@ function LaboratoryTests() {
         if(inputBox == true) {
             ExtractionInfo.length = 0;
         }
+    };
+    
+    console.log(ExtractionInfo);
+
+    const showPending = (response) => {
+        var message; 
+
+        response.map((row, index) => {
+            message += row.lab_test + " is still PENDING" + "\n";
+        });
+
+        toast.success(message);
+    };
+
+    const updateExtraction = () => {
+        // console.log(ExtractionInfo);
+
+        ExtractionInfo.map((row, index) => {
+
+            if(row.type == "lab") {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'Bookingdetails/updateExtraction/' + row.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        booking: id,
+                        status: 'done',
+                        extracted_on: presentDate.toISOString().split('T')[0], 
+                        updated_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+
+                    if (ExtractionInfo.length == index - 1) {
+                        showPending(response.data);
+                        toast.success("Successful Extraction!");
+                    }
+                    
+                }).catch(function (error) {
+                    toast.error(error);
+                });
+            } 
+            else if (row.type == "package") {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'Bookingpackage_details/updateExtraction/' + id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        booking_detail_id: row.id,
+                        status: 'done',
+                        extracted_on: presentDate.toISOString().split('T')[0], 
+                        updated_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+
+                    if (ExtractionInfo.length == index - 1) {
+                        showPending(response.data);
+                        toast.success("Successful Extraction!");
+                    }
+                   
+                }).catch(function (error) {
+                    toast.error(error);
+                });
+            }
+        });
+        toggleExtraction();
     };
 
       React.useEffect(() => {
@@ -104,7 +178,7 @@ function LaboratoryTests() {
         }).then(function (booking) {
             console.log(booking.data)
             setPackages(booking.data.filter((info) => info.type != "lab"));
-            setServices(booking.data.filter((info) => info.type != "package" && info.category_id != xrayId));
+            setServices(booking.data.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
         }).catch(function (error) {
             console.log(error);
         });
@@ -122,7 +196,8 @@ function LaboratoryTests() {
                             {
                                 id: row.id,
                                 name: row.lab_test,
-                                barcode: row.barcode
+                                barcode: row.barcode,
+                                type: row.type
                             },
                         ]);
                     } else {
@@ -152,7 +227,7 @@ function LaboratoryTests() {
                     requester: userId,
                 }
             }).then(function (response) {
-                setPackageServices(response.data.filter((info) => info.category_id != xrayId));
+                setPackageServices(response.data.filter((info) => info.category_id != xrayId && info.status != "done"));
             }).catch(function (error) {
                 console.log(error);
             });
@@ -171,7 +246,8 @@ function LaboratoryTests() {
                                 {
                                     id: services.id,
                                     name: services.lab_test,
-                                    barcode: services.barcode
+                                    barcode: services.barcode,
+                                    type: "package",
                                 },
                             ]);
                         } else {
@@ -200,8 +276,6 @@ function LaboratoryTests() {
             </div>
         );
     });
-   
-
 
     return (
         <div>
@@ -211,6 +285,7 @@ function LaboratoryTests() {
                 type='thin'
                 title='LABORATORY TESTS' 
             />
+            <ToastContainer/>
             <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
             <div className="personal-data-cont">
@@ -270,7 +345,7 @@ function LaboratoryTests() {
 
             <div className="row d-flex justify-content-center">        
                 {inputBox === false && <button className="start-btn" onClick={toggleExtraction}>START EXTRACTION</button>}  
-                {inputBox === true && <button className="save-details-btn" onClick={toggleExtraction}>END EXTRACTION</button>}     
+                {inputBox === true && <button className="save-details-btn" onClick={updateExtraction}>END EXTRACTION</button>}     
             </div>
 
         </div>
