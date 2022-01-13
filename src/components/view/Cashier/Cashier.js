@@ -26,18 +26,16 @@ const filterData = {
 };
 
 const cashCountData = {
-  oneCentavos: '',
   fiveCentavos: '',
   tenCentavos: '',
   twentyfiveCentavos: '',
-  onePesos: '', 
-  fivePesos: '', 
+  onePesos: '',
+  fivePesos: '',
   tenPesos: '',
   twentyPesosCoin: '',
   twentyPesosBill: '',
   fiftyPesos: '',
   onehundredPesos: '',
-  twohundredPesos: '',
   fivehundredPesos: '',
   onethousandPesos: '',
 };
@@ -46,7 +44,6 @@ var id = '';
 var patientData = [];
 
 function Cashier() {
-
   //Cash Count
   const [cashCount, setCashCount] = useForm(cashCountData);
   const [cashSales, setCashSales] = useState(0);
@@ -58,32 +55,31 @@ function Cashier() {
 
   //filteredData
   const [filteredData, setFilter] = useForm(filterData);
+  const [bookingDetails, setBookingDetails] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [finalPatientData, setFinalPatientData] = useState([]);
- 
-  function addPayment(bookingId) {
-    id = bookingId;
+
+  function addPayment(customerId) {
+    id = customerId;
     setRedirect(true);
   }
 
   React.useEffect(() => {
     axios({
-    method: 'post',
-    url: window.$link + 'reports/cashSales',
-    withCredentials: false,
-    params: {
-      api_key: window.$api_key,
-      token: userToken.replace(/['"]+/g, ''),
-      requester: userId,
-    },
-  }).then(function (response) {
-    setCashSales(response.data.data.total_cash_sales);
-  });
-
+      method: 'post',
+      url: window.$link + 'reports/cashSales/',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+      },
+    }).then(function (response) {
+      setCashSales(response.data.data.total_cash_sales);
+    });
   }, []);
 
   React.useEffect(() => {
-    finalPatientData.length = 0;
     axios({
       method: 'post',
       url: window.$link + 'bookings/getAll',
@@ -97,151 +93,101 @@ function Cashier() {
       },
     })
       .then(function (response) {
-        // console.log(response);
-        response.data.bookings.map((booking, index) => {
-          axios({
-            method: 'post',
-            url: window.$link + 'customers/show/' + booking.customer_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          })
-            .then(function (customer) {
-              var formatBookingTime = new Date(booking.booking_time);
-              var formatAddedOn = new Date(booking.added_on);
-              var bookingDetails = {};
-              bookingDetails.id = booking.id;
-              bookingDetails.name =
-              customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-              bookingDetails.bookingTime = formatBookingTime.toDateString();
-              bookingDetails.serviceType = booking.type;
-              bookingDetails.amount = booking.grand_total;
-              bookingDetails.payment = booking.payment_status;
-    
-              // //fully paid or not
-              // if (booking.paid_amount == booking.grand_total || booking.paid_amount > booking.grand_total) {
-              //   bookingDetails.payment = 'PAID';
-              // } else if (booking.paid_amount < booking.grand_total) {
-              //   bookingDetails.payment = 'PENDING';
-              // }
-    
-              bookingDetails.addedOn = formatAddedOn.toDateString();
-              if(bookingDetails.payment == 'unpaid') {
-                bookingDetails.payment = "PENDING";
-                setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        });
+        console.log(response);
+        setBookingDetails(response.data.bookings);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
-
-
-
-  function calculate() {
-
-    var oneCentavoTotal =  parseFloat(0.01 * cashCount.oneCentavos);
-    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
-    var tenCentavoTotal = parseFloat(0.10 * cashCount.tenCentavos);
-    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
-    var onePesoTotal = parseFloat(1.00 * cashCount.onePesos);
-    var fivePesoTotal = parseFloat(5.00 * cashCount.fivePesos);
-    var tenPesoTotal = parseFloat(10.00 * cashCount.tenPesos);
-    var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
-    var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
-    var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
-    var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
-    var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
-    var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
-    var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
-
-    var totalAmount = oneCentavoTotal
-                      + fiveCentavoTotal 
-                      + tenCentavoTotal
-                      + twentyfiveCentavoTotal
-                      + onePesoTotal
-                      + fivePesoTotal
-                      + tenPesoTotal
-                      + twentyPesoCoinTotal
-                      + twentyPesoBillTotal
-                      + fiftyPesoTotal
-                      + onehundredPesoTotal
-                      + twohundredPesoTotal
-                      + fivehundredPesoTotal
-                      + onethousandPesoTotal;
-
-    return totalAmount.toFixed(2);
-  }
-
-  function logOut() {  
-    var oneCentavoTotal =  parseFloat(0.01 * cashCount.oneCentavos);
-    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
-    var tenCentavoTotal = parseFloat(0.10 * cashCount.tenCentavos);
-    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
-    var onePesoTotal = parseFloat(1.00 * cashCount.onePesos);
-    var fivePesoTotal = parseFloat(5.00 * cashCount.fivePesos);
-    var tenPesoTotal = parseFloat(10.00 * cashCount.tenPesos);
-    var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
-    var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
-    var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
-    var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
-    var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
-    var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
-    var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
-    var cashCount = calculate();
-
-    if (cashCount == cashSales) {
-
+  React.useEffect(() => {
+    patientData.length = 0;
+    bookingDetails.map((booking, index) => {
       axios({
         method: 'post',
-        url: window.$link + 'bookings/getAll',
+        url: window.$link + 'customers/show/' + booking.customer_id,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
-          added_by: userId,
-          physical_count: cashCount,
-          bill_1000: onethousandPesoTotal,
-          bill_500: fivehundredPesoTotal,
-          bill_200: twohundredPesoTotal,
-          bill_100: onehundredPesoTotal,
-          bill_50: fiftyPesoTotal,
-          bill_20: twentyPesoBillTotal,
-          coin_20: twentyPesoCoinTotal,
-          coin_10: tenPesoTotal,
-          coin_5: fivePesoTotal,
-          coin_1: onePesoTotal,
-          cent_25: twentyfiveCentavoTotal,
-          cent_10: tenCentavoTotal,
-          cent_5: fiveCentavoTotal,
-          cent_1: oneCentavoTotal,
+          requester: userId,
         },
       })
-        .then(function (response) {
-          removeUserSession();
-        }).catch(function (error) {
-          toast.error("Oops! Something wrong with the server");
+        .then(function (customer) {
+          var formatBookingTime = new Date(booking.booking_time);
+          var formatAddedOn = new Date(booking.added_on);
+          var bookingDetails = {};
+          bookingDetails.id = booking.id;
+          bookingDetails.name =
+            customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+          bookingDetails.bookingTime = formatBookingTime.toDateString();
+          bookingDetails.serviceType = booking.type;
+          bookingDetails.amount = booking.grand_total;
+
+          //fully paid or not
+          if (booking.paid_amount == booking.grand_total) {
+            bookingDetails.payment = 'PAID';
+          } else if (booking.paid_amount < booking.grand_total) {
+            bookingDetails.payment = 'PENDING';
+            console.log('here');
+          }
+
+          bookingDetails.addedOn = formatAddedOn.toDateString();
+          if (bookingDetails.payment == 'PENDING') {
+            patientData.push(bookingDetails);
+            setFinalPatientData(patientData);
+          }
+          console.log(bookingDetails);
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-      
+    });
+  });
+
+  function calculate() {
+    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
+    var tenCentavoTotal = parseFloat(0.1 * cashCount.tenCentavos);
+    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
+    var onePesoTotal = parseFloat(1.0 * cashCount.onePesos);
+    var fivePesoTotal = parseFloat(5.0 * cashCount.fivePesos);
+    var tenPesoTotal = parseFloat(10.0 * cashCount.tenPesos);
+    var twentyPesoCoinTotal = parseFloat(20.0 * cashCount.twentyPesosCoin);
+    var twentyPesoBillTotal = parseFloat(20.0 * cashCount.twentyPesosBill);
+    var fiftyPesoTotal = parseFloat(50.0 * cashCount.fiftyPesos);
+    var onehundredPesoTotal = parseFloat(100.0 * cashCount.onehundredPesos);
+    var fivehundredPesoTotal = parseFloat(500.0 * cashCount.fivehundredPesos);
+    var onethousandPesoTotal = parseFloat(1000.0 * cashCount.onethousandPesos);
+
+    var totalAmount =
+      fiveCentavoTotal +
+      tenCentavoTotal +
+      twentyfiveCentavoTotal +
+      onePesoTotal +
+      fivePesoTotal +
+      tenPesoTotal +
+      twentyPesoCoinTotal +
+      twentyPesoBillTotal +
+      fiftyPesoTotal +
+      onehundredPesoTotal +
+      fivehundredPesoTotal +
+      onethousandPesoTotal;
+
+    return totalAmount.toFixed(2);
+  }
+
+  function logOut() {
+    var cashCount = calculate();
+
+    if (cashCount == cashSales) {
+      removeUserSession();
     } else {
-      toast.warning("Cash count does not match with cash sales");
+      toast.warning('Cash count does not match with cash sales');
     }
   }
 
-  function filter() {
-   
-  }
-
-
+  function filter() {}
 
   if (redirect == true) {
     var link = '/add-payment/' + id;
@@ -249,21 +195,22 @@ function Cashier() {
     return <Navigate to={link} />;
   }
 
-
   return (
     <>
       <Navbar />
       <div className="active-cont">
         <Fragment>
           <div className="searchbar-container">
-              <div className="row">
-                  <div className="col">
-                      <h1 className="searchbar-header">CASHIER</h1>
-                  </div>
-                  <div className="col d-flex justify-content-end">
-                  <button className="cash-count-btn" onClick={handleShow}>CASH COUNT</button>
-                  </div>
+            <div className="row">
+              <div className="col">
+                <h1 className="searchbar-header">CASHIER</h1>
               </div>
+              <div className="col d-flex justify-content-end">
+                <button className="cash-count-btn" onClick={handleShow}>
+                  CASH COUNT
+                </button>
+              </div>
+            </div>
           </div>
           <Header type="thick" title="BOOKING MANAGER" tableData={patientData} />
           <Table
@@ -275,7 +222,7 @@ function Cashier() {
               'BOOKING DATE',
               'SERVICE TYPE',
               'PAYMENT',
-              'PAYMENT STATUS',
+              'TOTAL PAYMENT',
               'ADDED ON',
             ]}
             filteredData={filteredData}
@@ -287,178 +234,158 @@ function Cashier() {
         </Fragment>
 
         <Modal show={show} onHide={handleClose} size="lg">
-            <Modal.Header closeButton className='text-center'>
-               <Modal.Title className='w-100 cash-count-header'>CASH COUNT</Modal.Title>
-                </Modal.Header>
-                  <Modal.Body>
+          <Modal.Header closeButton className="text-center">
+            <Modal.Title className="w-100 cash-count-header">CASH COUNT</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              <div className="col-sm-6">
+                <div className="cash-count-sub-header text-center">COINS</div>
 
-                  <div className='row'>
-                    <div className='col-sm-6'>
-                      <div className='cash-count-sub-header text-center'>COINS</div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 0.01</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="oneCentavos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 0.05</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="fiveCentavos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 0.10</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="tenCentavos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 0.25</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="twentyfiveCentavos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 1.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="onePesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 5.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="fivePesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 10.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="tenPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 20.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="twentyPesosCoin" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-
-                    </div>
-                    <div className='col-sm-6'>
-                      <div className='cash-count-sub-header text-center'>BILLS</div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 20.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="twentyPesosBill" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 50.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="fiftyPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 100.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="onehundredPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 200.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="twohundredPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 500.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="fivehundredPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-
-                      <div className='row'>
-                        <div className='col-sm-3'>
-                          <div className='cash-count-amount text-center'>P 1000.00</div>
-                        </div>
-                        <div className='col-sm-6'>
-                          <input type="number" name="onethousandPesos" className='cash-count-input' onChange={setCashCount}/>
-                        </div>
-                      </div>
-                    </div>
-
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 0.05</div>
                   </div>
-
-                  <div className='row'>
-                    <div className='col-sm-6'>
-                      <div className='cash-count-sub-header text-start'>TOTAL</div>
-                    </div>
-                    <div className='col-sm-6'>
-                      <div className='amount text-center'>P {calculate()}</div>
-                    </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="fiveCentavos" className="cash-count-input" onChange={setCashCount} />
                   </div>
+                </div>
 
-                  <div className='row'>
-                    <div className='col-sm-6'>
-                      <div className='cash-count-sub-header text-start'>TOTAL CASH SALES</div>
-                    </div>
-                    <div className='col-sm-6'>
-                      <div className='amount text-center'>P {cashSales}</div>
-                    </div>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 0.10</div>
                   </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="tenCentavos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
 
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 0.25</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input
+                      type="number"
+                      name="twentyfiveCentavos"
+                      className="cash-count-input"
+                      onChange={setCashCount}
+                    />
+                  </div>
+                </div>
 
-                  </Modal.Body>
-                    <Modal.Footer>
-                        <button type="submit" className='save-btn' onClick={logOut}>
-                          SAVE
-                        </button>
-                   </Modal.Footer>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 1.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="onePesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 5.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="fivePesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 10.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="tenPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 20.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="twentyPesosCoin" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div className="cash-count-sub-header text-center">BILLS</div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 20.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="twentyPesosBill" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 50.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="fiftyPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 100.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="onehundredPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 500.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="fivehundredPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 1000.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="onethousandPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-6">
+                <div className="cash-count-sub-header text-start">TOTAL</div>
+              </div>
+              <div className="col-sm-6">
+                <div className="amount text-center">P {calculate()}</div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-6">
+                <div className="cash-count-sub-header text-start">TOTAL CASH SALES</div>
+              </div>
+              <div className="col-sm-6">
+                <div className="amount text-center">P {cashSales}</div>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button type="submit" className="save-btn" onClick={logOut}>
+              SAVE
+            </button>
+          </Modal.Footer>
         </Modal>
 
-        <ToastContainer/>
-        
+        <ToastContainer />
       </div>
     </>
   );
