@@ -52,7 +52,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         console.log(error);
     });
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountCode, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
@@ -141,10 +141,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
             <span className="sex label">SEX</span>
             <span className="sex detail">{gender.toUpperCase()}</span>
             </div>
-            {/* <div className="col-sm-4">
-            <span className="age label">AGE</span>
-            <span className="age detail">{age}</span>
-            </div> */}
+
         </div>
         <div className="row">
             <div className="col-sm-4">
@@ -171,6 +168,18 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                 <label for="address" className="form-label">REFERRAL</label><br />
                 <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
             </div>
+
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT CODE</label><br />
+                            <input type="text" className="form-control full" id="discount_code" name="discountCode" value={discountCode} onChange={setPersonal}/><br />
+                        </div>
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT DETAIL</label><br />
+                            <input type="text" className="form-control full" id="discount_detail" name="discountDetail" value={discountDetail} onChange={setPersonal}/><br />
+                        </div>
+                    </div>
+
                     <div className="row small-gap">
                      <div className="col-sm-6">
                          <div className="row">

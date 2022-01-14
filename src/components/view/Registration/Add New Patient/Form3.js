@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { Navigate } from 'react-router-dom';
 
 //css
@@ -12,7 +13,6 @@ import './Form3.css';
 import Navbar from '../../../Navbar';
 import Header from '../../../Header.js';
 import ServiceItems from '../../../ServiceItems';
-import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { getAnnualWellnessPackageBasic,
          getPregnancyLabPackage,
          getPreEmploymentDiscount,
@@ -162,6 +162,10 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         var resultDates = []; 
         var fileResults = [];
 
+        var discount_info = customer.discountCode.split("_");
+        const discount_code = discount_info[0];
+        const discount_percentage = discount_info[1];
+
         axios({
             method: 'post',
             url: window.$link + 'bookings/create',
@@ -175,9 +179,10 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 type: customer.serviceLocation,
                 result: customer.result,
                 total_amount: totalPrice,
-                discount: '0',
                 grand_total: totalPrice,
-                discount_code: '',
+                discount: discount_percentage,
+                discount_code: discount_code,
+                discount_reference_no: customer.discountDetail, 
                 status: 'For Examination',
                 reference_code: '',
                 payment_type: 'PENDING',

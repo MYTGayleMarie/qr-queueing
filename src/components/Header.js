@@ -36,6 +36,9 @@ function Header({type, title, buttons, tableData}) {
                 else if (button === 'add-old-patient') {
                     return <Link to={linkTo}><button className="add-patient"> OLD PATIENT</button></Link>
                 }
+                else if (button === 'add-company') {
+                    return <Link to={linkTo}><button className="add-company"> ADD COMPANY</button></Link>
+                }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
             }

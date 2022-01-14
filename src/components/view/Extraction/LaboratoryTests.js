@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { getToken, getUser} from "../../../utilities/Common";
+import { getToken, getUser, refreshPage} from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,6 +42,10 @@ function LaboratoryTests() {
       const [packages, setPackages] = useState([]);
       const [packageServices, setPackageServices] = useState([]);
 
+      //message
+      const [message, setMessage] = useState();
+      const [status, setStatus] = useState(false);
+
 
     const toggleExtraction = () => {
         setExtraction(!inputBox);
@@ -50,18 +54,19 @@ function LaboratoryTests() {
             ExtractionInfo.length = 0;
         }
     };
-    
-    console.log(ExtractionInfo);
 
     const showPending = (response) => {
         var message; 
 
-        response.map((row, index) => {
-            message += row.lab_test + " is still PENDING" + "\n";
-        });
-
-        toast.success(message);
+        if(response != null) {
+            response.map((row, index) => {
+                message += row.lab_test + " is still PENDING" + "\n";
+            });
+    
+            return toast.success(message);
+        }
     };
+
 
     const updateExtraction = () => {
         // console.log(ExtractionInfo);
@@ -82,43 +87,47 @@ function LaboratoryTests() {
                         updated_by: userId,
                     }
                 }).then(function (response) {
-                    console.log(response);
-
-                    if (ExtractionInfo.length == index - 1) {
-                        showPending(response.data);
-                        toast.success("Successful Extraction!");
-                    }
-                    
+                    console.log(response.data);
+                    setMessage(response.data.pending_booking_details);
+                    setStatus(true);
                 }).catch(function (error) {
-                    toast.error(error);
+                    console.log(error);
+                    toast.error("Oops! Something went wrong...");
                 });
             } 
             else if (row.type == "package") {
                 axios({
                     method: 'post',
-                    url: window.$link + 'Bookingpackage_details/updateExtraction/' + id,
+                    url: window.$link + 'Bookingpackage_details/updateExtraction/' + row.id,
                     withCredentials: false, 
                     params: {
                         api_key: window.$api_key,
                         token: userToken.replace(/['"]+/g, ''),
-                        booking_detail_id: row.id,
+                        booking_detail_id: row.booking_detail_id,
                         status: 'done',
                         extracted_on: presentDate.toISOString().split('T')[0], 
                         updated_by: userId,
                     }
                 }).then(function (response) {
-                    console.log(response);
-
-                    if (ExtractionInfo.length == index - 1) {
-                        showPending(response.data);
-                        toast.success("Successful Extraction!");
-                    }
-                   
+                   console.log(response.data);
+                   setMessage(response.data.pending_booking_package_details);
+                   setStatus(true);
                 }).catch(function (error) {
-                    toast.error(error);
+                    console.log(error);
+                    toast.error("Oops! Something went wrong...");
                 });
             }
         });
+        // showPending(message);
+        if(status == true) {
+            toast.success("Success!");
+        } 
+        else if (status == false) {
+            toast.warning("Oops! Something went wrong...");
+        }
+        // setTimeout(function() {
+        //     refreshPage();
+        // }, 2000);
         toggleExtraction();
     };
 
@@ -197,7 +206,7 @@ function LaboratoryTests() {
                                 id: row.id,
                                 name: row.lab_test,
                                 barcode: row.barcode,
-                                type: row.type
+                                type: row.type,
                             },
                         ]);
                     } else {
@@ -234,6 +243,9 @@ function LaboratoryTests() {
         });
     }, [services]);
 
+    // console.log("----")
+    // console.log(packageServices);
+
     const packageTests = packageServices.map((services, index) => {
         return(
             <div className="row">
@@ -248,6 +260,7 @@ function LaboratoryTests() {
                                     name: services.lab_test,
                                     barcode: services.barcode,
                                     type: "package",
+                                    booking_detail_id: services.booking_detail_id
                                 },
                             ]);
                         } else {

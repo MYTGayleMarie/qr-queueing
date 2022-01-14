@@ -13,6 +13,8 @@ import extractionIcon from '../images/icons/extraction-icon.png';
 import imagingIcon from '../images/icons/imaging-icon.png';
 import medTechIcon from '../images/icons/med-tech-icon.png';
 import chiefIcon from '../images/icons/chief-icon.png';
+import usersIcon from '../images/icons/users-icon.png';
+import companiesIcon from '../images/icons/companies-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';
 import reportIcon from '../images/icons/report-icon.png';
 import logoutIcon from '../images/icons/logout.png';
@@ -106,12 +108,12 @@ function adminNavbar() {
         </li>
       </NavLink>
       <NavLink to="/medtech" activeClassName="active" class="link">
-        <li href="/medtech" class="nav-link medTech-nav">
+        <li href="/medtech" class="nav-link imaging-nav">
           <img src={medTechIcon} alt={'medTech'} class="medTech icon"></img>
           <span class="mx-2">Medical Technology</span>
         </li>
       </NavLink>
-      <li href="#" class="nav-link chief-nav">
+      <li href="#" class="nav-link imaging-nav">
         <div class="row">
           <div class="col-3">
             <img src={chiefIcon} alt={'chief'} class="chief icon"></img>
@@ -121,6 +123,28 @@ function adminNavbar() {
           </div>
         </div>
       </li>
+      <li href="#" class="nav-link users-nav">
+        <div class="row">
+          <div class="col-3">
+            <img src={usersIcon} alt={'users'} class="users icon"></img>
+          </div>
+          <div class="col-9">
+            <span class="mx-2">Users</span>
+          </div>
+        </div>
+      </li>
+      <NavLink to="/companies" activeClassName="active" class="link">
+      <li href="#" class="nav-link companies-nav">
+        <div class="row">
+          <div class="col-3">
+            <img src={companiesIcon} alt={'companies'} class="companies icon"></img>
+          </div>
+          <div class="col-9">
+            <span class="mx-2">Companies</span>
+          </div>
+        </div>
+      </li>
+      </NavLink>
       <li href="#" class="nav-link supply-nav">
         <img src={supplyIcon} alt={'supply'} class="supply icon"></img>
         <span class="mx-2">Supply</span>

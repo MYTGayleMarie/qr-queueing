@@ -29,6 +29,8 @@ import Reports from './components/View/Reports/Reports';
 import Chief from './components/View/ChiefMedTech/ChiefMedTech';
 import ChiefTests from './components/View/ChiefMedTech/ChiefTests';
 import ChiefTests2 from './components/View/ChiefMedTech/ChiefTests2';
+import Companies from './components/View/Companies/Companies';
+import AddCompany from './components/View/Companies/AddCompany';
 import { Navigate } from 'react-router';
 
 function App() {
@@ -56,6 +58,8 @@ function App() {
         <Route path="/chief-medical-tech" element={<Chief />} />
         <Route path="/chief-tests" element={<ChiefTests />} />
         <Route path="/chief-tests-2" element={<ChiefTests2 />} />
+        <Route path="/companies" element={token ? <Companies/> : <Navigate to="/" />} />
+        <Route path="/add-company" element={token ? <AddCompany/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />

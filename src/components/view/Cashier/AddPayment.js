@@ -700,11 +700,25 @@ function AddPayment() {
 
                     <div className="row">
                         <div className="col-sm-3">
-                            <span className="senior-pwd-header method-label">SENIOR/PWD ID</span>
+                            <span className="discount-header method-label">DISCOUNT</span>
                         </div>
 
                         <div className="col-sm-9">
-                            <input type="text" id="senior_pwd_id" name="senior_pwd_id" className="senior-pwd-id-input" onChange={(e) => setID(e.target.value)} />
+                            <select name="discount_id" className="discount-option">
+                                <option>None</option>
+                                <option>SENIOR/PWD Discount</option>
+                                <option>Friends and Family Discount</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-sm-3">
+                            <span className="discount-header method-label">DISCOUNT DETAILS</span>
+                        </div>
+
+                        <div className="col-sm-9">
+                            <input type="text" id="discount_details" name="discount_details" className="discount-details-input" onChange={(e) => setID(e.target.value)} />
                         </div>
                     </div>
 

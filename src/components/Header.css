@@ -26,7 +26,7 @@
 }
 
 
-.add-patient, .add-items, .add-supplier, .add-payment, .download {
+.add-patient, .add-items, .add-supplier, .add-payment, .download, .add-company {
   float: right;
   margin-top: 0.5rem;
   margin-left: 1rem;
