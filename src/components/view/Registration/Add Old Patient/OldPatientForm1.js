@@ -25,6 +25,8 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
     const [homeaddress, setAddress] = useState("");
     const {id} = useParams();
 
+    const [discountList, setDiscountList] = useState([]);
+
     axios({
         method: 'post',
         url: window.$link + 'customers/show/' + id,
@@ -75,6 +77,29 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
             console.log("Incomplete");
         }
     }
+
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'discounts/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            setDiscountList(response.data.discounts);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },[]);
+
+    const listOfDiscount =  discountList.map((row, index) => {
+            return(
+                <option key={index} value={row.discountCode + "_" + row.percentage}>{row.description + " (" + row.discount_code + ")" }</option>
+            );
+    });
 
     function sinceLastMeal() {
         var presentDate = new Date();
@@ -172,7 +197,10 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                     <div className="row">
                         <div className="col-sm-6">
                             <label for="address" className="form-label">DISCOUNT CODE</label><br />
-                            <input type="text" className="form-control full" id="discount_code" name="discountCode" value={discountCode} onChange={setPersonal}/><br />
+                            <select className="select-input full" id="discount_code" name="discountCode" value={discountCode} onChange={setPersonal}>
+                                {listOfDiscount}
+                            </select>
+                            <br />
                         </div>
                         <div className="col-sm-6">
                             <label for="address" className="form-label">DISCOUNT DETAIL</label><br />

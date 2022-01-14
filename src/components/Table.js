@@ -83,7 +83,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'cashier') {
+    else if(type === 'cashier' || type === 'companies') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

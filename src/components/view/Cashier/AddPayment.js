@@ -104,6 +104,11 @@ function AddPayment() {
     const handleRemoveClose = () => setShowRemove(false);
     const handleRemoveShow = () => setShowRemove(true);
 
+    //Discount
+    const [discountList, setDiscountList] = useState([]);
+    const [discountCode, setDiscountCode] = useState("");
+    const [discountDetails, setDiscountDetails] = useState("");
+
     function handleRemove(service_id) {
         handleRemoveShow();
         setServiceId(service_id);
@@ -127,8 +132,12 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log("----")
+            console.log(response)
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.total_amount);
+            setDiscountCode(response.data.discount_code);
+            setDiscount(response.data.discount);
             totalAmount = response.data.total_amount;
             discount = response.data.discount;
             customer = response.data.customer_id;
@@ -704,24 +713,9 @@ function AddPayment() {
                         </div>
 
                         <div className="col-sm-9">
-                            <select name="discount_id" className="discount-option">
-                                <option>None</option>
-                                <option>SENIOR/PWD Discount</option>
-                                <option>Friends and Family Discount</option>
-                            </select>
+                            <span>{discountCode + " " + discount + "%"}</span>
                         </div>
                     </div>
-
-                    <div className="row">
-                        <div className="col-sm-3">
-                            <span className="discount-header method-label">DISCOUNT DETAILS</span>
-                        </div>
-
-                        <div className="col-sm-9">
-                            <input type="text" id="discount_details" name="discount_details" className="discount-details-input" onChange={(e) => setID(e.target.value)} />
-                        </div>
-                    </div>
-
                     <br/>
 
                     <span className="method-label">METHOD</span>

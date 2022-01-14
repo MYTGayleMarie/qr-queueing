@@ -187,6 +187,10 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
         var resultDates = []; 
         var fileResults = [];
 
+        var discount_info = customer.discountCode.split("_");
+        const discount_code = discount_info[0];
+        const discount_percentage = discount_info[1];
+
         axios({
             method: 'post',
             url: window.$link + 'bookings/create',
@@ -200,9 +204,10 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 type: customer.serviceLocation,
                 result: customer.result,
                 total_amount: totalPrice,
-                discount: '0',
                 grand_total: totalPrice,
-                discount_code: '',
+                discount: discount_percentage,
+                discount_code: discount_code,
+                discount_reference_no: customer.discountDetail, 
                 status: 'For Examination',
                 reference_code: '',
                 payment_type: 'PENDING',

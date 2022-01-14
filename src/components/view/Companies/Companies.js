@@ -28,62 +28,56 @@ const filterData = {
     done: false,
   };
   
+var companyData = [];
 var patientData = [];
 
 function Companies() {
 
-    const [filteredData, setFilter] = useForm(filterData);
+  const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
+  const [finalCompanyData, setFinalCompanyData] = useState([]);
   
   React.useEffect(() => {
-    patientData.length = 0;
     axios({
-      method: 'post',
-      url: window.$link + 'bookings/getAll',
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
-        date_from: filteredData.from_date,
-        date_to: filteredData.to_date,
-      },
-    })
-      .then(function (response) {
+        method: 'post',
+        url: window.$link + 'discounts/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
         console.log(response);
-        response.data.bookings.map((booking, index) => {
-          axios({
-            method: 'post',
-            url: window.$link + 'customers/show/' + booking.customer_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          })
-            .then(function (customer) {
-              var formatBookingTime = new Date(booking.booking_time);
-              var formatAddedOn = new Date(booking.added_on);
-              var bookingDetails = {};
-              bookingDetails.id = booking.id;
-              bookingDetails.name =
-                customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-              bookingDetails.bookingTime = formatBookingTime.toDateString();
-              bookingDetails.serviceType = booking.type;
-              bookingDetails.addedOn = formatAddedOn.toDateString();
-              patientData.push(bookingDetails);
-            })
-            .catch(function (error) {
-              console.log(error);
+        response.data.discounts.map((row, index) => {
+            var companyDetails = {};
+            axios({
+                method: 'post',
+                url: window.$link + 'companies/show/' + row.company_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (company) {
+                console.log(company);
+
+                companyDetails.description = company.data.name;
+                companyDetails.discountCode = row.discount_code;
+                companyDetails.percentage = row.percentage;
+                companyDetails.remarks = company.data.remarks;
+
+                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+
+            }).catch(function (error) {
+                console.log(error);
             });
-          setRender(patientData);
         });
-      })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(error);
-      });
-  }, [filteredData]);
+    });
+  }, []);
 
   function filter() {}
 
@@ -96,9 +90,9 @@ function Companies() {
                 <Header type="thick" title="COMPANIES MANAGER" buttons={buttons} tableData={patientData} />
                 <Table
                     clickable={false}
-                    type={'no-action'}
-                    tableData={patientData}
-                    headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'ADDED ON']}
+                    type={'companies'}
+                    tableData={finalCompanyData}
+                    headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'DISCOUNT PERCENTAGE', 'REMARKS']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
