@@ -133,9 +133,9 @@ function AddPayment() {
             }
         }).then(function (response) {
             console.log("----")
-            console.log(response)
+            console.log(response.data.grand_total)
             setTotal(response.data.total_amount);
-            setGrandTotal(response.data.total_amount);
+            setGrandTotal(response.data.grand_total);
             setDiscountCode(response.data.discount_code);
             setDiscount(response.data.discount);
             totalAmount = response.data.total_amount;
@@ -362,7 +362,7 @@ function AddPayment() {
                 toast.success("Payment Successful!");
                 setTimeout(function() {
                     setRedirect(true);
-                }, 2000)
+                }, 2000);
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");

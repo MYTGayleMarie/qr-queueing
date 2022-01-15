@@ -162,10 +162,6 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         var resultDates = []; 
         var fileResults = [];
 
-        var discount_info = customer.discountCode.split("_");
-        const discount_code = discount_info[0];
-        const discount_percentage = discount_info[1];
-
         axios({
             method: 'post',
             url: window.$link + 'bookings/create',
@@ -174,23 +170,23 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 token: userToken,
                 api_key: window.$api_key, 
                 customer: response.data.data.customer_id,
+                discount_id: customer.discountId,
                 booking_time: customer.dateOfTesting,
                 company_contract_id: '',
+                doctors_referral: customer.referral, 
                 type: customer.serviceLocation,
                 result: customer.result,
                 total_amount: totalPrice,
-                grand_total: totalPrice,
-                discount: discount_percentage,
-                discount_code: discount_code,
                 discount_reference_no: customer.discountDetail, 
-                status: 'For Examination',
+                grand_total: totalPrice,
+                status: 'pending',
                 reference_code: '',
                 payment_type: 'PENDING',
                 lab_tests: testId,
                 package_tests: packageId,
                 lab_prices: labPrices,
                 package_prices: packagePrices,
-                status: '',
+                status: 'pending',
                 lab_extracted_dates: extractedDates,
                 lab_test_starts: testStarts,
                 lab_test_finishes: testFinishes,

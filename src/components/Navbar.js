@@ -123,6 +123,7 @@ function adminNavbar() {
           </div>
         </div>
       </li>
+      <NavLink to="/Users" activeClassName="active" class="link">
       <li href="#" class="nav-link users-nav">
         <div class="row">
           <div class="col-3">
@@ -133,6 +134,7 @@ function adminNavbar() {
           </div>
         </div>
       </li>
+      </NavLink>
       <NavLink to="/companies" activeClassName="active" class="link">
       <li href="#" class="nav-link companies-nav">
         <div class="row">

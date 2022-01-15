@@ -6,7 +6,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, tableData}) {
+function Header({type, title, buttons, editProfile, tableData}) {
 
     var btn = [];
 
@@ -41,6 +41,17 @@ function Header({type, title, buttons, tableData}) {
                 }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
+            }
+            else {
+                const linkTo = "/" + button;
+
+                if(button === 'change-password') {
+                    return <Link to={linkTo}><button className="change-password"> CHANGE PASSWORD</button></Link>
+                }
+                else if(button === 'edit-profile') {
+                    return <button className="edit-profile" onClick={editProfile}> EDIT PROFILE</button>
+                }
+
             }
     
         });

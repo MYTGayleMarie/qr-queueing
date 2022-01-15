@@ -44,7 +44,9 @@ function LaboratoryTests() {
 
       //message
       const [message, setMessage] = useState();
-      const [status, setStatus] = useState(false);
+      const [pendingLab, setPendingLab] = useState([]);
+      const [pendingPack, setPendingPack] = useState([]);
+      const [pendingPackServices, setPendingPackServices] = useState([]);
 
 
     const toggleExtraction = () => {
@@ -55,16 +57,16 @@ function LaboratoryTests() {
         }
     };
 
-    const showPending = (response) => {
-        var message; 
+    const showPending = (labServices, packageServices) => {
+        var message = "PENDING:" + "\n"; 
 
-        if(response != null) {
-            response.map((row, index) => {
-                message += row.lab_test + " is still PENDING" + "\n";
-            });
-    
-            return toast.success(message);
+        if(labServices.length != 0) {
+            
         }
+     
+       
+        console.log(labServices, packageServices);
+    
     };
 
 
@@ -88,8 +90,6 @@ function LaboratoryTests() {
                     }
                 }).then(function (response) {
                     console.log(response.data);
-                    setMessage(response.data.pending_booking_details);
-                    setStatus(true);
                 }).catch(function (error) {
                     console.log(error);
                     toast.error("Oops! Something went wrong...");
@@ -110,24 +110,55 @@ function LaboratoryTests() {
                     }
                 }).then(function (response) {
                    console.log(response.data);
-                   setMessage(response.data.pending_booking_package_details);
-                   setStatus(true);
+                
                 }).catch(function (error) {
                     console.log(error);
                     toast.error("Oops! Something went wrong...");
                 });
             }
         });
-        // showPending(message);
-        if(status == true) {
-            toast.success("Success!");
-        } 
-        else if (status == false) {
-            toast.warning("Oops! Something went wrong...");
-        }
-        // setTimeout(function() {
-        //     refreshPage();
-        // }, 2000);
+
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getBookingDetails/' + id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (booking) {
+            console.log("booking");
+            console.log(booking);
+            setPendingLab(booking.data.filter((info) => info.type != "package" && info.status != "done"));
+            setPendingPack(booking.data.filter((info) => info.type == "package"));
+
+            pendingPack.map((row,index) => {
+        
+                axios({
+                    method: 'post',
+                    url: window.$link + 'bookings/getBookingPackageDetails/' + row.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    console.log("package")
+                    console.log(response);
+                    setPendingPackServices(response.data.filter((info) => info.status == "pending"));
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            });
+    
+        }).catch(function (error) {
+            console.log(error)
+        });
+        
+        showPending(pendingLab, pendingPackServices);
+      
         toggleExtraction();
     };
 
@@ -236,15 +267,14 @@ function LaboratoryTests() {
                     requester: userId,
                 }
             }).then(function (response) {
+                console.log(response)
                 setPackageServices(response.data.filter((info) => info.category_id != xrayId && info.status != "done"));
             }).catch(function (error) {
                 console.log(error);
             });
         });
-    }, [services]);
+    }, [packages]);
 
-    // console.log("----")
-    // console.log(packageServices);
 
     const packageTests = packageServices.map((services, index) => {
         return(

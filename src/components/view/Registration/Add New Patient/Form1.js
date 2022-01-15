@@ -19,7 +19,7 @@ const userId = getUser();
 
 function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
     document.body.style = 'background: white;';
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountCode, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
     const [discountList, setDiscountList] = useState([]);
 
@@ -63,7 +63,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
 
     const listOfDiscount =  discountList.map((row, index) => {
             return(
-                <option key={index} value={row.discountCode + "_" + row.percentage}>{row.description + " (" + row.discount_code + ")" }</option>
+                <option key={index} value={row.id}>{row.description + " (" + row.discount_code + ")" }</option>
             );
     });
 
@@ -159,7 +159,8 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
                     <div className="row">
                         <div className="col-sm-6">
                             <label for="address" className="form-label">DISCOUNT CODE</label><br />
-                            <select className="select-input full" id="discount_code" name="discountCode" value={discountCode} onChange={setPersonal}>
+                            <select className="select-input full" id="discount_code" name="discountId" value={discountId} onChange={setPersonal}>
+                                <option value="" selected>None</option>
                                 {listOfDiscount}
                             </select>
                             <br />

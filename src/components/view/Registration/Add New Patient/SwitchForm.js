@@ -15,7 +15,7 @@ const personalData = {
     contactNum: "", 
     address: "", 
     referral: "",
-    discountCode: "",
+    discountId: "",
     discountDetail: "",
     serviceLocation: "", 
     result: "", 
