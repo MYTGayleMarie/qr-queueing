@@ -191,6 +191,7 @@ function adminNavbar() {
             </Link>
           </ul>
         </li>
+      </NavLink>
         <NavLink to="/reports" activeClassName="active" class="link">
           <li href="#" class="nav-link report-nav">
             <img src={reportIcon} alt={'report'} class="report icon"></img>
