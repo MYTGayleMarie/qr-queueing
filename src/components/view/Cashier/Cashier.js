@@ -77,10 +77,14 @@ function Cashier() {
       requester: userId,
     },
   }).then(function (response) {
+    var cash = response.data.data.total_cash_sales;
+    let nf = new Intl.NumberFormat('en-US');
+    console.log(cash.toLocaleString('en-US'));
     setCashSales(response.data.data.total_cash_sales);
   });
 
   }, []);
+
 
   React.useEffect(() => {
     finalPatientData.length = 0;
@@ -435,7 +439,7 @@ function Cashier() {
                       <div className='cash-count-sub-header text-start'>TOTAL</div>
                     </div>
                     <div className='col-sm-6'>
-                      <div className='amount text-center'>P {calculate()}</div>
+                      <div className='amount text-center'>P {calculate().toLocaleString('en-US', {maximumFractionDigits:2})}</div>
                     </div>
                   </div>
 
