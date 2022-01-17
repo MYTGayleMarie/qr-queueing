@@ -46,7 +46,6 @@ var id = '';
 var patientData = [];
 
 function Cashier() {
-
   //Cash Count
   const [cashCount, setCashCount] = useForm(cashCountData);
   const [cashSales, setCashSales] = useState(0);
@@ -69,21 +68,19 @@ function Cashier() {
 
   React.useEffect(() => {
     axios({
-    method: 'post',
-    url: window.$link + 'reports/cashSales',
-    withCredentials: false,
-    params: {
-      api_key: window.$api_key,
-      token: userToken.replace(/['"]+/g, ''),
-      requester: userId,
-    },
-  }).then(function (response) {
-    var cash = parseFloat(response.data.data.total_cash_sales);
-    setCashSales(cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}));
-  });
-
+      method: 'post',
+      url: window.$link + 'reports/cashSales',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+      },
+    }).then(function (response) {
+      var cash = parseFloat(response.data.data.total_cash_sales);
+      setCashSales(cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    });
   }, []);
-
 
   React.useEffect(() => {
     axios({
@@ -184,10 +181,54 @@ function Cashier() {
   }
 
   function logOut() {
-    var cashCount = calculate();
+    var oneCentavoTotal = parseFloat(0.01 * cashCount.oneCentavos);
+    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
+    var tenCentavoTotal = parseFloat(0.1 * cashCount.tenCentavos);
+    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
+    var onePesoTotal = parseFloat(1.0 * cashCount.onePesos);
+    var fivePesoTotal = parseFloat(5.0 * cashCount.fivePesos);
+    var tenPesoTotal = parseFloat(10.0 * cashCount.tenPesos);
+    var twentyPesoCoinTotal = parseFloat(20.0 * cashCount.twentyPesosCoin);
+    var twentyPesoBillTotal = parseFloat(20.0 * cashCount.twentyPesosBill);
+    var fiftyPesoTotal = parseFloat(50.0 * cashCount.fiftyPesos);
+    var onehundredPesoTotal = parseFloat(100.0 * cashCount.onehundredPesos);
+    var twohundredPesoTotal = parseFloat(200.0 * cashCount.twohundredPesos);
+    var fivehundredPesoTotal = parseFloat(500.0 * cashCount.fivehundredPesos);
+    var onethousandPesoTotal = parseFloat(1000.0 * cashCount.onethousandPesos);
+    var cashCounts = calculate();
 
-    if (cashCount == cashSales) {
-      removeUserSession();
+    if (cashCounts == cashSales) {
+      axios({
+        method: 'post',
+        url: window.$link + 'cash_counts/create',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          added_by: userId,
+          physical_count: cashCounts,
+          bill_1000: onethousandPesoTotal,
+          bill_500: fivehundredPesoTotal,
+          bill_200: twohundredPesoTotal,
+          bill_100: onehundredPesoTotal,
+          bill_50: fiftyPesoTotal,
+          bill_20: twentyPesoBillTotal,
+          coin_20: twentyPesoCoinTotal,
+          coin_10: tenPesoTotal,
+          coin_5: fivePesoTotal,
+          coin_1: onePesoTotal,
+          cent_25: twentyfiveCentavoTotal,
+          cent_10: tenCentavoTotal,
+          cent_5: fiveCentavoTotal,
+          cent_1: oneCentavoTotal,
+        },
+      })
+        .then(function (response) {
+          removeUserSession();
+        })
+        .catch(function (error) {
+          toast.error('Oops! Something wrong with the server');
+        });
     } else {
       toast.warning('Cash count does not match with cash sales');
     }
@@ -244,10 +285,7 @@ function Cashier() {
             <Modal.Title className="w-100 cash-count-header">CASH COUNT</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
-
             <div className="row">
-
               <div className="col-sm-6">
                 <div className="cash-count-sub-header text-center">COINS</div>
 
@@ -274,7 +312,12 @@ function Cashier() {
                     <div className="cash-count-amount text-center">P 0.25</div>
                   </div>
                   <div className="col-sm-6">
-                    <input type="number" name="twentyfiveCentavos" className="cash-count-input" onChange={setCashCount} />
+                    <input
+                      type="number"
+                      name="twentyfiveCentavos"
+                      className="cash-count-input"
+                      onChange={setCashCount}
+                    />
                   </div>
                 </div>
 
@@ -363,14 +406,16 @@ function Cashier() {
                   </div>
                 </div>
               </div>
-              </div>
-    
+            </div>
+
             <div className="row">
               <div className="col-sm-6">
                 <div className="cash-count-sub-header text-start">TOTAL</div>
               </div>
               <div className="col-sm-6">
-                <div className="amount text-center">P {calculate().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</div>
+                <div className="amount text-center">
+                  P {calculate().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
               </div>
             </div>
 
