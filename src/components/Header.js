@@ -6,7 +6,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, tableData}) {
+function Header({type, title, buttons, editProfile, editPassword, tableData}) {
 
     var btn = [];
 
@@ -46,7 +46,7 @@ function Header({type, title, buttons, editProfile, tableData}) {
                 const linkTo = "/" + button;
 
                 if(button === 'change-password') {
-                    return <Link to={linkTo}><button className="change-password"> CHANGE PASSWORD</button></Link>
+                    return <button className="change-password" onClick={editPassword}> CHANGE PASSWORD</button>
                 }
                 else if(button === 'edit-profile') {
                     return <button className="edit-profile" onClick={editProfile}> EDIT PROFILE</button>

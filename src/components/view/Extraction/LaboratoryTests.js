@@ -208,7 +208,7 @@ function LaboratoryTests() {
     React.useEffect(() => {
         axios({
             method: 'post',
-            url: window.$link + 'bookings/getBookingDetails/' + id,
+            url: window.$link + 'bookings/getDetails/' + id,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
@@ -216,9 +216,9 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data)
-            setPackages(booking.data.filter((info) => info.type != "lab"));
-            setServices(booking.data.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
+            console.log(booking)
+            // setPackages(booking.data.filter((info) => info.type != "lab"));
+            // setServices(booking.data.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
         }).catch(function (error) {
             console.log(error);
         });

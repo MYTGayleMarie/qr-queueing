@@ -6,6 +6,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
+
 
 //css
 import './UserDetail.css';
@@ -18,11 +20,6 @@ import Navbar from '../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-const userData = {
-    name: "",
-    email: "",
-};
-
 function UserDetail() {
     document.body.style = 'background: white;';
 
@@ -30,15 +27,26 @@ function UserDetail() {
       const {id} = useParams();
       const [name, setName] = useState("");
       const [email, setEmail] = useState("");
+      const [roleId, setRoleId] = useState("");
       const [role, setRole] = useState("");
+
+      //Edit User
+      const [editName, setEditName] = useState("");
+      const [editEmail, setEditEmail] = useState("");
+      const [editRoleId, setEditRoleId] = useState("");
 
      //Edit Profile Modal
      const [profileShow, setProfileShow] = useState(false);
      const handleProfileClose = () => setProfileShow(false);
      const handleProfileShow = () => setProfileShow(true);
 
-     //Update Profile
-     const [user, setUser] = useForm(userData);
+     //Change Password Modal
+     const [passwordShow, setPasswordShow] = useState(false);
+     const handlePasswordClose = () => setPasswordShow(false);
+     const handlePasswordShow = () => setPasswordShow(true);
+
+     //Other States
+     const [redirect, setRedirect] = useState(false);
 
       //Fetch
       React.useEffect(() => {
@@ -54,6 +62,12 @@ function UserDetail() {
         }).then(function (response) {
             setName(response.data.name);
             setEmail(response.data.email);
+            setRoleId(response.data.role_id);
+
+            setEditName(response.data.name);
+            setEditEmail(response.data.email);
+            setEditRoleId(response.data.role_id);
+           
             
             if(response.data.role_id == 1) {
                 setRole("User");
@@ -74,9 +88,9 @@ function UserDetail() {
       }, []);
 
       //Edit Profile Function
-      function editProfile(e, user) {
+      function editProfile(e) {
         e.preventDefault();
-        console.log("here")
+        console.log(editName);
         axios({
             method: 'post',
             url: window.$link + 'users/update/' + id,
@@ -84,18 +98,28 @@ function UserDetail() {
             params: {
                 api_key: window.$api_key,
                 token: userToken.replace(/['"]+/g, ''),
-                name: user.name,
-                email: user.email,
+                name: editName,
+                email: editEmail,
+                role_id: editRoleId,
                 updated_by: userId,
             }
         }).then(function (response) {
             console.log(response);
             toast.success("Successfully updated user profile!");
             handleProfileClose();
+            setTimeout(function() {
+              setRedirect(true);
+          }, 2000);
         }).catch(function (error) {
             console.log(error);
         });
       }
+
+      if(redirect == true) {
+        return (
+            <Navigate to = "/users"/>
+        )
+    }    
 
 
     return (
@@ -107,6 +131,7 @@ function UserDetail() {
                     title='USERS' 
                     buttons= {['change-password', 'edit-profile']}
                     editProfile={handleProfileShow}
+                    editPassword={handlePasswordShow}
                 />
                 <ToastContainer/>
 
@@ -141,7 +166,7 @@ function UserDetail() {
                           <div className='label text-center'>NAME</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input type="text" name="name" className='cash-count-input' onChange={setUser}/>
+                          <input type="text" name="name" className='cash-count-input' value={editName} onChange={(e) => setEditName(e.target.value)}/>
                         </div>
                       </div>
                       <div className='row'>
@@ -149,14 +174,56 @@ function UserDetail() {
                           <div className='label text-center'>EMAIL</div>
                         </div>
                         <div className='col-sm-6'>
-                          <input type="text" name="email" className='cash-count-input' onChange={setUser}/>
+                          <input type="text" name="email" className='cash-count-input' value={editEmail} onChange={(e) => setEditEmail(e.target.value)}/>
+                        </div>
+                      </div>
+                      <div className='row'>
+                        <div className='col-sm-3'>
+                          <div className='label text-center'>ROLE</div>
+                        </div>
+                        <div className='col-sm-6'>
+                         <select name="role_id" className="role-input" value={editRoleId} onChange={(e) => setEditRoleId(e.target.value)}>
+                           <option value="1" selected>User</option>
+                           <option value="2">Registration Officer</option>
+                           <option value="3">Cashier Officer</option>
+                           <option value="4">Admin</option>
+                           <option value="0">Other</option>
+                         </select>
                         </div>
                       </div>
                     </div>
                    </div>
                   </Modal.Body>
                     <Modal.Footer>
-                        <button type="submit" className='save-btn' onClick={(e) => editProfile(e, user)}>
+                        <button type="submit" className='save-btn' onClick={(e) => editProfile(e)}>
+                          SAVE
+                        </button>
+                   </Modal.Footer>
+                   </form>
+            </Modal>
+
+            <Modal show={passwordShow} onHide={handlePasswordClose} size="md">
+            <Modal.Header closeButton className='text-center'>
+               <Modal.Title className='w-100 cash-count-header'>EDIT PASSWORD</Modal.Title>
+                </Modal.Header>
+                  <form>
+                  <Modal.Body>
+
+                  <div className='row'>
+                    <div className='col-sm-6'>
+                      <div className='row'>
+                        <div className='col-sm-9'>
+                          <div className='label text-center'>NEW PASSWORD</div>
+                        </div>
+                        <div className='col-sm-3'>
+                          <input type="text" name="password" className='cash-count-input'/>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                  </Modal.Body>
+                    <Modal.Footer>
+                        <button type="submit" className='save-btn'>
                           SAVE
                         </button>
                    </Modal.Footer>

@@ -695,7 +695,6 @@ function AddPayment() {
             setDiscount={setDiscount}
          />
 
-
         <div className="row">
             <div className="col-sm-9 d-flex justify-content-end">
                 <button className="add-tests-btn" onClick={handleShow}>ADD TESTS</button>
