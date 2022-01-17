@@ -220,7 +220,7 @@ checkedServices.map((data, index) => {
         totalPrice += parseFloat(data.price);
     });
 
-    console.log(checkedServicesDetails)
+
     return (
     <div>
         <Navbar/>
@@ -318,7 +318,7 @@ checkedServices.map((data, index) => {
                                <p className="item">{data.name}</p>
                            </div>
                            <div className="col d-flex justify-content-end">
-                               <span className="price"><span className="currency">P</span> {data.price}</span>
+                               <span className="price"><span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                            </div>
                        </div>
                     ))}
@@ -326,7 +326,7 @@ checkedServices.map((data, index) => {
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>TOTAL P {parseFloat(totalPrice).toFixed(2)}</b></span>
+                        <span className="total-price"><b>TOTAL P {totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                 </div>
 

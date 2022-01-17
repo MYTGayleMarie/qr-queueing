@@ -306,7 +306,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                   </div>
                   <div className="col d-flex justify-content-end">
                     <span className="price">
-                      <span className="currency">P</span> {data.price}
+                      <span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}
                     </span>
                   </div>
                 </div>
@@ -316,7 +316,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
             <div className="row">
               <div className="col d-flex justify-content-end">
                 <span className="total-price">
-                  <b>TOTAL P {parseFloat(totalPrice).toFixed(2)}</b>
+                  <b>TOTAL P {totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b>
                 </span>
               </div>
             </div>

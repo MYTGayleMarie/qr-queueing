@@ -51,7 +51,7 @@ a {
     background: url('../images/backgrounds/navbar-bg.png');
     object-fit: cover;
     transition: 0.5s;
-    overflow: auto;
+    overflow-x: hidden;
 }
 
 

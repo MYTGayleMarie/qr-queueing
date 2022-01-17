@@ -48,7 +48,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else {
             return <tr key={row.id} onClick={() => link(row.id)}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
         }
     });

@@ -133,7 +133,7 @@ function AddPayment() {
             }
         }).then(function (response) {
             console.log("----")
-            console.log(response.data.grand_total)
+            console.log(response.data)
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
             setDiscountCode(response.data.discount_code);
@@ -713,7 +713,7 @@ function AddPayment() {
                         </div>
 
                         <div className="col-sm-9">
-                            <span>{discountCode + " " + discount + "%"}</span>
+                            <span>{discountCode + " -  " + discount + "%"}</span>
                         </div>
                     </div>
                     <br/>

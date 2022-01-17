@@ -46,6 +46,7 @@ var id = '';
 var patientData = [];
 
 function Cashier() {
+
   //Cash Count
   const [cashCount, setCashCount] = useForm(cashCountData);
   const [cashSales, setCashSales] = useState(0);
@@ -77,10 +78,8 @@ function Cashier() {
       requester: userId,
     },
   }).then(function (response) {
-    var cash = response.data.data.total_cash_sales;
-    let nf = new Intl.NumberFormat('en-US');
- 
-    setCashSales(response.data.data.total_cash_sales);
+    var cash = parseFloat(response.data.data.total_cash_sales);
+    setCashSales(cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}));
   });
 
   }, []);
@@ -245,7 +244,10 @@ function Cashier() {
             <Modal.Title className="w-100 cash-count-header">CASH COUNT</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+
+
             <div className="row">
+
               <div className="col-sm-6">
                 <div className="cash-count-sub-header text-center">COINS</div>
 
@@ -267,21 +269,12 @@ function Cashier() {
                   </div>
                 </div>
 
-                  <div className='row'>
-                    <div className='col-sm-6'>
-                      <div className='cash-count-sub-header text-start'>TOTAL</div>
-                    </div>
-                    <div className='col-sm-6'>
-                      <div className='amount text-center'>P {calculate().toLocaleString('en-US', {maximumFractionDigits:2})}</div>
-                    </div>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 0.25</div>
                   </div>
                   <div className="col-sm-6">
-                    <input
-                      type="number"
-                      name="twentyfiveCentavos"
-                      className="cash-count-input"
-                      onChange={setCashCount}
-                    />
+                    <input type="number" name="twentyfiveCentavos" className="cash-count-input" onChange={setCashCount} />
                   </div>
                 </div>
 
@@ -321,6 +314,7 @@ function Cashier() {
                   </div>
                 </div>
               </div>
+
               <div className="col-sm-6">
                 <div className="cash-count-sub-header text-center">BILLS</div>
 
@@ -362,12 +356,13 @@ function Cashier() {
 
                 <div className="row">
                   <div className="col-sm-3">
-                    <div className="cash-count-amount text-center">P 1000.00</div>
+                    <div className="cash-count-amount text-center">P 1,000.00</div>
                   </div>
                   <div className="col-sm-6">
                     <input type="number" name="onethousandPesos" className="cash-count-input" onChange={setCashCount} />
                   </div>
                 </div>
+              </div>
               </div>
     
             <div className="row">
@@ -375,7 +370,7 @@ function Cashier() {
                 <div className="cash-count-sub-header text-start">TOTAL</div>
               </div>
               <div className="col-sm-6">
-                <div className="amount text-center">P {calculate()}</div>
+                <div className="amount text-center">P {calculate().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</div>
               </div>
             </div>
 

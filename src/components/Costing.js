@@ -38,7 +38,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
             <div class="row">
                 <div className="col-sm-1 "><button className="delete-btn" onClick={() => deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div>
                 <div className="col-sm-7 service">{row.lab_test ? row.lab_test : row.package }</div>
-                <div className="col-sm-4 total-price">P {row.price ? row.price : "0.00"}</div>
+                <div className="col-sm-4 total-price">P {row.price ? parseFloat(row.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : "0.00"}</div>
             </div>
         )
     });
@@ -83,7 +83,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
 
                     </div>
                     <div className="col-sm-4">
-                        <span className="amount">P {parseFloat(total).toFixed(2)}</span>
+                        <span className="amount">P {parseFloat(total).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
 
                         </div>
                         <div className="col-sm-4">
-                            <span className="amount">P {parseFloat(grandTotal).toFixed(2)}</span>
+                            <span className="amount">P {parseFloat(grandTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                         </div>
                 </div>
 

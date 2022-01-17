@@ -168,30 +168,6 @@ function adminNavbar() {
           </Link>
         </ul>
       </li>
-      <NavLink to="/reports" activeClassName="active" class="link">
-        <li href="#" class="nav-link report-nav">
-          <img src={reportIcon} alt={'report'} class="report icon"></img>
-          <span class="mx-2">Reports</span>
-        </li>
-        <li href="#" class="nav-link supply-nav">
-          <img src={supplyIcon} alt={'supply'} class="supply icon"></img>
-          <span class="mx-2">Supply</span>
-          <ul class="sub-menu">
-            <Link to="/release-item" className="sub-link">
-              <li class="sub-list">RELEASE ITEMS</li>
-            </Link>
-            <Link to="/purchase-order" className="sub-link">
-              <li class="sub-list">PURCHASE ORDER</li>
-            </Link>
-            <Link to="/items" className="sub-link">
-              <li class="sub-list">ITEMS</li>
-            </Link>
-            <Link to="/suppliers" className="sub-link">
-              <li class="sub-list">SUPPLIERS</li>
-            </Link>
-          </ul>
-        </li>
-      </NavLink>
         <NavLink to="/reports" activeClassName="active" class="link">
           <li href="#" class="nav-link report-nav">
             <img src={reportIcon} alt={'report'} class="report icon"></img>
