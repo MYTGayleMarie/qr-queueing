@@ -79,21 +79,27 @@ function AddPurchaseOrder() {
 
           <div className="add-items-cont">
             <div className="row">
-              <div className="col-sm-3">
+              <div className="col-sm-1">
                 <h1 className="item-header left">QUANTITY</h1>
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-3">
                 <h1 className="item-header left">ITEMS</h1>
               </div>
             </div>
 
             {items.map((item) => (
               <div className="row">
-                <div className="col-sm-3">
+                <div className="col-sm-1">
                   <input key={item.id} type="number" name="quantity" className="quantity-item" />
                 </div>
-                <div className="col-sm-9">
+                <div className="col-sm-3">
                   <input key={item.id} type="text" name="item" className="items-item" />
+                </div>
+                <div className="col-sm-3">
+                  <input key={item.id} type="number" name="item" className="items-item" />
+                </div>
+                <div className="col-sm-3">
+                  <input key={item.id} type="number" name="item" className="items-item" />
                 </div>
               </div>
             ))}
