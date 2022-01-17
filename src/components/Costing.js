@@ -14,12 +14,10 @@ const userId = getUser();
 
 function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, setGrandTotal, setDiscount}) {
 
+
     var totalCost = 0;
     var labTotal = 0;
 
-    if (withDiscount == '') {
-        setGrandTotal(total);
-    }
 
     const summary = data.map((row, index) => {
 
@@ -50,8 +48,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
     function discountedPrice() {
         const discount = labTotal.toFixed(2) * 0.20;
         const grandTotal = parseFloat(total).toFixed(2) - discount;
-        setGrandTotal(grandTotal);
-        setDiscount(discount);
+    
         console.log(discount)
 
         return (

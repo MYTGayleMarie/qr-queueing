@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import DateTimePicker from 'react-datetime-picker';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 
 //css
 import './Form1.css';
@@ -10,11 +12,16 @@ import './Form1.css';
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
+//VARIABLES
+const userToken = getToken();
+const userId = getUser();
+
 
 function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
     document.body.style = 'background: white;';
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
+    const [discountList, setDiscountList] = useState([]);
 
     function turnActive() {
         setActive(true);
@@ -36,6 +43,30 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
             console.log("Incomplete");
         }
     }
+
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'discounts/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            setDiscountList(response.data.discounts);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },[]);
+
+    const listOfDiscount =  discountList.map((row, index) => {
+            return(
+                <option key={index} value={row.id}>{row.description + " (" + row.discount_code + ")" }</option>
+            );
+    });
+
 
     function sinceLastMeal() {
         var presentDate = new Date();
@@ -120,6 +151,24 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation  
                     <div className="row">
                         <label for="address" className="form-label">ADDRESS <i>(required)</i></label><br />
                         <input type="text" className="form-control full" id="address" name="address" value={address} onChange={setPersonal} required/><br />
+                    </div>
+                    <div className="row">
+                        <label for="address" className="form-label">REFERRAL</label><br />
+                        <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal}/><br />
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT CODE</label><br />
+                            <select className="select-input full" id="discount_code" name="discountId" value={discountId} onChange={setPersonal}>
+                                <option value="" selected>None</option>
+                                {listOfDiscount}
+                            </select>
+                            <br />
+                        </div>
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT DETAIL</label><br />
+                            <input type="text" className="form-control full" id="discount_detail" name="discountDetail" value={discountDetail} onChange={setPersonal}/><br />
+                        </div>
                     </div>
                     <div className="row small-gap">
                         <div className="col-sm-6">

@@ -1,7 +1,7 @@
 .navbar-logo {
     width: 70%;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-bottom: 2%;
 }
 
 .active {
@@ -12,7 +12,7 @@
     max-height: 53px !important;
 }
 
-.cashier-nav, .extraction-nav, .imaging-nav, .report-nav {
+.cashier-nav, .extraction-nav, .imaging-nav, .report-nav, .users-nav, .companies-nav {
     height: 54px; 
 }
 
@@ -40,7 +40,7 @@ a {
  font-size: 0.7em;
  text-align: left;
  text-indent: -8px;
- padding-bottom: 10% !important;
+ padding: 0.2rem 0.5rem !important;
 }
 
 .side-navbar {
@@ -110,7 +110,7 @@ a {
     margin-right: 3%;
 }
 
-.chief {
+.chief, .users, .companies {
     width: 70%;
     margin-left: 51%;
     margin-right: 0%;
@@ -121,3 +121,6 @@ a {
     bottom: 0;
 }
 
+.supply-nav {
+    margin-bottom: 10%;
+}

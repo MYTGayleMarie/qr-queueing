@@ -104,6 +104,11 @@ function AddPayment() {
     const handleRemoveClose = () => setShowRemove(false);
     const handleRemoveShow = () => setShowRemove(true);
 
+    //Discount
+    const [discountList, setDiscountList] = useState([]);
+    const [discountCode, setDiscountCode] = useState("");
+    const [discountDetails, setDiscountDetails] = useState("");
+
     function handleRemove(service_id) {
         handleRemoveShow();
         setServiceId(service_id);
@@ -127,8 +132,12 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log("----")
+            console.log(response.data.grand_total)
             setTotal(response.data.total_amount);
-            setGrandTotal(response.data.total_amount);
+            setGrandTotal(response.data.grand_total);
+            setDiscountCode(response.data.discount_code);
+            setDiscount(response.data.discount);
             totalAmount = response.data.total_amount;
             discount = response.data.discount;
             customer = response.data.customer_id;
@@ -353,7 +362,7 @@ function AddPayment() {
                 toast.success("Payment Successful!");
                 setTimeout(function() {
                     setRedirect(true);
-                }, 2000)
+                }, 2000);
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -700,14 +709,13 @@ function AddPayment() {
 
                     <div className="row">
                         <div className="col-sm-3">
-                            <span className="senior-pwd-header method-label">SENIOR/PWD ID</span>
+                            <span className="discount-header method-label">DISCOUNT</span>
                         </div>
 
                         <div className="col-sm-9">
-                            <input type="text" id="senior_pwd_id" name="senior_pwd_id" className="senior-pwd-id-input" onChange={(e) => setID(e.target.value)} />
+                            <span>{discountCode + " " + discount + "%"}</span>
                         </div>
                     </div>
-
                     <br/>
 
                     <span className="method-label">METHOD</span>

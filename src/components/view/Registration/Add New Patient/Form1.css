@@ -118,6 +118,12 @@ label {
     margin: 4%;
 }
 
+.select-input {
+  padding: 0.5rem;
+  border-color: #cdd4d9;
+  border-radius: 0.3rem;
+}
+
 
   
   /* label::before {

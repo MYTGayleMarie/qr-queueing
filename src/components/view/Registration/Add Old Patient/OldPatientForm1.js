@@ -25,6 +25,8 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
     const [homeaddress, setAddress] = useState("");
     const {id} = useParams();
 
+    const [discountList, setDiscountList] = useState([]);
+
     axios({
         method: 'post',
         url: window.$link + 'customers/show/' + id,
@@ -52,7 +54,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         console.log(error);
     });
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
@@ -76,6 +78,30 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         }
     }
 
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'discounts/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            setDiscountList(response.data.discounts);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },[]);
+
+    const listOfDiscount =  discountList.map((row, index) => {
+            return(
+                <option key={index} value={row.id}>{row.description + " (" + row.discount_code + ")" }</option>
+            );
+    });
+
+    console.log(discountList)
     function sinceLastMeal() {
         var presentDate = new Date();
         let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
@@ -141,10 +167,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
             <span className="sex label">SEX</span>
             <span className="sex detail">{gender.toUpperCase()}</span>
             </div>
-            {/* <div className="col-sm-4">
-            <span className="age label">AGE</span>
-            <span className="age detail">{age}</span>
-            </div> */}
+
         </div>
         <div className="row">
             <div className="col-sm-4">
@@ -167,7 +190,27 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
              <div className="booking-form">
              <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
              <form className="needs-validation">
-                 <div className="row small-gap">
+             <div className="row">
+                <label for="address" className="form-label">REFERRAL</label><br />
+                <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
+            </div>
+
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT CODE</label><br />
+                            <select className="select-input full" id="discount_code" name="discountId" value={discountId} onChange={setPersonal}>
+                                <option value="" selected>None</option>
+                                {listOfDiscount}
+                            </select>
+                            <br />
+                        </div>
+                        <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT DETAIL</label><br />
+                            <input type="text" className="form-control full" id="discount_detail" name="discountDetail" value={discountDetail} onChange={setPersonal}/><br />
+                        </div>
+                    </div>
+
+                    <div className="row small-gap">
                      <div className="col-sm-6">
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />

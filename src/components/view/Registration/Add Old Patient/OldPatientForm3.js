@@ -186,6 +186,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
         var testFinishes = [];
         var resultDates = []; 
         var fileResults = [];
+        
 
         axios({
             method: 'post',
@@ -195,22 +196,23 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 token: userToken,
                 api_key: window.$api_key, 
                 customer: id,
+                discount_id: customer.discountId,
                 booking_time: customer.dateOfTesting,
                 company_contract_id: '',
+                doctors_referal: customer.referral, 
                 type: customer.serviceLocation,
                 result: customer.result,
                 total_amount: totalPrice,
-                discount: '0',
-                grand_total: totalPrice,
-                discount_code: '',
-                status: 'For Examination',
+                grand_total: "",
+                discount_reference_no: customer.discountDetail, 
+                status: 'pending',
                 reference_code: '',
                 payment_type: 'PENDING',
                 lab_tests: testId,
                 package_tests: packageId,
                 lab_prices: labPrices,
                 package_prices: packagePrices,
-                status: '',
+                status: 'pending',
                 lab_extracted_dates: extractedDates,
                 lab_test_starts: testStarts,
                 lab_test_finishes: testFinishes,
@@ -225,12 +227,14 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 added_by: userId, 
             }
         }).then(function (response) {
-            console.log(response.data);
+            console.log(response);
             toast.success(response.data.message.success);
-            setTimeout(function() {
-                setRedirect(true);
-            }, 2000);
-        })
+            // setTimeout(function() {
+            //     setRedirect(true);
+            // }, 2000);
+        }).catch(function (error) {
+            console.log(error);
+        });
         handleClose();
         })
     }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { Navigate } from 'react-router-dom';
 
 //css
@@ -12,7 +13,6 @@ import './Form3.css';
 import Navbar from '../../../Navbar';
 import Header from '../../../Header.js';
 import ServiceItems from '../../../ServiceItems';
-import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { getAnnualWellnessPackageBasic,
          getPregnancyLabPackage,
          getPreEmploymentDiscount,
@@ -170,22 +170,23 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 token: userToken,
                 api_key: window.$api_key, 
                 customer: response.data.data.customer_id,
+                discount_id: customer.discountId,
                 booking_time: customer.dateOfTesting,
                 company_contract_id: '',
+                doctors_referral: customer.referral, 
                 type: customer.serviceLocation,
                 result: customer.result,
                 total_amount: totalPrice,
-                discount: '0',
+                discount_reference_no: customer.discountDetail, 
                 grand_total: totalPrice,
-                discount_code: '',
-                status: 'For Examination',
+                status: 'pending',
                 reference_code: '',
                 payment_type: 'PENDING',
                 lab_tests: testId,
                 package_tests: packageId,
                 lab_prices: labPrices,
                 package_prices: packagePrices,
-                status: '',
+                status: 'pending',
                 lab_extracted_dates: extractedDates,
                 lab_test_starts: testStarts,
                 lab_test_finishes: testFinishes,

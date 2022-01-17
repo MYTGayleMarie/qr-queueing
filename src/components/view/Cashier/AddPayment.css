@@ -85,11 +85,11 @@
     margin-left: 1rem !important;
 }
 
-.senior-pwd-id-input {
-    margin-left: -8% !important;
+.discount-details-input, .discount-option {
+    margin-left: -5% !important;
     width: 30% !important;
 }
 
-.senior-pwd-header {
+.discount-header {
     margin-left: 10%;
 }

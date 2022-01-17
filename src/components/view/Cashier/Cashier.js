@@ -26,18 +26,20 @@ const filterData = {
 };
 
 const cashCountData = {
-  fiveCentavos: '',
-  tenCentavos: '',
-  twentyfiveCentavos: '',
-  onePesos: '',
-  fivePesos: '',
-  tenPesos: '',
-  twentyPesosCoin: '',
-  twentyPesosBill: '',
-  fiftyPesos: '',
-  onehundredPesos: '',
-  fivehundredPesos: '',
-  onethousandPesos: '',
+  oneCentavos: 0,
+  fiveCentavos: 0,
+  tenCentavos: 0,
+  twentyfiveCentavos: 0,
+  onePesos: 0,
+  fivePesos: 0,
+  tenPesos: 0,
+  twentyPesosCoin: 0,
+  twentyPesosBill: 0,
+  fiftyPesos: 0,
+  onehundredPesos: 0,
+  twohundredPesos: 0,
+  fivehundredPesos: 0,
+  onethousandPesos: 0,
 };
 
 var id = '';
@@ -177,11 +179,64 @@ function Cashier() {
     return totalAmount.toFixed(2);
   }
 
+<<<<<<< HEAD
   function logOut() {
     var cashCount = calculate();
 
     if (cashCount == cashSales) {
       removeUserSession();
+=======
+  function logOut() {
+    var oneCentavoTotal =  parseFloat(0.01 * cashCount.oneCentavos);
+    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
+    var tenCentavoTotal = parseFloat(0.10 * cashCount.tenCentavos);
+    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
+    var onePesoTotal = parseFloat(1.00 * cashCount.onePesos);
+    var fivePesoTotal = parseFloat(5.00 * cashCount.fivePesos);
+    var tenPesoTotal = parseFloat(10.00 * cashCount.tenPesos);
+    var twentyPesoCoinTotal = parseFloat(20.00 * cashCount.twentyPesosCoin);
+    var twentyPesoBillTotal = parseFloat(20.00 * cashCount.twentyPesosBill);
+    var fiftyPesoTotal = parseFloat(50.00 * cashCount.fiftyPesos);
+    var onehundredPesoTotal = parseFloat(100.00 * cashCount.onehundredPesos);
+    var twohundredPesoTotal = parseFloat(200.00 * cashCount.twohundredPesos);
+    var fivehundredPesoTotal = parseFloat(500.00 * cashCount.fivehundredPesos);
+    var onethousandPesoTotal = parseFloat(1000.00 * cashCount.onethousandPesos);
+    var cashCounts = calculate();
+
+    if (cashCounts == cashSales) {
+
+      axios({
+        method: 'post',
+        url: window.$link + 'cash_counts/create',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          added_by: userId,
+          physical_count: cashCounts,
+          bill_1000: onethousandPesoTotal,
+          bill_500: fivehundredPesoTotal,
+          bill_200: twohundredPesoTotal,
+          bill_100: onehundredPesoTotal,
+          bill_50: fiftyPesoTotal,
+          bill_20: twentyPesoBillTotal,
+          coin_20: twentyPesoCoinTotal,
+          coin_10: tenPesoTotal,
+          coin_5: fivePesoTotal,
+          coin_1: onePesoTotal,
+          cent_25: twentyfiveCentavoTotal,
+          cent_10: tenCentavoTotal,
+          cent_5: fiveCentavoTotal,
+          cent_1: oneCentavoTotal,
+        },
+      })
+        .then(function (response) {
+          removeUserSession();
+        }).catch(function (error) {
+          toast.error("Oops! Something wrong with the server");
+        });
+
+>>>>>>> b2df397d7cf9a74f6575581f008992d17c1fd114
     } else {
       toast.warning('Cash count does not match with cash sales');
     }
