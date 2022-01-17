@@ -94,7 +94,7 @@ function ImagingTests() {
     React.useEffect(() => {
         axios({
             method: 'post',
-            url: window.$link + 'bookings/getBookingDetails/' + id,
+            url: window.$link + 'bookings/getDetails/' + id,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
@@ -102,9 +102,14 @@ function ImagingTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data)
-            setPackages(booking.data.filter((info) => info.type != "lab"));
-            setServices(booking.data.filter((info) => info.type != "package" && info.category_id == xrayId));
+            console.log(booking.data.data.booking_details);
+            setPackages(booking.data.data.booking_package_details);
+            setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id == xrayId && info.status != "done"));
+
+            var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+            const finalArray = mergedArray[0];
+            setPackageServices(finalArray.filter((info) => info.category_id== xrayId ));
+
         }).catch(function (error) {
             console.log(error);
         });
@@ -139,25 +144,6 @@ function ImagingTests() {
         );
      });
 
-     React.useEffect(() => {
-        packages.map((row,index) => {
-        
-            axios({
-                method: 'post',
-                url: window.$link + 'bookings/getBookingPackageDetails/' + row.id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                setPackageServices(response.data.filter((info) => info.category_id == xrayId));
-            }).catch(function (error) {
-                console.log(error);
-            });
-        });
-    }, [services]);
 
     const packageTests = packageServices.map((services, index) => {
         return(
