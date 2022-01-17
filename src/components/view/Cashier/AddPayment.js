@@ -132,8 +132,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log("----")
-            console.log(response.data)
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
             setDiscountCode(response.data.discount_code);
@@ -713,7 +711,7 @@ function AddPayment() {
                         </div>
 
                         <div className="col-sm-9">
-                            <span>{discountCode + " -  " + discount + "%"}</span>
+                            <span className="amount">{"P " + parseFloat(discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) + ""}</span>
                         </div>
                     </div>
                     <br/>
