@@ -37,7 +37,7 @@ import { Navigate } from 'react-router';
 
 function App() {
   const [token, setAuthentication] = useState(window.$userToken);
-  document.title = "QR Diagnostics System"
+  document.title = 'QR Diagnostics System';
 
   return (
     <Router>
@@ -60,10 +60,10 @@ function App() {
         <Route path="/chief-medical-tech" element={<Chief />} />
         <Route path="/chief-tests" element={<ChiefTests />} />
         <Route path="/chief-tests-2" element={<ChiefTests2 />} />
-        <Route path="/Users" element={token ? <Users/> : <Navigate to="/" />} />
-        <Route path="/User/:id" element={token ? <UserDetail/> : <Navigate to="/" />} />
-        <Route path="/companies" element={token ? <Companies/> : <Navigate to="/" />} />
-        <Route path="/add-company" element={token ? <AddCompany/> : <Navigate to="/" />} />
+        <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
+        <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
+        <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />
+        <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />

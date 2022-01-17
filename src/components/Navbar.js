@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { getRoleId, refreshPage, removeUserSession, getUser } from '../utilities/Common';
 
@@ -36,9 +36,13 @@ function cashierNavbar() {
             <span class="mx-2">Cashier</span>
           </li>
         </NavLink>
+        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
+          <span class="mx-2">Log Out</span>
+        </li>
       </ul>
     </div>
-  )
+  );
 }
 
 function registrationNavbar() {
@@ -66,9 +70,8 @@ function registrationNavbar() {
         </li>
       </ul>
     </div>
-  )
+  );
 }
-
 
 function adminNavbar() {
   return (
@@ -170,30 +173,52 @@ function adminNavbar() {
           <img src={reportIcon} alt={'report'} class="report icon"></img>
           <span class="mx-2">Reports</span>
         </li>
-      </NavLink>
+        <li href="#" class="nav-link supply-nav">
+          <img src={supplyIcon} alt={'supply'} class="supply icon"></img>
+          <span class="mx-2">Supply</span>
+          <ul class="sub-menu">
+            <Link to="/release-item" className="sub-link">
+              <li class="sub-list">RELEASE ITEMS</li>
+            </Link>
+            <Link to="/purchase-order" className="sub-link">
+              <li class="sub-list">PURCHASE ORDER</li>
+            </Link>
+            <Link to="/items" className="sub-link">
+              <li class="sub-list">ITEMS</li>
+            </Link>
+            <Link to="/suppliers" className="sub-link">
+              <li class="sub-list">SUPPLIERS</li>
+            </Link>
+          </ul>
+        </li>
+        <NavLink to="/reports" activeClassName="active" class="link">
+          <li href="#" class="nav-link report-nav">
+            <img src={reportIcon} alt={'report'} class="report icon"></img>
+            <span class="mx-2">Reports</span>
+          </li>
+        </NavLink>
 
-      <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
-        <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
-        <span class="mx-2">Log Out</span>
-      </li>
-    </ul>
-  </div>   
-  )
+        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
+          <span class="mx-2">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  );
 }
 
-
 function Navbar() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState('');
 
   React.useEffect(() => {
     setUser(getUser());
-  },[]);
+  }, []);
 
   return (
     <div>
       {user == 5 && cashierNavbar()}
       {user == 4 && registrationNavbar()}
-      {user != 4 && user != 5 && adminNavbar() }
+      {user != 4 && user != 5 && adminNavbar()}
     </div>
   );
 }
