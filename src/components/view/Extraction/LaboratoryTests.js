@@ -216,13 +216,19 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking)
-            // setPackages(booking.data.filter((info) => info.type != "lab"));
-            // setServices(booking.data.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
+            console.log(booking.data.data.booking_details);
+            setPackages(booking.data.data.booking_package_details);
+            setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
+
+            var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+            const finalArray = mergedArray[0];
+            setPackageServices(finalArray.filter((info) => info.category_id != xrayId ));
+
         }).catch(function (error) {
             console.log(error);
         });
     }, []);
+
 
     const laboratoryTests = services.map((row, index) => {
        return(
@@ -254,26 +260,14 @@ function LaboratoryTests() {
        );
     });
 
-    React.useEffect(() => {
-        packages.map((row,index) => {
-        
-            axios({
-                method: 'post',
-                url: window.$link + 'bookings/getBookingPackageDetails/' + row.id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response)
-                setPackageServices(response.data.filter((info) => info.category_id != xrayId && info.status != "done"));
-            }).catch(function (error) {
-                console.log(error);
-            });
-        });
-    }, [packages]);
+    // React.useEffect(() => {
+    //     // console.log(Object.entries(packages));
+    //     var mergedArray = [].concat.apply([], Object.entries(packages)).filter((value) => value != null && isNaN(value) == true);
+    //     const finalArray = mergedArray[0];
+    //     console.log("---")
+    //     console.log(finalArray)
+   
+    // }, [packages]);
 
 
     const packageTests = packageServices.map((services, index) => {
