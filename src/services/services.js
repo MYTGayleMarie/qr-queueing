@@ -758,7 +758,7 @@ const Xray = [
     name: 'Chest Bucky',
     categoryId: '18',
     labTestId: '72',
-    price: '190.00',
+    price: '250.00',
     type: 'lab',
   },
   {
@@ -819,7 +819,7 @@ const Xray = [
   },
   {
     key: 'HumerusAPL_18',
-    name: 'Chest PAL/APL',
+    name: 'Humerus APL',
     categoryId: '18',
     labTestId: '80',
     price: '420.00',
@@ -906,8 +906,8 @@ const Xray = [
     type: 'lab',
   },
   {
-    key: 'ThoracoLumbarAPL_18',
-    name: 'Thorace-Lumber APL',
+    key: 'PhoraceLumbarAPL_18',
+    name: 'Phorace-Lumber APL',
     categoryId: '18',
     labTestId: '91',
     price: '1320.00',

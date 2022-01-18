@@ -34,6 +34,8 @@ const discountData = {
 
 function AddCompany() {
 
+    document.body.style = 'background: white;';
+
     //Form
     const [company, setCompany] = useForm(companyData);
     const [discount, setDiscount] = useForm(discountData);
@@ -63,8 +65,9 @@ function submit(e, company, discount) {
             }
         }).then(function (response) {
             console.log(response);
-            console.log(discount.discount_percentage)
-            toast.success("Successfully added company details");
+            // console.log(discount.discount_percentage)
+            console.log(response.data.message[0]);
+            toast.success(response.data.message.success);
             axios({
                 method: 'post',
                 url: window.$link + 'discounts/create',
@@ -81,15 +84,15 @@ function submit(e, company, discount) {
             }).then(function (discount_response) {
                 console.log(discount_response)
                 toast.success("Successfully added company discount details");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 2000);
+                // setTimeout(function() {
+                //     setRedirect(true);
+                // }, 2000);
             }).catch(function (error) {
-                console.log(error);
+                toast.error(error);
             })
     
         }).catch(function (error) {
-    
+            toast.error(error);
         });
     
     } else {

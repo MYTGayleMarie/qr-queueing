@@ -55,6 +55,7 @@ function AddPayment() {
     const [pay, setPay] = useState(0);
     const [remarks, setRemarks] = useState("");
     const [discount, setDiscount] = useState(0);
+    const [discountRemarks, setDiscountRemarks] = useState(""); 
     const {id} = useParams();
 
     //customer details
@@ -68,6 +69,7 @@ function AddPayment() {
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
     const [seniorPwdId, setID] = useState("");
+
 
     //services
     const [services, setServices] = useState([]);
@@ -132,6 +134,7 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log(response)
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
             setDiscountCode(response.data.discount_code);

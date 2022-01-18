@@ -26,6 +26,8 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
     const {id} = useParams();
 
     const [discountList, setDiscountList] = useState([]);
+    const [companyId, setCompanyId] = useState("");
+    const [companyRemarks, setCompanyRemarks] = useState("");
 
     axios({
         method: 'post',
@@ -73,9 +75,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                 </button>
                 </div>
             );
-        } else {
-            console.log("Incomplete");
-        }
+        } 
     }
 
     React.useEffect(() => {
@@ -95,13 +95,47 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
         });
     },[]);
 
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'discounts/show/' + discountId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            setCompanyId(response.data.company_id);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },[discountId]);
+
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'companies/show/' + companyId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            setCompanyRemarks(response.data.remarks);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+    },[companyId]);
+
     const listOfDiscount =  discountList.map((row, index) => {
             return(
                 <option key={index} value={row.id}>{row.description + " (" + row.discount_code + ")" }</option>
             );
     });
 
-    console.log(discountList)
     function sinceLastMeal() {
         var presentDate = new Date();
         let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
@@ -205,6 +239,15 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
                             <br />
                         </div>
                         <div className="col-sm-6">
+                            <label for="address" className="form-label">DISCOUNT REMARKS</label><br />
+                            <span className="remarks ">{companyRemarks != "" && companyRemarks}</span>
+                        </div>
+                    </div>
+
+
+
+                    <div className="row">
+                        <div className="col-sm-12">
                             <label for="address" className="form-label">DISCOUNT DETAIL</label><br />
                             <input type="text" className="form-control full" id="discount_detail" name="discountDetail" value={discountDetail} onChange={setPersonal}/><br />
                         </div>
