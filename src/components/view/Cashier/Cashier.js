@@ -43,7 +43,6 @@ const cashCountData = {
 };
 
 var id = '';
-var patientData = [];
 
 function Cashier() {
   //Cash Count
@@ -105,7 +104,6 @@ function Cashier() {
   }, []);
 
   React.useEffect(() => {
-    patientData.length = 0;
     bookingDetails.map((booking, index) => {
       axios({
         method: 'post',
@@ -123,7 +121,7 @@ function Cashier() {
           var bookingDetails = {};
           bookingDetails.id = booking.id;
           bookingDetails.name =
-            customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+          customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
           bookingDetails.bookingTime = formatBookingTime.toDateString();
           bookingDetails.serviceType = booking.type;
           bookingDetails.amount = booking.grand_total;
@@ -138,16 +136,14 @@ function Cashier() {
 
           bookingDetails.addedOn = formatAddedOn.toDateString();
           if (bookingDetails.payment == 'PENDING') {
-            patientData.push(bookingDetails);
-            setFinalPatientData(patientData);
+            setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
-          console.log(bookingDetails);
         })
         .catch(function (error) {
           console.log(error);
         });
     });
-  });
+  },[bookingDetails]);
 
   function calculate() {
     var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
@@ -259,7 +255,7 @@ function Cashier() {
               </div>
             </div>
           </div>
-          <Header type="thick" title="BOOKING MANAGER" tableData={patientData} />
+          <Header type="thick" title="BOOKING MANAGER"/>
           <Table
             type={'cashier'}
             tableData={finalPatientData}

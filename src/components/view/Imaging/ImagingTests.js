@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { getToken, getUser} from "../../../utilities/Common";
+import { getToken, getUser, refreshPage} from "../../../utilities/Common";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import './ImagingTests.css';
@@ -12,6 +14,7 @@ import Navbar from '../../Navbar';
 import PersonalDetails from '../../PersonalDetails';
 
 //constants
+const presentDate = new Date();
 const userToken = getToken();
 const userId = getUser();
 const xrayId = 18;
@@ -40,6 +43,12 @@ function ImagingTests() {
       const [packages, setPackages] = useState([]);
       const [packageServices, setPackageServices] = useState([]);
 
+     //message
+      const [message, setMessage] = useState();
+      const [pendingLab, setPendingLab] = useState([]);
+      const [pendingPack, setPendingPack] = useState([]);
+      const [pendingPackServices, setPendingPackServices] = useState([]);
+
       const toggleImaging = () => {
         setImaging(!inputBox);
 
@@ -47,6 +56,111 @@ function ImagingTests() {
             ImagingInfo.length = 0;
         }
     };
+
+     const showPending = (pendingLab, pendingPackServices) => {
+        var message = "PENDING:" + "\n"; 
+
+        if(pendingLab.length == 0 && pendingPackServices == 0) {
+            return;
+        }
+
+        if(pendingLab.length != 0) {
+            pendingLab.map((info,index) => {
+                message += info.lab_test + ",\n";
+            });
+        }
+
+        if(pendingPackServices.length != 0) {
+            pendingPackServices.map((info,index) => {
+                message += info.lab_test + ",\n";
+            });
+        }
+
+        toast.success(message);
+     
+     };
+
+     const updateImaging = () => {
+        ImagingInfo.map((row, index) => {
+            console.log("hereee")
+            console.log(row);
+            console.log(row.type == "lab");
+            console.log(row.type == "package");
+            if(row.type == "lab") {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'Bookingdetails/updateExtraction/' + row.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        booking: id,
+                        status: 'done',
+                        extracted_on: presentDate.toISOString().split('T')[0], 
+                        updated_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Oops! Something went wrong...");
+                });
+            } 
+            else if (row.type == "package") {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'Bookingpackage_details/updateExtraction/' + row.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        booking_detail_id: row.booking_detail_id,
+                        status: 'done',
+                        extracted_on: presentDate.toISOString().split('T')[0], 
+                        updated_by: userId,
+                    }
+                }).then(function (response) {
+                   console.log(response);
+                
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Oops! Something went wrong...");
+                });
+            }
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getDetails/' + id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+            setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "done"));
+            setPendingPack(booking.data.data.booking_package_details);
+
+            console.log(pendingLab);
+            var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+            const finalArray = mergedArray[0];
+            setPendingPackServices(finalArray.filter((info) => info.category_id == xrayId && info.status != "done"));
+
+        }).catch(function (error) {
+            console.log(error)
+        });
+      
+        toggleImaging();
+        setTimeout(function() {
+            refreshPage();
+        }, 5000);
+    };
+
+    React.useEffect(() => {
+        showPending(pendingLab,pendingPackServices);
+    },[pendingPackServices]);
 
     React.useEffect(() => {
 
@@ -108,7 +222,7 @@ function ImagingTests() {
 
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
-            setPackageServices(finalArray.filter((info) => info.category_id== xrayId ));
+            setPackageServices(finalArray.filter((info) => info.category_id == xrayId ));
 
         }).catch(function (error) {
             console.log(error);
@@ -127,7 +241,8 @@ function ImagingTests() {
                              {
                                  id: row.id,
                                  name: row.lab_test,
-                                 barcode: row.barcode
+                                 barcode: row.barcode,
+                                 type: "lab",
                              },
                          ]);
                      } else {
@@ -157,7 +272,8 @@ function ImagingTests() {
                                 {
                                     id: services.id,
                                     name: services.lab_test,
-                                    barcode: services.barcode
+                                    barcode: services.barcode,
+                                    type: "package",
                                 },
                             ]);
                         } else {
@@ -186,6 +302,8 @@ function ImagingTests() {
             </div>
         );
     });
+
+    console.log(ImagingInfo);
    
 
 
@@ -197,7 +315,7 @@ function ImagingTests() {
                 type='thin'
                 title='IMAGING TESTS' 
             />
-
+            <ToastContainer/>
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
         <div className="personal-data-cont">
@@ -257,7 +375,7 @@ function ImagingTests() {
 
             <div className="row d-flex justify-content-center">        
                 {inputBox === false && <button className="start-btn" onClick={toggleImaging}>START EXTRACTION</button>}  
-                {inputBox === true && <button className="save-details-btn" onClick={toggleImaging}>SAVE DETAILS</button>}     
+                {inputBox === true && <button className="save-details-btn" onClick={updateImaging}>SAVE DETAILS</button>}     
             </div>
 
         </div>

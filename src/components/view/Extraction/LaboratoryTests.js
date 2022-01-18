@@ -57,21 +57,41 @@ function LaboratoryTests() {
         }
     };
 
-    const showPending = (labServices, packageServices) => {
-        var message = "PENDING:" + "\n"; 
+    const showPending = (pendingLab, pendingPackServices) => {
+        var message = "PENDING:" + "\n\n"; 
 
-        if(labServices.length != 0) {
-            
+        if(pendingLab.length == 0 && pendingPackServices == 0) {
+            return;
         }
-     
-       
-        console.log(labServices, packageServices);
+
+        if(pendingLab.length != 0) {
+            message += "\n\n (LAB SERVICES):\n";
+            pendingLab.map((info,index) => {
+                if(pendingLab.length == index) {
+                    message += info.lab_test + "\n";
+                } else {
+                    message += info.lab_test + ",\n";
+                }
+            });
+        }
+
+        if(pendingPackServices.length != 0) {
+            message += "\n\n (PACKAGE SERVICES):\n";
+            pendingPackServices.map((info,index) => {
+                if(pendingLab.length == index) {
+                    message += info.lab_test + "\n";
+                } else {
+                    message += info.lab_test + ",\n";
+                }
+            });
+        }
+
+        toast.success(message);
     
     };
 
 
     const updateExtraction = () => {
-        // console.log(ExtractionInfo);
 
         ExtractionInfo.map((row, index) => {
 
@@ -120,7 +140,7 @@ function LaboratoryTests() {
 
         axios({
             method: 'post',
-            url: window.$link + 'bookings/getBookingDetails/' + id,
+            url: window.$link + 'bookings/getDetails/' + id,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
@@ -128,39 +148,28 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log("booking");
             console.log(booking);
-            setPendingLab(booking.data.filter((info) => info.type != "package" && info.status != "done"));
-            setPendingPack(booking.data.filter((info) => info.type == "package"));
+            setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "done"));
+            setPendingPack(booking.data.data.booking_package_details);
 
-            pendingPack.map((row,index) => {
-        
-                axios({
-                    method: 'post',
-                    url: window.$link + 'bookings/getBookingPackageDetails/' + row.id,
-                    withCredentials: false, 
-                    params: {
-                        api_key: window.$api_key,
-                        token: userToken.replace(/['"]+/g, ''),
-                        requester: userId,
-                    }
-                }).then(function (response) {
-                    console.log("package")
-                    console.log(response);
-                    setPendingPackServices(response.data.filter((info) => info.status == "pending"));
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            });
-    
+            console.log(pendingLab);
+            var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+            const finalArray = mergedArray[0];
+            setPendingPackServices(finalArray.filter((info) => info.status != "done"));
+
         }).catch(function (error) {
             console.log(error)
         });
-        
-        showPending(pendingLab, pendingPackServices);
       
         toggleExtraction();
+        setTimeout(function() {
+            refreshPage();
+        }, 5000);
     };
+
+    React.useEffect(() => {
+        showPending(pendingLab,pendingPackServices);
+    },[pendingPackServices]);
 
       React.useEffect(() => {
 
@@ -216,13 +225,13 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data.data.booking_details);
+            console.log(booking.data.data);
             setPackages(booking.data.data.booking_package_details);
             setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "done"));
 
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
-            setPackageServices(finalArray.filter((info) => info.category_id != xrayId ));
+            setPackageServices(finalArray.filter((info) => info.category_id != xrayId && info.status != "done"));
 
         }).catch(function (error) {
             console.log(error);
