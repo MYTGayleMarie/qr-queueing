@@ -32,6 +32,7 @@ import {
   getCardiology,
   getMedicalCertificate,
   getUltrasound,
+  getPromo,
 } from '../../../../services/services';
 
 //VARIABLES
@@ -67,6 +68,7 @@ const xray = getXray();
 const cardiology = getCardiology();
 const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
+const promo = getPromo();
 
 function Form2({ service, customer, setServices, lastMeal, navigation }) {
   document.body.style = 'background: white;';
@@ -211,6 +213,9 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         getDetails(ultrasound, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
+      case 22:
+        getDetails(promo, data[0]);
+        checkedServicesDetails.push(itemDetails);
     }
   });
 
@@ -306,7 +311,11 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                   </div>
                   <div className="col d-flex justify-content-end">
                     <span className="price">
-                      <span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}
+                      <span className="currency">P</span>{' '}
+                      {parseFloat(data.price).toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                     </span>
                   </div>
                 </div>
@@ -316,7 +325,9 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
             <div className="row">
               <div className="col d-flex justify-content-end">
                 <span className="total-price">
-                  <b>TOTAL P {totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b>
+                  <b>
+                    TOTAL P {totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </b>
                 </span>
               </div>
             </div>

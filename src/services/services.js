@@ -1100,6 +1100,41 @@ const UltraSound = [
   },
 ];
 
+const Promo = [
+  {
+    key: 'Promo22',
+    name: 'Chest XRAY Test Promo Individual',
+    categoryId: '22',
+    labTestId: '114',
+    price: '170.00',
+    type: 'lab',
+  },
+  {
+    key: 'Promo23',
+    name: 'Chest XRAY Test Promo Group (15 PAX OR MORE)',
+    categoryId: '22',
+    labTestId: '115',
+    price: '150.00',
+    type: 'lab',
+  },
+  {
+    key: 'Promo24',
+    name: 'Hbsag Test Promo Individual',
+    categoryId: '22',
+    labTestId: '116',
+    price: '270.00',
+    type: 'lab',
+  },
+  {
+    key: 'Promo25',
+    name: 'Hbsag Test Promo Group (15 PAX OR MORE)',
+    categoryId: '22',
+    labTestId: '117',
+    price: '240.00',
+    type: 'lab',
+  },
+];
+
 const allLabServices = ClincalMicroscopy.concat(
   Hematology,
   Electrocytes,
@@ -1118,7 +1153,8 @@ const allLabServices = ClincalMicroscopy.concat(
   Xray,
   Cardiology,
   MedicalCertificate,
-  UltraSound
+  UltraSound,
+  Promo
 );
 
 /*********************************
@@ -1271,4 +1307,9 @@ export const getMedicalCertificate = () => {
 //Ultrasound
 export const getUltrasound = () => {
   return UltraSound;
+};
+
+//Promo
+export const getPromo = () => {
+  return Promo;
 };
