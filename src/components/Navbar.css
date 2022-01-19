@@ -117,8 +117,7 @@ a {
 }
 
 .logout-nav {
-    position: absolute;
-    bottom: 0;
+    margin-top: 5%;
 }
 
 .supply-nav {
