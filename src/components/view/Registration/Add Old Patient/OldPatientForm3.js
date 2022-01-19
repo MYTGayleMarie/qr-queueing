@@ -74,8 +74,10 @@ const ultrasound = getUltrasound();
 const promo = getPromo();
 
 function OldPatientForm3({ service, customer, setServices, lastMeal, navigation }) {
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+      },[]);
     document.body.style = 'background: white;';
-    window.scrollTo(0, 0);
 
     //customer details
     const [firstName, setFirstName] = useState("");
