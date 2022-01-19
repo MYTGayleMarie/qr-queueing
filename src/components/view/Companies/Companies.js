@@ -92,6 +92,7 @@ function Companies() {
                     clickable={false}
                     type={'companies'}
                     tableData={finalCompanyData}
+                    rowsPerPage={4}
                     headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'DISCOUNT PERCENTAGE', 'REMARKS']}
                     filteredData={filteredData}
                     setFilter={setFilter}

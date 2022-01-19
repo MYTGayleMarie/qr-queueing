@@ -259,6 +259,7 @@ function Cashier() {
           <Table
             type={'cashier'}
             tableData={finalPatientData}
+            rowsPerPage={4}
             headingColumns={[
               'BOOKING ID',
               'PATIENT NAME',

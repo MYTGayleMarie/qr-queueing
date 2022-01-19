@@ -91,6 +91,7 @@ function SearchPatient() {
                     clickable={true}
                     type={'search-patient'}
                     tableData={patients}
+                    rowsPerPage={4}
                     headingColumns={['ID', 'PATIENT NAME', 'GENDER', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'ACTION']}
                     link={addBooking}
                 />            

@@ -92,6 +92,7 @@ function Users() {
                 <Table
                     type={'users'}
                     tableData={finalUserData}
+                    rowsPerPage={4}
                     headingColumns={['ID', 'NAME', 'EMAIL', 'ROLE']}
                     link={UserDetails}
                 />

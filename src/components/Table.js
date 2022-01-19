@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import useTable from "../utilities/Pagination";
+import TableFooter from "./TableFooter";
 import { Link, NavLink } from 'react-router-dom';
 
 //css 
 import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
+
 function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link}) {
+    
+      //PAGINATION 
+    const [page, setPage] = useState(1);
+    const {slice, range} = useTable(tableData, page, rowsPerPage);
 
     let tableClass = 'table-container__table';
 
@@ -19,11 +25,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         tableClass += ' table-container_table--break-lg';
     }
 
-    //PAGINATION 
-    const [page, setPage] = useState(1);
-    const {slice, range} = useTable(tableData, page, rowsPerPage);
-
-    const data = tableData.map((row, index) => {
+    const data = slice.map((row, index) => {
 
         let rowData = [];
         let i = 0;
@@ -35,7 +37,6 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             });
             i++;
         }
-
 
         if(clickable == false) {
             return <tr key={row.id}>
@@ -85,6 +86,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
              </div>
         );
     }
@@ -106,6 +108,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
              </div>
         );
 
@@ -132,13 +135,14 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     {data}
                 </tbody>
             </table>
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
          </div>
         );
     }
     else if (type === "search-patient") {
         return(
             <div className="table-container">
-                <div className="search-table-container d-flex justify-content-end">
+                <div className="search-table-container d-flex justify-content-end"></div>
                 <table className={tableClass}>
                     <thead>
                         <tr>
@@ -151,7 +155,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-             </div>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
             </div>
         );
     }

@@ -25,13 +25,13 @@ const filterData = {
 };
 
 var id = '';
-const patientData = [];
 
 function Extraction() {
 
     const [filteredData, setFilter] = useForm(filterData);
     const [render, setRender] = useState([]);
     const [redirect, setRedirect] = useState(false);
+    const [patientData, setPatientData] = useState([]);
 
     function startExtraction(bookingId) {
         id = bookingId;
@@ -73,7 +73,7 @@ function Extraction() {
                   bookingDetails.name = customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
                   bookingDetails.birthDate = formatBookingTime.toDateString();
                   bookingDetails.gender = customer.data.gender;
-                  patientData.push(bookingDetails);
+                  setPatientData(oldArray => [...oldArray, bookingDetails]);
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -111,6 +111,7 @@ function Extraction() {
                 <Table
                     type={'no-action'}
                     tableData={patientData}
+                    rowsPerPage={4}
                     headingColumns={['BOOKING ID', 'PATIENT NAME', 'BIRTHDATE', 'GENDER']}
                     filteredData={filteredData}
                     setFilter={setFilter}

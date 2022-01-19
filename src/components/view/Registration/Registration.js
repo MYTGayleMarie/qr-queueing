@@ -4,6 +4,8 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useTable from '../../../utilities/Pagination';
+import TableFooter from '../../TableFooter';
 
 //css
 import './Registration.css';
@@ -21,15 +23,16 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
   from_date: formattedPresentData,
+
   to_date: formattedPresentData,
   done: false,
 };
 
-var patientData = [];
-
 function Registration() {
+
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
+  const [patientData, setPatientData] = useState([]);
   
   React.useEffect(() => {
     patientData.length = 0;
@@ -68,7 +71,7 @@ function Registration() {
               bookingDetails.bookingTime = formatBookingTime.toDateString();
               bookingDetails.serviceType = booking.type;
               bookingDetails.addedOn = formatAddedOn.toDateString();
-              patientData.push(bookingDetails);
+              setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
             .catch(function (error) {
               console.log(error);
@@ -93,6 +96,7 @@ function Registration() {
             clickable={false}
             type={'no-action'}
             tableData={patientData}
+            rowsPerPage={4}
             headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'ADDED ON']}
             filteredData={filteredData}
             setFilter={setFilter}
