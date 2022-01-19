@@ -1102,7 +1102,7 @@ const UltraSound = [
 
 const Promo = [
   {
-    key: 'Promo22',
+    key: 'Promo_22',
     name: 'Chest XRAY Test Promo Individual',
     categoryId: '22',
     labTestId: '114',
@@ -1110,7 +1110,7 @@ const Promo = [
     type: 'lab',
   },
   {
-    key: 'Promo23',
+    key: 'Promo_23',
     name: 'Chest XRAY Test Promo Group (15 PAX OR MORE)',
     categoryId: '22',
     labTestId: '115',
@@ -1118,7 +1118,7 @@ const Promo = [
     type: 'lab',
   },
   {
-    key: 'Promo24',
+    key: 'Promo_24',
     name: 'Hbsag Test Promo Individual',
     categoryId: '22',
     labTestId: '116',
@@ -1126,7 +1126,7 @@ const Promo = [
     type: 'lab',
   },
   {
-    key: 'Promo25',
+    key: 'Promo_25',
     name: 'Hbsag Test Promo Group (15 PAX OR MORE)',
     categoryId: '22',
     labTestId: '117',

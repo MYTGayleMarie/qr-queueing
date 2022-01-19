@@ -90,8 +90,10 @@ const promo = getPromo();
  ********************************/
 
 function Form2({ service, customer, setServices, lastMeal, navigation }) {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  },[]);
   document.body.style = 'background: white;';
-  window.scrollTo(0, 0);
 
   //Redirection
   const [redirect, setRedirect] = useState(false);

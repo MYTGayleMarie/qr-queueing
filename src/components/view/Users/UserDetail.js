@@ -34,6 +34,7 @@ function UserDetail() {
       const [editName, setEditName] = useState("");
       const [editEmail, setEditEmail] = useState("");
       const [editRoleId, setEditRoleId] = useState("");
+      const [editPassword, setEditPassword] = useState("");
 
      //Edit Profile Modal
      const [profileShow, setProfileShow] = useState(false);
@@ -90,7 +91,6 @@ function UserDetail() {
       //Edit Profile Function
       function editProfile(e) {
         e.preventDefault();
-        console.log(editName);
         axios({
             method: 'post',
             url: window.$link + 'users/update/' + id,
@@ -115,11 +115,35 @@ function UserDetail() {
         });
       }
 
+      function changePassword(e) {
+        e.preventDefault();
+        axios({
+            method: 'post',
+            url: window.$link + 'users/reset_password/' + id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                password: "",
+                updated_by: userId,
+            }
+        }).then(function (response) {
+            console.log(response);
+            toast.success("Successfully changed password!");
+            handleProfileClose();
+          //   setTimeout(function() {
+          //     setRedirect(true);
+          // }, 2000);
+        }).catch(function (error) {
+            console.log(error);
+        });
+      }
+
       if(redirect == true) {
         return (
             <Navigate to = "/users"/>
         )
-    }    
+     }    
 
 
     return (
@@ -216,14 +240,14 @@ function UserDetail() {
                           <div className='label text-center'>NEW PASSWORD</div>
                         </div>
                         <div className='col-sm-3'>
-                          <input type="text" name="password" className='cash-count-input'/>
+                          <input type="text" name="password" className='cash-count-input' onChange={(e) => setEditPassword(e.target.value)}/>
                         </div>
                       </div>
                     </div>
                    </div>
                   </Modal.Body>
                     <Modal.Footer>
-                        <button type="submit" className='save-btn'>
+                        <button type="submit" className='save-btn' onClick={(e) => changePassword(e)}>
                           SAVE
                         </button>
                    </Modal.Footer>
