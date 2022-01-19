@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
+import useTable from "../utilities/Pagination";
 import { Link, NavLink } from 'react-router-dom';
 
 //css 
 import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link}) {
 
     let tableClass = 'table-container__table';
 
@@ -17,6 +18,10 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     } else if(breakOn === 'large') {
         tableClass += ' table-container_table--break-lg';
     }
+
+    //PAGINATION 
+    const [page, setPage] = useState(1);
+    const {slice, range} = useTable(tableData, page, rowsPerPage);
 
     const data = tableData.map((row, index) => {
 

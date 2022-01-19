@@ -447,8 +447,20 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
                 setForm={setServices}
               />
 
-              <ServiceItems category="ULTRASOUND" items={ultrasound} formData={service} setForm={setServices} />
-              <ServiceItems category="TEST PROMOS" items={promo} formData={service} setForm={setServices} />
+              <ServiceItems 
+                category="ULTRASOUND" 
+                items={ultrasound} 
+                formData={service} 
+                setForm={setServices} 
+              />
+
+              <ServiceItems 
+                category="TEST PROMOS" 
+                items={promo} 
+                formData={service} 
+                setForm={setServices} 
+                />
+                
               {/*
                 <h3 className="form-categories-header italic">PACKAGES</h3>
 

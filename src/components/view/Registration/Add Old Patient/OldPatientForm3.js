@@ -33,7 +33,8 @@ import { getAnnualWellnessPackageBasic,
          getXray,
          getCardiology,
          getMedicalCertificate,
-         getUltrasound } from '../../../../services/services';
+         getUltrasound,
+         getPromo, } from '../../../../services/services';
 
 /*********************************
  * FUNCTIONS
@@ -70,6 +71,7 @@ const xray = getXray();
 const cardiology = getCardiology();
 const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
+const promo = getPromo();
 
 function OldPatientForm3({ service, customer, setServices, lastMeal, navigation }) {
     document.body.style = 'background: white;';
@@ -354,6 +356,10 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 getDetails(ultrasound, data[0])
                 checkedServicesDetails.push(itemDetails);
             break;
+            case 22:
+                getDetails(promo, data[0]);
+                checkedServicesDetails.push(itemDetails);
+            break;
         }
 
     });
@@ -514,6 +520,13 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 items={ultrasound} 
                 formData={service}
                 setForm={setServices}
+                />
+
+                <ServiceItems 
+                category="TEST PROMOS" 
+                items={promo} 
+                formData={service} 
+                setForm={setServices} 
                 />
 {/* 
                 <h3 className="form-categories-header italic">PACKAGES</h3>
