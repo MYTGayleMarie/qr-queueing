@@ -1,7 +1,7 @@
 .navbar-logo {
     width: 70%;
-    margin-top: 5%;
-    margin-bottom: 2%;
+    margin-top: 10%;
+    margin-bottom: 15%;
 }
 
 .active {
@@ -118,6 +118,7 @@ a {
 
 .logout-nav {
     margin-top: 5%;
+    padding: 5% !important;
 }
 
 .supply-nav {
