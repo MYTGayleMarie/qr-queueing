@@ -52,7 +52,6 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
       mname != '' &&
       sex != '' &&
       birthDate != '' &&
-      email != '' &&
       contactNum != '' &&
       address != '' &&
       serviceLocation != '' &&
@@ -256,7 +255,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
             <div className="row">
               <div className="col-sm-6">
                 <label for="email" className="form-label">
-                  EMAIL <i>(required)</i>
+                  EMAIL 
                 </label>
                 <br />
                 <input
