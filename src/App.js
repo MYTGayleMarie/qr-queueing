@@ -33,6 +33,7 @@ import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
 import AddCompany from './components/View/Companies/AddCompany';
+import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import { Navigate } from 'react-router';
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
+        <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );

@@ -76,10 +76,13 @@ function Cashier() {
         requester: userId,
       },
     }).then(function (response) {
+      console.log(response)
       var cash = parseFloat(response.data.data.total_cash_sales);
       setCashSales(cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     });
   }, []);
+
+  console.log(filteredData.from_date);
 
   React.useEffect(() => {
     axios({
@@ -90,7 +93,7 @@ function Cashier() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: filteredData.from_date,
+        date_from: "Thu Jan 10 2022 21:47:22 GMT+0800 (Philippine Standard Time)",
         date_to: filteredData.to_date,
       },
     })
@@ -116,6 +119,7 @@ function Cashier() {
         },
       })
         .then(function (customer) {
+          console.log(customer)
           var formatBookingTime = new Date(booking.booking_time);
           var formatAddedOn = new Date(booking.added_on);
           var bookingDetails = {};

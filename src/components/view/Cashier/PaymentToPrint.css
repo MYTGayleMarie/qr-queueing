@@ -1,0 +1,27 @@
+.print-area {
+    padding: 3%;
+}
+
+.table-header {
+    color: #bfbc4b;
+    font-size:1em;
+}
+
+.request-form {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.header {
+    font-weight: bold;
+    color: #419ea3;
+    font-size: 0.8em;
+}
+
+.detail {
+    font-size: 0.7em;
+}
+
+.payment-logo {
+    width: 10%;
+}

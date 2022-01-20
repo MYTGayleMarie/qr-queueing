@@ -141,6 +141,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         added_by: userId,
       },
     }).then(function (response) {
+      console.log(response);
       toast.success(response.data.message.success);
       var packageId = [];
       var packagePrices = [];

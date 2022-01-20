@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import axios from 'axios';
@@ -7,6 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllLabServices, getAllPackages } from "../../../services/services";
 import { Navigate } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
+import { PaymentToPrint } from "./PaymentToPrint";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //css
 import './AddPayment.css'
@@ -55,7 +58,6 @@ function AddPayment() {
     const [pay, setPay] = useState(0);
     const [remarks, setRemarks] = useState("");
     const [discount, setDiscount] = useState(0);
-    const [discountRemarks, setDiscountRemarks] = useState(""); 
     const {id} = useParams();
 
     //customer details
@@ -73,6 +75,9 @@ function AddPayment() {
 
     //services
     const [services, setServices] = useState([]);
+    const [bookingDate, setBookingDate] = useState("");
+    const [result, setResult] = useState("");
+    const [printServices, setPrintServices] = useState([]);
 
     //check states
     const [checkNo, setCheckNo] = useState("");
@@ -90,6 +95,7 @@ function AddPayment() {
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [print, setPrint] = useState(false);
 
     //add Test states
     const [addTestType, setAddTestType] = useState("");
@@ -110,6 +116,11 @@ function AddPayment() {
     const [discountList, setDiscountList] = useState([]);
     const [discountCode, setDiscountCode] = useState("");
     const [discountDetails, setDiscountDetails] = useState("");
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+    });
 
     function handleRemove(service_id) {
         handleRemoveShow();
@@ -139,6 +150,8 @@ function AddPayment() {
             setGrandTotal(response.data.grand_total);
             setDiscountCode(response.data.discount_code);
             setDiscount(response.data.discount);
+            setBookingDate(response.data.booking_time);
+            setResult(response.data.result);
             totalAmount = response.data.total_amount;
             discount = response.data.discount;
             customer = response.data.customer_id;
@@ -193,6 +206,39 @@ function AddPayment() {
             console.log(error);
         });
     }, []);
+
+    React.useEffect(() => {
+        printServices.length = 0;
+        services.map((info, index) => {
+
+            axios({
+                method: 'post',
+                url: window.$link + 'categories/show/' + info.category_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (category) {
+                var serviceDetails = {};
+                
+                if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                    serviceDetails.key = "Electrolytes";
+                }
+                else {
+                    serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                }
+                serviceDetails.category = category.data.name;
+                serviceDetails.name = info.lab_test;
+                setPrintServices(oldArray => [...oldArray, serviceDetails]);
+            }).catch(function (error) {
+                console.log(error);
+            })
+        });
+    },[services]);
+
+    console.log(printServices)
 
     function removeService() {
         axios({
@@ -361,9 +407,8 @@ function AddPayment() {
             }).then(function (response) {
                 var date = new Date();                
                 toast.success("Payment Successful!");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 2000);
+                setPrint(true);
+                handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -392,9 +437,8 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 2000)
+                setPrint(true);
+                handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -425,9 +469,8 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 3000)
+                setPrint(true);
+                handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -455,14 +498,22 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 2000)
+                setPrint(true);
+                handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
             });
         }
+    }
+
+    function printButton() {
+        return (
+            <button className="save-btn" onClick={handlePrint}>
+            <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+                PRINT
+            </button>
+        ) 
     }
 
     function cashForm() {
@@ -498,8 +549,9 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        <button className="save-btn">SAVE BOOKING</button>
-                    </div>
+                        {print == true && printButton()}
+                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                    </div>                    
              </div>       
             )
         }
@@ -536,8 +588,10 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                <button className="save-btn">SAVE BOOKING</button>
+                {print == true && printButton()}
+                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
+
         </div>
         )
     }
@@ -576,7 +630,8 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                <button className="save-btn">SAVE BOOKING</button>
+                {print == true && printButton()}
+                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
         </div>
         )
@@ -615,7 +670,8 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        <button className="save-btn">SAVE BOOKING</button>
+                        {print == true && printButton()}
+                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>
              </div>       
             )
@@ -626,7 +682,6 @@ function AddPayment() {
                 <Navigate to = "/cashier"/>
             )
         }    
-
 
     return (
         <div>
@@ -727,17 +782,34 @@ function AddPayment() {
                     <span className="check method">CARD</span>
                     <input type="radio" id="others" name="payment_method" value="others" onClick={()=> setPayment('others')}/>
                     <span className="check method">OTHERS</span>
-
-                    <form onSubmit={(e) => submit(e)}>
+                    
+                    {/* <form> */}
                         <p>{payment === 'cash' && cashForm()}</p>
                         <p>{payment === 'check' && checkForm()}</p>
                         <p>{payment === 'card' && cardForm()}</p>
                         <p>{payment === 'others' && othersForm()}</p>
-                    </form>
+                    {/* </form> */}
 
                     <ToastContainer hideProgressBar={true}/>
 
-                    
+                
+                    <div
+                    style={{ display: "none" }}// This make ComponentToPrint show   only while printing
+                    > 
+                    <PaymentToPrint 
+                        ref={componentRef} 
+                        name={firstName + " " + middleName + " " + lastName}
+                        birthdate={birthDate}
+                        gender={gender}
+                        age={age}
+                        contact={contactNo + " " + email}
+                        address={address}
+                        bookingDate={bookingDate}
+                        payment={payment}
+                        result={result}
+                        services={printServices}
+                    />
+                    </div>
 
                 <Modal show={showRemove} onHide={handleRemoveClose}>
                     <Modal.Header closeButton>
