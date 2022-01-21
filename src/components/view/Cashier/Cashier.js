@@ -93,7 +93,7 @@ function Cashier() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: "Thu Jan 10 2022 21:47:22 GMT+0800 (Philippine Standard Time)",
+        date_from: filteredData.from_date,
         date_to: filteredData.to_date,
       },
     })
