@@ -201,6 +201,7 @@ function AddPayment() {
             }
         }).then(function (booking) {
             console.log(booking.data)
+            console.log("here")
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
@@ -252,7 +253,6 @@ function AddPayment() {
                 booking: id,
             }
         }).then(function (booking) {
-            console.log(booking.data);
             setServices(services);
             setTotal(total);
             handleRemoveClose();
@@ -408,7 +408,7 @@ function AddPayment() {
                 var date = new Date();                
                 toast.success("Payment Successful!");
                 setPrint(true);
-                handlePrint();
+                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -438,7 +438,7 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setPrint(true);
-                handlePrint();
+                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -470,7 +470,7 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setPrint(true);
-                handlePrint();
+                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -499,7 +499,7 @@ function AddPayment() {
                 console.log(response);
                 toast.success("Payment Successful!");
                 setPrint(true);
-                handlePrint();
+                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");

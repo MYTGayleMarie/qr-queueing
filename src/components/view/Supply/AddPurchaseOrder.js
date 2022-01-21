@@ -40,7 +40,7 @@ function AddPurchaseOrder() {
                 <span className="item-id-label">ITEM ID.</span>
               </div>
               <div className="col-sm-9">
-                <input type="text" name="item_id" className="item-id-input" />
+                <input type="text" name="item_id" className="item-name-input" />
               </div>
             </div>
             <div className="row">
@@ -78,29 +78,29 @@ function AddPurchaseOrder() {
           </div>
 
           <div className="add-items-cont">
-            <div className="row">
-              <div className="col-sm-1">
-                <h1 className="item-header left">QUANTITY</h1>
+            <div className="row d-flex justify-content-left">
+              <div className="col-sm-7">
+                <h1 className="add-item-header">QUANTITY</h1>
               </div>
-              <div className="col-sm-3">
-                <h1 className="item-header left">ITEMS</h1>
+              <div className="col-sm-5">
+                <h1 className="add-item-header items">ITEMS</h1>
               </div>
             </div>
 
             {items.map((item) => (
               <div className="row">
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <input key={item.id} type="number" name="quantity" className="quantity-item" />
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-10">
                   <input key={item.id} type="text" name="item" className="items-item" />
                 </div>
-                <div className="col-sm-3">
+                {/* <div className="col-sm-3">
                   <input key={item.id} type="number" name="item" className="items-item" />
                 </div>
                 <div className="col-sm-3">
                   <input key={item.id} type="number" name="item" className="items-item" />
-                </div>
+                </div> */}
               </div>
             ))}
           </div>

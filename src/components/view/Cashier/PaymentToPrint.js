@@ -28,8 +28,6 @@ export class PaymentToPrint extends React.PureComponent {
         console.log(groupedServices);
 
         const services = Object.keys(groupedServices).map(function(key) {
-            console.log(key)
-            console.log(groupedServices[key]);
 
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
