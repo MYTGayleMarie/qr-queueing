@@ -3,7 +3,7 @@
 }
 
 .table-header {
-    color: #bfbc4b;
+    color: black;
     font-size:1em;
 }
 
@@ -14,12 +14,12 @@
 
 .header {
     font-weight: bold;
-    color: #419ea3;
-    font-size: 0.8em;
+    color: black;
+    font-size: 0.9em;
 }
 
 .detail {
-    font-size: 0.7em;
+    font-size: 0.8em;
 }
 
 .payment-logo {

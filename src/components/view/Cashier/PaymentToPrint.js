@@ -7,7 +7,7 @@ import axios from 'axios';
 import './PaymentToPrint.css';
 
 //logo image
-import logo from '../../../images/logo.png';
+import logo from '../../../images/logo-black.png';
 
 function groupArrayOfObjects(list, key) {
     return list.reduce(function(rv, x) {
@@ -96,11 +96,11 @@ export class PaymentToPrint extends React.PureComponent {
             <div className='row'>
                 <div className='row'>
                     <div className='col-sm-4'>
-                        <span className='label'>Payment:</span>
+                        <span className='print-label'><b>Payment:</b></span>
                         <span> {this.props.payment}</span>
                     </div>
                     <div className='col-sm-4'>
-                        <span className='label'>Result:</span>
+                        <span className='print-label'><b>Result:</b></span>
                         <span> {this.props.result}</span>
                     </div>
                 </div>
@@ -145,11 +145,11 @@ export class PaymentToPrint extends React.PureComponent {
             <div className='row'>
                 <div className='row'>
                     <div className='col-sm-4'>
-                        <span className='label'>Payment:</span>
+                        <span className='print-label'><b>Payment:</b></span>
                         <span> {this.props.payment}</span>
                     </div>
                     <div className='col-sm-4'>
-                        <span className='label'>Result:</span>
+                        <span className='print-label'><b>Result:</b></span>
                         <span> {this.props.result}</span>
                     </div>
                 </div>
@@ -194,17 +194,19 @@ export class PaymentToPrint extends React.PureComponent {
             <div className='row'>
                 <div className='row'>
                     <div className='col-sm-4'>
-                        <span className='label'>Payment:</span>
+                        <span className='print-label'><b>Payment:</b></span>
                         <span> {this.props.payment}</span>
                     </div>
                     <div className='col-sm-4'>
-                        <span className='label'>Result:</span>
+                        <span className='print-label'><b>Result:</b></span>
                         <span> {this.props.result}</span>
                     </div>
                 </div>
             </div>
 
             <hr/>
+
+
         </div>
     </div>
       );
