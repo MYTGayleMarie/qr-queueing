@@ -32,6 +32,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
     discountId,
     discountDetail,
     serviceLocation,
+    homeServiceFee,
     result,
     dateOfTesting,
     lastmeal,
@@ -68,6 +69,29 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
       );
     } else {
       console.log('Incomplete');
+    }
+  }
+
+   function homeServiceFeeDisplay() {
+    if (
+      serviceLocation === "home service"
+    ) {
+      return (
+        <div className="row date-of-testing-container large-gap">
+        <div className="col">
+          <label for="date" className="form-label">
+            Home Service Fee
+          </label>
+          <br />
+          <select name="date" className="home-service-fee-select" value={homeServiceFee} onChange={setPersonal} required>
+            <option>Within 2km or less</option>
+            <option>More than 2km</option>
+          </select>
+        </div>
+      </div>
+      );
+    } else {
+      console.log('Error. No home service fee');
     }
   }
 
@@ -442,6 +466,9 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="col">
+                {homeServiceFeeDisplay()}
             </div>
             <div className="row date-of-testing-container large-gap">
               <div className="col-sm-4">
