@@ -65,7 +65,7 @@ function PurchaseOrder() {
             <Table
                 type={'no-action'}
                 tableData={purchaseData}
-                headingColumns={['PRINTING ORDER ID', 'ITEM ID', 'ITEM NAME', 'REQUESTED', 'ACTUAL', 'ACTION']}
+                headingColumns={['DATE', 'SUPPLIER', 'PO NO.', 'TOTAL', 'BRANCH', 'PO STATUS','ORDER STATUS', 'CHECK NO.', 'PREPARED BY', 'APPROVED BY']}
                 filteredData={filteredData}
                 setFilter={setFilter}
             />

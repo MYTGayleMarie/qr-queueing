@@ -71,6 +71,7 @@ function AddPayment() {
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
     const [seniorPwdId, setID] = useState("");
+    const [patientId, setPatientId] = useState("");
 
 
     //services
@@ -171,6 +172,7 @@ function AddPayment() {
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
                 const age = presentDate.getFullYear() - birthDate.getFullYear();
+                setPatientId(response.data.customer_id);
                 setFirstName(customer.data.first_name);
                 setMiddleName(customer.data.middle_name);
                 setLastName(customer.data.last_name);
@@ -211,31 +213,72 @@ function AddPayment() {
     React.useEffect(() => {
         printServices.length = 0;
         services.map((info, index) => {
+            var serviceDetails = {};
 
-            axios({
-                method: 'post',
-                url: window.$link + 'categories/show/' + info.category_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (category) {
-                var serviceDetails = {};
-                
-                if(category.data.name == "Electrolytes (NaKCl,iCA)") {
-                    serviceDetails.key = "Electrolytes";
-                }
-                else {
-                    serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
-                }
-                serviceDetails.category = category.data.name;
-                serviceDetails.name = info.lab_test;
-                setPrintServices(oldArray => [...oldArray, serviceDetails]);
-            }).catch(function (error) {
-                console.log(error);
-            })
+            if(info.category_id == null) {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'bookings/getBookingPackageDetails/' + info.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response.data)
+
+                    response.data.map((packageCat, index) => {
+                        axios({
+                            method: 'post',
+                            url: window.$link + 'categories/show/' + packageCat.category_id,
+                            withCredentials: false, 
+                            params: {
+                                api_key: window.$api_key,
+                                token: userToken.replace(/['"]+/g, ''),
+                                requester: userId,
+                            }
+                        }).then(function (category) {
+                            
+                            if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                                serviceDetails.key = "Electrolytes";
+                            }
+                            else {
+                                serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                            }
+                            serviceDetails.category = category.data.name;
+                            serviceDetails.name = packageCat.lab_test;
+                            setPrintServices(oldArray => [...oldArray, serviceDetails]);
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                    });
+                });
+            } else {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'categories/show/' + info.category_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (category) {
+                    
+                    if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                        serviceDetails.key = "Electrolytes";
+                    }
+                    else {
+                        serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                    }
+                    serviceDetails.category = category.data.name;
+                    serviceDetails.name = info.lab_test;
+                    setPrintServices(oldArray => [...oldArray, serviceDetails]);
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            }
         });
     },[services]);
 
@@ -798,6 +841,7 @@ function AddPayment() {
                     > 
                     <PaymentToPrint 
                         ref={componentRef} 
+                        patientId = {patientId}
                         name={firstName + " " + middleName + " " + lastName}
                         birthdate={birthDate}
                         gender={gender}

@@ -12,9 +12,12 @@
 .add-item-header {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 5%;
 }
 
 .items {
     margin-left: -100%;
 }
+
+
