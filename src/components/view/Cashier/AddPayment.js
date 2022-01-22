@@ -213,7 +213,6 @@ function AddPayment() {
     React.useEffect(() => {
         printServices.length = 0;
         services.map((info, index) => {
-            var serviceDetails = {};
 
             if(info.category_id == null) {
                 axios({
@@ -226,9 +225,10 @@ function AddPayment() {
                         requester: userId,
                     }
                 }).then(function (response) {
-                    console.log(response.data)
-
+                    console.log("-----")
+                    console.log(response)
                     response.data.map((packageCat, index) => {
+                        var serviceDetails = {};
                         axios({
                             method: 'post',
                             url: window.$link + 'categories/show/' + packageCat.category_id,
@@ -265,7 +265,7 @@ function AddPayment() {
                         requester: userId,
                     }
                 }).then(function (category) {
-                    
+                    var serviceDetails = {};
                     if(category.data.name == "Electrolytes (NaKCl,iCA)") {
                         serviceDetails.key = "Electrolytes";
                     }

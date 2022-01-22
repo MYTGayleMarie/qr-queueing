@@ -78,7 +78,7 @@ function Cashier() {
     }).then(function (response) {
       console.log(response)
       var cash = parseFloat(response.data.data.total_cash_sales);
-      setCashSales(cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+      setCashSales(cash);
     });
   }, []);
 
@@ -93,7 +93,7 @@ function Cashier() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: "Sat Jan 12 2022 10:05:11 GMT+0800 (Philippine Standard Time)",
+        date_from: filterData.from_date,
         date_to: filteredData.to_date,
       },
     })
@@ -107,6 +107,7 @@ function Cashier() {
   }, []);
 
   React.useEffect(() => {
+    console.log(bookingDetails)
     bookingDetails.map((booking, index) => {
       axios({
         method: 'post',
@@ -135,11 +136,10 @@ function Cashier() {
             bookingDetails.payment = 'PAID';
           } else if (booking.paid_amount < booking.grand_total) {
             bookingDetails.payment = 'PENDING';
-            console.log('here');
           }
 
           bookingDetails.addedOn = formatAddedOn.toDateString();
-          if (bookingDetails.payment == 'PENDING') {
+          if (bookingDetails.payment == 'PAID') {
             setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
         })
@@ -233,6 +233,10 @@ function Cashier() {
       toast.warning('Cash count does not match with cash sales');
     }
   }
+  var cashCounts = calculate();
+  console.log(cashCounts.toLocaleString() == cashSales);
+  console.log(cashCounts)
+  console.log(cashSales)
 
   function filter() {}
 
@@ -415,7 +419,7 @@ function Cashier() {
               </div>
               <div className="col-sm-6">
                 <div className="amount text-center">
-                  P {calculate().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  P {parseFloat(cashCounts).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
               </div>
             </div>
@@ -425,7 +429,7 @@ function Cashier() {
                 <div className="cash-count-sub-header text-start">TOTAL CASH SALES</div>
               </div>
               <div className="col-sm-6">
-                <div className="amount text-center">P {cashSales}</div>
+                <div className="amount text-center">P {cashSales.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
               </div>
             </div>
           </Modal.Body>

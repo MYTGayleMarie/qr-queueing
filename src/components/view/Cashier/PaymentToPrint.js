@@ -25,7 +25,6 @@ export class PaymentToPrint extends React.PureComponent {
         const birthDate = new Date(this.props.birthdate);
 
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
-        console.log(groupedServices);
 
         const services = Object.keys(groupedServices).map(function(key) {
 
@@ -66,7 +65,7 @@ export class PaymentToPrint extends React.PureComponent {
             <h1 className='table-header'>Customer Details</h1>
             <table>
                 <tr>
-                <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span> </td>
+                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
                     <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                     <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
                     <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
@@ -116,6 +115,7 @@ export class PaymentToPrint extends React.PureComponent {
             <h1 className='table-header'>Customer Details</h1>
             <table>
                 <tr>
+                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
                     <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                     <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
                     <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
@@ -165,6 +165,7 @@ export class PaymentToPrint extends React.PureComponent {
             <h1 className='table-header'>Customer Details</h1>
             <table>
                 <tr>
+                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
                     <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                     <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
                     <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
