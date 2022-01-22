@@ -102,6 +102,7 @@ function Registration() {
             setFilter={setFilter}
             filter={filter}
             render={setRender}
+            givenClass={"register-mobile"}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>

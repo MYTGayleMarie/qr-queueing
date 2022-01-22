@@ -95,6 +95,7 @@ function Users() {
                     rowsPerPage={4}
                     headingColumns={['ID', 'NAME', 'EMAIL', 'ROLE']}
                     link={UserDetails}
+                    givenClass={'user-mobile'}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

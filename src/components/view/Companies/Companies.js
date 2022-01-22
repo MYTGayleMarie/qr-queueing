@@ -98,6 +98,7 @@ function Companies() {
                     setFilter={setFilter}
                     filter={filter}
                     render={setRender}
+                    givenClass={'company-mobile'}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass}) {
     
       //PAGINATION 
     const [page, setPage] = useState(1);
@@ -86,7 +86,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
              </div>
         );
     }
@@ -108,7 +108,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
              </div>
         );
 
@@ -135,14 +135,14 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     {data}
                 </tbody>
             </table>
-            <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
          </div>
         );
     }
     else if (type === "search-patient") {
         return(
             <div className="table-container">
-                <div className="search-table-container d-flex justify-content-end"></div>
+                <div className="search-table-container d-flex justify-content-end">  </div>
                 <table className={tableClass}>
                     <thead>
                         <tr>
@@ -155,7 +155,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
             </div>
         );
     }

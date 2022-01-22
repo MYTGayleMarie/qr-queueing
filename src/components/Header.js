@@ -22,22 +22,22 @@ function Header({type, title, buttons, editProfile, editPassword, tableData}) {
                 const linkTo = "/" + button;
 
                 if(button === "add-release") {
-                    return <Link to={linkTo}><button className="add-items"> ADD ITEMS</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-items"> ADD ITEMS</button></Link>
                 } 
                 else if (button === "add-purchase") {
-                    return <Link to={linkTo}><button className="add-items"> ADD ITEMS</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-items"> ADD ITEMS</button></Link>
                 }
                 else if (button === "add-supply-items") {
-                    return <Link to={linkTo}><button className="add-items"> ADD ITEMS</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-items"> ADD ITEMS</button></Link>
                 }
                 else if (button === 'add-new-patient') {
-                    return <Link to={linkTo}><button className="add-patient"> NEW PATIENT</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-patient"> NEW PATIENT</button></Link>
                 }
                 else if (button === 'add-old-patient') {
-                    return <Link to={linkTo}><button className="add-patient"> OLD PATIENT</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-patient"> OLD PATIENT</button></Link>
                 }
                 else if (button === 'add-company') {
-                    return <Link to={linkTo}><button className="add-company"> ADD COMPANY</button></Link>
+                    return <Link to={linkTo}><button className="header-btn add-company"> ADD COMPANY</button></Link>
                 }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
@@ -59,7 +59,9 @@ function Header({type, title, buttons, editProfile, editPassword, tableData}) {
 
     return (
         <div className={title, 'header', type}>
-            <div className="header-title">{title}{btn}</div>
+            <div className="header-title">
+                {title}{btn}
+            </div>
         </div>
     )
 }

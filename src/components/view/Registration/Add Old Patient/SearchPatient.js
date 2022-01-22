@@ -94,6 +94,7 @@ function SearchPatient() {
                     rowsPerPage={4}
                     headingColumns={['ID', 'PATIENT NAME', 'GENDER', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'ACTION']}
                     link={addBooking}
+                    givenClass={'search-mobile'}
                 />            
             </Fragment>
             </div>

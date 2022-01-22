@@ -71,6 +71,8 @@ body {
   max-width: 1500px;
   width: 90%;
   margin: 0 auto 10px;
+  overflow-x:auto !important;
+
 
   table tr:last-child td:first-child {
     border-bottom-left-radius: 0px;

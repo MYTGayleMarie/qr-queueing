@@ -181,20 +181,6 @@ function Cashier() {
   }
 
   function logOut() {
-    var oneCentavoTotal = parseFloat(0.01 * cashCount.oneCentavos);
-    var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
-    var tenCentavoTotal = parseFloat(0.1 * cashCount.tenCentavos);
-    var twentyfiveCentavoTotal = parseFloat(0.25 * cashCount.twentyfiveCentavos);
-    var onePesoTotal = parseFloat(1.0 * cashCount.onePesos);
-    var fivePesoTotal = parseFloat(5.0 * cashCount.fivePesos);
-    var tenPesoTotal = parseFloat(10.0 * cashCount.tenPesos);
-    var twentyPesoCoinTotal = parseFloat(20.0 * cashCount.twentyPesosCoin);
-    var twentyPesoBillTotal = parseFloat(20.0 * cashCount.twentyPesosBill);
-    var fiftyPesoTotal = parseFloat(50.0 * cashCount.fiftyPesos);
-    var onehundredPesoTotal = parseFloat(100.0 * cashCount.onehundredPesos);
-    var twohundredPesoTotal = parseFloat(200.0 * cashCount.twohundredPesos);
-    var fivehundredPesoTotal = parseFloat(500.0 * cashCount.fivehundredPesos);
-    var onethousandPesoTotal = parseFloat(1000.0 * cashCount.onethousandPesos);
     var cashCounts = calculate();
 
     if (cashCounts == cashSales) {
@@ -207,24 +193,25 @@ function Cashier() {
           token: userToken.replace(/['"]+/g, ''),
           added_by: userId,
           physical_count: cashCounts,
-          bill_1000: onethousandPesoTotal,
-          bill_500: fivehundredPesoTotal,
-          bill_200: twohundredPesoTotal,
-          bill_100: onehundredPesoTotal,
-          bill_50: fiftyPesoTotal,
-          bill_20: twentyPesoBillTotal,
-          coin_20: twentyPesoCoinTotal,
-          coin_10: tenPesoTotal,
-          coin_5: fivePesoTotal,
-          coin_1: onePesoTotal,
-          cent_25: twentyfiveCentavoTotal,
-          cent_10: tenCentavoTotal,
-          cent_5: fiveCentavoTotal,
-          cent_1: oneCentavoTotal,
+          bill_1000: cashCount.onethousandPesos,
+          bill_500: cashCount.fivehundredPesos,
+          bill_200: cashCount.twohundredPesos,
+          bill_100: cashCount.onehundredPesos,
+          bill_50: cashCount.fiftyPesos,
+          bill_20: cashCount.twentyPesosBill,
+          coin_20: cashCount.twentyPesosCoin,
+          coin_10: cashCount.tenPesos,
+          coin_5: cashCount.fivePesos,
+          coin_1: cashCount.onePesos,
+          cent_25: cashCount.twentyfiveCentavos,
+          cent_10: cashCount.tenCentavos,
+          cent_5: cashCount.fiveCentavos,
+          cent_1: cashCount.oneCentavos,
         },
       })
         .then(function (response) {
-          removeUserSession();
+          console.log(response)
+          // removeUserSession();
         })
         .catch(function (error) {
           toast.error('Oops! Something wrong with the server');
@@ -293,6 +280,15 @@ function Cashier() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="cash-count-sub-header text-center">COINS</div>
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 0.01</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="oneCentavos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
 
                 <div className="row">
                   <div className="col-sm-3">
