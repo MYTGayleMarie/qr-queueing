@@ -395,6 +395,15 @@ function Cashier() {
 
                 <div className="row">
                   <div className="col-sm-3">
+                    <div className="cash-count-amount text-center">P 200.00</div>
+                  </div>
+                  <div className="col-sm-6">
+                    <input type="number" name="twohundredPesos" className="cash-count-input" onChange={setCashCount} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-3">
                     <div className="cash-count-amount text-center">P 500.00</div>
                   </div>
                   <div className="col-sm-6">

@@ -18,6 +18,7 @@ const personalData = {
     discountId: "",
     discountDetail: "",
     serviceLocation: "", 
+    homeServiceFee:"",
     result: "", 
     dateOfTesting: "",
     lastmeal: "",
