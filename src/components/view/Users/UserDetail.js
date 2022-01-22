@@ -124,13 +124,13 @@ function UserDetail() {
             params: {
                 api_key: window.$api_key,
                 token: userToken.replace(/['"]+/g, ''),
-                password: "",
+                password: editPassword,
                 updated_by: userId,
             }
         }).then(function (response) {
             console.log(response);
             toast.success("Successfully changed password!");
-            handleProfileClose();
+            handlePasswordClose();
           //   setTimeout(function() {
           //     setRedirect(true);
           // }, 2000);
