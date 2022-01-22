@@ -139,7 +139,7 @@ function Cashier() {
           }
 
           bookingDetails.addedOn = formatAddedOn.toDateString();
-          if (bookingDetails.payment == 'PAID') {
+          if (bookingDetails.payment == 'PENDING') {
             setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
         })
