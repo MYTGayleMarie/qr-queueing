@@ -396,8 +396,8 @@ function Navbar() {
     <div>
 
       {showNavbar == false && (user == 5 || user == 8)  && CashierNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
-      {showNavbar == false && user != 4 && user != 5 && user != 8 && user != 9 && RegisterNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
-      {showNavbar == false && (user == 4 || user == 9) && AdminNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      {showNavbar == false && (user == 4 || user == 9)  && RegisterNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      {showNavbar == false && user != 4 && user != 5 && user != 8 && user != 9 && AdminNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
       
       {showNavbar == true && (user == 5 || user == 8) && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && (user == 4 || user == 9) && registrationNavbar(showNavbar,setshowNavbar)}
