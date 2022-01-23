@@ -219,7 +219,59 @@ function caretUp() {
   return ( <FontAwesomeIcon icon={"caret-up"} alt={"caret-up"} aria-hidden="true" className="caret-icon"/>)
 }
 
-function NavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+function CashierNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+
+  return (
+  <div class="navbar">
+  <div class="logo-mobile">
+      <img src={logo} alt={'logo'} class="navbar-logo"></img>
+  </div>
+  <div id="nav-icon">
+     <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+  </div>
+  <div id="side-nav">
+    <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+        <NavLink to="/cashier" activeClassName="active" class="link">
+            <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
+            <span class="mx-2">Cashier</span>
+        </NavLink>
+  </div>
+</div>
+  )
+}
+
+
+function RegisterNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+
+  return (
+  <div class="navbar">
+  <div class="logo-mobile">
+      <img src={logo} alt={'logo'} class="navbar-logo"></img>
+  </div>
+  <div id="nav-icon">
+     <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+  </div>
+  <div id="side-nav">
+    <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+        <NavLink to="/registration" activeClassName="active" class="link">
+          <img src={registrationIcon} alt={'registration'} class="registration icon mobile-size-icon"></img>
+          <span class="mx-2">Registration</span>
+        </NavLink>
+        <NavLink to="/add-old-patient" activeClassName="active" class="link">
+            <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
+            <span class="mx-2">Patient</span>
+        </NavLink>
+        <a href="#" class="nav-link" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
+          <span class="mx-2 logout-text">Log Out</span>
+        </a>
+  </div>
+</div>
+  )
+}
+
+
+function AdminNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
 
   return (
   <div class="navbar">
@@ -342,7 +394,11 @@ function Navbar() {
 
   return (
     <div>
-      {showNavbar == false && NavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+
+      {showNavbar == false && (user == 5 || user == 8)  && CashierNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      {showNavbar == false && user != 4 && user != 5 && user != 8 && user != 9 && RegisterNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      {showNavbar == false && (user == 4 || user == 9) && AdminNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      
       {showNavbar == true && (user == 5 || user == 8) && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && (user == 4 || user == 9) && registrationNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && user != 4 && user != 5 && user != 8 && user != 9 && adminNavbar(showNavbar,setshowNavbar)}
