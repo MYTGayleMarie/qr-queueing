@@ -8,25 +8,83 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 
 function AddPurchaseOrder() {
-  const [items, setItems] = useState([{ id: 0 }]);
-  const [existingItems, setRemoveItems] = useState(items);
+  const [items, setItems] = useState([{ 
+    order_quantity: " ", 
+    available_quantity: " ",
+    unit: " ", 
+    item: " ",
+    unit_cost: " ",
+    unit_discount: " ",
+    total_amount: " ",
+  }]);
+
+  const handleItemChange = (e,index) => {
+    const {name, value} = e.target;
+    const list = [...items];
+    list[index][name] = value;
+    console.log(list)
+    setItems(list);
+    console.log(items)
+  };
+
+  const removeItems = (index) => {
+       const list = [...items];
+       list.splice(index, 1);
+       setItems(list);
+       console.log(list)
+       console.log(items)
+  };
+
 
   const addItems = () => {
     setItems([
       ...items,
       {
-        id: items.length,
+        order_quantity: " ", 
+        available_quantity: " ",
+        unit: " ", 
+        item: " ",
+        unit_cost: " ",
+        unit_discount: " ",
+        total_amount: " ",
       },
     ]);
   };
 
-  const removeItems = (i) => {
-    if (items.length > 0) {
-      setRemoveItems(items.pop());
-      
-    
-    }
-  };
+  var purchaseItems = items.map((row, index) => {
+    return (
+                    <tr key={index}>
+                        <td>
+                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="number" name="available_quantity" id="available_quantity"  value={row.available_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="text" name="item" id="item" value={row.item} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="number" name="unit_cost" id="unit_cost" value={row.unit_cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="number" name="unit_discount" id="unit_discount" value={row.unit_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="number" name="total_amount" className="purchase-item" id="total_amount" value={row.total_amount} onChange={(e) => handleItemChange(e, index)} />
+                        </td>
+                        <td>
+                        {items.length !== 1 && (
+                          <button className="delete-purchase-btn" onClick={() => removeItems(index)}>
+                            DELETE
+                          </button> 
+                        )}
+                        </td>
+                      </tr>
+    )
+  })
 
   return (
     <div>
@@ -35,7 +93,6 @@ function AddPurchaseOrder() {
         <Header type="thin" title="ADD PURCHASE ORDER" />
 
         <h1 className="item-header">PURCHASE ORDER INFO</h1>
-        <form>
           <div className="item-details-cont">
             <div className="row">
               <div className="col-sm-4">
@@ -109,28 +166,27 @@ function AddPurchaseOrder() {
           </div>
 
           <div className="add-items-cont">
-
-            <table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Order Qty</th>
-                  <th>Available Qty</th>
-                  <th>Unit</th>
-                  <th>Item</th>
-                  <th>Unit Cost</th>
-                  <th>Unit Discount -optional-</th>
-                  <th>Total Amount</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input type="number" name="quantity" className="quantity-item" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">  </div>
+                <table className='table-container__table'>
+                    <thead>
+                        <tr>
+                        <th>Order Qty</th>
+                        <th>Available Qty</th>
+                        <th>Unit</th>
+                        <th>Item</th>
+                        <th>Unit Cost</th>
+                        <th>Unit Discount -optional-</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {purchaseItems}
+                    </tbody>
+                </table>
+        
+            </div>
 
 
             {/* <div className="row d-flex justify-content-left">
@@ -159,11 +215,7 @@ function AddPurchaseOrder() {
               </div>
             ))} */}
           </div>
-        </form>
         <div className="row d-flex justify-content-center">
-          <button className="delete-items-btn" onClick={removeItems}>
-            DELETE
-          </button> 
           <button className="add-items-btn" onClick={addItems}>
             ADD ITEM
           </button>

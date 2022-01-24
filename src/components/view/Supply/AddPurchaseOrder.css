@@ -20,4 +20,14 @@
     margin-left: -100%;
 }
 
+.delete-purchase-btn {
+    color: #ffff;
+    width: 100px;
+    height: 34px;
+    background: #419ea3;
+    border: 1px solid #419ea3;
+    box-sizing: border-box;
+    border-radius: 23px;
+}
+
 
