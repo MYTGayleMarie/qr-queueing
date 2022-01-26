@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass}) {
-    
+    console.log(tableData)
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -43,7 +43,14 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
-        } 
+        }
+        else if (type === 'items' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>UPDATE</button></td>
+            </tr>
+        }
         else if (type === 'search-patient' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -90,7 +97,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies' || type === 'users') {
+    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

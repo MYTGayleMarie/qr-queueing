@@ -23,6 +23,7 @@ import Items from './components/View/Supply/Items';
 import MedTech from './components/View/MedTech/MedTech';
 import MedTechStart from './components/View/MedTech/MedTech';
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
+import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import Reports from './components/View/Reports/Reports';
@@ -69,6 +70,7 @@ function App() {
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />
         <Route path="/add-supply-items" element={token ? <AddSupplyItems /> : <Navigate to="/" />} />
+        <Route path="/update-supply-item/:id" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
