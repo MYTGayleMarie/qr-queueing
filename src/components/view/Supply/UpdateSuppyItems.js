@@ -74,7 +74,7 @@ function UpdateSupplyItems() {
           cost: cost,
           beg_balance: balance,
           remarks: remarks,
-          added_by: userId,
+          updated_by: userId,
         }
     }).then(function (response) {
         console.log(response)

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useForm, useStep } from "react-hooks-helper";
-import { getToken, getUser, refreshPage} from "../../../utilities/Common";
+import { getToken, getUser } from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom';
 

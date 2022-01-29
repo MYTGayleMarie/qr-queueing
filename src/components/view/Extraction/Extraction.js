@@ -42,7 +42,7 @@ function Extraction() {
         patientData.length = 0;
         axios({
           method: 'post',
-          url: window.$link + 'bookings/getAll',
+          url: window.$link + 'bookings/getIncomplete',
           withCredentials: false,
           params: {
             api_key: window.$api_key,

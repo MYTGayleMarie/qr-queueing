@@ -9,6 +9,12 @@
     margin-left: 2rem;
 }
 
+.form-categories-subheader {
+    color: #bfbc4b;
+    font-size:1.8em;
+    margin-left: 2rem;
+}
+
 .italic {
     font-family: 'Montserrat-Italic';
 }

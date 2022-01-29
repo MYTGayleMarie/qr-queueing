@@ -6,7 +6,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPassword, tableData}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, statusPO, editPassword, tableData}) {
 
     var btn = [];
 
@@ -47,6 +47,12 @@ function Header({type, title, buttons, editProfile, editPassword, tableData}) {
 
                 if(button === 'change-password') {
                     return <button className="change-password" onClick={editPassword}> CHANGE PASSWORD</button>
+                }
+                else if(button === 'edit-po' && (statusPO == "pending" || statusPO == "for approval")) {
+                    return <button className="edit-profile" onClick={editPO}> EDIT </button>
+                }
+                else if(button === 'delete-po' && (statusPO == "pending" || statusPO == "for approval")) {
+                    return <button className="edit-profile" onClick={deletePO}>DELETE</button>
                 }
                 else if(button === 'edit-profile') {
                     return <button className="edit-profile" onClick={editProfile}> EDIT PROFILE</button>

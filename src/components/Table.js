@@ -44,6 +44,13 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
+        else if (type == 'purchase-order' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
+            </tr>
+        }
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -68,7 +75,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
 
     const [render, setRender] = useState(false);
 
-    if(type === 'no-action') {
+    if(type === 'no-action' || type === 'purchase-order') {
 
         const {from_date, to_date, done} = filteredData;
 

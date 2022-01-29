@@ -16,6 +16,7 @@ import Table from '../../Table.js';
 //variables
 const userToken = getToken();
 const userId = getUser();
+var id = "";
 const buttons = ['add-purchase'];
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
@@ -29,6 +30,9 @@ function PurchaseOrder() {
 
     const [filteredData, setFilter] = useForm(filterData);
     const [poData, setPoData] = useState([]);
+
+    //redirect
+    const [redirect, setRedirect] = useState(false);
 
     React.useEffect(() => {
         poData.length = 0;
@@ -54,6 +58,7 @@ function PurchaseOrder() {
                 posData.date = date.toDateString();
       
                 posData.total = data.grand_total;
+                posData.status = data.status;
 
                 setPoData(oldArray => [...oldArray, posData]);
             });
@@ -63,9 +68,18 @@ function PurchaseOrder() {
         });
     },[filteredData]);
 
-    console.log(poData)
+    function approve(poId) {
+        id = poId;
+        setRedirect(true);
+    }
+
+    if(redirect == true) {
+        var link =  "/review-purchase-order/" + id;
+        return (
+            <Navigate to ={link}/>
+        )
+    }
         
-    
     return (
         <div>
         <div>
@@ -79,12 +93,14 @@ function PurchaseOrder() {
                 buttons={buttons} 
             />
             <Table
-                type={'no-action'}
+                type={'purchase-order'}
+                clickable={true}
                 tableData={poData}
                 rowsPerPage={4}
-                headingColumns={['DATE', 'SUPPLIER', 'PO NO.', 'TOTAL']}
+                headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter}
+                link={approve}
             />
             </Fragment>
         </div>
