@@ -59,6 +59,7 @@ function PurchaseOrder() {
       
                 posData.total = data.grand_total;
                 posData.status = data.status;
+                posData.payment = data.payment_status != null ? "paid" : "unpaid";
 
                 setPoData(oldArray => [...oldArray, posData]);
             });
@@ -97,7 +98,7 @@ function PurchaseOrder() {
                 clickable={true}
                 tableData={poData}
                 rowsPerPage={4}
-                headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','ACTION']}
+                headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','PAYMENT', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter}
                 link={approve}

@@ -38,6 +38,7 @@ function ReviewPurchaseOrder() {
       const [subTotal, setSubTotal] = useState("");
       const [poItems, setPoItems] = useState([]);
       const [status, setStatus] = useState("");
+      const [paymentStatus, setPaymentStatus] = useState("");
       const [printedBy, setPrintedBy] = useState("");
       const [approvedBy, setApprovedBy] = useState("");
 
@@ -55,6 +56,7 @@ function ReviewPurchaseOrder() {
 
       //Redirect Edit 
       const [editRedirect, setEditRedirect] = useState(false);
+      const [payRedirect, setPayRedirect] = useState(false);
       const [deleteRedirect, setDeleteRedirect] = useState(false);
       const [closeRedirect, setCloseRedirect] = useState(false);
 
@@ -106,6 +108,7 @@ function ReviewPurchaseOrder() {
             setSubTotal(response.data.subtotal)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
+            setPaymentStatus(response.data.payment_status);
 
             setEditSupplier(response.data.supplier_id);
             setEditPurchaseDate(response.data.purchase_date);
@@ -367,6 +370,10 @@ function ReviewPurchaseOrder() {
           });
     }
 
+    function payPO() {
+        setPayRedirect(true);
+    }
+
     function close() {
         setCloseRedirect(true);
     }
@@ -393,6 +400,13 @@ function ReviewPurchaseOrder() {
         )
     }
 
+    if(payRedirect == true) {
+        var link =  "/pay-purchase-order/" + id;
+        return (
+            <Navigate to ={link}/>
+        )
+    }
+
     return (
         <div>
         <Navbar/>
@@ -400,9 +414,11 @@ function ReviewPurchaseOrder() {
                 <Header 
                     type='thin'
                     title='PURCHASE ORDER' 
-                    buttons= {['delete-po', 'edit-po']}
+                    buttons= {['delete-po', 'edit-po', 'pay-po']}
                     editPO={redirectToEdit}
                     deletePO={deletePO}
+                    payPO={payPO}
+                    statusPaymentPO={paymentStatus}
                     statusPO={status}
                 />
                 <ToastContainer/>

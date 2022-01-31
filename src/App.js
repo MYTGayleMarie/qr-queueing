@@ -21,6 +21,7 @@ import PurchaseOrder from './components/View/Supply/PurchaseOrder';
 import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
 import ReviewPurchaseOrder from './components/View/Supply/ReviewPurchaseOrder';
 import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
+import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
 import Items from './components/View/Supply/Items';
 import MedTech from './components/View/MedTech/MedTech';
 import MedTechStart from './components/View/MedTech/MedTech';
@@ -72,6 +73,7 @@ function App() {
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/update-purchase-order/:id" element={token ? <UpdatePurchaseOrder /> : <Navigate to="/" />} />
+        <Route path="/pay-purchase-order/:id" element={token ? <PayPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />
         <Route path="/add-supply-items" element={token ? <AddSupplyItems /> : <Navigate to="/" />} />
         <Route path="/update-supply-item/:id" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />

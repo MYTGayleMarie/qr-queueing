@@ -80,6 +80,23 @@
 
 .approved {
     color: rgb(87, 187, 87);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.printed {
+    color: #00bcd4;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pending {
+    color: #c5c350;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.paid, .unpaid {
     text-transform: uppercase;
 }
 

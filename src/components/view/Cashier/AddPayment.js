@@ -98,7 +98,7 @@ function AddPayment() {
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
-    const [print, setPrint] = useState(false);
+    const [print, setPrint] = useState(true);
 
     //add Test states
     const [addTestType, setAddTestType] = useState("");

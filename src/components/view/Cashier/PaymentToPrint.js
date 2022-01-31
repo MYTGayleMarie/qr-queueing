@@ -94,7 +94,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <h1 className='table-header'>Laboratory Request Form</h1>
                         <table>
                             <tr>
-                                <th>Category</th>
+                                <th>Section Head</th>
                                 <th>Services</th>
                             </tr>
                             {services}
@@ -150,7 +150,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <h1 className='table-header'>Laboratory Request Form</h1>
                         <table>
                             <tr>
-                                <th>Category</th>
+                                <th>Section Head</th>
                                 <th>Services</th>
                             </tr>
                             {services}
@@ -208,7 +208,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <h1 className='table-header'>Laboratory Request Form</h1>
                         <table>
                             <tr>
-                                <th>Category</th>
+                                <th>Section Head</th>
                                 <th>Services</th>
                             </tr>
                             {services}
@@ -264,7 +264,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <h1 className='table-header'>Laboratory Request Form</h1>
                         <table>
                             <tr>
-                                <th>Category</th>
+                                <th>Section Head</th>
                                 <th>Services</th>
                             </tr>
                             {services}

@@ -44,7 +44,7 @@ function AddSupplier() {
             params: {
               token: userToken,
               api_key: window.$api_key,
-              name: supplies.name,
+              name: supplies.company_name,
               address: supplies.company_address,
               contact_no: supplies.phone, 
               tin: supplies.tin,
