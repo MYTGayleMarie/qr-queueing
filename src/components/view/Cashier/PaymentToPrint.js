@@ -62,13 +62,17 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column with-border">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
+                        <span className="to-right">#{this.props.queue} Request Form</span>
                     </div>
                     <div className='row'>
-                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <h1 className='table-header'>Customer Details</h1>
+                    <div className="">
+                        
+                    </div>
                     <table>
                         <tr>
-                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
+                            <td colSpan={1}><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
+                            <td colSpan={3}><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                         </tr>
                         <tr>
                             <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
@@ -90,8 +94,10 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     </div>
 
+                    <hr/>
+
                     <div className='row'>
-                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <h1 className='table-header'>Laboratory</h1>
                         <table>
                             <tr>
                                 <th>Section Head</th>
@@ -118,9 +124,10 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
+                        <span className="to-right">#{this.props.queue} Request Form</span>
                     </div>
                     <div className='row'>
-                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <h1 className='table-header'>Customer Details</h1>
                     <table>
                         <tr>
                             <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
@@ -146,8 +153,10 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     </div>
 
+                    <hr/>
+
                     <div className='row'>
-                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <h1 className='table-header'>Laboratory</h1>
                         <table>
                             <tr>
                                 <th>Section Head</th>
@@ -176,9 +185,10 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column with-border">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
+                        <span className="to-right">#{this.props.queue} Request Form</span>
                     </div>
                     <div className='row'>
-                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <h1 className='table-header'>Customer Details</h1>
                     <table>
                         <tr>
                             <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
@@ -204,8 +214,10 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     </div>
 
+                    <hr/>
+
                     <div className='row'>
-                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <h1 className='table-header'>Laboratory</h1>
                         <table>
                             <tr>
                                 <th>Section Head</th>
@@ -232,9 +244,10 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
+                        <span className="to-right">#{this.props.queue} Request Form</span>
                     </div>
                     <div className='row'>
-                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <h1 className='table-header'>Customer Details</h1>
                     <table>
                         <tr>
                             <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
@@ -260,8 +273,10 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     </div>
 
+                    <hr/>
+
                     <div className='row'>
-                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <h1 className='table-header'>Laboratory</h1>
                         <table>
                             <tr>
                                 <th>Section Head</th>

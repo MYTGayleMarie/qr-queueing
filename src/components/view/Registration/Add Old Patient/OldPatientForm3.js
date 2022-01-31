@@ -88,6 +88,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
     const [contactNo, setContactNo] = useState("");
     const [emailadd, setEmail] = useState("");
     const [homeaddress, setAddress] = useState("");
+    const [bookingId, setBookingId] = useState("");
     const {id} = useParams();
 
     //Redirection
@@ -231,11 +232,12 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
                 added_by: userId, 
             }
         }).then(function (response) {
-            console.log(response);
+            console.log(response.data.data);
+            setBookingId(response.data.data.booking_id)
             toast.success(response.data.message.success);
-            // setTimeout(function() {
-            //     setRedirect(true);
-            // }, 2000);
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             console.log(error);
         });
@@ -373,7 +375,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
 
 
   if (redirect == true) {
-    return <Navigate to="/registration" />;
+    return <Navigate to={"/add-payment/" + bookingId} />;
   }
     
     return (

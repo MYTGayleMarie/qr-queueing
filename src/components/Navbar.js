@@ -261,6 +261,10 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showReport, setShowRepo
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
         </NavLink>
+        <NavLink to="/cashier" activeClassName="active" class="link">
+            <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
+            <span class="mx-2">Cashier</span>
+        </NavLink>
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
           <span class="mx-2 logout-text">Log Out</span>

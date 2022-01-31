@@ -97,3 +97,8 @@
 .print-icon {
     margin-right: 5%;
 }
+
+.print-row {
+    display: flex;
+}
+

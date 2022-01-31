@@ -5,7 +5,7 @@
 .table-header {
     color: black;
     font-size:1em;
-    margin-top: 5% !important;
+    margin-top: 2% !important;
 }
 
 .request-form {
@@ -35,5 +35,9 @@
     flex: 50%;
     padding: 3%;
     border: 2px solid black;
+}
+
+.to-right {
+    margin-left: 3%;
 }
 
