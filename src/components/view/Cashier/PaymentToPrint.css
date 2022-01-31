@@ -5,6 +5,7 @@
 .table-header {
     color: black;
     font-size:1em;
+    margin-top: 5% !important;
 }
 
 .request-form {
@@ -23,5 +24,16 @@
 }
 
 .payment-logo {
-    width: 10%;
+    width: 20%;
 }
+
+.print-row {
+    display: flex;
+}
+
+.print-column {
+    flex: 50%;
+    padding: 3%;
+    border: 2px solid black;
+}
+

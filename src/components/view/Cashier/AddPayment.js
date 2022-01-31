@@ -79,6 +79,8 @@ function AddPayment() {
     const [bookingDate, setBookingDate] = useState("");
     const [result, setResult] = useState("");
     const [printServices, setPrintServices] = useState([]);
+    const [queue, setQueue] = useState([]);
+    const [queueNumber, setQueueNumber] = useState("");
 
     //check states
     const [checkNo, setCheckNo] = useState("");
@@ -136,7 +138,7 @@ function AddPayment() {
         var customer;
         var type;
 
-        axios({
+         axios({
             method: 'post',
             url: window.$link + 'bookings/show/' + id,
             withCredentials: false, 
@@ -188,10 +190,49 @@ function AddPayment() {
             });
         }).catch(function (error) {
             console.log(error);
-        });
+        });  
     }, []);
+
+    React.useEffect(() => {
+        var presentDate = new Date();
+        var formattedPresentData = presentDate.toISOString().split('T')[0];
+        queue.length = 0;
+          //Queue
+          axios({
+            method: 'post',
+            url: window.$link + 'bookings/getAll',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+              date_from: formattedPresentData,
+              date_to: formattedPresentData,
+            },
+          }).then(function (response) {
+              var obj = [...response.data.bookings];
+              obj.sort((a,b) => a.id - b.id).map((data,index) => {
+                var bookingInfo = {};
+                bookingInfo.queue = index;
+                bookingInfo.id = data.id;
+                setQueue(oldArray => [...oldArray, bookingInfo]);
+              });
+
+          }).then(function (error) {
+                console.log(error);
+          });
+    },[]);
+
+    React.useEffect(() => {
+        queue.map((data, index) => {
+            if(data.id = id) {
+                setQueueNumber(data.queue);
+            }
+          });
+    },[queue]);
    
     React.useEffect(() => {
+        services.length = 0;
         axios({
             method: 'post',
             url: window.$link + 'bookings/getBookingDetails/' + id,
@@ -203,7 +244,6 @@ function AddPayment() {
             }
         }).then(function (booking) {
             console.log(booking.data)
-            console.log("here")
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
@@ -213,7 +253,6 @@ function AddPayment() {
     React.useEffect(() => {
         printServices.length = 0;
         services.map((info, index) => {
-
             if(info.category_id == null) {
                 axios({
                     method: 'post',
@@ -225,8 +264,6 @@ function AddPayment() {
                         requester: userId,
                     }
                 }).then(function (response) {
-                    console.log("-----")
-                    console.log(response)
                     response.data.map((packageCat, index) => {
                         var serviceDetails = {};
                         axios({
@@ -282,8 +319,6 @@ function AddPayment() {
         });
     },[services]);
 
-    console.log(printServices)
-
     function removeService() {
         axios({
             method: 'post',
@@ -320,6 +355,7 @@ function AddPayment() {
             console.log(error);
         });
     }
+
 
     function showAvailableLab() {
         const labServices = getAllLabServices();
@@ -852,6 +888,7 @@ function AddPayment() {
                         payment={payment}
                         result={result}
                         services={printServices}
+                        queue={queueNumber}
                     />
                     </div>
 

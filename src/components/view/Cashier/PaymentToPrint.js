@@ -20,7 +20,7 @@ function groupArrayOfObjects(list, key) {
 export class PaymentToPrint extends React.PureComponent {
     render() {
 
-        console.log(this.props.services);
+        console.log(this.props.queue);
         const bookDate = new Date(this.props.bookingDate);
         const birthDate = new Date(this.props.birthdate);
 
@@ -58,157 +58,233 @@ export class PaymentToPrint extends React.PureComponent {
         <div>
         <style>{getPageMargins()}</style>
         <div className="print-area">
-            <div class="d-flex justify-content-left">
-                <img src={logo} alt={'logo'} class="payment-logo"></img>
-            </div>
-            <div className='row'>
-            <h1 className='table-header'>Customer Details</h1>
-            <table>
-                <tr>
-                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                    <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                    <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
-                    <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
-                </tr>
-                <tr>
-                    <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                    <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                    <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                </tr>
-                <tr>
-                    <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                    <td><span className="header">Attending Physician</span></td>
-                </tr>
-            </table>
-            </div>
-
-            <div className='row'>
-                <h1 className='table-header'>Laboratory Request Form</h1>
-                <table>
-                    <tr>
-                        <th>Category</th>
-                        <th>Services</th>
-                    </tr>
-                    {services}
-                </table>
-            </div>
-
-            <div className='row'>
-                <div className='row'>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Payment:</b></span>
-                        <span> {this.props.payment}</span>
+            <div className="print-row">
+                <div className="print-column with-border">
+                    <div class="d-flex justify-content-left">
+                        <img src={logo} alt={'logo'} class="payment-logo"></img>
                     </div>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Result:</b></span>
-                        <span> {this.props.result}</span>
+                    <div className='row'>
+                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <table>
+                        <tr>
+                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
+                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
+                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Attending Physician</span></td>
+                        </tr>
+                    </table>
+                    </div>
+
+                    <div className='row'>
+                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <table>
+                            <tr>
+                                <th>Category</th>
+                                <th>Services</th>
+                            </tr>
+                            {services}
+                        </table>
+                    </div>
+
+                    <div className='row'>
+                        <div className='row'>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Payment:</b></span>
+                                <span> {this.props.payment}</span>
+                            </div>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Result:</b></span>
+                                <span> {this.props.result}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="print-column">
+                    <div class="d-flex justify-content-left">
+                        <img src={logo} alt={'logo'} class="payment-logo"></img>
+                    </div>
+                    <div className='row'>
+                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <table>
+                        <tr>
+                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
+                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
+                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Attending Physician</span></td>
+                        </tr>
+                    </table>
+                    </div>
+
+                    <div className='row'>
+                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <table>
+                            <tr>
+                                <th>Category</th>
+                                <th>Services</th>
+                            </tr>
+                            {services}
+                        </table>
+                    </div>
+
+                    <div className='row'>
+                        <div className='row'>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Payment:</b></span>
+                                <span> {this.props.payment}</span>
+                            </div>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Result:</b></span>
+                                <span> {this.props.result}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <hr/>
-
-            <div class="d-flex justify-content-left">
-                <img src={logo} alt={'logo'} class="payment-logo"></img>
-            </div>
-            <div className='row'>
-            <h1 className='table-header'>Customer Details</h1>
-            <table>
-                <tr>
-                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                    <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                    <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
-                    <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
-                </tr>
-                <tr>
-                    <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                    <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                    <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                </tr>
-                <tr>
-                    <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                    <td><span className="header">Attending Physician</span></td>
-                </tr>
-            </table>
-            </div>
-
-            <div className='row'>
-                <h1 className='table-header'>Laboratory Request Form</h1>
-                <table>
-                    <tr>
-                        <th>Category</th>
-                        <th>Services</th>
-                    </tr>
-                    {services}
-                </table>
-            </div>
-
-            <div className='row'>
-                <div className='row'>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Payment:</b></span>
-                        <span> {this.props.payment}</span>
+            <div className="print-row">
+                <div className="print-column with-border">
+                    <div class="d-flex justify-content-left">
+                        <img src={logo} alt={'logo'} class="payment-logo"></img>
                     </div>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Result:</b></span>
-                        <span> {this.props.result}</span>
+                    <div className='row'>
+                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <table>
+                        <tr>
+                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
+                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
+                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Attending Physician</span></td>
+                        </tr>
+                    </table>
+                    </div>
+
+                    <div className='row'>
+                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <table>
+                            <tr>
+                                <th>Category</th>
+                                <th>Services</th>
+                            </tr>
+                            {services}
+                        </table>
+                    </div>
+
+                    <div className='row'>
+                        <div className='row'>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Payment:</b></span>
+                                <span> {this.props.payment}</span>
+                            </div>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Result:</b></span>
+                                <span> {this.props.result}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="print-column">
+                    <div class="d-flex justify-content-left">
+                        <img src={logo} alt={'logo'} class="payment-logo"></img>
+                    </div>
+                    <div className='row'>
+                    <h1 className='table-header'>Customer #{this.props.queue} Details</h1>
+                    <table>
+                        <tr>
+                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
+                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
+                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header">Attending Physician</span></td>
+                        </tr>
+                    </table>
+                    </div>
+
+                    <div className='row'>
+                        <h1 className='table-header'>Laboratory Request Form</h1>
+                        <table>
+                            <tr>
+                                <th>Category</th>
+                                <th>Services</th>
+                            </tr>
+                            {services}
+                        </table>
+                    </div>
+
+                    <div className='row'>
+                        <div className='row'>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Payment:</b></span>
+                                <span> {this.props.payment}</span>
+                            </div>
+                            <div className='col-sm-4'>
+                                <span className='print-label'><b>Result:</b></span>
+                                <span> {this.props.result}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <hr/>
-
-            <div class="d-flex justify-content-left">
-                <img src={logo} alt={'logo'} class="payment-logo"></img>
-            </div>
-            <div className='row'>
-            <h1 className='table-header'>Customer Details</h1>
-            <table>
-                <tr>
-                    <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                    <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                    <td><span className="header">Date of Birth</span><span className="detail">{birthDate.toDateString()}</span> </td>
-                    <td><span className="header">Booking Date</span><span className="detail">{bookDate.toDateString()}</span> </td>
-                </tr>
-                <tr>
-                    <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                    <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                    <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                </tr>
-                <tr>
-                    <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                    <td><span className="header">Attending Physician</span></td>
-                </tr>
-            </table>
-            </div>
-
-            <div className='row'>
-                <h1 className='table-header'>Laboratory Request Form</h1>
-                <table>
-                    <tr>
-                        <th>Category</th>
-                        <th>Services</th>
-                    </tr>
-                    {services}
-                </table>
-            </div>
-
-            <div className='row'>
-                <div className='row'>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Payment:</b></span>
-                        <span> {this.props.payment}</span>
-                    </div>
-                    <div className='col-sm-4'>
-                        <span className='print-label'><b>Result:</b></span>
-                        <span> {this.props.result}</span>
-                    </div>
-                </div>
-            </div>
-
-            <hr/>
-
-
         </div>
     </div>
       );

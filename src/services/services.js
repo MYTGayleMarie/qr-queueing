@@ -1112,7 +1112,7 @@ const Promo = [
   {
     key: 'ChestIndividual_22',
     name: 'Chest XRAY Test Promo Individual',
-    categoryId: '22',
+    categoryId: '18',
     labTestId: '119',
     price: '170.00',
     type: 'lab',
@@ -1120,7 +1120,7 @@ const Promo = [
   {
     key: 'ChestGroup_22',
     name: 'Chest XRAY Test Promo Group (15 PAX OR MORE)',
-    categoryId: '22',
+    categoryId: '18',
     labTestId: '120',
     price: '150.00',
     type: 'lab',
@@ -1128,7 +1128,7 @@ const Promo = [
   {
     key: 'HbsagIndividual_22',
     name: 'Hbsag Test Promo Individual',
-    categoryId: '22',
+    categoryId: '12',
     labTestId: '121',
     price: '270.00',
     type: 'lab',
@@ -1136,7 +1136,7 @@ const Promo = [
   {
     key: 'HbsagGroup_22',
     name: 'Hbsag Test Promo Group (15 PAX OR MORE)',
-    categoryId: '22',
+    categoryId: '12',
     labTestId: '117',
     price: '240.00',
     type: 'lab',
