@@ -33,7 +33,8 @@ function AddPurchaseOrder() {
     remarks: "",
   };
 
-  const [info, setInfo] = useForm(PoInfoData)
+  const [info, setInfo] = useForm(PoInfoData);
+  const [suppliers, setSuppliers] = useState([]);
   const [items, setItems] = useState([{ 
     order_quantity: " ", 
     unit: " ", 
@@ -108,9 +109,36 @@ function AddPurchaseOrder() {
       console.log(error)
     });
 
-  },[]);
+    axios({
+      method: 'post',
+      url: window.$link + 'suppliers/getAll',
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+  }).then(function (response) {
+      console.log(response.data.suppliers);
 
-  console.log(info)
+      response.data.suppliers.map((data, index) => {
+          var supplierInfo = {};
+
+          supplierInfo.id = data.id;
+          supplierInfo.name = data.name;
+          supplierInfo.address = data.address;
+          supplierInfo.phone = data.contact_no;
+          supplierInfo.email = ''; //to add email
+          supplierInfo.tin = data.tin;
+          supplierInfo.remarks = data.remarks;
+
+          setSuppliers(oldArray => [...oldArray, supplierInfo]);
+      });
+  }).catch(function(error) {
+      console.log(error);
+  });
+
+  },[]);
 
   //API submit call
   function submit(e, info, items) {
@@ -129,8 +157,6 @@ function AddPurchaseOrder() {
       qty.push(data.order_quantity);
       units.push(data.unit);
     });
-
-    console.log(item_ids)
 
     axios({
       method: 'post',
@@ -155,6 +181,7 @@ function AddPurchaseOrder() {
       },
     }).then(function (response) {
       console.log(response);
+      console.log(info.supplier);
       toast.success("Successfully added PO!");
       setTimeout(function () {
         setRedirect(true);
@@ -205,6 +232,8 @@ function AddPurchaseOrder() {
     return <Navigate to="/purchase-order" />;
   }
 
+  console.log(suppliers)
+
   return (
     <div>
       <Navbar />
@@ -227,7 +256,14 @@ function AddPurchaseOrder() {
                 <span className="item-name-label">SUPPLIER</span>
               </div>
               <div className="col-sm-8">
-                <input type="text" name="supplier" className="item-name-input" onChange={setInfo}/>
+                <select name="supplier" className="item-supplier-input" onChange={setInfo}>
+                <option value="" selected disabled>Choose here</option>
+                  {suppliers.map((data,index) => {
+                    return (
+                      <option value={data.id}>{data.name}</option>
+                    )
+                  })}
+                </select>
               </div>
             </div>
             <div className="row">

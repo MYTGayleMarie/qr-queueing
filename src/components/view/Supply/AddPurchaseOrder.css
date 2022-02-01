@@ -9,6 +9,14 @@
     border-color: #55073A;
 }
 
+.item-supplier-input {
+    width: 90%;
+    height: 120%;
+    margin-left: -5%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
 .add-item-header {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;

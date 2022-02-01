@@ -5,7 +5,7 @@
 .table-header {
     color: black;
     font-size:1em;
-    margin-top: 2% !important;
+    margin-top: 0% !important;
 }
 
 .request-form {
@@ -16,7 +16,11 @@
 .header {
     font-weight: bold;
     color: black;
-    font-size: 0.9em;
+    font-size: 0.8em;
+}
+
+.data {
+    font-size: 0.8em;
 }
 
 .detail {
@@ -40,4 +44,41 @@
 .to-right {
     margin-left: 3%;
 }
+
+.payment-row {
+    display: flex;
+}
+
+.payment-column {
+    float: left;
+    padding: 1px;
+}
+
+.left {
+    width: 35%;
+}
+
+.right {
+    width: 75%;
+}
+
+.left-2 {
+    width: 55%;
+}
+
+.right-2 {
+    width: 45%;
+}
+
+.left-3 {
+    width: 18%;
+}
+
+.middle-3 {
+    width: 33%;
+}
+
+
+
+
 

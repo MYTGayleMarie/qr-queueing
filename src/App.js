@@ -29,6 +29,7 @@ import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
+import ViewSupplier from './components/View/Supply/ViewSupplier';
 import Reports from './components/View/Reports/Reports';
 import Chief from './components/View/ChiefMedTech/ChiefMedTech';
 import ChiefTests from './components/View/ChiefMedTech/ChiefTests';
@@ -79,6 +80,7 @@ function App() {
         <Route path="/update-supply-item/:id" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
+        <Route path="/view-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>

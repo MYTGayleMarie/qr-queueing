@@ -58,6 +58,14 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>UPDATE</button></td>
             </tr>
         }
+        else if (type === 'suppliers' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>VIEW</button></td>
+          
+            </tr>
+        }
         else if (type === 'search-patient' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -104,7 +112,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items') {
+    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

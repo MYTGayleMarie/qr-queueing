@@ -73,15 +73,12 @@ function Users() {
         });
     }, []);
 
-
     if (redirect == true) {
         var link = '/user/' + id;
         console.log(link);
         return <Navigate to={link} />;
     }
     
-
-
     return (
         <div>
             <div>

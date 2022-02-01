@@ -51,17 +51,32 @@ function PurchaseOrder() {
             console.log(response.data.pos);
 
             response.data.pos.map((data,index) => {
-                var date = new Date(data.purchase_date)
-                var posData = {};
-                posData.id = data.id;
-                posData.supplier = "";
-                posData.date = date.toDateString();
-      
-                posData.total = data.grand_total;
-                posData.status = data.status;
-                posData.payment = data.payment_status != null ? "paid" : "unpaid";
 
-                setPoData(oldArray => [...oldArray, posData]);
+                axios({
+                    method: 'post',
+                    url: window.$link + 'suppliers/show/' + data.supplier_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                  console.log(response.data);
+                  var date = new Date(data.purchase_date);
+                  var posData = {};
+                  posData.id = data.id;
+                  posData.supplier = response.data.name;
+                  posData.date = date.toDateString();
+        
+                  posData.total = data.grand_total;
+                  posData.status = data.status;
+                  posData.payment = data.payment_status != null ? "paid" : "unpaid";
+  
+                  setPoData(oldArray => [...oldArray, posData]);
+                }).then(function (error) {
+                    console.log(error);
+                });
             });
             
         }).catch(function (error) {
