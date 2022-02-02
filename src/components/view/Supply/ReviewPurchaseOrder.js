@@ -36,6 +36,7 @@ function ReviewPurchaseOrder() {
       const [remarks, setRemarks] = useState("");
       const [grandTotal, setGrandTotal] = useState("");
       const [subTotal, setSubTotal] = useState("");
+      const [discount, setDiscount] = useState("");
       const [poItems, setPoItems] = useState([]);
       const [status, setStatus] = useState("");
       const [paymentStatus, setPaymentStatus] = useState("");
@@ -99,13 +100,27 @@ function ReviewPurchaseOrder() {
             var pDate = new Date(response.data.purchase_date);
             var dDate = new Date(response.data.delivery_date);
 
-            setSupplier(response.data.supplier_id);
+            axios({
+                method: 'post',
+                url: window.$link + 'suppliers/show/' + response.data.supplier_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                setSupplier(response.data.name);
+            }).then(function (error) {
+                console.log(error);
+            })
             setPurchaseDate(pDate.toDateString());
             setDeliveryDate(dDate.toDateString());
             setDeliveryAddress(response.data.delivery_address);
             setRequisitioner(response.data.requisitioner);
             setForwarder(response.data.forwarder);
             setGrandTotal(response.data.grand_total);
+            setDiscount(response.data.discount);
             setSubTotal(response.data.subtotal)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
@@ -238,20 +253,17 @@ function ReviewPurchaseOrder() {
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
-            <div className="col-sm-2">
-                {data.item}
-            </div>
-            <div className="col-sm-2">
-                {parseFloat(data.qty).toFixed(2)}                
-            </div>
-            <div className="col-sm-2">
-                {data.unit}
+            <div className="col-sm-3">
+                { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
             </div>
             <div className="col-sm-2">
                 {data.amount}
             </div>
             <div className="col-sm-2">
                 {data.discount}
+            </div>
+            <div className="col-sm-2">
+                {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
             </div>
             {status != "approved" && status != "disapproved" && status != "printed" && (
               <div className="col-sm-2">
@@ -425,104 +437,113 @@ function ReviewPurchaseOrder() {
                 <ToastContainer/>
 
             <h4 className="form-categories-header italic">PURCHASE ORDER DETAILS</h4>
-
-           <div className="row">
-               <div className="col-sm-2">
-                    <div className='label text-center'>SUPPLIER</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{supplier}</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='label'>PURCHASE DATE</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{purchaseDate}</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='label'>DELIVERY DATE</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{deliveryDate}</div>
-               </div>
-           </div>
-           <div className="row">
-               <div className="col-sm-2">
-                    <div className='label text-center'>DELIVERY ADDRESS</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{deliveryAddress}</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='label'>REQUISITIONER</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{requisitioner}</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='label'>FORWARDER</div>
-               </div>
-               <div className="col-sm-2">
-                    <div className='detail'>{forwarder}</div>
-               </div>
-           </div>
-           <div className="row">
-               <div className="col-sm-2">
-                    <div className='label text-center'>REMARKS</div>
-               </div>
-               <div className="col-sm-10">
-                    <div className='detail'>{remarks}</div>
-               </div>
-           </div>
-
-           <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
-
-            <div className="summary-services">
+            
+            <div className="po-details">
                 <div className="row">
-                    <div className="col-sm-2 service">
-                        ITEM
-                    </div>
-                    <div className="col-sm-2 service">
-                        QTY
-                    </div>
-                    <div className="col-sm-2 service">
-                        UNIT
-                    </div>
-                    <div className="col-sm-2 service">
-                        AMOUNT
-                    </div>
-                    <div className="col-sm-2 service">
-                        DISCOUNT
-                    </div>
-                    {status != "approved" && status != "disapproved" && status != "printed" && (
-                        <div className="col-sm-2 service">
-                          ACTION
-                      </div>
-                    )}
+                <div className="col-sm-2">
+                        <div className='label'>SUPPLIER</div>
                 </div>
-
-                {listItems}
-
-                <div className="row less-gap d-flex justify-content-end">
-                    <div className="col-sm-2">
-                        <div className='label'>SUB TOTAL</div>
-                    </div>
-                    <div className="col-sm-2">
-                        <div className='detail'><b>{subTotal}</b></div>
-                    </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{supplier}</div>
                 </div>
-
-                <div className="row less-gap d-flex justify-content-end">
-                    <div className="col-sm-2">
-                        <div className='label'>GRAND TOTAL</div>
-                    </div>
-                    <div className="col-sm-2">
-                        <div className='detail'><b>{grandTotal}</b></div>
-                    </div>
+                <div className="col-sm-2">
+                        <div className='label'>PURCHASE DATE</div>
                 </div>
-
+                <div className="col-sm-2">
+                        <div className='detail'>{purchaseDate}</div>
+                </div>
+            </div>
+            <div className="row to-right">
+                <div className="col-sm-2">
+                        <div className='label'>DELIVERY ADDRESS</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{deliveryAddress}</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='label'>DELIVERY DATE</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{deliveryDate}</div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-2">
+                        <div className='label'>REQUISITIONER</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{requisitioner}</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='label'>FORWARDER</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{forwarder}</div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-2">
+                        <div className='label'>REMARKS</div>
+                </div>
+                <div className="col-sm-10">
+                        <div className='detail'>{remarks}</div>
+                </div>
             </div>
 
+            <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
+
+                <div className="summary-services">
+                    <div className="row">
+                        <div className="col-sm-3 service">
+                            PARTICULARS
+                        </div>
+                        <div className="col-sm-2 service">
+                            AMOUNT
+                        </div>
+                        <div className="col-sm-2 service">
+                            DISCOUNT
+                        </div>
+                        <div className="col-sm-2 service">
+                            TOTAL
+                        </div>
+                        {status != "approved" && status != "disapproved" && status != "printed" && (
+                            <div className="col-sm-2 service">
+                            ACTION
+                        </div>
+                        )}
+                    </div>
+
+                    {listItems}
+
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>SUB TOTAL</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{subTotal}</b></div>
+                        </div>
+                    </div>
+
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>DISCOUNT</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{discount}</b></div>
+                        </div>
+                    </div>
+
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>GRAND TOTAL</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{grandTotal}</b></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             {poItems.length != 0 && status != "approved" && status != "disapproved" && status != "printed" && showPOButtons()}
 
             {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && (

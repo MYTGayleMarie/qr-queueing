@@ -91,7 +91,6 @@ function AddPurchaseOrder() {
       } else {
         grandTotal = subTotal
       }
-      console.log("HEREEEEE")
       setSubTotal(subTotal);
       setDiscount(discountTotal);
       setGrandTotal(grandTotal);
@@ -235,10 +234,10 @@ function AddPurchaseOrder() {
     return (
                     <tr key={index}>
                         <td>
-                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
                         </td>
                         <td>
-                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="purchase-item unit" />
                         </td>
                         <td>
                           <select className='purchase-select' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
@@ -249,13 +248,13 @@ function AddPurchaseOrder() {
                           </select>
                         </td>
                         <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item" disabled readOnly/>
+                          <input type="number" name="cost" id="cost" value={row.cost} value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost" disabled readOnly/>
                         </td>
                         <td>
-                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item item-discount" />
                         </td>
                         <td>
-                          <input type="number" name="total" id="total" value={row.total} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                          <input type="number" name="total" id="total" value={row.total} onChange={(e) => handleItemChange(e, index)} className="purchase-item total" />
                         </td>
                         <td>
                         {items.length !== 1 && (

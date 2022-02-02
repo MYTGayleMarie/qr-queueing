@@ -23,6 +23,12 @@ function PayPurchaseOrder() {
     document.body.style = 'background: white;';
 
     //States
+    const [supplier, setSupplier] = useState("");
+    const [purchaseDate, setPurchaseDate] = useState("");
+    const [deliveryDate, setDeliveryDate] = useState("");
+    const [deliveryAddress, setDeliveryAddress] = useState("");
+    const [requisitioner, setRequisitioner] = useState("");
+    const [forwarder, setForwarder] = useState("");
     const [status, setStatus] = useState("");
     const [payment, setPayment] = useState("");
     const [total, setTotal] = useState(0);
@@ -65,9 +71,34 @@ function PayPurchaseOrder() {
             },
           }).then(function (response) {
               console.log(response.data)
-     
-              setGrandTotal(response.data.grand_total);
-              setSubTotal(response.data.subtotal)
+               //format date
+               var pDate = new Date(response.data.purchase_date);
+               var dDate = new Date(response.data.delivery_date);
+
+              axios({
+                method: 'post',
+                url: window.$link + 'suppliers/show/' + response.data.supplier_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                setSupplier(response.data.name);
+            }).then(function (error) {
+                console.log(error);
+            })
+            setPurchaseDate(pDate.toDateString());
+            setDeliveryDate(dDate.toDateString());
+            setDeliveryAddress(response.data.delivery_address);
+            setRequisitioner(response.data.requisitioner);
+            setForwarder(response.data.forwarder);
+            setGrandTotal(response.data.grand_total);
+            setDiscount(response.data.discount);
+            setSubTotal(response.data.subtotal)
+            setRemarks(response.data.remarks);
+            setStatus(response.data.status);
           });
 
         axios({
@@ -105,21 +136,24 @@ function PayPurchaseOrder() {
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
-            <div className="col-sm-2">
+            <div className="col-sm-3">
                 {data.item}
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-1">
                 {parseFloat(data.qty).toFixed(2)}                
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-1">
                 {data.unit}
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-1">
                 {data.amount}
             </div>
             <div className="col-sm-2">
                 {data.discount}
             </div>      
+            <div className="col-sm-2">
+                {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
+            </div>
         </div>
         )
     });
@@ -434,24 +468,82 @@ function PayPurchaseOrder() {
                 title="ADD PAYMENT"
           />
           <ToastContainer/>
+
+          <h4 className="form-categories-header italic">PURCHASE ORDER DETAILS</h4>
+            
+            <div className="po-details">
+                <div className="row">
+                <div className="col-sm-2">
+                        <div className='label'>SUPPLIER</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{supplier}</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='label'>PURCHASE DATE</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{purchaseDate}</div>
+                </div>
+                </div>
+                <div className="row to-right">
+                    <div className="col-sm-2">
+                            <div className='label'>DELIVERY ADDRESS</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='detail'>{deliveryAddress}</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='label'>DELIVERY DATE</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='detail'>{deliveryDate}</div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-2">
+                            <div className='label'>REQUISITIONER</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='detail'>{requisitioner}</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='label'>FORWARDER</div>
+                    </div>
+                    <div className="col-sm-2">
+                            <div className='detail'>{forwarder}</div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-2">
+                            <div className='label'>REMARKS</div>
+                    </div>
+                    <div className="col-sm-10">
+                            <div className='detail'>{remarks}</div>
+                    </div>
+                </div>
+            </div>
                 <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
 
                 <div className="summary-services">
                     <div className="row">
-                        <div className="col-sm-2 service">
+                        <div className="col-sm-3 service">
                             ITEM
                         </div>
-                        <div className="col-sm-2 service">
+                        <div className="col-sm-1 service">
                             QTY
                         </div>
-                        <div className="col-sm-2 service">
+                        <div className="col-sm-1 service">
                             UNIT
                         </div>
-                        <div className="col-sm-2 service">
+                        <div className="col-sm-1 service">
                             AMOUNT
                         </div>
                         <div className="col-sm-2 service">
-                            DISCOUNT
+                            ITEM DISCOUNT
+                        </div>
+                        <div className="col-sm-2 service">
+                            TOTAL
                         </div>
                     </div>
 
@@ -463,6 +555,15 @@ function PayPurchaseOrder() {
                         </div>
                         <div className="col-sm-2">
                             <div className='detail'><b>{parseFloat(subTotal).toFixed(2)}</b></div>
+                        </div>
+                    </div>
+
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>DISCOUNT</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{parseFloat(discount).toFixed(2)}</b></div>
                         </div>
                     </div>
 

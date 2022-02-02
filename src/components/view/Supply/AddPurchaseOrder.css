@@ -40,7 +40,16 @@
 
 .purchase-select {
     height: 30px;
+    width: 200px;
 }
 
+.qty, .unit {
+    width: 80px;
+
+}
+
+.cost, .item-discount, .total {
+    width: 100px;
+}
 
 
