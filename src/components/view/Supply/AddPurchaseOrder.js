@@ -33,6 +33,12 @@ function AddPurchaseOrder() {
     remarks: "",
   };
 
+  //TOTAL
+  const [subTotal, setSubTotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  //ITEMS
   const [info, setInfo] = useForm(PoInfoData);
   const [suppliers, setSuppliers] = useState([]);
   const [items, setItems] = useState([{ 
@@ -41,6 +47,7 @@ function AddPurchaseOrder() {
     item: " ",
     cost: " ",
     item_discount: " ",
+    total: " ",
   }]);
 
   const [itemInfo, setItemInfo] = useState([]);
@@ -58,8 +65,37 @@ function AddPurchaseOrder() {
       })
     }
 
+    if(list[index]["order_quantity"] != " " && list[index]["cost"] && list[index]["item_discount"]) {
+      list[index]["total"] = parseFloat((list[index]["order_quantity"] * list[index]["cost"]) - list[index]["item_discount"]).toFixed(2);
+    }
+
     setItems(list);
-    console.log(items)
+    console.log(items);
+
+    var subTotal = 0;
+    var discountTotal = 0;
+    var grandTotal = 0;
+
+    if(list[index]["total"] != " ") {
+      items.map((data,index) => {
+        if(data.total != " ") {
+          subTotal += parseFloat(data.total);
+        }
+        if(data.item_discount != " ") {
+          discountTotal += parseFloat(data.item_discount);
+        }
+      });
+
+      if(subTotal != 0 && discountTotal != 0) {
+        grandTotal = subTotal - discountTotal;
+      } else {
+        grandTotal = subTotal
+      }
+      console.log("HEREEEEE")
+      setSubTotal(subTotal);
+      setDiscount(discountTotal);
+      setGrandTotal(grandTotal);
+    }
   };
 
   const removeItems = (index) => {
@@ -73,11 +109,12 @@ function AddPurchaseOrder() {
     setItems([
       ...items,
       {
-        order_quantity: 0, 
-        unit: "",
+        order_quantity: " ", 
+        unit: " ", 
         item: " ",
         cost: " ",
         item_discount: " ",
+        total: " ",
       },
     ]);
   };
@@ -192,6 +229,7 @@ function AddPurchaseOrder() {
     });
   };
 
+
   var purchaseItems = items.map((row, index) => {
     console.log(itemInfo);
     return (
@@ -215,6 +253,9 @@ function AddPurchaseOrder() {
                         </td>
                         <td>
                           <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        </td>
+                        <td>
+                          <input type="number" name="total" id="total" value={row.total} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
                         </td>
                         <td>
                         {items.length !== 1 && (
@@ -340,6 +381,7 @@ function AddPurchaseOrder() {
                         <th>Item</th>
                         <th>Cost</th>
                         <th>Item Discount -optional-</th>
+                        <th>Total</th>
                         <th>Action</th>
                         </tr>
                     </thead>
@@ -349,35 +391,33 @@ function AddPurchaseOrder() {
                 </table>
         
             </div>
-
-
-            {/* <div className="row d-flex justify-content-left">
-              <div className="col-sm-7">
-                <h1 className="add-item-header">QUANTITY</h1>
-              </div>
-              <div className="col-sm-5">
-                <h1 className="add-item-header items">ITEMS</h1>
-              </div>
-            </div> */}
-
-            {/* {items.map((item) => (
-              <div className="row">
-                <div className="col-sm-1">
-                  <input key={item.id} type="number" name="quantity" className="quantity-item" />
-                </div>
-                <div className="col-sm-2">
-                  <input key={item.id} type="text" name="item" className="items-item" />
-                </div>
-                </div>
-                <div className="col-sm-5">
-                  <button className="delete-items-btn" onClick={removeItems}>
-                    DELETE
-                  </button> 
-                </div>
-              </div>
-            ))} */}
           </div>
-        <div className="row d-flex justify-content-center">
+
+        <div className="row d-flex justify-content-end mb-0">
+          <div className="col-sm-2">
+              <span className="item-name-label">SUBTOTAL</span>
+          </div>
+          <div className="col-sm-2">
+              <span>P {subTotal != null ? parseFloat(subTotal).toFixed(2) : "0.00"}</span>
+          </div>
+        </div>     
+        <div className="row d-flex justify-content-end mb-0">
+          <div className="col-sm-2">
+              <span className="item-name-label">DISCOUNT TOTAL</span>
+          </div>
+          <div className="col-sm-2">
+              <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span>
+          </div>
+        </div>     
+        <div className="row d-flex justify-content-end mb-0">
+          <div className="col-sm-2">
+              <span className="item-name-label">GRAND TOTAL</span>
+          </div>
+          <div className="col-sm-2">
+              <span>P {grandTotal != null ? parseFloat(grandTotal).toFixed(2) : "0.00"}</span>
+          </div>
+        </div>     
+        <div className="row d-flex justify-content-center m-5">
           <button className="add-items-btn" onClick={addItems}>
             ADD ITEM
           </button>

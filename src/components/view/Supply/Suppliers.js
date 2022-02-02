@@ -50,7 +50,7 @@ function Suppliers() {
                 supplierInfo.name = data.name;
                 supplierInfo.address = data.address;
                 supplierInfo.phone = data.contact_no;
-                supplierInfo.email = ''; //to add email
+                supplierInfo.email = data.email;
                 supplierInfo.tin = data.tin;
                 supplierInfo.remarks = data.remarks;
 

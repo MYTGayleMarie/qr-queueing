@@ -46,6 +46,7 @@ function AddSupplier() {
               api_key: window.$api_key,
               name: supplies.company_name,
               address: supplies.company_address,
+              email: supplies.email,
               contact_no: supplies.phone, 
               tin: supplies.tin,
               remarks: supplies.remarks,
