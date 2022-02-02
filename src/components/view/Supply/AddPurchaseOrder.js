@@ -31,6 +31,7 @@ function AddPurchaseOrder() {
     requisitioner: "",
     delivery_address: "",
     remarks: "",
+    discount: "",
   };
 
   //TOTAL
@@ -58,7 +59,7 @@ function AddPurchaseOrder() {
     list[index][name] = value;
 
     if(name == "item") {
-      itemInfo.map((data,index) => {
+      itemInfo.map((data,i) => {
         if(data.id == value){
             list[index]['cost'] = data.cost;
         }
@@ -405,7 +406,8 @@ function AddPurchaseOrder() {
               <span className="item-name-label">DISCOUNT TOTAL</span>
           </div>
           <div className="col-sm-2">
-              <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span>
+              {/* <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span> */}
+              P <input type="number" name="discount" className="discount-input" value={discount != null ? parseFloat(discount).toFixed(2) : "P 0.00"} disabled/>
           </div>
         </div>     
         <div className="row d-flex justify-content-end mb-0">
