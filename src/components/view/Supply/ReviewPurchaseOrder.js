@@ -77,6 +77,7 @@ function ReviewPurchaseOrder() {
      const handlePrint = useReactToPrint({
        onAfterPrint: handlePrintShow,
        content: () => componentRef.current,
+       pageStyle: () => "@page { size: letter; margin: 0mm; }",
      });
 
      //Fetch PO details
