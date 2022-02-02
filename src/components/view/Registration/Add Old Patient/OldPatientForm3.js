@@ -233,7 +233,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
             }
         }).then(function (response) {
             console.log(response.data.data);
-            setBookingId(response.data.data.booking_id)
+            setBookingId(response.data.data.booking_id);
             toast.success(response.data.message.success);
             setTimeout(function() {
                 setRedirect(true);

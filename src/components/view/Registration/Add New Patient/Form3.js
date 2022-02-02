@@ -95,6 +95,8 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
   },[]);
   document.body.style = 'background: white;';
 
+  const [bookingId, setBookingId] = useState("");
+
   //Redirection
   const [redirect, setRedirect] = useState(false);
 
@@ -206,6 +208,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         },
       }).then(function (response) {
         console.log(response.data);
+        setBookingId(response.data.data.booking_id);
         toast.success(response.data.message.success);
         setTimeout(function () {
           setRedirect(true);
@@ -358,7 +361,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
   });
 
   if (redirect == true) {
-    return <Navigate to="/registration" />;
+    return <Navigate to={"/add-payment/" + bookingId} />;
   }
 
   return (
