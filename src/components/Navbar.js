@@ -68,6 +68,10 @@ function registrationNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
+        <NavLink to="/cashier" activeClassName="active" class="link">
+            <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
+            <span class="mx-2">Cashier</span>
+        </NavLink>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
