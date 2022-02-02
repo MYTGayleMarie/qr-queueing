@@ -34,6 +34,18 @@ function cashierNavbar(showNavbar,setshowNavbar) {
         <div class="d-flex justify-content-center">
           <img src={logo} alt={'logo'} class="navbar-logo"></img>
         </div>
+        <NavLink to="/registration" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={registrationIcon} alt={'registration'} class="registration icon"></img>
+            <span class="mx-2">Registration</span>
+          </li>
+        </NavLink>
+        <NavLink to="/add-old-patient" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <span class="mx-2">Patient</span>
+          </li>
+        </NavLink>
         <NavLink to="/cashier" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={cashierIcon} alt={'cashier'} class="cashier icon"></img>
@@ -235,6 +247,18 @@ function CashierNavbarTop(showNavbar, showMobileNavBar, showReport, setShowRepor
   </div>
   <div id="side-nav">
     <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+        <NavLink to="/registration" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={registrationIcon} alt={'registration'} class="registration icon"></img>
+            <span class="mx-2">Registration</span>
+          </li>
+        </NavLink>
+        <NavLink to="/add-old-patient" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <span class="mx-2">Patient</span>
+          </li>
+        </NavLink>
         <NavLink to="/cashier" activeClassName="active" class="link">
             <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
             <span class="mx-2">Cashier</span>
