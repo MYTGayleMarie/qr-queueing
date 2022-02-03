@@ -11,7 +11,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigation  }) {
+function OldPatientForm1({ customer, setPersonal, setIsCompany, lastMeal, setLastMeal, navigation  }) {
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -113,6 +113,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
     },[discountId]);
 
     React.useEffect(() => {
+        setCompanyRemarks("");
         axios({
             method: 'post',
             url: window.$link + 'companies/show/' + companyId,
@@ -124,6 +125,7 @@ function OldPatientForm1({ customer, setPersonal, lastMeal, setLastMeal, navigat
             }
         }).then(function (response) {
             setCompanyRemarks(response.data.remarks);
+            setIsCompany(true);
         }).catch(function (error) {
             console.log(error);
         });

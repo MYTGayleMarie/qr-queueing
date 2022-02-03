@@ -16,7 +16,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }) {
+function AddPatient({ customer, setIsCompany, setPersonal, lastMeal, setLastMeal, navigation }) {
   document.body.style = 'background: white;';
 
   const {
@@ -146,6 +146,7 @@ function AddPatient({ customer, setPersonal, lastMeal, setLastMeal, navigation }
     })
       .then(function (response) {
         setCompanyRemarks(response.data.remarks);
+        setIsCompany(true);
       })
       .catch(function (error) {
         console.log(error);

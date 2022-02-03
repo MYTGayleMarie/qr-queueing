@@ -73,7 +73,7 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 const promo = getPromo();
 
-function OldPatientForm3({ service, customer, setServices, lastMeal, navigation }) {
+function OldPatientForm3({ service, customer, isCompany, setServices, lastMeal, navigation }) {
     React.useEffect(() => {
         window.scrollTo(0, 0);
       },[]);
@@ -93,7 +93,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
 
     //Redirection
     const [redirect, setRedirect] = useState(false);
-
+    const [print, setPrint] = useState(false);
 
     axios({
         method: 'post',
@@ -137,7 +137,7 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
              }
          });
      }
-
+    
     function submit(e, customer, services, totalPrice) {
 
         e.preventDefault();
@@ -235,9 +235,14 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
             console.log(response.data.data);
             setBookingId(response.data.data.booking_id);
             toast.success(response.data.message.success);
-            setTimeout(function() {
-                setRedirect(true);
-            }, 2000);
+
+            if(isCompany == false) {
+                setTimeout(function() {
+                    setRedirect(true);
+                }, 2000);
+            }else {
+                setPrint(true);
+            }
         }).catch(function (error) {
             console.log(error);
         });
@@ -373,6 +378,9 @@ function OldPatientForm3({ service, customer, setServices, lastMeal, navigation 
         totalPrice += parseInt(data.price);
     });
 
+  if (print == true) {
+    return <Navigate to={"/print-booking/" + bookingId} />;
+  }
 
   if (redirect == true) {
     return <Navigate to={"/add-payment/" + bookingId} />;

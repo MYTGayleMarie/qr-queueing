@@ -12,8 +12,7 @@ import cancelIcon from '../images/cancel.png';
 const userToken = getToken();
 const userId = getUser();
 
-function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, setGrandTotal, setDiscount}) {
-
+function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, setGrandTotal, setDiscount, discount, toPay}) {
 
     var totalCost = 0;
     var labTotal = 0;
@@ -36,7 +35,9 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
         return (
             
             <div class="row">
-                <div className="col-sm-1 "><button className="delete-btn" onClick={() => deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div>
+                {toPay != false && (
+                    <div className="col-sm-1 "><button className="delete-btn" onClick={() => deleteService(row.id)}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button></div>
+                )}
                 <div className="col-sm-7 service">{row.lab_test ? row.lab_test : row.package }</div>
                 <div className="col-sm-4 total-price">P {row.price ? parseFloat(row.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : "0.00"}</div>
             </div>
@@ -46,7 +47,10 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
   
 
     function discountedPrice() {
-        const discount = labTotal.toFixed(2) * 0.20;
+
+        if(withDiscount != '') {
+            const discount = labTotal.toFixed(2) * 0.20;
+        }
         const grandTotal = parseFloat(total).toFixed(2) - discount;
     
         console.log(discount)
@@ -61,7 +65,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
 
                         </div>
                         <div className="col-sm-4">
-                            <span className="amount">P {discount.toFixed(2)}</span>
+                            <span className="amount">P {parseFloat(discount).toFixed(2)}</span>
                         </div>
                 </div>
             </div>
@@ -87,7 +91,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
                     </div>
                 </div>
 
-                <div>{withDiscount != '' && discountedPrice()}</div>
+                <div>{discount != '' && discountedPrice()}</div>
 
                 <div className="row">
                         <div className="col-sm-4">

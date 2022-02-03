@@ -125,8 +125,7 @@ function Cashier() {
           var formatAddedOn = new Date(booking.added_on);
           var bookingDetails = {};
           bookingDetails.id = booking.id;
-          bookingDetails.name =
-          customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+          bookingDetails.name = customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
           bookingDetails.bookingTime = formatBookingTime.toDateString();
           bookingDetails.serviceType = booking.type;
           bookingDetails.amount = booking.grand_total;
@@ -139,7 +138,7 @@ function Cashier() {
           }
 
           bookingDetails.addedOn = formatAddedOn.toDateString();
-          if (bookingDetails.payment == 'PENDING') {
+          if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code)) {
             setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
         })
@@ -178,6 +177,31 @@ function Cashier() {
       onethousandPesoTotal;
 
     return totalAmount.toFixed(2);
+  }
+
+  function isCompany(discountCode) {
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/getAll',
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+        console.log(response.data.discount);
+
+        response.data.discount.filter((info) => info.id != null).map((data, index) => {
+          if(data.discount_code == discountCode) {
+            return true;
+          }
+        });
+
+            return false;
+    }).then(function (error) {
+        console.log(error);
+    });
   }
 
   function logOut() {

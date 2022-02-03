@@ -89,7 +89,7 @@ const promo = getPromo();
  * RENDER VIEW
  ********************************/
 
-function Form2({ service, customer, setServices, lastMeal, navigation }) {
+function Form2({ service, customer, isCompany, setServices, lastMeal, navigation }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   },[]);
@@ -99,6 +99,7 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
 
   //Redirection
   const [redirect, setRedirect] = useState(false);
+  const [print, setPrint] = useState(false);
 
   //functions
   function getDetails(categoryItems, checkedItem) {
@@ -210,9 +211,14 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
         console.log(response.data);
         setBookingId(response.data.data.booking_id);
         toast.success(response.data.message.success);
-        setTimeout(function () {
-          setRedirect(true);
-        }, 2000);
+
+        if(isCompany == false) {
+          setTimeout(function () {
+            setRedirect(true);
+          }, 2000);
+        }else {
+          setPrint(true);
+        }
       });
       handleClose();
     });
@@ -359,6 +365,10 @@ function Form2({ service, customer, setServices, lastMeal, navigation }) {
   checkedServicesDetails.map((data, index) => {
     totalPrice += parseFloat(data.price);
   });
+
+  if (print == true) {
+    return <Navigate to={"/print-booking/" + bookingId} />;
+  }
 
   if (redirect == true) {
     return <Navigate to={"/add-payment/" + bookingId} />;

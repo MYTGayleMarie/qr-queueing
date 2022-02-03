@@ -6,6 +6,7 @@ import './components/FontAwesomeIcons';
 /** view */
 import Login from './components/View/Login/Login';
 import Registration from './components/View/Registration/Registration';
+import PrintBooking from './components/View/Registration/PrintBooking';
 import SwitchForm from './components/View/Registration/Add New Patient/SwitchForm';
 import SearchPatient from './components/View/Registration/Add Old Patient/SearchPatient';
 import SwitchForm2 from './components/View/Registration/Add Old Patient/SwitchForm2';
@@ -50,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/registration" element={token ? <Registration /> : <Navigate to="/" />} />
+        <Route path="/print-booking/:id" element={token ? <PrintBooking /> : <Navigate to="/" />} />
         <Route path="/add-new-patient" element={token ? <SwitchForm /> : <Navigate to="/" />} />
         <Route path="/add-old-patient" element={token ? <SearchPatient /> : <Navigate to="/" />} />
         <Route path="/add-booking/:id" element={token ? <SwitchForm2 /> : <Navigate to="/" />} />

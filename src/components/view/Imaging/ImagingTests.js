@@ -368,14 +368,18 @@ function ImagingTests() {
             <h1 className="test-header">IMAGING TESTS</h1>
 
             <div class="test-list">
+            {services.length == 0 && (
+              <div className="row d-flex justify-content-left">
+                  <span className="info">NO IMAGING PENDING</span>
+              </div>)}
             {inputBox === false && laboratoryTests}
               {inputBox === false && packageTests}
               {inputBox === true && startImaging}
             </div>
 
             <div className="row d-flex justify-content-center">        
-                {inputBox === false && <button className="start-btn" onClick={toggleImaging}>START EXTRACTION</button>}  
-                {inputBox === true && <button className="save-details-btn" onClick={updateImaging}>SAVE DETAILS</button>}     
+                {inputBox === false && services.length == 0 && <button className="start-btn" onClick={toggleImaging}>START EXTRACTION</button>}  
+                {inputBox === true && services.length == 0 &&<button className="save-details-btn" onClick={updateImaging}>SAVE DETAILS</button>}     
             </div>
 
         </div>
