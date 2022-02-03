@@ -88,14 +88,12 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                        </tr>
-                        <tr>
                             <td><span className="header">Attending Physician</span></td>
                         </tr>
                     </table>
                     </div>
 
-                    <hr/>
+                    <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
@@ -146,14 +144,12 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                        </tr>
-                        <tr>
                             <td><span className="header">Attending Physician</span></td>
                         </tr>
                     </table>
                     </div>
 
-                    <hr/>
+                    <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
@@ -207,14 +203,12 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                        </tr>
-                        <tr>
                             <td><span className="header">Attending Physician</span></td>
                         </tr>
                     </table>
                     </div>
 
-                    <hr/>
+                    <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
@@ -265,14 +259,12 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                        </tr>
-                        <tr>
                             <td><span className="header">Attending Physician</span></td>
                         </tr>
                     </table>
                     </div>
 
-                    <hr/>
+                    <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>

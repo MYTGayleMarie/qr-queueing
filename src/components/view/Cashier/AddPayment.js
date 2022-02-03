@@ -123,7 +123,7 @@ function AddPayment() {
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
       content: () => componentRef.current,
-      pageStyle: () => "@page { size: letter; margin: 0mm; }"
+      pageStyle: () => "@page { size: letter;}"
 
     });
 
