@@ -26,6 +26,7 @@ function AddSupplyItems() {
     const itemInfo = {
         item_name: "",
         item_cost: "",
+        item_unit: "",
         item_balance: "",
         remarks: "",
         description: "",
@@ -49,6 +50,7 @@ function AddSupplyItems() {
           api_key: window.$api_key,
           name: info.item_name,
           description: info.description,
+          unit: info.item_unit,
           cost: info.item_cost,
           beg_balance: info.item_balance,
           remarks: info.remarks,
@@ -95,15 +97,21 @@ function AddSupplyItems() {
                     </div>
                     <div className="row">
                         <div className="col-sm-1">
+                            <span className="item-name-label">UNIT</span>
+                        </div>
+                        <div className="col-sm-1">
+                            <input type="text" name="item_unit" className="beginning-balance-input" onChange={setItem}/>
+                        </div>
+                        <div className="col-sm-1">
                             <span className="item-name-label">COST</span>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                             <input type="number" name="item_cost" className="beginning-balance-input" onChange={setItem}/>
                         </div>
                         <div className="col-sm-3">
                             <span className="beginning-balance-label">BEGINNING BALANCE </span>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-3">
                             <input type="number" name="item_balance" className="beginning-balance-input" onChange={setItem}/>
                         </div>
                     </div>

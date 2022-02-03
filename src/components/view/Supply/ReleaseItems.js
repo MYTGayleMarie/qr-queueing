@@ -10,7 +10,7 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
-const buttons = ['download','add-release'];
+const buttons = ['add-release'];
 
 const filterData = {
     from_date: "",

@@ -107,6 +107,7 @@ function AddPatient({ customer, setIsCompany, setPersonal, lastMeal, setLastMeal
       },
     })
       .then(function (response) {
+        console.log(response)
         setDiscountList(response.data.discounts);
       })
       .catch(function (error) {

@@ -6,7 +6,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, tableData}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, addInventory, tableData}) {
 
     var btn = [];
 
@@ -39,6 +39,9 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 else if (button === 'add-company') {
                     return <Link to={linkTo}><button className="header-btn add-company"> ADD COMPANY</button></Link>
                 }
+                else if(button === 'add-inventory') {
+                    return <button className="edit-profile" onClick={addInventory}> ADD INVENTORY</button>
+                }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
             }
@@ -66,7 +69,6 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 else if(button === 'delete-supplier') {
                     return <button className="edit-profile" onClick={deleteSupplier}> DELETE SUPPLIER</button>
                 }
-
             }
     
         });

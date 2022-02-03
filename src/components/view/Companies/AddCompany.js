@@ -162,7 +162,7 @@ console.log(discount)
                             <input type="text" className="form-control full" id="discount_code" name="discount_code" onChange={setDiscount} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="discount_percentage" className="form-label">DISCOUNT PERCENTAGE<i>(required)</i></label><br />
+                            <label for="discount_percentage" className="form-label">DISCOUNT<i>(required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_percentage" name="discount_percentage" onChange={setDiscount}  required/><br />
                         </div>
                     </div>

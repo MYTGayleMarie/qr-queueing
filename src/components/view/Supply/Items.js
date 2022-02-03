@@ -3,6 +3,7 @@ import { useForm } from "react-hooks-helper";
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
+import { Button, Modal } from 'react-bootstrap';
 
 //css
 import './Items.css';
@@ -18,7 +19,7 @@ const userToken = getToken();
 const userId = getUser();
 var id = "";
 
-const buttons = ['add-supply-items'];
+const buttons = ['add-supply-items', 'add-inventory'];
 
 const filterData = {
     from_date: "",
@@ -41,6 +42,13 @@ function Items() {
 
     const [filteredData, setFilter] = useForm(filterData);
     const [items, setItems] = useState([]);
+    const [inventoryItem, setInventoryItem] = useState("");
+    const [inventoryQty, setInventoryQty] = useState("");
+
+    //Inventory Modal
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //redirect
     const [redirect, setRedirect] = useState(false);
@@ -80,6 +88,10 @@ function Items() {
         setRedirect(true);
     }
 
+    function addInventory() {
+
+    }
+
     if(redirect == true) {
         var link =  "/update-supply-item/" + id;
         console.log(link);
@@ -98,9 +110,9 @@ function Items() {
             <Searchbar title='ITEMS'/>
             <Header 
                 type='thick'
-                title='SUPPLIES RELEASING MANAGER' 
+                title='ITEM MANAGER' 
                 buttons={buttons} 
-                tableData={itemsData}
+                addInventory={handleShow}
             />
             <Table
                 type={'items'}
@@ -113,6 +125,38 @@ function Items() {
                 link={update}
             />
             </Fragment>
+
+            <Modal show={show} onHide={handleClose} size="md">
+          <Modal.Header closeButton className="text-center">
+            <Modal.Title className="w-100 cash-count-header">ADD INVENTORY</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           <div className="row">
+               <div className="col-sm-3">
+                    <span className="label">ITEM</span>
+               </div>
+               <select className="inventury-item-input" name="inventory_item" onChange={(e) => setInventoryItem(e.target.value)}>
+                   <option value="" selected disabled>Select Item</option>
+                   {
+                       items.map((data,index) => {
+                            return <option value={data.id}>{data.item_name}</option>
+                       })
+                   }
+               </select>
+           </div>
+           <div className="row">
+               <div className="col-sm-3">
+                   <span className="label">QUANTITY</span>
+               </div>
+               <input type="number" name="quantity" className="inventory-qty-input" onChange={(e) => setInventoryQty(e.target.value)}/>
+           </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button type="submit" className="save-btn">
+              ADD
+            </button>
+          </Modal.Footer>
+        </Modal>
         </div>
         </div>
         </div>
