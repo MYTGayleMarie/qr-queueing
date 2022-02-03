@@ -173,9 +173,16 @@ function AddPayment() {
                     requester: userId,
                 }
             }).then(function (customer) {
+
+                //AGE
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
-                const age = presentDate.getFullYear() - birthDate.getFullYear();
+                var age = presentDate.getFullYear() - birthDate.getFullYear();
+                var m = presentDate.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
                 setPatientId(response.data.customer_id);
                 setFirstName(customer.data.first_name);
                 setMiddleName(customer.data.middle_name);
