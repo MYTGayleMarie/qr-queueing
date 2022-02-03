@@ -98,7 +98,7 @@ function AddPayment() {
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
-    const [print, setPrint] = useState(false);
+    const [print, setPrint] = useState(true);
 
     //add Test states
     const [addTestType, setAddTestType] = useState("");
@@ -212,11 +212,13 @@ function AddPayment() {
               date_to: formattedPresentData,
             },
           }).then(function (response) {
-              var obj = [...response.data.bookings];
-              obj.sort((a,b) => a.id - b.id).map((data,index) => {
+              const arrangedObj = response.data.bookings.sort((a,b) => a.id - b.id);
+         
+              arrangedObj.map((booking,index) => {
+                  console.log(booking.id)
                 var bookingInfo = {};
                 bookingInfo.queue = index;
-                bookingInfo.id = data.id;
+                bookingInfo.id = booking.id;
                 setQueue(oldArray => [...oldArray, bookingInfo]);
               });
 
@@ -225,9 +227,11 @@ function AddPayment() {
           });
     },[]);
 
+    console.log(queue)
+
     React.useEffect(() => {
         queue.map((data, index) => {
-            if(data.id = id) {
+            if(data.id == id) {
                 setQueueNumber(data.queue);
             }
           });
