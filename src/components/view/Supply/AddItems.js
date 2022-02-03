@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
+import { useForm } from 'react-hooks-helper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //css
 import './AddItems.css';
@@ -10,7 +16,22 @@ import Navbar from '../../Navbar';
 
 function AddItems() {
 
-    const [items, setItems] = useState([{id: 0}])
+    //style
+    document.body.style = 'background: white;';
+
+    //states
+    const ItemData = {
+        date: "",
+        requistioner: "",
+        remarks: ""
+    };
+
+    const [info, setInfo] = useForm(ItemData);
+    const [items, setItems] = useState([{
+        quantity: "",
+        items: "",
+    }]);
+    
     const [existingItems, setRemoveItems]  = useState(items)
 
     const addItems = () => {

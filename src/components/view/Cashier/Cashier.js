@@ -159,6 +159,7 @@ function Cashier() {
     var twentyPesoBillTotal = parseFloat(20.0 * cashCount.twentyPesosBill);
     var fiftyPesoTotal = parseFloat(50.0 * cashCount.fiftyPesos);
     var onehundredPesoTotal = parseFloat(100.0 * cashCount.onehundredPesos);
+    var twohundredPesoTotal = parseFloat(200.0 * cashCount.twohundredPesos);
     var fivehundredPesoTotal = parseFloat(500.0 * cashCount.fivehundredPesos);
     var onethousandPesoTotal = parseFloat(1000.0 * cashCount.onethousandPesos);
 
@@ -173,6 +174,7 @@ function Cashier() {
       twentyPesoBillTotal +
       fiftyPesoTotal +
       onehundredPesoTotal +
+      twohundredPesoTotal +
       fivehundredPesoTotal +
       onethousandPesoTotal;
 
@@ -235,7 +237,7 @@ function Cashier() {
       })
         .then(function (response) {
           console.log(response)
-          // removeUserSession();
+          removeUserSession();
         })
         .catch(function (error) {
           toast.error('Oops! Something wrong with the server');
