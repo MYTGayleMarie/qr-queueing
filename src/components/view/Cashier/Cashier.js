@@ -138,7 +138,7 @@ function Cashier() {
           }
 
           bookingDetails.addedOn = formatAddedOn.toDateString();
-          if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code)) {
+          if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code) != true) {
             setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
         })
@@ -182,6 +182,8 @@ function Cashier() {
   }
 
   function isCompany(discountCode) {
+
+
     axios({
       method: 'post',
       url: window.$link + 'discounts/getAll',
@@ -194,12 +196,13 @@ function Cashier() {
     }).then(function (response) {
         console.log(response.data.discount);
 
-        response.data.discount.filter((info) => info.id != null).map((data, index) => {
-          if(data.discount_code == discountCode) {
-            return true;
-          }
-        });
-
+        if(response.data.discount != null){
+          response.data.discount.filter((info) => info.id != null).map((data, index) => {
+            if(data.discount_code == discountCode) {
+              return true;
+            }
+          });  
+        }
             return false;
     }).then(function (error) {
         console.log(error);

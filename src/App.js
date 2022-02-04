@@ -17,6 +17,7 @@ import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
 import Imaging from './components/View/Imaging/Imaging';
 import ImagingTests from './components/View/Imaging/ImagingTests';
 import ReleaseItems from './components/View/Supply/ReleaseItems';
+import ReviewReleasingItems from './components/View/Supply/ReviewReleasingItems';
 import AddItems from './components/View/Supply/AddItems';
 import PurchaseOrder from './components/View/Supply/PurchaseOrder';
 import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
@@ -63,6 +64,7 @@ function App() {
         <Route path="/imaging-test/:id" element={token ? <ImagingTests /> : <Navigate to="/" />} />
         <Route path="/release-item" element={token ? <ReleaseItems /> : <Navigate to="/" />} />
         <Route path="/add-release" element={token ? <AddItems /> : <Navigate to="/" />} />
+        <Route path="/review-release/:id" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/medtech-start" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/chief-medical-tech" element={<Chief />} />

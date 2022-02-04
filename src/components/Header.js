@@ -69,6 +69,9 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 else if(button === 'delete-supplier') {
                     return <button className="edit-profile" onClick={deleteSupplier}> DELETE SUPPLIER</button>
                 }
+                else if(button === 'delete-release') {
+                    return <button className="edit-profile" onClick={deleteSupplier}> DELETE</button>
+                }
             }
     
         });

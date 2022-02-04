@@ -44,7 +44,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
@@ -83,7 +83,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
 
     const [render, setRender] = useState(false);
 
-    if(type === 'no-action' || type === 'purchase-order') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release') {
 
         const {from_date, to_date, done} = filteredData;
 
