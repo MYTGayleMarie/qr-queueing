@@ -93,7 +93,7 @@ function Companies() {
                     type={'companies'}
                     tableData={finalCompanyData}
                     rowsPerPage={4}
-                    headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'DISCOUNT PERCENTAGE', 'REMARKS']}
+                    headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'DISCOUNT', 'REMARKS']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
