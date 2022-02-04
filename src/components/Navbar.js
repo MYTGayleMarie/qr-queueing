@@ -160,18 +160,18 @@ function adminNavbar(showNavbar,setshowNavbar) {
             </div>
           </li>
         </NavLink>
-        <NavLink to="/companies" activeClassName="active" class="link">
-          <li href="#" class="nav-link companies-nav">
-            <div class="row">
-              <div class="col-3">
-                <img src={companiesIcon} alt={'companies'} class="companies icon"></img>
-              </div>
-              <div class="col-9">
-                <span class="mx-2">Companies</span>
-              </div>
-            </div>
+        <li href="#" class="nav-link supply-nav">
+            <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
+            <span class="mx-2">Companies</span>
+            <ul class="sub-menu">
+              <Link to="/companies" className="sub-link">
+                <li class="sub-list">COMPANY DISCOUNTS</li>
+              </Link>
+              <Link to="/company-invoices" className="sub-link">
+                <li class="sub-list">COMPANY INVOICE</li>
+              </Link>
+            </ul>
           </li>
-        </NavLink>
 
         <NavLink to="/reports" activeClassName="active" class="link">
           <li href="#" class="nav-link report-nav">
