@@ -60,7 +60,7 @@ function ReleaseItems() {
                 var info = {};
                 info.id = data.id;
                 info.items = "";
-                info.requisitioner = "";
+                info.requisitioner = data.requisitioner;
                 info.grandTotal = data.grand_total;
                 info.remarks = data.remarks;
 

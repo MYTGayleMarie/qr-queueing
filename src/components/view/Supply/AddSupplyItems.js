@@ -46,7 +46,7 @@ function AddSupplyItems() {
         url: window.$link + 'items/create',
         withCredentials: false,
         params: {
-          token: userToken,
+          token: userToken.replace(/['"]+/g, ''),
           api_key: window.$api_key,
           name: info.item_name,
           description: info.description,

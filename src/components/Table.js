@@ -44,7 +44,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
@@ -112,7 +112,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers') {
+    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'company-invoices') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

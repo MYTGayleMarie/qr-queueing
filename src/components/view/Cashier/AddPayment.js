@@ -843,6 +843,7 @@ function AddPayment() {
             grandTotal={grandTotal}
             setGrandTotal={setGrandTotal}
             setDiscount={setDiscount}
+            discount={discount}
          />
 
         <div className="row">

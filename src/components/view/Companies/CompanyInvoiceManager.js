@@ -18,6 +18,7 @@ import Table from '../../Table.js';
 const buttons = ['add-company'];
 const userToken = getToken();
 const userId = getUser();
+var id;
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -36,6 +37,7 @@ function CompanyInvoiceManager() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [finalCompanyData, setFinalCompanyData] = useState([]);
+  const [redirect, setRedirect] = useState("");
   
   React.useEffect(() => {
     axios({
@@ -62,7 +64,7 @@ function CompanyInvoiceManager() {
                 }
             }).then(function (company) {
                 console.log(company);
-
+                companyDetails.id = row.id;
                 companyDetails.description = company.data.name;
                 companyDetails.discountCode = row.discount_code;
                 companyDetails.remarks = company.data.remarks;
@@ -78,6 +80,17 @@ function CompanyInvoiceManager() {
     });
   }, []);
 
+  function reviewInvoice(invoiceId) {
+    id = invoiceId;
+    setRedirect(true);
+  }
+
+  if (redirect == true) {
+    var link = '/review-invoice/' + id;
+    return <Navigate to={link} />;
+  }
+
+
   function filter() {}
 
     return (
@@ -88,16 +101,17 @@ function CompanyInvoiceManager() {
                 <Fragment>
                 <Header type="thick" title="COMPANY INVOICE" tableData={patientData} />
                 <Table
-                    clickable={false}
-                    type={'companies'}
+                    clickable={true}
+                    type={'company-invoices'}
                     tableData={finalCompanyData}
                     rowsPerPage={4}
-                    headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'ACTION']}
+                    headingColumns={['ID', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'ACTION']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
                     render={setRender}
                     givenClass={'company-mobile'}
+                    link={reviewInvoice}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

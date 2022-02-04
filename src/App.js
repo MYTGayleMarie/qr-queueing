@@ -40,6 +40,7 @@ import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
 import CompanyInvoiceManager from './components/View/Companies/CompanyInvoiceManager';
+import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvoices';
 import AddCompany from './components/View/Companies/AddCompany';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import { Navigate } from 'react-router';
@@ -76,6 +77,7 @@ function App() {
         <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
+        <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
