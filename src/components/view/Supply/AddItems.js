@@ -136,9 +136,9 @@ function AddItems() {
       }).then(function (response) {
           console.log(response);
           toast.success("Successfully added releasing items!");
-        //   setTimeout(function () {
-        //     setRedirect(true);
-        //   }, 2000);
+          setTimeout(function () {
+            setRedirect(true);
+          }, 2000);
       }).then(function (error) {
           console.log(error);
       });

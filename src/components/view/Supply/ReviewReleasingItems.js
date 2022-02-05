@@ -25,7 +25,9 @@ function ReviewReleasingItems() {
     const [releaseId, setReleaseID] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [requisitioner, setRequisitioner] = useState("");
+    const [grandTotal, setGrandTotal] = useState("");
     const [remarks, setRemarks] = useState("");
+    const [items, setItems] = useState([]);
 
      
     React.useEffect(() => {
@@ -44,16 +46,85 @@ function ReviewReleasingItems() {
             var date = new Date(response.data.release_date);
             setReleaseID(response.data.id);
             setReleaseDate(date.toDateString());
+            setRequisitioner(response.data.requisitioner);
+            setGrandTotal(response.data.grand_total);
             setRemarks(response.data.remarks);
           })
           .catch(function (error) {
             console.log(error);
           });
+
+          axios({
+                method: 'post',
+                url: window.$link + 'releases/getReleasingItems/' + id,
+                withCredentials: false,
+                params: {
+                  api_key: window.$api_key,
+                  token: userToken.replace(/['"]+/g, ''),
+                  requester: userId,
+                },
+              }).then(function (response) {
+                 console.log(response.data);
+                 response.data.map((data, index) => {
+                      var info = {};
+
+                      info.id = data.id;
+                      info.qty = data.qty;
+                      info.unit = data.unit;
+                      info.item = data.item;
+                      info.cost = data.cost;
+                      info.total = data.amount;
+
+                      setItems(oldarray => [...oldarray, info]);
+                 })
+              }).then(function (error) {
+                  console.log(error);
+              })
       }, []);
+
+       //components
+    const listItems = items.map((data,index) => {
+        return (
+        <div className="row">
+            <div className="col-sm-1">
+                {data.id}
+            </div>
+            <div className="col-sm-1">
+                {parseFloat(data.qty).toFixed(2)}
+            </div>
+            <div className="col-sm-1">
+                {data.unit}
+            </div>
+            <div className="col-sm-3 d-flex justify-content-center">
+                {data.item}
+            </div>
+            <div className="col-sm-2">
+                {parseFloat(data.cost).toFixed(2)}
+            </div>
+            <div className="col-sm-2">
+                {parseFloat(data.total).toFixed(2)}
+            </div>
+        </div>
+        )
+    });
 
       //Functions
       function deleteRelease(){
-
+        axios({
+                method: 'post',
+                url: window.$link + 'releases/delete/' + id,
+                withCredentials: false,
+                params: {
+                  api_key: window.$api_key,
+                  token: userToken.replace(/['"]+/g, ''),
+                  updated_by: userId,
+                },
+              }).then(function (response) {
+                 console.log(response);
+                 toast.success("Release item succussfully deleted!")
+              }).then(function (error) {
+                  console.log(error);
+              })
       }
 
   return (<div>
@@ -63,6 +134,7 @@ function ReviewReleasingItems() {
                     type='thin'
                     title='RELEASE ITEM' 
                     buttons= {['delete-release']}
+                    deleteRelease={deleteRelease}
                 />
                 <ToastContainer/>
                 <h4 className="form-categories-header italic">RELEASE ITEM DETAILS</h4>
@@ -99,6 +171,39 @@ function ReviewReleasingItems() {
                 </div>
 
                 <h5 className="form-categories-subheader italic">LIST OF RELEASED ITEMS</h5>
+
+                <div className="summary-services">
+                    <div className="row">
+                        <div className="col-sm-1 service">
+                            ID
+                        </div>
+                        <div className="col-sm-1 service">
+                            QTY
+                        </div>
+                        <div className="col-sm-1 service">
+                            UNIT
+                        </div>
+                        <div className="col-sm-3 service d-flex justify-content-center">
+                            ITEM
+                        </div>
+                        <div className="col-sm-2 service">
+                            COST
+                        </div> 
+                        <div className="col-sm-2 service">
+                            TOTAL
+                        </div>
+                    </div>
+                    {listItems}
+
+                    <div className="row d-flex justify-content-end mt-5">
+                        <div className="col-sm-3">
+                            <div className='label'>GRAND TOTAL</div>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className='detail'><b>{grandTotal}</b></div>
+                        </div>
+                    </div>
+                </div>
             </div>
     
     </div>);

@@ -56,16 +56,37 @@ function ReleaseItems() {
           .then(function (response) {
             console.log(response);
             console.log(response.data.releases);
+
             response.data.releases.map((data,index) => {
-                var info = {};
-                info.id = data.id;
-                info.items = "";
-                info.requisitioner = data.requisitioner;
-                info.grandTotal = data.grand_total;
-                info.remarks = data.remarks;
-
-                setReleaseData(oldArray => [...oldArray, info]);
-
+                axios({
+                    method: 'post',
+                    url: window.$link + 'releases/getReleasingItems/' + data.id,
+                    withCredentials: false,
+                    params: {
+                      api_key: window.$api_key,
+                      token: userToken.replace(/['"]+/g, ''),
+                      requester: userId,
+                    },
+                  }).then(function (response) {
+                        var items = "";
+                        response.data.map((info,index) => {
+                            if(info.item != null && index != response.data.length - 1) {
+                                items += info.item + ", ";
+                            }else{
+                                items += info.item;
+                            }
+                        });
+                        var info = {};
+                        info.id = data.id;        
+                        info.items = items;
+                        info.requisitioner = data.requisitioner;
+                        info.grandTotal = data.grand_total;
+                        info.remarks = data.remarks;
+        
+                        setReleaseData(oldArray => [...oldArray, info]);
+                  }).then(function (error) {
+                      console.log(error);
+                  })
             });
           })
           .catch(function (error) {

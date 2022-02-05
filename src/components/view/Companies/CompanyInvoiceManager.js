@@ -64,7 +64,7 @@ function CompanyInvoiceManager() {
                 }
             }).then(function (company) {
                 console.log(company);
-                companyDetails.id = row.id;
+                companyDetails.id = row.company_id;
                 companyDetails.description = company.data.name;
                 companyDetails.discountCode = row.discount_code;
                 companyDetails.remarks = company.data.remarks;
