@@ -81,7 +81,7 @@ function ReviewCompanyInvoices() {
                     </div>
                     <div className="row">
                         <div className="col-sm-3">
-                            <div className='label'>COMPANY CONTACT NUMBER</div>
+                            <div className='label'>CONTACT NUMBER</div>
                         </div>
                         <div className="col-sm-4">
                             <div className='detail'>{contactNo}</div>

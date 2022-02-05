@@ -62,6 +62,7 @@ function AddPurchaseOrder() {
       itemInfo.map((data,i) => {
         if(data.id == value){
             list[index]['cost'] = data.cost;
+            list[index]['unit'] = data.unit;
         }
       })
     }
@@ -138,8 +139,9 @@ function AddPurchaseOrder() {
       response.data.items.map((data,index) => {
         var itemInfo = {};
         itemInfo.id = data.id;
-        itemInfo.name = data.name;
+        itemInfo.name = data.item_name;
         itemInfo.cost = data.cost;
+        itemInfo.unit = data.default_unit;
         setItemInfo(oldArray => [...oldArray, itemInfo]);
       });
     }).catch(function(error) {
@@ -238,7 +240,7 @@ function AddPurchaseOrder() {
                           <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
                         </td>
                         <td>
-                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="purchase-item unit" />
+                          <input type="text" name="unit" id="unit" value={row.unit} className="purchase-item unit" readOnly/>
                         </td>
                         <td>
                           <select className='purchase-select' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
@@ -249,7 +251,7 @@ function AddPurchaseOrder() {
                           </select>
                         </td>
                         <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost" disabled readOnly/>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost" readOnly/>
                         </td>
                         <td>
                           <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item item-discount" />
@@ -407,7 +409,7 @@ function AddPurchaseOrder() {
           </div>
           <div className="col-sm-2">
               {/* <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span> */}
-              P <input type="number" name="discount" className="discount-input" value={discount != null ? parseFloat(discount).toFixed(2) : "P 0.00"} disabled/>
+              P <input type="number" name="discount" className="discount-input" value={discount != null ? parseFloat(discount).toFixed(2) : "P 0.00"} readOnly/>
           </div>
         </div>     
         <div className="row d-flex justify-content-end mb-0">

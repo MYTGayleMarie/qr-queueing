@@ -69,9 +69,9 @@ function Items() {
             response.data.items.map((data,index) => {
                 var item = {};
                 item.id = data.id;
-                item.item_name = data.name;
+                item.item_name = data.item_name;
                 item.item_description = data.description;
-                item.beginning_balance = data.beg_balance;
+                item.beginning_balance = data.beginning_inventory;
                 item.remarks = data.remarks;
 
                 setItems(oldArray => [...oldArray, item]);
