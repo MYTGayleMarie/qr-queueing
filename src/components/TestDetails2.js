@@ -11,7 +11,7 @@ function TestDetails({ data }) {
       <br></br><br></br>
       <h4 className="form-categories-header italic">TEST DETAILS</h4>
 
-      <table className="personal-data-cont">
+      <table className="test-details-cont">
         <tr>
           <td className="first-name label">BOOKING ID</td>
           <td className="first-name detail">{patient.bookingId}</td>

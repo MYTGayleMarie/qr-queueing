@@ -196,3 +196,10 @@ body {
   box-sizing: border-box;
   border-radius: 6px;
 }
+
+/*** Medtech ***/
+.ForExamination, .OnGoing, .Completed {
+  color: #04b4cc !important;
+  font-weight: bold;
+  text-transform: uppercase;
+}

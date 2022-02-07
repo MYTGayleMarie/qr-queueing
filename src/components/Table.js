@@ -44,10 +44,10 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true || type === 'med-tech' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
             </tr>
         }
@@ -83,7 +83,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
 
     const [render, setRender] = useState(false);
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'med-tech') {
 
         const {from_date, to_date, done} = filteredData;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 //css
-import './View/ChiefMedTech/ChiefTests.css';
+import './View/MedTech/MedTechStart.css';
 
 function TestUpdates({ data }) {
   const patient = data;

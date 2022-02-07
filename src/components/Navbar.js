@@ -15,7 +15,6 @@ import cashierIcon from '../images/icons/cashier-icon.png';
 import extractionIcon from '../images/icons/extraction-icon.png';
 import imagingIcon from '../images/icons/imaging-icon.png';
 import medTechIcon from '../images/icons/med-tech-icon.png';
-import chiefIcon from '../images/icons/chief-icon.png';
 import usersIcon from '../images/icons/users-icon.png';
 import companiesIcon from '../images/icons/companies-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';

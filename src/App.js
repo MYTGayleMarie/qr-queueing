@@ -26,16 +26,13 @@ import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
 import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
 import Items from './components/View/Supply/Items';
 import MedTech from './components/View/MedTech/MedTech';
-import MedTechStart from './components/View/MedTech/MedTech';
+import MedTechStart from './components/View/MedTech/MedTechStart';
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
 import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import ViewSupplier from './components/View/Supply/ViewSupplier';
 import Reports from './components/View/Reports/Reports';
-import Chief from './components/View/ChiefMedTech/ChiefMedTech';
-import ChiefTests from './components/View/ChiefMedTech/ChiefTests';
-import ChiefTests2 from './components/View/ChiefMedTech/ChiefTests2';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
@@ -69,9 +66,6 @@ function App() {
         <Route path="/review-release/:id" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/medtech-start" element={token ? <MedTechStart /> : <Navigate to="/" />} />
-        <Route path="/chief-medical-tech" element={<Chief />} />
-        <Route path="/chief-tests" element={<ChiefTests />} />
-        <Route path="/chief-tests-2" element={<ChiefTests2 />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
         <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />

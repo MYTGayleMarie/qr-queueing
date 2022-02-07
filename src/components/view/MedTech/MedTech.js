@@ -46,7 +46,40 @@ function MedTech() {
         date_to: filteredData.to_date,
       },
     }).then(function (response) {
-        console.log(response);
+        console.log(response.data.bookings);
+
+        response.data.bookings.map((data,index) => {
+          axios({
+            method: 'post',
+            url: window.$link + 'bookings/getDetails/' + data.id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (booking) {
+            var filterPackage = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+            
+            var labServices = booking.data.data.booking_details.filter((info) => info.type == "lab"); 
+            var packageServices = filterPackage[0];
+            var mergedServices = [];
+
+            mergedServices = labServices.concat(packageServices);
+            mergedServices.filter((info) => typeof info !== 'undefined').map((info, index) => {
+              var servicesInfo = {};
+
+              servicesInfo.booking_id = info.id;
+              servicesInfo.barcode = info.barcode;
+              servicesInfo.test = info.lab_test;
+              servicesInfo.status = info.status; 
+
+              setPendingData(oldArray => [...oldArray, servicesInfo]);
+            });    
+        }).then(function (error) {
+          console.log(error);
+        });
+      });
     }).then(function (error) {
         console.log(error);
     })
@@ -60,9 +93,11 @@ function MedTech() {
           <Searchbar title="MEDICAL TECHNOLOGY" />
           <Header type="thick" title="BOOKING MANAGER" buttons={buttons} tableData={pendingData} />
           <Table
-            type={'no-action'}
+            type={'med-tech'}
+            clickable={true}
             tableData={pendingData}
-            headingColumns={['BOOKING ID', 'BARCODE NO.', 'TEST', 'STATUS']}
+            rowsPerPage={10}
+            headingColumns={['BOOKING ID', 'BARCODE NO.', 'TEST', 'STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
           />
