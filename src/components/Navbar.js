@@ -138,16 +138,6 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Medical Technology</span>
           </li>
         </NavLink>
-        <li href="#" class="nav-link imaging-nav">
-          <div class="row">
-            <div class="col-3">
-              <img src={chiefIcon} alt={'chief'} class="chief icon"></img>
-            </div>
-            <div class="col-9">
-              <span class="mx-2">Chief of Medical Technology</span>
-            </div>
-          </div>
-        </li>
         <NavLink to="/Users" activeClassName="active" class="link">
           <li href="#" class="nav-link users-nav">
             <div class="row">
@@ -338,10 +328,6 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport)
         <NavLink to="/medtech" activeClassName="active" class="link">
             <img src={medTechIcon} alt={'medTech'} class="medTech icon mobile-size-icon"></img>
             <span class="mx-2">Medical Technology</span>
-        </NavLink>
-        <NavLink to="/medtech" activeClassName="active" class="link">
-            <img src={chiefIcon} alt={'chief'} class="medTech icon mobile-size-icon"></img>
-            <span class="mx-1">Chief of Medical Technology</span>
         </NavLink>
         <NavLink to="/users" activeClassName="active" class="link">
             <img src={usersIcon} alt={'users'} class="medTech icon mobile-size-icon"></img>

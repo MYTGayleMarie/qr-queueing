@@ -384,7 +384,7 @@ function LaboratoryTests() {
             <h1 className="test-header">LABORATORY TESTS</h1>
 
             <div class="test-list">
-              {services.length == 0 && (
+              {services.length == 0 && packageServices.length == 0 && (
               <div className="row d-flex justify-content-left">
                   <span className="info">NO EXTRACTION PENDING</span>
               </div>)}
@@ -394,8 +394,8 @@ function LaboratoryTests() {
             </div>
 
             <div className="row d-flex justify-content-center">        
-                {inputBox === false && services.length != 0 && <button className="start-btn" onClick={toggleExtraction}>START EXTRACTION</button>}  
-                {inputBox === true && services.length != 0 && <button className="save-details-btn" onClick={updateExtraction}>END EXTRACTION</button>}     
+                {inputBox === false && (services.length !=0 || packageServices.length != 0) && <button className="start-btn" onClick={toggleExtraction}>START EXTRACTION</button>}  
+                {inputBox === true && (services.length !=0 || packageServices.length != 0) && <button className="save-details-btn" onClick={updateExtraction}>END EXTRACTION</button>}     
             </div>
 
         </div>

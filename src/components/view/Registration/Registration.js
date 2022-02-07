@@ -23,7 +23,6 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
   from_date: formattedPresentData,
-
   to_date: formattedPresentData,
   done: false,
 };
