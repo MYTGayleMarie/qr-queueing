@@ -16,7 +16,8 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 //variables
-var id = "";
+var servId = "";
+var bookId = "";
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
@@ -35,8 +36,9 @@ function MedTech() {
   const [pendingData, setPendingData] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
-  function startExam(serviceId) {
-      id = serviceId;
+  function startExam(bookingId, serviceId) {
+      servId = serviceId;
+      bookId = bookingId;
       setRedirect(true);
   }
 
@@ -94,7 +96,7 @@ function MedTech() {
   },[]);
 
   if (redirect == true) {
-    var link = '/medtech-start/' + id;
+    var link = '/medtech-start/' + bookId + '/' + servId;
     return <Navigate to={link} />;
   }
 

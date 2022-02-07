@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+import { getToken, getUser } from '../../../utilities/Common';
+import { useForm } from 'react-hooks-helper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -14,6 +19,8 @@ import uploadIcon from '../../../images/icons/upload-icon.png';
 
 
 //variables
+const userToken = getToken();
+const userId = getUser();
 const patientData = 
     {
         bookingId: '0199201',
@@ -33,14 +40,31 @@ function testInput() {
 }
     
 function MedTechStart() {
-    
-    const {id} = useParams();
+
+    const {bookId, servId} = useParams();
     const [inputBox, setImaging] = useState(false);
     const [file, setFile] = useState("");
 
     const toggleImaging= () => {
         setImaging(!inputBox);
     };
+
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getDetails/' + bookId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+        }).then(function (error) {
+            console.log(error);
+        })
+    },[]);
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     return (

@@ -44,11 +44,18 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true || type === 'med-tech' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
+            </tr>
+        }
+        else if (type === 'med-tech' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.booking_id, row.id)}>HERE</button></td>
             </tr>
         }
         else if (type === 'items' && clickable == true) {
