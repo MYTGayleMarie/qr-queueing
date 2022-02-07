@@ -111,7 +111,7 @@ function Extraction() {
                 <Table
                     type={'no-action'}
                     tableData={patientData}
-                    rowsPerPage={4}
+                    rowsPerPage={10}
                     headingColumns={['BOOKING ID', 'PATIENT NAME', 'BIRTHDATE', 'GENDER']}
                     filteredData={filteredData}
                     setFilter={setFilter}
