@@ -83,7 +83,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
 
     const [render, setRender] = useState(false);
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'med-tech') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release') {
 
         const {from_date, to_date, done} = filteredData;
 
@@ -112,7 +112,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'company-invoices') {
+    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'company-invoices' || type === 'med-tech') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

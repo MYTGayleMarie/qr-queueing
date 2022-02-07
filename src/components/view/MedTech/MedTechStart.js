@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 //components
 import Header from '../../Header.js';
@@ -11,6 +12,8 @@ import TestUpdates from "../../TestUpdates.js";
 //images
 import uploadIcon from '../../../images/icons/upload-icon.png';
 
+
+//variables
 const patientData = 
     {
         bookingId: '0199201',
@@ -30,7 +33,8 @@ function testInput() {
 }
     
 function MedTechStart() {
-
+    
+    const {id} = useParams();
     const [inputBox, setImaging] = useState(false);
     const [file, setFile] = useState("");
 

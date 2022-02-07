@@ -4,6 +4,7 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 //css
 import '../Imaging/Imaging.css';
@@ -15,6 +16,7 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
 //variables
+var id = "";
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
@@ -31,6 +33,12 @@ function MedTech() {
 
   const [filteredData, setFilter] = useForm(filterData);
   const [pendingData, setPendingData] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+
+  function startExam(serviceId) {
+      id = serviceId;
+      setRedirect(true);
+  }
 
   React.useEffect(() => {
     pendingData.length = 0;
@@ -68,8 +76,8 @@ function MedTech() {
             mergedServices = labServices.concat(packageServices);
             mergedServices.filter((info) => typeof info !== 'undefined').map((info, index) => {
               var servicesInfo = {};
-
-              servicesInfo.booking_id = info.id;
+              servicesInfo.booking_id = data.id;
+              servicesInfo.id = info.id;
               servicesInfo.barcode = info.barcode;
               servicesInfo.test = info.lab_test;
               servicesInfo.status = info.status; 
@@ -85,6 +93,11 @@ function MedTech() {
     })
   },[]);
 
+  if (redirect == true) {
+    var link = '/medtech-start/' + id;
+    return <Navigate to={link} />;
+  }
+
   return (
     <div>
       <Navbar />
@@ -97,9 +110,10 @@ function MedTech() {
             clickable={true}
             tableData={pendingData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'BARCODE NO.', 'TEST', 'STATUS', 'ACTION']}
+            headingColumns={['BOOKING ID', 'TEST ID', 'BARCODE NO.', 'TEST', 'STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
+            link={startExam}
           />
         </Fragment>
       </div>
