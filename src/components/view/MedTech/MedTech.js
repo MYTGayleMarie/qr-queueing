@@ -85,7 +85,7 @@ function MedTech() {
               servicesInfo.id = info.id;
               servicesInfo.barcode = info.barcode;
               servicesInfo.test = info.lab_test;
-              servicesInfo.type = info.type != undefined ? info.type : "PACKAGE";
+              servicesInfo.type = info.type != undefined ? info.type : "package";
               servicesInfo.status = info.status; 
 
               setPendingData(oldArray => [...oldArray, servicesInfo]);

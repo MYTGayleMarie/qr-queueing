@@ -4,7 +4,11 @@ import React from 'react';
 import './View/MedTech/MedTechStart.css';
 
 function TestUpdates({ extractedOn, testStart, testFinish, categoryId }) {
-  var formattedExtractedDate = new Date(extractedOn);
+  var formattedExtractedDate = "";
+  if(extractedOn != null) {
+    formattedExtractedDate = new Date(extractedOn);
+  }
+
 
   return (
     <div>
@@ -13,7 +17,7 @@ function TestUpdates({ extractedOn, testStart, testFinish, categoryId }) {
       <h4 className="form-categories-header italic">UPDATES</h4>
 
       <table className="personal-data-cont">
-        {extractedOn != "" && (
+        {formattedExtractedDate != "" && (
           <tr>
             <td className="first-name label">
               {categoryId == 18 && <span>IMAGING </span>}

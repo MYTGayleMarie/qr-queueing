@@ -63,10 +63,10 @@ function MedTechStart() {
     React.useEffect(() => {
         var urlLink = "";
         console.log(type)
-        if(type === "PACKAGE") {
+        if(type === "package") {
             urlLink = "Bookingpackage_details/getDetails/";
         }
-        else if(type === "LAB") {
+        else if(type === "lab") {
             urlLink = "Bookingdetails/getDetails/";
         }
 
@@ -82,10 +82,10 @@ function MedTechStart() {
         }).then(function (booking) {
             var info;
             
-            if(type === "PACKAGE") {
+            if(type === "package") {
                 info =  booking.data.data.booking_package_details[0];
             }
-            else if(type === "LAB") {
+            else if(type === "lab") {
                 info =  booking.data.data.booking_detail[0];
             }
             console.log(info);
@@ -101,7 +101,7 @@ function MedTechStart() {
         })
     },[]);
 
-    console.log(file);
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     return (
@@ -159,10 +159,12 @@ function MedTechStart() {
                 testFinish={""}
             />
 
-            <div className="row d-flex justify-content-center">        
-                {inputBox === false && <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  
-                {inputBox === true && <button className="save-details-btn" onClick={toggleImaging}>SAVE DETAILS</button>}     
-            </div>
+            {extractionOn != null && (
+                <div className="row d-flex justify-content-center">        
+                    {inputBox === false && <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  
+                    {inputBox === true && <button className="save-details-btn" onClick={toggleImaging}>SAVE DETAILS</button>}     
+                </div>
+            )}
 
         </div>
             
