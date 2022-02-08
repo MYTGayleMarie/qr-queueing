@@ -41,6 +41,12 @@ function testInput() {
     
 function MedTechStart() {
 
+    //Test Details
+    const [barcode, setBarcode] = useState("");
+    const [test, setTest] = useState("");
+    const [status, setStatus] = useState("");
+    const [updates, setUpdates] = useState("");
+
     const {bookId, servId} = useParams();
     const [inputBox, setImaging] = useState(false);
     const [file, setFile] = useState("");
@@ -77,23 +83,27 @@ function MedTechStart() {
             />
             <div className="row">
                 <div className="col-sm-6">
-                    <TestDetails2 data={patientData}/>
+                    <TestDetails2 
+                        bookID={bookId}
+                        />
                 </div>
                 <div className="col-sm-6">
+                    {inputBox == true && (
                     <div className="upload-area d-flex justify-content-center">
                         {file.length == 0 && (
                             <div class="upload-btn-wrapper">
-                              <div className="upload">
-                                  <img src={uploadIcon} alt={'upload-here'} className="upload-icon"></img><br/>
-                                  <span className="upload-inst"><b>Upload Results</b> or drop it here</span>
-                              </div>
-                              <input type="file" name="file" onChange={(e) => setFile(e.target.files)}/>
-                          </div>
+                                <div className="upload">
+                                    <img src={uploadIcon} alt={'upload-here'} className="upload-icon"></img><br/>
+                                    <span className="upload-inst"><b>Upload Results</b> or drop it here</span>
+                                </div>
+                                <input type="file" name="file" onChange={(e) => setFile(e.target.files)}/>
+                            </div>
                         )}
                         {file.length != 0 && (
                             <span className="uploaded-file">File: {file[0].name}</span>
-                         )}
+                        )}
                     </div>
+                    )}
                 </div>
             </div>
             

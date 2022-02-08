@@ -11,7 +11,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, setIsCompany, lastMeal, setLastMeal, navigation  }) {
+function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation  }) {
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -107,6 +107,14 @@ function OldPatientForm1({ customer, setPersonal, setIsCompany, lastMeal, setLas
             }
         }).then(function (response) {
             setCompanyId(response.data.company_id);
+            setDiscount(response.data.percentage);
+            console.log(response);
+            if(response.data.is_package == "1") {
+                setIsPackage("1");
+            }
+            if(response.data.is_service == "1") {
+                setIsService("1");
+            }
         }).catch(function (error) {
             console.log(error);
         });

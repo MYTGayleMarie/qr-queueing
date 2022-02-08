@@ -16,7 +16,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function AddPatient({ customer, setIsCompany, setPersonal, lastMeal, setLastMeal, navigation }) {
+function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation  }) {
   document.body.style = 'background: white;';
 
   const {
@@ -97,62 +97,65 @@ function AddPatient({ customer, setIsCompany, setPersonal, lastMeal, setLastMeal
 
   React.useEffect(() => {
     axios({
-      method: 'post',
-      url: window.$link + 'discounts/getAll',
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
-      },
-    })
-      .then(function (response) {
-        console.log(response)
+        method: 'post',
+        url: window.$link + 'discounts/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
         setDiscountList(response.data.discounts);
-      })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(error);
-      });
-  }, []);
+    });
+},[]);
 
-  React.useEffect(() => {
+React.useEffect(() => {
     axios({
-      method: 'post',
-      url: window.$link + 'discounts/show/' + discountId,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
-      },
-    })
-      .then(function (response) {
+        method: 'post',
+        url: window.$link + 'discounts/show/' + discountId,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
         setCompanyId(response.data.company_id);
-      })
-      .catch(function (error) {
+        setDiscount(response.data.percentage);
+        console.log(response);
+        if(response.data.is_package == "1") {
+            setIsPackage("1");
+        }
+        if(response.data.is_service == "1") {
+            setIsService("1");
+        }
+    }).catch(function (error) {
         console.log(error);
-      });
-  }, [discountId]);
+    });
+},[discountId]);
 
-  React.useEffect(() => {
+React.useEffect(() => {
+    setCompanyRemarks("");
     axios({
-      method: 'post',
-      url: window.$link + 'companies/show/' + companyId,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
-      },
-    })
-      .then(function (response) {
+        method: 'post',
+        url: window.$link + 'companies/show/' + companyId,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
         setCompanyRemarks(response.data.remarks);
         setIsCompany(true);
-      })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(error);
-      });
-  }, [companyId]);
+    });
+
+},[companyId]);
 
   const listOfDiscount = discountList.map((row, index) => {
     return (

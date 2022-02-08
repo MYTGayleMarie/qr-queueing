@@ -37,15 +37,24 @@ function SwitchForm() {
     const [customer, setPersonal] = useForm(personalData);
     const [lastMeal, setLastMeal] = useState(new Date());
     const [isCompany, setIsCompany] = useState(false);
+
+    const [packagePrice, setPackagePrice] = useState("");
+    const [labPrice, setLabPrice] = useState("");
+
+    const [discount, setDiscount] = useState("");
+
+    const [isService, setIsService] = useState(false);
+    const [isPackage, setIsPackage] = useState(false);
+    
     const [service, setServices] = useForm(serviceData);
     const { step, navigation } = useStep({
       steps,
       initialStep: 0,
     });
 
-    const personalProps = { customer, setPersonal, setIsCompany, lastMeal, setLastMeal, navigation };
-    const serviceProps = { service, customer, isCompany, setServices, lastMeal, navigation };
-
+    const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation };
+    const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation };
+    
     switch (step.id) {
         case "customer":
             return <Form1 { ...personalProps }/>   
