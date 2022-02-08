@@ -37,6 +37,8 @@ import {
 
 //VARIABLES
 var itemDetails;
+var newLabTotal = 0;
+var newPackageTotal = 0;
 
 //Package
 const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -220,22 +222,26 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   });
 
   checkedServicesDetails.map((data, index) => {
-    setLabPrice(0);
-    setPackagePrice(0);
-    if(data.type == 'lab') {
+
+    if(index == 0) {
+        console.log("hereeee")
+        newLabTotal = 0;
+        newPackageTotal = 0;
         setLabPrice(0);
-        var newTotal = 0;
-        newTotal += parseFloat(data.price);
-        setLabPrice(newTotal);
+        setPackagePrice(0);
+    }
+    if(data.type == 'lab') {
+        newLabTotal += parseFloat(data.price);
+        setLabPrice(newLabTotal);
     }
     else if (data.type == 'package') {
-        var newTotal = 0;
-        newTotal += parseFloat(data.price);
-        setPackagePrice(newTotal);
+        newPackageTotal += parseFloat(data.price);
+        setPackagePrice(newPackageTotal);
     }
 
     totalPrice += parseFloat(data.price);
 });
+console.log(discount)
 
   return (
     <div>
@@ -334,12 +340,12 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                        {isCompany == false && (
+                    {isCompany == false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT {
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }%</b></span>
                         )}
-                         {isCompany != false && (
+                         {isCompany != false && discount != "" &&(
                              <span className="total-price"><b>DISCOUNT P{
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }</b></span>
