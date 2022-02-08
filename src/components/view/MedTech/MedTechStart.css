@@ -29,6 +29,10 @@
   box-sizing: border-box;
 }
 
+.upload-info {
+  margin-left: -10%;
+}
+
 .test-details-cont {
   margin-left: 8% !important;
 }
@@ -70,8 +74,31 @@
 }
 
 .uploaded-file {
+  text-align: center;
+  vertical-align: middle;
+  word-wrap: break-word;
+  width: 50%;
+  margin-top: 20%;
+  font-size: 18px;
+}
+
+.uploaded-size {
   margin-top: 25%;
-  font-size: 25px;
+}
+
+.cancel-area{
+  width: 80%;
+  height: 80%;
+  margin-left: -10%;
+  margin-top: -4%;
+}
+
+.cancel-btn {
+  float: right;
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  border-radius: 8px;
 }
 
 /* Create two equal columns that floats next to each other */

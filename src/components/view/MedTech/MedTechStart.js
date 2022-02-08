@@ -45,20 +45,34 @@ function MedTechStart() {
     const [barcode, setBarcode] = useState("");
     const [test, setTest] = useState("");
     const [status, setStatus] = useState("");
-    const [updates, setUpdates] = useState("");
+    const [categoryId, setCategoryId] = useState("");
 
-    const {bookId, servId} = useParams();
+    //Updates
+    const [extractionOn, setExtractionOn] = useState("");
+    const [examinationStarted, setExaminationStarted] = useState("");
+    const [examinationCompleted, setExaminationCommpleted] = useState("");
+
+    const {serviceId, bookId, type} = useParams();
     const [inputBox, setImaging] = useState(false);
     const [file, setFile] = useState("");
 
     const toggleImaging= () => {
         setImaging(!inputBox);
     };
-
+  
     React.useEffect(() => {
+        var urlLink = "";
+        console.log(type)
+        if(type === "PACKAGE") {
+            urlLink = "Bookingpackage_details/getDetails/";
+        }
+        else if(type === "LAB") {
+            urlLink = "Bookingdetails/getDetails/";
+        }
+
         axios({
             method: 'post',
-            url: window.$link + 'bookings/getDetails/' + bookId,
+            url: window.$link + urlLink + serviceId,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
@@ -66,11 +80,28 @@ function MedTechStart() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking);
+            var info;
+            
+            if(type === "PACKAGE") {
+                info =  booking.data.data.booking_package_details[0];
+            }
+            else if(type === "LAB") {
+                info =  booking.data.data.booking_detail[0];
+            }
+            console.log(info);
+            setBarcode(info.barcode);
+            setTest(info.lab_test);
+            setStatus(info.status);
+            setCategoryId(info.category_id);
+            setExtractionOn(info.extracted_on);
+
+
         }).then(function (error) {
             console.log(error);
         })
     },[]);
+
+    console.log(file);
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     return (
@@ -85,6 +116,9 @@ function MedTechStart() {
                 <div className="col-sm-6">
                     <TestDetails2 
                         bookID={bookId}
+                        barcode={barcode}
+                        test={test}
+                        status={status}
                         />
                 </div>
                 <div className="col-sm-6">
@@ -104,10 +138,26 @@ function MedTechStart() {
                         )}
                     </div>
                     )}
+                    {inputBox == true && file.length == 0 && (
+                        <span className="upload-info">File size limit: 500 MB</span>
+                    )}
+                    {inputBox == true && file.length != 0 && (
+                        <span className="upload-info">Current size: {(file[0].size / (1024*1024)).toFixed(2)} MB</span>
+                    )}
+                    {inputBox == true && file.length != 0 && (
+                        <div className='cancel-area'>
+                            <button className='cancel-btn' onClick={(e) => setFile("")}>REMOVE</button>
+                        </div>
+                    )}
                 </div>
             </div>
             
-            <TestUpdates data={patientData}/>
+            <TestUpdates 
+                extractedOn={extractionOn}
+                categoryId={categoryId}
+                testStart={""}
+                testFinish={""}
+            />
 
             <div className="row d-flex justify-content-center">        
                 {inputBox === false && <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  

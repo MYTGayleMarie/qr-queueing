@@ -18,6 +18,7 @@ import Table from '../../Table.js';
 //variables
 var servId = "";
 var bookId = "";
+var type = "";
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
@@ -36,9 +37,10 @@ function MedTech() {
   const [pendingData, setPendingData] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
-  function startExam(bookingId, serviceId) {
+  function startExam(bookingId, serviceId, typeService) {
       servId = serviceId;
       bookId = bookingId;
+      type = typeService;
       setRedirect(true);
   }
 
@@ -77,11 +79,13 @@ function MedTech() {
 
             mergedServices = labServices.concat(packageServices);
             mergedServices.filter((info) => typeof info !== 'undefined').map((info, index) => {
+              console.log(info);
               var servicesInfo = {};
               servicesInfo.booking_id = data.id;
               servicesInfo.id = info.id;
               servicesInfo.barcode = info.barcode;
               servicesInfo.test = info.lab_test;
+              servicesInfo.type = info.type != undefined ? info.type : "PACKAGE";
               servicesInfo.status = info.status; 
 
               setPendingData(oldArray => [...oldArray, servicesInfo]);
@@ -96,7 +100,7 @@ function MedTech() {
   },[]);
 
   if (redirect == true) {
-    var link = '/medtech-start/' + bookId + '/' + servId;
+    var link = '/medtech-start/' + bookId + '/' + servId + "/" + type;
     return <Navigate to={link} />;
   }
 
@@ -112,7 +116,7 @@ function MedTech() {
             clickable={true}
             tableData={pendingData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'TEST ID', 'BARCODE NO.', 'TEST', 'STATUS', 'ACTION']}
+            headingColumns={['BOOKING ID', 'TEST ID', 'BARCODE NO.', 'TYPE', 'TEST', 'STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             link={startExam}

@@ -55,7 +55,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.booking_id, row.id)}>REVIEW</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.booking_id, row.id, row.type)}>REVIEW</button></td>
             </tr>
         }
         else if (type === 'items' && clickable == true) {
