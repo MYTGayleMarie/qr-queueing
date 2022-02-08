@@ -1,7 +1,7 @@
 .add-payment-btn {
     width: 15% !important;
     height: 20px;
-    margin-right: 10%;
+    margin-right: 6%;
     font-size: 80%;
     font-weight: bold;
     color: #55073A;
@@ -15,7 +15,6 @@
 
 .less-width {
     width: 15% !important;
-    position: absolute;
-    right: 5%;
-    bottom: 2%;
+    margin-right: 5%;
+    margin-top: 15% !important;
 }

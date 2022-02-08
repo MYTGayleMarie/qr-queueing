@@ -95,7 +95,7 @@ function Registration() {
             clickable={false}
             type={'no-action'}
             tableData={patientData}
-            rowsPerPage={4}
+            rowsPerPage={10}
             headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'ADDED ON']}
             filteredData={filteredData}
             setFilter={setFilter}

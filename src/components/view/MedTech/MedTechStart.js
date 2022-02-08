@@ -57,6 +57,32 @@ function MedTechStart() {
     const [file, setFile] = useState("");
 
     const toggleImaging= () => {
+        var urlLink = "";
+
+        if(type === "package") {
+            urlLink = "Bookingpackage_details/update/";
+        }
+        else if(type === "lab") {
+            urlLink = "Bookingdetails/update/";
+        }
+
+        axios({
+            method: 'post',
+            url: window.$link + urlLink + serviceId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                test_start: new Date(),
+                test_finish: "",
+                updated_by: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+            
+        }).then(function (error) {
+            console.log(error);
+        })
         setImaging(!inputBox);
     };
   
@@ -100,6 +126,23 @@ function MedTechStart() {
             console.log(error);
         })
     },[]);
+
+    function submit() {
+        // axios({
+        //     method: 'post',
+        //     url: window.$link + urlLink + serviceId,
+        //     withCredentials: false, 
+        //     params: {
+        //         api_key: window.$api_key,
+        //         token: userToken.replace(/['"]+/g, ''),
+        //         requester: userId,
+        //     }
+        // }).then(function (booking) {
+        //     console.log(booking);
+        // }).then(function (error) {
+        //     console.log(errpr);
+        // })
+    }
 
 
 

@@ -10,10 +10,20 @@ import { Navigate } from 'react-router-dom';
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
+import Table from '../../Table.js';
 
 //variables
+const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
+var info = [
+  {
+    invoice_no: "INV-QR-01",
+    discount_code: "MYT-WELCOME-NY!",
+    price: "500.00",
+    total: "5,000"
+  },
+];
 
 function ReviewCompanyInvoices() {
   document.body.style = 'background: white;';
@@ -28,6 +38,10 @@ function ReviewCompanyInvoices() {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [contactPerson, setContactPerson] = useState("");
+
+  //Redirection
+  const [toAddPayment, setToAddPayment] = useState(false);
+  const [toAddInvoice, setToAddInvoice] = useState(false);
 
   React.useEffect(() => {
     axios({
@@ -53,6 +67,24 @@ function ReviewCompanyInvoices() {
     });
   },[]);
 
+  function addInvoice() {
+    setToAddInvoice(true);
+  }
+
+  function addPayment() {
+    setToAddPayment(true);
+  }
+
+  if(toAddInvoice == true) {
+    return (
+      <Navigate to ={"/add-invoice/" + id}/>
+    )
+  }else if(toAddPayment == true) {
+    return (
+      <Navigate to = {"/add-invoice-payment/" + id}/>
+    )
+  }
+
   if(redirect == true) {
       return (
         <Navigate to = "/company-invoices"/>
@@ -63,10 +95,7 @@ function ReviewCompanyInvoices() {
     <div>
       <Navbar/>
             <div className="active-cont">
-                <Header 
-                    type='thin'
-                    title='COMPANY INVOICE' 
-                />
+            <Header type="thick" title="COMPANY INVOICES" buttons={buttons} addInvoice={addInvoice}/>
                 <ToastContainer/>
                 <h4 className="form-categories-header italic">COMPANY DETAILS</h4>
 
@@ -111,8 +140,22 @@ function ReviewCompanyInvoices() {
                     </div>
                 </div>
 
+                <h4 className="form-categories-header italic">INVOICES</h4>
+
+                <Table
+                    clickable={true}
+                    type={'companies-review'}
+                    tableData={info}
+                    rowsPerPage={4}
+                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
+                    // filteredData={filteredData}
+                    // setFilter={setFilter}
+                    // filter={filter}
+                    givenClass={'company-mobile'}
+                />
+
                 <div className="row d-flex justify-content-end">
-                  <button className="add-payment-btn">ADD PAYMENT</button>
+                  <button className="add-payment-btn" onClick={() => addPayment()}>ADD PAYMENT</button>
                 </div>
 
                 <div className="row d-flex justify-content-end">
