@@ -45,21 +45,24 @@ function Reports() {
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Patients'
+                        link={"/reports-transaction"}
+                        title='Total number of Transactions'
                         color='maroon'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Clinic Service'
+                        link={""}
+                        title='Total number of Services and Packages'
                         color='maroon'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Home Service'
+                        link={""}
+                        title='Total number of Home Services'
                         color='maroon'
                     />
                 </div>
@@ -68,21 +71,24 @@ function Reports() {
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Extraction'
+                        link={""}
+                        title='Total number of Clinical Tests'
                         color='blue'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Imaging'
+                        link={""}
+                        title='Total number of POs pending for approval'
                         color='blue'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
                         data={amount}
-                        title='Total number of Email Results'
+                        link={""}
+                        title='Item History'
                         color='blue'
                     />
                 </div>

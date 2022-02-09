@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 
 function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass}) {
-    console.log(tableData)
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -54,7 +53,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if (type === 'med-tech' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.booking_id, row.id, row.type)}>REVIEW</button></td>
             </tr>
         }
@@ -93,8 +92,6 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
     if(type === 'no-action' || type === 'purchase-order' || type === 'release') {
 
         const {from_date, to_date, done} = filteredData;
-
-        console.log(filteredData)
     
         return(
             <div className="table-container">

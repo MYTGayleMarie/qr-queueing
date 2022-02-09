@@ -13,8 +13,11 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
     if(buttons) {
         btn = buttons.map((button) => {
 
-            if(button === 'download') {
-                return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">DOWNLOAD</CSVLink></button>
+            if(button === 'export-excel') {
+                return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
+            }
+            if(button === 'export-pdf') {
+                return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT PDF</CSVLink></button>
             }
     
             if (button.includes("add-")) {

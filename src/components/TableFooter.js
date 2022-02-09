@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "./TableFooter.css";
 
 const TableFooter = ({ range, setPage, page, slice, footerClass }) => {
-  console.log(footerClass)
+
   useEffect(() => {
     if (slice.length < 1 && page !== 1) {
       setPage(page - 1);

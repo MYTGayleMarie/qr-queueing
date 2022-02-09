@@ -101,6 +101,16 @@
   border-radius: 8px;
 }
 
+.finish-info {
+  float: right;
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  border-radius: 8px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 /* Create two equal columns that floats next to each other */
 .column {
     float: left;

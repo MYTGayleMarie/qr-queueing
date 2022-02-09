@@ -5,10 +5,11 @@ import './Card.css';
 
 //image
 import cashierIcon from '../images/icons/cashier-icon.png';
+import { NavLink } from 'react-router-dom';
 
-function Card({data, title, color}) {
+function Card({data, link, title, color}) {
     return (
-        <div>
+        <NavLink to={link} class="report-link">
             <div className='card-container'>
                 <div className={`card-head ${color}`}></div>
                 <div className='row'>
@@ -29,7 +30,7 @@ function Card({data, title, color}) {
                     </div>
                 </div>
             </div>
-        </div>
+        </NavLink>
     )
 }
 

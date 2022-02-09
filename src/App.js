@@ -33,6 +33,7 @@ import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import ViewSupplier from './components/View/Supply/ViewSupplier';
 import Reports from './components/View/Reports/Reports';
+import ReportTransaction from './components/View/Reports/ReportTransaction';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
@@ -84,6 +85,7 @@ function App() {
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/view-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
+        <Route path="/reports-transaction" element={token ? <ReportTransaction /> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>
     </Router>

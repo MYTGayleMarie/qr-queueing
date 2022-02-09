@@ -104,8 +104,8 @@ function LaboratoryTests() {
                         api_key: window.$api_key,
                         token: userToken.replace(/['"]+/g, ''),
                         booking: id,
-                        status: 'For Examination',
-                        extracted_on: presentDate.toISOString().split('T')[0], 
+                        status: 'for examination',
+                        extracted_on: presentDate, 
                         updated_by: userId,
                     }
                 }).then(function (response) {
@@ -124,7 +124,7 @@ function LaboratoryTests() {
                         api_key: window.$api_key,
                         token: userToken.replace(/['"]+/g, ''),
                         booking_detail_id: row.booking_detail_id,
-                        status: 'For Examination',
+                        status: 'for examination',
                         extracted_on: presentDate.toISOString().split('T')[0], 
                         updated_by: userId,
                     }
@@ -149,13 +149,13 @@ function LaboratoryTests() {
             }
         }).then(function (booking) {
             console.log(booking);
-            setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "For Examination"));
+            setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "for examination"));
             setPendingPack(booking.data.data.booking_package_details);
 
             console.log(pendingLab);
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
-            setPendingPackServices(finalArray.filter((info) => info.status != "For Examination"));
+            setPendingPackServices(finalArray.filter((info) => info.status != "for examination"));
 
         }).catch(function (error) {
             console.log(error)
@@ -164,7 +164,7 @@ function LaboratoryTests() {
         toggleExtraction();
         setTimeout(function() {
             refreshPage();
-        }, 5000);
+        }, 3000);
     };
 
     React.useEffect(() => {
@@ -227,11 +227,11 @@ function LaboratoryTests() {
         }).then(function (booking) {
             console.log(booking.data.data);
             setPackages(booking.data.data.booking_package_details);
-            setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "For Examination"));
+            setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "for examination"));
 
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
-            setPackageServices(finalArray.filter((info) => info.category_id != xrayId && info.status != "For Examination"));
+            setPackageServices(finalArray.filter((info) => info.category_id != xrayId && info.status != "for examination"));
 
         }).catch(function (error) {
             console.log(error);

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { getToken, getUser, refreshPage } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,6 +46,7 @@ function MedTechStart() {
     const [test, setTest] = useState("");
     const [status, setStatus] = useState("");
     const [categoryId, setCategoryId] = useState("");
+    const [bookingDetailId, setBookingDetailId] = useState("");
 
     //Updates
     const [extractionOn, setExtractionOn] = useState("");
@@ -57,38 +58,112 @@ function MedTechStart() {
     const [file, setFile] = useState("");
 
     const toggleImaging= () => {
-        var urlLink = "";
+        var updateLink = "";
+        var extractionLink = "";
 
         if(type === "package") {
-            urlLink = "Bookingpackage_details/update/";
+            updateLink = "Bookingpackage_details/update/";
+            extractionLink = "Bookingpackage_details/updateExtraction/";
         }
         else if(type === "lab") {
-            urlLink = "Bookingdetails/update/";
+            updateLink = "Bookingdetails/update/";
+            extractionLink = "Bookingdetails/updateExtraction/";
         }
 
         axios({
             method: 'post',
-            url: window.$link + urlLink + serviceId,
+            url: window.$link + updateLink + serviceId,
             withCredentials: false, 
             params: {
                 api_key: window.$api_key,
                 token: userToken.replace(/['"]+/g, ''),
                 test_start: new Date(),
-                test_finish: "",
                 updated_by: userId,
             }
         }).then(function (booking) {
             console.log(booking);
-            
+            setExaminationStarted(new Date());
+        }).then(function (error) {
+            console.log(error);
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + extractionLink + serviceId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                booking: bookId,
+                booking_detail_id: bookingDetailId,
+                status: 'ongoing',
+                extracted_on: "",
+                updated_by: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
         }).then(function (error) {
             console.log(error);
         })
+        refreshPage();
         setImaging(!inputBox);
     };
+
+    function FinishExtraction() {
+        var updateLink = "";
+        var extractionLink = "";
+
+        if(type === "package") {
+            updateLink = "Bookingpackage_details/update/";
+            extractionLink = "Bookingpackage_details/updateExtraction/";
+        }
+        else if(type === "lab") {
+            updateLink = "Bookingdetails/update/";
+            extractionLink = "Bookingdetails/updateExtraction/";
+        }
+
+        axios({
+            method: 'post',
+            url: window.$link + updateLink + serviceId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                test_start: "",
+                test_finish: new Date(),
+                file_result: file,
+                updated_by: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+            setExaminationCommpleted(new Date());
+            toast.success("Examination finished!");
+        }).then(function (error) {
+            console.log(error);
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + extractionLink + serviceId,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                booking: bookId,
+                status: 'completed',
+                extracted_on: "",
+                updated_by: userId,
+            }
+        }).then(function (booking) {
+            console.log(booking);
+        }).then(function (error) {
+            console.log(error);
+        })
+    }
   
     React.useEffect(() => {
         var urlLink = "";
-        console.log(type)
+
         if(type === "package") {
             urlLink = "Bookingpackage_details/getDetails/";
         }
@@ -107,9 +182,10 @@ function MedTechStart() {
             }
         }).then(function (booking) {
             var info;
-            
+            console.log(booking)
             if(type === "package") {
                 info =  booking.data.data.booking_package_details[0];
+                setBookingDetailId(info.booking_detail_id);
             }
             else if(type === "lab") {
                 info =  booking.data.data.booking_detail[0];
@@ -120,31 +196,13 @@ function MedTechStart() {
             setStatus(info.status);
             setCategoryId(info.category_id);
             setExtractionOn(info.extracted_on);
-
+            setExaminationStarted(info.test_start);
+            setExaminationCommpleted(info.test_finish);
 
         }).then(function (error) {
             console.log(error);
         })
     },[]);
-
-    function submit() {
-        // axios({
-        //     method: 'post',
-        //     url: window.$link + urlLink + serviceId,
-        //     withCredentials: false, 
-        //     params: {
-        //         api_key: window.$api_key,
-        //         token: userToken.replace(/['"]+/g, ''),
-        //         requester: userId,
-        //     }
-        // }).then(function (booking) {
-        //     console.log(booking);
-        // }).then(function (error) {
-        //     console.log(errpr);
-        // })
-    }
-
-
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     return (
@@ -155,6 +213,7 @@ function MedTechStart() {
                 type='thin'
                 title='CHIEF MEDICAL TECHNOLOGY' 
             />
+            <ToastContainer/>
             <div className="row">
                 <div className="col-sm-6">
                     <TestDetails2 
@@ -165,7 +224,7 @@ function MedTechStart() {
                         />
                 </div>
                 <div className="col-sm-6">
-                    {inputBox == true && (
+                    {inputBox == true || examinationStarted != null && examinationCompleted == null && (
                     <div className="upload-area d-flex justify-content-center">
                         {file.length == 0 && (
                             <div class="upload-btn-wrapper">
@@ -184,10 +243,10 @@ function MedTechStart() {
                     {inputBox == true && file.length == 0 && (
                         <span className="upload-info">File size limit: 500 MB</span>
                     )}
-                    {inputBox == true && file.length != 0 && (
+                    {(file.length != 0 ) && examinationCompleted == null && (
                         <span className="upload-info">Current size: {(file[0].size / (1024*1024)).toFixed(2)} MB</span>
                     )}
-                    {inputBox == true && file.length != 0 && (
+                    {(inputBox == true || file.length != 0) && examinationCompleted == null &&  (
                         <div className='cancel-area'>
                             <button className='cancel-btn' onClick={(e) => setFile("")}>REMOVE</button>
                         </div>
@@ -198,14 +257,20 @@ function MedTechStart() {
             <TestUpdates 
                 extractedOn={extractionOn}
                 categoryId={categoryId}
-                testStart={""}
-                testFinish={""}
+                testStart={examinationStarted}
+                testFinish={examinationCompleted}
             />
 
-            {extractionOn != null && (
+            {extractionOn != null && examinationCompleted == null && (
                 <div className="row d-flex justify-content-center">        
-                    {inputBox === false && <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  
-                    {inputBox === true && <button className="save-details-btn" onClick={toggleImaging}>SAVE DETAILS</button>}     
+                    {examinationStarted == null &&  <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  
+                    {examinationStarted != null && <button className="save-details-btn" onClick={() => FinishExtraction()}>SAVE DETAILS</button>}     
+                </div>
+            )}
+
+            {examinationCompleted != null && (
+                <div className='d-flex justify-content-center'>
+                    <button className='finish-info'>Examination finished</button>
                 </div>
             )}
 

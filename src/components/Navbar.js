@@ -167,6 +167,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <img src={reportIcon} alt={'report'} class="report icon"></img>
             <span class="mx-2">Reports</span>
           </li>
+          </NavLink>
           <li href="#" class="nav-link supply-nav">
             <img src={supplyIcon} alt={'supply'} class="supply icon"></img>
             <span class="mx-2">Supply</span>
@@ -185,7 +186,6 @@ function adminNavbar(showNavbar,setshowNavbar) {
               </Link>
             </ul>
           </li>
-        </NavLink>
 
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
@@ -369,7 +369,6 @@ function Navbar() {
   const [width, setWidth] = useState(window.innerWidth);
   const [showReport, setShowReport] = useState(false);
 
-  console.log(showReport)
   const handleWindowSizeChange = () => {
           setWidth(window.innerWidth);
   }
