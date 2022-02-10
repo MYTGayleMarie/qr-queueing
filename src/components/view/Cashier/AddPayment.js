@@ -74,6 +74,7 @@ function AddPayment() {
     const [address, setAddress] = useState("");
     const [seniorPwdId, setID] = useState("");
     const [patientId, setPatientId] = useState("");
+    const [paymentStatus, setPaymentStatus] = useState("");
 
 
     //services
@@ -153,6 +154,7 @@ function AddPayment() {
             }
         }).then(function (response) {
             console.log(response)
+            setPaymentStatus(response.data.payment_status);
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
             setServiceFee(response.data.home_service_fee);
@@ -645,7 +647,7 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        {print == true && printButton()}
+                        {print == true || paymentStatus == "paid" && printButton()}
                         <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>                    
              </div>       

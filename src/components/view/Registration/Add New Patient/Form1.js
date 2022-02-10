@@ -83,7 +83,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
         <div className="row date-of-testing-container small-gap">
         <div className="col">
           <label for="result" className="radio-header">
-            HOME SERVICE FEE
+          SERVICE LOCATION
           </label>
           <br />
           <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
@@ -95,9 +95,25 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
         </div>
         <div className="col">
             <label for="result" className="radio-header">
-                Number of People
+                SERVICE FEE
             </label>
-            <input type="number" name="people"  className="home-service-fee-select" value={people} onChange={(e) => setPeople(e.target.value) }/>
+            {location == 0 && (
+                <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                  <option value="" selected disabled>Select</option>
+                  <option value={250}>(1 - 2 PAX) - P 250</option>
+                  <option value={150}>(3 or more) - P 150</option>
+                </select>
+            )}
+             {location == 1 && (
+                <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                  <option value="" selected disabled>Select</option>
+                  <option value={300}>(1 - 2 PAX) - P 300</option>
+                  <option value={180}>(3 or more) - P 180</option>
+                </select>
+            )}
+            {location == 2 && (
+                <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value) }/>
+            )}
         </div>
       </div>
       );
@@ -105,28 +121,6 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
       console.log('Error. No home service fee');
     }
   }
-
-  React.useEffect(() => {
-    if(location != 2) {
-        //within 2kms
-        if(location == 0 && people <= 2) {
-            setServiceFee(250 * people);
-        }
-        else if(location == 0 && people > 2) {
-            setServiceFee(150 * people);
-        }
-        //above 2kms
-        else if(location == 1 && people <= 2) {
-            setServiceFee(300 * people);
-        }
-        else if(location == 1 && people > 2) {
-            setServiceFee(180 * people);
-        }
-    }else {
-        //outside
-        setServiceFee(50 * km * people);
-    }
-  });
 
 
   React.useEffect(() => {
@@ -523,21 +517,6 @@ React.useEffect(() => {
                             {homeServiceFeeDisplay()}
                         </div>
                 </div>
-                    <div className="row">
-                        {location == 2 && (
-                            <div className="col-sm-4">
-                                <label for="result" className="radio-header">Kilometers</label><br/>
-                                <input type="number" name="km" value={km} onChange={(e) => setKm(e.target.value)}/>
-                            </div>
-                        )}
-                        {serviceFee != "" && (
-                        <div className="col-sm-8">
-                            <label for="result" className="radio-header">Total Service Fee</label><br/>
-                            <span>P {serviceFee}</span>
-                        </div>
-                        )}
-                    </div>
-
             <div className="row date-of-testing-container large-gap">
               <div className="col-sm-4">
                 <label for="date" className="form-label">

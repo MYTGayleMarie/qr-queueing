@@ -49,6 +49,7 @@ function ReportTransaction() {
       },
     })
       .then(function (response) {
+        console.log(response)
         response.data.bookings.map((booking, index) => {
           axios({
             method: 'post',

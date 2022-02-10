@@ -1,4 +1,6 @@
-import React, {Fragment} from 'react';
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+import { getToken, getUser } from '../../../utilities/Common';
 
 //css
 import './Reports.css';
@@ -10,7 +12,18 @@ import Navbar from '../../Navbar';
 import Table from '../../Table';
 import Card from '../../Card';
 
+//variables
 var amount = 100; 
+const userToken = getToken();
+const userId = getUser();
+var presentDate = new Date();
+var formattedPresentData = presentDate.toISOString().split('T')[0];
+
+const filteredData = {
+  from_date: "2022-01-06",
+  to_date: formattedPresentData,
+  done: false,
+};
 
 
 const patientData = [
@@ -28,6 +41,36 @@ const patientData = [
 ];
 
 function Reports() {
+    //STATES
+    const [bookings, setBookings] = useState([]);
+    const [services, setServices] = useState([]);
+    const [packages, setPackages] = useState([]);
+
+    //ALL BOOKINGS
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getAll',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
+            },
+          }).then(function (response) {
+              setBookings(response.data.bookings);
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
+
+    //COUNT FUNCTIONS
+    function countTransaction(data) {
+        return data.length; 
+    }
+
     return (
         <div>
         <div>
@@ -44,7 +87,7 @@ function Reports() {
             <div className="row">
                 <div className="col-sm-4">
                     <Card 
-                        data={amount}
+                        data={countTransaction(bookings)}
                         link={"/reports-transaction"}
                         title='Total number of Transactions'
                         color='maroon'
