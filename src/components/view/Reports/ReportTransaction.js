@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import axios from 'axios';
 import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
@@ -7,11 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 
+
+
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
+import PdfTransaction from './Pdf/PdfTransaction';
 
 const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
@@ -111,6 +114,7 @@ function ReportTransaction() {
       });
   }, [filteredData]);
 
+
   function filter() {}
 
   return (
@@ -118,12 +122,18 @@ function ReportTransaction() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
+
+        {/* <PdfTransaction/> */}
+
+
+
         <Searchbar title='TRANSACTION'/>
           <Header 
             type="thick" 
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
-            tableData={patientData} />
+            tableData={patientData}
+             />
           <Table
             clickable={false}
             type={'no-action'}
@@ -136,6 +146,8 @@ function ReportTransaction() {
             render={setRender}
             givenClass={"register-mobile"}
           />
+
+
           <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>

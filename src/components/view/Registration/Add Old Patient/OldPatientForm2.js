@@ -69,7 +69,7 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
 
-function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation}) {
+function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge}) {
     document.body.style = 'background: white;';
     window.scrollTo(0, 0);
      //functions
@@ -94,6 +94,15 @@ var totalPrice = 0;
 const asArray = Object.entries(service)
 const checkedServices = asArray.filter(([key,value]) => value == true);
 var checkedServicesDetails = [];
+var totalMDCharge = 0;
+
+if(mdCharge.physical_exam == true) {
+  totalMDCharge += 50.00;
+}
+
+if(mdCharge.medical_certificate == true) {
+  totalMDCharge += 50.00;
+}
 
 checkedServices.map((data, index) => {
     var categoryDetails = data[0].split("_");
@@ -221,7 +230,6 @@ checkedServices.map((data, index) => {
 checkedServicesDetails.map((data, index) => {
 
     if(index == 0) {
-        console.log("hereeee")
         newLabTotal = 0;
         newPackageTotal = 0;
         setLabPrice(0);
@@ -342,7 +350,6 @@ checkedServicesDetails.map((data, index) => {
                     ))}
                 </div>
 
-                <div className="row">
                     <div className="col d-flex justify-content-end">
                         {isCompany == false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT {
@@ -355,7 +362,18 @@ checkedServicesDetails.map((data, index) => {
                             }</b></span>
                         )}
                     </div>
-                </div>
+
+                {totalMDCharge != 0 && (
+                 <div className="col d-flex justify-content-end">
+                     <span className="total-price"><b>MEDICAL CHARGE P {parseFloat(totalMDCharge).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                 </div>
+                )}
+                    
+                {serviceFee != "" && (
+                 <div className="col d-flex justify-content-end">
+                     <span className="total-price"><b>SERVICE FEE P {parseFloat(serviceFee).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                 </div>
+                )}
                 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
@@ -366,32 +384,32 @@ checkedServicesDetails.map((data, index) => {
                 <div className="row">
                     {isCompany == false && isPackage == true && totalPrice != 0  && (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice - (packagePrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (packagePrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                       {isCompany == false && isService == true && totalPrice != 0  &&  (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice - (labPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - (labPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                     {isCompany == false && isService != true && totalPrice != 0 && isPackage != true &&  (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice - (totalPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - ((totalPrice) * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                     {isCompany == true && isPackage == true && totalPrice != 0  &&  (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice +  (packagePrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) +  (packagePrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                      {isCompany == true && isService == true && totalPrice != 0  &&  (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice +  (labPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  +  (labPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                      {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && (
                     <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {(totalPrice - discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                 </div>

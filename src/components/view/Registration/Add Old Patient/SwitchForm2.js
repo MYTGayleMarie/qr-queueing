@@ -28,7 +28,8 @@ const personalData = {
     lastmeal: "",
 }
 
-const serviceData = {}
+const serviceData = {};
+const mdData = {};
 
 const steps = [
     {id: "customer"},
@@ -41,6 +42,7 @@ function SwitchForm2() {
     const [customer, setPersonal] = useForm(personalData);
     const [lastMeal, setLastMeal] = useState(new Date());
     const [isCompany, setIsCompany] = useState(false);
+    const [dateOfTesting, setDOT] = useState(new Date());
 
     const [packagePrice, setPackagePrice] = useState("");
     const [labPrice, setLabPrice] = useState("");
@@ -49,6 +51,8 @@ function SwitchForm2() {
 
     const [isService, setIsService] = useState(false);
     const [isPackage, setIsPackage] = useState(false);
+    const [mdCharge, setMdCharge] = useForm(mdData);
+    const [serviceFee, setServiceFee] = useState("");
     
     const [service, setServices] = useForm(serviceData);
     const { step, navigation } = useStep({
@@ -56,8 +60,8 @@ function SwitchForm2() {
       initialStep: 0,
     });
 
-    const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation };
-    const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation };
+    const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, dateOfTesting, setDOT };
+    const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting };
 
     switch (step.id) {
         case "customer":

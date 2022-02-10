@@ -64,6 +64,8 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
+            setPayment(response.data.payment_type);
+            setResult(response.data.result);
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
@@ -122,7 +124,7 @@ function PrintBooking() {
                     requester: userId,
                 }
             }).then(function (booking) {
-                console.log(booking.data)
+                
                 setServices(booking.data);
             }).catch(function (error) {
                 console.log(error);
@@ -143,6 +145,7 @@ function PrintBooking() {
                             requester: userId,
                         }
                     }).then(function (response) {
+
                         response.data.map((packageCat, index) => {
                             var serviceDetails = {};
                             axios({

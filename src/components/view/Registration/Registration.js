@@ -32,6 +32,10 @@ function Registration() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
+
+  function getTime(date) {
+    return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  }
   
   React.useEffect(() => {
     patientData.length = 0;
@@ -67,7 +71,7 @@ function Registration() {
               bookingDetails.id = booking.id;
               bookingDetails.name =
                 customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-              bookingDetails.bookingTime = formatBookingTime.toDateString();
+              bookingDetails.bookingTime = formatBookingTime.toDateString() + "\n" + getTime(formatBookingTime);
               bookingDetails.serviceType = booking.type;
               bookingDetails.addedOn = formatAddedOn.toDateString();
               setPatientData(oldArray => [...oldArray, bookingDetails]);

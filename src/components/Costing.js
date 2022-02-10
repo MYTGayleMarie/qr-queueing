@@ -12,7 +12,7 @@ import cancelIcon from '../images/cancel.png';
 const userToken = getToken();
 const userId = getUser();
 
-function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, setGrandTotal, setDiscount, discount, toPay}) {
+function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, serviceFee, mdCharge, setGrandTotal, setDiscount, discount, toPay}) {
 
     var totalCost = 0;
     var labTotal = 0;
@@ -90,6 +90,32 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
                         <span className="amount">P {parseFloat(total).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                     </div>
                 </div>
+
+                {mdCharge != null && (
+                  <div className="row">
+                     <div className="col-sm-4">
+                         <span class="summary-total-label">MEDICAL CHARGE</span>
+                     </div>
+                     <div className="col-sm-4">
+                     </div>
+                     <div className="col-sm-4">
+                         <span className="amount">P {parseFloat(mdCharge).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
+                     </div>
+                  </div>
+                )}
+
+                {serviceFee != null && (
+                <div className="row">
+                    <div className="col-sm-4">
+                        <span class="summary-total-label">SERVICE FEE</span>
+                    </div>
+                    <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <span className="amount">P {parseFloat(serviceFee).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
+                    </div>
+                 </div>
+                )}
 
                 <div>{discount != '' && discountedPrice()}</div>
 

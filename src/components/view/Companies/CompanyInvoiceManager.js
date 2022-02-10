@@ -90,7 +90,6 @@ function CompanyInvoiceManager() {
     return <Navigate to={link} />;
   }
 
-
   function filter() {}
 
     return (

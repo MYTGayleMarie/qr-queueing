@@ -56,6 +56,8 @@ function AddPayment() {
     const [total, setTotal] = useState(0);
     const [grandTotal, setGrandTotal] = useState(0);
     const [pay, setPay] = useState(0);
+    const [serviceFee, setServiceFee] = useState(0);
+    const [mdCharge, setMdCharge] = useState(0);
     const [remarks, setRemarks] = useState("");
     const [discount, setDiscount] = useState(0);
     const {id} = useParams();
@@ -153,6 +155,8 @@ function AddPayment() {
             console.log(response)
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
+            setServiceFee(response.data.home_service_fee);
+            setMdCharge(response.data.md_charge);
             setDiscountCode(response.data.discount_code);
             setDiscount(response.data.discount);
             setBookingDate(response.data.booking_time);
@@ -841,6 +845,8 @@ function AddPayment() {
             total={total}
             setTotal={setTotal}
             grandTotal={grandTotal}
+            serviceFee={serviceFee}
+            mdCharge={mdCharge}
             setGrandTotal={setGrandTotal}
             setDiscount={setDiscount}
             discount={discount}
@@ -892,7 +898,7 @@ function AddPayment() {
                     <PaymentToPrint 
                         ref={componentRef} 
                         patientId = {patientId}
-                        name={firstName + " " + middleName + " " + lastName}
+                        name={lastName + ", " + firstName + " " + middleName}
                         birthdate={birthDate}
                         gender={gender}
                         age={age}

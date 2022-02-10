@@ -8,10 +8,13 @@ import axios from 'axios';
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
+//css
+import './OldPatientForm1.css';
+
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation  }) {
+function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, dateOfTesting, setDOT  }) {
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -28,6 +31,10 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     const [discountList, setDiscountList] = useState([]);
     const [companyId, setCompanyId] = useState("");
     const [companyRemarks, setCompanyRemarks] = useState("");
+
+    const [people, setPeople] = useState(0);
+    const [location, setLocation] = useState("");
+    const [km, setKm] = useState(0);
 
     axios({
         method: 'post',
@@ -56,12 +63,14 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
         console.log(error);
     });
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, dateOfTesting, lastmeal } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, lastmeal, homeServiceFee } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
         setActive(true);
     }
+
+    console.log(mdCharge)
 
     function proceed() {
         if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "") {
@@ -77,6 +86,59 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
             );
         } 
     }
+
+    function homeServiceFeeDisplay() {
+        if (
+          serviceLocation === "home service"
+        ) {
+          return (
+            <div className="row date-of-testing-container small-gap">
+            <div className="col">
+              <label for="result" className="radio-header">
+                HOME SERVICE FEE
+              </label>
+              <br />
+              <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
+                <option value="" selected disabled>Select</option>
+                <option value={0}>Within 2km or less</option>
+                <option value={1}>More than 2km</option>
+                <option value={2}>Outside Tacloban or Palo</option>
+              </select>
+            </div>
+            <div className="col">
+                <label for="result" className="radio-header">
+                    Number of People
+                </label>
+                <input type="number" name="people"  className="home-service-fee-select" value={people} onChange={(e) => setPeople(e.target.value) }/>
+            </div>
+          </div>
+          );
+        } else {
+          console.log('Error. No home service fee');
+        }
+      }
+    
+      React.useEffect(() => {
+        if(location != 2) {
+            //within 2kms
+            if(location == 0 && people <= 2) {
+                setServiceFee(250 * people);
+            }
+            else if(location == 0 && people > 2) {
+                setServiceFee(150 * people);
+            }
+            //above 2kms
+            else if(location == 1 && people <= 2) {
+                setServiceFee(300 * people);
+            }
+            else if(location == 1 && people > 2) {
+                setServiceFee(180 * people);
+            }
+        }else {
+            //outside
+            setServiceFee(50 * km * people);
+        }
+      });
 
     React.useEffect(() => {
         axios({
@@ -287,10 +349,44 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                          </div>
                      </div>
                  </div>
+                <div className="row small-gap">
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span className="radio-header">MD CHARGE</span><br />
+                                <div className="col">
+                                    <input type="checkbox" name="physical_exam" value="physical exam" checked={mdCharge.physical_exam == true} onChange={setMdCharge}/><label for="mdCharge" className="booking-label">Physical Exam</label>
+                                </div>
+                                <div className="col">
+                                    <input type="checkbox" name="medical_certificate" value="medical certificate" checked={mdCharge.medical_certificate == true} onChange={setMdCharge}/><label for="mdCharge" className="booking-label">Medical Certificate</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                            {homeServiceFeeDisplay()}
+                        </div>
+                </div>
+                    <div className="row">
+                        {location == 2 && (
+                            <div className="col-sm-4">
+                                <label for="result" className="radio-header">Kilometers</label><br/>
+                                <input type="number" name="km" value={km} onChange={(e) => setKm(e.target.value)}/>
+                            </div>
+                        )}
+                        {serviceFee != "" && (
+                        <div className="col-sm-8">
+                            <label for="result" className="radio-header">Total Service Fee</label><br/>
+                            <span>P {serviceFee}</span>
+                        </div>
+                        )}
+                    </div>
+
                  <div className="row date-of-testing-container large-gap">
                      <div className="col-sm-4">
                          <label for="date" className="form-label">DATE OF TESTING<i>(required)</i></label><br />
-                         <input type="date" id="date" name="dateOfTesting" className="schedule" value={dateOfTesting} onChange={setPersonal} required></input>
+                         <DateTimePicker
+                             onChange={setDOT}
+                             value={dateOfTesting}
+                         />
                      </div>
                      <div className="col-sm-4">
                          <label for="last_meal" className="form-label">LAST MEAL<i>(required)</i></label><br />
