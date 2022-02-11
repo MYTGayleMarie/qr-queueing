@@ -8,6 +8,10 @@ export const refreshPage = () => {
     window.location.reload();
 }
 
+export const getTime = (date) => {
+    return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  }
+
 
 /***************************
  * Local Storage Utilities

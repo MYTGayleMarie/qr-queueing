@@ -25,26 +25,13 @@ const filteredData = {
   done: false,
 };
 
-
-const patientData = [
-    {
-        bookId: '0199201',
-        patientName: 'Juan Dela Cruz',
-        bookingTime: 'November 11, 2021 4:00PM',
-    },
-    {
-        bookId: '0199201',
-        patientName: 'Juan Dela Cruz',
-        bookingTime: 'November 11, 2021 4:00PM',
-    },
-    
-];
-
 function Reports() {
     //STATES
     const [bookings, setBookings] = useState([]);
-    const [services, setServices] = useState([]);
-    const [packages, setPackages] = useState([]);
+    const [servicesPackages, setServicesPackages] = useState([]);
+    const [homeServices, setHomeServices] = useState([]);
+    const [clinicServices, setClinicServices] = useState([]);
+    const [pendingPOs, setPendingPOs] = useState([]);
 
     //ALL BOOKINGS
     React.useEffect(() => {
@@ -66,10 +53,83 @@ function Reports() {
           });
     },[]);
 
-    //COUNT FUNCTIONS
-    function countTransaction(data) {
-        return data.length; 
-    }
+    //ALL PACKAGES AND SERVICES
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'bookingdetails/getAll',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
+            },
+          }).then(function (response) {
+              setServicesPackages(response.data.booking_details);
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
+
+    //ALL HOME SERVICES
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getAllByType/home service',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+              setHomeServices(response.data.bookings);
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
+
+    //ALL CLINICAL SERVICES
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'bookings/getAllByType/clinic',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+              setClinicServices(response.data.bookings);
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
+
+    //ALL PENDING POS
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'pos/getAll',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
+              requester: userId,
+            },
+          }).then(function (response) {
+              var pending = response.data.pos.filter((info) => info.status == "pending");
+              setPendingPOs(pending);
+          }).then(function (error) {
+            console.log(error);
+          },[]);
+    },[]);
+
 
     return (
         <div>
@@ -87,7 +147,7 @@ function Reports() {
             <div className="row">
                 <div className="col-sm-4">
                     <Card 
-                        data={countTransaction(bookings)}
+                        data={bookings.length}
                         link={"/reports-transaction"}
                         title='Total number of Transactions'
                         color='maroon'
@@ -95,56 +155,54 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        data={amount}
-                        link={""}
+                        data={servicesPackages.length}
+                        link={"/reports-services-packages"}
                         title='Total number of Services and Packages'
                         color='maroon'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        data={amount}
-                        link={""}
+                        data={homeServices.length}
+                        link={"/reports-home-services"}
                         title='Total number of Home Services'
                         color='maroon'
                     />
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-4">
+                <div className="col-sm-6">
                     <Card 
-                        data={amount}
-                        link={""}
+                        data={clinicServices.length}
+                        link={"/reports-clinical-services"}
                         title='Total number of Clinical Tests'
                         color='blue'
                     />
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-6">
                     <Card 
-                        data={amount}
-                        link={""}
+                        data={pendingPOs.length}
+                        link={"/reports-pending-po"}
                         title='Total number of POs pending for approval'
                         color='blue'
                     />
                 </div>
-                <div className="col-sm-4">
+                {/* <div className="col-sm-4">
                     <Card 
                         data={amount}
                         link={""}
                         title='Item History'
                         color='blue'
                     />
-                </div>
+                </div> */}
             </div>
-            <div className="row">
+            {/* <div className="row">
                 <Table
                     type={'report'}
                     tableData={patientData}
                     headingColumns={['NAME OF TEST', 'CLINIC SERVICE', 'HOME SERVICE']}
                 />
-            </div>
-
-
+            </div> */}
             </Fragment>
         </div>
         </div>

@@ -6,15 +6,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
-
-
+import { getTime } from '../../../utilities/Common';
 
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
-import PdfTransaction from './Pdf/PdfTransaction';
 
 const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
@@ -49,7 +47,6 @@ function ReportTransaction() {
       },
     })
       .then(function (response) {
-        console.log(response)
         response.data.bookings.map((booking, index) => {
           axios({
             method: 'post',
@@ -65,8 +62,8 @@ function ReportTransaction() {
               var formatBookingTime = new Date(booking.booking_time);
               var bookingDetails = {};
               bookingDetails.id = booking.id;
-              bookingDetails.bookingTime = formatBookingTime.toDateString();
-              bookingDetails.serviceType = booking.type;
+              bookingDetails.booking_time = formatBookingTime.toDateString() + " " + getTime(formatBookingTime);
+              bookingDetails.type = booking.type;
 
               //tests
               var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
@@ -81,27 +78,16 @@ function ReportTransaction() {
               finalArray.map((test,index) => {
                 if(test.lab_test != null) {
                     if(finalArray.length - 1 != index){
-                        tests += test.lab_test + ", ";
+                        tests += test.lab_test + ",";
                     }else {
                         tests += test.lab_test;
                     }
                 }
               })
-            
-             
-            //   testInfo.map((test, index) => {
-            //     if(test.lab_test != null) {
-            //         if(testInfo.length - 1 != index){
-            //             tests += test.lab_test + ", ";
-            //         }else {
-            //             tests += test.lab_test;
-            //         }
-            //     }
-            //   });
 
               bookingDetails.tests = tests;
               bookingDetails.total = "P" + booking.total_amount;
-              bookingDetails.totalAmount = "P " + booking.grand_total;
+              bookingDetails.total_amount = "P " + booking.grand_total;
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
             .catch(function (error) {
@@ -115,7 +101,6 @@ function ReportTransaction() {
       });
   }, [filteredData]);
 
-
   function filter() {}
 
   return (
@@ -123,17 +108,14 @@ function ReportTransaction() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
-
-        {/* <PdfTransaction/> */}
-
-
-
         <Searchbar title='TRANSACTION'/>
           <Header 
             type="thick" 
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
+            tableName={'Transaction Report'}
             tableData={patientData}
+            tableHeaders={['BOOKING ID', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'AMOUNT', 'TOTAL AMOUNT']}
              />
           <Table
             clickable={false}

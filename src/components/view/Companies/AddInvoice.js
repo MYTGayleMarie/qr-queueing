@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage} from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom';
 
@@ -25,11 +25,11 @@ var info = [
   },
 ];
 
-function ReviewCompanyInvoices() {
+function AddInvoice() {
   document.body.style = 'background: white;';
 
   //Invoice details
-  const {id} = useParams();
+  const {id, discount} = useParams();
   const [redirect, setRedirect] = useState(false);
 
   //Company details
@@ -38,16 +38,11 @@ function ReviewCompanyInvoices() {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [contactPerson, setContactPerson] = useState("");
-  const [selectedCode, setSelectedCode] = useState("");
+  const [remarks, setRemarks] = useState("");
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
   const [toAddInvoice, setToAddInvoice] = useState(false);
-
-  //Add Invoice Modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   React.useEffect(() => {
     axios({
@@ -61,7 +56,7 @@ function ReviewCompanyInvoices() {
       }
     }).then(function (company) {
       console.log(company);
-
+      setRemarks(company.data.remarks);
       setName(company.data.name);
       setContactNo(company.data.contact_no);
       setEmail(company.data.company_email);
@@ -83,7 +78,7 @@ function ReviewCompanyInvoices() {
 
   if(toAddInvoice == true) {
     return (
-      <Navigate to ={"/add-invoice/" + id + "/" + selectedCode}/>
+      <Navigate to ={"/add-invoice/" + id}/>
     )
   }else if(toAddPayment == true) {
     return (
@@ -101,7 +96,7 @@ function ReviewCompanyInvoices() {
     <div>
       <Navbar/>
             <div className="active-cont">
-            <Header type="thick" title="COMPANY INVOICES" buttons={buttons} addInvoice={handleShow}/>
+            <Header type="thick" title="ADD INVOICE"/>
                 <ToastContainer/>
                 <h4 className="form-categories-header italic">COMPANY DETAILS</h4>
 
@@ -144,58 +139,53 @@ function ReviewCompanyInvoices() {
                             <div className='detail'>{contactPerson}</div>
                         </div>
                     </div>
-                </div>
 
-                <h4 className="form-categories-header italic">INVOICES</h4>
+                <h4 className="form-categories-header italic">DISCOUNT DETAILS</h4>
+                    <div className="row">
+                        <div className="col-sm-2">
+                            <div className='label'>DISCOUNT CODE</div>
+                        </div>
+                        <div className="col-sm-8">
+                            <div className='detail'>{address}</div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-2">
+                            <div className='label'>REMARKS</div>
+                        </div>
+                        <div className="col-sm-8">
+                            <div className='detail'>{remarks}</div>
+                        </div>
+                    </div>
+                </div>
 
                 <Table
                     clickable={true}
                     type={'companies-review'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
-                    // filteredData={filteredData}
-                    // setFilter={setFilter}
-                    // filter={filter}
+                    headingColumns={['DISCOUNT CODE', 'PRICE','QUANTITY', 'TOTAL']}
                     givenClass={'company-mobile'}
                 />
 
-                <div className="row d-flex justify-content-end">
-                  <button className="add-payment-btn" onClick={() => addPayment()}>ADD PAYMENT</button>
+                <div className="po-details">
+                    <div className='label'>PARTICULARS</div>
+                    <div className="row">
+                        <div className="col-sm-2">
+                            <div className='particulars'>DISCOUNT CODE</div>
+                        </div>
+                        <div className="col-sm-8">
+                            <div className='detail'>{address}</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="row d-flex justify-content-end">
-                  <button className="back-btn less-width" onClick={() => setRedirect(true)}>BACK</button>
+                  <button className="back-btn less-width">SAVE</button>
                 </div>
             </div>
-
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>ADD INVOICE</Modal.Title>
-              </Modal.Header>
-              <form>
-              <Modal.Body>
-                
-              <span>Choose Discount Code to add invoice:</span>
-              <select name="discountCode" className="invoice-select" value={selectedCode} onChange={(e) => setSelectedCode(e.target.value)}>
-                <option>Here</option>
-              </select>
-
-
-              </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button type="submit" variant="primary">
-                    Go
-                  </Button>
-                </Modal.Footer>
-              </form>
-            </Modal>
-
     </div>
   );
 }
 
-export default ReviewCompanyInvoices;
+export default AddInvoice;

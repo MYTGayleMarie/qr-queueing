@@ -33,15 +33,20 @@ import Suppliers from './components/View/Supply/Suppliers';
 import AddSupplier from './components/View/Supply/AddSupplier';
 import ViewSupplier from './components/View/Supply/ViewSupplier';
 import Reports from './components/View/Reports/Reports';
-import ViewerTest from './components/View/Reports/ViewerTest';
 import ReportTransaction from './components/View/Reports/ReportTransaction';
+import ReportServicesPackages from './components/View/Reports/ReportServicesPackages';
+import ReportHomeServices from './components/View/Reports/ReportHomeServices';
+import ReportClinicalServices from './components/View/Reports/ReportClinicalServices';
+import ReportPendingPO from './components/View/Reports/ReportPendingPO';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
 import CompanyInvoiceManager from './components/View/Companies/CompanyInvoiceManager';
 import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvoices';
+import AddInvoice from './components/View/Companies/AddInvoice';
 import AddCompany from './components/View/Companies/AddCompany';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
+import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
 
 function App() {
@@ -74,6 +79,7 @@ function App() {
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
         <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
+        <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
@@ -87,8 +93,11 @@ function App() {
         <Route path="/view-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
         <Route path="/reports-transaction" element={token ? <ReportTransaction /> : <Navigate to="/" />} />
+        <Route path="/reports-services-packages" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
+        <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
+        <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
+        <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
-        <Route path="/view" element={token ? <ViewerTest/> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );

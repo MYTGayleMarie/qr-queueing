@@ -505,8 +505,6 @@ function AddPayment() {
             }).then(function (response) {
                 var date = new Date();                
                 toast.success("Payment Successful!");
-                setPrint(true);
-                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -535,8 +533,6 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setPrint(true);
-                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -567,8 +563,6 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setPrint(true);
-                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -596,8 +590,6 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                setPrint(true);
-                // handlePrint();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -647,7 +639,7 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        {print == true || paymentStatus == "paid" && printButton()}
+                        {paymentStatus == "paid" && printButton()}
                         <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>                    
              </div>       
@@ -686,7 +678,7 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {print == true && printButton()}
+                {paymentStatus == "paid" && printButton()}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
 
@@ -728,7 +720,7 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {print == true && printButton()}
+                {paymentStatus == "paid" && printButton()}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
         </div>
@@ -768,7 +760,7 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        {print == true && printButton()}
+                        {paymentStatus == "paid" && printButton()}
                         <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>
              </div>       

@@ -52,7 +52,7 @@ function SwitchForm2() {
     const [isService, setIsService] = useState(false);
     const [isPackage, setIsPackage] = useState(false);
     const [mdCharge, setMdCharge] = useForm(mdData);
-    const [serviceFee, setServiceFee] = useState("");
+    const [serviceFee, setServiceFee] = useState(0);
     
     const [service, setServices] = useForm(serviceData);
     const { step, navigation } = useStep({

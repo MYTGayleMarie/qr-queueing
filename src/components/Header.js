@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PdfTransaction from './ReactToPDF';
 
 //css
 import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableData}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders}) {
 
     var btn = [];
 
@@ -17,7 +18,13 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
             }
             if(button === 'export-pdf') {
-                return <button className="download" onClick={downloadPDF}>EXPORT PDF</button>
+                return (
+                    <PdfTransaction
+                        name={tableName}
+                        header={tableHeaders}
+                        data={tableData}
+                    />
+                )
             }
     
             if (button.includes("add-")) {
