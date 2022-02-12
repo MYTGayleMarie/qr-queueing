@@ -39,6 +39,7 @@ function AddInvoice() {
   const [address, setAddress] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [remarks, setRemarks] = useState("");
+  const [discountInfo, setDiscountInfo] = useState("");
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -63,6 +64,22 @@ function AddInvoice() {
       setAddress(company.data.address);
       setContactPerson(company.data.contact_person);
 
+    }).then(function(error) {
+      console.log(error);
+    });
+
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/show/' + discount,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response.data);
+      setDiscountInfo(response.data);
     }).then(function(error) {
       console.log(error);
     });
@@ -146,7 +163,7 @@ function AddInvoice() {
                             <div className='label'>DISCOUNT CODE</div>
                         </div>
                         <div className="col-sm-8">
-                            <div className='detail'>{address}</div>
+                            <div className='detail'>{discountInfo.discount_code}</div>
                         </div>
                     </div>
                     <div className="row">
