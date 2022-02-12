@@ -16,14 +16,7 @@ import Table from '../../Table.js';
 const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
-var info = [
-  {
-    invoice_no: "INV-QR-01",
-    discount_code: "MYT-WELCOME-NY!",
-    price: "500.00",
-    total: "5,000"
-  },
-];
+var info = [];
 
 function AddInvoice() {
   document.body.style = 'background: white;';
@@ -40,6 +33,9 @@ function AddInvoice() {
   const [contactPerson, setContactPerson] = useState("");
   const [remarks, setRemarks] = useState("");
   const [discountInfo, setDiscountInfo] = useState("");
+
+  //Discount Details
+  const [discountDetails, setDiscountDetails] = useState("");
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -84,6 +80,23 @@ function AddInvoice() {
       console.log(error);
     });
   },[]);
+
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getByDiscountCode/' + discountInfo.discount_code.replace(/\s/g, ''),
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response);
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[discountInfo]);
 
   function addInvoice() {
     setToAddInvoice(true);
