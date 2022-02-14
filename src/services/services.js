@@ -336,7 +336,8 @@ const GlucoseTests = [
     name: 'Fasting Blood Sugar',
     categoryId: '5',
     labTestId: '24',
-    price: '125.00',
+    price: '107.50',
+    // price: '125.00',
     type: 'lab',
   },
   {
