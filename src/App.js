@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './components/FontAwesomeIcons';
 
 /** view */
+<<<<<<< HEAD
 import Login from './components/view/Login/Login';
 import Registration from './components/view/Registration/Registration';
 import PrintBooking from './components/view/Registration/PrintBooking';
@@ -46,6 +47,51 @@ import ReviewCompanyInvoices from './components/view/Companies/ReviewCompanyInvo
 import AddInvoice from './components/view/Companies/AddInvoice';
 import AddCompany from './components/view/Companies/AddCompany';
 import { PaymentToPrint } from './components/view/Cashier/PaymentToPrint';
+=======
+import Login from './components/View/Login/Login';
+import Registration from './components/View/Registration/Registration';
+import PrintBooking from './components/View/Registration/PrintBooking';
+import SwitchForm from './components/View/Registration/Add New Patient/SwitchForm';
+import SearchPatient from './components/View/Registration/Add Old Patient/SearchPatient';
+import SwitchForm2 from './components/View/Registration/Add Old Patient/SwitchForm2';
+import Cashier from './components/View/Cashier/Cashier';
+import AddPayment from './components/View/Cashier/AddPayment';
+import Extraction from './components/View/Extraction/Extraction';
+import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
+import Imaging from './components/View/Imaging/Imaging';
+import ImagingTests from './components/View/Imaging/ImagingTests';
+import ReleaseItems from './components/View/Supply/ReleaseItems';
+import ReviewReleasingItems from './components/View/Supply/ReviewReleasingItems';
+import AddItems from './components/View/Supply/AddItems';
+import PurchaseOrder from './components/View/Supply/PurchaseOrder';
+import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
+import ReviewPurchaseOrder from './components/View/Supply/ReviewPurchaseOrder';
+import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
+import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
+import Items from './components/View/Supply/Items';
+import MedTech from './components/View/MedTech/MedTech';
+import MedTechStart from './components/View/MedTech/MedTechStart';
+import AddSupplyItems from './components/View/Supply/AddSupplyItems';
+import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
+import Suppliers from './components/View/Supply/Suppliers';
+import AddSupplier from './components/View/Supply/AddSupplier';
+import ViewSupplier from './components/View/Supply/ViewSupplier';
+import Reports from './components/View/Reports/Reports';
+import ReportTransaction from './components/View/Reports/ReportTransaction';
+import ReportServicesPackages from './components/View/Reports/ReportServicesPackages';
+import ReportHomeServices from './components/View/Reports/ReportHomeServices';
+import ReportClinicalServices from './components/View/Reports/ReportClinicalServices';
+import ReportPendingPO from './components/View/Reports/ReportPendingPO';
+import Users from './components/View/Users/Users';
+import UserDetail from './components/View/Users/UserDetail';
+import Companies from './components/View/Companies/Companies';
+import CompanyInvoiceManager from './components/View/Companies/CompanyInvoiceManager';
+import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvoices';
+import AddInvoice from './components/View/Companies/AddInvoice';
+import AddInvoicePayment from './components/View/Companies/AddInvoicePayment';
+import AddCompany from './components/View/Companies/AddCompany';
+import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
+>>>>>>> a1f9b56f06c824386c8f06a5cc34fb14b78bc7fd
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
 
@@ -80,6 +126,7 @@ function App() {
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
         <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
+        <Route path="/add-invoice-payment/:id" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />

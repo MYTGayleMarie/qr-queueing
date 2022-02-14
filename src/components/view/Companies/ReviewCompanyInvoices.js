@@ -39,6 +39,7 @@ function ReviewCompanyInvoices() {
   const [address, setAddress] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [selectedCode, setSelectedCode] = useState("");
+  const [discountCodes, setDiscountCodes] = useState("");
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -72,6 +73,26 @@ function ReviewCompanyInvoices() {
       console.log(error);
     });
   },[]);
+
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/company/' + id,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      setDiscountCodes(response.data);
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[]);
+
+
+
 
   function addInvoice() {
     setToAddInvoice(true);
@@ -176,9 +197,14 @@ function ReviewCompanyInvoices() {
               <form>
               <Modal.Body>
                 
-              <span>Choose Discount Code to add invoice:</span>
+              <span>Choose discount code to add invoice:</span>
               <select name="discountCode" className="invoice-select" value={selectedCode} onChange={(e) => setSelectedCode(e.target.value)}>
-                <option>Here</option>
+                <option value="" disabled selected>Select</option>
+                {discountCodes != "" && discountCodes.map((data,index) => {
+                  return (
+                    <option value={data.id}>{data.discount_code}</option>
+                  )
+                })}
               </select>
 
 
@@ -187,7 +213,7 @@ function ReviewCompanyInvoices() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button type="submit" variant="primary">
+                  <Button type="submit" variant="primary" onClick={addInvoice}>
                     Go
                   </Button>
                 </Modal.Footer>

@@ -16,14 +16,7 @@ import Table from '../../Table.js';
 const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
-var info = [
-  {
-    invoice_no: "INV-QR-01",
-    discount_code: "MYT-WELCOME-NY!",
-    price: "500.00",
-    total: "5,000"
-  },
-];
+var info = [];
 
 function AddInvoice() {
   document.body.style = 'background: white;';
@@ -39,6 +32,10 @@ function AddInvoice() {
   const [address, setAddress] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [remarks, setRemarks] = useState("");
+  const [discountInfo, setDiscountInfo] = useState("");
+
+  //Discount Details
+  const [discountDetails, setDiscountDetails] = useState("");
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -66,7 +63,40 @@ function AddInvoice() {
     }).then(function(error) {
       console.log(error);
     });
+
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/show/' + discount,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response.data);
+      setDiscountInfo(response.data);
+    }).then(function(error) {
+      console.log(error);
+    });
   },[]);
+
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getByDiscountCode/' + discountInfo.discount_code.replace(/\s/g, ''),
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response);
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[discountInfo]);
 
   function addInvoice() {
     setToAddInvoice(true);
@@ -146,7 +176,7 @@ function AddInvoice() {
                             <div className='label'>DISCOUNT CODE</div>
                         </div>
                         <div className="col-sm-8">
-                            <div className='detail'>{address}</div>
+                            <div className='detail'>{discountInfo.discount_code}</div>
                         </div>
                     </div>
                     <div className="row">

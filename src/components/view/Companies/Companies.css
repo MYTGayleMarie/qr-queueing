@@ -22,3 +22,12 @@
 .invoice-select {
     margin-left: 3% !important;
 }
+
+.grand-total {
+    float:right;
+    padding-right: 6% !important;
+}
+
+.invoice-total {
+    color: #000000;
+}
