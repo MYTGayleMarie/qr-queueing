@@ -505,6 +505,7 @@ function AddPayment() {
             }).then(function (response) {
                 var date = new Date();                
                 toast.success("Payment Successful!");
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -533,6 +534,7 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -590,6 +592,7 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -598,12 +601,12 @@ function AddPayment() {
     }
 
     function printButton() {
-        return (
-            <button className="save-btn" onClick={handlePrint}>
-            <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
-                PRINT
-            </button>
-        ) 
+            return (
+                <button className="save-btn" onClick={handlePrint}>
+                <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+                    PRINT
+                </button>
+            )         
     }
 
     function cashForm() {
@@ -851,7 +854,11 @@ function AddPayment() {
                 <button className="add-tests-btn" onClick={handleShow}>ADD TESTS</button>
             </div>
         </div>
-
+        <div className="row">
+            <div className="col-sm-10 d-flex justify-content-end">
+                {paymentStatus == "paid" && printButton()}
+            </div>
+        </div>
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
 
