@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage} from "../../../utilities/Common";
+import { getTime, getToken, getUser, refreshPage} from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
@@ -31,7 +31,7 @@ function AddInvoice() {
   const {id, discount} = useParams();
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([invoice]);
-  const [particulars, setParticulars] = useState();
+  const [particulars, setParticulars] = useState([]);
   
 
   //Company details
@@ -109,6 +109,28 @@ function AddInvoice() {
       data.total = "P " + response.data.data.total.toLocaleString();
 
       setInfo([data]);
+   
+      var output = [];
+      var array = response.data.data.particulars;
+         array.forEach(function(item, index) {
+             var existing = output.filter(function(v, i) {
+                 var vDate = v.booking_time.split(" ");
+                 var iDate = item.booking_time.split(" ");
+          
+                 return vDate[0] == iDate[0];
+             });
+  
+             if (existing.length) {
+                 var existingIndex = output.indexOf(existing[0]);
+                 output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
+             } else {
+             if (typeof item.customer == 'string')
+                 item.customer = [item.customer];
+             output.push(item);
+             }
+         });
+  
+         setParticulars(output)
     }).then(function(error) {
       console.log(error);
     });
@@ -237,14 +259,30 @@ function AddInvoice() {
 
                 <div className="po-details">
                     <div className='label'>PARTICULARS</div>
-                    <div className="row">
-                        <div className="col-sm-2">
-                            <div className='particulars'>DISCOUNT CODE</div>
-                        </div>
-                        <div className="col-sm-8">
-                            <div className='detail'>{address}</div>
-                        </div>
-                    </div>
+                    {particulars.map((data,index) => {
+
+                      var date = new Date(data.booking_time);
+                      var formattedDate = date.toDateString().split(" ");
+
+                      return (
+                      <div className="row">
+                          <div className="col-sm-2">
+                              <div className='particulars'>{formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</div>
+                          </div>
+                          <div className="col-sm-8">
+                              <div className='detail'>
+                              {data.customer.map((customer, index) => {
+                                if(data.customer.length - 1 != index) {
+                                  return customer + ", "
+                                } else {
+                                  return customer 
+                                }
+
+                              })}</div>
+                          </div>
+                      </div>
+                      )
+                    })}
                 </div>
 
                 <div className="row d-flex justify-content-end">
