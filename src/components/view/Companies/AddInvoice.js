@@ -106,9 +106,9 @@ function AddInvoice() {
       console.log(response.data.data)
       var data = {};
       data.discount_code = discountInfo.discount_code;
-      data.price = "P " + response.data.data.price.toLocaleString();
+      data.price = "P " + response.data.data.price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
       data.quantity = response.data.data.quantity;
-      data.total = "P " + response.data.data.total.toLocaleString();
+      data.total = "P " + response.data.data.total.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
       setInfo([data]);
       setPrice(response.data.data.price);

@@ -17,21 +17,13 @@ const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
 
-var info = [
-  {
-    invoice_no: "INV-QR-01",
-    discount_code: "MYT-WELCOME-NY!",
-    price: "500.00",
-    total: "5,000"
-  },
-];
-
 function ReviewCompanyInvoices() {
   document.body.style = 'background: white;';
 
   //Invoice details
   const {id} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [info, setInfo] = useState([]);
 
   //Company details
   const [name, setName] = useState("");
@@ -68,7 +60,39 @@ function ReviewCompanyInvoices() {
       setContactNo(company.data.contact_no);
       setEmail(company.data.company_email);
       setAddress(company.data.address);
-      setContactPerson(company.data.contact_person);
+      setContactPerson(company.data.contact_person); 
+
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[]);
+
+  React.useEffect(() => {
+    info.length = 0;
+    axios({
+      method: 'post',
+      url: window.$link + 'company_invoices/getAllByCompany/' + id,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response.data.company_invoices);
+
+      response.data.company_invoices.map((data,index) => {
+        var price = parseFloat(data.price).toFixed(2);
+        var total = parseFloat(data.total).toFixed(2);
+        var info = {};
+        info.id = data.id;
+        info.code = data.discount_code;
+        info.price = "P " + price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        info.total = "P " + total.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+
+        setInfo(oldArray => [...oldArray, info]);
+        
+      });
 
     }).then(function(error) {
       console.log(error);
@@ -91,9 +115,6 @@ function ReviewCompanyInvoices() {
       console.log(error);
     });
   },[]);
-
-
-
 
   function addInvoice() {
     setToAddInvoice(true);

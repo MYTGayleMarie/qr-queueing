@@ -17,14 +17,6 @@ import Table from '../../Table.js';
 //variables
 const userToken = getToken();
 const userId = getUser();
-var info = [
-  {
-    invoice_no: "INV-QR-01",
-    discount_code: "MYT-WELCOME-NY!",
-    price: "500.00",
-    total: "5,000"
-  },
-];
 
 const CashPaymentDetails = {
     type: "",
@@ -58,6 +50,7 @@ function AddInvoicePayment() {
   //Invoice details
   const {id} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [info, setInfo] = useState([]);
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -150,6 +143,36 @@ function AddInvoicePayment() {
       }
     }).then(function (response) {
       setDiscountCodes(response.data);
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[]);
+
+  React.useEffect(() => {
+    info.length = 0;
+    axios({
+      method: 'post',
+      url: window.$link + 'company_invoices/getAllByCompany/' + id,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response.data.company_invoices);
+
+      response.data.company_invoices.map((data,index) => {
+        var info = {};
+        info.id = data.id;
+        info.code = data.discount_code;
+        info.price = "P " + data.price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        info.total = "P " + data.total.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+
+        setInfo(oldArray => [...oldArray, info]);
+        
+      });
+
     }).then(function(error) {
       console.log(error);
     });
