@@ -32,6 +32,8 @@ function AddInvoice() {
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([invoice]);
   const [particulars, setParticulars] = useState([]);
+  const [price, setPrice] = useState("");
+  const [total, setTotal] = useState("");
   
 
   //Company details
@@ -109,6 +111,8 @@ function AddInvoice() {
       data.total = "P " + response.data.data.total.toLocaleString();
 
       setInfo([data]);
+      setPrice(response.data.data.price);
+      setTotal(response.data.data.total);
    
       var output = [];
       var array = response.data.data.particulars;
@@ -147,37 +151,25 @@ function AddInvoice() {
           company_id: discountInfo.company_id,
           discount_id: discount, 
           discount_code: discountInfo.discount_code,
-          price: info[0].price,
+          price: price,
           qty: info[0].quantity,
-          total: info[0].total,
-          remarks: "",
-          particulars: "",
+          total: total,
           added_by: userId,
       }
     }).then(function (response) {
       console.log(response);
+      toast.success("Successfully added invoice!");
+        setTimeout(function() {
+          setRedirect(true);
+      }, 2000);
     }).then(function(error) {
       console.log(error);
     });
   }
 
-  function addPayment() {
-    setToAddPayment(true);
-  }
-
-  if(toAddInvoice == true) {
-    return (
-      <Navigate to ={"/add-invoice/" + id}/>
-    )
-  }else if(toAddPayment == true) {
-    return (
-      <Navigate to = {"/add-invoice-payment/" + id}/>
-    )
-  }
-
   if(redirect == true) {
       return (
-        <Navigate to = "/company-invoices"/>
+        <Navigate to = {"/review-invoice/" + id}/>
     )
   }
 
@@ -286,7 +278,7 @@ function AddInvoice() {
                 </div>
 
                 <div className="row d-flex justify-content-end">
-                  <button className="back-btn less-width">SAVE</button>
+                  <button className="back-btn less-width" onClick={() => addInvoice()}>SAVE</button>
                 </div>
             </div>
     </div>
