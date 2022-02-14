@@ -336,7 +336,8 @@ const GlucoseTests = [
     name: 'Fasting Blood Sugar',
     categoryId: '5',
     labTestId: '24',
-    price: '125.00',
+    price: '107.50',
+    // price: '125.00',
     type: 'lab',
   },
   {
@@ -387,7 +388,8 @@ const KidneyFunctionTests = [
     name: 'Creatinine',
     categoryId: '6',
     labTestId: '30',
-    price: '140.00',
+    price: '120.40',
+    // price: '140.00',
     type: 'lab',
   },
   {
@@ -403,7 +405,8 @@ const KidneyFunctionTests = [
     name: 'Blood Uric Acid',
     categoryId: '6',
     labTestId: '32',
-    price: '125.00',
+    price: '107.50',
+    // price: '125.00',
     type: 'lab',
   },
   {
@@ -446,7 +449,8 @@ const LipidProfile = [
     name: 'Total Cholesterol Only',
     categoryId: '7',
     labTestId: '37',
-    price: '190.00',
+    price: '163.40',
+    // price: '190.00',
     type: 'lab',
   },
   {
@@ -462,7 +466,8 @@ const LipidProfile = [
     name: 'Triglycerides Only',
     categoryId: '7',
     labTestId: '39',
-    price: '200.00',
+    price: '172.00',
+    // price: '200.00',
     type: 'lab',
   },
 ];
@@ -484,7 +489,8 @@ const LiverFunctionTests = [
     name: 'ALT/SGPT',
     categoryId: '9',
     labTestId: '41',
-    price: '180.00',
+    price: '154.80',
+    // price: '180.00',
     type: 'lab',
   },
   {
@@ -492,7 +498,8 @@ const LiverFunctionTests = [
     name: 'AST/SGOT',
     categoryId: '9',
     labTestId: '42',
-    price: '180.00',
+    price: '154.80',
+    // price: '180.00',
     type: 'lab',
   },
   {
