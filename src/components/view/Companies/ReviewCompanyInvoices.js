@@ -16,6 +16,7 @@ import Table from '../../Table.js';
 const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
+
 var info = [
   {
     invoice_no: "INV-QR-01",

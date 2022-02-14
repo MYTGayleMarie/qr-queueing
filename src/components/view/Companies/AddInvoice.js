@@ -16,7 +16,13 @@ import Table from '../../Table.js';
 const buttons = ['add-invoice'];
 const userToken = getToken();
 const userId = getUser();
-var info = [];
+
+var invoice = {
+  discount_code: "",
+  quantity: "",
+  price: "",
+  total: ""
+};
 
 function AddInvoice() {
   document.body.style = 'background: white;';
@@ -24,6 +30,9 @@ function AddInvoice() {
   //Invoice details
   const {id, discount} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [info, setInfo] = useState([invoice]);
+  const [particulars, setParticulars] = useState();
+  
 
   //Company details
   const [name, setName] = useState("");
@@ -92,14 +101,42 @@ function AddInvoice() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response);
+      console.log(response.data.data)
+      var data = {};
+      data.discount_code = discountInfo.discount_code;
+      data.price = "P " + response.data.data.price.toLocaleString();
+      data.quantity = response.data.data.quantity;
+      data.total = "P " + response.data.data.total.toLocaleString();
+
+      setInfo([data]);
     }).then(function(error) {
       console.log(error);
     });
   },[discountInfo]);
 
   function addInvoice() {
-    setToAddInvoice(true);
+    axios({
+      method: 'post',
+      url: window.$link + 'Company_invoices/create',
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          company_id: discountInfo.company_id,
+          discount_id: discount, 
+          discount_code: discountInfo.discount_code,
+          price: info[0].price,
+          qty: info[0].quantity,
+          total: info[0].total,
+          remarks: "",
+          particulars: "",
+          added_by: userId,
+      }
+    }).then(function (response) {
+      console.log(response);
+    }).then(function(error) {
+      console.log(error);
+    });
   }
 
   function addPayment() {

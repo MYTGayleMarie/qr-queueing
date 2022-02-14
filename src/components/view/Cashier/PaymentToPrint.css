@@ -83,8 +83,12 @@
     height: 47px;
     border-bottom: 1px solid black;
     margin-top: -12%;
-    }
+}
 
+.encoded-on {
+    font-size: 10px;
+    margin-left: -1% !important;
+}
 
 
 

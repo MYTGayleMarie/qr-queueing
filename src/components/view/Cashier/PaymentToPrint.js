@@ -24,10 +24,12 @@ export class PaymentToPrint extends React.PureComponent {
         console.log(this.props.queue);
         const bookDate = new Date(this.props.bookingDate);
         const birthDate = new Date(this.props.birthdate);
+        const encodedDate = new Date(this.props.encodedOn);
 
         var formattedBookDate = bookDate.toDateString().split(' ');
         var formattedBirthDate = birthDate.toDateString().split(' ');
-
+        var formattedEncodedDate = encodedDate.toDateString().split(' ');
+        console.log(formattedEncodedDate);
 
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
 
@@ -89,7 +91,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span></td>
+                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
                         </tr>
                     </table>
                     </div>
@@ -118,6 +120,9 @@ export class PaymentToPrint extends React.PureComponent {
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
+                    </div>
+                    <div className='row'>
+                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
                     </div>
                 </div>
                 <div className="print-column">
@@ -145,7 +150,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span></td>
+                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
                         </tr>
                     </table>
                     </div>
@@ -174,6 +179,9 @@ export class PaymentToPrint extends React.PureComponent {
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
+                    </div>
+                    <div className='row'>
+                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
                     </div>
                 </div>
             </div>
@@ -204,7 +212,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span></td>
+                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
                         </tr>
                     </table>
                     </div>
@@ -233,6 +241,9 @@ export class PaymentToPrint extends React.PureComponent {
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
+                    </div>
+                    <div className='row'>
+                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
                     </div>
                 </div>
                 <div className="print-column">
@@ -260,7 +271,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </tr>
                         <tr>
                             <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span></td>
+                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
                         </tr>
                     </table>
                     </div>
@@ -289,6 +300,9 @@ export class PaymentToPrint extends React.PureComponent {
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
+                    </div>
+                    <div className='row'>
+                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
                     </div>
                 </div>
             </div>

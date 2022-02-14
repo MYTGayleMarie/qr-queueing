@@ -75,7 +75,7 @@ function AddPayment() {
     const [seniorPwdId, setID] = useState("");
     const [patientId, setPatientId] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
-
+    const [referral, setReferral] = useState("");
 
     //services
     const [services, setServices] = useState([]);
@@ -84,6 +84,7 @@ function AddPayment() {
     const [printServices, setPrintServices] = useState([]);
     const [queue, setQueue] = useState([]);
     const [queueNumber, setQueueNumber] = useState("");
+    const [encodedOn, setEncodedOn] = useState("");
 
     //check states
     const [checkNo, setCheckNo] = useState("");
@@ -162,6 +163,8 @@ function AddPayment() {
             setDiscountCode(response.data.discount_code);
             setDiscount(response.data.discount);
             setBookingDate(response.data.booking_time);
+            setEncodedOn(response.data.added_on);
+            setReferral(response.data.doctors_referal);
             setResult(response.data.result);
             totalAmount = response.data.total_amount;
             discount = response.data.discount;
@@ -681,7 +684,7 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {paymentStatus == "paid" && printButton()}
+                {paymentStatus = "paid" && printButton()}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
 
@@ -848,17 +851,19 @@ function AddPayment() {
             setDiscount={setDiscount}
             discount={discount}
          />
-
+         {paymentStatus != "paid" && (
         <div className="row">
             <div className="col-sm-9 d-flex justify-content-end">
                 <button className="add-tests-btn" onClick={handleShow}>ADD TESTS</button>
             </div>
         </div>
+         )}
         <div className="row">
-            <div className="col-sm-10 d-flex justify-content-end">
-                {paymentStatus == "paid" && printButton()}
+            <div className="col-sm-12 d-flex justify-content-end">
+                {paymentStatus != "paid" && printButton()}
             </div>
         </div>
+        {paymentStatus != "paid" && (
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
 
@@ -889,29 +894,7 @@ function AddPayment() {
                         <p>{payment === 'card' && cardForm()}</p>
                         <p>{payment === 'others' && othersForm()}</p>
                     {/* </form> */}
-
-                    <ToastContainer hideProgressBar={true}/>
-
-                
-                    <div
-                    style={{ display: "none" }}// This make ComponentToPrint show   only while printing
-                    > 
-                    <PaymentToPrint 
-                        ref={componentRef} 
-                        patientId = {patientId}
-                        name={lastName + ", " + firstName + " " + middleName}
-                        birthdate={birthDate}
-                        gender={gender}
-                        age={age}
-                        contact={contactNo + " " + email}
-                        address={address}
-                        bookingDate={bookingDate}
-                        payment={payment}
-                        result={result}
-                        services={printServices}
-                        queue={queueNumber}
-                    />
-                    </div>
+                    <ToastContainer hideProgressBar={true}/>            
 
                 <Modal show={showRemove} onHide={handleRemoveClose}>
                     <Modal.Header closeButton>
@@ -961,7 +944,29 @@ function AddPayment() {
                 </Modal>
                     
                 </div>
+            )}
 
+                    <div
+                    style={{ display: "none" }}// This make ComponentToPrint show   only while printing
+                    > 
+                    <PaymentToPrint 
+                        ref={componentRef} 
+                        patientId = {patientId}
+                        name={lastName + ", " + firstName + " " + middleName}
+                        birthdate={birthDate}
+                        gender={gender}
+                        age={age}
+                        contact={contactNo + " " + email}
+                        address={address}
+                        bookingDate={bookingDate}
+                        payment={payment}
+                        result={result}
+                        services={printServices}
+                        queue={queueNumber}
+                        encodedOn={encodedOn}
+                        referral={referral}
+                    />
+                    </div>
 
 
             </div>
