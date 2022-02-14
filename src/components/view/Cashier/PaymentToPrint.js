@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import { withRouter } from "react-router";
 import axios from 'axios';
+import { getTime } from '../../../utilities/Common';
 
 import './PaymentToPrint.css';
 
@@ -76,8 +77,8 @@ export class PaymentToPrint extends React.PureComponent {
                             <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                         </tr>
                         <tr>
-                        <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3]}</span> </td>
+                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                         </tr>
                         <tr>
                             <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
@@ -132,8 +133,8 @@ export class PaymentToPrint extends React.PureComponent {
                             <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                         </tr>
                         <tr>
-                        <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3]}</span> </td>
+                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                         </tr>
                         <tr>
                             <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
@@ -191,8 +192,8 @@ export class PaymentToPrint extends React.PureComponent {
                             <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                         </tr>
                         <tr>
-                        <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3]}</span> </td>
+                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                         </tr>
                         <tr>
                             <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
@@ -247,8 +248,8 @@ export class PaymentToPrint extends React.PureComponent {
                             <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
                         </tr>
                         <tr>
-                        <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3]}</span> </td>
+                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
+                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                         </tr>
                         <tr>
                             <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>

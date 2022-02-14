@@ -84,7 +84,7 @@ function AddInvoice() {
   React.useEffect(() => {
     axios({
       method: 'post',
-      url: window.$link + 'bookings/getByDiscountCode/' + discountInfo.discount_code.replace(/\s/g, ''),
+      url: window.$link + 'bookings/getByDiscountCode/' + discountInfo.discount_code,
       withCredentials: false, 
       params: {
           api_key: window.$api_key,
