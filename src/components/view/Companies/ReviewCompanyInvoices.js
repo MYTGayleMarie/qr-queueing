@@ -79,13 +79,19 @@ function ReviewCompanyInvoices() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response.data.company_invoices);
+      console.log(response);
 
-      response.data.company_invoices.map((data,index) => {
+      response.data.data.company_invoices.map((data,index) => {
         var price = parseFloat(data.price).toFixed(2);
         var total = parseFloat(data.total).toFixed(2);
         var info = {};
         info.id = data.id;
+        
+        if(data.is_paid == 1) {
+          info.status = "PAID";
+        } else {
+          info.status = "PENDING";
+        }
         info.code = data.discount_code;
         info.price = "P " + price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         info.total = "P " + total.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -196,17 +202,18 @@ function ReviewCompanyInvoices() {
                     type={'companies-review'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
+                    headingColumns={['INVOICE NO.', 'PAYMENT STATUS', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
                     // filteredData={filteredData}
                     // setFilter={setFilter}
                     // filter={filter}
                     givenClass={'company-mobile'}
                 />
 
+                {info.filter((info) => info.status != "PAID").length != 0 && (
                 <div className="row d-flex justify-content-end">
-                  <button className="add-payment-btn" onClick={() => addPayment()}>ADD PAYMENT</button>
-                </div>
-
+                   <button className="add-payment-btn" onClick={() => addPayment()}>ADD PAYMENT</button>
+                 </div>
+                )}
                 <div className="row d-flex justify-content-end">
                   <button className="back-btn less-width" onClick={() => setRedirect(true)}>BACK</button>
                 </div>

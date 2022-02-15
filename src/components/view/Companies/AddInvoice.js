@@ -106,9 +106,9 @@ function AddInvoice() {
       console.log(response.data.data)
       var data = {};
       data.discount_code = discountInfo.discount_code;
-      data.price = "P " + response.data.data.price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      data.price = response.data.data.price;
       data.quantity = response.data.data.quantity;
-      data.total = "P " + response.data.data.total.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      data.total = response.data.data.total;
 
       setInfo([data]);
       setPrice(response.data.data.price);
@@ -172,6 +172,8 @@ function AddInvoice() {
         <Navigate to = {"/review-invoice/" + id}/>
     )
   }
+
+  console.log(info)
 
   return (
     <div>
@@ -240,17 +242,27 @@ function AddInvoice() {
                     </div>
                 </div>
 
+                {info[0].discount_code != '' && (
                 <Table
                     clickable={true}
-                    type={'companies-review'}
+                    type={'add-invoice'}
                     tableData={info}
                     rowsPerPage={4}
                     headingColumns={['DISCOUNT CODE', 'PRICE','QUANTITY', 'TOTAL']}
                     givenClass={'company-mobile'}
                 />
+                )}
+
+                {info[0].discount_code == '' && (
+                  <div className="row d-flex justify-content-center info">
+                       NO COMPANY DISCOUNT BOOKINGS FOR THIS INVOICE
+                  </div>
+                )}
 
                 <div className="po-details">
-                    <div className='label'>PARTICULARS</div>
+                    {particulars.length != 0 && (
+                        <div className='label'>PARTICULARS</div>
+                    )}
                     {particulars.map((data,index) => {
 
                       var date = new Date(data.booking_time);
@@ -276,10 +288,12 @@ function AddInvoice() {
                       )
                     })}
                 </div>
-
+                
+                {info[0].discount_code != '' && (
                 <div className="row d-flex justify-content-end">
                   <button className="back-btn less-width" onClick={() => addInvoice()}>SAVE</button>
                 </div>
+                )}
             </div>
     </div>
   );
