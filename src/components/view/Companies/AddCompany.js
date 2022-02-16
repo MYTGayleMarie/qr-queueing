@@ -75,7 +75,7 @@ function submit(e, company, discount) {
                 params: {
                     token: userToken.replace(/['"]+/g, ''),
                     api_key: window.$api_key, 
-                    description: company.name + "Discount",
+                    description: discount.remarks,
                     discount_code: discount.discount_code,
                     discount_percentage: discount.discount_percentage,
                     company_id: response.data.data.company_id,

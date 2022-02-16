@@ -753,6 +753,14 @@ const Xray = [
     type: 'lab',
   },
   {
+    key: 'Apicolordotic_18',
+    name: 'Apicolordotic View',
+    categoryId: '18',
+    labTestId: '124',
+    price: '220.00',
+    type: 'lab',
+  },
+  {
     key: 'ChestPA_18',
     name: 'Chest PA',
     categoryId: '18',
@@ -873,6 +881,14 @@ const Xray = [
     type: 'lab',
   },
   {
+    key: 'MandibleAPO_18',
+    name: 'Mandible APO (One side)',
+    categoryId: '18',
+    labTestId: '125',
+    price: '450.00',
+    type: 'lab',
+  },
+  {
     key: 'MastoidSeries_18',
     name: 'Mastoid Series',
     categoryId: '18',
@@ -882,10 +898,10 @@ const Xray = [
   },
   {
     key: 'ParanasalSinusesComplete_18',
-    name: 'ParanasalSinusesComplete',
+    name: 'Paranasal Sinuses Complete',
     categoryId: '18',
     labTestId: '86',
-    price: '450.00',
+    price: '800.00',
     type: 'lab',
   },
   {
@@ -917,7 +933,7 @@ const Xray = [
     name: 'Skull APL',
     categoryId: '18',
     labTestId: '90',
-    price: '530.00',
+    price: '550.00',
     type: 'lab',
   },
   {

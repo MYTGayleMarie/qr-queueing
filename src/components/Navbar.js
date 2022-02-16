@@ -156,6 +156,9 @@ function adminNavbar(showNavbar,setshowNavbar) {
               <Link to="/companies" className="sub-link">
                 <li class="sub-list">COMPANY MANAGER</li>
               </Link>
+              <Link to="/company-discounts" className="sub-link">
+                <li class="sub-list">COMPANY DISCOUNT</li>
+              </Link>
               <Link to="/company-invoices" className="sub-link">
                 <li class="sub-list">COMPANY INVOICE</li>
               </Link>
@@ -197,7 +200,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
   );
 }
 
-function reportsSideNav() {
+function supplySideNav() {
   return (
     <div className='reports-show-nav'>
           <Link to="/release-item">
@@ -216,6 +219,23 @@ function reportsSideNav() {
   );
 }
 
+function companySideNav() {
+  return (
+    <div className='reports-show-nav'>
+        <Link to="/companies">
+          <span class="mx-2">COMPANY MANAGER</span>
+        </Link>
+        <Link to="/company-discounts">
+          <span class="mx-2">COMPANY DISCOUNT</span>
+        </Link>
+        <Link to="/company-invoices">
+          <span class="mx-2">COMPANY INVOICE</span>
+        </Link>
+    </div>
+  );
+}
+
+
 function caretDown() {
   return ( <FontAwesomeIcon icon={"caret-down"} alt={"caret-down"} aria-hidden="true" className="caret-icon"/>)
 }
@@ -224,7 +244,7 @@ function caretUp() {
   return ( <FontAwesomeIcon icon={"caret-up"} alt={"caret-up"} aria-hidden="true" className="caret-icon"/>)
 }
 
-function CashierNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+function CashierNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
 
   return (
   <div class="navbar">
@@ -258,7 +278,7 @@ function CashierNavbarTop(showNavbar, showMobileNavBar, showReport, setShowRepor
 }
 
 
-function RegisterNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
 
   return (
   <div class="navbar">
@@ -292,7 +312,7 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showReport, setShowRepo
 }
 
 
-function AdminNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport) {
+function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply, showCompany, setShowCompany) {
 
   return (
   <div class="navbar">
@@ -332,23 +352,30 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showReport, setShowReport)
             <img src={usersIcon} alt={'users'} class="medTech icon mobile-size-icon"></img>
             <span class="mx-1">Users</span>
         </NavLink>
-        <NavLink to="/companies" activeClassName="active" class="link">
-            <img src={companiesIcon} alt={'companies'} class="medTech icon mobile-size-icon"></img>
+        <div class="side-nav-content">
+          <div className='reports-show-nav' onClick={(e) => setShowCompany(!showCompany)}>
+            <img src={companiesIcon} alt={'supply'} class="supply icon mobile-size-icon"></img>
             <span class="mx-2">Companies</span>
-        </NavLink>
+            <span>
+              {showCompany == true && caretUp()}
+              {showCompany == false && caretDown()}
+            </span>
+            {showCompany == true && companySideNav()}
+          </div>         
+        </div>
         <NavLink to="/reports" activeClassName="active" class="link">
             <img src={reportIcon} alt={'report'} class="report icon mobile-size-icon"></img>
             <span class="mx-2">Reports</span>
         </NavLink>
         <div class="side-nav-content">
-          <div className='reports-show-nav' onClick={(e) => setShowReport(!showReport)}>
+          <div className='reports-show-nav' onClick={(e) => setShowSupply(!showSupply)}>
             <img src={supplyIcon} alt={'supply'} class="supply icon mobile-size-icon"></img>
             <span class="mx-2">Reports</span>
             <span>
-              {showReport == true && caretUp()}
-              {showReport == false && caretDown()}
+              {showSupply == true && caretUp()}
+              {showSupply == false && caretDown()}
             </span>
-            {showReport == true && reportsSideNav()}
+            {showSupply == true && supplySideNav()}
           </div>         
         </div>
 
@@ -367,7 +394,8 @@ function Navbar() {
   const [showNavbar, setshowNavbar] = useState(false);
   const [showMobileSideBar, setShowMobileSideBar] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
-  const [showReport, setShowReport] = useState(false);
+  const [showSupply, setShowSupply] = useState(false);
+  const [showCompany, setShowCompany] = useState(false);
 
   const handleWindowSizeChange = () => {
           setWidth(window.innerWidth);
@@ -411,9 +439,9 @@ function Navbar() {
   return (
     <div>
 
-      {showNavbar == false && (user == 5 || user == 8)  && CashierNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
-      {showNavbar == false && (user == 4 || user == 9)  && RegisterNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
-      {showNavbar == false && user != 4 && user != 5 && user != 8 && user != 9 && AdminNavbarTop(showNavbar,showMobileNavBar,showReport, setShowReport)}
+      {showNavbar == false && (user == 5 || user == 8)  && CashierNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
+      {showNavbar == false && (user == 4 || user == 9)  && RegisterNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
+      {showNavbar == false && user != 4 && user != 5 && user != 8 && user != 9 && AdminNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
       
       {showNavbar == true && (user == 5 || user == 8) && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && (user == 4 || user == 9) && registrationNavbar(showNavbar,setshowNavbar)}

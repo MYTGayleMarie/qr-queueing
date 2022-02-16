@@ -42,6 +42,7 @@ import ReportSales from './components/View/Reports/ReportSales';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
+import CompanyDiscounts from './components/View/Companies/CompanyDiscounts';
 import CompanyInvoiceManager from './components/View/Companies/CompanyInvoiceManager';
 import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvoices';
 import AddInvoice from './components/View/Companies/AddInvoice';
@@ -60,6 +61,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/registration" element={token ? <Registration /> : <Navigate to="/" />} />
         <Route path="/print-booking/:id" element={token ? <PrintBooking /> : <Navigate to="/" />} />
         <Route path="/add-new-patient" element={token ? <SwitchForm /> : <Navigate to="/" />} />
@@ -79,6 +81,7 @@ function App() {
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
         <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />
+        <Route path="/company-discounts" element={token ? <CompanyDiscounts /> : <Navigate to="/" />} />
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/add-discount/:id" element={token ? <AddDiscount /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />

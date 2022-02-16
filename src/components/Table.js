@@ -107,8 +107,15 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if(type === 'companies') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val}>{index == 0 ? "" : data.val}</td>
+            )}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD DISCOUNT</button></td>
+            </tr>
+        }
+        else if(type === 'companies-discount') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={index == 0 ? "company_name" : data.val}>{data.val}</td>)}
             </tr>
         }
         else {
@@ -169,7 +176,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         );
 
     }
-    else if(type === 'companies' ) {
+    else if(type === 'companies' || type === 'company-invoices') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -192,7 +199,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         );
 
     }
-    else if(type === 'company-invoices') {
+    else if(type === 'companies-discount') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -202,7 +209,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index} className={index == 1 ? "company_name" : ""}>{col}</th>
+                                <th key={index} className={index == 0 ? "company_name" : ""}>{col}</th>
                             ))}
                         </tr>
                     </thead>

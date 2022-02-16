@@ -18,34 +18,26 @@ import Table from '../../Table.js';
 const buttons = ['add-company'];
 const userToken = getToken();
 const userId = getUser();
-var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
-
 
 const filterData = {
     from_date: formattedPresentData,
     to_date: formattedPresentData,
     done: false,
   };
-  
-var companyData = [];
-var patientData = [];
 
-function Companies() {
+function CompanyDiscounts() {
 
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
-  const [finalCompanyData, setFinalCompanyData] = useState([]);
-
-  //Redirect
-  const [redirect, setRedirect] = useState(false);
+  const [discount, setDiscount] = useState([]);
   
   React.useEffect(() => {
-    finalCompanyData.length = 0;
+    discount.length = 0;
     axios({
         method: 'post',
-        url: window.$link + 'companies/getAll',
+        url: window.$link + 'discounts/getAll',
         withCredentials: false, 
         params: {
             api_key: window.$api_key,
@@ -53,24 +45,32 @@ function Companies() {
             requester: userId,
         }
     }).then(function (response) {
-        console.log(response.data.companys);
+        console.log(response.data.discounts);
 
-        response.data.companys.map((data,index) => {
-            var info = {};
-            var contact = data.contact_no.split("/");
-            var contact_company = contact[0].split(":");
-            var contact_person = contact[1].split(":");
+        response.data.discounts.map((data,index) => {
+            if(data.company_id != null) {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'companies/show/' + data.company_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (company) {
+                    console.log(company.data);
+                    var info = {};
+                    info.name = company.data.name;
+                    info.code = data.discount_code;
+                    info.discount = data.percentage;
+                    info.description = data.description;
 
-            info.id = data.id;
-            info.company_name = data.name;
-            info.address = data.address;
-            info.email = data.company_email == "" ? "Unspecified" : data.company_email;
-            info.contact_number = contact_company[1] == "" ? "Unspecified" : contact_company[1] ;
-            info.point_person = data.contact_person;
-            info.point_contact_no = contact_person[1];
-
-            setFinalCompanyData(oldArray => [...oldArray, info]);
-
+                    setDiscount(oldArray => [...oldArray, info]);
+                }).then (function (error) {
+    
+                });
+            }
         });
     }).then(function (error) {
         console.log(error);
@@ -79,35 +79,22 @@ function Companies() {
 
   function filter() {}
 
-  function addDiscount(companyId) {
-    id = companyId;
-    setRedirect(true);
-  }
-
-    if(redirect == true) {
-        var link =  "/add-discount/" + id;
-        return (
-            <Navigate to ={link}/>
-        )
-    }
-
     return (
         <div>
             <div>
             <Navbar />
             <div className="active-cont">
                 <Fragment>
-                <Header type="thick" title="COMPANY MANAGER" buttons={buttons}/>
+                <Header type="thick" title="DISCOUNT MANAGER"/>
                 <Table
-                    type={'companies'}
-                    tableData={finalCompanyData}
+                    type={'companies-discount'}
+                    tableData={discount}
                     rowsPerPage={10}
-                    headingColumns={['', 'COMPANY NAME', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'POINT PERSON', 'POINT PERSON CONTACT NUMBER', 'ACTION']}
+                    headingColumns={['COMPANY', 'DISCOUNT CODE', 'DISCOUNT', 'DESCRIPTION']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
                     render={setRender}
-                    link={addDiscount}
                     givenClass={'company-mobile'}
                 />
                 <ToastContainer hideProgressBar={true} />
@@ -118,4 +105,4 @@ function Companies() {
     )
 }
 
-export default Companies
+export default CompanyDiscounts
