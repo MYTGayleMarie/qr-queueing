@@ -18,6 +18,7 @@ import Table from '../../Table.js';
 const buttons = ['add-company'];
 const userToken = getToken();
 const userId = getUser();
+var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -36,11 +37,15 @@ function Companies() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [finalCompanyData, setFinalCompanyData] = useState([]);
+
+  //Redirect
+  const [redirect, setRedirect] = useState(false);
   
   React.useEffect(() => {
+    finalCompanyData.length = 0;
     axios({
         method: 'post',
-        url: window.$link + 'discounts/getAll',
+        url: window.$link + 'companies/getAll',
         withCredentials: false, 
         params: {
             api_key: window.$api_key,
@@ -48,38 +53,43 @@ function Companies() {
             requester: userId,
         }
     }).then(function (response) {
-        console.log(response);
-        response.data.discounts.map((row, index) => {
-            var companyDetails = {};
-            axios({
-                method: 'post',
-                url: window.$link + 'companies/show/' + row.company_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (company) {
-                console.log(company);
+        console.log(response.data.companys);
 
-                companyDetails.description = company.data.name;
-                companyDetails.discountCode = row.discount_code;
-                companyDetails.percentage = row.percentage;
-                companyDetails.remarks = company.data.remarks;
+        response.data.companys.map((data,index) => {
+            var info = {};
+            var contact = data.contact_no.split("/");
+            var contact_company = contact[0].split(":");
+            var contact_person = contact[1].split(":");
 
-                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            info.id = data.id;
+            info.company_name = data.name;
+            info.address = data.address;
+            info.email = data.company_email == "" ? "Unspecified" : data.company_email;
+            info.contact_number = contact_company[1] == "" ? "Unspecified" : contact_company[1] ;
+            info.point_person = data.contact_person;
+            info.point_contact_no = contact_person[1];
 
-            }).catch(function (error) {
-                console.log(error);
-            });
+            setFinalCompanyData(oldArray => [...oldArray, info]);
+
         });
-    }).catch(function (error) {
+    }).then(function (error) {
         console.log(error);
-    });
+    })
   }, []);
 
   function filter() {}
+
+  function addDiscount(companyId) {
+    id = companyId;
+    setRedirect(true);
+  }
+
+    if(redirect == true) {
+        var link =  "/add-discount/" + id;
+        return (
+            <Navigate to ={link}/>
+        )
+    }
 
     return (
         <div>
@@ -87,17 +97,17 @@ function Companies() {
             <Navbar />
             <div className="active-cont">
                 <Fragment>
-                <Header type="thick" title="COMPANIES MANAGER" buttons={buttons} tableData={patientData} />
+                <Header type="thick" title="COMPANY MANAGER" buttons={buttons}/>
                 <Table
-                    clickable={false}
                     type={'companies'}
                     tableData={finalCompanyData}
-                    rowsPerPage={4}
-                    headingColumns={['COMPANY NAME', 'DISCOUNT CODE', 'DISCOUNT', 'REMARKS']}
+                    rowsPerPage={10}
+                    headingColumns={['ID', 'COMPANY NAME', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'POINT PERSON', 'POINT PERSON CONTACT NUMBER', 'ACTION']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
                     render={setRender}
+                    link={addDiscount}
                     givenClass={'company-mobile'}
                 />
                 <ToastContainer hideProgressBar={true} />

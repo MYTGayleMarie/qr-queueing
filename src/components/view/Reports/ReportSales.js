@@ -29,11 +29,12 @@ const filterData = {
 function ReportSales() {
 
   const [filteredData, setFilter] = useForm(filterData);
-  const [render, setRender] = useState([]);
+  const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
   
      //SALES REPORT
      React.useEffect(() => {
+       sales.length = 0;
         axios({
             method: 'post',
             url: window.$link + 'reports/sales',
@@ -41,47 +42,27 @@ function ReportSales() {
             params: {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
-              date_from: formattedPresentData,
+              date_from: filteredData.from_date,
               date_to: filteredData.to_date,
               requester: userId,
             },
           }).then(function (response) {
               console.log(response.data.data.sales)
-              var total = 0; 
-              var info = {};
-              info.date = new Date(formattedPresentData).toDateString();
-
-              info.total_cash = "P 0.00";
-              info.total_card = "P 0.00";
-              info.total_check = "P 0.00";
-              info.total_others = "P 0.00";
-
+          
               response.data.data.sales.map((data,index) => {
-            
-                if(data.type == "cash") {
-                    info.total_cash = "P " + data.grand_total;
-                }
-                if(data.type == "card") {
-                    info.total_card = "P " + data.grand_total;
-                }
-                if(data.type == "check") {
-                    info.total_check = "P " + data.grand_total;
-                }
-                if(data.type == "others") {
-                    info.total_others = "P " + data.grand_total;
-                }
-
-                total += parseFloat(data.grand_total);
-                info.grand_total = "P" + total;
-
+                var info = {};
+                var formattedDate = new Date(data.payment_date)
+                info.method = data.type.toUpperCase();
+                info.amount = "P " + data.grand_total;
+                info.date = formattedDate.toDateString();
+                
+                setSales(oldArray => [...oldArray, info]);
               });
-
-              setSales([info]);
           
           }).then(function (error) {
             console.log(error);
           });
-    },[]);
+    },[render]);
 
   function filter() {}
 
@@ -98,18 +79,19 @@ function ReportSales() {
             buttons={buttons} 
             tableName={'Home Service Report'}
             tableData={sales}
-            tableHeaders={['SALES DATE', 'TOTAL CASH', 'TOTAL CARD', 'TOTAL CHECK', 'TOTAL OTHERS','GRAND TOTAL']}
+            tableHeaders={['METHOD', 'AMOUNT','DATE']}
              />
           <Table
             clickable={false}
-            type={'services-packages'}
+            type={'no-action'}
             tableData={sales}
             rowsPerPage={100}
-            headingColumns={['SALES DATE', 'TOTAL CASH', 'TOTAL CARD', 'TOTAL CHECK', 'TOTAL OTHERS','GRAND TOTAL']}
+            headingColumns={['METHOD', 'AMOUNT','DATE']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
           />
 

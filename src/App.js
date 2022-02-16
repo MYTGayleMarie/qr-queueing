@@ -47,6 +47,7 @@ import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvo
 import AddInvoice from './components/View/Companies/AddInvoice';
 import AddInvoicePayment from './components/View/Companies/AddInvoicePayment';
 import AddCompany from './components/View/Companies/AddCompany';
+import AddDiscount from './components/View/Companies/AddDiscount';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
@@ -79,6 +80,7 @@ function App() {
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
         <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
+        <Route path="/add-discount/:id" element={token ? <AddDiscount /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
         <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />

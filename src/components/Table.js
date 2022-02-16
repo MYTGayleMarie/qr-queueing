@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender}) {
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -104,7 +104,13 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 && index != 2 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
         }
-
+        else if(type === 'companies') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD DISCOUNT</button></td>
+            </tr>
+        }
         else {
             return <tr key={row.id} onClick={() => link(row.id)}>
             {rowData.map((data, index) => 
@@ -113,9 +119,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
     });
 
-    const [render, setRender] = useState(false);
-
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales') {
 
         const {from_date, to_date, done} = filteredData;
     
@@ -175,7 +179,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index} className={index==0 ? "company_name" : ""}>{col}</th>
+                                <th key={index} className={index == 1 ? "company_name" : ""}>{col}</th>
                             ))}
                         </tr>
                     </thead>

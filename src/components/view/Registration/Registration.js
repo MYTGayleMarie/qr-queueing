@@ -85,7 +85,7 @@ function Registration() {
       .catch(function (error) {
         console.log(error);
       });
-  }, [filteredData]);
+  }, [render]);
 
   function filter() {}
 
@@ -99,12 +99,13 @@ function Registration() {
             clickable={false}
             type={'no-action'}
             tableData={patientData}
-            rowsPerPage={10}
+            rowsPerPage={20}
             headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'ADDED ON']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
           />
           <ToastContainer hideProgressBar={true} />

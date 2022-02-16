@@ -154,7 +154,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Companies</span>
             <ul class="sub-menu">
               <Link to="/companies" className="sub-link">
-                <li class="sub-list">COMPANY DISCOUNTS</li>
+                <li class="sub-list">COMPANY MANAGER</li>
               </Link>
               <Link to="/company-invoices" className="sub-link">
                 <li class="sub-list">COMPANY INVOICE</li>

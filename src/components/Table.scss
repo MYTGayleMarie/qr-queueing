@@ -191,10 +191,11 @@ body {
 }
 
 .action-btn {
-  background: #FFFFFF;
+  background: transparent;
   border: 1px solid #55073A;
   box-sizing: border-box;
   border-radius: 6px;
+  font-size: 9px;
 }
 
 .table-checkbox {
