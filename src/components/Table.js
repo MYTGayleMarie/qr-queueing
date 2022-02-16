@@ -40,13 +40,20 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         if(clickable == false) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={index == 0 ? "company_name" : data.val}>{data.val}</td>)}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type === 'company-invoices' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
+            </tr>
+        }
+        else if (type === 'company-invoices' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val.replace(/\s/g, '')}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
             </tr>
         }
@@ -130,7 +137,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'company-invoices' || type === 'companies-review' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -141,6 +148,52 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+
+    }
+    else if(type === 'companies' ) {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index} className={index==0 ? "company_name" : ""}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+
+    }
+    else if(type === 'company-invoices') {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index} className={index == 1 ? "company_name" : ""}>{col}</th>
                             ))}
                         </tr>
                     </thead>

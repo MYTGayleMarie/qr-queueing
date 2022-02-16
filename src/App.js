@@ -38,6 +38,7 @@ import ReportServicesPackages from './components/View/Reports/ReportServicesPack
 import ReportHomeServices from './components/View/Reports/ReportHomeServices';
 import ReportClinicalServices from './components/View/Reports/ReportClinicalServices';
 import ReportPendingPO from './components/View/Reports/ReportPendingPO';
+import ReportSales from './components/View/Reports/ReportSales';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
@@ -99,6 +100,7 @@ function App() {
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
+        <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>
     </Router>

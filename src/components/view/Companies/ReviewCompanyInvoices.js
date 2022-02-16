@@ -198,7 +198,7 @@ function ReviewCompanyInvoices() {
                 <h4 className="form-categories-header italic">INVOICES</h4>
 
                 <Table
-                    clickable={true}
+                    clickable={false}
                     type={'companies-review'}
                     tableData={info}
                     rowsPerPage={4}
