@@ -148,21 +148,21 @@ console.log(discount)
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="contact_person" className="form-label">CONTACT PERSON <i>(required)</i></label><br />
+                            <label for="contact_person" className="form-label">CONTACT PERSON <i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="contact_person" name="contact_person" onChange={setCompany} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="contact_no" className="form-label">CONTACT NUMBER<i>(required)</i></label><br />
+                            <label for="contact_no" className="form-label">CONTACT NUMBER<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="contact_no" name="contact_no" onChange={setCompany}  required/><br />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="discount_code" className="form-label">DISCOUNT CODE<i>(required)</i></label><br />
+                            <label for="discount_code" className="form-label">DISCOUNT CODE<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_code" name="discount_code" onChange={setDiscount} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="discount_percentage" className="form-label">DISCOUNT<i>(required)</i></label><br />
+                            <label for="discount_percentage" className="form-label">DISCOUNT<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_percentage" name="discount_percentage" onChange={setDiscount}  required/><br />
                         </div>
                     </div>

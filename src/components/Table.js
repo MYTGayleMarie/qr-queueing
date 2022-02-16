@@ -36,11 +36,16 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             });
             i++;
         }
-
-        if(clickable == false) {
+        if (type === 'companies-review' && clickable == false) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 0 ? "company_name" : data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            </tr>
+        }
+        else if(clickable == false) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key}>{data.val}</td>)}
             </tr>
         }
         else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
