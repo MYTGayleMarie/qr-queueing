@@ -84,7 +84,7 @@ function Imaging() {
           .catch(function (error) {
             console.log(error);
           });
-      }, [filteredData]);
+      }, [render]);
 
 
       if (redirect == true) {
@@ -110,10 +110,12 @@ function Imaging() {
                 <Table
                     type={'no-action'}
                     tableData={patientData}
-                    rowsPerPage={10}
+                    rowsPerPage={20}
                     headingColumns={['BOOKING ID', 'PATIENT NAME', 'BIRTHDATE', 'GENDER']}
                     filteredData={filteredData}
                     setFilter={setFilter}
+                    setRender={setRender}
+                    render={render}
                     link={startImaging}
                 />
                 </Fragment>

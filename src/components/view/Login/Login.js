@@ -16,6 +16,7 @@ import axios from 'axios';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [click, setClick] = useState(0);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -30,24 +31,27 @@ function Login() {
 
   function submit(e) {
     e.preventDefault();
-    axios({
-      method: 'post',
-      url: window.$link + 'login',
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        email: data.email,
-        password: data.password,
-      },
-    })
-      .then(function (response) {
-        localStorage.setItem('token', JSON.stringify(response.data.token));
-        localStorage.setItem('user', JSON.stringify(response.data.id));
-        refreshPage();
+    if(click == 0) {
+      axios({
+        method: 'post',
+        url: window.$link + 'login',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          email: data.email,
+          password: data.password,
+        },
       })
-      .catch(function (error) {
-        toast.error('Invalid Login');
-      });
+        .then(function (response) {
+          localStorage.setItem('token', JSON.stringify(response.data.token));
+          localStorage.setItem('user', JSON.stringify(response.data.id));
+          refreshPage();
+        })
+        .catch(function (error) {
+          toast.error('Invalid Login');
+        });
+    }
+    setClick(click+=1);
   }
 
   function handle(e) {

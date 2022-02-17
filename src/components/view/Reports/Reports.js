@@ -32,6 +32,7 @@ function Reports() {
     const [homeServices, setHomeServices] = useState([]);
     const [clinicServices, setClinicServices] = useState([]);
     const [pendingPOs, setPendingPOs] = useState([]);
+    const [totalSales, setTotalSales] = useState(0);
 
     //ALL BOOKINGS
     React.useEffect(() => {
@@ -130,6 +131,32 @@ function Reports() {
           },[]);
     },[]);
 
+     //SALES REPORT
+     React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'reports/sales',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              date_from: formattedPresentData,
+              date_to: filteredData.to_date,
+              requester: userId,
+            },
+          }).then(function (response) {
+              console.log(response.data.data.sales)
+              var total = 0;
+              response.data.data.sales.map((data,index) => {
+                total += parseFloat(data.grand_total);
+              })
+
+              setTotalSales(total);
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
+
 
     return (
         <div>
@@ -171,7 +198,7 @@ function Reports() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                     <Card 
                         data={clinicServices.length}
                         link={"/reports-clinical-services"}
@@ -179,7 +206,7 @@ function Reports() {
                         color='blue'
                     />
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                     <Card 
                         data={pendingPOs.length}
                         link={"/reports-pending-po"}
@@ -187,22 +214,15 @@ function Reports() {
                         color='blue'
                     />
                 </div>
-                {/* <div className="col-sm-4">
+                <div className="col-sm-4">
                     <Card 
-                        data={amount}
-                        link={""}
-                        title='Item History'
+                        data={"P" + totalSales}
+                        link={"/reports-sales"}
+                        title="Today's Total Sales"
                         color='blue'
                     />
-                </div> */}
+                </div>
             </div>
-            {/* <div className="row">
-                <Table
-                    type={'report'}
-                    tableData={patientData}
-                    headingColumns={['NAME OF TEST', 'CLINIC SERVICE', 'HOME SERVICE']}
-                />
-            </div> */}
             </Fragment>
         </div>
         </div>

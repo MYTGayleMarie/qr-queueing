@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Button, Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom';
+import { useForm, useStep } from "react-hooks-helper";
 import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,14 +18,7 @@ import Table from '../../Table.js';
 //variables
 const userToken = getToken();
 const userId = getUser();
-var info = [
-  {
-    invoice_no: "INV-QR-01",
-    discount_code: "MYT-WELCOME-NY!",
-    price: "500.00",
-    total: "5,000"
-  },
-];
+const checkedData = {};
 
 const CashPaymentDetails = {
     type: "",
@@ -58,6 +52,8 @@ function AddInvoicePayment() {
   //Invoice details
   const {id} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [info, setInfo] = useState([]);
+  const [checked, setChecked] = useForm(checkedData);
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -155,17 +151,77 @@ function AddInvoicePayment() {
     });
   },[]);
 
+  React.useEffect(() => {
+    info.length = 0;
+    axios({
+      method: 'post',
+      url: window.$link + 'company_invoices/getAllByCompany/' + id,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then(function (response) {
+      console.log(response.data.company_invoices);
+
+      response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
+        var info = {};
+        info.id = data.id;
+        info.code = data.discount_code;
+        info.price = data.price;
+        info.total = data.total;
+
+        setInfo(oldArray => [...oldArray, info]);
+        
+      });
+
+    }).then(function(error) {
+      console.log(error);
+    });
+  },[]);
+
+  React.useEffect(() => {
+
+    for (let [key, value] of Object.entries(checked)) {
+        var grandTotal = 0;
+        if(value != false) {
+            var obj = info[key];
+            if(info[key].total != null) {
+                grandTotal += parseFloat(obj.total);
+            }
+        }
+    }
+    setGrandTotal(grandTotal);
+
+  },[checked]);
+
   function submit (e) {
     e.preventDefault();
+
+    var invoice_nos = [];
+    var prices = [];
+    var totals = [];
+
+    for (let [key, value] of Object.entries(checked)) {
+        if(value != false) {
+            invoice_nos.push(info[key].id);
+            prices.push(info[key].price);
+            totals.push(info[key].total); 
+        }
+    }
+
     if(payment === 'cash') {
         axios({
             method: 'post',
-            url: window.$link + 'payments/create',
+            url: window.$link + 'invoice_payments/create',
             withCredentials: false, 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                booking: id,
+                invoice_nos: invoice_nos,
+                prices: prices,
+                totals: totals, 
                 type: payment,
                 amount: grandTotal,
                 senior_pwd_id: seniorPwdId,
@@ -175,8 +231,11 @@ function AddInvoicePayment() {
                 added_by: userId,
             }
         }).then(function (response) {
-            var date = new Date();                
+            console.log(response)            
             toast.success("Payment Successful!");
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             console.log(error);
             toast.error("Payment Unsuccessful!");
@@ -185,12 +244,14 @@ function AddInvoicePayment() {
     if(payment === 'check') {
         axios({
             method: 'post',
-            url: window.$link + 'payments/create',
+            url: window.$link + 'invoice_payments/create',
             withCredentials: false, 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                booking: id,
+                invoice_nos: invoice_nos,
+                prices: prices,
+                totals: totals, 
                 type: payment,
                 amount: grandTotal,
                 check_no: checkNo,
@@ -205,6 +266,9 @@ function AddInvoicePayment() {
         }).then(function (response) {
             console.log(response);
             toast.success("Payment Successful!");
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             console.log(error);
             toast.error("Payment Unsuccessful!");
@@ -213,12 +277,14 @@ function AddInvoicePayment() {
     if(payment === 'card') {
         axios({
             method: 'post',
-            url: window.$link + 'payments/create',
+            url: window.$link + 'invoice_payments/create',
             withCredentials: false, 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                booking: id,
+                invoice_nos: invoice_nos,
+                prices: prices,
+                totals: totals, 
                 type: payment,
                 amount: grandTotal,
                 cardName: cardName,
@@ -235,6 +301,9 @@ function AddInvoicePayment() {
         }).then(function (response) {
             console.log(response);
             toast.success("Payment Successful!");
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             console.log(error);
             toast.error("Payment Unsuccessful!");
@@ -243,12 +312,14 @@ function AddInvoicePayment() {
     if(payment === 'others') {
         axios({
             method: 'post',
-            url: window.$link + 'payments/create',
+            url: window.$link + 'invoice_payments/create',
             withCredentials: false, 
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                booking: id,
+                invoice_nos: invoice_nos,
+                prices: prices,
+                totals: totals, 
                 type: payment,
                 amount: grandTotal,
                 other_source: source,
@@ -262,6 +333,9 @@ function AddInvoicePayment() {
         }).then(function (response) {
             console.log(response);
             toast.success("Payment Successful!");
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             console.log(error);
             toast.error("Payment Unsuccessful!");
@@ -443,23 +517,9 @@ function othersForm() {
     setToAddInvoice(true);
   }
 
-  function addPayment() {
-    setToAddPayment(true);
-  }
-
-  if(toAddInvoice == true) {
-    return (
-      <Navigate to ={"/add-invoice/" + id + "/" + selectedCode}/>
-    )
-  }else if(toAddPayment == true) {
-    return (
-      <Navigate to = {"/add-invoice-payment/" + id}/>
-    )
-  }
-
   if(redirect == true) {
       return (
-        <Navigate to = "/company-invoices"/>
+        <Navigate to = {"/review-invoice/" + id}/>
     )
   }
 
@@ -515,35 +575,31 @@ function othersForm() {
                 <h4 className="form-categories-header italic">INVOICES</h4>
 
                 <Table
-                    clickable={true}
-                    type={'companies-review'}
+                    type={'payment-invoices'}
                     tableData={info}
                     rowsPerPage={4}
                     headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
-                    // filteredData={filteredData}
-                    // setFilter={setFilter}
-                    // filter={filter}
                     givenClass={'company-mobile'}
+                    setChecked={setChecked}
                 />
 
+                {grandTotal != null && grandTotal != 0 && (
                 <div className="row">
                     <div className="col d-flex justify-content-end grand-total">
-                        <span className="label">GRAND TOTAL: <b className="invoice-total">P 5,000.00</b></span>
+                        <span className="label">GRAND TOTAL: <b className="invoice-total">P {parseFloat(grandTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                    </div>
+                </div>
+                )}
+
+                <div className="row">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                        {paymentStatus == "paid" && printButton()}
                     </div>
                 </div>
 
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
 
-                    <div className="row">
-                        <div className="col-sm-3">
-                            <span className="discount-header method-label">DISCOUNT</span>
-                        </div>
-
-                        <div className="col-sm-9">
-                            <span className="amount">{"P " + parseFloat(discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) + ""}</span>
-                        </div>
-                    </div>
                     <br/>
 
                     <span className="method-label">METHOD</span>

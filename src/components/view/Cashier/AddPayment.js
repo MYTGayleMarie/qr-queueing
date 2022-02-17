@@ -860,7 +860,7 @@ function AddPayment() {
          )}
         <div className="row">
             <div className="col-sm-12 d-flex justify-content-end">
-                {paymentStatus != "paid" && printButton()}
+                {paymentStatus == "paid" && printButton()}
             </div>
         </div>
         {paymentStatus != "paid" && (

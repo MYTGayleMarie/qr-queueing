@@ -30,6 +30,7 @@ const companyData = {
 const discountData = {
     discount_code: "",
     discount_percentage: "",
+    remarks: "",
 };
 
 function AddCompany() {
@@ -65,7 +66,6 @@ function submit(e, company, discount) {
             }
         }).then(function (response) {
             console.log(response);
-            // console.log(discount.discount_percentage)
             console.log(response.data.message[0]);
             toast.success(response.data.message.success);
             axios({
@@ -75,10 +75,11 @@ function submit(e, company, discount) {
                 params: {
                     token: userToken.replace(/['"]+/g, ''),
                     api_key: window.$api_key, 
-                    description: company.name + "Discount",
+                    description: discount.remarks,
                     discount_code: discount.discount_code,
                     discount_percentage: discount.discount_percentage,
                     company_id: response.data.data.company_id,
+                    remarks: discount.remarks,
                     added_by: userId
                 }
             }).then(function (discount_response) {
@@ -148,27 +149,33 @@ console.log(discount)
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="contact_person" className="form-label">CONTACT PERSON <i>(required)</i></label><br />
+                            <label for="contact_person" className="form-label">CONTACT PERSON <i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="contact_person" name="contact_person" onChange={setCompany} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="contact_no" className="form-label">CONTACT NUMBER<i>(required)</i></label><br />
+                            <label for="contact_no" className="form-label">CONTACT NUMBER<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="contact_no" name="contact_no" onChange={setCompany}  required/><br />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="discount_code" className="form-label">DISCOUNT CODE<i>(required)</i></label><br />
+                            <label for="discount_code" className="form-label">DISCOUNT CODE<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_code" name="discount_code" onChange={setDiscount} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="discount_percentage" className="form-label">DISCOUNT<i>(required)</i></label><br />
+                            <label for="discount_percentage" className="form-label">DISCOUNT<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_percentage" name="discount_percentage" onChange={setDiscount}  required/><br />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-12">
-                            <label for="remarks" className="form-label">REMARKS</label><br />
+                            <label for="remarks" className="form-label">DISCOUNT DESCRIPTION</label><br />
+                            <textarea id="remarks" className="remarks-input" name="remarks" rows="4" cols="50" onChange={setDiscount} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <label for="remarks" className="form-label">COMPANY REMARKS</label><br />
                             <textarea id="remarks" className="remarks-input" name="remarks" rows="4" cols="50" onChange={setCompany} />
                         </div>
                     </div>

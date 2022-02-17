@@ -19,7 +19,7 @@ function PdfTransaction({name, data, header}) {
         const doc = new jsPDF();
         var img = new Image();
         img.src = logo;
-        doc.addImage(img, 'png', 15, 13, 16, 9);
+        doc.addImage(img, 'png', 15, 13, 19, 9);
         doc.text(name, 35, 20);
         doc.autoTable({
             theme: "plain",

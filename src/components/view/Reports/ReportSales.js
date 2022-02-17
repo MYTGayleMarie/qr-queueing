@@ -1,0 +1,105 @@
+import React, { Fragment, useState, useRef } from 'react';
+import axios from 'axios';
+import { getToken, getUser } from '../../../utilities/Common';
+import { useForm } from 'react-hooks-helper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useTable from '../../../utilities/Pagination';
+import TableFooter from '../../TableFooter';
+import { getTime } from '../../../utilities/Common';
+
+//components
+import Header from '../../Header.js';
+import Navbar from '../../Navbar';
+import Searchbar from '../../Searchbar';
+import Table from '../../Table.js';
+
+const buttons = ['export-excel', 'export-pdf'];
+const userToken = getToken();
+const userId = getUser();
+var presentDate = new Date();
+var formattedPresentData = presentDate.toISOString().split('T')[0];
+
+const filterData = {
+  from_date: formattedPresentData,
+  to_date: formattedPresentData,
+  done: false,
+};
+
+function ReportSales() {
+
+  const [filteredData, setFilter] = useForm(filterData);
+  const [render, setRender] = useState(false);
+  const [sales, setSales] = useState([]);
+  
+     //SALES REPORT
+     React.useEffect(() => {
+       sales.length = 0;
+        axios({
+            method: 'post',
+            url: window.$link + 'reports/sales',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
+              requester: userId,
+            },
+          }).then(function (response) {
+              console.log(response.data.data.sales)
+          
+              response.data.data.sales.map((data,index) => {
+                var info = {};
+                var formattedDate = new Date(data.payment_date)
+                info.method = data.type.toUpperCase();
+                info.amount = "P " + data.grand_total;
+                info.date = formattedDate.toDateString();
+                
+                setSales(oldArray => [...oldArray, info]);
+              });
+          
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[render]);
+
+  function filter() {}
+
+  return (
+    <div>
+      <Navbar />
+      <div className="active-cont">
+        <Fragment>
+
+        <Searchbar title='SALES'/>
+          <Header 
+            type="thick" 
+            title="QR DIAGNOSTICS REPORT" 
+            buttons={buttons} 
+            tableName={'Home Service Report'}
+            tableData={sales}
+            tableHeaders={['METHOD', 'AMOUNT','DATE']}
+             />
+          <Table
+            clickable={false}
+            type={'no-action'}
+            tableData={sales}
+            rowsPerPage={100}
+            headingColumns={['METHOD', 'AMOUNT','DATE']}
+            filteredData={filteredData}
+            setFilter={setFilter}
+            filter={filter}
+            setRender={setRender}
+            render={render}
+            givenClass={"register-mobile"}
+          />
+
+          <ToastContainer hideProgressBar={true} />
+        </Fragment>
+      </div>
+    </div>
+  );
+}
+
+export default ReportSales;

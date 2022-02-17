@@ -31,3 +31,8 @@
 .invoice-total {
     color: #000000;
 }
+
+.info {
+    font-size: 18px;
+    background-color: rgba(194, 194, 194, 0.575);
+}

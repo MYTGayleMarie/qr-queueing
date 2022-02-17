@@ -4,49 +4,52 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './components/FontAwesomeIcons';
 
 /** view */
-import Login from './components/view/Login/Login';
-import Registration from './components/view/Registration/Registration';
-import PrintBooking from './components/view/Registration/PrintBooking';
-import SwitchForm from './components/view/Registration/Add New Patient/SwitchForm';
-import SearchPatient from './components/view/Registration/Add Old Patient/SearchPatient';
-import SwitchForm2 from './components/view/Registration/Add Old Patient/SwitchForm2';
-import Cashier from './components/view/Cashier/Cashier';
-import AddPayment from './components/view/Cashier/AddPayment';
-import Extraction from './components/view/Extraction/Extraction';
-import LaboratoryTests from './components/view/Extraction/LaboratoryTests';
-import Imaging from './components/view/Imaging/Imaging';
-import ImagingTests from './components/view/Imaging/ImagingTests';
-import ReleaseItems from './components/view/Supply/ReleaseItems';
-import ReviewReleasingItems from './components/view/Supply/ReviewReleasingItems';
-import AddItems from './components/view/Supply/AddItems';
-import PurchaseOrder from './components/view/Supply/PurchaseOrder';
-import AddPurchaseOrder from './components/view/Supply/AddPurchaseOrder';
-import ReviewPurchaseOrder from './components/view/Supply/ReviewPurchaseOrder';
-import UpdatePurchaseOrder from './components/view/Supply/UpdatePurchaseOrder';
-import PayPurchaseOrder from './components/view/Supply/PayPurchaseOrder';
-import Items from './components/view/Supply/Items';
-import MedTech from './components/view/MedTech/MedTech';
-import MedTechStart from './components/view/MedTech/MedTechStart';
-import AddSupplyItems from './components/view/Supply/AddSupplyItems';
-import UpdateSupplyItems from './components/view/Supply/UpdateSuppyItems';
-import Suppliers from './components/view/Supply/Suppliers';
-import AddSupplier from './components/view/Supply/AddSupplier';
-import ViewSupplier from './components/view/Supply/ViewSupplier';
-import Reports from './components/view/Reports/Reports';
-import ReportTransaction from './components/view/Reports/ReportTransaction';
-import ReportServicesPackages from './components/view/Reports/ReportServicesPackages';
-import ReportHomeServices from './components/view/Reports/ReportHomeServices';
-import ReportClinicalServices from './components/view/Reports/ReportClinicalServices';
-import ReportPendingPO from './components/view/Reports/ReportPendingPO';
-import Users from './components/view/Users/Users';
-import UserDetail from './components/view/Users/UserDetail';
-import Companies from './components/view/Companies/Companies';
-import CompanyInvoiceManager from './components/view/Companies/CompanyInvoiceManager';
-import ReviewCompanyInvoices from './components/view/Companies/ReviewCompanyInvoices';
-import AddInvoice from './components/view/Companies/AddInvoice';
-import AddInvoicePayment from './components/view/Companies/AddInvoicePayment';
-import AddCompany from './components/view/Companies/AddCompany';
-import { PaymentToPrint } from './components/view/Cashier/PaymentToPrint';
+import Login from './components/View/Login/Login';
+import Registration from './components/View/Registration/Registration';
+import PrintBooking from './components/View/Registration/PrintBooking';
+import SwitchForm from './components/View/Registration/Add New Patient/SwitchForm';
+import SearchPatient from './components/View/Registration/Add Old Patient/SearchPatient';
+import SwitchForm2 from './components/View/Registration/Add Old Patient/SwitchForm2';
+import Cashier from './components/View/Cashier/Cashier';
+import AddPayment from './components/View/Cashier/AddPayment';
+import Extraction from './components/View/Extraction/Extraction';
+import LaboratoryTests from './components/View/Extraction/LaboratoryTests';
+import Imaging from './components/View/Imaging/Imaging';
+import ImagingTests from './components/View/Imaging/ImagingTests';
+import ReleaseItems from './components/View/Supply/ReleaseItems';
+import ReviewReleasingItems from './components/View/Supply/ReviewReleasingItems';
+import AddItems from './components/View/Supply/AddItems';
+import PurchaseOrder from './components/View/Supply/PurchaseOrder';
+import AddPurchaseOrder from './components/View/Supply/AddPurchaseOrder';
+import ReviewPurchaseOrder from './components/View/Supply/ReviewPurchaseOrder';
+import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
+import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
+import Items from './components/View/Supply/Items';
+import MedTech from './components/View/MedTech/MedTech';
+import MedTechStart from './components/View/MedTech/MedTechStart';
+import AddSupplyItems from './components/View/Supply/AddSupplyItems';
+import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
+import Suppliers from './components/View/Supply/Suppliers';
+import AddSupplier from './components/View/Supply/AddSupplier';
+import ViewSupplier from './components/View/Supply/ViewSupplier';
+import Reports from './components/View/Reports/Reports';
+import ReportTransaction from './components/View/Reports/ReportTransaction';
+import ReportServicesPackages from './components/View/Reports/ReportServicesPackages';
+import ReportHomeServices from './components/View/Reports/ReportHomeServices';
+import ReportClinicalServices from './components/View/Reports/ReportClinicalServices';
+import ReportPendingPO from './components/View/Reports/ReportPendingPO';
+import ReportSales from './components/View/Reports/ReportSales';
+import Users from './components/View/Users/Users';
+import UserDetail from './components/View/Users/UserDetail';
+import Companies from './components/View/Companies/Companies';
+import CompanyDiscounts from './components/View/Companies/CompanyDiscounts';
+import CompanyInvoiceManager from './components/View/Companies/CompanyInvoiceManager';
+import ReviewCompanyInvoices from './components/View/Companies/ReviewCompanyInvoices';
+import AddInvoice from './components/View/Companies/AddInvoice';
+import AddInvoicePayment from './components/View/Companies/AddInvoicePayment';
+import AddCompany from './components/View/Companies/AddCompany';
+import AddDiscount from './components/View/Companies/AddDiscount';
+import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
 
@@ -58,6 +61,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/registration" element={token ? <Registration /> : <Navigate to="/" />} />
         <Route path="/print-booking/:id" element={token ? <PrintBooking /> : <Navigate to="/" />} />
         <Route path="/add-new-patient" element={token ? <SwitchForm /> : <Navigate to="/" />} />
@@ -77,7 +81,9 @@ function App() {
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
         <Route path="/companies" element={token ? <Companies /> : <Navigate to="/" />} />
+        <Route path="/company-discounts" element={token ? <CompanyDiscounts /> : <Navigate to="/" />} />
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
+        <Route path="/add-discount/:id" element={token ? <AddDiscount /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
         <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
@@ -99,6 +105,7 @@ function App() {
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
+        <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>
     </Router>
