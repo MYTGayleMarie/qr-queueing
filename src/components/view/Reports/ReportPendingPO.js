@@ -34,6 +34,7 @@ function ReportPendingPO() {
   const [render, setRender] = useState([]);
   const [clinicServices, setClinicServices] = useState([]);
   const [pendingPOs, setPendingPOs] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -79,7 +80,9 @@ function ReportPendingPO() {
 
                   });
 
-
+                  if(pending.length - 1 == index) {
+                    setPrintReadyFinal(true);
+                  }
               });
           }).then(function (error) {
             console.log(error);
@@ -116,6 +119,7 @@ function ReportPendingPO() {
             tableName={'Pending Purchase Order Report'}
             tableData={pendingPOs}
             tableHeaders={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT']}
+            status={printReadyFinal}
              />
           <Table
             clickable={true}

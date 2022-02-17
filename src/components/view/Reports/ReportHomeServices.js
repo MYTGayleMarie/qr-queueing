@@ -31,6 +31,7 @@ function ReportHomeServices() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [homeServices, setHomeServices] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
   //ALL HOME SERVICES
    React.useEffect(() => {
@@ -46,7 +47,7 @@ function ReportHomeServices() {
         },
       }).then(function (booking) {
           var array = booking.data.bookings;
-          array.map((data, index) => {
+          array.map((data, index1) => {
             var info = {};
             axios({
               method: 'post',
@@ -74,20 +75,25 @@ function ReportHomeServices() {
                 info.booking_date = formattedDate.toDateString() + getTime(formattedDate);
                 info.address = customer.data.address;
                 var tests = '';
-                response.data.map((data,index) => {
+                response.data.map((data,index2) => {
                   if(data.type == 'package') {
-                    if(response.data.length - 1 == index) {
+                    if(response.data.length - 1 == index2) {
                       tests += data.package;
                     } else {
                       tests += data.package + ", \n";
                     }
                   } else {
-                    if(response.data.length - 1 == index) {
+                    if(response.data.length - 1 == index2) {
                       tests += data.lab_test;
                     } else {
                       tests += data.lab_test + ", \n";
                     }
                   }
+
+                  if(array.length - 1 == index1 && response.data.length - 1 == index2) {
+                    setPrintReadyFinal(true);
+                  }
+                  
                 });
                 info.tests = tests;
                 info.total_amount = data.grand_total;
@@ -122,6 +128,7 @@ function ReportHomeServices() {
             tableName={'Home Service Report'}
             tableData={homeServices}
             tableHeaders={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'TOTAL AMOUNT']}
+            status={printReadyFinal}
              />
           <Table
             clickable={false}

@@ -86,6 +86,9 @@ function AddPayment() {
     const [queueNumber, setQueueNumber] = useState("");
     const [encodedOn, setEncodedOn] = useState("");
 
+    //print
+    const [printData, setPrintData] = useState(false);
+
     //check states
     const [checkNo, setCheckNo] = useState("");
     const [checkBank, setCheckBank] = useState("");
@@ -248,9 +251,11 @@ function AddPayment() {
                 setQueueNumber(data.queue.toString());
             }
           });
-    },[queue]);
 
-    console.log(queue)
+          if(queueNumber == "") {
+              setQueueNumber("0");
+          }
+    },[queue]);
    
     React.useEffect(() => {
         services.length = 0;
@@ -272,7 +277,7 @@ function AddPayment() {
 
     React.useEffect(() => {
         printServices.length = 0;
-        services.map((info, index) => {
+        services.map((info, index1) => {
             if(info.category_id == null) {
                 axios({
                     method: 'post',
@@ -284,7 +289,7 @@ function AddPayment() {
                         requester: userId,
                     }
                 }).then(function (response) {
-                    response.data.map((packageCat, index) => {
+                    response.data.map((packageCat, index2) => {
                         var serviceDetails = {};
                         axios({
                             method: 'post',
@@ -305,6 +310,11 @@ function AddPayment() {
                             serviceDetails.category = category.data.name;
                             serviceDetails.name = packageCat.lab_test;
                             setPrintServices(oldArray => [...oldArray, serviceDetails]);
+
+
+                            if(services.length - 1 == index1 && response.data.length - 1 == index2 && bookingDate != null && birthDate != null && encodedOn != null) {
+                                setPrintData(true);
+                            }
                         }).catch(function (error) {
                             console.log(error);
                         })
@@ -331,6 +341,11 @@ function AddPayment() {
                     serviceDetails.category = category.data.name;
                     serviceDetails.name = info.lab_test;
                     setPrintServices(oldArray => [...oldArray, serviceDetails]);
+
+
+                    if(services.length - 1 == index1 && bookingDate != null && birthDate != null && encodedOn != null) {
+                        setPrintData(true);
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -641,7 +656,7 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        {paymentStatus == "paid" && printButton()}
+                        {paymentStatus == "paid" && queueNumber != "" && printData == true && (printButton())}
                         <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>                    
              </div>       
@@ -680,7 +695,7 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {paymentStatus == "paid" && printButton()}
+                {paymentStatus == "paid" && queueNumber != "" && printData == true && (printButton())}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
 
@@ -722,7 +737,7 @@ function AddPayment() {
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {paymentStatus == "paid" && printButton()}
+                {paymentStatus == "paid" && queueNumber != "" && printData == true && (printButton())}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
         </div>
@@ -762,7 +777,7 @@ function AddPayment() {
                         </div>
                     </div>
                     <div className="row d-flex justify-content-end">
-                        {paymentStatus == "paid" && printButton()}
+                        {paymentStatus == "paid" && queueNumber != "" && printData == true && (printButton())}
                         <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
                     </div>
              </div>       
@@ -848,6 +863,7 @@ function AddPayment() {
             discount={discount}
             toPay={paymentStatus == "paid" ? false : true}
          />
+
          {paymentStatus != "paid" && (
         <div className="row">
             <div className="col-sm-9 d-flex justify-content-end">
@@ -855,11 +871,21 @@ function AddPayment() {
             </div>
         </div>
          )}
+
+        {paymentStatus == "paid" && queueNumber != "" && printData == true && (
         <div className="row">
             <div className="col-sm-12 d-flex justify-content-end">
-                {paymentStatus != "paid" && printButton()}
+                {printButton()}
             </div>
-        </div>
+        </div>)}
+
+        {paymentStatus != "paid" && printData == false && (
+        <div className="row">
+            <div className="col-sm-12 d-flex justify-content-end">
+                <button className="save-btn">Loading Data...</button>
+            </div>
+        </div>)}
+
         {paymentStatus != "paid" && (
                 <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
@@ -946,7 +972,7 @@ function AddPayment() {
                     <div
                     style={{ display: "none" }}// This make ComponentToPrint show   only while printing
                     > 
-                    {queueNumber != "" && (
+            
                         <PaymentToPrint 
                             ref={componentRef} 
                             patientId = {patientId}
@@ -964,7 +990,7 @@ function AddPayment() {
                             encodedOn={encodedOn}
                             referral={referral}
                         />
-                    )}
+                
                     </div>
 
 

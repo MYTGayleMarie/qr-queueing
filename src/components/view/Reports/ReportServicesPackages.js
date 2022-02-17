@@ -13,6 +13,7 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
+import { parse } from '@fortawesome/fontawesome-svg-core';
 
 const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
@@ -31,8 +32,7 @@ function ReportServicesPackages() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [servicesPackages, setServicesPackages] = useState([]);
-  const [finalData, setFinalData] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
   //ALL PACKAGES AND SERVICES
     React.useEffect(() => {
@@ -89,8 +89,12 @@ function ReportServicesPackages() {
                         info.booking_number = data.booking_id;
                         info.quantity = info.booking_number.toString().split("\n").length;
                         info.amount = data.price;
-                        info.total_amount = data.price * info.quantity;
+                        info.total_amount = parseFloat(data.price * info.quantity).toFixed(2);
                         setServicesPackages(oldArray => [...oldArray, info]);
+
+                        if(output.length - 1 == index) {
+                          setPrintReadyFinal(true);
+                        }
 
                     })
         
@@ -119,6 +123,7 @@ function ReportServicesPackages() {
             tableName={'Services and Packages Report'}
             tableData={servicesPackages}
             tableHeaders={['BOOKING DATE', 'SERVICE NAME', 'BOOKING NUMBER', 'QUANTITY', 'AMOUNT', 'TOTAL AMOUNT']}
+            status={printReadyFinal}
              />
           <Table
             clickable={false}

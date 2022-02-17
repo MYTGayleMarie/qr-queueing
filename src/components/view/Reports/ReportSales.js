@@ -31,6 +31,7 @@ function ReportSales() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
      //SALES REPORT
      React.useEffect(() => {
@@ -57,6 +58,10 @@ function ReportSales() {
                 info.date = formattedDate.toDateString();
                 
                 setSales(oldArray => [...oldArray, info]);
+
+                if(response.data.data.sales.length - 1 == index) {
+                  setPrintReadyFinal(true);
+                }
               });
           
           }).then(function (error) {
@@ -80,6 +85,7 @@ function ReportSales() {
             tableName={'Home Service Report'}
             tableData={sales}
             tableHeaders={['METHOD', 'AMOUNT','DATE']}
+            status={printReadyFinal}
              />
           <Table
             clickable={false}

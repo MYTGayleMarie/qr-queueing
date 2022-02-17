@@ -31,6 +31,7 @@ function ReportTransaction() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
   React.useEffect(() => {
     patientData.length = 0;
@@ -93,7 +94,10 @@ function ReportTransaction() {
             .catch(function (error) {
               console.log(error);
             });
-          setRender(patientData);
+
+            if(response.data.bookings.length - 1 == index) {
+              setPrintReadyFinal(true);
+            }
         });
       })
       .catch(function (error) {
@@ -116,6 +120,7 @@ function ReportTransaction() {
             tableName={'Transaction Report'}
             tableData={patientData}
             tableHeaders={['BOOKING ID', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'AMOUNT', 'TOTAL AMOUNT']}
+            status={printReadyFinal}
              />
           <Table
             clickable={false}
