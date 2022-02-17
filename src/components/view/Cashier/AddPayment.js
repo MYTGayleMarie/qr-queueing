@@ -83,7 +83,7 @@ function AddPayment() {
     const [result, setResult] = useState("");
     const [printServices, setPrintServices] = useState([]);
     const [queue, setQueue] = useState([]);
-    const [queueNumber, setQueueNumber] = useState("");
+    const [queueNumber, setQueueNumber] = useState("0");
     const [encodedOn, setEncodedOn] = useState("");
 
     //check states
@@ -154,7 +154,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
             setPaymentStatus(response.data.payment_status);
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
@@ -231,7 +230,6 @@ function AddPayment() {
               const arrangedObj = response.data.bookings.sort((a,b) => a.id - b.id);
          
               arrangedObj.map((booking,index) => {
-                  console.log(booking.id)
                 var bookingInfo = {};
                 bookingInfo.queue = index;
                 bookingInfo.id = booking.id;
@@ -265,7 +263,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data)
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
@@ -370,7 +367,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data)
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
@@ -776,7 +772,7 @@ function AddPayment() {
             return (
                 <Navigate to = "/cashier"/>
             )
-        }    
+        }
 
     return (
         <div>
@@ -849,6 +845,7 @@ function AddPayment() {
             setGrandTotal={setGrandTotal}
             setDiscount={setDiscount}
             discount={discount}
+            toPay={paymentStatus == "paid" ? false : true}
          />
          {paymentStatus != "paid" && (
         <div className="row">

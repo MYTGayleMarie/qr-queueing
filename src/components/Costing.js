@@ -12,7 +12,7 @@ import cancelIcon from '../images/cancel.png';
 const userToken = getToken();
 const userId = getUser();
 
-function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, serviceFee, mdCharge, setGrandTotal, setDiscount, discount, toPay}) {
+function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, serviceFee, mdCharge, setGrandTotal, setDiscount, discount, toPay, paymentStatus}) {
 
     var totalCost = 0;
     var labTotal = 0;
