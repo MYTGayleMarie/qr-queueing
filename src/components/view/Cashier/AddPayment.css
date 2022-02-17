@@ -60,6 +60,10 @@
     margin-left: 5%;
 } */
 
+.remarks-payment-input {
+    margin-left: 5% !important;
+}
+
 .remarks-payment-label {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;

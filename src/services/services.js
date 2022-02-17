@@ -743,7 +743,7 @@ const Microbiology = [
   },
 ];
 
-//Imaging
+//XRAY
 const Xray = [
   {
     key: 'AbdominalSupine_18',
@@ -790,7 +790,7 @@ const Xray = [
     name: 'Chest Bucky',
     categoryId: '18',
     labTestId: '72',
-    price: '250.00',
+    price: '350.00',
     type: 'lab',
   },
   {
@@ -946,8 +946,16 @@ const Xray = [
     type: 'lab',
   },
   {
-    key: 'PhoraceLumbarAPL_18',
-    name: 'Phorace-Lumber APL',
+    key: 'TCage_18',
+    name: 'T-Cage',
+    categoryId: '18',
+    labTestId: '127',
+    price: '400.00',
+    type: 'lab',
+  },
+  {
+    key: 'ThoracoLumbarAPL_18',
+    name: 'Thoraco-Lumbar APL',
     categoryId: '18',
     labTestId: '91',
     price: '1320.00',

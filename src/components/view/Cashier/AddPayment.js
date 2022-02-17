@@ -298,7 +298,6 @@ function AddPayment() {
                                 requester: userId,
                             }
                         }).then(function (category) {
-                            
                             if(category.data.name == "Electrolytes (NaKCl,iCA)") {
                                 serviceDetails.key = "Electrolytes";
                             }
@@ -640,7 +639,7 @@ function AddPayment() {
                                 <span class="remarks-payment-label">REMARKS</span>
                             </div>
                             <div className="row">
-                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                                <textarea id="remarks" name="remarks"  className="remarks-payment-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                             </div>
                         </div>
                     </div>
@@ -679,12 +678,12 @@ function AddPayment() {
                         <span class="remarks-payment-label">REMARKS</span>
                     </div>
                     <div className="row">
-                        <textarea id="remarks" name="remarks" className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                        <textarea id="remarks" name="remarks" className="remarks-payment-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                     </div>
                 </div>
             </div>
             <div className="row d-flex justify-content-end">
-                {paymentStatus = "paid" && printButton()}
+                {paymentStatus == "paid" && printButton()}
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
             </div>
 
@@ -721,7 +720,7 @@ function AddPayment() {
                         <span class="remarks-payment-label">REMARKS</span>
                     </div>
                     <div className="row">
-                        <textarea id="remarks" name="remarks" rows="4" className="remarks-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                        <textarea id="remarks" name="remarks" rows="4" className="remarks-payment-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                     </div>
                 </div>
             </div>
@@ -761,7 +760,7 @@ function AddPayment() {
                                 <span class="remarks-payment-label">REMARKS</span>
                             </div>
                             <div className="row">
-                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                                <textarea id="remarks" name="remarks"  className="remarks-payment-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                             </div>
                         </div>
                     </div>
