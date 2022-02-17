@@ -235,13 +235,13 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         setBookingId(response.data.data.booking_id);
         toast.success(response.data.message.success);
 
-        // if(isCompany === false) {
-        //   setTimeout(function () {
-        //     setRedirect(true);
-        //   }, 2000);
-        // }else {
-        //   setPrint(true);
-        // }
+        if(isCompany === false) {
+          setTimeout(function () {
+            setRedirect(true);
+          }, 2000);
+        }else {
+          setPrint(true);
+        }
       });
       handleClose();
     });
