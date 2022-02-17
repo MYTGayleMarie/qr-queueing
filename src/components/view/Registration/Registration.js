@@ -79,7 +79,6 @@ function Registration() {
             .catch(function (error) {
               console.log(error);
             });
-          setRender(patientData);
         });
       })
       .catch(function (error) {

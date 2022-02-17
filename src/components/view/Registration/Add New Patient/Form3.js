@@ -201,7 +201,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
           discount_id: customer.discountId,
           booking_time: dateOfTesting,
           company_contract_id: '',
-          doctors_referral: customer.referral,
+          doctors_referal: customer.referral,
           type: customer.serviceLocation,
           result: customer.result,
           total_amount: totalPrice,
@@ -231,17 +231,17 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
           added_by: userId,
         },
       }).then(function (response) {
-        console.log(response.data);
+        console.log(response);
         setBookingId(response.data.data.booking_id);
         toast.success(response.data.message.success);
 
-        if(isCompany === false) {
-          setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
-        }else {
-          setPrint(true);
-        }
+        // if(isCompany === false) {
+        //   setTimeout(function () {
+        //     setRedirect(true);
+        //   }, 2000);
+        // }else {
+        //   setPrint(true);
+        // }
       });
       handleClose();
     });

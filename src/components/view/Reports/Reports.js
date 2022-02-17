@@ -150,7 +150,6 @@ function Reports() {
               response.data.data.sales.map((data,index) => {
                 total += parseFloat(data.grand_total);
               })
-
               setTotalSales(total);
           }).then(function (error) {
             console.log(error);
