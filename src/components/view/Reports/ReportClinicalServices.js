@@ -31,6 +31,7 @@ function ReportClinicalServices() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [clinicServices, setClinicServices] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
   //ALL HOME SERVICES
    React.useEffect(() => {
@@ -46,7 +47,7 @@ function ReportClinicalServices() {
         },
       }).then(function (booking) {
           var array = booking.data.bookings;
-          array.map((data, index) => {
+          const requests = array.map((data, index1) => {
             var info = {};
             axios({
                 method: 'post',
@@ -58,32 +59,35 @@ function ReportClinicalServices() {
                   requester: userId,
                 },
               }).then(function (response) {
-                console.log(response.data)
                 var formattedDate = new Date(data.booking_time);
                 info.booking_number = data.id;
                 info.booking_date = formattedDate.toDateString() + getTime(formattedDate);
                 var tests = '';
-                response.data.map((data,index) => {
+
+                response.data.map((data,index2) => {
                   if(data.type == 'package') {
-                    if(response.data.length - 1 == index) {
+                    if(response.data.length - 1 == index2) {
                       tests += data.package;
                     } else {
                       tests += data.package + ", \n";
                     }
                   } else {
-                    if(response.data.length - 1 == index) {
+                    if(response.data.length - 1 == index2) {
                       tests += data.lab_test;
                     } else {
                       tests += data.lab_test + ", \n";
                     }
+                  }
+
+                  if(array.length - 1 == index1 && response.data.length - 1 == index2) {
+                    setPrintReadyFinal(true);
                   }
                 });
                 info.tests = tests;
                 info.total_amount = data.grand_total;
                 setClinicServices(oldArray => [...oldArray, info]);
               }).then(function (error) {
-                console.log(error);
-              })
+              });
           });
       }).then(function (error) {
         console.log(error);
@@ -108,6 +112,7 @@ function ReportClinicalServices() {
             tableName={'Clinic Service Report'}
             tableData={clinicServices}
             tableHeaders={['BOOKING NUMBER', 'BOOKING DATE', 'TESTS', 'TOTAL AMOUNT']}
+            status={printReadyFinal}
              />
           <Table
             clickable={false}

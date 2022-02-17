@@ -83,7 +83,7 @@ function AddPayment() {
     const [result, setResult] = useState("");
     const [printServices, setPrintServices] = useState([]);
     const [queue, setQueue] = useState([]);
-    const [queueNumber, setQueueNumber] = useState("0");
+    const [queueNumber, setQueueNumber] = useState("");
     const [encodedOn, setEncodedOn] = useState("");
 
     //check states
@@ -231,7 +231,7 @@ function AddPayment() {
          
               arrangedObj.map((booking,index) => {
                 var bookingInfo = {};
-                bookingInfo.queue = index;
+                bookingInfo.queue = index + 1;
                 bookingInfo.id = booking.id;
                 setQueue(oldArray => [...oldArray, bookingInfo]);
               });
@@ -241,15 +241,16 @@ function AddPayment() {
           });
     },[]);
 
-    console.log(queue)
 
     React.useEffect(() => {
         queue.map((data, index) => {
             if(data.id == id) {
-                setQueueNumber(data.queue);
+                setQueueNumber(data.queue.toString());
             }
           });
     },[queue]);
+
+    console.log(queue)
    
     React.useEffect(() => {
         services.length = 0;
@@ -856,7 +857,7 @@ function AddPayment() {
          )}
         <div className="row">
             <div className="col-sm-12 d-flex justify-content-end">
-                {paymentStatus == "paid" && printButton()}
+                {paymentStatus != "paid" && printButton()}
             </div>
         </div>
         {paymentStatus != "paid" && (
@@ -945,23 +946,25 @@ function AddPayment() {
                     <div
                     style={{ display: "none" }}// This make ComponentToPrint show   only while printing
                     > 
-                    <PaymentToPrint 
-                        ref={componentRef} 
-                        patientId = {patientId}
-                        name={lastName + ", " + firstName + " " + middleName}
-                        birthdate={birthDate}
-                        gender={gender}
-                        age={age}
-                        contact={contactNo + " " + email}
-                        address={address}
-                        bookingDate={bookingDate}
-                        payment={payment}
-                        result={result}
-                        services={printServices}
-                        queue={queueNumber}
-                        encodedOn={encodedOn}
-                        referral={referral}
-                    />
+                    {queueNumber != "" && (
+                        <PaymentToPrint 
+                            ref={componentRef} 
+                            patientId = {patientId}
+                            name={lastName + ", " + firstName + " " + middleName}
+                            birthdate={birthDate}
+                            gender={gender}
+                            age={age}
+                            contact={contactNo + " " + email}
+                            address={address}
+                            bookingDate={bookingDate}
+                            payment={payment}
+                            result={result}
+                            services={printServices}
+                            queue={queueNumber}
+                            encodedOn={encodedOn}
+                            referral={referral}
+                        />
+                    )}
                     </div>
 
 

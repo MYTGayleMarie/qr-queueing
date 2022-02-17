@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status}) {
 
     var btn = [];
 
@@ -15,16 +15,28 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
         btn = buttons.map((button) => {
 
             if(button === 'export-excel') {
-                return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
+                if(status == true) {
+                    return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
+                } else {
+                    return (
+                        <button className="download">Loading Data...</button>
+                    )
+                }
             }
             if(button === 'export-pdf') {
-                return (
-                    <PdfTransaction
-                        name={tableName}
-                        header={tableHeaders}
-                        data={tableData}
-                    />
-                )
+                if(status == true) {
+                    return (
+                        <PdfTransaction
+                            name={tableName}
+                            header={tableHeaders}
+                            data={tableData}
+                        />
+                    )
+                } else {
+                    return (
+                        <button className="download">Loading Data...</button>
+                    )
+                }
             }
     
             if (button.includes("add-")) {
