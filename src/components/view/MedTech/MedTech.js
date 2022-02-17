@@ -78,7 +78,8 @@ function MedTech() {
             var mergedServices = [];
 
             mergedServices = labServices.concat(packageServices);
-            mergedServices.filter((info) => typeof info !== 'undefined').map((info, index) => {
+            console.log(mergedServices)
+            mergedServices.filter((info) => typeof info !== 'undefined' && info.status != 'pending').map((info, index) => {
               console.log(info);
               var servicesInfo = {};
               servicesInfo.booking_id = data.id;
