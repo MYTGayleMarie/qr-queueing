@@ -33,6 +33,7 @@ function ReportClinicalServices() {
   const [clinicServices, setClinicServices] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
+  
   //ALL HOME SERVICES
    React.useEffect(() => {
     clinicServices.length = 0;

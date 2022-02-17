@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint}) {
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -46,6 +46,18 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key}>{data.val}</td>)}
+            </tr>
+        }
+        else if (type === 'registration') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            {rowData[4].val == "unpaid" && (
+                <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button></td>
+            )}
+            {rowData[4].val == "paid" && (
+                <td><button class="action-btn" role="button" onClick={() => link(row.id)}>PRINT BOOKING</button></td>
+            )}
             </tr>
         }
         else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
@@ -126,7 +138,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
     });
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales' || type === 'registration') {
 
         const {from_date, to_date, done} = filteredData;
     

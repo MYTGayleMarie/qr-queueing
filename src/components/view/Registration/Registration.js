@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Registration.css';
@@ -18,6 +19,7 @@ import Table from '../../Table.js';
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
+var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -32,6 +34,7 @@ function Registration() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -65,15 +68,18 @@ function Registration() {
             },
           })
             .then(function (customer) {
-              var formatBookingTime = new Date(booking.booking_time);
-              var formatAddedOn = new Date(booking.added_on);
+              var bookingTime = new Date(booking.booking_time);
+              var formatBookingTime = bookingTime.toDateString().split(" ");
+              var addedOn = new Date(booking.added_on);
+              var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
               bookingDetails.id = booking.id;
               bookingDetails.name =
                 customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-              bookingDetails.bookingTime = formatBookingTime.toDateString() + "\n" + getTime(formatBookingTime);
+              bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
               bookingDetails.serviceType = booking.type;
-              bookingDetails.addedOn = formatAddedOn.toDateString();
+              bookingDetails.paymentStatus = booking.payment_status;
+              bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
             .catch(function (error) {
@@ -88,6 +94,19 @@ function Registration() {
 
   function filter() {}
 
+  function addPaymentPrint(customerId) {
+    id = customerId;
+    setRedirect(true);
+  }
+
+  if(redirect == true) {
+    var link =  "/add-payment/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+
+
   return (
     <div>
       <Navbar />
@@ -95,17 +114,17 @@ function Registration() {
         <Fragment>
           <Header type="thick" title="BOOKING MANAGER" buttons={buttons} tableData={patientData} />
           <Table
-            clickable={false}
-            type={'no-action'}
+            type={'registration'}
             tableData={patientData}
             rowsPerPage={20}
-            headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'ADDED ON']}
+            headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            link={addPaymentPrint}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>

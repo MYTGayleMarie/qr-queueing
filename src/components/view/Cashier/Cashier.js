@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
+import { getToken, getUser, removeUserSession, getTime } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -120,13 +120,16 @@ function Cashier() {
         },
       })
         .then(function (customer) {
-          console.log(customer)
-          var formatBookingTime = new Date(booking.booking_time);
-          var formatAddedOn = new Date(booking.added_on);
+
+          var bookingTime = new Date(booking.booking_time);
+          var formatBookingTime = bookingTime.toDateString().split(" ");
+          var addedOn = new Date(booking.added_on);
+          var formatAddedOn = addedOn.toDateString().split(" ");
           var bookingDetails = {};
+          
           bookingDetails.id = booking.id;
           bookingDetails.name = customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-          bookingDetails.bookingTime = formatBookingTime.toDateString();
+          bookingDetails.bookingTime =  formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
           bookingDetails.serviceType = booking.type;
           bookingDetails.amount = booking.grand_total;
 
@@ -137,7 +140,7 @@ function Cashier() {
             bookingDetails.payment = 'PENDING';
           }
 
-          bookingDetails.addedOn = formatAddedOn.toDateString();
+          bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
           if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code) != true) {
             setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
           }
