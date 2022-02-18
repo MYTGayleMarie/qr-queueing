@@ -31,7 +31,7 @@ const PreEmploymentPackageBasic = [
     name: 'Employment C (CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg)',
     services: 'CBC, ECG, Lipid Panel, Crea, BUA, SGPT, FBS, U/A, CXR, HBsAg',
     labTestId: '3',
-    price: '1600.00',
+    price: '1700.00',
     type: 'package',
   },
 ];
