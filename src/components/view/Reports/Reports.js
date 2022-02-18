@@ -39,8 +39,9 @@ function Reports() {
 
     const [clinicServices, setClinicServices] = useState([]);
 
-    const [pendingPOs, setPendingPOs] = useState([]);
     const [totalSales, setTotalSales] = useState(0);
+    const [pendingPOs, setPendingPOs] = useState([]);
+    const [unpaidInvoices, setUnpaidInvoices] = useState([]);
 
     //ALL BOOKINGS
     React.useEffect(() => {
@@ -119,6 +120,8 @@ function Reports() {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
               requester: userId,
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
             },
           }).then(function (response) {
               setHomeServices(response.data.bookings);
@@ -137,9 +140,11 @@ function Reports() {
             api_key: window.$api_key,
             token: userToken.replace(/['"]+/g, ''),
             requester: userId,
+            date_from: filteredData.to_date,
+            date_to: filteredData.to_date,
           },
         }).then(function (response) {
-            setHomeServices(response.data.bookings);
+            setTodayHomeServices(response.data.bookings);
         }).then(function (error) {
           console.log(error);
         });
@@ -209,6 +214,29 @@ function Reports() {
           });
     },[]);
 
+        //ALL UNPAID INVOICES
+        React.useEffect(() => {
+          axios({
+              method: 'post',
+              url: window.$link + 'Company_invoices/getAll',
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                date_from: filteredData.from_date,
+                date_to: filteredData.to_date,
+                requester: userId,
+              },
+            }).then(function (response) {
+                console.log(response);
+
+                var pending = response.data.company_invoices.filter((info) => info.is_paid == "0");
+                setUnpaidInvoices(pending);
+            }).then(function (error) {
+              console.log(error);
+            });
+      },[]);
+
 
     return (
         <div>
@@ -245,7 +273,7 @@ function Reports() {
                 <div className="col-sm-4">
                     <Card 
                         totalData={homeServices.length}
-                        todayData={""}
+                        todayData={todayHomeServices.length}
                         link={"/reports-home-services"}
                         title='Home Services'
                         color='maroon'
@@ -283,9 +311,9 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        totalData={clinicServices.length}
+                        totalData={unpaidInvoices.length}
                         todayData={""}
-                        link={"/reports-clinical-services"}
+                        link={"/unpaid-invoices"}
                         title='Unpaid Invoices'
                         color='blue'
                         disable={"today"}
