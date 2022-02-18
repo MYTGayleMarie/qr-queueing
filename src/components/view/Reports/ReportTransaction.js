@@ -60,36 +60,51 @@ function ReportTransaction() {
             },
           })
             .then(function (details) {
-              var formatBookingTime = new Date(booking.booking_time);
-              var bookingDetails = {};
-              bookingDetails.id = booking.id;
-              bookingDetails.booking_time = formatBookingTime.toDateString() + " " + getTime(formatBookingTime);
-              bookingDetails.type = booking.type;
+              console.log(details)
+              var bookingTime = new Date(booking.booking_time);
+              var formattedBookingTime = bookingTime.toDateString().split(" ");
 
-              //tests
-              var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
-              var finalArray = details.data.data.booking_details;
-              var tests = "";
-              const packageFinalArray = mergedArray[0];
-
-              if(packageFinalArray != null) {
-                  finalArray = finalArray.concat(packageFinalArray);
-              }
-
-              finalArray.map((test,index) => {
-                if(test.lab_test != null) {
-                    if(finalArray.length - 1 != index){
-                        tests += test.lab_test + ",";
-                    }else {
-                        tests += test.lab_test;
+              axios({
+                method: 'post',
+                url: window.$link + 'customers/show/' + booking.customer_id,
+                withCredentials: false,
+                params: {
+                  api_key: window.$api_key,
+                  token: userToken.replace(/['"]+/g, ''),
+                  requester: userId,
+                },
+              }).then(function (customer) {
+                  var bookingDetails = {};
+                  bookingDetails.id = booking.id;
+                  bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
+                  bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
+                  bookingDetails.type = booking.type;
+    
+                  //tests
+                  var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+                  var finalArray = details.data.data.booking_details;
+                  var tests = "";
+                  const packageFinalArray = mergedArray[0];
+    
+                  if(packageFinalArray != null) {
+                      finalArray = finalArray.concat(packageFinalArray);
+                  }
+    
+                  finalArray.map((test,index) => {
+                    if(test.lab_test != null) {
+                        if(finalArray.length - 1 != index){
+                            tests += test.lab_test + ",";
+                        }else {
+                            tests += test.lab_test;
+                        }
                     }
-                }
-              })
+                  })
+    
+                  bookingDetails.tests = tests;
+                  bookingDetails.total_amount = "P " + booking.grand_total;
+                  setPatientData(oldArray => [...oldArray, bookingDetails]);
 
-              bookingDetails.tests = tests;
-              bookingDetails.total = "P" + booking.total_amount;
-              bookingDetails.total_amount = "P " + booking.grand_total;
-              setPatientData(oldArray => [...oldArray, bookingDetails]);
+              });
             })
             .catch(function (error) {
               console.log(error);
@@ -119,7 +134,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'AMOUNT', 'TOTAL AMOUNT']}
+            tableHeaders={['BOOKING ID', 'BOOKING DATE', 'NAME', 'SERVICE TYPE', 'TESTS', 'AMOUNT']}
             status={printReadyFinal}
              />
           <Table
@@ -127,7 +142,7 @@ function ReportTransaction() {
             type={'no-action'}
             tableData={patientData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'AMOUNT', 'TOTAL AMOUNT']}
+            headingColumns={['BOOKING ID', 'BOOKING DATE', 'NAME', 'SERVICE TYPE', 'TESTS', 'AMOUNT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

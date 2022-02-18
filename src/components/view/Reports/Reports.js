@@ -28,9 +28,17 @@ const filteredData = {
 function Reports() {
     //STATES
     const [bookings, setBookings] = useState([]);
+    const [todayBookings, setTodayBookings] = useState([]);
+
     const [servicesPackages, setServicesPackages] = useState([]);
+    const [services, setServices] = useState([]);
+    const [packages, setPackages] = useState([]);
+
     const [homeServices, setHomeServices] = useState([]);
+    const [todayHomeServices, setTodayHomeServices] = useState([]);
+
     const [clinicServices, setClinicServices] = useState([]);
+
     const [pendingPOs, setPendingPOs] = useState([]);
     const [totalSales, setTotalSales] = useState(0);
 
@@ -54,6 +62,26 @@ function Reports() {
           });
     },[]);
 
+    //TODAY BOOKINGS
+    React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'bookings/getAll',
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+            date_from: filteredData.to_date,
+            date_to: filteredData.to_date,
+          },
+        }).then(function (response) {
+            setTodayBookings(response.data.bookings);
+        }).then(function (error) {
+          console.log(error);
+        });
+  },[]);
+
     //ALL PACKAGES AND SERVICES
     React.useEffect(() => {
         axios({
@@ -64,11 +92,18 @@ function Reports() {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
               requester: userId,
-              date_from: filteredData.from_date,
+              date_from: filteredData.to_date,
               date_to: filteredData.to_date,
             },
           }).then(function (response) {
               setServicesPackages(response.data.booking_details);
+              response.data.booking_details.map((data) => {
+                if(data.type == "lab") {
+                  setServices(oldArray => [...oldArray, data]);
+                } else {
+                  setPackages(oldArray => [...oldArray, data]);
+                }
+              });
           }).then(function (error) {
             console.log(error);
           });
@@ -91,6 +126,24 @@ function Reports() {
             console.log(error);
           });
     },[]);
+
+    //TODAY HOME SERVICES
+    React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'bookings/getAllByType/home service',
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+          },
+        }).then(function (response) {
+            setHomeServices(response.data.bookings);
+        }).then(function (error) {
+          console.log(error);
+        });
+  },[]);
 
     //ALL CLINICAL SERVICES
     React.useEffect(() => {
@@ -173,52 +226,69 @@ function Reports() {
             <div className="row">
                 <div className="col-sm-4">
                     <Card 
-                        data={bookings.length}
+                        totalData={bookings.length}
+                        todayData={todayBookings.length}
                         link={"/reports-transaction"}
-                        title='Total number of Transactions'
+                        title='Transactions'
                         color='maroon'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        data={servicesPackages.length}
+                        services={services.length}
+                        packages={packages.length}
                         link={"/reports-services-packages"}
-                        title='Total number of Services and Packages'
+                        title='Services Today'
                         color='maroon'
                     />
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        data={homeServices.length}
+                        totalData={homeServices.length}
+                        todayData={""}
                         link={"/reports-home-services"}
-                        title='Total number of Home Services'
+                        title='Home Services'
                         color='maroon'
                     />
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-4">
+              <div className="col-sm-4">
                     <Card 
-                        data={clinicServices.length}
-                        link={"/reports-clinical-services"}
-                        title='Total number of Clinical Tests'
-                        color='blue'
-                    />
-                </div>
-                <div className="col-sm-4">
-                    <Card 
-                        data={pendingPOs.length}
-                        link={"/reports-pending-po"}
-                        title='Total number of POs pending for approval'
-                        color='blue'
-                    />
-                </div>
-                <div className="col-sm-4">
-                    <Card 
-                        data={"P " + totalSales}
+                        totalData={"P " + totalSales}
+                        todayData={""}
                         link={"/reports-sales"}
                         title="Today's Total Sales"
                         color='blue'
+                        disable={"today"}
+                    />
+                </div>
+                {/* <div className="col-sm-4">
+                    <Card 
+                        totalData={clinicServices.length}
+                        link={"/reports-clinical-services"}
+                        title='Clinical Tests'
+                        color='blue'
+                    />
+                </div> */}
+                <div className="col-sm-4">
+                    <Card 
+                        totalData={pendingPOs.length}
+                        todayData={""}
+                        link={"/reports-pending-po"}
+                        title='POs pending for approval'
+                        color='blue'
+                        disable={"today"}
+                    />
+                </div>
+                <div className="col-sm-4">
+                    <Card 
+                        totalData={clinicServices.length}
+                        todayData={""}
+                        link={"/reports-clinical-services"}
+                        title='Unpaid Invoices'
+                        color='blue'
+                        disable={"today"}
                     />
                 </div>
             </div>

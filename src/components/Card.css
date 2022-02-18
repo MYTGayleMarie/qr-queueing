@@ -5,7 +5,12 @@
 }
 
 .card-head {
-    height: 20px;
+    height: 25px;
+}
+
+.card-head-title {
+    margin-left: 3%;
+    color: #ffff;
 }
 
 a {
@@ -39,6 +44,8 @@ a {
 .card-title {
     color: #A59F9F;
     font-family: 'Lato-Regular';
+    font-weight: bolder;
     font-size: 12px;
     padding-right: 5%;
+    margin-top: -5%;
 }
