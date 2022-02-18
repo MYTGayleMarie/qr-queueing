@@ -50,6 +50,8 @@ a {
     margin-left: -300px;
     background: url('../images/backgrounds/navbar-bg.png');
     object-fit: cover;
+    background-repeat: repeat;
+    background-size: cover;
     transition: 0.5s;
     overflow-x: hidden;
 }

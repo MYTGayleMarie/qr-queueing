@@ -213,7 +213,7 @@ function PrintBooking() {
             });
         },[services]);
 
-        console.log(printReadyFinal)
+   
 
         React.useEffect(() => {
             var presentDate = new Date();

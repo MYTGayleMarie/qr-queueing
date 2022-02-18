@@ -208,7 +208,7 @@ function Reports() {
               console.log(response.data.data.sales)
               var total = 0;
               response.data.data.sales.map((data,index) => {
-                total += parseFloat(data.grand_total);
+                total += data.grand_total == null ? 0 : parseFloat(data.grand_total);
               })
               setTotalSales(total);
           }).then(function (error) {

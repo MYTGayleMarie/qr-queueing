@@ -72,9 +72,10 @@ function ReportHomeServices() {
                 },
               }).then(function (response) {
                 console.log(response.data)
-                var formattedDate = new Date(data.booking_time);
+                var date = new Date(data.booking_time);
+                var formattedDate = date.toDateString().split(" ");
                 info.booking_number = data.id;
-                info.booking_date = formattedDate.toDateString() + getTime(formattedDate);
+                info.booking_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                 info.address = customer.data.address;
                 var tests = '';
                 response.data.map((data,index2) => {

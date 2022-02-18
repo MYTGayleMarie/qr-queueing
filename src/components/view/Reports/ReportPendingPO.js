@@ -70,9 +70,10 @@ function ReportPendingPO() {
                       requester: userId,
                     },
                   }).then(function (supplier) {
-                    var formattedDate = new Date(data.added_on);
+                    var date =  new Date(data.added_on);
+                    var formattedDate = date.toDateString().split(" ");
                     info.id = data.id;
-                    info.po_date = formattedDate.toDateString() + " " + getTime(formattedDate);
+                    info.po_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                     info.supplier = supplier.data.name;
                     info.total_amount = data.grand_total;
                     setPendingPOs(oldArray => [...oldArray, info]);

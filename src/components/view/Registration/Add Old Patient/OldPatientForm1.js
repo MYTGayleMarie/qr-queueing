@@ -143,6 +143,7 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                 requester: userId,
             }
         }).then(function (response) {
+            console.log(response);
             setDiscountList(response.data.discounts);
         }).catch(function (error) {
             console.log(error);
@@ -162,7 +163,6 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
         }).then(function (response) {
             setCompanyId(response.data.company_id);
             setDiscount(response.data.percentage);
-            console.log(response);
             if(response.data.is_package == "1") {
                 setIsPackage("1");
             }
@@ -207,17 +207,14 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
         //calculate days
         const days = Math.floor(diffInMilliSeconds / 86400);
         diffInMilliSeconds -= days * 86400;
-        console.log('calculated days', days);
     
         // calculate hours
         const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
         diffInMilliSeconds -= hours * 3600;
-        console.log('calculated hours', hours);
     
         // calculate minutes
         const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
         diffInMilliSeconds -= minutes * 60;
-        console.log('minutes', minutes);
 
         let difference = '';
         if (days > 0) {

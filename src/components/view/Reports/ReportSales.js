@@ -55,11 +55,14 @@ function ReportSales() {
               var totalAmount = 0;
               response.data.data.sales.map((data,index) => {
                 var info = {};
-                var formattedDate = new Date(data.payment_date)
+                var date = new Date(data.payment_date);
+                var formattedDate = date.toDateString().split(" ");
+                var selectedDate = new Date(filteredData.from_date);
+                var formattedSelectedDate = selectedDate.toDateString().split(" ");
                 info.method = data.type.toUpperCase();
-                info.amount = "P " + data.grand_total;
-                totalAmount += parseFloat(data.grand_total);
-                info.date = formattedDate.toDateString();
+                info.amount = data.grand_total == null ? "P 0.00" : "P " + data.grand_total;
+                totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
+                info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                 
                 setSales(oldArray => [...oldArray, info]);
 
@@ -112,7 +115,7 @@ function ReportSales() {
             setRender={setRender}
             render={render}
             link={toTransaction}
-            totalCount={total}
+            totalCount={"P "+ total}
             givenClass={"register-mobile"}
           />
 
