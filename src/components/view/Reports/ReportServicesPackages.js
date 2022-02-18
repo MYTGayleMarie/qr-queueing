@@ -30,9 +30,10 @@ const filterData = {
 function ReportServicesPackages() {
 
   const [filteredData, setFilter] = useForm(filterData);
-  const [render, setRender] = useState([]);
+  const [render, setRender] = useState(false);
   const [servicesPackages, setServicesPackages] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
   
   //ALL PACKAGES AND SERVICES
     React.useEffect(() => {
@@ -49,9 +50,9 @@ function ReportServicesPackages() {
               date_to: filteredData.to_date,
             },
           }).then(function (details) {
-              console.log(details.data.booking_details)
                 var output = [];
                  var array = details.data.booking_details;
+                 setTotalCount(array.length);
                     array.forEach(function(item, index) {
                         var existing = output.filter(function(v, i) {
                             var vDate = v.booking_date.split(" ");
@@ -73,29 +74,21 @@ function ReportServicesPackages() {
                         }
                     });
 
-                    console.log(output)
-
                     output.map((data,index) => {
                         var info = {};
-                        var formattedDate = new Date(data.booking_date)
-                        info.booking_date = formattedDate.toDateString();
-
+        
                         if(data.type == "package") {
                             info.service_name = data.package;
                         } else {
                             info.service_name = data.lab_test;
                         }
                         
-                        info.booking_number = data.booking_id;
-                        info.quantity = info.booking_number.toString().split("\n").length;
-                        info.amount = data.price;
-                        info.total_amount = parseFloat(data.price * info.quantity).toFixed(2);
+                        info.quantity = data.booking_id.toString().split("\n").length;
                         setServicesPackages(oldArray => [...oldArray, info]);
 
                         if(output.length - 1 == index) {
                           setPrintReadyFinal(true);
                         }
-
                     })
         
           }).then(function (error) {
@@ -122,7 +115,7 @@ function ReportServicesPackages() {
             buttons={buttons} 
             tableName={'Services and Packages Report'}
             tableData={servicesPackages}
-            tableHeaders={['BOOKING DATE', 'SERVICE NAME', 'BOOKING NUMBER', 'QUANTITY', 'AMOUNT', 'TOTAL AMOUNT']}
+            tableHeaders={['SERVICE NAME', 'QUANTITY']}
             status={printReadyFinal}
              />
           <Table
@@ -130,11 +123,12 @@ function ReportServicesPackages() {
             type={'no-action'}
             tableData={servicesPackages}
             rowsPerPage={10}
-            headingColumns={['BOOKING DATE', 'SERVICE NAME', 'BOOKING NUMBER', 'QUANTITY', 'AMOUNT', 'TOTAL AMOUNT']}
+            headingColumns={['SERVICE NAME', 'QUANTITY']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
             render={setRender}
+            totalCount={totalCount}
             givenClass={"register-mobile"}
           />
 

@@ -97,6 +97,7 @@ function Reports() {
               date_to: filteredData.to_date,
             },
           }).then(function (response) {
+              console.log(response)
               setServicesPackages(response.data.booking_details);
               response.data.booking_details.map((data) => {
                 if(data.type == "lab") {

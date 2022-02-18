@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount}) {
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -144,10 +144,20 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
     
         return(
             <div className="table-container">
-                <div className="search-table-container d-flex justify-content-end">
-                <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
-                <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
-                    <button className="filter-btn" name="done" onClick={() => setRender(!render)}>FILTER</button>
+                <div className="search-table-container row">
+
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
                 </div>
                 <table className={tableClass}>
                     <thead>
