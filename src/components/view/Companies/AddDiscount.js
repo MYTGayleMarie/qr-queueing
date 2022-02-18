@@ -5,6 +5,7 @@ import { useForm, useStep } from "react-hooks-helper";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useParams } from 'react-router-dom';
+import { MultiSelect } from 'react-multi-select-component';
 
 //css
 import './AddCompany.css';
@@ -30,12 +31,19 @@ function AddDiscount() {
     //Form
     const [company, setCompany] = useState("");
     const [discount, setDiscount] = useForm(discountData);
+    const [selectedLab, setSelectedLab] = useState([]);
+    const [selectedPackages, setSelectedPackages] = useState([]);
+    const [applyToall, setApplyToAll] = useState("");
     const {id} = useParams();
+
+    //options
+    const [labOptions, setLabOptions] = useState([]);
+    const [packageOptions, setPackageOptions] = useState([]);
 
     //Redirect
     const [redirect, setRedirect] = useState(false);
 
-    //GET
+    //GET COMPANY DETAILS
     React.useEffect(() => {
         axios({
             method: 'post',
@@ -54,11 +62,79 @@ function AddDiscount() {
         })
     },[]);
 
+    //GET OPTION DETAILS
+    React.useEffect(() => {
+        labOptions.length = 0;
+
+        axios({
+            method: 'post',
+            url: window.$link + '/lab_tests/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            response.data.lab_tests.map((data) => {
+                var info = {};
+
+                info.label = data.name;
+                info.value = data.id + "_service";
+
+                setLabOptions(oldArray => [...oldArray, info]);
+            });
+        }).then(function (error) {
+            console.log(error);
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + '/packages/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            response.data.packages.map((data) => {
+                var info = {};
+
+                info.label = data.name;
+                info.value = data.id + "_package";
+
+                setPackageOptions(oldArray => [...oldArray, info]);
+            });
+        }).then(function (error) {
+            console.log(error);
+        });
+    },[]);
+
+
     //FUNCTIONS
 function submit(e, discount) {
     e.preventDefault();
 
     if(discount.discount_code != "" && discount.discount_percentage != "") {
+
+        var selectedIds = [];
+        var selectedTypes = [];
+
+        selectedLab.map((data) => {
+            var value = data.value.split("_");
+
+            selectedIds.push(value[0]);
+            selectedTypes.push(value[1]);
+        });
+
+        selectedPackages.map((data) => {
+            var value = data.value.split("_");
+
+            selectedIds.push(value[0]);
+            selectedTypes.push(value[1]);
+        });
+
         axios({
             method: 'post',
             url: window.$link + 'discounts/create',
@@ -71,7 +147,10 @@ function submit(e, discount) {
                 discount_percentage: discount.discount_percentage,
                 company_id: id,
                 remarks: discount.remarks,
-                added_by: userId
+                added_by: userId,
+                ids: selectedIds,
+                types: selectedTypes,
+                discount: discount.discount_percentage,
             }
         }).then(function (discount_response) {
             console.log(discount_response)
@@ -153,6 +232,41 @@ if(redirect == true) {
                     <h3 className="form-categories-header italic">DISCOUNT DETAILS</h3>
                     <div className="form-wrapper">
                     <form>
+                    <div className="row">
+                        <label for="discount_code" className="form-label">APPLY TO ALL:  </label>
+                        <div className="col-sm-1">
+                            <input type="radio" value="yes" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/><label className="radio-label">Yes</label>
+                        </div>
+                        <div className="col-sm-1">
+                            <input type="radio" value="no" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/><label className="radio-label">No</label>
+                        </div>
+                    </div>
+                    {applyToall == "no" && (
+                    <div className="row">
+                        <div className="col-sm-11">
+                        <label for="discount_code" className="form-label">APPLY DISCOUNT TO LAB SERVICE/S: </label><br />
+                        <MultiSelect
+                            options={labOptions}
+                            value={selectedLab}
+                            onChange={setSelectedLab}
+                            labelledBy="Select"
+                        />
+                        </div>
+                    </div>
+                    )}
+                    {applyToall == "no" && (
+                    <div className="row">
+                        <div className="col-sm-11">
+                        <label for="discount_code" className="form-label">APPLY DISCOUNT TO PACKAGE/S: </label><br />
+                        <MultiSelect
+                            options={packageOptions}
+                            value={selectedPackages}
+                            onChange={setSelectedPackages}
+                            labelledBy="Select"
+                        />
+                        </div>
+                    </div>
+                    )}
                     <div className="row">
                         <div className="col-sm-6">
                             <label for="discount_code" className="form-label">DISCOUNT CODE<i> (required)</i></label><br />

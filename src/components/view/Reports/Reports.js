@@ -215,7 +215,7 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        data={"P" + totalSales}
+                        data={"P " + totalSales}
                         link={"/reports-sales"}
                         title="Today's Total Sales"
                         color='blue'
