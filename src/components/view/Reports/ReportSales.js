@@ -60,7 +60,7 @@ function ReportSales() {
                 var selectedDate = new Date(filteredData.from_date);
                 var formattedSelectedDate = selectedDate.toDateString().split(" ");
                 info.method = data.type.toUpperCase();
-                info.amount = data.grand_total == null ? "P 0.00" : "P " + data.grand_total;
+                info.amount = data.grand_total == null ? "P 0.00" : "P " + data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
                 info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                 
@@ -115,7 +115,7 @@ function ReportSales() {
             setRender={setRender}
             render={render}
             link={toTransaction}
-            totalCount={"P "+ total}
+            totalCount={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             givenClass={"register-mobile"}
           />
 

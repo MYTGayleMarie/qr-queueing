@@ -99,7 +99,7 @@ function ReportHomeServices() {
                   
                 });
                 info.tests = tests;
-                info.total_amount = data.grand_total;
+                info.total_amount = data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 setHomeServices(oldArray => [...oldArray, info]);
               }).then(function (error) {
                 console.log(error);

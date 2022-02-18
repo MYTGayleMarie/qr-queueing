@@ -101,7 +101,7 @@ function ReportTransaction() {
                   })
     
                   bookingDetails.tests = tests;
-                  bookingDetails.total_amount = "P " + booking.grand_total;
+                  bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
 
               });
