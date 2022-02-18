@@ -26,6 +26,9 @@ const filteredData = {
 };
 
 function Reports() {
+
+    document.body.style = 'background: white;';
+
     //STATES
     const [bookings, setBookings] = useState([]);
     const [todayBookings, setTodayBookings] = useState([]);

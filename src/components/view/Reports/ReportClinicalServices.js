@@ -27,7 +27,7 @@ const filterData = {
 };
 
 function ReportClinicalServices() {
-
+  document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [clinicServices, setClinicServices] = useState([]);

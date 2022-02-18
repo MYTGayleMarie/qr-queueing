@@ -33,6 +33,7 @@ const filterData = {
 
 function MedTech() {
 
+  document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [pendingData, setPendingData] = useState([]);
   const [redirect, setRedirect] = useState(false);

@@ -28,6 +28,7 @@ const filterData = {
 
 function PurchaseOrder() {
 
+    document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [poData, setPoData] = useState([]);
 

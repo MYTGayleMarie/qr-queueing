@@ -29,6 +29,7 @@ const filterData = {
 
 function ReportServicesPackages() {
 
+  document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [servicesPackages, setServicesPackages] = useState([]);

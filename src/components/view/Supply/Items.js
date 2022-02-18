@@ -40,6 +40,7 @@ const itemsData = [
 
 function Items() {
 
+    document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [items, setItems] = useState([]);
     const [inventoryItem, setInventoryItem] = useState("");

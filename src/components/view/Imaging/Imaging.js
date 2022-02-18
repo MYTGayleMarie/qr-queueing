@@ -28,6 +28,7 @@ var id = '';
 
 function Imaging() {
 
+    document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [render, setRender] = useState([]);
     const [redirect, setRedirect] = useState(false);

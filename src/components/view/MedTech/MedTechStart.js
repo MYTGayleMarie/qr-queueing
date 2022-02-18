@@ -41,6 +41,8 @@ function testInput() {
     
 function MedTechStart() {
 
+    document.body.style = 'background: white;';
+    
     //Test Details
     const [barcode, setBarcode] = useState("");
     const [test, setTest] = useState("");

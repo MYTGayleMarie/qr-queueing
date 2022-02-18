@@ -20,6 +20,7 @@ var id = '';
 const buttons = ['add-supplier'];
 
 function Suppliers() {
+    document.body.style = 'background: white;';
     const [render, setRender] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [supplierData, setSupplierData] = useState([]);

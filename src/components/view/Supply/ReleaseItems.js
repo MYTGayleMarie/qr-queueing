@@ -30,6 +30,8 @@ const filterData = {
   };
 
 function ReleaseItems() {
+  
+    document.body.style = 'background: white;';
     const [releaseData, setReleaseData] = useState([]);
     const [filteredData, setFilter] = useForm(filterData);
     const [redirect, setRedirect] = useState(false);

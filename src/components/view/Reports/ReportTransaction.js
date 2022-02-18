@@ -28,6 +28,7 @@ const filterData = {
 
 function ReportTransaction() {
 
+  document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);

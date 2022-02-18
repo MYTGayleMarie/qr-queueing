@@ -29,6 +29,8 @@ const suppliesInfo = {
 
 function AddSupplier() {
 
+    document.body.style = 'background: white;';
+
     //States
     const [supplies, setSupplies] = useForm(suppliesInfo);
 

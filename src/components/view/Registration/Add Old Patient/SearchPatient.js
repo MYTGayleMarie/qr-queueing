@@ -19,6 +19,7 @@ var id = "";
 
 function SearchPatient() {
 
+    document.body.style = 'background: white;';
     const [patientName, setPatientName] = useState("");
     const [patients, setPatients] = useState([]);
     const [redirect, setRedirect] = useState(false);
