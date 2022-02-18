@@ -35,7 +35,7 @@ function ReportHomeServices() {
   
   //ALL HOME SERVICES
    React.useEffect(() => {
-     homeServices.length = 0;
+    homeServices.length = 0;
     axios({
         method: 'post',
         url: window.$link + 'bookings/getAllByType/home service',
@@ -44,6 +44,8 @@ function ReportHomeServices() {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
           requester: userId,
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
         },
       }).then(function (booking) {
           var array = booking.data.bookings;
@@ -108,7 +110,7 @@ function ReportHomeServices() {
       }).then(function (error) {
         console.log(error);
       });
-},[]);
+},[render]);
 
   function filter() {}
 
@@ -124,7 +126,7 @@ function ReportHomeServices() {
           <Header 
             type="thick" 
             title="QR DIAGNOSTICS REPORT" 
-            buttons={buttons} 
+            buttons={homeServices.length != 0 ? buttons : ""} 
             tableName={'Home Service Report'}
             tableData={homeServices}
             tableHeaders={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'TOTAL AMOUNT']}
@@ -132,14 +134,15 @@ function ReportHomeServices() {
              />
           <Table
             clickable={false}
-            type={'services-packages'}
+            type={'no-action'}
             tableData={homeServices}
             rowsPerPage={100}
             headingColumns={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'TOTAL AMOUNT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
           />
 

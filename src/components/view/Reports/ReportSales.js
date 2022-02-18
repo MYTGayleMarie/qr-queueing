@@ -13,6 +13,7 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
+import { Navigate } from 'react-router-dom';
 
 const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
@@ -32,6 +33,8 @@ function ReportSales() {
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [redirect, setRedirection] = useState(false);
+  const [total, setTotal] = useState(0);
   
      //SALES REPORT
      React.useEffect(() => {
@@ -49,17 +52,19 @@ function ReportSales() {
             },
           }).then(function (response) {
               console.log(response.data.data.sales)
-          
+              var totalAmount = 0;
               response.data.data.sales.map((data,index) => {
                 var info = {};
                 var formattedDate = new Date(data.payment_date)
                 info.method = data.type.toUpperCase();
                 info.amount = "P " + data.grand_total;
+                totalAmount += parseFloat(data.grand_total);
                 info.date = formattedDate.toDateString();
                 
                 setSales(oldArray => [...oldArray, info]);
 
                 if(response.data.data.sales.length - 1 == index) {
+                  setTotal(totalAmount);
                   setPrintReadyFinal(true);
                 }
               });
@@ -70,6 +75,14 @@ function ReportSales() {
     },[render]);
 
   function filter() {}
+
+  function toTransaction() {
+    setRedirection(true);
+  }
+
+  if(redirect == true) {
+    return <Navigate to={"/reports-transaction"} />;
+  }
 
   return (
     <div>
@@ -88,8 +101,8 @@ function ReportSales() {
             status={printReadyFinal}
              />
           <Table
-            clickable={false}
-            type={'no-action'}
+            clickable={true}
+            type={'sales'}
             tableData={sales}
             rowsPerPage={100}
             headingColumns={['METHOD', 'AMOUNT','DATE']}
@@ -98,6 +111,8 @@ function ReportSales() {
             filter={filter}
             setRender={setRender}
             render={render}
+            link={toTransaction}
+            totalCount={total}
             givenClass={"register-mobile"}
           />
 

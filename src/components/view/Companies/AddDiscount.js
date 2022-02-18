@@ -146,18 +146,17 @@ function submit(e, discount) {
                 discount_code: discount.discount_code,
                 discount_percentage: discount.discount_percentage,
                 company_id: id,
-                remarks: discount.remarks,
                 added_by: userId,
                 ids: selectedIds,
                 types: selectedTypes,
-                discount: discount.discount_percentage,
+                discounts: "",
             }
         }).then(function (discount_response) {
             console.log(discount_response)
             toast.success("Successfully added company discount details");
-            setTimeout(function() {
-                setRedirect(true);
-            }, 2000);
+            // setTimeout(function() {
+            //     setRedirect(true);
+            // }, 2000);
         }).catch(function (error) {
             toast.error(error);
         })

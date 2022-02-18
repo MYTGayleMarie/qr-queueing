@@ -93,7 +93,7 @@ function ReportClinicalServices() {
       }).then(function (error) {
         console.log(error);
       });
-},[]);
+},[render]);
 
   function filter() {}
 
@@ -124,7 +124,8 @@ function ReportClinicalServices() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
           />
 

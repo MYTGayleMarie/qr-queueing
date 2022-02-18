@@ -32,6 +32,7 @@ function PrintBooking() {
        const [pay, setPay] = useState(0);
        const [remarks, setRemarks] = useState("");
        const [discount, setDiscount] = useState(0);
+       const [encodedOn, setEncodedOn] = useState("");
 
        //customer details
        const {id} = useParams();
@@ -49,6 +50,7 @@ function PrintBooking() {
 
        //other states
        const [redirect, setRedirect] = useState(false);
+       const [printReadyFinal, setPrintReadyFinal] = useState(false);
        const handleRedirect = () => setRedirect(true);
 
        //get customer details
@@ -64,6 +66,8 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
+            setEncodedOn(response.data.added_on);
+            setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
             setResult(response.data.result);
             setTotal(response.data.total_amount);
@@ -133,7 +137,7 @@ function PrintBooking() {
     
         React.useEffect(() => {
             printServices.length = 0;
-            services.map((info, index) => {
+            services.map((info, index1) => {
                 if(info.category_id == null) {
                     axios({
                         method: 'post',
@@ -146,7 +150,7 @@ function PrintBooking() {
                         }
                     }).then(function (response) {
 
-                        response.data.map((packageCat, index) => {
+                        response.data.map((packageCat, index2) => {
                             var serviceDetails = {};
                             axios({
                                 method: 'post',
@@ -168,6 +172,10 @@ function PrintBooking() {
                                 serviceDetails.category = category.data.name;
                                 serviceDetails.name = packageCat.lab_test;
                                 setPrintServices(oldArray => [...oldArray, serviceDetails]);
+
+                                if(services.length - 1 == index1 && response.data.length - 1 == index2) {
+                                    setPrintReadyFinal(true);
+                                }
                             }).catch(function (error) {
                                 console.log(error);
                             })
@@ -197,9 +205,15 @@ function PrintBooking() {
                     }).catch(function (error) {
                         console.log(error);
                     })
+
+                    if(services.length - 1 == index1) {
+                        setPrintReadyFinal(true);
+                    }
                 }
             });
         },[services]);
+
+        console.log(printReadyFinal)
 
         React.useEffect(() => {
             var presentDate = new Date();
@@ -232,15 +246,18 @@ function PrintBooking() {
                     console.log(error);
               });
         },[]);
-    
-        console.log(queue)
+
     
         React.useEffect(() => {
             queue.map((data, index) => {
                 if(data.id == id) {
-                    setQueueNumber(data.queue);
+                    setQueueNumber(data.queue.toString());
                 }
               });
+    
+              if(queueNumber == "") {
+                  setQueueNumber("0");
+              }
         },[queue]);
 
         const componentRef = useRef();
@@ -355,12 +372,25 @@ function PrintBooking() {
                         payment={payment}
                         result={result}
                         services={printServices}
+                        encodedOn={encodedOn}
                         queue={queueNumber}
                     />
             </div>
 
              <div className="row d-flex justify-content-center booking-print">
-                {printButton()}
+                {queueNumber != "" && printReadyFinal == true && (
+                <div className="row">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                        {printButton()}
+                    </div>
+                </div>)}
+
+                {printReadyFinal == false && (
+                <div className="row">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                        <button className="save-btn">Loading Data...</button>
+                    </div>
+                </div>)}
             </div>      
         </div>
       </div>

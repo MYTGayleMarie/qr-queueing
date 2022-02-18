@@ -118,7 +118,7 @@ function ReportTransaction() {
       .catch(function (error) {
         console.log(error);
       });
-  }, [filteredData]);
+  }, [render]);
 
   function filter() {}
 
@@ -146,7 +146,8 @@ function ReportTransaction() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
           />
 

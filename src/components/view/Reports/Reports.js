@@ -204,6 +204,7 @@ function Reports() {
               requester: userId,
             },
           }).then(function (response) {
+              console.log(response)
               console.log(response.data.data.sales)
               var total = 0;
               response.data.data.sales.map((data,index) => {

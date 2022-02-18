@@ -94,7 +94,7 @@ function ReportServicesPackages() {
           }).then(function (error) {
             // console.log(error);
           });
-    },[filteredData]);
+    },[render]);
     
 
   function filter() {}
@@ -127,7 +127,8 @@ function ReportServicesPackages() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             totalCount={totalCount}
             givenClass={"register-mobile"}
           />

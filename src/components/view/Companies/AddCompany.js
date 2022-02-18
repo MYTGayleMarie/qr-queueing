@@ -140,7 +140,7 @@ function AddCompany() {
                 added_by: userId,
                 ids: selectedIds,
                 types: selectedTypes,
-                discount: discount.discount_percentage,
+                discounts: "",
             }
         }).then(function (response) {
             console.log(response);
@@ -157,7 +157,6 @@ function AddCompany() {
                     discount_code: discount.discount_code,
                     discount_percentage: discount.discount_percentage,
                     company_id: response.data.data.company_id,
-                    remarks: discount.remarks,
                     added_by: userId
                 }
             }).then(function (discount_response) {

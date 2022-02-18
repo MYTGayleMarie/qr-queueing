@@ -87,7 +87,7 @@ function ReportPendingPO() {
           }).then(function (error) {
             console.log(error);
           });
-    },[]);
+    },[render]);
 
     function approve(poId) {
         id = poId;
@@ -130,7 +130,8 @@ function ReportPendingPO() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            render={setRender}
+            setRender={setRender}
+            render={render}
             givenClass={"register-mobile"}
             link={approve}
           />
