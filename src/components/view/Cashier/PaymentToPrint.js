@@ -80,14 +80,16 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     <table>
                         <tr>
-                            <td colspan="0"><span className="header">DOB: </span><span className="detail-print dob">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td colspan="1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td colspan="1"><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td colspan="1"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
+                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
+                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
+                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral}</span></td>
+                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
                         </tr >
                     </table>
                     </div>
@@ -128,20 +130,22 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
                     <table>
                         <tr>
-                            <td colspan="0"><span className="header">DOB: </span><span className="detail-print dob">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td colspan="1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td colspan="1"><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td colspan="1"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
+                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
+                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
+                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral}</span></td>
+                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
                         </tr >
                     </table>
                     </div>
@@ -185,20 +189,22 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
                     <table>
                         <tr>
-                            <td colspan="0"><span className="header">DOB: </span><span className="detail-print dob">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td colspan="1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td colspan="1"><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td colspan="1"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
+                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
+                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
+                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral}</span></td>
+                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
                         </tr >
                     </table>
                     </div>
@@ -239,20 +245,22 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
                     <table>
                         <tr>
-                            <td colspan="0"><span className="header">DOB: </span><span className="detail-print dob">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td colspan="1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td colspan="1"><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td colspan="1"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
+                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
+                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
+                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
                         </tr>
+                    </table>
+                    <table>
                         <tr>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral}</span></td>
+                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
                         </tr >
                     </table>
                     </div>

@@ -21,15 +21,15 @@
 .header {
     font-weight: bold;
     color: black;
-    font-size: 8px;
+    font-size: 11px;
 }
 
 .data {
-    font-size: 0.5em;
+    font-size: 0.75em;
 }
 
 .detail-print {
-    font-size: 0.5em;
+    font-size: 0.7em;
 }
 
 .payment-logo {
@@ -115,13 +115,22 @@
 }
 
 .footer-header, .receipt-header {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 2%;
 }
 
-.print-data-header {
-    width: 181px !important;
+.print-data-dob {
+    width: 180px !important;
 }
+
+.print-data-contact {
+    width: 150px !important;
+}
+
+.print-data-address {
+    width: 170px !important;
+}
+
 
 /***TABLE***/
 .table {
