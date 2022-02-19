@@ -9,6 +9,10 @@
     margin-left: -1% !important;
 }
 
+.detail-gender {
+    margin-left: 10%;
+}
+
 .request-form {
     border: 1px solid black;
     border-collapse: collapse;
@@ -84,7 +88,7 @@
     width: 330px;
     height: 47px;
     border-bottom: 1px solid black;
-    margin-top: -17.5%;
+    margin-top: -15.5%;
     margin-left: -3%;
 }
 
@@ -98,7 +102,11 @@
 }
 
 .customer-details-table {
-    margin-top: -2.4% !important;
+    margin-top: -0.2% !important;
+}
+
+.row-bottom-margin {
+    margin-bottom:1px !important;
 }
 
 .services-table {

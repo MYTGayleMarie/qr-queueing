@@ -366,7 +366,7 @@ function PrintBooking() {
                         birthdate={birthDate}
                         gender={gender}
                         age={age}
-                        contact={contactNo + " " + email}
+                        contact={contactNo}
                         address={address}
                         bookingDate={bookingDate}
                         payment={payment}
