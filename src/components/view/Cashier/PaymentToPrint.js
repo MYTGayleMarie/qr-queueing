@@ -74,7 +74,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
@@ -128,7 +128,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
@@ -185,7 +185,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>
@@ -239,7 +239,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div className='row'>
                     <table>
                         <tr>
-                            <td><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
+                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
                             <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
                         </tr>
                     </table>

@@ -119,6 +119,10 @@
     margin-top: 2%;
 }
 
+.print-data-header {
+    width: 182px !important;
+}
+
 /***TABLE***/
 .table {
     display: table;
