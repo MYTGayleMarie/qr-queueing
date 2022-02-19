@@ -69,38 +69,31 @@ export class PaymentToPrint extends React.PureComponent {
             <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right">#{this.props.queue} Request Form</span>
+                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <h1 className='table-header'>Customer Details</h1>
-                    <table>
-                        <tr>
-                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
-                        </tr>
-                    </table>
+                    <div className="customer-details-table">
+                        <div className="row">
+                            <div className="col-sm-4"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </div>
+                            <div className="col-sm-3"><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></div>
+                            <div className="col-sm-1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></div>
+                            <div className="col-sm-1"><span className="header">Gender: </span><span className="detail-print">{this.props.gender}</span></div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-2"><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear()}</span> </div>
+                            <div className="col-sm-4"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></div>
+                            <div className="col-sm-3"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></div>
+                            <div className="col-sm-2"><span className="header">Attending Physician: </span><span className="detail-print">{this.props.referral}</span></div>
+                        </div>
+                    </div>
                     </div>
 
                     <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
-                        <table>
+                        <table className="services-table">
                             <tr>
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
@@ -109,14 +102,14 @@ export class PaymentToPrint extends React.PureComponent {
                         </table>
                     </div>
 
-                    <div className='row'>
+                    <div className='row footer'>
                         <div className='row'>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Payment:</b></span>
+                                <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'> {this.props.payment}</span>
                             </div>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Result:</b></span>
+                                <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
@@ -128,38 +121,31 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right">#{this.props.queue} Request Form</span>
+                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <h1 className='table-header'>Customer Details</h1>
-                    <table>
-                        <tr>
-                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
-                        </tr>
-                    </table>
+                    <div className="customer-details-table">
+                        <div className="row">
+                            <div className="col-sm-4"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </div>
+                            <div className="col-sm-3"><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></div>
+                            <div className="col-sm-1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></div>
+                            <div className="col-sm-1"><span className="header">Gender: </span><span className="detail-print">{this.props.gender}</span></div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-2"><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear()}</span> </div>
+                            <div className="col-sm-4"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></div>
+                            <div className="col-sm-3"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></div>
+                            <div className="col-sm-2"><span className="header">Attending Physician: </span><span className="detail-print">{this.props.referral}</span></div>
+                        </div>
+                    </div>
                     </div>
 
                     <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
-                        <table>
+                        <table className="services-table">
                             <tr>
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
@@ -168,14 +154,14 @@ export class PaymentToPrint extends React.PureComponent {
                         </table>
                     </div>
 
-                    <div className='row'>
+                    <div className='row footer'>
                         <div className='row'>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Payment:</b></span>
+                                <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'> {this.props.payment}</span>
                             </div>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Result:</b></span>
+                                <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
@@ -190,38 +176,31 @@ export class PaymentToPrint extends React.PureComponent {
             <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right">#{this.props.queue} Request Form</span>
+                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <h1 className='table-header'>Customer Details</h1>
-                    <table>
-                        <tr>
-                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
-                        </tr>
-                    </table>
+                    <div className="customer-details-table">
+                        <div className="row">
+                            <div className="col-sm-4"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </div>
+                            <div className="col-sm-3"><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></div>
+                            <div className="col-sm-1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></div>
+                            <div className="col-sm-1"><span className="header">Gender: </span><span className="detail-print">{this.props.gender}</span></div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-2"><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear()}</span> </div>
+                            <div className="col-sm-4"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></div>
+                            <div className="col-sm-3"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></div>
+                            <div className="col-sm-2"><span className="header">Attending Physician: </span><span className="detail-print">{this.props.referral}</span></div>
+                        </div>
+                    </div>
                     </div>
 
                     <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
-                        <table>
+                        <table className="services-table">
                             <tr>
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
@@ -230,14 +209,14 @@ export class PaymentToPrint extends React.PureComponent {
                         </table>
                     </div>
 
-                    <div className='row'>
+                    <div className='row footer'>
                         <div className='row'>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Payment:</b></span>
+                                <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'> {this.props.payment}</span>
                             </div>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Result:</b></span>
+                                <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>
@@ -249,38 +228,31 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right">#{this.props.queue} Request Form</span>
+                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <h1 className='table-header'>Customer Details</h1>
-                    <table>
-                        <tr>
-                            <td><span className="header">Patient ID</span><span className="detail">{this.props.patientId}</span></td>
-                            <td><span className="header">Name</span><span className="detail">{this.props.name}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Date of Birth</span><span className="detail">{formattedBirthDate[1] + ' ' + formattedBirthDate[2] + ' ' + formattedBirthDate[3]}</span> </td>
-                            <td><span className="header">Booking Date</span><span className="detail">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Age</span><span className="detail">{this.props.age}</span></td>
-                            <td><span className="header">Gender</span><span className="detail">{this.props.gender}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Contact</span><span className="detail">{this.props.contact}</span></td>
-                        </tr>
-                        <tr>
-                            <td><span className="header">Address</span><span className="detail">{this.props.address}</span></td>
-                            <td><span className="header">Attending Physician</span><span className="detail">{this.props.referral}</span></td>
-                        </tr>
-                    </table>
+                    <div className="customer-details-table">
+                        <div className="row">
+                            <div className="col-sm-4"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span> </div>
+                            <div className="col-sm-3"><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></div>
+                            <div className="col-sm-1"><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></div>
+                            <div className="col-sm-1"><span className="header">Gender: </span><span className="detail-print">{this.props.gender}</span></div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-2"><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear()}</span> </div>
+                            <div className="col-sm-4"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></div>
+                            <div className="col-sm-3"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></div>
+                            <div className="col-sm-2"><span className="header">Attending Physician: </span><span className="detail-print">{this.props.referral}</span></div>
+                        </div>
+                    </div>
                     </div>
 
                     <div className="line"></div>  
 
                     <div className='row'>
                         <h1 className='table-header'>Laboratory</h1>
-                        <table>
+                        <table className="services-table">
                             <tr>
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
@@ -289,14 +261,14 @@ export class PaymentToPrint extends React.PureComponent {
                         </table>
                     </div>
 
-                    <div className='row'>
+                    <div className='row footer'>
                         <div className='row'>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Payment:</b></span>
+                                <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'> {this.props.payment}</span>
                             </div>
                             <div className='col-sm-4'>
-                                <span className='header'><b>Result:</b></span>
+                                <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result}</span>
                             </div>
                         </div>

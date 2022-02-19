@@ -1,11 +1,12 @@
 .print-area {
-    padding: 3%;
+    padding: 2%;
 }
 
 .table-header {
     color: black;
-    font-size:1em;
-    margin-top: 0% !important;
+    font-size:8px;
+    margin-top: 0.5% !important;
+    margin-left: -1% !important;
 }
 
 .request-form {
@@ -16,19 +17,20 @@
 .header {
     font-weight: bold;
     color: black;
-    font-size: 0.8em;
+    font-size: 8px;
 }
 
 .data {
-    font-size: 0.8em;
+    font-size: 0.5em;
 }
 
-.detail {
-    font-size: 0.8em;
+.detail-print {
+    font-size: 0.5em;
 }
 
 .payment-logo {
-    width: 20%;
+    width: 13%;
+    margin-left: -2.7%;
 }
 
 .print-row {
@@ -79,16 +81,57 @@
 }
 
 .line{
-    width: 300px;
+    width: 330px;
     height: 47px;
     border-bottom: 1px solid black;
-    margin-top: -12%;
+    margin-top: -17.5%;
+    margin-left: -3%;
 }
 
 .encoded-on {
     font-size: 10px;
     margin-left: -1% !important;
 }
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.customer-details-table {
+    margin-top: -2.4% !important;
+}
+
+.services-table {
+    margin-left: 1%;
+    padding: 3% !important;
+}
+
+.footer-header, .receipt-header {
+    font-size: 10px;
+    margin-top: 2%;
+}
+
+.footer {
+    margin-left: 5%;
+}
+
+/***TABLE***/
+.table {
+    display: table;
+    border-collapse: collapse;
+ }
+  
+ .table .table-row {
+    display: table-row;
+ }
+  
+ .table .table-cell {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid black;
+ }
+ 
 
 
 
