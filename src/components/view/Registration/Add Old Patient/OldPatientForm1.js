@@ -71,7 +71,7 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     }
 
     function proceed() {
-        if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "") {
+        if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "" && referral != "") {
             return (
                 <div className="d-flex justify-content-end">
                 <button 
@@ -286,7 +286,7 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
              <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
              <form className="needs-validation">
              <div className="row">
-                <label for="address" className="form-label">REFERRAL</label><br />
+                <label for="address" className="form-label">REFERRAL <i>(required)</i></label><br />
                 <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
             </div>
 

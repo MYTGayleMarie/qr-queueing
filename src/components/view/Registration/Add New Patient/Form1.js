@@ -61,7 +61,8 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
       serviceLocation != '' &&
       result != '' &&
       dateOfTesting != '' &&
-      lastMeal != ''
+      lastMeal != '' &&
+      referral != ""
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -361,7 +362,7 @@ React.useEffect(() => {
             </div>
             <div className="row">
               <label for="address" className="form-label">
-                REFERRAL
+                REFERRAL <i>(required)</i>
               </label>
               <br />
               <input
