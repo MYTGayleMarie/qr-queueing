@@ -25,8 +25,8 @@ import ReviewPurchaseOrder from './components/View/Supply/ReviewPurchaseOrder';
 import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
 import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
 import Items from './components/View/Supply/Items';
-import MedTech from './components/View/MedTech/MedTech';
-import MedTechStart from './components/View/MedTech/MedTechStart';
+import MedTech from './components/View/Results Releasing/MedTech';
+import MedTechStart from './components/View/Results Releasing/MedTechStart';
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
 import Suppliers from './components/View/Supply/Suppliers';
@@ -51,6 +51,7 @@ import AddInvoicePayment from './components/View/Companies/AddInvoicePayment';
 import AddCompany from './components/View/Companies/AddCompany';
 import AddDiscount from './components/View/Companies/AddDiscount';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
+import { InvoiceToPrint } from './components/View/Companies/InvoiceToPrint';
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
 
@@ -86,9 +87,9 @@ function App() {
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/add-discount/:id" element={token ? <AddDiscount /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
-        <Route path="/review-invoice/:id" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
+        <Route path="/review-invoice/:id/:discountId" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
-        <Route path="/add-invoice-payment/:id" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
+        <Route path="/add-invoice-payment/:id/:companyId" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />

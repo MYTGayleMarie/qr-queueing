@@ -65,7 +65,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                     return <button className="edit-profile" onClick={addInventory}> ADD INVENTORY</button>
                 }
                 else if(button === 'add-invoice') {
-                    return <button className="edit-profile" onClick={addInvoice}> ADD INVOICE</button>
+                    return <button className="edit-profile" onClick={addInvoice}> CREATE INVOICE</button>
                 }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>

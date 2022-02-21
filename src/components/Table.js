@@ -67,11 +67,12 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
             </tr>
         }
-        else if (type === 'company-invoices' && clickable == true) {
+        else if (type === 'companies-discount' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val.replace(/\s/g, '')}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
+            <td key={index} data-heading={data.key} className={index == 2 ? "company_name" : data.val.replace(/\s/g, '')}>{index == 0 || index == 1 ? "" : data.val}</td>
+            )}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id, row.discount_id)}>REVIEW</button></td>
             </tr>
         }
         else if (type === 'med-tech' && clickable == true) {
@@ -105,7 +106,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
         else if(type === "payment-invoices") {
             return <tr key={row.id}>
-            <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td>
+            {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
@@ -124,10 +125,11 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD DISCOUNT</button></td>
             </tr>
         }
-        else if(type === 'companies-discount') {
+        else if(type === 'company-invoices') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 0 ? "company_name" : data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val}>{index == 0 ? "" : data.val}</td>)}
+             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.company_id)}>ADD PAYMENT</button></td>
             </tr>
         }
         else {
@@ -234,7 +236,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         );
 
     }
-    else if(type === 'companies' || type === 'company-invoices') {
+    else if(type === 'companies') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -257,6 +259,29 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         );
 
     }
+    else if(type === 'company-invoices') {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index} className={index == 1 ? "company_name" : ""}>{index == 0 ? "" : col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+
+    }
     else if(type === 'companies-discount') {
         return(
             <div className="table-container">
@@ -267,7 +292,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index} className={index == 0 ? "company_name" : ""}>{col}</th>
+                                <th key={index} className={index == 2 ? "company_name" : ""}>{index == 0 || index == 1 ? "" : col}</th>
                             ))}
                         </tr>
                     </thead>
@@ -289,7 +314,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                 <table className={tableClass}>
                     <thead>
                         <tr>
-                            <th></th>
+                            {/* <th></th> */}
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
                             ))}
@@ -299,7 +324,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                {/* <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} /> */}
              </div>
         );
 
