@@ -108,9 +108,9 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-4'>
+                            <td className='col-sm-10'>
                                 <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.payment == "" ? " NONE" : " " + this.props.payment}</span>
+                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
                             <td className='col-sm-4'>
                                 <span className='footer-header'><b>Result:</b></span>
@@ -164,9 +164,9 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-4'>
+                            <td className='col-sm-10'>
                                 <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.payment == "" ? " NONE" : " " + this.props.payment}</span>
+                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
                             <td className='col-sm-4'>
                                 <span className='footer-header'><b>Result:</b></span>
@@ -223,9 +223,9 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-4'>
+                            <td className='col-sm-10'>
                                 <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.payment == "" ? " NONE" : " " + this.props.payment}</span>
+                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
                             <td className='col-sm-4'>
                                 <span className='footer-header'><b>Result:</b></span>
@@ -279,9 +279,9 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-4'>
+                            <td className='col-sm-10'>
                                 <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.payment == "" ? " NONE" : " " + this.props.payment}</span>
+                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
                             <td className='col-sm-4'>
                                 <span className='footer-header'><b>Result:</b></span>

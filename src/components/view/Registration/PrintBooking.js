@@ -47,6 +47,7 @@ function PrintBooking() {
        const [address, setAddress] = useState("");
        const [seniorPwdId, setID] = useState("");
        const [patientId, setPatientId] = useState("");
+       const [discountCode, setDiscountCode] = useState("");
 
        //other states
        const [redirect, setRedirect] = useState(false);
@@ -374,6 +375,7 @@ function PrintBooking() {
                         services={printServices}
                         encodedOn={encodedOn}
                         queue={queueNumber}
+                        isCompany={true}
                     />
             </div>
 

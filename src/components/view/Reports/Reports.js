@@ -288,7 +288,7 @@ function Reports() {
             <div className="row">
               <div className="col-sm-4">
                     <Card 
-                        totalData={"P " + totalSales}
+                        totalData={"P " + totalSales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         todayData={""}
                         link={"/reports-sales"}
                         title="Today's Total Sales"

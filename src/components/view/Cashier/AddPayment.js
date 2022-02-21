@@ -75,6 +75,7 @@ function AddPayment() {
     const [seniorPwdId, setID] = useState("");
     const [patientId, setPatientId] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
+    const [paymentType, setPaymentType] = useState("");
     const [referral, setReferral] = useState("");
 
     //services
@@ -157,7 +158,9 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log(response);
             setPaymentStatus(response.data.payment_status);
+            setPaymentType(response.data.payment_type);
             setTotal(response.data.total_amount);
             setGrandTotal(response.data.grand_total);
             setServiceFee(response.data.home_service_fee);
@@ -989,6 +992,7 @@ function AddPayment() {
                             queue={queueNumber}
                             encodedOn={encodedOn}
                             referral={referral}
+                            discountCode={false}
                         />
                 
                     </div>
