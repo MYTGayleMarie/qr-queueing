@@ -35,6 +35,11 @@ export const getToken = () => {
     return localStorage.getItem('token') || null;
 }
 
+//return token expiry from local storage
+export const getTokenExpiry = () => {
+    return localStorage.getItem('token_expiry') || null;
+}
+
 //log logout session
 export const logOut = () => {
     axios({
@@ -52,6 +57,7 @@ export const logOut = () => {
 export const removeUserSession = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('token_expiry');
     logOut();
     refreshPage();
 }

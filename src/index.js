@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
-import {getToken, getUser} from './utilities/Common.js';
+import {getToken, getTokenExpiry, getUser} from './utilities/Common.js';
 
 
 
@@ -13,6 +13,7 @@ window.$link= "https://blue.qrdiagnosticsph.com/";
 window.$api_key = "Y5QubbhTOb";
 window.$userToken = getToken();
 window.$userId = getUser();
+window.$token_expiry = getTokenExpiry();
 
 ReactDOM.render(
   <React.StrictMode>
