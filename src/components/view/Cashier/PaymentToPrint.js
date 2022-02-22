@@ -88,9 +88,12 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     <table>
                         <tr>
-                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
                         </tr >
+                        <tr>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                        </tr>
                     </table>
                     </div>
 
@@ -144,9 +147,12 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     <table>
                         <tr>
-                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
                         </tr >
+                        <tr>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                        </tr>
                     </table>
                     </div>
 
@@ -203,9 +209,12 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     <table>
                         <tr>
-                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
                         </tr >
+                        <tr>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                        </tr>
                     </table>
                     </div>
 
@@ -259,9 +268,12 @@ export class PaymentToPrint extends React.PureComponent {
                     </table>
                     <table>
                         <tr>
-                            <td className="print-data-address"><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
                         </tr >
+                        <tr>
+                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                        </tr>
                     </table>
                     </div>
 

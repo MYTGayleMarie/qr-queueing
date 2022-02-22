@@ -984,6 +984,7 @@ function AddPayment() {
                             gender={gender}
                             age={age}
                             contact={contactNo}
+                            email={email}
                             address={address}
                             bookingDate={bookingDate}
                             payment={payment}
