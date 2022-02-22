@@ -54,12 +54,33 @@ import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import { InvoiceToPrint } from './components/View/Companies/InvoiceToPrint';
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
+import { useEffect } from 'react';
+import { removeUserSession} from './utilities/Common.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [token, setAuthentication] = useState(window.$userToken);
+  const [tokenExpiry, setTokenExpiry] = useState(window.$token_expiry);
   document.title = 'QR Diagnostics System';
 
+  function promptExpiry() {
+    toast.warning("TOKEN HAS EXPIRED. PLEASE LOG IN AGAIN...");
+    setTimeout(removeUserSession(),5000);
+  }
+
+  useEffect(() => {
+    var startDate = new Date().getTime();
+    var endDate = new Date(tokenExpiry.replace(/['"]+/g, ''));
+
+    var seconds = Math.floor((endDate - startDate)/1000);
+
+    setInterval(promptExpiry, seconds * 1000);
+
+  },[]);
+
   return (
+    <div>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -112,6 +133,9 @@ function App() {
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>
     </Router>
+
+    <ToastContainer/>
+    </div>
   );
 }
 

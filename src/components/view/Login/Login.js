@@ -16,7 +16,7 @@ import axios from 'axios';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [click, setClick] = useState(0);
+  const [click, setClick] = useState(false);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -31,7 +31,7 @@ function Login() {
 
   function submit(e) {
     e.preventDefault();
-    if(click == 0) {
+    if(click == false) {
       axios({
         method: 'post',
         url: window.$link + 'login',
@@ -45,13 +45,15 @@ function Login() {
         .then(function (response) {
           localStorage.setItem('token', JSON.stringify(response.data.token));
           localStorage.setItem('user', JSON.stringify(response.data.id));
+          localStorage.setItem('token_expiry', JSON.stringify(response.data.token_expiry));
           refreshPage();
         })
         .catch(function (error) {
           toast.error('Invalid Login');
         });
     }
-    setClick(click+=1);
+
+    setClick(true);
   }
 
   function handle(e) {
