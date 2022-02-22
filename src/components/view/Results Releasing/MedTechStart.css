@@ -111,6 +111,21 @@
   margin-bottom: 5%;
 }
 
+.md-input {
+  width: 35%;
+  margin-right: 15% !important;
+}
+
+.md-label {
+  margin-right: 1%;
+  color: #419EA3;
+  font-family: 'Montserrat-Bold';
+}
+
+.more-gap {
+  margin-top: 3%;
+}
+
 /* Create two equal columns that floats next to each other */
 .column {
     float: left;

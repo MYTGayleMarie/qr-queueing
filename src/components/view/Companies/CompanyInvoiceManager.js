@@ -19,6 +19,7 @@ const buttons = ['add-company'];
 const userToken = getToken();
 const userId = getUser();
 var id;
+var company_id;
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -38,11 +39,12 @@ function CompanyInvoiceManager() {
   const [render, setRender] = useState([]);
   const [finalCompanyData, setFinalCompanyData] = useState([]);
   const [redirect, setRedirect] = useState("");
+  const [toAddPayment, setToAddPayment] = useState(false);
   
   React.useEffect(() => {
     axios({
         method: 'post',
-        url: window.$link + 'discounts/getAll',
+        url: window.$link + 'Company_invoices/getAll',
         withCredentials: false, 
         params: {
             api_key: window.$api_key,
@@ -51,7 +53,7 @@ function CompanyInvoiceManager() {
         }
     }).then(function (response) {
         console.log(response);
-        response.data.discounts.map((row, index) => {
+        response.data.company_invoices.map((row, index) => {
             var companyDetails = {};
             axios({
                 method: 'post',
@@ -64,10 +66,13 @@ function CompanyInvoiceManager() {
                 }
             }).then(function (company) {
                 console.log(company);
-                companyDetails.id = row.company_id;
+                companyDetails.company_id = company.data.id;
+                companyDetails.id = row.id;
                 companyDetails.description = company.data.name;
                 companyDetails.discountCode = row.discount_code;
                 companyDetails.remarks = company.data.remarks;
+                companyDetails.total = "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
 
                 setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
 
@@ -80,14 +85,16 @@ function CompanyInvoiceManager() {
     });
   }, []);
 
-  function reviewInvoice(invoiceId) {
+  function addPayment(invoiceId, companyId) {
     id = invoiceId;
-    setRedirect(true);
+    company_id = companyId
+    setToAddPayment(true);
   }
 
-  if (redirect == true) {
-    var link = '/review-invoice/' + id;
-    return <Navigate to={link} />;
+  if(toAddPayment == true) {
+    return (
+      <Navigate to ={"/add-invoice-payment/" + id + "/" + company_id}/>
+    )
   }
 
   function filter() {}
@@ -104,13 +111,13 @@ function CompanyInvoiceManager() {
                     type={'company-invoices'}
                     tableData={finalCompanyData}
                     rowsPerPage={4}
-                    headingColumns={['ID', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'ACTION']}
+                    headingColumns={['COMPANY ID','ID', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'TOTAL', 'PAYMENT STATUS', 'ACTION']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
                     render={setRender}
                     givenClass={'company-mobile'}
-                    link={reviewInvoice}
+                    link={addPayment}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

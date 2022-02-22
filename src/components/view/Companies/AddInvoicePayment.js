@@ -9,6 +9,7 @@ import { Navigate } from 'react-router-dom';
 import { useForm, useStep } from "react-hooks-helper";
 import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InvoiceToPrint } from './InvoiceToPrint';
 
 //components
 import Header from '../../Header.js';
@@ -50,7 +51,7 @@ function AddInvoicePayment() {
   document.body.style = 'background: white;';
 
   //Invoice details
-  const {id} = useParams();
+  const {id, companyId} = useParams();
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([]);
   const [checked, setChecked] = useForm(checkedData);
@@ -113,7 +114,7 @@ function AddInvoicePayment() {
   React.useEffect(() => {
     axios({
       method: 'post',
-      url: window.$link + 'companies/show/' + id,
+      url: window.$link + 'companies/show/' + companyId,
       withCredentials: false, 
       params: {
           api_key: window.$api_key,
@@ -155,7 +156,7 @@ function AddInvoicePayment() {
     info.length = 0;
     axios({
       method: 'post',
-      url: window.$link + 'company_invoices/getAllByCompany/' + id,
+      url: window.$link + 'company_invoices/show/' + id,
       withCredentials: false, 
       params: {
           api_key: window.$api_key,
@@ -163,18 +164,18 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response.data.company_invoices);
+      console.log(response);
 
-      response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
+    //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
         var info = {};
-        info.id = data.id;
-        info.code = data.discount_code;
-        info.price = data.price;
-        info.total = data.total;
+        info.id = response.data.id;
+        info.code = response.data.discount_code;
+        info.price = response.data.price;
+        info.total = response.data.total;
 
         setInfo(oldArray => [...oldArray, info]);
         
-      });
+    //   });
 
     }).then(function(error) {
       console.log(error);
@@ -341,16 +342,56 @@ function AddInvoicePayment() {
             toast.error("Payment Unsuccessful!");
         });
     }
-}
+}   
+
+  function printLog() {
+    axios({
+        method: 'post',
+        url: window.$link + 'company_invoices/print/' + id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then(function (response) {
+        console.log(response);
+      });
+  }
+
+  function emailInvoice() {
+    axios({
+        method: 'post',
+        url: window.$link + 'company_invoices/email/' + id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+            emailed_to: email,
+        }
+      }).then(function (response) {
+        console.log(response);
+      });
+  }
 
   function printButton() {
-    return (
-        <button className="save-btn" onClick={handlePrint}>
-        <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
-            PRINT
-        </button>
-    ) 
-}
+        return (
+            <button className="save-btn" onClick={handlePrint}>
+            <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+                PRINT
+            </button>
+        ) 
+    }
+
+    function emailButton() {
+        return (
+            <button className="save-btn" onClick={handleShow}>
+            <FontAwesomeIcon icon={"envelope"} alt={"email"} aria-hidden="true" className="print-icon"/>
+                EMAIL
+            </button>
+        ) 
+    }
 
 function cashForm() {
 
@@ -580,7 +621,7 @@ function othersForm() {
                     rowsPerPage={4}
                     headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
                     givenClass={'company-mobile'}
-                    setChecked={setChecked}
+                    // setChecked={setChecked}
                 />
 
                 {grandTotal != null && grandTotal != 0 && (
@@ -592,8 +633,9 @@ function othersForm() {
                 )}
 
                 <div className="row">
-                    <div className="col-sm-12 d-flex justify-content-end">
-                        {paymentStatus == "paid" && printButton()}
+                    <div className="col-sm-12 d-flex justify-content-center">
+                        {printButton()}
+                        {emailButton()}
                     </div>
                 </div>
 
@@ -612,12 +654,12 @@ function othersForm() {
                     <input type="radio" id="others" name="payment_method" value="others" onClick={()=> setPayment('others')}/>
                     <span className="check method">OTHERS</span>
                     
-                    {/* <form> */}
+                  
                         <p>{payment === 'cash' && cashForm()}</p>
                         <p>{payment === 'check' && checkForm()}</p>
                         <p>{payment === 'card' && cardForm()}</p>
                         <p>{payment === 'others' && othersForm()}</p>
-                    {/* </form> */}
+                 
 
                     <ToastContainer hideProgressBar={true}/>
 
@@ -626,20 +668,13 @@ function othersForm() {
 
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
-                <Modal.Title>ADD INVOICE</Modal.Title>
+                <Modal.Title>EMAIL INVOICE TO:</Modal.Title>
               </Modal.Header>
               <form>
               <Modal.Body>
                 
-              <span>Choose discount code to add invoice:</span>
-              <select name="discountCode" className="invoice-select" value={selectedCode} onChange={(e) => setSelectedCode(e.target.value)}>
-                <option value="" disabled selected>Select</option>
-                {discountCodes != "" && discountCodes.map((data,index) => {
-                  return (
-                    <option value={data.id}>{data.discount_code}</option>
-                  )
-                })}
-              </select>
+              <span className="label">EMAIL: </span>
+              <input name="email" className="email-input" value={email} onChange={(e) => setEmail(e.target.value)}/>
 
 
               </Modal.Body>
@@ -647,12 +682,27 @@ function othersForm() {
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
-                  <Button type="submit" variant="primary" onClick={addInvoice}>
-                    Go
+                  <Button variant="primary" onClick={emailInvoice}>
+                    EMAIL
                   </Button>
                 </Modal.Footer>
               </form>
             </Modal>
+
+            <div
+                    style={{ display: "none" }}// This make ComponentToPrint show   only while printing
+                    > 
+            
+                        <InvoiceToPrint 
+                            ref={componentRef} 
+                            name={name}
+                            contactNo={contactNo}
+                            address={address}
+                            contactPerson={contactPerson}
+                            invoices={info}
+                        />
+                
+                    </div>
 
     </div>
   );

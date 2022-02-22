@@ -119,7 +119,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Cashier</span>
           </li>
         </NavLink>
-        <NavLink to="/extraction" activeClassName="active" class="link">
+        {/* <NavLink to="/extraction" activeClassName="active" class="link">
           <li href="#" class="nav-link extraction-nav">
             <img src={extractionIcon} alt={'extraction'} class="extraction icon"></img>
             <span class="mx-2">Extraction</span>
@@ -130,23 +130,11 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <img src={imagingIcon} alt={'imaging'} class="imaging icon"></img>
             <span class="mx-2">Imaging</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/medtech" activeClassName="active" class="link">
           <li href="/medtech" class="nav-link imaging-nav">
             <img src={medTechIcon} alt={'medTech'} class="medTech icon"></img>
-            <span class="mx-2">Medical Technology</span>
-          </li>
-        </NavLink>
-        <NavLink to="/Users" activeClassName="active" class="link">
-          <li href="#" class="nav-link users-nav">
-            <div class="row">
-              <div class="col-3">
-                <img src={usersIcon} alt={'users'} class="users icon"></img>
-              </div>
-              <div class="col-9">
-                <span class="mx-2">Users</span>
-              </div>
-            </div>
+            <span class="mx-2">Results Releasing</span>
           </li>
         </NavLink>
         <li href="#" class="nav-link supply-nav">
@@ -189,6 +177,18 @@ function adminNavbar(showNavbar,setshowNavbar) {
               </Link>
             </ul>
           </li>
+          <NavLink to="/Users" activeClassName="active" class="link">
+          <li href="#" class="nav-link users-nav">
+            <div class="row">
+              <div class="col-3">
+                <img src={usersIcon} alt={'users'} class="users icon"></img>
+              </div>
+              <div class="col-9">
+                <span class="mx-2">Users</span>
+              </div>
+            </div>
+          </li>
+        </NavLink>
 
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
@@ -336,21 +336,17 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
             <span class="mx-2">Cashier</span>
         </NavLink>
-        <NavLink to="/extraction" activeClassName="active" class="link">
+        {/* <NavLink to="/extraction" activeClassName="active" class="link">
             <img src={extractionIcon} alt={'extraction'} class="extraction icon mobile-size-icon"></img>
             <span class="mx-2">Extraction</span>
         </NavLink>
         <NavLink to="/imaging" activeClassName="active" class="link">
             <img src={imagingIcon} alt={'imaging'} class="imaging icon mobile-size-icon"></img>
             <span class="mx-2">Imaging</span>
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/medtech" activeClassName="active" class="link">
             <img src={medTechIcon} alt={'medTech'} class="medTech icon mobile-size-icon"></img>
-            <span class="mx-2">Medical Technology</span>
-        </NavLink>
-        <NavLink to="/users" activeClassName="active" class="link">
-            <img src={usersIcon} alt={'users'} class="medTech icon mobile-size-icon"></img>
-            <span class="mx-1">Users</span>
+            <span class="mx-2">Results Releasing</span>
         </NavLink>
         <div class="side-nav-content">
           <div className='reports-show-nav' onClick={(e) => setShowCompany(!showCompany)}>
@@ -378,6 +374,10 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             {showSupply == true && supplySideNav()}
           </div>         
         </div>
+        <NavLink to="/users" activeClassName="active" class="link">
+            <img src={usersIcon} alt={'users'} class="medTech icon mobile-size-icon"></img>
+            <span class="mx-1">Users</span>
+        </NavLink>
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>

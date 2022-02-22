@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
 import Header from '../../Header.js';
@@ -58,6 +59,7 @@ function MedTechStart() {
     const {serviceId, bookId, type} = useParams();
     const [inputBox, setImaging] = useState(false);
     const [file, setFile] = useState("");
+    const [md, setMd] = useState("");
 
     const toggleImaging= () => {
         var updateLink = "";
@@ -124,43 +126,46 @@ function MedTechStart() {
             extractionLink = "Bookingdetails/updateExtraction/";
         }
 
-        axios({
-            method: 'post',
-            url: window.$link + updateLink + serviceId,
-            withCredentials: false, 
-            params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ''),
-                test_start: "",
-                test_finish: new Date(),
-                file_result: file,
-                updated_by: userId,
-            }
-        }).then(function (booking) {
-            console.log(booking);
-            setExaminationCommpleted(new Date());
-            toast.success("Examination finished!");
-        }).then(function (error) {
-            console.log(error);
-        });
-
-        axios({
-            method: 'post',
-            url: window.$link + extractionLink + serviceId,
-            withCredentials: false, 
-            params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ''),
-                booking: bookId,
-                status: 'completed',
-                extracted_on: "",
-                updated_by: userId,
-            }
-        }).then(function (booking) {
-            console.log(booking);
-        }).then(function (error) {
-            console.log(error);
-        })
+        if(file != "" && md != "") {
+            axios({
+                method: 'post',
+                url: window.$link + updateLink + serviceId,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    test_start: "",
+                    test_finish: new Date(),
+                    file_result: file,
+                    //md: md,
+                    updated_by: userId,
+                }
+            }).then(function (booking) {
+                console.log(booking);
+                setExaminationCommpleted(new Date());
+                toast.success("Examination finished!");
+            }).then(function (error) {
+                console.log(error);
+            });
+    
+            axios({
+                method: 'post',
+                url: window.$link + extractionLink + serviceId,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    booking: bookId,
+                    status: 'completed',
+                    extracted_on: "",
+                    updated_by: userId,
+                }
+            }).then(function (booking) {
+                console.log(booking);
+            }).then(function (error) {
+                console.log(error);
+            })
+        }
     }
   
     React.useEffect(() => {
@@ -213,7 +218,7 @@ function MedTechStart() {
         <div className="active-cont">
             <Header 
                 type='thin'
-                title='CHIEF MEDICAL TECHNOLOGY' 
+                title='RESULTS RELEASING' 
             />
             <ToastContainer/>
             <div className="row">
@@ -255,15 +260,23 @@ function MedTechStart() {
                     )}
                 </div>
             </div>
+
+            <div className='row more-gap'>
+                {examinationStarted != null  && examinationCompleted == null && (
+                <div className='col-sm-12 d-flex justify-content-end'>
+                    <span className='md-label'>MD :</span>
+                    <input name="md" className='md-input' onChange={(e) => setMd(e.target.value)}/>
+                </div>
+                )}
+            </div>
             
             <TestUpdates 
-                extractedOn={extractionOn}
                 categoryId={categoryId}
                 testStart={examinationStarted}
                 testFinish={examinationCompleted}
             />
 
-            {extractionOn != null && examinationCompleted == null && (
+            {examinationCompleted == null && (
                 <div className="row d-flex justify-content-center">        
                     {examinationStarted == null &&  <button className="start-btn" onClick={toggleImaging}>UPLOAD RESULTS</button>}  
                     {examinationStarted != null && <button className="save-details-btn" onClick={() => FinishExtraction()}>SAVE DETAILS</button>}     
@@ -271,8 +284,15 @@ function MedTechStart() {
             )}
 
             {examinationCompleted != null && (
-                <div className='d-flex justify-content-center'>
-                    <button className='finish-info'>Examination finished</button>
+                <div className='d-flex justify-content-center mb-5'>
+                    <button className="save-btn">
+                    <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+                        PRINT
+                    </button>
+                    <button className="save-btn">
+                    <FontAwesomeIcon icon={"envelope"} alt={"email"} aria-hidden="true" className="print-icon"/>
+                        EMAIL
+                    </button>
                 </div>
             )}
 

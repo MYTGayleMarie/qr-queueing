@@ -1,7 +1,7 @@
 import React from 'react';
 
 //css
-import './View/MedTech/MedTechStart.css';
+import './View/Results Releasing/MedTechStart.css';
 
 function getTime(date) {
   return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -31,7 +31,9 @@ function TestUpdates({ extractedOn, testStart, testFinish, categoryId }) {
     <div>
       <br></br>
       <br></br>
-      <h4 className="form-categories-header italic">UPDATES</h4>
+      {testStart != null && (
+        <h4 className="form-categories-header italic">UPDATES</h4>
+      )}
 
       <table className="personal-data-cont">
         {formattedExtractedDate != "" && (
