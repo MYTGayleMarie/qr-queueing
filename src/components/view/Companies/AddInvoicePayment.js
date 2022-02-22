@@ -10,6 +10,7 @@ import { useForm, useStep } from "react-hooks-helper";
 import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InvoiceToPrint } from './InvoiceToPrint';
+import { ReceiptToPrint } from "./ReceiptToPrint";
 
 //components
 import Header from '../../Header.js';
@@ -55,6 +56,10 @@ function AddInvoicePayment() {
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([]);
   const [checked, setChecked] = useForm(checkedData);
+  const [haslogs, setHasLogs] = useState(true);
+  const [paidAmount, setPaidAmount] = useState("");
+  const [discountCode, setDiscountCode] = useState("");
+  const [payments, setPayments] = useState("");
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -67,6 +72,7 @@ function AddInvoicePayment() {
   const [discount, setDiscount] = useState(0);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [seniorPwdId, setID] = useState("");
+  const [hasPay, setHasPay] = useState(false);
 
   //Company details
   const [name, setName] = useState("");
@@ -103,13 +109,26 @@ function AddInvoicePayment() {
   const [reference, setReference] = useState("");
   const [print, setPrint] = useState(false);
 
+  //Print Invoice
+  const [isprinted, setIsPrinted] = useState(false);
+  const handlePrintClose = () => setIsPrinted(false);
+  const handlePrintShow = () => setIsPrinted(true);
+
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    onAfterPrint: handlePrintShow,
     pageStyle: () => "@page { size: letter;}"
-
   });
+
+  const acknowledgementRef = useRef();
+  const handleAcknowledgePrint = useReactToPrint({
+    content: () => acknowledgementRef.current,
+    pageStyle: () => "@page { size: letter;}"
+  });
+
+  
 
   React.useEffect(() => {
     axios({
@@ -153,6 +172,36 @@ function AddInvoicePayment() {
   },[]);
 
   React.useEffect(() => {
+    axios({
+        method: 'post',
+        url: window.$link + 'Company_invoices/check_company_invoice_log/' + id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then(function (response) {
+            console.log(response);
+
+            if(response.data.status == 404) {
+                setHasLogs(false);
+            } else {
+                var array = response.data.data.logs.filter((info) => info.type == "print" || (info.type == "email" && info.response == "Email successfully sent"))
+
+                if(array.length == 0) {
+                    setHasLogs(false);
+                }
+
+                console.log(array);
+            }
+
+      }).then(function(error) {
+        console.log(error);
+      });
+  },[]);
+
+  React.useEffect(() => {
     info.length = 0;
     axios({
       method: 'post',
@@ -165,15 +214,20 @@ function AddInvoicePayment() {
       }
     }).then(function (response) {
       console.log(response);
-
+      var invoice = response.data.data.company_invoice;
+      var payments = response.data.data.payments;
     //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
         var info = {};
-        info.id = response.data.id;
-        info.code = response.data.discount_code;
-        info.price = response.data.price;
-        info.total = response.data.total;
+        info.id = invoice.id;
+        info.code = invoice.discount_code;
+        info.price = invoice.price;
+        info.total = invoice.total;
 
-        setGrandTotal(response.data.total);
+        setGrandTotal(invoice.total);
+        setDiscountCode(invoice.discount_code);
+        setPaidAmount(invoice.paid_amount);
+        setPayments(payments);
+        setHasPay(invoice.paid_amount != "0" ? true : false);
         setInfo(oldArray => [...oldArray, info]);
         
     //   });
@@ -221,9 +275,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: invoice_nos,
-                prices: prices,
-                totals: totals, 
+                invoice_nos: [info[0].id],
+                prices: [info[0].price],
+                totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 senior_pwd_id: seniorPwdId,
@@ -251,9 +305,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: invoice_nos,
-                prices: prices,
-                totals: totals, 
+                invoice_nos: [info[0].id],
+                prices: [info[0].price],
+                totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 check_no: checkNo,
@@ -284,9 +338,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: invoice_nos,
-                prices: prices,
-                totals: totals, 
+                invoice_nos: [info[0].id],
+                prices: [info[0].price],
+                totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 cardName: cardName,
@@ -319,9 +373,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: invoice_nos,
-                prices: prices,
-                totals: totals, 
+                invoice_nos: [info[0].id],
+                prices: [info[0].price],
+                totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 other_source: source,
@@ -376,11 +430,22 @@ function AddInvoicePayment() {
       });
   }
 
-  function printButton() {
+  //Invoice Print
+  function printInvoiceButton() {
         return (
             <button className="save-btn" onClick={handlePrint}>
             <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
-                PRINT
+                PRINT INVOICE
+            </button>
+        ) 
+    }
+
+    //Acknowledgement Print
+    function printButton() {
+        return (
+            <button className="save-btn" onClick={handleAcknowledgePrint}>
+            <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+                PRINT RECEIPT
             </button>
         ) 
     }
@@ -561,7 +626,7 @@ function othersForm() {
 
   if(redirect == true) {
       return (
-        <Navigate to = {"/review-invoice/" + id}/>
+        <Navigate to = {"/company-invoices"}/>
     )
   }
 
@@ -614,7 +679,7 @@ function othersForm() {
                     </div>
                 </div>
 
-                <h4 className="form-categories-header italic">INVOICES</h4>
+                <h4 className="form-categories-header italic">INVOICE DETAILS</h4>
 
                 <Table
                     type={'payment-invoices'}
@@ -635,12 +700,14 @@ function othersForm() {
 
                 <div className="row">
                     <div className="col-sm-12 d-flex justify-content-center">
-                        {printButton()}
-                        {emailButton()}
+                        {hasPay == true && (printButton())}
+                        {hasPay == false && (printInvoiceButton())}
+                        {hasPay == false && (emailButton())}
                     </div>
                 </div>
-
-                <div className="payment-cont">
+                
+                {haslogs == true && hasPay == false && (
+                    <div className="payment-cont">
                     <h1 className="payment-label">PAYMENT</h1>
 
                     <br/>
@@ -665,7 +732,30 @@ function othersForm() {
                     <ToastContainer hideProgressBar={true}/>
 
                 </div>
+                )}
             </div>
+
+            <Modal show={isprinted} onHide={handlePrintClose} size="md">
+            <Modal.Header closeButton className='text-center'>
+               <Modal.Title className='w-100 cash-count-header'>PRINT SUCCESSFUL?</Modal.Title>
+                </Modal.Header>
+                  <form>
+                  <Modal.Body>
+
+                  <div className='row d-flex justify-content-center'>
+                    Was printing successful?
+                   </div>
+                  </Modal.Body>
+                    <Modal.Footer>
+                        <button type="submit" className='po-yes-btn' onClick={() => printLog()}>
+                          YES
+                        </button>
+                        <button type="submit" className='po-no-btn'>
+                          NO
+                        </button>
+                   </Modal.Footer>
+                   </form>
+            </Modal>
 
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -691,7 +781,7 @@ function othersForm() {
             </Modal>
 
             <div
-                    style={{ display: "none" }}// This make ComponentToPrint show   only while printing
+                style={{ display: "none" }}// This make ComponentToPrint show   only while printing
                     > 
             
                         <InvoiceToPrint 
@@ -701,6 +791,22 @@ function othersForm() {
                             address={address}
                             contactPerson={contactPerson}
                             invoices={info}
+                            grandTotal={grandTotal}
+                        />
+                
+                    </div>
+
+            <div
+                style={{ display: "none" }}// This make ComponentToPrint show   only while printing
+                    > 
+            
+                        <ReceiptToPrint 
+                            ref={acknowledgementRef} 
+                            name={name}
+                            address={address}
+                            paidAmount={paidAmount}
+                            discountCode={discountCode}
+                            payments={payments}
                         />
                 
                     </div>

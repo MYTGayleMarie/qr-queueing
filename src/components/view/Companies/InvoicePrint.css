@@ -1,0 +1,107 @@
+/** Receipt **/
+.receipt-cont {
+    padding: 10%;
+}
+
+.receipt-header {
+  font-size: 24px;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.invoice-number-cont {
+    text-align: end;
+    margin-top: 3%;
+}
+
+.received-from-cont {
+    font-size: 20px;
+}
+
+.received-from-label {
+    font-weight: bold;
+}
+
+.date-cont {
+    text-align: end;
+}
+
+.invoice-number-detail {
+    color: #ff0000;
+}
+
+.receipt-details-pre-footer, .receipt-details-footer {
+    margin-top: 10%;
+}
+
+.receipt-details-footer {
+    margin-top: 20%;
+}
+
+.to-left {
+    float: left !important;
+}
+
+.to-right {
+    float: right !important;
+}
+
+.to-center {
+    float: center !important;
+    margin-left: 22%;
+}
+
+.receipt-line {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgb(10, 10, 10);
+    margin: 1em 0;
+    padding: 0;
+}
+
+.receipt-logo {
+    width: 20%;
+}
+
+/** Invoice **/
+.invoice-logo {
+    width: 21%;
+    padding-top: 2%;
+    padding-left: 3%;
+}
+
+.invoice-header {
+    font-size: 24px;
+    text-align: left;
+}
+
+.invoice-cont {
+    margin: 5%;
+}
+
+.invoice-line {
+    width: 90%;
+    margin-left: 5%;
+    height: 5px;
+    border-bottom: 1px solid black;
+}
+
+.invoice-sub-header {
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+.invoice-table-cont {
+    margin-top: -8%;
+    margin-left: -7%;
+    color: #0000 !important;
+}
+
+.grand-total-invoice {
+    margin-left: 5%;
+}

@@ -11,6 +11,9 @@ import logo from '../../../images/logo-black.png';
 //components
 import Table from '../../Table.js';
 
+//css
+import './InvoicePrint.css';
+
 
 export class InvoiceToPrint extends React.PureComponent {
     render() {
@@ -26,59 +29,79 @@ export class InvoiceToPrint extends React.PureComponent {
       return (
         <div>
         <style>{getPageMargins()}</style>
-        <h4 className="form-categories-header italic">COMPANY DETAILS</h4>
+        <img src={logo} alt={'logo'} class="invoice-logo"></img>
 
-        <div className="po-details">
-            <div className="row">
-                <div className="col-sm-2">
-                    <div className='label'>COMPANY NAME</div>
-                </div>
-                <div className="col-sm-8">
-                    <div className='detail'>{this.props.name}</div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-3">
-                    <div className='label'>CONTACT NUMBER</div>
-                </div>
-                <div className="col-sm-4">
-                    <div className='detail'>{this.props.contactNo}</div>
-                </div>
-                <div className="col-sm-2">
-                    <div className='label'>COMPANY EMAIL</div>
-                </div>
-                <div className="col-sm-3">
-                    <div className='detail'>{this.props.email}</div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-2">
-                    <div className='label'>COMPANY ADDRESS</div>
-                </div>
-                <div className="col-sm-8">
-                    <div className='detail'>{this.props.address}</div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-2">
-                    <div className='label'>CONTACT PERSON</div>
-                </div>
-                <div className="col-sm-8">
-                    <div className='detail'>{this.props.contactPerson}</div>
-                </div>
-            </div>
+        <div className="invoice-cont">
+        <h4 className="invoice-header">COMPANY DETAILS</h4>
+            <table>
+                <tr>
+                    <td>
+                        <span className='label'>COMPANY NAME</span>
+                    </td>
+                    <td>
+                        <span className='detail'>{this.props.name}</span>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <td>
+                    <span className='label'>CONTACT NUMBER</span>
+                </td>
+                <td>
+                    <span className='detail'>{this.props.contactNo}</span>
+                </td>
+            </table>
+            <table>
+                <td>
+                    <span className='label'>COMPANY EMAIL</span>
+                </td>
+                <td>
+                    <span className='detail'>{this.props.email}</span>
+                </td>
+            </table>
+            <table>
+                <td>
+                    <span className='label'>COMPANY ADDRESS</span>
+                </td>
+                <td>
+                    <span className='detail'>{this.props.address}</span>
+                </td>
+            </table>
+            <table>
+                <td>
+                    <span className='label'>CONTACT PERSON</span>
+                </td>
+                <td>
+                    <span className='detail'>{this.props.contactPerson}</span>
+                </td>
+            </table>
         </div>
 
-        <h4 className="form-categories-header italic">INVOICES</h4>
+        <div className="invoice-line"/>
 
-        <Table
-            type={'payment-invoices'}
-            tableData={this.props.invoices}
-            rowsPerPage={4}
-            headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
-            givenClass={'company-mobile'}
-            // setChecked={setChecked}
-        />
+        <h4 className="invoice-header invoice-sub-header">INVOICE DETAILS</h4>
+
+            <div className="invoice-table-cont">
+                <Table
+                    type={'payment-invoices'}
+                    tableData={this.props.invoices}
+                    rowsPerPage={4}
+                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
+                    givenClass={'company-mobile'}
+                    // setChecked={setChecked}
+                />
+            </div>
+
+            <div className="grand-total-invoice to-left">
+                <table>
+                    <td>
+                        <span className="bold">GRAND TOTAL P </span>
+                    </td>
+                    <td>
+                        {this.props.grandTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </td>
+                </table>
+            </div>
         </div>
       );
     }

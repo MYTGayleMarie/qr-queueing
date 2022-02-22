@@ -171,7 +171,7 @@ function AddInvoice() {
 
   if(redirect == true) {
       return (
-        <Navigate to = {"/add-invoice-payment/" + id + "/" + companyId}/>
+        <Navigate to = {"/company-invoices"}/>
     )
   }
 
