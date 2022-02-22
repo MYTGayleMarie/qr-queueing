@@ -72,7 +72,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index == 2 ? "company_name" : data.val.replace(/\s/g, '')}>{index == 0 || index == 1 ? "" : data.val}</td>
             )}
-            <td><button class="action-btn" role="button" onClick={() => link(row.id, row.discount_id)}>REVIEW</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.id, row.discount_id)}>CREATE INVOICE</button></td>
             </tr>
         }
         else if (type === 'med-tech' && clickable == true) {

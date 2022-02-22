@@ -84,14 +84,14 @@ function CompanyDiscounts() {
 
   function filter() {}
 
-  function reviewInvoice(companyId, discountCode) {
+  function createInvoice(companyId, discountCode) {
     id = companyId;
     discount_code = discountCode;
     setRedirect(true);
   }
 
   if (redirect == true) {
-    var link = '/review-invoice/' + id + "/" + discount_code;
+    var link = '/add-invoice/' + id + "/" + discount_code;
     return <Navigate to={link} />;
   }
 
@@ -113,7 +113,7 @@ function CompanyDiscounts() {
                     filter={filter}
                     render={setRender}
                     givenClass={'company-mobile'}
-                    link={reviewInvoice}
+                    link={createInvoice}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>
