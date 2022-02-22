@@ -37,6 +37,7 @@ function AddInvoice() {
   
 
   //Company details
+  const [companyId, setCompanyId] = useState("");
   const [name, setName] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
@@ -64,6 +65,7 @@ function AddInvoice() {
       }
     }).then(function (company) {
       console.log(company);
+      setCompanyId(company.data.id);
       setRemarks(company.data.remarks);
       setName(company.data.name);
       setContactNo(company.data.contact_no);
@@ -169,7 +171,7 @@ function AddInvoice() {
 
   if(redirect == true) {
       return (
-        <Navigate to = {"/review-invoice/" + id}/>
+        <Navigate to = {"/add-invoice-payment/" + id + "/" + companyId}/>
     )
   }
 

@@ -173,6 +173,7 @@ function AddInvoicePayment() {
         info.price = response.data.price;
         info.total = response.data.total;
 
+        setGrandTotal(response.data.total);
         setInfo(oldArray => [...oldArray, info]);
         
     //   });
@@ -182,20 +183,20 @@ function AddInvoicePayment() {
     });
   },[]);
 
-  React.useEffect(() => {
+//   React.useEffect(() => {
 
-    for (let [key, value] of Object.entries(checked)) {
-        var grandTotal = 0;
-        if(value != false) {
-            var obj = info[key];
-            if(info[key].total != null) {
-                grandTotal += parseFloat(obj.total);
-            }
-        }
-    }
-    setGrandTotal(grandTotal);
+//     for (let [key, value] of Object.entries(checked)) {
+//         var grandTotal = 0;
+//         if(value != false) {
+//             var obj = info[key];
+//             if(info[key].total != null) {
+//                 grandTotal += parseFloat(obj.total);
+//             }
+//         }
+//     }
+//     setGrandTotal(grandTotal);
 
-  },[checked]);
+//   },[checked]);
 
   function submit (e) {
     e.preventDefault();
@@ -421,13 +422,13 @@ function cashForm() {
                             <span class="remarks-payment-label">REMARKS (optional)</span>
                         </div>
                         <div className="row">
-                            <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                            <textarea id="remarks" name="remarks"  className="invoice-remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                         </div>
                     </div>
                 </div>
                 <div className="row d-flex justify-content-end">
                     {paymentStatus == "paid" && printButton()}
-                    <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                    <button className="save-btn" onClick={(e) => submit(e)}>SAVE PAYMENT </button>
                 </div>                    
          </div>       
         )
@@ -460,13 +461,13 @@ function checkForm () {
                     <span class="remarks-payment-label">REMARKS (optional)</span>
                 </div>
                 <div className="row">
-                    <textarea id="remarks" name="remarks" className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    <textarea id="remarks" name="remarks" className="invoice-remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                 </div>
             </div>
         </div>
         <div className="row d-flex justify-content-end">
             {paymentStatus == "paid" && printButton()}
-            <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+            <button className="save-btn" onClick={(e) => submit(e)}>SAVE PAYMENT </button>
         </div>
 
     </div>
@@ -502,13 +503,13 @@ function cardForm () {
                     <span class="remarks-payment-label">REMARKS (optional)</span>
                 </div>
                 <div className="row">
-                    <textarea id="remarks" name="remarks" rows="4" className="remarks-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    <textarea id="remarks" name="remarks" rows="4" className="invoice-remarks-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                 </div>
             </div>
         </div>
         <div className="row d-flex justify-content-end">
             {paymentStatus == "paid" && printButton()}
-            <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+            <button className="save-btn" onClick={(e) => submit(e)}>SAVE PAYMENT </button>
         </div>
     </div>
     )
@@ -542,13 +543,13 @@ function othersForm() {
                             <span class="remarks-payment-label">REMARKS (optional)</span>
                         </div>
                         <div className="row">
-                            <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                            <textarea id="remarks" name="remarks"  className="invoice-remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
                         </div>
                     </div>
                 </div>
                 <div className="row d-flex justify-content-end">
                     {paymentStatus == "paid" && printButton()}
-                    <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                    <button className="save-btn" onClick={(e) => submit(e)}>SAVE PAYMENT </button>
                 </div>
          </div>       
         )
