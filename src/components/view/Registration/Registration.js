@@ -74,6 +74,7 @@ function Registration() {
               var addedOn = new Date(booking.added_on);
               var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
+              bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
               bookingDetails.name =
                 customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
@@ -118,7 +119,7 @@ function Registration() {
             type={'registration'}
             tableData={patientData}
             rowsPerPage={20}
-            headingColumns={['BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

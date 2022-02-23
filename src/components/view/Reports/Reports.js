@@ -100,7 +100,6 @@ function Reports() {
               date_to: filteredData.to_date,
             },
           }).then(function (response) {
-              console.log(response)
               setServicesPackages(response.data.booking_details);
               response.data.booking_details.map((data) => {
                 if(data.type == "lab") {
@@ -320,6 +319,18 @@ function Reports() {
                         todayData={""}
                         link={"/unpaid-invoices"}
                         title='Unpaid Invoices'
+                        color='blue'
+                        disable={"today"}
+                    />
+                </div>
+            </div>
+            <div className="row">    
+                <div className="col-sm-4">
+                    <Card 
+                        totalData={"MD REPORTS"}
+                        todayData={""}
+                        link={"/reports-md"}
+                        title=''
                         color='blue'
                         disable={"today"}
                     />

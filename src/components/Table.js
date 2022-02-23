@@ -51,11 +51,11 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if (type === 'registration') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
-            {rowData[4].val == "unpaid" && (
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{totalCount == null && index == 0 ? "" : data.val}</td>)}
+            {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
                 <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button></td>
             )}
-            {rowData[4].val == "paid" && (
+            {(rowData[5].val == "paid" || rowData[0].val != "no_company_discount") && (
                 <td><button class="action-btn" role="button" onClick={() => link(row.id)}>PRINT BOOKING</button></td>
             )}
             </tr>
@@ -140,7 +140,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
     });
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales' || type === 'registration') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales') {
 
         const {from_date, to_date, done} = filteredData;
     
@@ -166,6 +166,43 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+    }
+    else if(type === 'registration') {
+
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{totalCount == null && index == 0 ? "" : col}</th>
                             ))}
                         </tr>
                     </thead>

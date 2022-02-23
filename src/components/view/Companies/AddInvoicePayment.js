@@ -60,6 +60,8 @@ function AddInvoicePayment() {
   const [paidAmount, setPaidAmount] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [payments, setPayments] = useState("");
+  const [discountId, setDiscountId] = useState("");
+  const [discountDescription, setDiscountDescription] = useState("");
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -245,6 +247,8 @@ function AddInvoicePayment() {
             console.log(value);
             setPrintData(true);
         })
+
+        setDiscountId(invoice.discount_id);
         
     //   });
 
@@ -252,6 +256,22 @@ function AddInvoicePayment() {
       console.log(error);
     });
   },[]);
+
+  React.useEffect(() => {
+    axios({
+        method: 'post',
+        url: window.$link + 'discounts/show/' + discountId,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then(function (response) {
+          console.log(response);
+          setDiscountDescription(response.data.discount_code);
+      });
+  },[discountId]);
 
 //   React.useEffect(() => {
 
@@ -857,8 +877,9 @@ function othersForm() {
                             ref={acknowledgementRef} 
                             name={name}
                             address={address}
-                            paidAmount={paidAmount}
+                            paidAmount={"20523.53"}
                             discountCode={discountCode}
+                            discountDescription={discountDescription}
                             payments={payments}
                         />
                 

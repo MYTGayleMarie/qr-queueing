@@ -71,23 +71,23 @@ export class ReceiptToPrint extends React.PureComponent {
             
             <div className="receipt-details">
                 <span className="received-from-cont">
-                    <span className="received-from-label">Received From</span>
+                    <span className="received-from-label">Received From </span>
                     <span className="received-from-detail"> {this.props.name}</span>
                 </span>
                 <br/>
                 <span className="received-from-cont">
-                    <span className="received-from-label">Address: </span>
+                    <span className="received-from-label">Address </span>
                     <span className="received-from-detail"> {this.props.address}</span>
                 </span>
                 <br/>
                 <span className="received-from-cont">
-                    <span className="received-from-label">the sum of pesos</span>
+                    <span className="received-from-label">Amount Received </span>
                     <span className="received-from-detail"> {numToWords(amount[0],false) + numToWords(amount[1], true)} <span className="decimal-amount-form">(Php {this.props.paidAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")})</span> </span>
                 </span>
                 <br/>
                 <span className="received-from-cont">
-                    <span className="received-from-label">in full/partial payment of </span>
-                    <span className="received-from-detail"> {this.props.discountCode} </span>
+                    <span className="received-from-label">Payment for</span>
+                    <span className="received-from-detail"> {this.props.discountDescription + " (" + this.props.discountCode + ")"} </span>
                 </span>
             </div>
 
@@ -97,7 +97,7 @@ export class ReceiptToPrint extends React.PureComponent {
                         <span className="received-from-detail"> {payment.type}</span>
                     </div> */}
                     <div className="to-right">
-                        <span className="received-from-label">BY _____________________</span>
+                        <span className="received-from-label">BY __________________</span>
                         <br/>
                         <span className="to-center signature-label">Authorized Signature</span>
                     </div>
