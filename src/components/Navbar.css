@@ -108,14 +108,20 @@ a {
     margin-right: 3%;
 }
 
-.chief, .users, .companies {
+.chief, .companies {
     width: 70%;
     margin-left: 51%;
     margin-right: 0%;
 }
 
+.users {
+  width: 15%;
+  margin-left: 7%;
+  margin-right: 3%;
+  margin-top: 3%;
+}
+
 .logout-nav {
-    margin-top: 5%;
     padding: 5% !important;
 }
 

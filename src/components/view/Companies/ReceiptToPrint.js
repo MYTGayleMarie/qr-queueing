@@ -97,9 +97,9 @@ export class ReceiptToPrint extends React.PureComponent {
                         <span className="received-from-detail"> {payment.type}</span>
                     </div> */}
                     <div className="to-right">
-                        <span className="received-from-label">BY ________________________</span>
+                        <span className="received-from-label">BY _____________________</span>
                         <br/>
-                        <span className="to-center">Authorized Signature</span>
+                        <span className="to-center signature-label">Authorized Signature</span>
                     </div>
             </div>
 
