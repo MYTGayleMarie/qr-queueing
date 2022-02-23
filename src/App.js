@@ -71,12 +71,16 @@ function App() {
 
   useEffect(() => {
     var startDate = new Date().getTime();
-    var endDate = new Date(tokenExpiry.replace(/['"]+/g, ''));
+    var endDate;
+
+    if(tokenExpiry != null) {
+      endDate = new Date(tokenExpiry.replace(/['"]+/g, ''));
 
     var seconds = Math.floor((endDate - startDate)/1000);
 
     setInterval(promptExpiry, seconds * 1000);
 
+    }
   },[]);
 
   return (

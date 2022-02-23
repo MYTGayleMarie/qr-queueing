@@ -35,11 +35,11 @@ export class InvoiceToPrint extends React.PureComponent {
         <h4 className="invoice-header">COMPANY DETAILS</h4>
             <table>
                 <tr>
-                    <td>
-                        <span className='label'>COMPANY NAME</span>
+                    <td className="add-td-gap">
+                        <span className='label'>COMPANY NAME </span>
                     </td>
                     <td>
-                        <span className='detail'>{this.props.name}</span>
+                        <span className=''> {this.props.name}</span>
                     </td>
                 </tr>
             </table>

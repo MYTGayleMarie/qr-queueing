@@ -92,27 +92,34 @@ function AddInvoicePayment() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //check states
+  //Check states
   const [checkNo, setCheckNo] = useState("");
   const [checkBank, setCheckBank] = useState("");
   const [checkDate, setCheckDate] = useState("");
 
-  //card states
+  //Card states
   const [cardNo, setCardNo] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardType, setCardType] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardBank, setCardBank] = useState("");
 
-  //others states
+  //Others states
   const [source, setSource] = useState("");
   const [reference, setReference] = useState("");
-  const [print, setPrint] = useState(false);
+
+  //Print state
+  const [printData, setPrintData] = useState(false);
 
   //Print Invoice
   const [isprinted, setIsPrinted] = useState(false);
   const handlePrintClose = () => setIsPrinted(false);
   const handlePrintShow = () => setIsPrinted(true);
+
+  //Print Receipt
+  const [isprintedReceipt, setIsPrintedReceipt] = useState(false);
+  const handlePrintReceiptClose = () => setIsPrintedReceipt(false);
+  const handlePrintReceiptShow = () => setIsPrintedReceipt(true);
 
 
   const componentRef = useRef();
@@ -125,6 +132,7 @@ function AddInvoicePayment() {
   const acknowledgementRef = useRef();
   const handleAcknowledgePrint = useReactToPrint({
     content: () => acknowledgementRef.current,
+    onAfterPrint: handlePrintReceiptShow,
     pageStyle: () => "@page { size: letter;}"
   });
 
@@ -223,12 +231,20 @@ function AddInvoicePayment() {
         info.price = invoice.price;
         info.total = invoice.total;
 
-        setGrandTotal(invoice.total);
-        setDiscountCode(invoice.discount_code);
-        setPaidAmount(invoice.paid_amount);
-        setPayments(payments);
-        setHasPay(invoice.paid_amount != "0" ? true : false);
-        setInfo(oldArray => [...oldArray, info]);
+        const promisePrint = new Promise((resolve,reject) => {
+            resolve('Success');
+            setGrandTotal(invoice.total);
+            setDiscountCode(invoice.discount_code);
+            setPaidAmount(invoice.paid_amount);
+            setPayments(payments);
+            setHasPay(invoice.paid_amount != "0.00" || invoice.paidAmount != null ? true : false);
+            setInfo(oldArray => [...oldArray, info]);
+        }); 
+
+        promisePrint.then((value) => {
+            console.log(value);
+            setPrintData(true);
+        })
         
     //   });
 
@@ -397,7 +413,22 @@ function AddInvoicePayment() {
             toast.error("Payment Unsuccessful!");
         });
     }
-}   
+}  
+
+  function ReceiptPrintLog() {
+    axios({
+        method: 'post',
+        url: window.$link + 'invoice_payments/print/' + id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then(function (response) {
+        console.log(response);
+      });
+  }
 
   function printLog() {
     axios({
@@ -443,9 +474,9 @@ function AddInvoicePayment() {
     //Acknowledgement Print
     function printButton() {
         return (
-            <button className="save-btn" onClick={handleAcknowledgePrint}>
+            <button className="save-btn" onClick={printData == false ? "" : handleAcknowledgePrint}>
             <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
-                PRINT RECEIPT
+                {printData == false ? "Loading Data..." : "PRINT RECEIPT"}
             </button>
         ) 
     }
@@ -748,6 +779,28 @@ function othersForm() {
                   </Modal.Body>
                     <Modal.Footer>
                         <button type="submit" className='po-yes-btn' onClick={() => printLog()}>
+                          YES
+                        </button>
+                        <button type="submit" className='po-no-btn'>
+                          NO
+                        </button>
+                   </Modal.Footer>
+                   </form>
+            </Modal>
+
+            <Modal show={isprintedReceipt} onHide={handlePrintReceiptClose} size="md">
+            <Modal.Header closeButton className='text-center'>
+               <Modal.Title className='w-100 cash-count-header'>PRINT SUCCESSFUL?</Modal.Title>
+                </Modal.Header>
+                  <form>
+                  <Modal.Body>
+
+                  <div className='row d-flex justify-content-center'>
+                    Was printing successful?
+                   </div>
+                  </Modal.Body>
+                    <Modal.Footer>
+                        <button type="submit" className='po-yes-btn' onClick={() => ReceiptPrintLog()}>
                           YES
                         </button>
                         <button type="submit" className='po-no-btn'>
