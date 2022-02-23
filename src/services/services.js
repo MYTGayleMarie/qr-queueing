@@ -747,6 +747,14 @@ const Xray = [
     type: 'lab',
   },
   {
+    key: 'AdditionalXrayService_18',
+    name: 'Additional Xray Service',
+    categoryId: '18',
+    labTestId: '128',
+    price: '200.00',
+    type: 'lab',
+  },
+  {
     key: 'AnkleAPL_18',
     name: 'Ankle APL',
     categoryId: '18',
