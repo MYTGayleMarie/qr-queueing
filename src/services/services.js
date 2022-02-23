@@ -751,7 +751,7 @@ const Xray = [
     name: 'Additional Xray Service',
     categoryId: '18',
     labTestId: '128',
-    price: '200.00',
+    price: '250.00',
     type: 'lab',
   },
   {

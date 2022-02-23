@@ -82,7 +82,7 @@ export class ReceiptToPrint extends React.PureComponent {
                 <br/>
                 <span className="received-from-cont">
                     <span className="received-from-label">Amount Received </span>
-                    <span className="received-from-detail"> {numToWords(amount[0],false) + numToWords(amount[1], true)} <span className="decimal-amount-form">(Php {this.props.paidAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")})</span> </span>
+                    <span className="received-from-detail"> {numToWords(amount[0],false).toUpperCase() + numToWords(amount[1], true).toUpperCase()} <span className="decimal-amount-form">(Php {this.props.paidAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")})</span> </span>
                 </span>
                 <br/>
                 <span className="received-from-cont">

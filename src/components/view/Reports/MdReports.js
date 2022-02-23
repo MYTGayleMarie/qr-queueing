@@ -31,12 +31,12 @@ function MdReports() {
   document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
-  const [unpaidInvoices, setUnpaidInvoices] = useState([]);
+  const [mds, setMds] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   
      //SALES REPORT
      React.useEffect(() => {
-       unpaidInvoices.length = 0;
+       mds.length = 0;
        axios({
         method: 'post',
         url: window.$link + 'reports/md',
@@ -49,7 +49,12 @@ function MdReports() {
           requester: userId,
         },
       }).then(function (response) {
-          console.log(response)
+          console.log(response.data.data.mds)
+          var data = [response.data.data.mds];
+
+        //   data.map((data, index) => {
+
+        //   })
       });
        
     },[render]);
@@ -68,14 +73,14 @@ function MdReports() {
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Unpaid Invoice Report'}
-            tableData={unpaidInvoices}
+            tableData={mds}
             tableHeaders={['MD NAME', 'REFERRAL', 'XRAY','ECG']}
             status={printReadyFinal}
              />
           <Table
             clickable={false}
             type={'no-action'}
-            tableData={unpaidInvoices}
+            tableData={mds}
             rowsPerPage={100}
             headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG']}
             filteredData={filteredData}

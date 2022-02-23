@@ -127,17 +127,20 @@ function MedTechStart() {
         }
 
         if(file != "" && md != "") {
+            const formData = new FormData();
+            formData.append("file_result", file[0]);
             axios({
                 method: 'post',
                 url: window.$link + updateLink + serviceId,
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
                 withCredentials: false, 
                 params: {
                     api_key: window.$api_key,
                     token: userToken.replace(/['"]+/g, ''),
                     test_start: "",
                     test_finish: new Date(),
-                    file_result: file,
-                    //md: md,
+                    md: md,
                     updated_by: userId,
                 }
             }).then(function (booking) {
@@ -167,6 +170,7 @@ function MedTechStart() {
             })
         }
     }
+    
   
     React.useEffect(() => {
         var urlLink = "";
@@ -210,6 +214,8 @@ function MedTechStart() {
             console.log(error);
         })
     },[]);
+
+    console.log(file[0]);
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     return (
