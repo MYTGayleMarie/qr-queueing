@@ -179,14 +179,8 @@ function adminNavbar(showNavbar,setshowNavbar) {
           </li>
           <NavLink to="/Users" activeClassName="active" class="link">
           <li href="#" class="nav-link users-nav">
-            <div class="row">
-              <div class="col-3">
                 <img src={usersIcon} alt={'users'} class="users icon"></img>
-              </div>
-              <div class="col-9">
                 <span class="mx-2">Users</span>
-              </div>
-            </div>
           </li>
         </NavLink>
 
@@ -375,7 +369,7 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
           </div>         
         </div>
         <NavLink to="/users" activeClassName="active" class="link">
-            <img src={usersIcon} alt={'users'} class="medTech icon mobile-size-icon"></img>
+            <img src={usersIcon} alt={'users'} class="users icon mobile-size-icon"></img>
             <span class="mx-1">Users</span>
         </NavLink>
 
