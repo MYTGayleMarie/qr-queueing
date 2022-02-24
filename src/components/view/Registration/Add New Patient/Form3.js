@@ -49,11 +49,14 @@ import {
  ********************************/
 
 //VARIABLES
-var itemDetails;
+var itemDetails; 
 var newLabTotal = 0;
 var newPackageTotal = 0;
+var labDiscountedTotal = 0;
+var packageDiscountedTotal = 0;
 const userToken = getToken();
 const userId = getUser();
+
 
 //Packages
 const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -91,13 +94,16 @@ const promo = getPromo();
  * RENDER VIEW
  ********************************/
 
-function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting }) {
+function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting, discountDetails }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   },[]);
   document.body.style = 'background: white;';
 
   const [bookingId, setBookingId] = useState("");
+
+  //states
+  const [appliedTo, setAppliedTo] = useState([]);
 
   //Redirection
   const [redirect, setRedirect] = useState(false);
@@ -255,6 +261,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 
   //Checked Services
   var totalPrice = 0;
+  var discountedTotalPrice = 0;
   const asArray = Object.entries(service);
   const checkedServices = asArray.filter(([key, value]) => value == true);
   var checkedServicesDetails = [];
@@ -384,24 +391,108 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     }
   });
 
-  checkedServicesDetails.map((data, index) => {
+  React.useEffect(() => {
 
-    if(index == 0) {
-        newLabTotal = 0;
-        newPackageTotal = 0;
-        setLabPrice(0);
-        setPackagePrice(0);
-    }
-    if(data.type == 'lab') {
-        newLabTotal += parseFloat(data.price);
-        setLabPrice(newLabTotal);
-    }
-    else if (data.type == 'package') {
-        newPackageTotal += parseFloat(data.price);
-        setPackagePrice(newPackageTotal);
-    }
+    discountDetails.map((data, index) => {
+        appliedTo.length = 0;
+        if(data.type == "service") {
+            axios({
+                method: 'post',
+                url: window.$link + 'lab_tests/show/' + data.source_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                console.log(response.data.name);
+                setAppliedTo(oldArray => [...oldArray, response.data.name]);
+            });
+        } else {
+            axios({
+                method: 'post',
+                url: window.$link + 'packages/show/' + data.source_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                console.log(response.data.name);
+                setAppliedTo(oldArray => [...oldArray, response.data.name]);
+            });
+        }
+    });
 
-    totalPrice += parseFloat(data.price);
+},[discountDetails]);
+
+//Total discount labs/packages
+checkedServicesDetails.map((data, index) => {
+  console.log(data);
+
+  //To insert condition for discount for specific labs/packages
+  if(index == 0) {
+      labDiscountedTotal = 0;
+      packageDiscountedTotal = 0;
+  }
+
+  discountDetails.map((detail) => {
+      if(data.type == 'lab' && detail.type == 'service') {
+          if(data.labTestId == detail.source_id) {
+              discountedTotalPrice += parseFloat(data.price);
+          }
+      }
+      else if (data.type == 'package' && detail.type == 'package') {
+          if(data.packageId == detail.source_id) {
+             discountedTotalPrice += parseFloat(data.price);
+          }
+      }
+  });
+
+});
+
+
+checkedServicesDetails.map((data, index) => {
+console.log(data);
+//To insert condition for discount for specific labs/packages
+if(index == 0) {
+  newLabTotal = 0;
+  labDiscountedTotal = 0;
+  newPackageTotal = 0;
+  packageDiscountedTotal = 0;
+  setLabPrice(0);
+  setPackagePrice(0);
+}
+
+if(data.type == 'lab') {
+  if(discountDetails.length != 0 ) {
+      discountDetails.map((detail) => {
+          if(detail.source_id != data.labTestId && detail.type == "service") {
+              newLabTotal += parseFloat(data.price);
+              setLabPrice(newLabTotal);
+          }
+      });
+  } else {
+      newLabTotal += parseFloat(data.price);
+      setLabPrice(newLabTotal);
+  }
+}
+else if (data.type == 'package') {
+  if(discountDetails.length != 0) {
+      discountDetails.map((detail) => {
+          if(detail.source_id != data.labTestId && detail.type == "package") {
+              newPackageTotal += parseFloat(data.price);
+              setPackagePrice(newPackageTotal);
+          }
+      });
+  } else {
+      newPackageTotal += parseFloat(data.price);
+      setPackagePrice(newPackageTotal);
+  }
+}
+totalPrice += parseFloat(data.price);
 });
 
   if (print == true) {
@@ -563,12 +654,27 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 
                 <div className="row">
                     <div className="col d-flex justify-content-end">
-                      {isCompany == false && discount != "" && (
+                      {isCompany == false && discount != "" && discountDetails.length == 0 && (
                              <span className="total-price"><b>DISCOUNT {
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }%</b></span>
                         )}
-                         {isCompany != false && discount != "" &&(
+                         {isCompany == false && discount != "" && discountDetails.length != 0 && (
+                             <span className="total-price"><b>DISCOUNT {
+                                discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
+                            }%</b> for only {appliedTo.map((data, index) => {
+                                if(appliedTo.length == 1 ) {
+                                    return data 
+                                } 
+                                else if (appliedTo.length - 1 == index ) {
+                                    return ", and " + data
+                                }
+                                else {
+                                    return data + ", "
+                                } 
+                            })}</span>
+                        )}
+                         {isCompany != false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT P{
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }</b></span>
@@ -596,6 +702,11 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
                 </div>
 
                 <div className="row">
+                  {isCompany == false && discountedTotalPrice != 0 && totalPrice != 0  && (
+                    <div className="col d-flex justify-content-end">
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                    </div>
+                    )}
                     {isCompany == false && isPackage == true && totalPrice != 0  && (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (packagePrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
@@ -606,9 +717,14 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - (labPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
-                    {isCompany == false && isService != true && totalPrice != 0 && isPackage != true &&  (
+                    {isCompany == false && isService != true && totalPrice != 0 && isPackage != true && discountedTotalPrice == 0 && (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - ((totalPrice) * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                    </div>
+                    )}
+                    {isCompany == true && discountedTotalPrice != 0 && totalPrice != 0 && (
+                    <div className="col d-flex justify-content-end">
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                     {isCompany == true && isPackage == true && totalPrice != 0  &&  (
@@ -621,7 +737,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  +  (labPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
-                     {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && (
+                     {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && discountedTotalPrice == 0 &&  (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>

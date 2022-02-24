@@ -44,17 +44,26 @@ function MdReports() {
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
-        //   date_from: filteredData.from_date,
-        //   date_to: filteredData.to_date,
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
           requester: userId,
         },
       }).then(function (response) {
-          console.log(response.data.data.mds)
-          var data = [response.data.data.mds];
+          console.log(response)
+          var data = response.data.data.data;
 
-        //   data.map((data, index) => {
+          data.map((value, index) => {
+            var info = {};
+            info.md = value.md;
+            info.referrals = value.referrals == null ? "0" : value.referrals;
+            info.xray = value.xray == null ? "0" : value.xray;
+            info.ecg = value.ecg == null ? "0" : value.ecg;
+            setMds(oldArray => [...oldArray, info]);
 
-        //   })
+            if(data.length - 1 == index) {
+              setPrintReadyFinal(true);
+            }
+          })
       });
        
     },[render]);

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 
 //components
 import Navbar from '../../../Navbar';
 import Header from '../../../Header.js';
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
 import ServiceItems from '../../../ServiceItems';
 import { getAnnualWellnessPackageBasic,
     getPregnancyLabPackage,
@@ -36,6 +38,11 @@ import { getAnnualWellnessPackageBasic,
 var itemDetails; 
 var newLabTotal = 0;
 var newPackageTotal = 0;
+var labDiscountedTotal = 0;
+var packageDiscountedTotal = 0;
+const userToken = getToken();
+const userId = getUser();
+
 
 //Package
 const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -69,9 +76,12 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 
 
-function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge}) {
+function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge, discountDetails }) {
     document.body.style = 'background: white;';
     window.scrollTo(0, 0);
+
+    //states
+    const [appliedTo, setAppliedTo] = useState([]);
      //functions
      function getDetails(categoryItems, checkedItem) {
         categoryItems.map((data, index) => {
@@ -91,6 +101,7 @@ function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackage
 
 //Checked Services
 var totalPrice = 0;
+var discountedTotalPrice = 0;
 const asArray = Object.entries(service)
 const checkedServices = asArray.filter(([key,value]) => value == true);
 var checkedServicesDetails = [];
@@ -227,23 +238,108 @@ checkedServices.map((data, index) => {
 
 });
 
-checkedServicesDetails.map((data, index) => {
+React.useEffect(() => {
 
+    discountDetails.map((data, index) => {
+        appliedTo.length = 0;
+        if(data.type == "service") {
+            axios({
+                method: 'post',
+                url: window.$link + 'lab_tests/show/' + data.source_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                console.log(response.data.name);
+                setAppliedTo(oldArray => [...oldArray, response.data.name]);
+            });
+        } else {
+            axios({
+                method: 'post',
+                url: window.$link + 'packages/show/' + data.source_id,
+                withCredentials: false, 
+                params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    requester: userId,
+                }
+            }).then(function (response) {
+                console.log(response.data.name);
+                setAppliedTo(oldArray => [...oldArray, response.data.name]);
+            });
+        }
+    });
+
+},[discountDetails]);
+
+
+//Total discount labs/packages
+    checkedServicesDetails.map((data, index) => {
+        console.log(data);
+
+        //To insert condition for discount for specific labs/packages
+        if(index == 0) {
+            labDiscountedTotal = 0;
+            packageDiscountedTotal = 0;
+        }
+
+        discountDetails.map((detail) => {
+            if(data.type == 'lab' && detail.type == 'service') {
+                if(data.labTestId == detail.source_id) {
+                    discountedTotalPrice += parseFloat(data.price);
+                }
+            }
+            else if (data.type == 'package' && detail.type == 'package') {
+                if(data.packageId == detail.source_id) {
+                   discountedTotalPrice += parseFloat(data.price);
+                }
+            }
+        });
+    
+    });
+
+
+checkedServicesDetails.map((data, index) => {
+    console.log(data);
+    //To insert condition for discount for specific labs/packages
     if(index == 0) {
         newLabTotal = 0;
+        labDiscountedTotal = 0;
         newPackageTotal = 0;
+        packageDiscountedTotal = 0;
         setLabPrice(0);
         setPackagePrice(0);
     }
+
     if(data.type == 'lab') {
-        newLabTotal += parseFloat(data.price);
-        setLabPrice(newLabTotal);
+        if(discountDetails.length != 0 ) {
+            discountDetails.map((detail) => {
+                if(detail.source_id != data.labTestId && detail.type == "service") {
+                    newLabTotal += parseFloat(data.price);
+                    setLabPrice(newLabTotal);
+                }
+            });
+        } else {
+            newLabTotal += parseFloat(data.price);
+            setLabPrice(newLabTotal);
+        }
     }
     else if (data.type == 'package') {
-        newPackageTotal += parseFloat(data.price);
-        setPackagePrice(newPackageTotal);
+        if(discountDetails.length != 0) {
+            discountDetails.map((detail) => {
+                if(detail.source_id != data.labTestId && detail.type == "package") {
+                    newPackageTotal += parseFloat(data.price);
+                    setPackagePrice(newPackageTotal);
+                }
+            });
+        } else {
+            newPackageTotal += parseFloat(data.price);
+            setPackagePrice(newPackageTotal);
+        }
     }
-
     totalPrice += parseFloat(data.price);
 });
 
@@ -351,12 +447,27 @@ checkedServicesDetails.map((data, index) => {
                 </div>
 
                     <div className="col d-flex justify-content-end">
-                        {isCompany == false && discount != "" && (
+                        {isCompany == false && discount != "" && discountDetails.length == 0 && (
                              <span className="total-price"><b>DISCOUNT {
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }%</b></span>
                         )}
-                         {isCompany != false && discount != "" &&(
+                         {isCompany == false && discount != "" && discountDetails.length != 0 && (
+                             <span className="total-price"><b>DISCOUNT {
+                                discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
+                            }%</b> for only {appliedTo.map((data, index) => {
+                                if(appliedTo.length == 1 ) {
+                                    return data 
+                                } 
+                                else if (appliedTo.length - 1 == index ) {
+                                    return ", and " + data
+                                }
+                                else {
+                                    return data + ", "
+                                } 
+                            })}</span>
+                        )}
+                         {isCompany != false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT P{
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
                             }</b></span>
@@ -382,6 +493,11 @@ checkedServicesDetails.map((data, index) => {
                 </div>
 
                 <div className="row">
+                    {isCompany == false && discountedTotalPrice != 0 && totalPrice != 0  && (
+                    <div className="col d-flex justify-content-end">
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                    </div>
+                    )}
                     {isCompany == false && isPackage == true && totalPrice != 0  && (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (packagePrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
@@ -392,9 +508,14 @@ checkedServicesDetails.map((data, index) => {
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - (labPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
-                    {isCompany == false && isService != true && totalPrice != 0 && isPackage != true &&  (
+                    {isCompany == false && isService != true && totalPrice != 0 && isPackage != true && discountedTotalPrice == 0 && (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - ((totalPrice) * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                    </div>
+                    )}
+                    {isCompany == true && discountedTotalPrice != 0 && totalPrice != 0 && (
+                    <div className="col d-flex justify-content-end">
+                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
                     {isCompany == true && isPackage == true && totalPrice != 0  &&  (
@@ -407,7 +528,7 @@ checkedServicesDetails.map((data, index) => {
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  +  (labPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>
                     )}
-                     {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && (
+                     {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && discountedTotalPrice == 0 &&  (
                     <div className="col d-flex justify-content-end">
                         <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                     </div>

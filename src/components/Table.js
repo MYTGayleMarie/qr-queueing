@@ -250,7 +250,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice' || type === 'discount') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

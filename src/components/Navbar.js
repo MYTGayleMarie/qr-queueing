@@ -17,6 +17,7 @@ import imagingIcon from '../images/icons/imaging-icon.png';
 import medTechIcon from '../images/icons/med-tech-icon.png';
 import usersIcon from '../images/icons/users-icon.png';
 import companiesIcon from '../images/icons/companies-icon.png';
+import discountIcon from '../images/icons/discount-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';
 import reportIcon from '../images/icons/report-icon.png';
 import logoutIcon from '../images/icons/logout.png';
@@ -152,7 +153,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
               </Link>
             </ul>
           </li>
-
+          <NavLink to="/discounts" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={discountIcon} alt={'discount'} class="discount icon"></img>
+            <span class="mx-2">DISCOUNTS</span>
+          </li>
+        </NavLink> 
         <NavLink to="/reports" activeClassName="active" class="link">
           <li href="#" class="nav-link report-nav">
             <img src={reportIcon} alt={'report'} class="report icon"></img>
@@ -353,6 +359,12 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             {showCompany == true && companySideNav()}
           </div>         
         </div>
+        <NavLink to="/discounts" activeClassName="active" class="link">
+          <li href="#" class="nav-link cashier-nav">
+            <img src={discountIcon} alt={'discount'} class="discount icon"></img>
+            <span class="mx-2">DISCOUNTS</span>
+          </li>
+        </NavLink> 
         <NavLink to="/reports" activeClassName="active" class="link">
             <img src={reportIcon} alt={'report'} class="report icon mobile-size-icon"></img>
             <span class="mx-2">Reports</span>

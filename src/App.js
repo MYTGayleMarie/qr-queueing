@@ -51,6 +51,8 @@ import AddInvoice from './components/View/Companies/AddInvoice';
 import AddInvoicePayment from './components/View/Companies/AddInvoicePayment';
 import AddCompany from './components/View/Companies/AddCompany';
 import AddDiscount from './components/View/Companies/AddDiscount';
+import Discount from './components/View/Discount/Discount';
+import AddDiscountNoCompany from './components/View/Discount/AddDiscountNoCompany';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import { InvoiceToPrint } from './components/View/Companies/InvoiceToPrint';
 import PdfTransaction from './components/ReactToPDF';
@@ -116,6 +118,8 @@ function App() {
         <Route path="/review-invoice/:id/:discountId" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
         <Route path="/add-invoice-payment/:id/:companyId" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
+        <Route path="/discounts" element={token ? <Discount /> : <Navigate to="/" />} />
+        <Route path="/add-discount" element={token ? <AddDiscountNoCompany /> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />

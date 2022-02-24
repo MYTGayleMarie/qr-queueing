@@ -16,7 +16,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT  }) {
+function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
   document.body.style = 'background: white;';
 
   const {
@@ -143,28 +143,29 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
 },[]);
 
 React.useEffect(() => {
-    axios({
-        method: 'post',
-        url: window.$link + 'discounts/show/' + discountId,
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        setCompanyId(response.data.company_id);
-        setDiscount(response.data.percentage);
-        console.log(response);
-        if(response.data.is_package == "1") {
-            setIsPackage("1");
-        }
-        if(response.data.is_service == "1") {
-            setIsService("1");
-        }
-    }).catch(function (error) {
-        console.log(error);
-    });
+  axios({
+      method: 'post',
+      url: window.$link + 'discounts/show/' + discountId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+  }).then(function (response) {
+      console.log(response);
+      setCompanyId(response.data.data.discount.company_id);
+      setDiscount(response.data.data.discount.percentage);
+      setDiscountDetails(response.data.data.discount_details);
+      if(response.data.is_package == "1") {
+          setIsPackage("1");
+      }
+      if(response.data.is_service == "1") {
+          setIsService("1");
+      }
+  }).catch(function (error) {
+      console.log(error);
+  });
 },[discountId]);
 
 React.useEffect(() => {

@@ -14,7 +14,7 @@ import './OldPatientForm1.css';
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT  }) {
+function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -68,8 +68,6 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     function turnActive() {
         setActive(true);
     }
-
-    console.log(location);
 
     function proceed() {
         if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "" && referral != "") {
@@ -146,7 +144,6 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response);
             setDiscountList(response.data.discounts);
         }).catch(function (error) {
             console.log(error);
@@ -164,8 +161,10 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                 requester: userId,
             }
         }).then(function (response) {
-            setCompanyId(response.data.company_id);
-            setDiscount(response.data.percentage);
+            console.log(response);
+            setCompanyId(response.data.data.discount.company_id);
+            setDiscount(response.data.data.discount.percentage);
+            setDiscountDetails(response.data.data.discount_details);
             if(response.data.is_package == "1") {
                 setIsPackage("1");
             }
@@ -338,6 +337,9 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                              <div className="col">
                                  <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
                              </div>
+                             <div className="col">
+                                <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">BOTH</label>
+                            </div>
                          </div>
                      </div>
                  </div>
