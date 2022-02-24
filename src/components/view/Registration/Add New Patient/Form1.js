@@ -16,7 +16,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, dateOfTesting, setDOT  }) {
+function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT  }) {
   document.body.style = 'background: white;';
 
   const {
@@ -42,7 +42,6 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
   const [companyRemarks, setCompanyRemarks] = useState('');
 
   const [people, setPeople] = useState(0);
-  const [location, setLocation] = useState("");
   const [km, setKm] = useState(0);
 
   function turnActive() {
@@ -95,26 +94,28 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
           </select>
         </div>
         <div className="col">
-            <label for="result" className="radio-header">
-                SERVICE FEE
-            </label>
-            {location == 0 && (
-                <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                  <option value="" selected disabled>Select</option>
-                  <option value={250}>(1 - 2 PAX) - P 250</option>
-                  <option value={150}>(3 or more) - P 150</option>
-                </select>
-            )}
-             {location == 1 && (
-                <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                  <option value="" selected disabled>Select</option>
-                  <option value={300}>(1 - 2 PAX) - P 300</option>
-                  <option value={180}>(3 or more) - P 180</option>
-                </select>
-            )}
-            {location == 2 && (
-                <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value) }/>
-            )}
+        {location != "" && (
+                <label for="result" className="radio-header">
+                    SERVICE FEE
+                </label>
+                )}
+                {location == 0 && location != "" && (
+                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                      <option value="" selected>Select</option>
+                      <option value={250}>(1 - 2 PAX) - P 250</option>
+                      <option value={150}>(3 or more) - P 150</option>
+                    </select>
+                )}
+                 {location == 1 && (
+                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                      <option value="" selected>Select</option>
+                      <option value={300}>(1 - 2 PAX) - P 300</option>
+                      <option value={180}>(3 or more) - P 180</option>
+                    </select>
+                )}
+                {location == 2 && (
+                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value) }/>
+                )}
         </div>
       </div>
       );

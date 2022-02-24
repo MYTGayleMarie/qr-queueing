@@ -75,7 +75,7 @@ const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 const promo = getPromo();
 
-function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting }) {
+function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting }) {
     React.useEffect(() => {
         window.scrollTo(0, 0);
       },[]);
