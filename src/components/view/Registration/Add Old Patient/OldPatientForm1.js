@@ -14,7 +14,7 @@ import './OldPatientForm1.css';
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, dateOfTesting, setDOT  }) {
+function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT  }) {
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -33,7 +33,6 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     const [companyRemarks, setCompanyRemarks] = useState("");
 
     const [people, setPeople] = useState(0);
-    const [location, setLocation] = useState("");
     const [km, setKm] = useState(0);
 
     axios({
@@ -70,6 +69,8 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
         setActive(true);
     }
 
+    console.log(location);
+
     function proceed() {
         if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "" && referral != "") {
             return (
@@ -104,19 +105,21 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
               </select>
             </div>
             <div className="col">
+                {location != "" && (
                 <label for="result" className="radio-header">
                     SERVICE FEE
                 </label>
-                {location == 0 && (
+                )}
+                {location == 0 && location != "" && (
                     <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected disabled>Select</option>
+                      <option value="" selected>Select</option>
                       <option value={250}>(1 - 2 PAX) - P 250</option>
                       <option value={150}>(3 or more) - P 150</option>
                     </select>
                 )}
                  {location == 1 && (
                     <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected disabled>Select</option>
+                      <option value="" selected>Select</option>
                       <option value={300}>(1 - 2 PAX) - P 300</option>
                       <option value={180}>(3 or more) - P 180</option>
                     </select>
