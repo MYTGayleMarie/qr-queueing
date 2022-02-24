@@ -80,7 +80,6 @@ function App() {
       endDate = new Date(tokenExpiry.replace(/['"]+/g, ''));
 
     var seconds = Math.floor((endDate - startDate)/1000);
-    console.log(seconds);
     setInterval(promptExpiry, parseFloat(seconds) * 1000);
 
     }
