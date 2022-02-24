@@ -55,11 +55,11 @@ export const logOut = () => {
 
 //remove token from local storage
 export const removeUserSession = () => {
+    logOut();
+    refreshPage();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('token_expiry');
-    logOut();
-    refreshPage();
 }
 
 //set the token and user from local storage
