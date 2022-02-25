@@ -287,6 +287,7 @@ React.useEffect(() => {
             packageDiscountedTotal = 0;
         }
 
+        if(discountDetails != null) {
         discountDetails.map((detail) => {
             if(data.type == 'lab' && detail.type == 'service') {
                 if(data.labTestId == detail.source_id) {
@@ -299,6 +300,7 @@ React.useEffect(() => {
                 }
             }
         });
+        }
     
     });
 
@@ -316,7 +318,7 @@ checkedServicesDetails.map((data, index) => {
     }
 
     if(data.type == 'lab') {
-        if(discountDetails.length != 0 ) {
+        if(discountDetails != null ) {
             discountDetails.map((detail) => {
                 if(detail.source_id != data.labTestId && detail.type == "service") {
                     newLabTotal += parseFloat(data.price);
@@ -329,7 +331,7 @@ checkedServicesDetails.map((data, index) => {
         }
     }
     else if (data.type == 'package') {
-        if(discountDetails.length != 0) {
+        if(discountDetails != null) {
             discountDetails.map((detail) => {
                 if(detail.source_id != data.labTestId && detail.type == "package") {
                     newPackageTotal += parseFloat(data.price);
