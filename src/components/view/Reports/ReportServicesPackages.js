@@ -59,9 +59,9 @@ function ReportServicesPackages() {
                             var vDate = v.booking_date.split(" ");
                             var iDate = item.booking_date.split(" ");
                             if(v.type == "package") {
-                                return v.package == item.package && vDate[0] == iDate[0];
+                                return v.package == item.package;
                             } else {
-                                return v.lab_test == item.lab_test && vDate[0] == iDate[0];
+                                return v.lab_test == item.lab_test;
                             }
                         });
         
