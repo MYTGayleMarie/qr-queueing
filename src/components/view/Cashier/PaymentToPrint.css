@@ -33,7 +33,8 @@
 }
 
 .payment-logo {
-    width: 13%;
+    width: 70px;
+    height: 35px;
     margin-left: -2.7%;
 }
 
@@ -114,8 +115,13 @@
     padding: 3% !important;
 }
 
-.footer-header, .receipt-header {
-    font-size: 12px;
+.footer-header {
+    font-size: 12px !important;
+    margin-top: 2%;
+}
+
+.request-header {
+    font-size: 10px !important;
     margin-top: 2%;
 }
 

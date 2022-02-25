@@ -69,7 +69,7 @@ export class PaymentToPrint extends React.PureComponent {
             <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -111,11 +111,11 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-10'>
+                            <td>
                                 <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
-                            <td className='col-sm-4'>
+                            <td>
                                 <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result.toUpperCase()}</span>
                             </td>
@@ -128,7 +128,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -170,11 +170,11 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-10'>
+                            <td>
                                 <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
-                            <td className='col-sm-4'>
+                            <td>
                                 <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result.toUpperCase()}</span>
                             </td>
@@ -190,7 +190,7 @@ export class PaymentToPrint extends React.PureComponent {
             <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -232,11 +232,11 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-10'>
+                            <td>
                                 <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
-                            <td className='col-sm-4'>
+                            <td>
                                 <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result.toUpperCase()}</span>
                             </td>
@@ -249,7 +249,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right receipt-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -291,11 +291,11 @@ export class PaymentToPrint extends React.PureComponent {
 
                     <table className='footer'>
                         <tr className='row'>
-                            <td className='col-sm-10'>
+                            <td>
                                 <span className='footer-header'><b>Payment:</b></span>
                                 <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
                             </td>
-                            <td className='col-sm-4'>
+                            <td>
                                 <span className='footer-header'><b>Result:</b></span>
                                 <span className='data'> {this.props.result.toUpperCase()}</span>
                             </td>
