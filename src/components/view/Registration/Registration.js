@@ -28,7 +28,7 @@ const filterData = {
   to_date: formattedPresentData,
   done: false,
 };
-
+console.log(filterData.from_date)
 function Registration() {
 
   document.body.style = 'background: white;';

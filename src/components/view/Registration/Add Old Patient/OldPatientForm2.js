@@ -239,39 +239,40 @@ checkedServices.map((data, index) => {
 });
 
 React.useEffect(() => {
-
-    discountDetails.map((data, index) => {
-        appliedTo.length = 0;
-        if(data.type == "service") {
-            axios({
-                method: 'post',
-                url: window.$link + 'lab_tests/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        } else {
-            axios({
-                method: 'post',
-                url: window.$link + 'packages/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        }
-    });
+    if(discountDetails != null) {
+        discountDetails.map((data, index) => {
+            appliedTo.length = 0;
+            if(data.type == "service") {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'lab_tests/show/' + data.source_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response.data.name);
+                    setAppliedTo(oldArray => [...oldArray, response.data.name]);
+                });
+            } else {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'packages/show/' + data.source_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response.data.name);
+                    setAppliedTo(oldArray => [...oldArray, response.data.name]);
+                });
+            }
+        });
+    }
 
 },[discountDetails]);
 

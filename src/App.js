@@ -79,8 +79,8 @@ function App() {
     if(tokenExpiry != null) {
       endDate = new Date(tokenExpiry.replace(/['"]+/g, ''));
 
-    var seconds = Math.floor((endDate - startDate)/1000);
-    setInterval(promptExpiry, parseFloat(seconds) * 1000);
+      var seconds = Math.floor((endDate - startDate)/1000);
+      setInterval(promptExpiry, parseFloat(seconds) * 1000);
 
     }
   },[]);

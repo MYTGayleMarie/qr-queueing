@@ -399,7 +399,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
 
     });
     React.useEffect(() => {
-
+    if(discountDetails != null) {
         discountDetails.map((data, index) => {
             appliedTo.length = 0;
             if(data.type == "service") {
@@ -432,8 +432,8 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
                 });
             }
         });
-    
-    },[discountDetails]);
+    }
+    },[discountDetails])
 
     //Total discount labs/packages
     checkedServicesDetails.map((data, index) => {
@@ -444,7 +444,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
             labDiscountedTotal = 0;
             packageDiscountedTotal = 0;
         }
-
+        if(discountDetails != null) {
         discountDetails.map((detail) => {
             if(data.type == 'lab' && detail.type == 'service') {
                 if(data.labTestId == detail.source_id) {
@@ -457,7 +457,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
                 }
             }
         });
-    
+    }
     });
 
 
@@ -474,7 +474,7 @@ checkedServicesDetails.map((data, index) => {
     }
 
     if(data.type == 'lab') {
-        if(discountDetails.length != 0 ) {
+        if(discountDetails != null ) {
             discountDetails.map((detail) => {
                 if(detail.source_id != data.labTestId && detail.type == "service") {
                     newLabTotal += parseFloat(data.price);
@@ -487,7 +487,7 @@ checkedServicesDetails.map((data, index) => {
         }
     }
     else if (data.type == 'package') {
-        if(discountDetails.length != 0) {
+        if(discountDetails != null) {
             discountDetails.map((detail) => {
                 if(detail.source_id != data.labTestId && detail.type == "package") {
                     newPackageTotal += parseFloat(data.price);

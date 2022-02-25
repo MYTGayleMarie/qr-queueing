@@ -242,7 +242,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   });
 
   React.useEffect(() => {
-
+    if(discountDetails != null) {
     discountDetails.map((data, index) => {
         appliedTo.length = 0;
         if(data.type == "service") {
@@ -275,7 +275,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             });
         }
     });
-
+  }
 },[discountDetails]);
 
 //Total discount labspackages
