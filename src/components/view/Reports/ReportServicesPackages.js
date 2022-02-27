@@ -41,7 +41,7 @@ function ReportServicesPackages() {
         servicesPackages.length = 0;
         axios({
             method: 'post',
-            url: window.$link + 'bookingdetails/getAll',
+            url: window.$link + 'reports/service_package',
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -50,50 +50,22 @@ function ReportServicesPackages() {
               date_from: filteredData.from_date,
               date_to: filteredData.to_date,
             },
-          }).then(function (details) {
-                var output = [];
-                 var array = details.data.booking_details;
-                 setTotalCount(array.length);
-                    array.forEach(function(item, index) {
-                        var existing = output.filter(function(v, i) {
-                            var vDate = v.booking_date.split(" ");
-                            var iDate = item.booking_date.split(" ");
-                            if(v.type == "package") {
-                                return v.package == item.package;
-                            } else {
-                                return v.lab_test == item.lab_test;
-                            }
-                        });
-        
-                        if (existing.length) {
-                            var existingIndex = output.indexOf(existing[0]);
-                            output[existingIndex].booking_id = output[existingIndex].booking_id.concat("\n" + item.booking_id);
-                        } else {
-                        if (typeof item.booking_id == 'string')
-                            item.booking_id = [item.booking_id];
-                        output.push(item);
-                        }
-                    });
+          }).then(function (response) {
+              console.log(response.data.data.data);
+              
+              response.data.data.data.map((data,index) => {
+                var info = {};
+                info.service = data.lab_test ? data.lab_test : data.package;
+                info.total_count = data.total_count;
+                setServicesPackages(oldArray => [...oldArray, info]);
 
-                    output.map((data,index) => {
-                        var info = {};
-        
-                        if(data.type == "package") {
-                            info.service_name = data.package;
-                        } else {
-                            info.service_name = data.lab_test;
-                        }
-                        
-                        info.quantity = data.booking_id.toString().split("\n").length;
-                        setServicesPackages(oldArray => [...oldArray, info]);
+                if(response.data.data.data.length - 1 == index) {
+                  setPrintReadyFinal(true);
+                }
+              });
 
-                        if(output.length - 1 == index) {
-                          setPrintReadyFinal(true);
-                        }
-                    })
-        
-          }).then(function (error) {
-            // console.log(error);
+              
+
           });
     },[render]);
     
@@ -106,9 +78,6 @@ function ReportServicesPackages() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
-
-        {/* <PdfTransaction/> */}
-
         <Searchbar title='SERVICES ANG PACKAGES'/>
           <Header 
             type="thick" 

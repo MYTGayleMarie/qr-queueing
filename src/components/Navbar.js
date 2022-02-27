@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { getRoleId, refreshPage, removeUserSession, getUser } from '../utilities/Common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMediaQuery } from 'react-responsive'
 
 
 //css
