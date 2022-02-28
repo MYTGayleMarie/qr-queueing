@@ -470,7 +470,7 @@ const LipidProfile = [
     name: 'Lipid Panel',
     categoryId: '7',
     labTestId: '126',
-    price: '0.00',
+    price: '600.00',
     // price: '200.00',
     type: 'lab',
   },

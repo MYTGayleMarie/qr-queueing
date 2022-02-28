@@ -162,9 +162,9 @@ function AddCompany() {
             }).then(function (discount_response) {
                 console.log(discount_response)
                 toast.success("Successfully added company discount details");
-                setTimeout(function() {
-                    setRedirect(true);
-                }, 2000);
+                // setTimeout(function() {
+                //     setRedirect(true);
+                // }, 2000);
             }).catch(function (error) {
                 toast.error(error);
             })
