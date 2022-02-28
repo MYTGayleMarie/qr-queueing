@@ -484,7 +484,7 @@ React.useEffect(() => {
                       onChange={setPersonal}
                     />
                     <label for="print-with-pickup" className="radio-label">
-                      PRINT WITH PICKUP
+                      PICKUP
                     </label>
                   </div>
                   <div className="col">
