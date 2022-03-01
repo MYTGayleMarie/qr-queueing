@@ -398,28 +398,19 @@ React.useEffect(() => {
                 <br />
               </div>
               <div className="col-sm-6">
-                <label for="address" className="form-label">
-                  DISCOUNT REMARKS
-                </label>
-                <br />
-                <span className="remarks ">{companyRemarks != '' && companyRemarks}</span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12">
-                <label for="address" className="form-label">
-                  DISCOUNT DETAIL
-                </label>
-                <br />
-                <input
-                  type="text"
-                  className="form-control full"
-                  id="discount_detail"
-                  name="discountDetail"
-                  value={discountDetail}
-                  onChange={setPersonal}
-                />
-                <br />
+                  <label for="address" className="form-label">
+                      DISCOUNT DETAIL
+                    </label>
+                    <br />
+                    <input
+                      type="text"
+                      className="form-control full"
+                      id="discount_detail"
+                      name="discountDetail"
+                      value={discountDetail}
+                      onChange={setPersonal}
+                    />
+                    <br />
               </div>
             </div>
             <div className="row small-gap">
@@ -484,7 +475,7 @@ React.useEffect(() => {
                       onChange={setPersonal}
                     />
                     <label for="print-with-pickup" className="radio-label">
-                      PRINT WITH PICKUP
+                      PICKUP
                     </label>
                   </div>
                   <div className="col">
