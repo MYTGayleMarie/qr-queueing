@@ -42,6 +42,7 @@ function AddDiscountNoCompany() {
 
     //Redirect
     const [redirect, setRedirect] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
     //GET OPTION DETAILS
     React.useEffect(() => {
@@ -97,60 +98,63 @@ function AddDiscountNoCompany() {
 function submit(e, discount) {
     e.preventDefault();
 
-    if(discount.discount_code != "" && discount.discount_percentage != "") {
+    if(isClicked == false) {
+        if(discount.discount_code != "" && discount.discount_percentage != "") {
 
-        var selectedIds = [];
-        var selectedTypes = [];
+            var selectedIds = [];
+            var selectedTypes = [];
 
-        selectedLab.map((data) => {
-            var value = data.value.split("_");
+            selectedLab.map((data) => {
+                var value = data.value.split("_");
 
-            selectedIds.push(value[0]);
-            selectedTypes.push(value[1]);
-        });
+                selectedIds.push(value[0]);
+                selectedTypes.push(value[1]);
+            });
 
-        selectedPackages.map((data) => {
-            var value = data.value.split("_");
+            selectedPackages.map((data) => {
+                var value = data.value.split("_");
 
-            selectedIds.push(value[0]);
-            selectedTypes.push(value[1]);
-        });
+                selectedIds.push(value[0]);
+                selectedTypes.push(value[1]);
+            });
 
-        axios({
-            method: 'post',
-            url: window.$link + 'discounts/create',
-            withCredentials: false,
-            params: {
-                token: userToken.replace(/['"]+/g, ''),
-                api_key: window.$api_key, 
-                description: discount.remarks,
-                discount_code: discount.discount_code,
-                discount_percentage: discount.discount_percentage,
-                // company_id: id,
-                added_by: userId,
-                ids: selectedIds,
-                types: selectedTypes,
-                discounts: "",
-            }
-        }).then(function (discount_response) {
-            console.log(discount_response)
-            toast.success("Successfully added company discount details");
-            // setTimeout(function() {
-            //     setRedirect(true);
-            // }, 2000);
-        }).catch(function (error) {
-            toast.error(error);
-        })
-    
-    } else {
-        toast.warning("Please fill up all required inputs!");
+            axios({
+                method: 'post',
+                url: window.$link + 'discounts/create',
+                withCredentials: false,
+                params: {
+                    token: userToken.replace(/['"]+/g, ''),
+                    api_key: window.$api_key, 
+                    description: discount.remarks,
+                    discount_code: discount.discount_code,
+                    discount_percentage: discount.discount_percentage,
+                    // company_id: id,
+                    added_by: userId,
+                    ids: selectedIds,
+                    types: selectedTypes,
+                    discounts: "",
+                }
+            }).then(function (discount_response) {
+                console.log(discount_response)
+                setIsClicked(true);
+                toast.success("Successfully added company discount details");
+                setTimeout(function() {
+                    setRedirect(true);
+                }, 2000);
+            }).catch(function (error) {
+                toast.error(error);
+            })
+        
+        } else {
+            toast.warning("Please fill up all required inputs!");
+        }
     }
 
 }
 
 if(redirect == true) {
     return (
-        <Navigate to = "/companies"/>
+        <Navigate to = "/discounts"/>
     )
 }  
 
@@ -208,7 +212,7 @@ if(redirect == true) {
                             <input type="text" className="form-control full" id="discount_code" name="discount_code" onChange={setDiscount} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="discount_percentage" className="form-label">DISCOUNT<i> (required)</i></label><br />
+                            <label for="discount_percentage" className="form-label">DISCOUNT %<i> (required)</i></label><br />
                             <input type="text" className="form-control full" id="discount_percentage" name="discount_percentage" onChange={setDiscount}  required/><br />
                         </div>
                     </div>

@@ -62,6 +62,7 @@ function AddInvoicePayment() {
   const [payments, setPayments] = useState("");
   const [discountId, setDiscountId] = useState("");
   const [discountDescription, setDiscountDescription] = useState("");
+  const [user, setUser] = useState("");
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -162,6 +163,20 @@ function AddInvoicePayment() {
     }).then(function(error) {
       console.log(error);
     });
+
+    axios({
+        method: 'post',
+        url: window.$link + 'users/show/' + userId,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then(function (response) {
+          setUser(response.data.name);
+      });
+
   },[]);
 
   React.useEffect(() => {
@@ -225,12 +240,15 @@ function AddInvoicePayment() {
     }).then(function (response) {
       console.log(response);
       var invoice = response.data.data.company_invoice;
+      var date = new Date(invoice.added_on);
+      var formattedDate = date.toDateString().split(" ");
       var payments = response.data.data.payments;
     //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
         var info = {};
-        info.id = invoice.id;
+        info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
         info.code = invoice.discount_code;
         info.price = invoice.price;
+        info.qty = invoice.qty;
         info.total = invoice.total;
 
         const promisePrint = new Promise((resolve,reject) => {
@@ -238,6 +256,7 @@ function AddInvoicePayment() {
             setGrandTotal(invoice.total);
             setDiscountCode(invoice.discount_code);
             setPaidAmount(invoice.paid_amount);
+            //add payment type
             setPayments(payments);
             setHasPay(invoice.paid_amount != "0.00" || invoice.paidAmount != null ? true : false);
             setInfo(oldArray => [...oldArray, info]);
@@ -269,24 +288,10 @@ function AddInvoicePayment() {
         }
       }).then(function (response) {
           console.log(response);
-          setDiscountDescription(response.data.discount_code);
+          setDiscountDescription(response.data.data.discount.description);
+          
       });
   },[discountId]);
-
-//   React.useEffect(() => {
-
-//     for (let [key, value] of Object.entries(checked)) {
-//         var grandTotal = 0;
-//         if(value != false) {
-//             var obj = info[key];
-//             if(info[key].total != null) {
-//                 grandTotal += parseFloat(obj.total);
-//             }
-//         }
-//     }
-//     setGrandTotal(grandTotal);
-
-//   },[checked]);
 
   function submit (e) {
     e.preventDefault();
@@ -484,7 +489,7 @@ function AddInvoicePayment() {
   //Invoice Print
   function printInvoiceButton() {
         return (
-            <button className="save-btn" onClick={handlePrint}>
+            <button className="invoice-btn" onClick={handlePrint}>
             <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
                 PRINT INVOICE
             </button>
@@ -494,7 +499,7 @@ function AddInvoicePayment() {
     //Acknowledgement Print
     function printButton() {
         return (
-            <button className="save-btn" onClick={printData == false ? "" : handleAcknowledgePrint}>
+            <button className="invoice-btn" onClick={printData == false ? "" : handleAcknowledgePrint}>
             <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
                 {printData == false ? "Loading Data..." : "PRINT RECEIPT"}
             </button>
@@ -503,11 +508,21 @@ function AddInvoicePayment() {
 
     function emailButton() {
         return (
-            <button className="save-btn" onClick={handleShow}>
+            <button className="invoice-btn" onClick={handleShow}>
             <FontAwesomeIcon icon={"envelope"} alt={"email"} aria-hidden="true" className="print-icon"/>
                 EMAIL
             </button>
         ) 
+    }
+
+    function paymentDetails() {
+        return (
+            <div className="paymentDetails">
+                <span className="label">PAYMENT TYPE: <b className="invoice-total"> CASH </b></span>
+                <br/>
+                <span className="label">PAID AMOUNT: <b className="invoice-total">P {parseFloat(paidAmount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+            </div>
+        )
     }
 
 function cashForm() {
@@ -687,7 +702,7 @@ function othersForm() {
             <div className="active-cont">
             <Header type="thin" title="COMPANY INVOICES" addInvoice={handleShow}/>
                 <ToastContainer/>
-                <h4 className="form-categories-header italic">COMPANY DETAILS</h4>
+                {/* <h4 className="form-categories-header italic">COMPANY DETAILS</h4> */}
 
                 <div className="po-details">
                     <div className="row">
@@ -699,7 +714,7 @@ function othersForm() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                             <div className='label'>CONTACT NUMBER</div>
                         </div>
                         <div className="col-sm-4">
@@ -730,13 +745,13 @@ function othersForm() {
                     </div>
                 </div>
 
-                <h4 className="form-categories-header italic">INVOICE DETAILS</h4>
+                {/* <h4 className="form-categories-header italic">INVOICE DETAILS</h4> */}
 
                 <Table
                     type={'payment-invoices'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
+                    headingColumns={['INVOICE DATE','DISCOUNT CODE', 'PRICE', 'QTY', 'TOTAL']}
                     givenClass={'company-mobile'}
                     // setChecked={setChecked}
                 />
@@ -750,16 +765,23 @@ function othersForm() {
                 )}
 
                 <div className="row">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                        {hasPay == true && paymentDetails()}
+                    </div>
+                </div>
+                
+
+                <div className="row">
                     <div className="col-sm-12 d-flex justify-content-center">
                         {hasPay == true && (printButton())}
                         {hasPay == false && (printInvoiceButton())}
                         {hasPay == false && (emailButton())}
                     </div>
                 </div>
-                
+
                 {haslogs == true && hasPay == false && (
                     <div className="payment-cont">
-                    <h1 className="payment-label">PAYMENT</h1>
+                    <h1 className="payment-label">ADD PAYMENT</h1>
 
                     <br/>
 
@@ -865,6 +887,7 @@ function othersForm() {
                             contactPerson={contactPerson}
                             invoices={info}
                             grandTotal={grandTotal}
+                            user={user}
                         />
                 
                     </div>

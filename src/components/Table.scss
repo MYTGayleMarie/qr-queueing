@@ -220,6 +220,14 @@ body {
   margin-left: 5%;
 }
 
+.ACTIVE {
+  color: rgb(55, 175, 65);
+  font-weight: bold;
+}
+
+.text-left {
+  text-align: left !important;
+}
 
 
 /*** Medtech ***/
@@ -232,3 +240,4 @@ body {
 .lab, .package {
   text-transform: uppercase;
 }
+

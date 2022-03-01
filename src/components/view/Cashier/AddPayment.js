@@ -890,7 +890,7 @@ function AddPayment() {
 
         {paymentStatus != "paid" && (
                 <div className="payment-cont">
-                    <h1 className="payment-label">PAYMENT</h1>
+                    <h1 className="payment-label">ADD PAYMENT</h1>
 
                     <div className="row">
                         <div className="col-sm-3">

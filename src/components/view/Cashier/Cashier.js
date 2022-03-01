@@ -151,6 +151,10 @@ function Cashier() {
     });
   },[bookingDetails]);
 
+  // React.useEffect(() => {
+  //   finalPatientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
+  // },[finalPatientData]);
+
   function calculate() {
     var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
     var tenCentavoTotal = parseFloat(0.1 * cashCount.tenCentavos);
@@ -285,7 +289,7 @@ function Cashier() {
           <Header type="thick" title="BOOKING MANAGER"/>
           <Table
             type={'cashier'}
-            tableData={finalPatientData}
+            tableData={finalPatientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={4}
             headingColumns={[
               'BOOKING ID',

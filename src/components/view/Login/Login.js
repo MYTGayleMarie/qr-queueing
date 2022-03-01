@@ -73,7 +73,7 @@ function Login() {
   }
 
   document.body.style = 'background: white;';
-  console.log(getRoleId());
+
   return (
     <>
       <div className="container">

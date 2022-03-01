@@ -35,6 +35,7 @@ function Registration() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
+  const [finalData, setFinalData] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
   function getTime(date) {
@@ -43,7 +44,7 @@ function Registration() {
   
   React.useEffect(() => {
     patientData.length = 0;
-    axios({
+     axios({
       method: 'post',
       url: window.$link + 'bookings/getAll',
       withCredentials: false,
@@ -55,10 +56,10 @@ function Registration() {
         date_to: filteredData.to_date,
       },
     })
-      .then(function (response) {
+      .then( function (response) {
         console.log(response);
-        response.data.bookings.map((booking, index) => {
-          axios({
+        response.data.bookings.map( async (booking, index) => {
+          await axios({
             method: 'post',
             url: window.$link + 'customers/show/' + booking.customer_id,
             withCredentials: false,
@@ -67,13 +68,13 @@ function Registration() {
               token: userToken.replace(/['"]+/g, ''),
               requester: userId,
             },
-          })
-            .then(function (customer) {
+          }).then(function (customer) {
               var bookingTime = new Date(booking.booking_time);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var addedOn = new Date(booking.added_on);
               var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
+
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
               bookingDetails.name =
@@ -84,7 +85,7 @@ function Registration() {
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
-            .catch(function (error) {
+            .then (function (error) {
               console.log(error);
             });
         });
@@ -93,6 +94,10 @@ function Registration() {
         console.log(error);
       });
   }, [render]);
+
+  // React.useEffect(() => {
+  //   patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
+  // });
 
   function filter() {}
 
@@ -108,6 +113,7 @@ function Registration() {
     )
   }
 
+  console.log(patientData);
 
   return (
     <div>
@@ -117,7 +123,7 @@ function Registration() {
           <Header type="thick" title="BOOKING MANAGER" buttons={buttons} tableData={patientData} />
           <Table
             type={'registration'}
-            tableData={patientData}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}

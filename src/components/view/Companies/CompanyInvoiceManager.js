@@ -40,8 +40,10 @@ function CompanyInvoiceManager() {
   const [finalCompanyData, setFinalCompanyData] = useState([]);
   const [redirect, setRedirect] = useState("");
   const [toAddPayment, setToAddPayment] = useState(false);
+  const [status, setStatus] = useState('UNPAID');
   
   React.useEffect(() => {
+    finalCompanyData.length = 0;
     axios({
         method: 'post',
         url: window.$link + 'Company_invoices/getAll',
@@ -66,16 +68,46 @@ function CompanyInvoiceManager() {
                 }
             }).then(function (company) {
                 console.log(company);
-                companyDetails.company_id = company.data.id;
-                companyDetails.id = row.id;
-                companyDetails.description = company.data.name;
-                companyDetails.discountCode = row.discount_code;
-                companyDetails.remarks = company.data.remarks;
-                companyDetails.total = "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
-
-                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
-
+                var date = new Date(row.added_on);
+                var formattedDate = date.toDateString().split(" ");
+                if(status == 'UNPAID' && row.is_paid == 0) {
+                    companyDetails.company_id = company.data.id;
+                    companyDetails.id = row.id;
+                    companyDetails.date = date.toDateString();
+                    companyDetails.description = company.data.name;
+                    companyDetails.discountCode = row.discount_code;
+                    companyDetails.remarks = company.data.remarks;
+                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+    
+                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+    
+                }
+                else if(status == "PAID" && row.is_paid == 1) {
+                    companyDetails.company_id = company.data.id;
+                    companyDetails.id = row.id;
+                    companyDetails.date = date.toDateString();
+                    companyDetails.description = company.data.name;
+                    companyDetails.discountCode = row.discount_code;
+                    companyDetails.remarks = company.data.remarks;
+                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+    
+                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+                }
+                else if(status == "ALL"){
+                    companyDetails.company_id = company.data.id;
+                    companyDetails.id = row.id;
+                    companyDetails.date = date.toDateString();
+                    // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                    companyDetails.description = company.data.name;
+                    companyDetails.discountCode = row.discount_code;
+                    companyDetails.remarks = company.data.remarks;
+                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+    
+                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -83,7 +115,7 @@ function CompanyInvoiceManager() {
     }).catch(function (error) {
         console.log(error);
     });
-  }, []);
+  }, [render]);
 
   function addPayment(invoiceId, companyId) {
     id = invoiceId;
@@ -109,15 +141,17 @@ function CompanyInvoiceManager() {
                 <Table
                     clickable={true}
                     type={'company-invoices'}
-                    tableData={finalCompanyData}
+                    tableData={finalCompanyData.sort((a,b) => (new Date(a.date) > new Date(b.date) ? 1 : ((new Date(b.date) > new Date(a.date)) ? -1 : 0)))}
                     rowsPerPage={4}
-                    headingColumns={['COMPANY ID','ID', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'TOTAL', 'PAYMENT STATUS', 'ACTION']}
+                    headingColumns={['COMPANY ID','ID', 'INVOICE DATE', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'TOTAL', 'PAYMENT STATUS', 'ACTION']}
                     filteredData={filteredData}
                     setFilter={setFilter}
                     filter={filter}
-                    render={setRender}
+                    render={render}
+                    setRender={setRender}
                     givenClass={'company-mobile'}
                     link={addPayment}
+                    setStatus={setStatus}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

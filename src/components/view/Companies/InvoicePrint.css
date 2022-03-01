@@ -4,7 +4,7 @@
 }
 
 .receipt-header {
-  font-size: 24px;
+  font-size: 20px;
   text-decoration: underline;
   text-align: center;
 }
@@ -14,6 +14,7 @@
 }
 
 .invoice-number-cont {
+    font-size: 16px;
     text-align: end;
     margin-top: 3%;
 }
@@ -23,10 +24,16 @@
 }
 
 .received-from-label {
+    font-size: 14px;
     font-weight: bold;
 }
 
+.received-from-detail {
+    font-size: 16px;
+}
+
 .date-cont {
+    font-size: 16px;
     text-align: end;
 }
 
@@ -39,7 +46,7 @@
 }
 
 .receipt-details-footer {
-    margin-top: 10%;
+    margin-top: 3%;
 }
 
 .to-left {
@@ -65,12 +72,12 @@
 }
 
 .receipt-logo {
-    width: 18%;
+    width: 15%;
 }
 
 /** Invoice **/
 .invoice-logo {
-    width: 21%;
+    width: 17%;
     padding-top: 2%;
     padding-left: 3%;
 }
@@ -82,12 +89,14 @@
 
 .invoice-cont {
     margin: 5%;
+    margin-top: 1%;
 }
 
+
 .invoice-line {
-    width: 90%;
-    margin-left: 5%;
-    height: 5px;
+    width: 95%;
+    margin-left: 1%;
+    height: 18px;
     border-bottom: 1px solid black;
 }
 
@@ -97,9 +106,13 @@
 }
 
 .invoice-table-cont {
-    margin-top: -8%;
+    margin-top: -10%;
     margin-left: -7%;
     color: #0000 !important;
+}
+
+.label-fill {
+    width: 200px;
 }
 
 .grand-total-invoice {
@@ -108,4 +121,12 @@
 
 .signature-label {
     font-size: 12px;
+}
+
+.invoice-footer {
+    margin-left: 6%;
+}
+
+.not-bold {
+    font-weight: 400;
 }

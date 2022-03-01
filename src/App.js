@@ -53,23 +53,27 @@ import AddCompany from './components/View/Companies/AddCompany';
 import AddDiscount from './components/View/Companies/AddDiscount';
 import Discount from './components/View/Discount/Discount';
 import AddDiscountNoCompany from './components/View/Discount/AddDiscountNoCompany';
+import DiscountDetail from './components/View/Discount/DiscountDetail';
 import { PaymentToPrint } from './components/View/Cashier/PaymentToPrint';
 import { InvoiceToPrint } from './components/View/Companies/InvoiceToPrint';
 import PdfTransaction from './components/ReactToPDF';
 import { Navigate } from 'react-router';
 import { useEffect } from 'react';
-import { removeUserSession} from './utilities/Common.js';
+import { refreshPage, removeUserSession} from './utilities/Common.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  document.title = 'QR Diagnostics System';
   const [token, setAuthentication] = useState(window.$userToken);
   const [tokenExpiry, setTokenExpiry] = useState(window.$token_expiry);
-  document.title = 'QR Diagnostics System';
 
   function promptExpiry() {
     toast.warning("TOKEN HAS EXPIRED. PLEASE LOG IN AGAIN...");
-    setTimeout(removeUserSession(),5000);
+    setTimeout(() => {
+      removeUserSession();
+      refreshPage();
+    },5000);
   }
 
   useEffect(() => {
@@ -119,6 +123,7 @@ function App() {
         <Route path="/add-invoice-payment/:id/:companyId" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
         <Route path="/discounts" element={token ? <Discount /> : <Navigate to="/" />} />
         <Route path="/add-discount" element={token ? <AddDiscountNoCompany /> : <Navigate to="/" />} />
+        <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />

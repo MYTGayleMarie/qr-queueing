@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo}) {
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -40,6 +40,12 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            </tr>
+        }
+        else if(type === "discount-detail") {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{data.val}</td>)}
             </tr>
         }
         else if(clickable == false) {
@@ -108,7 +114,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             return <tr key={row.id}>
             {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 && index != 3 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
         }
         else if(type === "add-invoice") {
@@ -128,8 +134,15 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if(type === 'company-invoices') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 1 ? "company_name" : data.val}>{index == 0 ? "" : data.val}</td>)}
-             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.company_id)}>ADD PAYMENT</button></td>
+            <td key={index} data-heading={data.key} className={index == 3 ? "company_name" : data.val}>{index == 0 || index == 1 ? "" : data.val}</td>)}
+             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.company_id)}>{row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}</button></td>
+            </tr>
+        }
+        else if(type === 'discount'){
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => endPromo(row.id)}>END PROMO</button></td>
             </tr>
         }
         else {
@@ -175,6 +188,52 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
              </div>
+        );
+    }
+    else if (type === "search-patient") {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">  </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
+            </div>
+        );
+    } else if (type === "discount-detail") {
+
+        const {from_date, to_date, done} = filteredData;
+
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end"> 
+                    {/* <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button> */}
+                 </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
+            </div>
         );
     }
     else if(type === 'registration') {
@@ -250,7 +309,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice' || type === 'discount') {
+    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -261,6 +320,32 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+    }
+    else if(type === 'discount') {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+                    <select onChange={(e) => setStatus(e.target.value)}>
+                        <option value="active">ACTIVE</option>
+                        <option value="inactive">INACTIVE</option>
+                    </select>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{index == 0 ? "" : col}</th>
                             ))}
                         </tr>
                     </thead>
@@ -300,13 +385,18 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
-
+                    <select onChange={(e) => setStatus(e.target.value)}>
+                        <option value="UNPAID">UNPAID</option>
+                        <option value="PAID">PAID</option>
+                        <option value="ALL">ALL</option>
+                    </select>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
                 <table className={tableClass}>
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index} className={index == 1 ? "company_name" : ""}>{index == 0 ? "" : col}</th>
+                                <th key={index} className={index == 3 ? "company_name" : ""}>{index == 0 || index == 1 ? "" : col}</th>
                             ))}
                         </tr>
                     </thead>

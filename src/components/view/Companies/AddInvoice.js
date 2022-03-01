@@ -87,8 +87,8 @@ function AddInvoice() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response.data);
-      setDiscountInfo(response.data);
+      console.log(response);
+      setDiscountInfo(response.data.data.discount);
     }).then(function(error) {
       console.log(error);
     });

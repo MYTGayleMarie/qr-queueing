@@ -66,7 +66,7 @@ export class ReceiptToPrint extends React.PureComponent {
         <div className="receipt-cont">
             <img src={logo} alt={'logo'} class="receipt-logo"></img>
             <h4 className="receipt-header">ACKNOWLEDGEMENT RECEIPT</h4>
-            <h5 className="invoice-number-cont">N<span className="underline">o</span><span className="invoice-number-detail"> {payment != null ? payment.id : ""}</span></h5>
+            <h5 className="invoice-number-cont">Payment N<span className="underline">o</span><span className="invoice-number-detail"> {payment != null ? payment.id : ""}</span></h5>
             <h5 className="date-cont"><span className="bold">DATE</span> {addedOn != null ? addedOn : updatedOn}</h5>
             
             <div className="receipt-details">
@@ -89,18 +89,6 @@ export class ReceiptToPrint extends React.PureComponent {
                     <span className="received-from-label">Payment for</span>
                     <span className="received-from-detail"> {this.props.discountDescription + " (" + this.props.discountCode + ")"} </span>
                 </span>
-            </div>
-
-            <div className="receipt-details-pre-footer">
-                    {/* <div className="to-left">
-                        <span className="received-from-label">PAYMENT TYPE: </span>
-                        <span className="received-from-detail"> {payment.type}</span>
-                    </div> */}
-                    <div className="to-right">
-                        <span className="received-from-label">BY __________________</span>
-                        <br/>
-                        <span className="to-center signature-label">Authorized Signature</span>
-                    </div>
             </div>
 
             <div className="receipt-details-footer">

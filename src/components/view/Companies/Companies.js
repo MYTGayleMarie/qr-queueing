@@ -53,9 +53,8 @@ function Companies() {
             requester: userId,
         }
     }).then(function (response) {
-        console.log(response.data.companys);
-
-        response.data.companys.map((data,index) => {
+        // console.log(response.data.companys);
+        response.data.companys.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)).map((data,index) => {
             var info = {};
             var contact = data.contact_no.split("/");
             var contact_company = contact[0].split(":");

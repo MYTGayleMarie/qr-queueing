@@ -40,3 +40,20 @@
 .invoice-remarks-input {
     margin-left: 10%;
 }
+
+.invoice-btn {
+    background-color: #094b5b;
+    color: white;
+    border: none;
+    width: 15% !important;
+    border-radius: 1em;
+    padding:  0.5%;
+    margin-top: -2%;
+    margin-right: 5%;
+}
+
+.paymentDetails {
+    margin-top: -3%;
+    float:right;
+    padding-right: 5% !important;
+}

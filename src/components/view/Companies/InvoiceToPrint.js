@@ -32,7 +32,6 @@ export class InvoiceToPrint extends React.PureComponent {
         <img src={logo} alt={'logo'} class="invoice-logo"></img>
 
         <div className="invoice-cont">
-        <h4 className="invoice-header">COMPANY DETAILS</h4>
             <table>
                 <tr>
                     <td className="add-td-gap">
@@ -44,64 +43,54 @@ export class InvoiceToPrint extends React.PureComponent {
                 </tr>
             </table>
             <table>
-                <td>
+                <td className='label-fill'>
                     <span className='label'>CONTACT NUMBER</span>
                 </td>
-                <td>
+                <td className='label-fill'>
                     <span className='detail'>{this.props.contactNo}</span>
                 </td>
             </table>
             <table>
-                <td>
+                <td className='label-fill'>
                     <span className='label'>COMPANY EMAIL</span>
                 </td>
-                <td>
+                <td className='label-fill'>
                     <span className='detail'>{this.props.email}</span>
                 </td>
             </table>
             <table>
-                <td>
+                <td className='label-fill'>
                     <span className='label'>COMPANY ADDRESS</span>
                 </td>
-                <td>
+                <td className='label-fill'>
                     <span className='detail'>{this.props.address}</span>
                 </td>
             </table>
             <table>
-                <td>
+                <td className='label-fill'>
                     <span className='label'>CONTACT PERSON</span>
                 </td>
-                <td>
+                <td className='label-fill'>
                     <span className='detail'>{this.props.contactPerson}</span>
                 </td>
             </table>
+            <div className="invoice-line"/>
         </div>
-
-        <div className="invoice-line"/>
-
-        <h4 className="invoice-header invoice-sub-header">INVOICE DETAILS</h4>
-
             <div className="invoice-table-cont">
                 <Table
                     type={'payment-invoices'}
                     tableData={this.props.invoices}
                     rowsPerPage={4}
-                    headingColumns={['INVOICE NO.', 'DISCOUNT CODE', 'PRICE', 'TOTAL']}
+                    headingColumns={['INVOICE DATE','DISCOUNT CODE', 'PRICE','QTY', 'TOTAL']}
                     givenClass={'company-mobile'}
                     // setChecked={setChecked}
                 />
-            </div>
-
-            <div className="grand-total-invoice to-left">
-                <table>
-                    <td>
-                        <span className="bold">GRAND TOTAL P </span>
-                    </td>
-                    <td>
-                        {this.props.grandTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </td>
-                </table>
-            </div>
+            </div>   
+            <div className="invoice-footer">
+                        <span className="received-from-label"> PREPARED BY <span className="not-bold">{this.props.user}</span></span><br/>
+                        <span className="received-from-label"> RECEIVED BY ________________________</span><br/>
+                        <br/>
+            </div>         
         </div>
       );
     }
