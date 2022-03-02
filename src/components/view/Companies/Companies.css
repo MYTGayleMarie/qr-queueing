@@ -54,6 +54,5 @@
 
 .paymentDetails {
     margin-top: -3%;
-    float:right;
-    padding-right: 5% !important;
+    padding-left: 5% !important;
 }

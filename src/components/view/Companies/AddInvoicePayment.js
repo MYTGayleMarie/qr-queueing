@@ -256,7 +256,6 @@ function AddInvoicePayment() {
             setGrandTotal(invoice.total);
             setDiscountCode(invoice.discount_code);
             setPaidAmount(invoice.paid_amount);
-            //add payment type
             setPayments(payments);
             setHasPay(invoice.paid_amount != "0.00" || invoice.paidAmount != null ? true : false);
             setInfo(oldArray => [...oldArray, info]);
@@ -518,9 +517,22 @@ function AddInvoicePayment() {
     function paymentDetails() {
         return (
             <div className="paymentDetails">
-                <span className="label">PAYMENT TYPE: <b className="invoice-total"> CASH </b></span>
-                <br/>
-                <span className="label">PAID AMOUNT: <b className="invoice-total">P {parseFloat(paidAmount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
+                {payments.map((data,index) => {
+                    var date = new Date(data.added_on);
+                    var formattedDate = date.toDateString().split(" ");
+                    return(
+                    <div>
+                        <span className="label">PAYMENT DATE: <b className="invoice-total"> {formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]} </b></span>
+                        <br/>
+                        <span className="label">PAYMENT TYPE: <b className="invoice-total"> {data.type} </b></span>
+                        <br/>
+                        <span className="label">PAID AMOUNT: <b className="invoice-total">P {parseFloat(data.amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <br/>
+                        <br/>
+                    </div>
+                    )
+                })}
             </div>
         )
     }
@@ -747,6 +759,12 @@ function othersForm() {
 
                 {/* <h4 className="form-categories-header italic">INVOICE DETAILS</h4> */}
 
+                <div className="row">
+                    <div className="col-sm-12 d-flex justify-content-start">
+                        {hasPay == true && paymentDetails()}
+                    </div>
+                </div>
+
                 <Table
                     type={'payment-invoices'}
                     tableData={info}
@@ -763,13 +781,6 @@ function othersForm() {
                     </div>
                 </div>
                 )}
-
-                <div className="row">
-                    <div className="col-sm-12 d-flex justify-content-end">
-                        {hasPay == true && paymentDetails()}
-                    </div>
-                </div>
-                
 
                 <div className="row">
                     <div className="col-sm-12 d-flex justify-content-center">
@@ -900,7 +911,7 @@ function othersForm() {
                             ref={acknowledgementRef} 
                             name={name}
                             address={address}
-                            paidAmount={"20523.53"}
+                            paidAmount={paidAmount}
                             discountCode={discountCode}
                             discountDescription={discountDescription}
                             payments={payments}
