@@ -42,13 +42,14 @@ function AddPurchaseOrder() {
   //ITEMS
   const [info, setInfo] = useForm(PoInfoData);
   const [suppliers, setSuppliers] = useState([]);
+  const [generalDiscount, setGeneralDiscount] = useState(0);
   const [items, setItems] = useState([{ 
-    order_quantity: " ", 
+    order_quantity: 0, 
     unit: " ", 
     item: " ",
     cost: " ",
-    item_discount: " ",
-    total: " ",
+    item_discount: 0,
+    total: 0,
   }]);
 
   const [itemInfo, setItemInfo] = useState([]);
@@ -67,12 +68,15 @@ function AddPurchaseOrder() {
       })
     }
 
-    if(list[index]["order_quantity"] != " " && list[index]["cost"] && list[index]["item_discount"]) {
-      list[index]["total"] = parseFloat((list[index]["order_quantity"] * list[index]["cost"]) - list[index]["item_discount"]).toFixed(2);
+    console.log(list[index]["item_discount"]);
+    var item_discount = list[index]["item_discount"] == null ? 0 : list[index]["item_discount"];
+
+    if(list[index]["order_quantity"] != " " && list[index]["cost"]) {
+      list[index]["total"] = parseFloat((list[index]["order_quantity"] * list[index]["cost"]) - item_discount).toFixed(2);
     }
 
     setItems(list);
-    console.log(items);
+
 
     var subTotal = 0;
     var discountTotal = 0;
@@ -88,22 +92,23 @@ function AddPurchaseOrder() {
         }
       });
 
-      if(subTotal != 0 && discountTotal != 0) {
-        grandTotal = subTotal - discountTotal;
-      } else {
-        grandTotal = subTotal
-      }
+
+      grandTotal = subTotal
       setSubTotal(subTotal);
-      setDiscount(discountTotal);
       setGrandTotal(grandTotal);
     }
   };
+
+  React.useEffect(() => {
+    var discount = isNaN(generalDiscount) == true ? 0 : generalDiscount;
+    var grand_total = subTotal;
+    setGrandTotal(grand_total - discount);
+  },[generalDiscount, subTotal]);
 
   const removeItems = (index) => {
        const list = [...items];
        list.splice(index, 1);
        setItems(list);
-       console.log(items)
   };
 
   const addItems = () => {
@@ -135,7 +140,6 @@ function AddPurchaseOrder() {
         requester: userId,
       },
     }).then(function (response) {
-      console.log(response.data.items)
       response.data.items.map((data,index) => {
         var itemInfo = {};
         itemInfo.id = data.id;
@@ -158,7 +162,6 @@ function AddPurchaseOrder() {
           requester: userId,
       }
   }).then(function (response) {
-      console.log(response.data.suppliers);
 
       response.data.suppliers.map((data, index) => {
           var supplierInfo = {};
@@ -192,7 +195,6 @@ function AddPurchaseOrder() {
     items.map((data, index) => {
       item_ids.push(data.item);
       costs.push(data.cost);
-      item_discounts.push(data.item_discount);
       qty.push(data.order_quantity);
       units.push(data.unit);
     });
@@ -213,14 +215,13 @@ function AddPurchaseOrder() {
         items: item_ids,
         cost: costs,
         item_discount: item_discounts,
+        //general discount
         qty: qty,
         unit: units,
         remarks: '',
         added_by: userId,
       },
     }).then(function (response) {
-      console.log(response);
-      console.log(info.supplier);
       toast.success("Successfully added PO!");
       setTimeout(function () {
         setRedirect(true);
@@ -233,7 +234,6 @@ function AddPurchaseOrder() {
 
 
   var purchaseItems = items.map((row, index) => {
-    console.log(itemInfo);
     return (
                     <tr key={index}>
                         <td>
@@ -275,8 +275,6 @@ function AddPurchaseOrder() {
     return <Navigate to="/purchase-order" />;
   }
 
-  console.log(suppliers)
-
   return (
     <div>
       <Navbar />
@@ -309,14 +307,14 @@ function AddPurchaseOrder() {
                 </select>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">FORWARDER</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="forwarder" className="item-name-input" onChange={setInfo}/>
               </div>
-            </div>
+            </div> */}
             {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">BRANCH</span>
@@ -346,22 +344,22 @@ function AddPurchaseOrder() {
                 <input type="date" name="delivery_date" className="item-name-input" onChange={setInfo}/>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">REQUISITIONER</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="requisitioner" className="item-name-input" onChange={setInfo}/>
               </div>
-            </div>
-            <div className="row">
+            </div> */}
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">DELIVERY ADDRESS</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="delivery_address" className="item-name-input" onChange={setInfo}/>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">REMARKS</span>
@@ -391,7 +389,12 @@ function AddPurchaseOrder() {
                       {purchaseItems}
                     </tbody>
                 </table>
-        
+
+                <div className='add-item-cont'>
+                  <button className="add-items-btn" onClick={addItems}>
+                    ADD ITEM
+                  </button>
+                </div>
             </div>
           </div>
 
@@ -409,7 +412,7 @@ function AddPurchaseOrder() {
           </div>
           <div className="col-sm-2">
               {/* <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span> */}
-              P <input type="number" name="discount" className="discount-input" value={discount != null ? parseFloat(discount).toFixed(2) : "P 0.00"} readOnly/>
+              P <input type="number" name="general_discount" className="discount-input" onChange={(e) => setGeneralDiscount(e.target.value)}/>
           </div>
         </div>     
         <div className="row d-flex justify-content-end mb-0">
@@ -421,9 +424,6 @@ function AddPurchaseOrder() {
           </div>
         </div>     
         <div className="row d-flex justify-content-center m-5">
-          <button className="add-items-btn" onClick={addItems}>
-            ADD ITEM
-          </button>
           <button className="save-items-btn" onClick={(e) => submit(e, info, items)}>SAVE</button>
         </div>
       </div>

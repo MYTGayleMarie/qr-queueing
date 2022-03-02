@@ -80,7 +80,7 @@ function Suppliers() {
             <Searchbar title='SUPPLIER'/>
             <Header 
                 type='thick'
-                title='SUPPLIES RELEASING MANAGER' 
+                title='SUPPLIER MANAGER' 
                 buttons={buttons} 
             />
             <Table

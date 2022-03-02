@@ -91,7 +91,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val}>{index == 0 ? "" : data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>UPDATE</button></td>
             </tr>
         }
@@ -309,7 +309,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'items' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -320,6 +320,28 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+             </div>
+        );
+    }
+    else if( type === 'items') {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{index == 0 ? "" : col}</th>
                             ))}
                         </tr>
                     </thead>

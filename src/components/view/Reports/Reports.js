@@ -46,6 +46,8 @@ function Reports() {
     const [pendingPOs, setPendingPOs] = useState([]);
     const [unpaidInvoices, setUnpaidInvoices] = useState([]);
 
+    const [discounts, setDiscounts] = useState([]);
+
     //ALL BOOKINGS
     React.useEffect(() => {
         axios({
@@ -241,6 +243,29 @@ function Reports() {
             });
       },[]);
 
+    //ALL BOOKINGS
+    React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'discounts/getAll',
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+            date_from: filteredData.from_date,
+            date_to: filteredData.to_date,
+          },
+        }).then(function (response) {
+            console.log(response.data.discounts.filter((info) => info.company_id != null));
+            response.data.discounts.filter((info) => info.company_id != null).map((data) => {
+
+            });
+        }).then(function (error) {
+          console.log(error);
+        });
+  },[]);
+
 
     return (
         <div>
@@ -331,6 +356,16 @@ function Reports() {
                         todayData={""}
                         link={"/reports-md"}
                         title=''
+                        color='blue'
+                        disable={"today"}
+                    />
+                </div>
+                <div className="col-sm-4">
+                    <Card 
+                        totalData={pendingPOs.length}
+                        todayData={""}
+                        link={"/reports-credit"}
+                        title='Credit Report'
                         color='blue'
                         disable={"today"}
                     />

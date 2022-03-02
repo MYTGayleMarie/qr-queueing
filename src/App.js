@@ -41,6 +41,7 @@ import ReportPendingPO from './components/View/Reports/ReportPendingPO';
 import ReportSales from './components/View/Reports/ReportSales';
 import ReportUnpaidInvoices from './components/View/Reports/ReportUnpaidInvoices';
 import MdReports from './components/View/Reports/MdReports';
+import ReportCredits from './components/View/Reports/ReportCredits';
 import Users from './components/View/Users/Users';
 import UserDetail from './components/View/Users/UserDetail';
 import Companies from './components/View/Companies/Companies';
@@ -143,6 +144,7 @@ function App() {
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/reports-md" element={token ? <MdReports/> : <Navigate to="/" />} />
+        <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
       </Routes>

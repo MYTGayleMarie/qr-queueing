@@ -106,7 +106,7 @@ function PurchaseOrder() {
             <Searchbar title='PURCHASE ORDER'/>
             <Header 
                 type='thick'
-                title='SUPPLIES RELEASING MANAGER' 
+                title='PURCHASE ORDER MANAGER' 
                 buttons={buttons} 
             />
             <Table

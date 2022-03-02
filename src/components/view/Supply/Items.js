@@ -19,7 +19,7 @@ const userToken = getToken();
 const userId = getUser();
 var id = "";
 
-const buttons = ['add-supply-items', 'add-inventory'];
+const buttons = ['add-supply-items'];
 
 const filterData = {
     from_date: "",
@@ -72,7 +72,7 @@ function Items() {
                 item.id = data.id;
                 item.item_name = data.item_name;
                 item.item_description = data.description;
-                item.beginning_balance = data.beginning_inventory;
+                item.beginning_balance = data.beginning_inventory + " pc/s";
                 item.remarks = data.remarks;
 
                 setItems(oldArray => [...oldArray, item]);
