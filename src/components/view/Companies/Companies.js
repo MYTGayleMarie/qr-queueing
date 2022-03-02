@@ -54,7 +54,7 @@ function Companies() {
         }
     }).then(function (response) {
         // console.log(response.data.companys);
-        response.data.companys.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)).map((data,index) => {
+        response.data.companys.map((data,index) => {
             var info = {};
             var contact = data.contact_no.split("/");
             var contact_company = contact[0].split(":");
@@ -99,7 +99,7 @@ function Companies() {
                 <Header type="thick" title="COMPANY MANAGER" buttons={buttons}/>
                 <Table
                     type={'companies'}
-                    tableData={finalCompanyData}
+                    tableData={finalCompanyData.sort((a,b) => (a.company_name > b.company_name) ? 1 : ((b.company_name > a.company_name) ? -1 : 0))}
                     rowsPerPage={10}
                     headingColumns={['', 'COMPANY NAME', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'POINT PERSON', 'POINT PERSON CONTACT NUMBER', 'ACTION']}
                     filteredData={filteredData}
