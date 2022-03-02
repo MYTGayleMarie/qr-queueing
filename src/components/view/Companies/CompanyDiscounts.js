@@ -64,9 +64,9 @@ function CompanyDiscounts() {
                 }).then(function (company) {
                     console.log(company.data);
                     var info = {};
-                    info.id = company.data.id;
-                    info.discount_id = data.id;
-                    info.name = company.data.name;
+                    info.company_id = company.data.id;
+                    info.id = data.id;
+                    info.company_name = company.data.name;
                     info.code = data.discount_code;
                     info.discount = data.percentage;
                     info.description = data.description;
@@ -95,6 +95,8 @@ function CompanyDiscounts() {
     return <Navigate to={link} />;
   }
 
+  console.log(discount)
+
     return (
         <div>
             <div>
@@ -105,7 +107,7 @@ function CompanyDiscounts() {
                 <Table
                     clickable={true}
                     type={'companies-discount'}
-                    tableData={discount.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))}
+                    tableData={discount.sort((a,b) => (a.company_name > b.company_name) ? 1 : ((b.company_name > a.company_name) ? -1 : 0))}
                     rowsPerPage={10}
                     headingColumns={['COMPANY ID', 'DISCOUNT ID','COMPANY', 'DISCOUNT CODE', 'DISCOUNT', 'DESCRIPTION', 'ACTION']}
                     filteredData={filteredData}
