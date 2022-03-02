@@ -52,12 +52,13 @@ function ReportServicesPackages() {
             },
           }).then(function (response) {
               console.log(response.data.data.data);
-              
+              var count = 0;
               response.data.data.data.map((data,index) => {
                 var info = {};
                 info.service = data.lab_test ? data.lab_test : data.package;
                 info.total_count = data.total_count;
                 setServicesPackages(oldArray => [...oldArray, info]);
+                setTotalCount(count += parseFloat(info.total_count));
 
                 if(response.data.data.data.length - 1 == index) {
                   setPrintReadyFinal(true);
