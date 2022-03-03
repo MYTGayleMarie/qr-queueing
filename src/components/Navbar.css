@@ -71,7 +71,7 @@ a {
 
 .sub-list {
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 25px;
     cursor: pointer;
 }
 
@@ -270,11 +270,11 @@ body{
   line-height:1.7;
   background:transparent;
   border:none;
-  color: #ffff;
+  color: #ffff !important;
   padding:0;
 }
 #side-nav .close-btn:hover{
-  color:#ffff;
+  color:#ffff !important;
   border:none;
   background:transparent;
 }
@@ -283,6 +283,10 @@ main{
   padding:16px;
   font-family: Arial, Helvetica, sans-serif;
   font-size:18px;
+}
+
+.open-btn {
+  color: #ffff !important;
 }
 
 .mobile {
@@ -304,5 +308,11 @@ main{
     margin-top: 2.6%;
     margin-right: 5%;
 }
+
+.nav-item {
+  color: #ffff;
+}
+
+
 
 

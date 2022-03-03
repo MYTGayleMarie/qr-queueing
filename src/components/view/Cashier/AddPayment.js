@@ -521,7 +521,7 @@ function AddPayment() {
             }).then(function (response) {
                 var date = new Date();                
                 toast.success("Payment Successful!");
-                refreshPage();
+                // refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -543,14 +543,14 @@ function AddPayment() {
                     check_date: checkDate,
                     senior_pwd_id: seniorPwdId,
                     discount: discount,
-                    grandTotal: grandTotal,
+                    grand_total: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                refreshPage();
+                // refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -574,7 +574,7 @@ function AddPayment() {
                     card_bank: cardBank,
                     senior_pwd_id: seniorPwdId,
                     discount: discount,
-                    grandTotal: grandTotal,
+                    grand_total: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
@@ -601,14 +601,14 @@ function AddPayment() {
                     other_reference_no: reference,
                     senior_pwd_id: seniorPwdId,
                     discount: discount,
-                    grandTotal: grandTotal,
+                    grand_total: grandTotal,
                     remarks: remarks,
                     added_by: userId,
                 }
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                refreshPage();
+                // refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -764,7 +764,7 @@ function AddPayment() {
                                 <span class="amount-label">REFERENCE NUMBER</span>
                             </div>
                             <div className="row">
-                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setRemarks(e.target.value)}/>
+                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setReference(e.target.value)}/>
                             </div>
                         </div>
                     </div>
