@@ -295,7 +295,7 @@ function AddInvoice() {
                 
                 {info[0].discount_code != '' && (
                 <div className="row d-flex justify-content-end">
-                  <button className="back-btn less-width" onClick={() => addInvoice()}>SAVE</button>
+                  <button className="back-btn less-width" onClick={() => addInvoice()}>GENERATE INVOICE</button>
                 </div>
                 )}
             </div>
