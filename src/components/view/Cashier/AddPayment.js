@@ -521,7 +521,7 @@ function AddPayment() {
             }).then(function (response) {
                 var date = new Date();                
                 toast.success("Payment Successful!");
-                // refreshPage();
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -550,7 +550,7 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                // refreshPage();
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -581,6 +581,7 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
@@ -608,7 +609,7 @@ function AddPayment() {
             }).then(function (response) {
                 console.log(response);
                 toast.success("Payment Successful!");
-                // refreshPage();
+                refreshPage();
             }).catch(function (error) {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
