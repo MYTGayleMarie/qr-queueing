@@ -103,7 +103,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   const [bookingId, setBookingId] = useState("");
 
   //states
-  const [appliedTo, setAppliedTo] = useState([]);
+  const [discountCode, setDiscountCode] = useState("");
 
   //Redirection
   const [redirect, setRedirect] = useState(false);
@@ -400,40 +400,18 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   });
 
   React.useEffect(() => {
-    if(discountDetails != null) {
-    discountDetails.map((data, index) => {
-        appliedTo.length = 0;
-        if(data.type == "service") {
-            axios({
-                method: 'post',
-                url: window.$link + 'lab_tests/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        } else {
-            axios({
-                method: 'post',
-                url: window.$link + 'packages/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        }
-    });
-  }
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/show/' + customer.discountId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+  }).then(function (response) {
+      setDiscountCode(response.data.data.discount.discount_code);
+  });
 },[discountDetails]);
 
 //Total discount labs/packages
@@ -671,17 +649,7 @@ totalPrice += parseFloat(data.price);
                          {isCompany == false && discount != "" && discountDetails.length != 0 && (
                              <span className="total-price"><b>DISCOUNT {
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
-                            }%</b> for only {appliedTo.map((data, index) => {
-                                if(appliedTo.length == 1 ) {
-                                    return data 
-                                } 
-                                else if (appliedTo.length - 1 == index ) {
-                                    return ", and " + data
-                                }
-                                else {
-                                    return data + ", "
-                                } 
-                            })}</span>
+                            }%</b> - {discountCode}</span>
                         )}
                          {isCompany != false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT P{
