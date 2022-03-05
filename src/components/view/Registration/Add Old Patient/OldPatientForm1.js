@@ -151,6 +151,14 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     },[]);
 
     React.useEffect(() => {
+        if (discountId == "") {
+            setDiscount(0);
+            setDiscountDetails(null);
+            setCompanyId("");
+            setIsService("");
+            setIsPackage("");
+        }
+
         axios({
             method: 'post',
             url: window.$link + 'discounts/show/' + discountId,
@@ -296,7 +304,7 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                         <div className="col-sm-6">
                             <label for="address" className="form-label">DISCOUNT CODE</label><br />
                             <select className="select-input full" id="discount_code" name="discountId" value={discountId} onChange={setPersonal}>
-                                <option value="" selected>None</option>
+                                <option value="">None</option>
                                 {listOfDiscount}
                             </select>
                             <br />

@@ -103,11 +103,15 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   const [bookingId, setBookingId] = useState("");
 
   //states
-  const [appliedTo, setAppliedTo] = useState([]);
+  const [discountCode, setDiscountCode] = useState("");
 
   //Redirection
   const [redirect, setRedirect] = useState(false);
   const [print, setPrint] = useState(false);
+
+  //Single Click
+  const [isClicked, setClicked] = useState(false);
+
   var totalMDCharge = 0;
 
   if(mdCharge.physical_exam == true) {
@@ -137,120 +141,124 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   function submit(e, customer, services, totalPrice) {
     e.preventDefault();
 
-    axios({
-      method: 'post',
-      url: window.$link + 'customers/create',
-      withCredentials: false,
-      params: {
-        token: userToken,
-        api_key: window.$api_key,
-        first_name: customer.fname,
-        last_name: customer.lname,
-        middle_name: customer.mname,
-        suffix: '',
-        birthdate: customer.birthDate,
-        contact_no: customer.contactNum,
-        email: customer.email,
-        gender: customer.sex,
-        address: customer.address,
-        emergency_contact: '',
-        emergency_contact_no: '',
-        relation_w_contact: '',
-        last_meal: lastMeal,
-        remarks: '',
-        added_by: userId,
-      },
-    }).then(function (response) {
-      console.log(response);
-      toast.success(response.data.message.success);
-      var packageId = [];
-      var packagePrices = [];
-      var testId = [];
-      var labPrices = [];
-
-      services.map((data, index) => {
-        if (data.type == 'lab') {
-          testId.push(data.labTestId);
-          labPrices.push(data.price);
-        } else if (data.type == 'package') {
-          packageId.push(data.labTestId);
-          packagePrices.push(data.price);
-        }
-      });
-
-      var prices = labPrices.concat(packagePrices);
-
-      var extractedDates = [];
-      var testStarts = [];
-      var testFinishes = [];
-      var resultDates = [];
-      var fileResults = [];
-      var finalMdCharge = [];
-      
-      if(mdCharge.physical_exam == true){
-          finalMdCharge.push("physical exam");
-      }
-      if(mdCharge.medical_certificate == true) {
-          finalMdCharge.push("medical certificate");
-      }
-      
-
-
+    if(isClicked == false) {
+      setClicked(true);
       axios({
         method: 'post',
-        url: window.$link + 'bookings/create',
+        url: window.$link + 'customers/create',
         withCredentials: false,
         params: {
           token: userToken,
           api_key: window.$api_key,
-          customer: response.data.data.customer_id,
-          discount_id: customer.discountId,
-          booking_time: dateOfTesting,
-          company_contract_id: '',
-          doctors_referal: customer.referral,
-          type: customer.serviceLocation,
-          result: customer.result,
-          total_amount: totalPrice,
-          discount_reference_no: customer.discountDetail,
-          home_service_fee: serviceFee,
-          md_charge: finalMdCharge,
-          grand_total: totalPrice,
-          status: 'pending',
-          reference_code: '',
-          payment_type: 'PENDING',
-          lab_tests: testId,
-          package_tests: packageId,
-          lab_prices: labPrices,
-          package_prices: packagePrices,
-          status: 'pending',
-          lab_extracted_dates: extractedDates,
-          lab_test_starts: testStarts,
-          lab_test_finishes: testFinishes,
-          lab_result_dates: resultDates,
-          lab_file_result: fileResults,
-          package_extracted_dates: extractedDates,
-          package_test_starts: testStarts,
-          package_test_finishes: testFinishes,
-          package_result_dates: resultDates,
-          package_file_result: fileResults,
+          first_name: customer.fname,
+          last_name: customer.lname,
+          middle_name: customer.mname,
+          suffix: '',
+          birthdate: customer.birthDate,
+          contact_no: customer.contactNum,
+          email: customer.email,
+          gender: customer.sex,
+          address: customer.address,
+          emergency_contact: '',
+          emergency_contact_no: '',
+          relation_w_contact: '',
+          last_meal: lastMeal,
           remarks: '',
           added_by: userId,
         },
       }).then(function (response) {
         console.log(response);
-        setBookingId(response.data.data.booking_id);
         toast.success(response.data.message.success);
+        var packageId = [];
+        var packagePrices = [];
+        var testId = [];
+        var labPrices = [];
 
-        if(isCompany === false) {
-          setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
-        }else {
-          setPrint(true);
+        services.map((data, index) => {
+          if (data.type == 'lab') {
+            testId.push(data.labTestId);
+            labPrices.push(data.price);
+          } else if (data.type == 'package') {
+            packageId.push(data.labTestId);
+            packagePrices.push(data.price);
+          }
+        });
+
+        var prices = labPrices.concat(packagePrices);
+
+        var extractedDates = [];
+        var testStarts = [];
+        var testFinishes = [];
+        var resultDates = [];
+        var fileResults = [];
+        var finalMdCharge = [];
+        
+        if(mdCharge.physical_exam == true){
+            finalMdCharge.push("physical exam");
         }
+        if(mdCharge.medical_certificate == true) {
+            finalMdCharge.push("medical certificate");
+        }
+        
+
+
+        axios({
+          method: 'post',
+          url: window.$link + 'bookings/create',
+          withCredentials: false,
+          params: {
+            token: userToken,
+            api_key: window.$api_key,
+            customer: response.data.data.customer_id,
+            discount_id: customer.discountId,
+            booking_time: dateOfTesting,
+            company_contract_id: '',
+            doctors_referal: customer.referral,
+            type: customer.serviceLocation,
+            result: customer.result,
+            total_amount: totalPrice,
+            discount_reference_no: customer.discountDetail,
+            home_service_fee: serviceFee,
+            md_charge: finalMdCharge,
+            grand_total: totalPrice,
+            status: 'pending',
+            reference_code: '',
+            payment_type: 'PENDING',
+            lab_tests: testId,
+            package_tests: packageId,
+            lab_prices: labPrices,
+            package_prices: packagePrices,
+            status: 'pending',
+            lab_extracted_dates: extractedDates,
+            lab_test_starts: testStarts,
+            lab_test_finishes: testFinishes,
+            lab_result_dates: resultDates,
+            lab_file_result: fileResults,
+            package_extracted_dates: extractedDates,
+            package_test_starts: testStarts,
+            package_test_finishes: testFinishes,
+            package_result_dates: resultDates,
+            package_file_result: fileResults,
+            remarks: '',
+            added_by: userId,
+          },
+        }).then(function (response) {
+          console.log(response);
+          setBookingId(response.data.data.booking_id);
+          toast.success(response.data.message.success);
+          
+
+          if(isCompany === false) {
+            setTimeout(function () {
+              setRedirect(true);
+            }, 2000);
+          }else {
+            setPrint(true);
+          }
+        });
+        handleClose();
       });
-      handleClose();
-    });
+    }
   }
 
   //Modal
@@ -392,40 +400,18 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   });
 
   React.useEffect(() => {
-    if(discountDetails != null) {
-    discountDetails.map((data, index) => {
-        appliedTo.length = 0;
-        if(data.type == "service") {
-            axios({
-                method: 'post',
-                url: window.$link + 'lab_tests/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        } else {
-            axios({
-                method: 'post',
-                url: window.$link + 'packages/show/' + data.source_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response.data.name);
-                setAppliedTo(oldArray => [...oldArray, response.data.name]);
-            });
-        }
-    });
-  }
+    axios({
+      method: 'post',
+      url: window.$link + 'discounts/show/' + customer.discountId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+  }).then(function (response) {
+      setDiscountCode(response.data.data.discount.discount_code);
+  });
 },[discountDetails]);
 
 //Total discount labs/packages
@@ -663,17 +649,7 @@ totalPrice += parseFloat(data.price);
                          {isCompany == false && discount != "" && discountDetails.length != 0 && (
                              <span className="total-price"><b>DISCOUNT {
                                 discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
-                            }%</b> for only {appliedTo.map((data, index) => {
-                                if(appliedTo.length == 1 ) {
-                                    return data 
-                                } 
-                                else if (appliedTo.length - 1 == index ) {
-                                    return ", and " + data
-                                }
-                                else {
-                                    return data + ", "
-                                } 
-                            })}</span>
+                            }%</b> - {discountCode}</span>
                         )}
                          {isCompany != false && discount != "" && (
                              <span className="total-price"><b>DISCOUNT P{

@@ -439,7 +439,7 @@ function ReviewPurchaseOrder() {
             <h4 className="form-categories-header italic">PURCHASE ORDER DETAILS</h4>
             
             <div className="po-details">
-                <div className="row">
+            <div className="row">
                 <div className="col-sm-2">
                         <div className='label'>SUPPLIER</div>
                 </div>
@@ -453,7 +453,7 @@ function ReviewPurchaseOrder() {
                         <div className='detail'>{purchaseDate}</div>
                 </div>
             </div>
-            <div className="row to-right">
+            <div className="row ">
                 <div className="col-sm-2">
                         <div className='label'>DELIVERY ADDRESS</div>
                 </div>

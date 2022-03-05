@@ -43,8 +43,10 @@ function Login() {
         },
       })
         .then(function (response) {
+          console.log(response);
           localStorage.setItem('token', JSON.stringify(response.data.token));
           localStorage.setItem('user', JSON.stringify(response.data.id));
+          localStorage.setItem('role_id', JSON.stringify(response.data.role_id));
           localStorage.setItem('token_expiry', JSON.stringify(response.data.token_expiry));
           refreshPage();
         })
@@ -63,9 +65,23 @@ function Login() {
   }
 
   if (window.$userToken != null) {
-    if (window.$userId === '5') {
+      var roleId = window.$roleId.replace(/^"(.*)"$/, '$1');
+    if (roleId === "3") {
       NavigationRedirection = <Navigate to="/cashier" />;
-    } else {
+    }
+    else if (roleId === "5") {
+      NavigationRedirection = <Navigate to="/medtech" />;
+    }
+    else if (roleId === "6") {
+      NavigationRedirection = <Navigate to="/purchase-order" />;
+    }
+    else if (roleId === "7") {
+      NavigationRedirection = <Navigate to="/items" />;
+    }
+    else if (roleId === "8") {
+      NavigationRedirection = <Navigate to="/companies" />;
+    }
+    else {
       NavigationRedirection = <Navigate to="/registration" />;
     }
 

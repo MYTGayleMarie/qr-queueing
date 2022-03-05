@@ -215,7 +215,7 @@ function AddPurchaseOrder() {
         items: item_ids,
         cost: costs,
         item_discount: item_discounts,
-        //general discount
+        general_discount: generalDiscount,
         qty: qty,
         unit: units,
         remarks: '',

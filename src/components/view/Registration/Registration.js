@@ -36,7 +36,8 @@ function Registration() {
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const [finalData, setFinalData] = useState([]);
-  const [redirect, setRedirect] = useState(false);
+  const [redirectPay, setRedirectPay] = useState(false);
+  const [redirectPrint, setRedirectPrint] = useState(false);
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -101,13 +102,25 @@ function Registration() {
 
   function filter() {}
 
-  function addPaymentPrint(customerId) {
-    id = customerId;
-    setRedirect(true);
+  function addPayment(bookingId) {
+    id = bookingId;
+    setRedirectPay(true);
   }
 
-  if(redirect == true) {
+  function printPayment(bookingId) {
+    id = bookingId;
+    setRedirectPrint(true);
+  }
+
+  if(redirectPay == true) {
     var link =  "/add-payment/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+
+  if(redirectPrint == true) {
+    var link =  "/print-booking/" + id;
     return (
         <Navigate to ={link}/>
     )
@@ -132,7 +145,8 @@ function Registration() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            link={addPaymentPrint}
+            link={addPayment}
+            print={printPayment}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>

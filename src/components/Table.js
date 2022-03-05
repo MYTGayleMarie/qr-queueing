@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo}) {
+function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print}) {
       //PAGINATION 
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
@@ -62,7 +62,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                 <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button></td>
             )}
             {(rowData[5].val == "paid" || rowData[0].val != "no_company_discount") && (
-                <td><button class="action-btn" role="button" onClick={() => link(row.id)}>PRINT BOOKING</button></td>
+                <td><button class="action-btn" role="button" onClick={() => print(row.id)}>PRINT BOOKING</button></td>
             )}
             </tr>
         }
@@ -78,7 +78,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index == 2 ? "company_name" : data.val.replace(/\s/g, '')}>{index == 0 || index == 1 ? "" : data.val}</td>
             )}
-            <td><button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>CREATE INVOICE</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>VIEW DETAILS</button></td>
             </tr>
         }
         else if (type === 'med-tech' && clickable == true) {
