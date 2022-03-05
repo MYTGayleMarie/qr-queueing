@@ -446,7 +446,7 @@ const LipidProfile = [
     name: 'Total Cholesterol Only',
     categoryId: '7',
     labTestId: '37',
-    price: '200.00',
+    price: '190.00',
     type: 'lab',
   },
   {
