@@ -486,7 +486,7 @@ function PayPurchaseOrder() {
                         <div className='detail'>{purchaseDate}</div>
                 </div>
                 </div>
-                <div className="row to-right">
+                <div className="row">
                     <div className="col-sm-2">
                             <div className='label'>DELIVERY ADDRESS</div>
                     </div>
@@ -504,13 +504,13 @@ function PayPurchaseOrder() {
                     <div className="col-sm-2">
                             <div className='label'>REQUISITIONER</div>
                     </div>
-                    <div className="col-sm-2">
+                    <div className="col">
                             <div className='detail'>{requisitioner}</div>
                     </div>
                     <div className="col-sm-2">
                             <div className='label'>FORWARDER</div>
                     </div>
-                    <div className="col-sm-2">
+                    <div className="col">
                             <div className='detail'>{forwarder}</div>
                     </div>
                 </div>
