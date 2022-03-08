@@ -55,6 +55,7 @@ function AddInvoicePayment() {
   const {id, companyId} = useParams();
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([]);
+  const [infoId, setInfoId] = useState("");
   const [checked, setChecked] = useForm(checkedData);
   const [haslogs, setHasLogs] = useState(true);
   const [paidAmount, setPaidAmount] = useState("");
@@ -152,7 +153,6 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (company) {
-      console.log(company);
 
       setName(company.data.name);
       setContactNo(company.data.contact_no);
@@ -207,7 +207,6 @@ function AddInvoicePayment() {
             requester: userId,
         }
       }).then(function (response) {
-            console.log(response);
 
             if(response.data.status == 404) {
                 setHasLogs(false);
@@ -257,6 +256,7 @@ function AddInvoicePayment() {
             setDiscountCode(invoice.discount_code);
             setPaidAmount(invoice.paid_amount);
             setPayments(payments);
+            setInfoId(invoice.id);
             setHasPay(invoice.paid_amount != "0.00" || invoice.paidAmount != null ? true : false);
             setInfo(oldArray => [...oldArray, info]);
         }); 
@@ -292,6 +292,8 @@ function AddInvoicePayment() {
       });
   },[discountId]);
 
+  console.log(info);
+
   function submit (e) {
     e.preventDefault();
 
@@ -315,7 +317,7 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [info[0].id],
+                invoice_nos: [infoId],
                 prices: [info[0].price],
                 totals: [info[0].total], 
                 type: payment,
@@ -345,7 +347,7 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [info[0].id],
+                invoice_nos: [infoId],
                 prices: [info[0].price],
                 totals: [info[0].total], 
                 type: payment,
@@ -378,7 +380,7 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [info[0].id],
+                invoice_nos: [infoId],
                 prices: [info[0].price],
                 totals: [info[0].total], 
                 type: payment,
@@ -413,7 +415,7 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [info[0].id],
+                invoice_nos: [infoId],
                 prices: [info[0].price],
                 totals: [info[0].total], 
                 type: payment,

@@ -45,6 +45,7 @@ function Reports() {
     const [totalSales, setTotalSales] = useState(0);
     const [pendingPOs, setPendingPOs] = useState([]);
     const [unpaidInvoices, setUnpaidInvoices] = useState([]);
+    const [credit, setCredit] = useState(0);
 
     const [discounts, setDiscounts] = useState([]);
 
@@ -243,11 +244,11 @@ function Reports() {
             });
       },[]);
 
-    //ALL BOOKINGS
+    //ALL CREDITS
     React.useEffect(() => {
       axios({
           method: 'post',
-          url: window.$link + 'discounts/getAll',
+          url: window.$link + 'reports/credit',
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -257,14 +258,16 @@ function Reports() {
             date_to: filteredData.to_date,
           },
         }).then(function (response) {
-            console.log(response.data.discounts.filter((info) => info.company_id != null));
-            response.data.discounts.filter((info) => info.company_id != null).map((data) => {
-
+            var count = 0;
+            response.data.data.data.map((data) => {
+              setCredit(count += parseFloat(data.total_count));
             });
+
         }).then(function (error) {
           console.log(error);
         });
   },[]);
+
 
 
     return (
@@ -362,7 +365,7 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                     <Card 
-                        totalData={pendingPOs.length}
+                        totalData={credit}
                         todayData={""}
                         link={"/reports-credit"}
                         title='Credit Report'

@@ -53,6 +53,8 @@ function AddInvoice() {
   const [toAddPayment, setToAddPayment] = useState(false);
   const [toAddInvoice, setToAddInvoice] = useState(false);
 
+  const [isClicked, setIsClicked] = useState(false);
+
   React.useEffect(() => {
     axios({
       method: 'post',
@@ -145,30 +147,34 @@ function AddInvoice() {
   },[discountInfo]);
 
   function addInvoice() {
-    axios({
-      method: 'post',
-      url: window.$link + 'Company_invoices/create',
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          company_id: discountInfo.company_id,
-          discount_id: discount, 
-          discount_code: discountInfo.discount_code,
-          price: price,
-          qty: info[0].quantity,
-          total: total,
-          added_by: userId,
-      }
-    }).then(function (response) {
-      console.log(response);
-      toast.success("Successfully added invoice!");
-        setTimeout(function() {
-          setRedirect(true);
-      }, 2000);
-    }).then(function(error) {
-      console.log(error);
-    });
+    
+    if(isClicked == false) {
+      setIsClicked(true);
+      axios({
+        method: 'post',
+        url: window.$link + 'Company_invoices/create',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            company_id: discountInfo.company_id,
+            discount_id: discount, 
+            discount_code: discountInfo.discount_code,
+            price: price,
+            qty: info[0].quantity,
+            total: total,
+            added_by: userId,
+        }
+      }).then(function (response) {
+        console.log(response);
+        toast.success("Successfully added invoice!");
+          setTimeout(function() {
+            setRedirect(true);
+        }, 2000);
+      }).then(function(error) {
+        console.log(error);
+      });
+    }
   }
 
   if(redirect == true) {

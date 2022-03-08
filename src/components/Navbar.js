@@ -718,8 +718,6 @@ function Navbar() {
 
   },[width]);
 
-  console.log(role)
-
   return (
     <div>
 

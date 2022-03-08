@@ -81,6 +81,14 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
             <td><button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>VIEW DETAILS</button></td>
             </tr>
         }
+        else if (type === 'credits' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>
+            )}
+            <td><button class="action-btn" role="button" onClick={() => link(row.company_discount)}>VIEW DETAILS</button></td>
+            </tr>
+        }
         else if (type === 'med-tech' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -153,7 +161,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
     });
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales') {
+    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales' || type === 'credits') {
 
         const {from_date, to_date, done} = filteredData;
     
