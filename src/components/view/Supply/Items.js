@@ -120,7 +120,7 @@ function Items() {
             <Table
                 type={'items'}
                 clickable={true}
-                tableData={items}
+                tableData={items.sort((a,b) => (a.item_name > b.item_name) ? 1 : ((b.item_name > a.item_name) ? -1 : 0))}
                 rowsPerPage={10}
                 headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
                 filteredData={filteredData}
