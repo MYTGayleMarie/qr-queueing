@@ -7,14 +7,14 @@ import "./TableFooter.css";
 const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage, rowsPerPage }) => {
 
   const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(7);
+  const [endIndex, setEndIndex] = useState(5);
 
   function prev() {
     var end = endIndex;
     var start = startIndex;
     if(startIndex > 0) {
-    setEndIndex(end - 7);
-    setStartIndex(start - 7);
+    setEndIndex(end - 5);
+    setStartIndex(start - 5);
     }
   }
 
@@ -22,9 +22,31 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
     var end = endIndex;
     var start = startIndex;
     if(endIndex <= range.length - 1) {
-      setEndIndex(end + 7);
-      setStartIndex(start + 7);
+      setEndIndex(end + 5);
+      setStartIndex(start + 5);
     }
+  }
+
+  function start() {
+      setPage(range[0]);
+      setEndIndex(5);
+      setStartIndex(0);
+  }
+
+  function end() {
+    setPage(range.length);
+    setEndIndex(range.length);
+    setStartIndex(range.length - 5);
+  }
+
+  function setPageNav(el) {
+    var division = Math.floor(el/5);
+    if(Math.floor(el%5) != 0) {
+      division += 1;
+    }
+    setEndIndex(division * 5);
+    setStartIndex((division * 5) - 5);
+    setPage(parseFloat(el))
   }
 
   useEffect(() => {
@@ -38,16 +60,21 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
       <div className="col page-count-cont">
         <span>Rows per page: </span>
         <select className="rows-input" onChange={(e) => setRowsPerPage(e.target.value)}>
-          <option value={5}>5</option>
           <option value={10} selected>10</option>
-          <option value={15}>15</option>
-          <option value={30}>30</option>
+          <option value={25}>25</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+          <option value={150}>150</option>
+          <option value={500}>500</option>
         </select>
-        <span>{page} of {range.length}</span>
+        <span>| {page} of {range.length}</span>
      </div>
      <div className="col pages-cont d-flex justify-content-center">
-      <button className="button navigateButton" onClick={() => prev()}>
+     <button className="button navigateButton" onClick={() => start()}>
         <FontAwesomeIcon icon={"angle-double-left"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
+      </button>
+      <button className="button navigateButton" onClick={() => prev()}>
+        <FontAwesomeIcon icon={"angle-left"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
       </button>
       {range.slice(startIndex, endIndex).map((el, index) => (
         <button
@@ -61,10 +88,19 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
         </button>
       ))}
        <button className="button navigateButton" onClick={() => next()}>
-        <FontAwesomeIcon icon={"angle-double-right"} alt={"next"} aria-hidden="true" className="next-icon"/>
+        <FontAwesomeIcon icon={"angle-right"} alt={"next"} aria-hidden="true" className="next-icon"/>
        </button>
+       <button className="button navigateButton" onClick={() => end()}>
+        <FontAwesomeIcon icon={"angle-double-right"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
+      </button>
        </div>
-       <div className="col"></div>
+       <div className="col d-flex justify-content-end">
+          <select className="page-number-input" value={page} onChange={(e) => setPageNav(e.target.value)}>
+            {range.map((el,index) => {
+              return <option value={el}>{index + 1}</option>
+            })}
+          </select>
+       </div>
     </div>
   );
 };

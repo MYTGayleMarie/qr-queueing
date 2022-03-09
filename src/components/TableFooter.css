@@ -49,6 +49,10 @@
     margin-left: 1%;
   }
 
+  .page-number-input {
+    min-width: 14%;
+  }
+
   @media only screen and (max-width: 1000px){ 
 
     .register-mobile, .user-mobile {
