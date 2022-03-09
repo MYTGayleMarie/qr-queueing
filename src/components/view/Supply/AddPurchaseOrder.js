@@ -53,6 +53,7 @@ function AddPurchaseOrder() {
   }]);
 
   const [itemInfo, setItemInfo] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleItemChange = (e,index) => {
     const {name, value} = e.target;
@@ -199,37 +200,39 @@ function AddPurchaseOrder() {
       units.push(data.unit);
     });
 
-    axios({
-      method: 'post',
-      url: window.$link + 'pos/create',
-      withCredentials: false,
-      params: {
-        token: userToken,
-        api_key: window.$api_key,
-        supplier: info.supplier,
-        purchase_date: info.purchase_date,
-        delivery_date: info.delivery_date,
-        delivery_address: info.delivery_address,
-        requisitioner: info.requisitioner,
-        forwarder: info.forwarder,
-        items: item_ids,
-        cost: costs,
-        item_discount: item_discounts,
-        general_discount: generalDiscount,
-        qty: qty,
-        unit: units,
-        remarks: '',
-        added_by: userId,
-      },
-    }).then(function (response) {
-      toast.success("Successfully added PO!");
-      setTimeout(function () {
-        setRedirect(true);
-      }, 2000);
-    }).catch(function (error) {
-      console.log(error);
-      toast.error("Oops...something went wrong");
-    });
+    if(isClicked == false) {
+      setIsClicked(true);
+      axios({
+        method: 'post',
+        url: window.$link + 'pos/create',
+        withCredentials: false,
+        params: {
+          token: userToken,
+          api_key: window.$api_key,
+          supplier: info.supplier,
+          purchase_date: info.purchase_date,
+          delivery_date: info.delivery_date,
+          delivery_address: info.delivery_address,
+          requisitioner: info.requisitioner,
+          forwarder: info.forwarder,
+          items: item_ids,
+          cost: costs,
+          item_discount: item_discounts,
+          general_discount: generalDiscount,
+          qty: qty,
+          unit: units,
+          remarks: '',
+          added_by: userId,
+        },
+      }).then(function (response) {
+        toast.success("Successfully added PO!");
+        setTimeout(function () {
+          setRedirect(true);
+        }, 2000);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
   };
 
 

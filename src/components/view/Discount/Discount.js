@@ -148,6 +148,7 @@ function Discount() {
                     link={createInvoice}
                     endPromo={endPromo}
                     setStatus={setStatus}
+                    
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem}) {
 
     var btn = [];
 
@@ -82,8 +82,11 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 else if(button === 'edit-po' && (statusPO == "pending" || statusPO == "for approval")) {
                     return <button className="edit-profile" onClick={editPO}> EDIT </button>
                 }
-                else if(button === 'pay-po' && statusPO == "approved" && statusPaymentPO != "paid") {
+                else if(button === 'pay-po' && statusPO == "printed" && completedOn != null && statusPaymentPO != "paid" ) {
                     return <button className="edit-profile" onClick={payPO}>ADD PAYMENT</button>
+                }
+                else if(button === 'receive-items' && statusPO == "printed" && completedOn == null) {
+                    return <button className="edit-profile" onClick={receiveItem}>RECEIVE ITEMS</button>
                 }
                 else if(button === 'delete-po' && (statusPO == "pending" || statusPO == "for approval")) {
                     return <button className="edit-profile" onClick={deletePO}>DELETE</button>

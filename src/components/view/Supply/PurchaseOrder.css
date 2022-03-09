@@ -76,6 +76,7 @@
 .disapproved {
     color: rgb(207, 87, 87);
     text-transform: uppercase;
+    font-weight: bold;
 }
 
 .approved {
@@ -110,4 +111,20 @@
 
 .po-details {
     margin: 5%;
+}
+
+.received-qty {
+    margin-left: 4%;
+}
+
+.received-qty-cont {
+    margin-bottom: 3%;
+}
+
+.received-qty-input {
+    width: 50%;
+}
+
+.receive-cont {
+    margin-top: -10% !important;
 }

@@ -39,6 +39,7 @@ function AddItems() {
 
     const [existingItems, setRemoveItems]  = useState(items);
     const [redirect, setRedirect] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
     const handleItemChange = (e,index) => {
         const {name, value} = e.target;
@@ -117,31 +118,34 @@ function AddItems() {
       units.push(data.unit);
     });
 
-    axios({
-        method: 'post',
-        url: window.$link + 'releases/create',
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          release_date: info.date,
-          requisitioner: info.requisitioner,
-          remarks: info.remarks,
-          items: item_ids,
-          cost: costs,
-          qty: qty,
-          unit: units,
-          added_by: userId,
-        },
-      }).then(function (response) {
-          console.log(response);
-          toast.success("Successfully added releasing items!");
-          setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
-      }).then(function (error) {
-          console.log(error);
-      });
+    if(isClicked == false) {
+        setIsClicked(true);
+        axios({
+            method: 'post',
+            url: window.$link + 'releases/create',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              release_date: info.date,
+              requisitioner: info.requisitioner,
+              remarks: info.remarks,
+              items: item_ids,
+              cost: costs,
+              qty: qty,
+              unit: units,
+              added_by: userId,
+            },
+          }).then(function (response) {
+              console.log(response);
+              toast.success("Successfully added releasing items!");
+              setTimeout(function () {
+                setRedirect(true);
+              }, 2000);
+          }).then(function (error) {
+              console.log(error);
+          });
+    }
    }
 
     //redirect

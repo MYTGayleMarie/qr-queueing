@@ -24,6 +24,7 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
+  status: 'pending',
 };
 
 function PurchaseOrder() {
@@ -50,8 +51,11 @@ function PurchaseOrder() {
           },
         }).then(function (response) {
             console.log(response.data.pos);
-
-            response.data.pos.map((data,index) => {
+            var pos =  response.data.pos;
+            if(filteredData.status != "") {
+                pos =  response.data.pos.filter((info) => info.status == filteredData.status);
+            }
+            pos.map((data,index) => {
 
                 axios({
                     method: 'post',

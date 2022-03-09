@@ -42,6 +42,7 @@ function ReviewPurchaseOrder() {
       const [paymentStatus, setPaymentStatus] = useState("");
       const [printedBy, setPrintedBy] = useState("");
       const [approvedBy, setApprovedBy] = useState("");
+      const [completedOn, setCompletedOn] = useState("");
 
       //Edit PO details
       const [editSupplier, setEditSupplier] = useState("");
@@ -60,6 +61,7 @@ function ReviewPurchaseOrder() {
       const [payRedirect, setPayRedirect] = useState(false);
       const [deleteRedirect, setDeleteRedirect] = useState(false);
       const [closeRedirect, setCloseRedirect] = useState(false);
+      const [receiveRedirect, setReceiveRedirect] = useState(false);
 
      //Disapprove Item Prompt Modal
      const [promptDisapprove, setPromptDisapprove] = useState(false);
@@ -125,6 +127,7 @@ function ReviewPurchaseOrder() {
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
             setPaymentStatus(response.data.payment_status);
+            setCompletedOn(response.data.completed_on);
 
             setEditSupplier(response.data.supplier_id);
             setEditPurchaseDate(response.data.purchase_date);
@@ -358,7 +361,7 @@ function ReviewPurchaseOrder() {
               console.log(response)
               toast.success("Approved PO!");
               setTimeout(function () {
-                refreshPage();
+                close();
               }, 2000);
           }).then(function (error) {
               console.log(error);
@@ -381,6 +384,10 @@ function ReviewPurchaseOrder() {
           }).then(function (error) {
               console.log(error);
           });
+    }
+
+    function receiveItem() {
+        setReceiveRedirect(true);
     }
 
     function payPO() {
@@ -420,6 +427,13 @@ function ReviewPurchaseOrder() {
         )
     }
 
+    if(receiveRedirect == true) {
+        var link =  "/receive-purchase-order/" + id;
+        return (
+            <Navigate to ={link}/>
+        )
+    }
+
     return (
         <div>
         <Navbar/>
@@ -427,10 +441,12 @@ function ReviewPurchaseOrder() {
                 <Header 
                     type='thin'
                     title='PURCHASE ORDER' 
-                    buttons= {['delete-po', 'edit-po', 'pay-po']}
+                    buttons= {['delete-po', 'edit-po', 'pay-po', 'receive-items']}
                     editPO={redirectToEdit}
                     deletePO={deletePO}
                     payPO={payPO}
+                    receiveItem={receiveItem}
+                    completedOn={completedOn}
                     statusPaymentPO={paymentStatus}
                     statusPO={status}
                 />

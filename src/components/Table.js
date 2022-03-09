@@ -9,8 +9,9 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print}) {
     //PAGINATION 
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
     const {slice, range} = useTable(tableData, page, rowsPerPage);
 
@@ -99,7 +100,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{index == 0 ? "" : data.val}</td>)}
+            <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{index == 0 ? "" : data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>UPDATE</button></td>
             </tr>
         }
@@ -161,7 +162,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
         }
     });
 
-    if(type === 'no-action' || type === 'purchase-order' || type === 'release' || type === 'reports-sales' || type === 'credits') {
+    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits') {
 
         const {from_date, to_date, done} = filteredData;
     
@@ -194,7 +195,44 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'purchase-order') {
+
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                <div className="col-sm-12 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <select name="status" onChange={setFilter}>
+                        <option value="pending" selected>FOR APPROVAL</option>
+                        <option value="approved">APPROVED</option>
+                        <option value="completed">COMPLETED</option>
+                        <option value="disapproved">DISAPPROVED</option>
+                        <option value="">ALL</option>
+                    </select>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
     }
@@ -214,7 +252,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
             </div>
         );
     } else if (type === "discount-detail") {
@@ -240,7 +278,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
             </div>
         );
     }
@@ -277,7 +315,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
     }
@@ -313,7 +351,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
     }
@@ -335,7 +373,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
     }
@@ -357,7 +395,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
     }
@@ -383,7 +421,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
 
@@ -406,7 +444,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
 
@@ -434,7 +472,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
 
@@ -457,10 +495,9 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
-
     }
     else if(type === "payment-invoices") {
         return(
@@ -508,7 +545,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                     {data}
                 </tbody>
             </table>
-            <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
+            <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
          </div>
         );
     }
@@ -528,7 +565,7 @@ function Table({clickable, type, tableData, rowsPerPage, headingColumns, breakOn
                         {data}
                     </tbody>
                 </table>
-             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass}/>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
             </div>
         );
     }

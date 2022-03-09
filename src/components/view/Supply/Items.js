@@ -45,6 +45,7 @@ function Items() {
     const [items, setItems] = useState([]);
     const [inventoryItem, setInventoryItem] = useState("");
     const [inventoryQty, setInventoryQty] = useState("");
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     //Inventory Modal
     const [show, setShow] = useState(false);
@@ -72,7 +73,8 @@ function Items() {
                 item.id = data.id;
                 item.item_name = data.item_name;
                 item.item_description = data.description;
-                item.beginning_balance = data.beginning_inventory + " pc/s";
+                item.beginning_balance = data.beginning_inventory + " " + data.default_unit;
+                item.current_balance = parseFloat(data.qty).toFixed(2) + " " + data.default_unit;
                 item.remarks = data.remarks;
 
                 setItems(oldArray => [...oldArray, item]);
@@ -119,8 +121,8 @@ function Items() {
                 type={'items'}
                 clickable={true}
                 tableData={items}
-                rowsPerPage={4}
-                headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'REMARKS', 'ACTION']}
+                rowsPerPage={10}
+                headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter} 
                 link={update}

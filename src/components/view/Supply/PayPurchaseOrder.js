@@ -58,8 +58,34 @@ function PayPurchaseOrder() {
     const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [print, setPrint] = useState(false);
+    const [qty, setQty] = useState(0);
+    const [unfilteredPoItems, setUnfilteredPoItems] = useState([]);
+    const [releaseItems, setReleaseItems] = useState([]);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const [releaseItemsInfo, setReleaseItemsInfo] = useState([]);
+
+    const handleItemChange = (e,index) => {
+        const {name, value} = e.target;
+        const list = [...releaseItems];
+        list[index][name] = value;
+        setReleaseItems(list);
+
+        releaseItems.map((data) => {
+            var tempTotal = 0;
+
+            setSubTotal(tempTotal += ((data.qty * data.cost) - data.discount));
+        })
+    };
 
     React.useEffect(() => {
+        setGrandTotal(subTotal - discount);
+    },[subTotal]);
+    
+
+
+    React.useEffect(() => {
+        poItems.length = 0;
         axios({
             method: 'post',
             url: window.$link + 'pos/show/' + id,
@@ -112,7 +138,7 @@ function PayPurchaseOrder() {
             },
           }).then(function (response) {
               console.log(response.data);
-            
+              setUnfilteredPoItems(response.data);
               response.data.map((data,index) => {
                 
                 if(data.status != "disapprove") {
@@ -123,7 +149,7 @@ function PayPurchaseOrder() {
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
                     itemData.discount = data.discount;
-      
+                    
                     setPoItems(oldArray => [...oldArray, itemData]);
                 }
               });
@@ -131,6 +157,23 @@ function PayPurchaseOrder() {
               console.log(error);
           })
     },[]);
+
+    React.useEffect(() => {
+        unfilteredPoItems.map((data) => {
+            setReleaseItems([
+                ...releaseItems,
+                {
+                    item: data.id,
+                    cost: data.cost,
+                    qty: data.qty,
+                    unit: data.unit,
+                    discount: data.discount,
+                },
+              ]);
+        });
+        console.log(unfilteredPoItems);
+
+    },[unfilteredPoItems]);
 
     //components
     const listItems = poItems.map((data,index) => {
@@ -158,137 +201,141 @@ function PayPurchaseOrder() {
         )
     });
 
-    //Functions
     function submit (e) {
         e.preventDefault();
-        if(payment === 'cash') {
-            axios({
-                method: 'post',
-                url: window.$link + 'po_payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    po_id: id,
-                    type: payment,
-                    amount: grandTotal,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grand_total: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                var date = new Date();    
-                console.log(response)            
-                toast.success("Payment Successful!");
-                setPrint(true);
-                setTimeout(function () {
-                    setRedirect(true);
-                  }, 2000);
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
-        if(payment === 'check') {
-            axios({
-                method: 'post',
-                url: window.$link + 'po_payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: userToken.replace(/['"]+/g, ''), 
-                    po_id: id,
-                    type: payment,
-                    amount: grandTotal,
-                    check_no: checkNo,
-                    check_bank: checkBank,
-                    check_date: checkDate,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grandTotal: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                console.log(response);
-                toast.success("Payment Successful!");
-                setPrint(true);
-                setTimeout(function () {
-                    setRedirect(true);
-                  }, 2000);
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
-        if(payment === 'card') {
-            axios({
-                method: 'post',
-                url: window.$link + 'po_payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: userToken.replace(/['"]+/g, ''), 
-                    po_id: id,
-                    type: payment,
-                    amount: grandTotal,
-                    cardName: cardName,
-                    card_no: cardNo,
-                    card_type: cardType,
-                    card_expiry: cardExpiry,
-                    card_bank: cardBank,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grandTotal: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                console.log(response);
-                toast.success("Payment Successful!");
-                setPrint(true);
-                setTimeout(function () {
-                    setRedirect(true);
-                  }, 2000);
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
-        if(payment === 'others') {
-            axios({
-                method: 'post',
-                url: window.$link + 'po_payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: userToken.replace(/['"]+/g, ''), 
-                    po_id: id,
-                    type: payment,
-                    amount: grandTotal,
-                    other_source: source,
-                    other_reference_no: reference,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grandTotal: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                console.log(response);
-                toast.success("Payment Successful!");
-                setPrint(true);
-                setTimeout(function () {
-                    setRedirect(true);
-                  }, 2000);
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
+        if(isClicked == false) {
+            setIsClicked(true);
+            if(payment === 'cash') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: window.$api_key, 
+                        po_id: id,
+                        type: payment,
+                        amount: grandTotal,
+                        senior_pwd_id: seniorPwdId, //not included, just empty
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    var date = new Date();    
+                    console.log(response)            
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'check') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_id: id,
+                        type: payment,
+                        amount: grandTotal,
+                        check_no: checkNo,
+                        check_bank: checkBank,
+                        check_date: checkDate,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                    }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'card') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_id: id,
+                        type: payment,
+                        amount: grandTotal,
+                        cardName: cardName,
+                        card_no: cardNo,
+                        card_type: cardType,
+                        card_expiry: cardExpiry,
+                        card_bank: cardBank,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'others') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_id: id,
+                        type: payment,
+                        amount: grandTotal,
+                        other_source: source,
+                        other_reference_no: reference,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
         }
     }
+
+    console.log(remarks)
 
   
     function cashForm() {
@@ -430,7 +477,7 @@ function PayPurchaseOrder() {
                                 <span class="amount-label">REFERENCE NUMBER</span>
                             </div>
                             <div className="row">
-                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setRemarks(e.target.value)}/>
+                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setReference(e.target.value)}/>
                             </div>
                         </div>
                     </div>

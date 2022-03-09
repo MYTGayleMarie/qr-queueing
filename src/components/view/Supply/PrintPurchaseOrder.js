@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import axios from 'axios';
 
 //css
-import '../Cashier/PaymentToPrint.css';
+import './PrintPurchaseOrder.css';
 
 //logo image
 import logo from '../../../images/logo-black.png';
@@ -49,29 +49,31 @@ export class PrintPurchaseOrder extends React.PureComponent {
         return (
             <div>
                 <style>{getPageMargins()}</style>
-                <div className="print-area">
+                <div className="print-area-po">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="po-logo"></img>
                     </div>
-                    <div className='row add-space'>
-                        <h1 className='table-header'>Purchase Order Details</h1>
+                    <div className='row'>
+                        <h1 className='table-header-po'>Purchase Order Details</h1>
                         <table>
                             <tr>
-                                <td><span className="header">Supplier</span><span className="detail">{this.props.supplier}</span></td>
-                                <td><span className="header">Purchase Date</span><span className="detail">{purchaseDateformat.toDateString()}</span> </td>
-                                <td><span className="header">Delivery Date</span><span className="detail">{deliveryDateformat.toDateString()}</span> </td>
-                                <td><span className="header">Delivery Address</span><span className="detail">{this.props.deliveryAddress}</span> </td>
+                                <td className="po-gap"><span className="header-po">Supplier</span><span className="detail-po"> {this.props.supplier}</span></td>
+                                <td><span className="header-po">Purchase Date</span><span className="detail-po"> {purchaseDateformat.toDateString()}</span> </td>
+                                <td><span className="header-po">Delivery Date</span><span className="detail-po"> {deliveryDateformat.toDateString()}</span> </td>
                             </tr>
                             <tr>
-                                <td><span className="header">Requisitioner</span><span className="detail">{this.props.requisitioner}</span></td>
-                                <td><span className="header">Forwarder</span><span className="detail">{this.props.forwarder}</span></td>
-                                <td><span className="header">Remarks</span><span className="detail">{this.props.remarks}</span></td>
+                                <td><span className="header-po">Requisitioner</span><span className="detail-po"> {this.props.requisitioner}</span></td>
+                                <td><span className="header-po">Forwarder</span><span className="detail-po"> {this.props.forwarder}</span></td>
+                                <td><span className="header-po">Delivery Address</span><span className="detail-po"> {this.props.deliveryAddress}</span> </td>
+                            </tr>
+                            <tr>
+                                <td><span className="header-po">Remarks</span><span className="detail-po">{this.props.remarks}</span></td>
                             </tr>
                         </table>
                     </div>
                     <hr></hr>
-                    <div className='row'>
-                        <h1 className='table-header'>List of Purchased Items</h1>
+                    <div className='row print-po-row'>
+                        <h1 className='table-header-po'>List of Purchased Items</h1>
                         <table>
                             <tr>
                                 <th>ITEM</th>
@@ -84,25 +86,19 @@ export class PrintPurchaseOrder extends React.PureComponent {
                         </table>
                     </div>
          
-                    <div className='row add-space'>
-                        <div className='col-sm-4 d-flex justify-content-end'>
-                            <span className='print-label'><b>SUBTOTAL</b></span>
-                            <span> {this.props.subTotal}</span>
-                        </div>
-                        <div className='col-sm-4 d-flex justify-content-end'>
-                            <span className='print-label'><b>GRANDTOTAL</b></span>
-                            <span> {this.props.grandTotal}</span>
-                        </div>
+                    <div className='po-print-breakdown-cont'>
+                        <div className='print-label po-print-breakdown'><b>SUBTOTAL </b></div><div className="margin-right-2"> {this.props.subTotal}</div>
+                        <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div> {this.props.grandTotal}</div>
                     </div>
 
                     <hr></hr>
 
-                    <div className="row">
-                        <div className='col-sm-4'>
+                    <div className="po-print-approval-cont">
+                        <div className='po-print-approval'>
                             <span className='print-label'><b>PRINTED BY</b></span>
                             <span> {this.props.printedBy}</span>
                         </div>
-                        <div className='col-sm-4'>
+                        <div className='po-print-approval'>
                             <span className='print-label'><b>APPROVED BY</b></span>
                             <span> {this.props.approvedBy}</span>
                         </div>
