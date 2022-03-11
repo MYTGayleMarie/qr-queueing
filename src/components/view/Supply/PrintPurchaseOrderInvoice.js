@@ -10,7 +10,7 @@ import './PrintPurchaseOrder.css';
 //logo image
 import logo from '../../../images/logo-black.png';
 
-export class PrintPurchaseOrder extends React.PureComponent {
+export class PrintPurchaseOrderInvoice extends React.PureComponent {
     render() {
            //components
     const listItems = this.props.poItems.map((data,index) => {
@@ -26,10 +26,10 @@ export class PrintPurchaseOrder extends React.PureComponent {
                 {data.unit}
             </td>
             <td>
-                {data.amount}
+                {parseFloat(data.amount).toFixed(2)}
             </td>
-            <td>
-                {data.discount}
+            <td className="text-right">
+                {parseFloat(data.total).toFixed(2)}
             </td>
         </tr>
         )
@@ -49,12 +49,12 @@ export class PrintPurchaseOrder extends React.PureComponent {
         return (
             <div>
                 <style>{getPageMargins()}</style>
-                <div className="print-area-po">
+                <div className="print-area-receives">
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="po-logo"></img>
                     </div>
                     <div className='row'>
-                        <h1 className='table-header-po'>Purchase Order #{this.props.id} Details</h1>
+                        <h1 className='table-header-po'>Receive Invoice #{this.props.id} for Purchase Order #{this.props.poId} Details</h1>
                         <table>
                             <tr>
                                 <td className="po-gap"><span className="header-po">Supplier</span><span className="detail-po"> {this.props.supplier}</span></td>
@@ -73,27 +73,30 @@ export class PrintPurchaseOrder extends React.PureComponent {
                     </div>
                     <hr></hr>
                     <div className='row print-po-row'>
-                        <h1 className='table-header-po'>List of Purchased Items</h1>
+                        <h1 className='table-header-po'>List of Received Purchased Items</h1>
                         <table>
                             <tr>
                                 <th>ITEM</th>
                                 <th>QTY</th>
                                 <th>UNIT</th>
-                                <th>AMOUNT</th>
-                                <th>DISCOUNT</th>
+                                <th>COST</th>
+                                <th>TOTAL</th>
                             </tr>
                             {listItems}
                         </table>
                     </div>
-         
+        
                     <div className='po-print-breakdown-cont'>
-                        <div className='print-label po-print-breakdown'><b>SUBTOTAL </b></div><div className="margin-right-2"> {this.props.subTotal}</div>
-                    </div>
-                    <div className='po-print-breakdown-cont'>
-                        <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div> {this.props.grandTotal}</div>
+                        <span className='print-label po-print-breakdown'><b> GRANDTOTAL </b></span><span> {this.props.receivePo.grand_total}</span>
                     </div>
 
-                    <hr></hr>
+                    <br/>
+
+                    <div className='po-print-payment-cont'>
+                        <span className='print-label po-print-payment-type'><b> PAID AMOUNT </b></span><span> {this.props.receivePo.paid_amount}</span>
+                    </div>
+
+                    <br/>
 
                     <div className="po-print-approval-cont">
                         <div className='po-print-approval'>
@@ -112,4 +115,4 @@ export class PrintPurchaseOrder extends React.PureComponent {
     }
 }
 
-export default PrintPurchaseOrder;
+export default PrintPurchaseOrderInvoice;

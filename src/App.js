@@ -25,6 +25,8 @@ import ReviewPurchaseOrder from './components/View/Supply/ReviewPurchaseOrder';
 import UpdatePurchaseOrder from './components/View/Supply/UpdatePurchaseOrder';
 import PayPurchaseOrder from './components/View/Supply/PayPurchaseOrder';
 import ReceivePurchaseOrder from './components/View/Supply/ReceivePurchaseOrder';
+import Receives from './components/View/Supply/Receives';
+import ReceivesPrint from './components/View/Supply/ReceivesPrint';
 import Items from './components/View/Supply/Items';
 import MedTech from './components/View/Results Releasing/MedTech';
 import MedTechStart from './components/View/Results Releasing/MedTechStart';
@@ -128,6 +130,8 @@ function App() {
         <Route path="/add-discount" element={token ? <AddDiscountNoCompany /> : <Navigate to="/" />} />
         <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
+        <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
+        <Route path="/receives-print/:id/:poId" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/update-purchase-order/:id" element={token ? <UpdatePurchaseOrder /> : <Navigate to="/" />} />

@@ -67,6 +67,12 @@ Values
     color: #DAC92F;
 }
 
+.for-approval {
+    color: #DAC92F;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 .HOME, .CLINIC, .PAID, .PENDING, .CREDIT {
     font-weight: bold;
 }

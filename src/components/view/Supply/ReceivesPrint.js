@@ -24,12 +24,11 @@ import Table from '../../Table.js';
 const userToken = getToken();
 const userId = getUser();
 
-function ReviewPurchaseOrder() {
+function ReceivesPrint() {
     document.body.style = 'background: white;';
 
       //PO details
-      const {id} = useParams();
-      var poId;
+      const {id, poId} = useParams();
       const [supplier, setSupplier] = useState("");
       const [purchaseDate, setPurchaseDate] = useState("");
       const [deliveryDate, setDeliveryDate] = useState("");
@@ -39,7 +38,6 @@ function ReviewPurchaseOrder() {
       const [remarks, setRemarks] = useState("");
       const [grandTotal, setGrandTotal] = useState("");
       const [subTotal, setSubTotal] = useState("");
-      const [discount, setDiscount] = useState("");
       const [poItems, setPoItems] = useState([]);
       const [status, setStatus] = useState("");
       const [paymentStatus, setPaymentStatus] = useState("");
@@ -47,6 +45,7 @@ function ReviewPurchaseOrder() {
       const [approvedBy, setApprovedBy] = useState("");
       const [completedOn, setCompletedOn] = useState("");
       const [paidAmount, setPaidAmount] = useState("");
+      const [receivePo, setReceivePo] = useState([]);
 
       //Edit PO details
       const [editSupplier, setEditSupplier] = useState("");
@@ -98,7 +97,7 @@ function ReviewPurchaseOrder() {
         poItems.length = 0;
         axios({
           method: 'post',
-          url: window.$link + 'pos/show/' + id,
+          url: window.$link + 'pos/show/' + poId,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -131,9 +130,6 @@ function ReviewPurchaseOrder() {
             setDeliveryAddress(response.data.delivery_address);
             setRequisitioner(response.data.requisitioner);
             setForwarder(response.data.forwarder);
-            setGrandTotal(response.data.grand_total);
-            setDiscount(response.data.discount);
-            setSubTotal(response.data.subtotal)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
             setPaymentStatus(response.data.payment_status);
@@ -187,7 +183,7 @@ function ReviewPurchaseOrder() {
 
         axios({
             method: 'post',
-            url: window.$link + 'pos/getPoItems/' + id,
+            url: window.$link + 'po_receives/getPOReceiveItems/' + id,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -206,11 +202,26 @@ function ReviewPurchaseOrder() {
                     itemData.qty = data.qty;
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
-                    itemData.discount = data.discount;
-                    itemData.received = data.received;
+                    itemData.total = data.amount;
                     setPoItems(oldArray => [...oldArray, itemData]);
                 }
               });
+          }).catch(function (error) {
+              console.log(error);
+          });
+
+          axios({
+            method: 'post',
+            url: window.$link + 'po_receives/show/' + id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+              console.log(response.data);
+              setReceivePo(response.data);
           }).catch(function (error) {
               console.log(error);
           })
@@ -267,20 +278,14 @@ function ReviewPurchaseOrder() {
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
-            <div className="col-sm-3">
+            <div className="col-sm-4">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
             </div>
-            <div className="col-sm-2">
-                {data.amount}
+            <div className="col-sm-4 text-center">
+                {parseFloat(data.amount).toFixed(2)}
             </div>
-            <div className="col-sm-2">
-                {data.discount}
-            </div>
-            <div className="col-sm-1">
-                {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
-            </div>
-            <div className="col-sm-2">
-                {data.received}
+            <div className="col-sm-2 text-right">
+                {parseFloat(data.total).toFixed(2)}
             </div>
             {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
               <div className="col-sm-2">
@@ -454,8 +459,7 @@ function ReviewPurchaseOrder() {
             <div className="active-cont">
                 <Header 
                     type='thin'
-                    title='PURCHASE ORDER' 
-                    buttons= {['delete-po', 'edit-po', 'receive-items']}
+                    title='RECEIVES' 
                     editPO={redirectToEdit}
                     deletePO={deletePO}
                     payPO={payPO}
@@ -469,6 +473,20 @@ function ReviewPurchaseOrder() {
             <h4 className="form-categories-header italic">PURCHASE ORDER DETAILS</h4>
             
             <div className="po-details">
+            <div className="row">
+                <div className="col-sm-3">
+                        <div className='label'>RECEIVE INVOICE ID</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{id}</div>
+                </div>
+                <div className="col-sm-1">
+                        <div className='label'>PO ID</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{poId}</div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-sm-2">
                         <div className='label'>SUPPLIER</div>
@@ -529,58 +547,29 @@ function ReviewPurchaseOrder() {
                 headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','PAYMENT', 'ACTION']}
                 /> */}
 
-            <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
+            <h5 className="form-categories-subheader italic">LIST OF RECEIVED ITEMS</h5>
 
                 <div className="summary-services">
                     <div className="row">
-                        <div className="col-sm-3 service">
+                        <div className="col-sm-5 service">
                             PARTICULARS
                         </div>
-                        <div className="col-sm-2 service">
-                            AMOUNT
+                        <div className="col-sm-4 service">
+                            COST
                         </div>
-                        <div className="col-sm-2 service">
-                            DISCOUNT
-                        </div>
-                        <div className="col-sm-1 service">
+                        <div className="col-sm-3 service">
                             TOTAL
                         </div>
-                        <div className="col-sm-2 service">
-                            RECEIVED
-                        </div>
-                        {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
-                            <div className="col-sm-1 service">
-                            ACTION
-                        </div>
-                        )}
                     </div>
 
                     {listItems}
 
                     <div className="row less-gap d-flex justify-content-end">
                         <div className="col-sm-2">
-                            <div className='label'>SUB TOTAL</div>
-                        </div>
-                        <div className="col-sm-2">
-                            <div className='detail'><b>{subTotal}</b></div>
-                        </div>
-                    </div>
-
-                    <div className="row less-gap d-flex justify-content-end">
-                        <div className="col-sm-2">
-                            <div className='label'>DISCOUNT</div>
-                        </div>
-                        <div className="col-sm-2">
-                            <div className='detail'><b>{discount}</b></div>
-                        </div>
-                    </div>
-
-                    <div className="row less-gap d-flex justify-content-end">
-                        <div className="col-sm-2">
                             <div className='label'>GRAND TOTAL</div>
                         </div>
                         <div className="col-sm-2">
-                            <div className='detail'><b>{grandTotal}</b></div>
+                            <div className='detail'><b>{receivePo.grand_total}</b></div>
                         </div>
                     </div>
 
@@ -590,7 +579,7 @@ function ReviewPurchaseOrder() {
             {poItems.length != 0 && status != "approved" && status != "disapproved" && status != "printed" &&  status !="completed" && showPOButtons()}
 
                 <div className="row d-flex justify-content-center">
-                {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && (
+                {/* {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && (
                     <div className="col-sm-3">
                         <button className="po-print-btn" onClick={handlePrint}><FontAwesomeIcon
                         icon={'print'}
@@ -599,8 +588,8 @@ function ReviewPurchaseOrder() {
                         className="print-icon"
                       />PRINT DETAILS</button>
                     </div>
-                )}
-                 {/* {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && paidAmount != "0.00"&& (
+                )} */}
+                 {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && paidAmount != "0.00"&& (
                     <div className="col-sm-3">
                         <button className="po-print-btn" onClick={handlePrintInvoice}><FontAwesomeIcon
                         icon={'print'}
@@ -609,33 +598,16 @@ function ReviewPurchaseOrder() {
                         className="print-icon"
                       />PRINT INVOICE</button>
                     </div>
-                 )} */}
+                 )}
                 </div>
 
             <div
                 style={{ display: "none" }}// This make ComponentToPrint show   only while printing
             > 
-            <PrintPurchaseOrder
-                ref={componentRef}
-                id={id}
-                supplier={supplier}
-                purchaseDate={purchaseDate}
-                deliveryDate={deliveryDate}
-                deliveryAddress={deliveryAddress}
-                requisitioner={requisitioner}
-                forwarder={forwarder}
-                remarks={remarks}
-                poItems={poItems} 
-                status={status}
-                subTotal={subTotal}
-                grandTotal={grandTotal}
-                printedBy={printedBy}
-                approvedBy={approvedBy}
-            />
-
             <PrintPurchaseOrderInvoice
                 ref={componentRefInvoice}
                 id={id}
+                poId={poId}
                 supplier={supplier}
                 purchaseDate={purchaseDate}
                 deliveryDate={deliveryDate}
@@ -649,9 +621,8 @@ function ReviewPurchaseOrder() {
                 grandTotal={grandTotal}
                 printedBy={printedBy}
                 approvedBy={approvedBy}
+                receivePo={receivePo}
             />
-
-
             </div>
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">
@@ -698,4 +669,4 @@ function ReviewPurchaseOrder() {
     )
 }
 
-export default ReviewPurchaseOrder
+export default ReceivesPrint

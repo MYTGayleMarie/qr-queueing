@@ -128,3 +128,7 @@
 .receive-cont {
     margin-top: -10% !important;
 }
+
+.text-right {
+    text-align: right !important;
+}

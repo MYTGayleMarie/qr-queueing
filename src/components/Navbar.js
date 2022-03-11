@@ -298,6 +298,9 @@ function adminNavbar(showNavbar,setshowNavbar) {
               <Link to="/purchase-order" className="sub-link">
                 <li class="sub-list">PURCHASE ORDER</li>
               </Link>
+              <Link to="/receives" className="sub-link">
+                <li class="sub-list">RECEIVES</li>
+              </Link>
               <Link to="/items" className="sub-link">
                 <li class="sub-list">ITEMS</li>
               </Link>
@@ -332,6 +335,9 @@ function supplySideNav() {
           <Link to="/purchase-order">
             <span class="mx-2 nav-item">PURCHASE ORDER</span>
           </Link>
+          <Link to="/receives" className="sub-link">
+            <span class="mx-2 nav-item">RECEIVES</span>
+          </Link>
           <Link to="/items">
             <span class="mx-2 nav-item">ITEMS</span>
           </Link>
@@ -360,6 +366,9 @@ function accountingSideNav() {
     <div className='reports-show-nav'>
           <Link to="/purchase-order">
             <span class="mx-2 nav-item">PURCHASE ORDER</span>
+          </Link>
+          <Link to="/receives" className="sub-link">
+            <span class="mx-2 nav-item">RECEIVES</span>
           </Link>
     </div>
   );

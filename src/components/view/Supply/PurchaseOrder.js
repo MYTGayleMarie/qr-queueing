@@ -24,7 +24,7 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
-  status: 'pending',
+  status: 'for approval',
 };
 
 function PurchaseOrder() {
@@ -76,7 +76,7 @@ function PurchaseOrder() {
         
                   posData.total = data.grand_total;
                   posData.status = data.status;
-                  posData.payment = data.payment_status != null ? "paid" : "unpaid";
+                  posData.payment = data.paid_amount == data.grand_total ? "paid" : "unpaid";
   
                   setPoData(oldArray => [...oldArray, posData]);
                 }).then(function (error) {

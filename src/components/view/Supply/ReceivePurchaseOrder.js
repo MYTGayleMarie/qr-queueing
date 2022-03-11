@@ -2,10 +2,13 @@ import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import axios from 'axios';
+import { Button, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllLabServices, getAllPackages } from "../../../services/services";
 import { Navigate } from 'react-router-dom';
-
+import { useReactToPrint } from 'react-to-print';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
 import Navbar from '../../Navbar';
@@ -15,7 +18,7 @@ import Header from '../../Header.js';
 const userToken = getToken();
 const userId = getUser();
 
-function ReceivePurchaseOrder() {
+function PayPurchaseOrder() {
 
     document.body.style = 'background: white;';
 
@@ -38,22 +41,40 @@ function ReceivePurchaseOrder() {
     const [seniorPwdId, setID] = useState("");
     const {id} = useParams();
 
+    //check states
+    const [checkNo, setCheckNo] = useState("");
+    const [checkBank, setCheckBank] = useState("");
+    const [checkDate, setCheckDate] = useState("");
+
+    //card states
+    const [cardNo, setCardNo] = useState("");
+    const [cardName, setCardName] = useState("");
+    const [cardType, setCardType] = useState("");
+    const [cardExpiry, setCardExpiry] = useState("");
+    const [cardBank, setCardBank] = useState("");
+
     //others states
+    const [source, setSource] = useState("");
+    const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [print, setPrint] = useState(false);
+    const [qty, setQty] = useState(0);
     const [unfilteredPoItems, setUnfilteredPoItems] = useState([]);
     const [releaseItems, setReleaseItems] = useState([]);
     const [isClicked, setIsClicked] = useState(false);
 
+    const [releaseItemsInfo, setReleaseItemsInfo] = useState([]);
+
     const handleItemChange = (e,index) => {
         const {name, value} = e.target;
         const list = [...releaseItems];
-        list[index][name] = value;
-        setReleaseItems(list);
-
+        if(list[index]["qty"] >= value && value >= 0) {
+            list[index][name] = value;
+            setReleaseItems(list);
+        }
+        var tempTotal = 0;
         releaseItems.map((data) => {
-            var tempTotal = 0;
-
-            setSubTotal(tempTotal += ((data.qty * data.cost) - data.discount));
+            setSubTotal(tempTotal += ((data.received * data.cost) - data.discount));
         })
     };
 
@@ -99,9 +120,9 @@ function ReceivePurchaseOrder() {
             setDeliveryAddress(response.data.delivery_address);
             setRequisitioner(response.data.requisitioner);
             setForwarder(response.data.forwarder);
-            setGrandTotal(response.data.grand_total);
+            setGrandTotal(0);
             setDiscount(response.data.discount);
-            setSubTotal(response.data.subtotal)
+            setSubTotal(0)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
           });
@@ -116,7 +137,8 @@ function ReceivePurchaseOrder() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response.data);
+              console.log("here");
+            console.log(response.data);
               setUnfilteredPoItems(response.data);
               response.data.map((data,index) => {
                 
@@ -138,29 +160,29 @@ function ReceivePurchaseOrder() {
     },[]);
 
     React.useEffect(() => {
+        releaseItems.length = 0;
         unfilteredPoItems.map((data) => {
-            setReleaseItems([
-                ...releaseItems,
-                {
-                    item: data.id,
-                    name: data.item,
-                    cost: data.cost,
-                    qty: data.qty,
-                    unit: data.unit,
-                    discount: data.discount,
-                },
-              ]);
+            var info={};
+            info.po_item_ids = data.id;
+            info.item_id = data.item_id;
+            info.cost = data.cost;
+            info.name = data.item;
+            info.qty = data.qty - data.received;
+            info.unit = data.unit; 
+            info.discount = data.discount;
+            info.received = 0;
+            setReleaseItems(oldArray => [...oldArray, info]);
         });
-        console.log(unfilteredPoItems);
+        console.log(releaseItems);
 
     },[unfilteredPoItems]);
 
     //components
-    const listItems = poItems.map((data,index) => {
+    const listItems = releaseItems.map((data,index) => {
         return (
         <div className="row">
             <div className="col-sm-3">
-                {data.item}
+                {data.name} 
             </div>
             <div className="col-sm-1">
                 {parseFloat(data.qty).toFixed(2)}                
@@ -168,62 +190,373 @@ function ReceivePurchaseOrder() {
             <div className="col-sm-1">
                 {data.unit}
             </div>
-            <div className="col-sm-1">
-                {data.amount}
+            <div className="col-sm-1 text-right">
+                {data.cost}
             </div>
             <div className="col-sm-2">
                 {data.discount}
             </div>      
             <div className="col-sm-2">
-                {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
+                <input type="number" className="received-qty-input" name="received" value={data.received} onChange={(e) => handleItemChange(e, index)}/>
             </div>
             <div className="col-sm-2">
-               <input type="number" className="received-qty-input" name="qty"  value={releaseItems[index].qty} onChange={(e) => handleItemChange(e, index)}/>
+               {parseFloat((data.received)* data.cost - data.discount).toFixed(2)}
             </div>
         </div>
         )
     });
 
-    //Functions
-    function ReceiveItems() {
-        var items = [];
-        var cost = [];
-        var qty = [];
-        var unit = [];
-        var names = [];
-
-        releaseItems.map((data) => {
-            items.push(data.item);
-            cost.push(data.cost);
-            qty.push(data.qty);
-            unit.push(data.unit);
-            names.push(data.name);
-        });
-
+    function submit (e) {
+        e.preventDefault();
         if(isClicked == false) {
             setIsClicked(true);
+
+            var po_item_ids = [];
+            var cost = [];
+            var received = [];
+            var unit = [];
+            var names = [];
+            var item_ids = [];
+    
+            releaseItems.map((data) => {
+                po_item_ids.push(data.po_item_ids);
+                item_ids.push(data.item_id);
+                cost.push(data.cost);
+                received.push(data.received);
+                unit.push(data.unit);
+                names.push(data.name);
+            });
+
             axios({
                 method: 'post',
-                url: window.$link + 'po/receive/' + id,
+                url: window.$link + 'pos/receive/' + id,
                 withCredentials: false, 
                 params: {
                     token: userToken.replace(/['"]+/g, ''),
                     api_key: window.$api_key, 
-                    po_item_ids: items,
-                    items: names,
+                    po_item_ids: po_item_ids,
+                    items: item_ids,
                     cost: cost,
-                    qty: qty,
+                    qty: received,
                     unit: unit,
                     received_by: userId,
                 }
             }).then(function (response) {
                 console.log(response);
-                setTimeout(function () {
-                    setRedirect(true);
-                  }, 2000);
+                var receive_id = response.data.data.receive_id;
+                console.log(receive_id);
+            if(payment === 'cash') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken.replace(/['"]+/g, ''),
+                        api_key: window.$api_key, 
+                        po_receive_id: receive_id,
+                        type: payment,
+                        amount: pay,
+                        senior_pwd_id: seniorPwdId, //not included, just empty
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    var date = new Date();    
+                    console.log(response)            
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'check') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_receive_id: response.data.data.received_id,
+                        type: payment,
+                        amount: pay,
+                        check_no: checkNo,
+                        check_bank: checkBank,
+                        check_date: checkDate,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                    }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'card') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_receive_id: response.data.data.received_id,
+                        type: payment,
+                        amount: pay,
+                        cardName: cardName,
+                        card_no: cardNo,
+                        card_type: cardType,
+                        card_expiry: cardExpiry,
+                        card_bank: cardBank,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
+            if(payment === 'others') {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'po_payments/create',
+                    withCredentials: false, 
+                    params: {
+                        token: userToken,
+                        api_key: userToken.replace(/['"]+/g, ''), 
+                        po_receive_id: response.data.data.received_id,
+                        type: payment,
+                        amount: pay,
+                        other_source: source,
+                        other_reference_no: reference,
+                        senior_pwd_id: seniorPwdId,
+                        discount: discount,
+                        grand_total: grandTotal,
+                        remarks: remarks,
+                        added_by: userId,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    toast.success("Payment Successful!");
+                    setPrint(true);
+                    setTimeout(function () {
+                        setRedirect(true);
+                      }, 2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    toast.error("Payment Unsuccessful!");
+                });
+            }
             });
         }
     }
+
+    console.log(remarks)
+
+  
+    function cashForm() {
+
+        return (
+            <div class="pay-cash-cont">
+                <div className="row">
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">AMOUNT</span>
+                            </div>
+                            <div className="row">
+                                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                            </div>
+                        </div>
+                        {/* <div className="col-sm-6">
+                            <div className="row">
+                                <span class="amount-label">CHANGE</span>
+                            </div>
+                            <div className="row">
+                                <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(pay-grandTotal).toFixed(2)}  placeholder="P"/>
+                            </div>
+                        </div> */}
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="remarks-payment-label">REMARKS</span>
+                            </div>
+                            <div className="row">
+                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row d-flex justify-content-end">
+                        {/* {print == true && printButton()} */}
+                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                    </div>                    
+             </div>       
+            )
+        }
+    
+    function checkForm () {
+        return (
+        <div class="pay-cash-cont">
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="check-label">AMOUNT</span>
+                    <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="check" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="check-label">CHECK NO</span>
+                    <input type="text" id="check" name="check_no" class="check" onChange={(e) => setCheckNo(e.target.value)}/>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="check-label">CHECK BANK</span>
+                    <input type="text" id="check" name="check_bank" class="check" onChange={(e) => setCheckBank(e.target.value)}/>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="check-label">CHECK DATE</span>
+                    <input type="date" id="check" name="check_date" class="check" onChange={(e) => setCheckDate(e.target.value)}/>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="row">
+                        <span class="remarks-payment-label">REMARKS</span>
+                    </div>
+                    <div className="row">
+                        <textarea id="remarks" name="remarks" className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    </div>
+                </div>
+            </div>
+            <div className="row d-flex justify-content-end">
+                {/* {print == true && printButton()} */}
+                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+            </div>
+
+        </div>
+        )
+    }
+    
+    function cardForm () {
+        return (
+        <div class="pay-cash-cont">
+             <div className="row">
+                <span class="check-label">AMOUNT</span>
+                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="check" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+            </div>
+            <div className="row">
+                <span class="check-label">CARD NAME</span>
+                <input type="text" id="card" name="card_name" class="check" onChange={(e) => setCardName(e.target.value)}/>
+            </div>
+            <div className="row">
+                <span class="check-label">CARD NO</span>
+                <input type="text" id="card" name="card_no" class="check" onChange={(e) => setCardNo(e.target.value)}/>
+            </div>
+            <div className="row">
+                <span class="check-label">CARD TYPE</span>
+                <input type="text" id="card" name="card_type" class="check" onChange={(e) => setCardType(e.target.value)}/>
+            </div>
+            <div className="row">
+                <span class="check-label">CARD EXPIRY</span>
+                <input type="date" id="card" name="card_expiry" class="check" onChange={(e) => setCardExpiry(e.target.value)}/>
+            </div>
+            <div className="row">
+                <span class="check-label">CARD BANK</span>
+                <input type="text" id="card" name="card_bank" class="check" onChange={(e) => setCardBank(e.target.value)}/>
+            </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="row">
+                        <span class="remarks-payment-label">REMARKS</span>
+                    </div>
+                    <div className="row">
+                        <textarea id="remarks" name="remarks" rows="4" className="remarks-input" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                    </div>
+                </div>
+            </div>
+            <div className="row d-flex justify-content-end">
+                {/* {print == true && printButton()} */}
+                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+            </div>
+        </div>
+        )
+    }
+
+    function othersForm() {
+
+        return (
+            <div class="pay-cash-cont">
+                <div className="row">
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">AMOUNT</span>
+                            </div>
+                            <div className="row">
+                                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">SOURCE</span>
+                            </div>
+                            <div className="row">
+                                <input type="text" id="payAmount" name="source" class="cash-input pay" onChange={(e) => setSource(e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="amount-label">REFERENCE NUMBER</span>
+                            </div>
+                            <div className="row">
+                                <input type="text" id="changeAmount" name="reference_number" class="cash-input pay" onChange={(e) => setReference(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <div className="row">
+                                <span class="remarks-payment-label">REMARKS</span>
+                            </div>
+                            <div className="row">
+                                <textarea id="remarks" name="remarks"  className="remarks-input" rows="4" cols="100" onChange={(e) => setRemarks(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row d-flex justify-content-end">
+                        {/* {print == true && printButton()} */}
+                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                    </div>
+             </div>       
+            )
+        }
 
         if(redirect == true) {
             var link = "/review-purchase-order/" + id;
@@ -316,27 +649,68 @@ function ReceivePurchaseOrder() {
                             ITEM DISCOUNT
                         </div>
                         <div className="col-sm-2 service">
-                            TOTAL
+                            RECEIVED ITEMS
                         </div>
                         <div className="col-sm-2 service">
-                            RECEIVED QUANTITY
+                            TOTAL
                         </div>
                     </div>
 
                     {listItems}
 
-                    <div className="row d-flex justify-content-center receive-cont">
-                        <div className="col-sm-3">
-                            <button className="po-print-btn" onClick={() => ReceiveItems()}>
-                            Receive 
-                            </button>
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>SUB TOTAL</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{parseFloat(subTotal).toFixed(2)}</b></div>
                         </div>
                     </div>
 
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>DISCOUNT</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{parseFloat(discount).toFixed(2)}</b></div>
+                        </div>
+                    </div>
+
+                    <div className="row less-gap d-flex justify-content-end">
+                        <div className="col-sm-2">
+                            <div className='label'>GRAND TOTAL</div>
+                        </div>
+                        <div className="col-sm-2">
+                            <div className='detail'><b>{parseFloat(grandTotal).toFixed(2)}</b></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="payment-cont">
+                    <h1 className="payment-label add-space">PAYMENT</h1>
+                    <br/>
+
+                    <span className="method-label">METHOD</span>
+                    <input type="radio" id="cash" name="payment_method" value="cash" onClick={()=> setPayment('cash')}/>
+                    <span className="cash method">CASH</span>
+                    <input type="radio" id="check" name="payment_method" value="check" onClick={()=> setPayment('check')}/>
+                    <span className="check method">CHECK</span>
+                    <input type="radio" id="card" name="payment_method" value="card" onClick={()=> setPayment('card')}/>
+                    <span className="check method">CARD</span>
+                    <input type="radio" id="others" name="payment_method" value="others" onClick={()=> setPayment('others')}/>
+                    <span className="check method">OTHERS</span>
+                    
+                    {/* <form> */}
+                        <p>{payment === 'cash' && cashForm()}</p>
+                        <p>{payment === 'check' && checkForm()}</p>
+                        <p>{payment === 'card' && cardForm()}</p>
+                        <p>{payment === 'others' && othersForm()}</p>
+                    {/* </form> */}
                 </div>
           </div>
       </div>
   );
 }
 
-export default ReceivePurchaseOrder;
+export default PayPurchaseOrder;

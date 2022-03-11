@@ -59,7 +59,7 @@ a {
 
 .nav-link:hover .sub-menu {
     display: block;
-    max-height: 200px;
+    max-height: 300px;
     color: #55073A;
 } 
 

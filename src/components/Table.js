@@ -67,11 +67,18 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             )}
             </tr>
         }
-        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true) {
+        else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type == 'purchase-order-invoice' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val == "for approval" ? "for-approval" : data.val.replace(/\s/g, '')}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
+            </tr>
+        }
+        else if (type == 'receives' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={index == 3 ? "text-right" : data.val}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id, row.po_no)}>REVIEW</button></td>
             </tr>
         }
         else if (type === 'companies-discount' && clickable == true) {
@@ -162,7 +169,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
     });
 
-    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits') {
+    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits' || type === 'receives') {
 
         const {from_date, to_date, done} = filteredData;
     
@@ -211,7 +218,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <select name="status" onChange={setFilter}>
-                        <option value="pending" selected>FOR APPROVAL</option>
+                        <option value="for approval" selected>FOR APPROVAL</option>
                         <option value="approved">APPROVED</option>
                         <option value="completed">COMPLETED</option>
                         <option value="disapproved">DISAPPROVED</option>
@@ -236,7 +243,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if (type === "search-patient") {
+    else if (type === "search-patient" || type == 'purchase-order-invoice') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  </div>

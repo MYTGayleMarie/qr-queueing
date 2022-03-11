@@ -215,7 +215,7 @@ function PayPurchaseOrder() {
                         api_key: window.$api_key, 
                         po_id: id,
                         type: payment,
-                        amount: grandTotal,
+                        amount: pay,
                         senior_pwd_id: seniorPwdId, //not included, just empty
                         discount: discount,
                         grand_total: grandTotal,
@@ -245,7 +245,7 @@ function PayPurchaseOrder() {
                         api_key: userToken.replace(/['"]+/g, ''), 
                         po_id: id,
                         type: payment,
-                        amount: grandTotal,
+                        amount: pay,
                         check_no: checkNo,
                         check_bank: checkBank,
                         check_date: checkDate,
@@ -277,7 +277,7 @@ function PayPurchaseOrder() {
                         api_key: userToken.replace(/['"]+/g, ''), 
                         po_id: id,
                         type: payment,
-                        amount: grandTotal,
+                        amount: pay,
                         cardName: cardName,
                         card_no: cardNo,
                         card_type: cardType,
@@ -311,7 +311,7 @@ function PayPurchaseOrder() {
                         api_key: userToken.replace(/['"]+/g, ''), 
                         po_id: id,
                         type: payment,
-                        amount: grandTotal,
+                        amount: pay,
                         other_source: source,
                         other_reference_no: reference,
                         senior_pwd_id: seniorPwdId,
@@ -351,14 +351,14 @@ function PayPurchaseOrder() {
                                 <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                             <div className="row">
                                 <span class="amount-label">CHANGE</span>
                             </div>
                             <div className="row">
                                 <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(pay-grandTotal).toFixed(2)}  placeholder="P"/>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
@@ -380,7 +380,13 @@ function PayPurchaseOrder() {
     
     function checkForm () {
         return (
-        <div class="pay-check-cont">
+        <div class="pay-cash-cont">
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="check-label">AMOUNT</span>
+                    <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="check" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-sm-8">
                     <span class="check-label">CHECK NO</span>
@@ -420,7 +426,11 @@ function PayPurchaseOrder() {
     
     function cardForm () {
         return (
-        <div class="pay-check-cont">
+        <div class="pay-cash-cont">
+             <div className="row">
+                <span class="check-label">AMOUNT</span>
+                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="check" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+            </div>
             <div className="row">
                 <span class="check-label">CARD NAME</span>
                 <input type="text" id="card" name="card_name" class="check" onChange={(e) => setCardName(e.target.value)}/>
@@ -464,6 +474,14 @@ function PayPurchaseOrder() {
         return (
             <div class="pay-cash-cont">
                 <div className="row">
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">AMOUNT</span>
+                            </div>
+                            <div className="row">
+                                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                            </div>
+                        </div>
                         <div className="col-sm-6">
                              <div className="row">
                                 <span class="amount-label">SOURCE</span>

@@ -120,7 +120,7 @@ function AddPurchaseOrder() {
         unit: " ", 
         item: " ",
         cost: " ",
-        item_discount: " ",
+        item_discount: "0",
         total: " ",
       },
     ]);
@@ -197,6 +197,7 @@ function AddPurchaseOrder() {
       item_ids.push(data.item);
       costs.push(data.cost);
       qty.push(data.order_quantity);
+      item_discounts.push(data.item_discount)
       units.push(data.unit);
     });
 
@@ -207,7 +208,7 @@ function AddPurchaseOrder() {
         url: window.$link + 'pos/create',
         withCredentials: false,
         params: {
-          token: userToken,
+          token: userToken.replace(/['"]+/g, ''),
           api_key: window.$api_key,
           supplier: info.supplier,
           purchase_date: info.purchase_date,
@@ -225,6 +226,7 @@ function AddPurchaseOrder() {
           added_by: userId,
         },
       }).then(function (response) {
+        console.log(response)
         toast.success("Successfully added PO!");
         setTimeout(function () {
           setRedirect(true);

@@ -82,7 +82,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payPO, sta
                 else if(button === 'edit-po' && (statusPO == "pending" || statusPO == "for approval")) {
                     return <button className="edit-profile" onClick={editPO}> EDIT </button>
                 }
-                else if(button === 'pay-po' && statusPO == "printed" && completedOn != null && statusPaymentPO != "paid" ) {
+                else if(button === 'pay-po' && statusPO != "for approval" && statusPaymentPO != "paid" ) {
                     return <button className="edit-profile" onClick={payPO}>ADD PAYMENT</button>
                 }
                 else if(button === 'receive-items' && statusPO == "printed" && completedOn == null) {

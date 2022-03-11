@@ -28,15 +28,19 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
   }
 
   function start() {
+    if(range.length != 0) {
       setPage(range[0]);
       setEndIndex(5);
       setStartIndex(0);
+    }
   }
 
   function end() {
-    setPage(range.length);
-    setEndIndex(range.length);
-    setStartIndex(range.length - 5);
+    if(range.length != 0) {
+      setPage(range.length);
+      setEndIndex(range.length);
+      setStartIndex(range.length - 5);
+    }
   }
 
   function setPageNav(el) {
@@ -71,10 +75,10 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
      </div>
      <div className="col pages-cont d-flex justify-content-center">
      <button className="button navigateButton" onClick={() => start()}>
-        <FontAwesomeIcon icon={"angle-double-left"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
+        <FontAwesomeIcon icon={"angle-double-left"} title={"Start"} alt={"Start"} aria-hidden="true" className="prev-icon"/>
       </button>
       <button className="button navigateButton" onClick={() => prev()}>
-        <FontAwesomeIcon icon={"angle-left"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
+        <FontAwesomeIcon icon={"angle-left"} title={"Previous"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
       </button>
       {range.slice(startIndex, endIndex).map((el, index) => (
         <button
@@ -88,10 +92,10 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
         </button>
       ))}
        <button className="button navigateButton" onClick={() => next()}>
-        <FontAwesomeIcon icon={"angle-right"} alt={"next"} aria-hidden="true" className="next-icon"/>
+        <FontAwesomeIcon icon={"angle-right"} alt={"next"} title={"Next"} aria-hidden="true" className="next-icon"/>
        </button>
        <button className="button navigateButton" onClick={() => end()}>
-        <FontAwesomeIcon icon={"angle-double-right"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
+        <FontAwesomeIcon icon={"angle-double-right"} alt={"previous"} title={"End"} aria-hidden="true" className="prev-icon"/>
       </button>
        </div>
        <div className="col d-flex justify-content-end">

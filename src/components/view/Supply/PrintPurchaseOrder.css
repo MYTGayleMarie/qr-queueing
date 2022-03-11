@@ -1,6 +1,23 @@
 .print-area-po {
     margin: 5%;
 }
+
+.print-area-receives {
+    margin: 5%;
+}
+
+.print-area-receives td { 
+    font-size: 12px !important;
+}
+
+.print-area-receives th { 
+    font-size: 12px !important;
+}
+
+.print-area-receives span { 
+    font-size: 13px !important;
+}
+
 .table-header-po {
     font-size: 18px;
 }
@@ -19,8 +36,11 @@
 }
 .po-print-breakdown-cont {
     display: flex;
-    flex-wrap: wrap;
-    margin-left: 60%;
+    float:right;
+}
+.po-print-payment-cont {
+    display: flex;
+    float:right;
 }
 .po-print-breakdown {
     display: inline-block !important;
