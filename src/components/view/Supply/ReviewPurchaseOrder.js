@@ -633,7 +633,7 @@ function ReviewPurchaseOrder() {
                 approvedBy={approvedBy}
             />
 
-            <PrintPurchaseOrderInvoice
+            {/* <PrintPurchaseOrderInvoice
                 ref={componentRefInvoice}
                 id={id}
                 supplier={supplier}
@@ -649,7 +649,7 @@ function ReviewPurchaseOrder() {
                 grandTotal={grandTotal}
                 printedBy={printedBy}
                 approvedBy={approvedBy}
-            />
+            /> */}
 
 
             </div>
