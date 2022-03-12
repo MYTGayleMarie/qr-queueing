@@ -229,21 +229,6 @@ function ReceivesPrint() {
     },[]);
 
     //Functions
-    function showPOButtons() {
-        return (
-            <div className="row d-flex justify-content-center po-btn">
-                <div className="col-sm-2">
-                    <button className="po-approve-btn" onClick={approveAll}>APPROVE </button>
-                </div>
-                <div className="col-sm-2">
-                    <button className="po-disapprove-btn" onClick={disapproveAll}>DISAPPROVE </button>
-                </div>
-                <div className="col-sm-2">
-                    <button className="po-close-btn" onClick={close}>CLOSE </button>
-                </div>
-            </div>
-        )
-    }
     function edit(e) {
 
         e.preventDefault();
@@ -380,7 +365,6 @@ function ReceivesPrint() {
               console.log(response)
               toast.success("Approved PO!");
               setTimeout(function () {
-                close();
               }, 2000);
           }).then(function (error) {
               console.log(error);
@@ -405,49 +389,15 @@ function ReceivesPrint() {
           });
     }
 
-    function receiveItem() {
-        setReceiveRedirect(true);
-    }
-
-    function payPO() {
+    function payReceive() {
         setPayRedirect(true);
-    }
-
-    function close() {
-        setCloseRedirect(true);
-    }
-
-    function redirectToEdit() {
-        setEditRedirect(true);
     }
 
     console.log(status)
 
     //Redirections
-
-    if(deleteRedirect == true || closeRedirect == true) {
-        var link =  "/purchase-order";
-        return (
-            <Navigate to ={link}/>
-        )
-    }
-
-    if(editRedirect == true) {
-        var link =  "/update-purchase-order/" + id;
-        return (
-            <Navigate to ={link}/>
-        )
-    }
-
     if(payRedirect == true) {
-        var link =  "/pay-purchase-order/" + id;
-        return (
-            <Navigate to ={link}/>
-        )
-    }
-
-    if(receiveRedirect == true) {
-        var link =  "/receive-purchase-order/" + id;
+        var link =  "/pay-purchase-order/" + id + "/" + poId;
         return (
             <Navigate to ={link}/>
         )
@@ -460,13 +410,11 @@ function ReceivesPrint() {
                 <Header 
                     type='thin'
                     title='RECEIVES' 
-                    editPO={redirectToEdit}
+                    buttons= {['pay-receive']}
                     deletePO={deletePO}
-                    payPO={payPO}
-                    receiveItem={receiveItem}
+                    payReceive={payReceive}
                     completedOn={completedOn}
-                    statusPaymentPO={paymentStatus}
-                    statusPO={status}
+                    statusPaymentPO={receivePo.paid_amount == receivePo.grand_total ? "paid" : "unpaid"}
                 />
                 <ToastContainer/>
 
@@ -575,8 +523,6 @@ function ReceivesPrint() {
 
                 </div>
             </div>
-
-            {poItems.length != 0 && status != "approved" && status != "disapproved" && status != "printed" &&  status !="completed" && showPOButtons()}
 
                 <div className="row d-flex justify-content-center">
                 {/* {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && (

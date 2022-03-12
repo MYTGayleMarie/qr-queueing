@@ -243,135 +243,140 @@ function PayPurchaseOrder() {
                 }
             }).then(function (response) {
                 console.log(response);
-                var receive_id = response.data.data.receive_id;
-                console.log(receive_id);
-            if(payment === 'cash') {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'po_payments/create',
-                    withCredentials: false, 
-                    params: {
-                        token: userToken.replace(/['"]+/g, ''),
-                        api_key: window.$api_key, 
-                        po_receive_id: receive_id,
-                        type: payment,
-                        amount: pay,
-                        senior_pwd_id: seniorPwdId, //not included, just empty
-                        discount: discount,
-                        grand_total: grandTotal,
-                        remarks: remarks,
-                        added_by: userId,
-                    }
-                }).then(function (response) {
-                    var date = new Date();    
-                    console.log(response)            
-                    toast.success("Payment Successful!");
-                    setPrint(true);
-                    setTimeout(function () {
-                        setRedirect(true);
-                      }, 2000);
-                }).catch(function (error) {
-                    console.log(error);
-                    toast.error("Payment Unsuccessful!");
-                });
-            }
-            if(payment === 'check') {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'po_payments/create',
-                    withCredentials: false, 
-                    params: {
-                        token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
-                        po_receive_id: response.data.data.received_id,
-                        type: payment,
-                        amount: pay,
-                        check_no: checkNo,
-                        check_bank: checkBank,
-                        check_date: checkDate,
-                        senior_pwd_id: seniorPwdId,
-                        discount: discount,
-                        grand_total: grandTotal,
-                        remarks: remarks,
-                        added_by: userId,
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    toast.success("Payment Successful!");
-                    setPrint(true);
-                    setTimeout(function () {
-                        setRedirect(true);
-                    }, 2000);
-                }).catch(function (error) {
-                    console.log(error);
-                    toast.error("Payment Unsuccessful!");
-                });
-            }
-            if(payment === 'card') {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'po_payments/create',
-                    withCredentials: false, 
-                    params: {
-                        token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
-                        po_receive_id: response.data.data.received_id,
-                        type: payment,
-                        amount: pay,
-                        cardName: cardName,
-                        card_no: cardNo,
-                        card_type: cardType,
-                        card_expiry: cardExpiry,
-                        card_bank: cardBank,
-                        senior_pwd_id: seniorPwdId,
-                        discount: discount,
-                        grand_total: grandTotal,
-                        remarks: remarks,
-                        added_by: userId,
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    toast.success("Payment Successful!");
-                    setPrint(true);
-                    setTimeout(function () {
-                        setRedirect(true);
-                      }, 2000);
-                }).catch(function (error) {
-                    console.log(error);
-                    toast.error("Payment Unsuccessful!");
-                });
-            }
-            if(payment === 'others') {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'po_payments/create',
-                    withCredentials: false, 
-                    params: {
-                        token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
-                        po_receive_id: response.data.data.received_id,
-                        type: payment,
-                        amount: pay,
-                        other_source: source,
-                        other_reference_no: reference,
-                        senior_pwd_id: seniorPwdId,
-                        discount: discount,
-                        grand_total: grandTotal,
-                        remarks: remarks,
-                        added_by: userId,
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                    toast.success("Payment Successful!");
-                    setPrint(true);
-                    setTimeout(function () {
-                        setRedirect(true);
-                      }, 2000);
-                }).catch(function (error) {
-                    console.log(error);
-                    toast.error("Payment Unsuccessful!");
-                });
-            }
+                toast.success("Receive Successful!");
+                setPrint(true);
+                setTimeout(function () {
+                    setRedirect(true);
+                }, 2000);
+            //     var receive_id = response.data.data.receive_id;
+            //     console.log(receive_id);
+            // if(payment === 'cash') {
+            //     axios({
+            //         method: 'post',
+            //         url: window.$link + 'po_payments/create',
+            //         withCredentials: false, 
+            //         params: {
+            //             token: userToken.replace(/['"]+/g, ''),
+            //             api_key: window.$api_key, 
+            //             po_receive_id: receive_id,
+            //             type: payment,
+            //             amount: pay,
+            //             senior_pwd_id: seniorPwdId, //not included, just empty
+            //             discount: discount,
+            //             grand_total: grandTotal,
+            //             remarks: remarks,
+            //             added_by: userId,
+            //         }
+            //     }).then(function (response) {
+            //         var date = new Date();    
+            //         console.log(response)            
+            //         toast.success("Payment Successful!");
+            //         setPrint(true);
+            //         setTimeout(function () {
+            //             setRedirect(true);
+            //           }, 2000);
+            //     }).catch(function (error) {
+            //         console.log(error);
+            //         toast.error("Payment Unsuccessful!");
+            //     });
+            // }
+            // if(payment === 'check') {
+            //     axios({
+            //         method: 'post',
+            //         url: window.$link + 'po_payments/create',
+            //         withCredentials: false, 
+            //         params: {
+            //             token: userToken,
+            //             api_key: userToken.replace(/['"]+/g, ''), 
+            //             po_receive_id: response.data.data.received_id,
+            //             type: payment,
+            //             amount: pay,
+            //             check_no: checkNo,
+            //             check_bank: checkBank,
+            //             check_date: checkDate,
+            //             senior_pwd_id: seniorPwdId,
+            //             discount: discount,
+            //             grand_total: grandTotal,
+            //             remarks: remarks,
+            //             added_by: userId,
+            //         }
+            //     }).then(function (response) {
+            //         console.log(response);
+            //         toast.success("Payment Successful!");
+            //         setPrint(true);
+            //         setTimeout(function () {
+            //             setRedirect(true);
+            //         }, 2000);
+            //     }).catch(function (error) {
+            //         console.log(error);
+            //         toast.error("Payment Unsuccessful!");
+            //     });
+            // }
+            // if(payment === 'card') {
+            //     axios({
+            //         method: 'post',
+            //         url: window.$link + 'po_payments/create',
+            //         withCredentials: false, 
+            //         params: {
+            //             token: userToken,
+            //             api_key: userToken.replace(/['"]+/g, ''), 
+            //             po_receive_id: response.data.data.received_id,
+            //             type: payment,
+            //             amount: pay,
+            //             cardName: cardName,
+            //             card_no: cardNo,
+            //             card_type: cardType,
+            //             card_expiry: cardExpiry,
+            //             card_bank: cardBank,
+            //             senior_pwd_id: seniorPwdId,
+            //             discount: discount,
+            //             grand_total: grandTotal,
+            //             remarks: remarks,
+            //             added_by: userId,
+            //         }
+            //     }).then(function (response) {
+            //         console.log(response);
+            //         toast.success("Payment Successful!");
+            //         setPrint(true);
+            //         setTimeout(function () {
+            //             setRedirect(true);
+            //           }, 2000);
+            //     }).catch(function (error) {
+            //         console.log(error);
+            //         toast.error("Payment Unsuccessful!");
+            //     });
+            // }
+            // if(payment === 'others') {
+            //     axios({
+            //         method: 'post',
+            //         url: window.$link + 'po_payments/create',
+            //         withCredentials: false, 
+            //         params: {
+            //             token: userToken,
+            //             api_key: userToken.replace(/['"]+/g, ''), 
+            //             po_receive_id: response.data.data.received_id,
+            //             type: payment,
+            //             amount: pay,
+            //             other_source: source,
+            //             other_reference_no: reference,
+            //             senior_pwd_id: seniorPwdId,
+            //             discount: discount,
+            //             grand_total: grandTotal,
+            //             remarks: remarks,
+            //             added_by: userId,
+            //         }
+            //     }).then(function (response) {
+            //         console.log(response);
+            //         toast.success("Payment Successful!");
+            //         setPrint(true);
+            //         setTimeout(function () {
+            //             setRedirect(true);
+            //           }, 2000);
+            //     }).catch(function (error) {
+            //         console.log(error);
+            //         toast.error("Payment Unsuccessful!");
+            //     });
+            // }
             });
         }
     }
@@ -687,7 +692,12 @@ function PayPurchaseOrder() {
 
                 </div>
 
-                <div className="payment-cont">
+                <div className="row d-flex more-gap justify-content-end">
+                {/* {print == true && printButton()} */}
+                <button className="save-btn" onClick={(e) => submit(e)}>SAVE RECEIVES</button>
+                </div>
+
+                {/* <div className="payment-cont">
                     <h1 className="payment-label add-space">PAYMENT</h1>
                     <br/>
 
@@ -699,7 +709,7 @@ function PayPurchaseOrder() {
                     <input type="radio" id="card" name="payment_method" value="card" onClick={()=> setPayment('card')}/>
                     <span className="check method">CARD</span>
                     <input type="radio" id="others" name="payment_method" value="others" onClick={()=> setPayment('others')}/>
-                    <span className="check method">OTHERS</span>
+                    <span className="check method">OTHERS</span> */}
                     
                     {/* <form> */}
                         <p>{payment === 'cash' && cashForm()}</p>
@@ -707,7 +717,7 @@ function PayPurchaseOrder() {
                         <p>{payment === 'card' && cardForm()}</p>
                         <p>{payment === 'others' && othersForm()}</p>
                     {/* </form> */}
-                </div>
+                {/* </div> */}
           </div>
       </div>
   );

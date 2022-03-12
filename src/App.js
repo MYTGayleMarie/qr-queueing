@@ -135,7 +135,7 @@ function App() {
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/update-purchase-order/:id" element={token ? <UpdatePurchaseOrder /> : <Navigate to="/" />} />
-        <Route path="/pay-purchase-order/:id" element={token ? <PayPurchaseOrder /> : <Navigate to="/" />} />
+        <Route path="/pay-purchase-order/:id/:poId" element={token ? <PayPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receive-purchase-order/:id" element={token ? <ReceivePurchaseOrder/> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />
         <Route path="/add-supply-items" element={token ? <AddSupplyItems /> : <Navigate to="/" />} />

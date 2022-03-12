@@ -39,7 +39,8 @@ function PayPurchaseOrder() {
     const [remarks, setRemarks] = useState("");
     const [discount, setDiscount] = useState(0);
     const [seniorPwdId, setID] = useState("");
-    const {id} = useParams();
+    const [receivePo, setReceivePo] = useState([]);
+    const {id, poId} = useParams();
 
     //check states
     const [checkNo, setCheckNo] = useState("");
@@ -88,7 +89,7 @@ function PayPurchaseOrder() {
         poItems.length = 0;
         axios({
             method: 'post',
-            url: window.$link + 'pos/show/' + id,
+            url: window.$link + 'pos/show/' + poId,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -120,16 +121,12 @@ function PayPurchaseOrder() {
             setDeliveryAddress(response.data.delivery_address);
             setRequisitioner(response.data.requisitioner);
             setForwarder(response.data.forwarder);
-            setGrandTotal(response.data.grand_total);
-            setDiscount(response.data.discount);
-            setSubTotal(response.data.subtotal)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
           });
-
-        axios({
+          axios({
             method: 'post',
-            url: window.$link + 'pos/getPoItems/' + id,
+            url: window.$link + 'po_receives/getPOReceiveItems/' + id,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -138,7 +135,7 @@ function PayPurchaseOrder() {
             },
           }).then(function (response) {
               console.log(response.data);
-              setUnfilteredPoItems(response.data);
+            
               response.data.map((data,index) => {
                 
                 if(data.status != "disapprove") {
@@ -148,11 +145,26 @@ function PayPurchaseOrder() {
                     itemData.qty = data.qty;
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
-                    itemData.discount = data.discount;
-                    
+                    itemData.total = data.amount;
                     setPoItems(oldArray => [...oldArray, itemData]);
                 }
               });
+          }).catch(function (error) {
+              console.log(error);
+          });
+
+          axios({
+            method: 'post',
+            url: window.$link + 'po_receives/show/' + id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+              console.log(response.data);
+              setReceivePo(response.data);
           }).catch(function (error) {
               console.log(error);
           })
@@ -188,14 +200,11 @@ function PayPurchaseOrder() {
             <div className="col-sm-1">
                 {data.unit}
             </div>
-            <div className="col-sm-1">
-                {data.amount}
+            <div className="col-sm-1 text-center">
+                {parseFloat(data.amount).toFixed(2)}
             </div>
-            <div className="col-sm-2">
-                {data.discount}
-            </div>      
-            <div className="col-sm-2">
-                {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
+            <div className="col-sm-1 text-right">
+                {parseFloat(data.total).toFixed(2)}
             </div>
         </div>
         )
@@ -213,7 +222,7 @@ function PayPurchaseOrder() {
                     params: {
                         token: userToken,
                         api_key: window.$api_key, 
-                        po_id: id,
+                        po_receive_id: id,
                         type: payment,
                         amount: pay,
                         senior_pwd_id: seniorPwdId, //not included, just empty
@@ -243,7 +252,7 @@ function PayPurchaseOrder() {
                     params: {
                         token: userToken,
                         api_key: userToken.replace(/['"]+/g, ''), 
-                        po_id: id,
+                        po_receive_id: id,
                         type: payment,
                         amount: pay,
                         check_no: checkNo,
@@ -275,7 +284,7 @@ function PayPurchaseOrder() {
                     params: {
                         token: userToken,
                         api_key: userToken.replace(/['"]+/g, ''), 
-                        po_id: id,
+                        po_receive_id: id,
                         type: payment,
                         amount: pay,
                         cardName: cardName,
@@ -309,7 +318,7 @@ function PayPurchaseOrder() {
                     params: {
                         token: userToken,
                         api_key: userToken.replace(/['"]+/g, ''), 
-                        po_id: id,
+                        po_receive_id: id,
                         type: payment,
                         amount: pay,
                         other_source: source,
@@ -372,7 +381,7 @@ function PayPurchaseOrder() {
                     </div>
                     <div className="row d-flex justify-content-end">
                         {/* {print == true && printButton()} */}
-                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                        <button className="save-btn" onClick={(e) => submit(e)}>PAY RECEIVE</button>
                     </div>                    
              </div>       
             )
@@ -417,7 +426,7 @@ function PayPurchaseOrder() {
             </div>
             <div className="row d-flex justify-content-end">
                 {/* {print == true && printButton()} */}
-                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                <button className="save-btn" onClick={(e) => submit(e)}>PAY RECEIVE</button>
             </div>
 
         </div>
@@ -463,7 +472,7 @@ function PayPurchaseOrder() {
             </div>
             <div className="row d-flex justify-content-end">
                 {/* {print == true && printButton()} */}
-                <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                <button className="save-btn" onClick={(e) => submit(e)}>PAY RECEIVE</button>
             </div>
         </div>
         )
@@ -511,14 +520,14 @@ function PayPurchaseOrder() {
                     </div>
                     <div className="row d-flex justify-content-end">
                         {/* {print == true && printButton()} */}
-                        <button className="save-btn" onClick={(e) => submit(e)}>SAVE BOOKING</button>
+                        <button className="save-btn" onClick={(e) => submit(e)}>PAY RECEIVE</button>
                     </div>
              </div>       
             )
         }
 
         if(redirect == true) {
-            var link = "/review-purchase-order/" + id;
+            var link = "/receives";
             return (
                 <Navigate to = {link}/>
             )
@@ -588,7 +597,7 @@ function PayPurchaseOrder() {
                     </div>
                 </div>
             </div>
-                <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
+                <h5 className="form-categories-subheader italic">LIST OF RECEIVED ITEMS</h5>
 
                 <div className="summary-services">
                     <div className="row">
@@ -602,10 +611,7 @@ function PayPurchaseOrder() {
                             UNIT
                         </div>
                         <div className="col-sm-1 service">
-                            AMOUNT
-                        </div>
-                        <div className="col-sm-2 service">
-                            ITEM DISCOUNT
+                            COST
                         </div>
                         <div className="col-sm-2 service">
                             TOTAL
@@ -616,28 +622,10 @@ function PayPurchaseOrder() {
 
                     <div className="row less-gap d-flex justify-content-end">
                         <div className="col-sm-2">
-                            <div className='label'>SUB TOTAL</div>
-                        </div>
-                        <div className="col-sm-2">
-                            <div className='detail'><b>{parseFloat(subTotal).toFixed(2)}</b></div>
-                        </div>
-                    </div>
-
-                    <div className="row less-gap d-flex justify-content-end">
-                        <div className="col-sm-2">
-                            <div className='label'>DISCOUNT</div>
-                        </div>
-                        <div className="col-sm-2">
-                            <div className='detail'><b>{parseFloat(discount).toFixed(2)}</b></div>
-                        </div>
-                    </div>
-
-                    <div className="row less-gap d-flex justify-content-end">
-                        <div className="col-sm-2">
                             <div className='label'>GRAND TOTAL</div>
                         </div>
                         <div className="col-sm-2">
-                            <div className='detail'><b>{parseFloat(grandTotal).toFixed(2)}</b></div>
+                            <div className='detail'><b>{receivePo.grand_total}</b></div>
                         </div>
                     </div>
 

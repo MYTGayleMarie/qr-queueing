@@ -63,7 +63,8 @@ Values
     color: #19A451;
 }
 
-.PENDING {
+.PENDING, .UNPAID {
+    font-weight: bold;
     color: #DAC92F;
 }
 
