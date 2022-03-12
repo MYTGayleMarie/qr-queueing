@@ -34,7 +34,9 @@ import { getAnnualWellnessPackageBasic,
          getCardiology,
          getMedicalCertificate,
          getUltrasound,
-         getPromo, } from '../../../../services/services';
+         getPromo, 
+         getOtherTests
+        } from '../../../../services/services';
 
 /*********************************
  * FUNCTIONS
@@ -76,6 +78,7 @@ const cardiology = getCardiology();
 const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 const promo = getPromo();
+const otherTests = getOtherTests();
 
 function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
     React.useEffect(() => {
@@ -402,6 +405,10 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
                 getDetails(promo, data[0]);
                 checkedServicesDetails.push(itemDetails);
             break;
+            case 23:
+                getDetails(otherTests, data[0]);
+                checkedServicesDetails.push(itemDetails);
+            break;
         }
 
     });
@@ -648,6 +655,13 @@ checkedServicesDetails.map((data, index) => {
                 <ServiceItems 
                 category="TEST PROMOS" 
                 items={promo} 
+                formData={service} 
+                setForm={setServices} 
+                />
+
+                <ServiceItems 
+                category="OTHER TESTS" 
+                items={otherTests} 
                 formData={service} 
                 setForm={setServices} 
                 />

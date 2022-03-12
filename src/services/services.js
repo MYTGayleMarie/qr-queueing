@@ -1184,6 +1184,17 @@ const Promo = [
   },
 ];
 
+const OtherTests = [
+  {
+    key: 'DrugTest_23',
+    name: 'Drug Test',
+    categoryId: '22',
+    labTestId: '129',
+    price: '300.00',
+    type: 'lab',
+  },
+];
+
 const allLabServices = ClincalMicroscopy.concat(
   Hematology,
   Electrocytes,
@@ -1203,7 +1214,8 @@ const allLabServices = ClincalMicroscopy.concat(
   Cardiology,
   MedicalCertificate,
   UltraSound,
-  Promo
+  Promo,
+  OtherTests
 );
 
 /*********************************
@@ -1361,4 +1373,9 @@ export const getUltrasound = () => {
 //Promo
 export const getPromo = () => {
   return Promo;
+};
+
+//Other Tests
+export const getOtherTests = () => {
+  return OtherTests;
 };
