@@ -42,6 +42,7 @@ import {
   getMedicalCertificate,
   getUltrasound,
   getPromo,
+  getOtherTests,
 } from '../../../../services/services';
 
 /*********************************
@@ -89,6 +90,7 @@ const cardiology = getCardiology();
 const medicalCertificate = getMedicalCertificate();
 const ultrasound = getUltrasound();
 const promo = getPromo();
+const otherTests = getOtherTests();
 
 /*********************************
  * RENDER VIEW
@@ -396,6 +398,10 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         getDetails(promo, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
+      case 23:
+          getDetails(otherTests, data[0]);
+          checkedServicesDetails.push(itemDetails);
+      break;
     }
   });
 
@@ -585,6 +591,13 @@ totalPrice += parseFloat(data.price);
               <ServiceItems 
                 category="TEST PROMOS" 
                 items={promo} 
+                formData={service} 
+                setForm={setServices} 
+                />
+
+              <ServiceItems 
+                category="OTHER TESTS" 
+                items={otherTests} 
                 formData={service} 
                 setForm={setServices} 
                 />
