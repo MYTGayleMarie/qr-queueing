@@ -42,6 +42,12 @@
     display: flex;
     float:right;
 }
+
+.po-print-payment-details-cont {
+    display: flex;
+    float:right;
+}
+
 .po-print-breakdown {
     display: inline-block !important;
     margin-right: 1%;

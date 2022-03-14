@@ -222,10 +222,10 @@ function ReceivesPrint() {
           }).then(function (response) {
               console.log(response.data);
               setReceivePo(response.data);
+              setGrandTotal(response.data[0].grand_total);
           }).catch(function (error) {
               console.log(error);
-          })
-
+          });
     },[]);
 
     //Functions
@@ -451,30 +451,10 @@ function ReceivesPrint() {
             </div>
             <div className="row ">
                 <div className="col-sm-2">
-                        <div className='label'>DELIVERY ADDRESS</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{deliveryAddress}</div>
-                </div>
-                <div className="col-sm-2">
                         <div className='label'>DELIVERY DATE</div>
                 </div>
                 <div className="col-sm-2">
                         <div className='detail'>{deliveryDate}</div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-2">
-                        <div className='label'>REQUISITIONER</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{requisitioner}</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='label'>FORWARDER</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{forwarder}</div>
                 </div>
             </div>
             <div className="row">
@@ -517,7 +497,7 @@ function ReceivesPrint() {
                             <div className='label'>GRAND TOTAL</div>
                         </div>
                         <div className="col-sm-2">
-                            <div className='detail'><b>{receivePo.grand_total}</b></div>
+                            <div className='detail'><b>{grandTotal}</b></div>
                         </div>
                     </div>
 

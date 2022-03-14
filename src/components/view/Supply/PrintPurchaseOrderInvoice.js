@@ -62,11 +62,6 @@ export class PrintPurchaseOrderInvoice extends React.PureComponent {
                                 <td><span className="header-po">Delivery Date</span><span className="detail-po"> {deliveryDateformat.toDateString()}</span> </td>
                             </tr>
                             <tr>
-                                <td><span className="header-po">Requisitioner</span><span className="detail-po"> {this.props.requisitioner}</span></td>
-                                <td><span className="header-po">Forwarder</span><span className="detail-po"> {this.props.forwarder}</span></td>
-                                <td><span className="header-po">Delivery Address</span><span className="detail-po"> {this.props.deliveryAddress}</span> </td>
-                            </tr>
-                            <tr>
                                 <td><span className="header-po">Remarks</span><span className="detail-po">{this.props.remarks}</span></td>
                             </tr>
                         </table>
@@ -87,13 +82,25 @@ export class PrintPurchaseOrderInvoice extends React.PureComponent {
                     </div>
         
                     <div className='po-print-breakdown-cont'>
-                        <span className='print-label po-print-breakdown'><b> GRANDTOTAL </b></span><span> {this.props.receivePo.grand_total}</span>
+                        <span className='print-label po-print-breakdown'><b> GRANDTOTAL </b></span><span> {this.props.grandTotal}</span>
                     </div>
 
                     <br/>
 
                     <div className='po-print-payment-cont'>
-                        <span className='print-label po-print-payment-type'><b> PAID AMOUNT </b></span><span> {this.props.receivePo.paid_amount}</span>
+                        <span className='print-label po-print-payment-type'><b> PAYMENT DETAILS</b></span>
+                    </div>
+
+                    <br/>
+
+                    <div className='po-print-payment-details-cont'>
+                        {
+                            this.props.receivePo.map((data) => {
+                           
+                                return <span>{data.details}</span>
+                       
+                            })
+                        }
                     </div>
 
                     <br/>
