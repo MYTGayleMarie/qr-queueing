@@ -231,7 +231,8 @@ if(redirect == true) {
                     <h3 className="form-categories-header italic">DISCOUNT DETAILS</h3>
                     <div className="form-wrapper">
                     <form>
-                    <div className="row">
+                    
+                    {/* <div className="row">
                         <label for="discount_code" className="form-label">APPLY TO ALL:  </label>
                         <div className="col-sm-1">
                             <input type="radio" value="yes" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/><label className="radio-label">Yes</label>
@@ -239,8 +240,8 @@ if(redirect == true) {
                         <div className="col-sm-1">
                             <input type="radio" value="no" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/><label className="radio-label">No</label>
                         </div>
-                    </div>
-                    {applyToall == "no" && (
+                    </div> */}
+                    {/* {applyToall == "no" && (
                     <div className="row">
                         <div className="col-sm-11">
                         <label for="discount_code" className="form-label">APPLY DISCOUNT TO LAB SERVICE/S: </label><br />
@@ -265,7 +266,7 @@ if(redirect == true) {
                         />
                         </div>
                     </div>
-                    )}
+                    )} */}
                     <div className="row">
                         <div className="col-sm-6">
                             <label for="discount_code" className="form-label">DISCOUNT CODE<i> (required)</i></label><br />
