@@ -414,7 +414,7 @@ function ReceivesPrint() {
                     deletePO={deletePO}
                     payReceive={payReceive}
                     completedOn={completedOn}
-                    statusPaymentPO={receivePo.paid_amount == receivePo.grand_total ? "paid" : "unpaid"}
+                    statusPaymentPO={receivePo[0].paid_amount == receivePo[0].grand_total ? "paid" : "unpaid"}
                 />
                 <ToastContainer/>
 
@@ -422,47 +422,35 @@ function ReceivesPrint() {
             
             <div className="po-details">
             <div className="row">
-                <div className="col-sm-3">
-                        <div className='label'>RECEIVE INVOICE ID</div>
+                <div className="col-sm-4">
+                        <span className='label'>RECEIVE INVOICE ID</span>
+                        <span className='detail'>{id}</span>
                 </div>
                 <div className="col-sm-2">
-                        <div className='detail'>{id}</div>
-                </div>
-                <div className="col-sm-1">
-                        <div className='label'>PO ID</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{poId}</div>
+                        <span className='label'>PO ID</span>
+                        <span className='detail'>{poId}</span>
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-2">
-                        <div className='label'>SUPPLIER</div>
+                <div className="col-sm-4">
+                        <span className='label'>SUPPLIER</span>
+                        <span className='detail'>{supplier}</span>
                 </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{supplier}</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='label'>PURCHASE DATE</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{purchaseDate}</div>
+                <div className="col-sm-3">
+                        <span className='label'>PURCHASE DATE</span>
+                        <span className='detail'>{purchaseDate}</span>
                 </div>
             </div>
             <div className="row ">
-                <div className="col-sm-2">
-                        <div className='label'>DELIVERY DATE</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{deliveryDate}</div>
+                <div className="col-sm-6">
+                        <span className='label'>DELIVERY DATE</span>
+                        <span className='detail'>{deliveryDate}</span>
                 </div>
             </div>
             <div className="row">
                 <div className="col-sm-2">
-                        <div className='label'>REMARKS</div>
-                </div>
-                <div className="col-sm-10">
-                        <div className='detail'>{remarks}</div>
+                        <span className='label'>REMARKS</span>
+                        <span className='detail'>{remarks}</span>
                 </div>
             </div>
 
@@ -493,11 +481,9 @@ function ReceivesPrint() {
                     {listItems}
 
                     <div className="row less-gap d-flex justify-content-end">
-                        <div className="col-sm-2">
-                            <div className='label'>GRAND TOTAL</div>
-                        </div>
-                        <div className="col-sm-2">
-                            <div className='detail'><b>{grandTotal}</b></div>
+                        <div className="col-sm-4">
+                            <span className='label'>GRAND TOTAL</span>
+                            <span className='detail'><b>{grandTotal}</b></span>
                         </div>
                     </div>
 
