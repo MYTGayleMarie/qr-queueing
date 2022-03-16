@@ -132,7 +132,7 @@ function ReviewPurchaseOrder() {
             setRequisitioner(response.data.requisitioner);
             setForwarder(response.data.forwarder);
             setGrandTotal(response.data.grand_total);
-            setDiscount(response.data.discount);
+            setDiscount(response.data.general_discount);
             setSubTotal(response.data.subtotal)
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
@@ -470,17 +470,13 @@ function ReviewPurchaseOrder() {
             
             <div className="po-details">
             <div className="row">
-                <div className="col-sm-1">
-                        <div className='label'>SUPPLIER</div>
+                <div className="col-sm-4">
+                        <span className='label'>SUPPLIER</span>
+                        <span className='detail'>{supplier}</span>
                 </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{supplier}</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='label'>PURCHASE DATE</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{purchaseDate}</div>
+                <div className="col-sm-6">
+                        <span className='label'>PURCHASE DATE</span>
+                        <span className='detail'>{purchaseDate}</span>
                 </div>
             </div>
             <div className="row ">
@@ -490,11 +486,9 @@ function ReviewPurchaseOrder() {
                 <div className="col-sm-2">
                         <div className='detail'>{deliveryAddress}</div>
                 </div>
-                <div className="col-sm-2">
-                        <div className='label'>DELIVERY DATE</div>
-                </div>
-                <div className="col-sm-2">
-                        <div className='detail'>{deliveryDate}</div>
+                <div className="col-sm-5">
+                        <span className='label'>DELIVERY DATE</span>
+                        <span className='detail'>{deliveryDate}</span>
                 </div>
             </div>
             <div className="row">
