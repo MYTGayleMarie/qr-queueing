@@ -46,6 +46,7 @@ function ReceivesPrint() {
       const [completedOn, setCompletedOn] = useState("");
       const [paidAmount, setPaidAmount] = useState("");
       const [receivePo, setReceivePo] = useState([]);
+      const [isPaid, setIsPaid] = useState([]);
 
       //Edit PO details
       const [editSupplier, setEditSupplier] = useState("");
@@ -222,6 +223,7 @@ function ReceivesPrint() {
           }).then(function (response) {
               console.log(response.data);
               setReceivePo(response.data);
+              setIsPaid(response.data[0].paid_amount == response.data[0].grand_total ? "paid" : "unpaid")
               setGrandTotal(response.data[0].grand_total);
           }).catch(function (error) {
               console.log(error);
@@ -414,7 +416,7 @@ function ReceivesPrint() {
                     deletePO={deletePO}
                     payReceive={payReceive}
                     completedOn={completedOn}
-                    statusPaymentPO={receivePo[0].paid_amount == receivePo[0].grand_total ? "paid" : "unpaid"}
+                    statusPaymentPO={isPaid}
                 />
                 <ToastContainer/>
 
