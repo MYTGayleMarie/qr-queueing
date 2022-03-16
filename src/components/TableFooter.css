@@ -53,6 +53,10 @@
     min-width: 14%;
   }
 
+  .disable {
+    background-color: rgb(190, 190, 190);
+  }
+
   @media only screen and (max-width: 1000px){ 
 
     .register-mobile, .user-mobile {

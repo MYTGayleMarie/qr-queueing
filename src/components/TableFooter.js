@@ -77,7 +77,7 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
      <button className="button navigateButton" onClick={() => start()}>
         <FontAwesomeIcon icon={"angle-double-left"} title={"Start"} alt={"Start"} aria-hidden="true" className="prev-icon"/>
       </button>
-      <button className="button navigateButton" onClick={() => prev()}>
+      <button className={range.length <= 5 ? "disable button navigateButton" : "button navigateButton"} onClick={() => prev()}>
         <FontAwesomeIcon icon={"angle-left"} title={"Previous"} alt={"previous"} aria-hidden="true" className="prev-icon"/>
       </button>
       {range.slice(startIndex, endIndex).map((el, index) => (
@@ -91,7 +91,7 @@ const TableFooter = ({ range, setPage, page, slice, footerClass, setRowsPerPage,
           {el}
         </button>
       ))}
-       <button className="button navigateButton" onClick={() => next()}>
+       <button className={range.length <= 5 ? "disable button navigateButton" : "button navigateButton"}  onClick={() => next()}>
         <FontAwesomeIcon icon={"angle-right"} alt={"next"} title={"Next"} aria-hidden="true" className="next-icon"/>
        </button>
        <button className="button navigateButton" onClick={() => end()}>
