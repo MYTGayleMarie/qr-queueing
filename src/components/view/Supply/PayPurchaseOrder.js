@@ -165,6 +165,7 @@ function PayPurchaseOrder() {
           }).then(function (response) {
               console.log(response.data);
               setReceivePo(response.data);
+              setGrandTotal(response.data[0].grand_total);
           }).catch(function (error) {
               console.log(error);
           })
@@ -625,7 +626,7 @@ function PayPurchaseOrder() {
                             <div className='label'>GRAND TOTAL</div>
                         </div>
                         <div className="col-sm-2">
-                            <div className='detail'><b>{receivePo.grand_total}</b></div>
+                            <div className='detail'><b>{parseFloat(grandTotal).toFixed(2)}</b></div>
                         </div>
                     </div>
 
