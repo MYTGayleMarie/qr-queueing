@@ -222,6 +222,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         <option value="approved">APPROVED</option>
                         <option value="completed">COMPLETED</option>
                         <option value="disapproved">DISAPPROVED</option>
+                        <option value="printed">PRINTED</option>
                         <option value="">ALL</option>
                     </select>
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
