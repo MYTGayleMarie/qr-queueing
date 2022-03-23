@@ -20,9 +20,6 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
     render() {
-
-        console.log(this.props.queue);
-        console.log(this.props);
         const bookDate = new Date(this.props.bookingDate);
         const birthDate = new Date(this.props.birthdate);
         const encodedDate = new Date(this.props.encodedOn);
@@ -48,7 +45,7 @@ export class PaymentToPrint extends React.PureComponent {
             });
         
             return  <tr>
-                        {category_name == "XRAY" &&
+                        {category_name == "XRAY" && 
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
@@ -95,7 +92,7 @@ export class PaymentToPrint extends React.PureComponent {
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
-                        {category_name == "ELECTROLYTES (NAKCL, ICA)" &&
+                        {category_name == "ELECTROLYTES" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
@@ -109,6 +106,12 @@ export class PaymentToPrint extends React.PureComponent {
                           </>
                         }
                         {category_name == "GLUCOSE TEST" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "LIVER FUNCTIONS TEST" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
@@ -149,13 +152,19 @@ export class PaymentToPrint extends React.PureComponent {
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
-                        {category_name == "THYROID FLOW" &&
+                         {category_name == "THYROID PROFILE" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "TUMOR MARKERS" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                         {category_name == "HEPATITIS PROFILE SCREENING" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
@@ -227,6 +236,7 @@ export class PaymentToPrint extends React.PureComponent {
         <div className="print-area">
             <div className="print-row">
             <div className="print-column">
+                
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
                         <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
