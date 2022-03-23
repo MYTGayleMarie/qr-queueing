@@ -1,51 +1,54 @@
 .card-container {
-    border: solid 1px #000000;
-    margin: 10%;
-    width:80%;
+  border: solid 1px #000000;
+  margin: 10%;
+  width: 80%;
+}
+
+.hide {
+  display: none;
 }
 
 .card-head {
-    height: 25px;
+  height: 25px;
 }
 
 .card-head-title {
-    margin-left: 3%;
-    color: #ffff;
+  margin-left: 3%;
+  color: #ffff;
 }
 
 a {
-    color:#000000 !important;
-    text-decoration: none;
+  color: #000000 !important;
+  text-decoration: none;
 }
-
 
 /**Card Header Color Options**/
 
 .maroon {
-    background-color: #55073A;
+  background-color: #55073a;
 }
 
 .blue {
-    background-color: #419EA3;;
+  background-color: #419ea3;
 }
 
 .report-card {
-    margin-top: 20px;
-    width: 30px;
-    height: 35px;
+  margin-top: 20px;
+  width: 30px;
+  height: 35px;
 }
 
 .card-data {
-    font-family: 'Lato-Bold';
-    font-size: 30px;
-    padding-right: 5%;
+  font-family: "Lato-Bold";
+  font-size: 30px;
+  padding-right: 5%;
 }
 
 .card-title {
-    color: #A59F9F;
-    font-family: 'Lato-Regular';
-    font-weight: bolder;
-    font-size: 12px;
-    padding-right: 5%;
-    margin-top: -5%;
+  color: #a59f9f;
+  font-family: "Lato-Regular";
+  font-weight: bolder;
+  font-size: 12px;
+  padding-right: 5%;
+  margin-top: -5%;
 }
