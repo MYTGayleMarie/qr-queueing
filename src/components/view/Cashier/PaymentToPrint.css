@@ -48,6 +48,11 @@
     border: 2px solid black;
 }
 
+.print-column-blank {
+    flex: 50%;
+    padding: 3%;
+}
+
 .to-right {
     margin-left: 3%;
 }
