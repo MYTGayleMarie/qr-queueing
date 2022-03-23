@@ -102,7 +102,7 @@ function ReportTransaction() {
                   })
     
                   bookingDetails.tests = tests;
-                  bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
 
               });
@@ -135,7 +135,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'BOOKING DATE', 'NAME', 'SERVICE TYPE', 'TESTS', 'AMOUNT']}
+            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS']}
             status={printReadyFinal}
              />
           <Table
@@ -143,7 +143,7 @@ function ReportTransaction() {
             type={'no-action'}
             tableData={patientData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'BOOKING DATE', 'NAME', 'SERVICE TYPE', 'TESTS', 'AMOUNT']}
+            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
