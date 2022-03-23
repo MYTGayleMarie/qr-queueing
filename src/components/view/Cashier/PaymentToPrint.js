@@ -33,8 +33,7 @@ export class PaymentToPrint extends React.PureComponent {
 
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
 
-        const services = Object.keys(groupedServices).map(function(key) {
-
+        const services_XRAY = Object.keys(groupedServices).map(function(key) {
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
 
@@ -46,12 +45,154 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }
             });
-
-            return <tr>
-                        <td><span className="data">{category_name}</span></td>
-                        <td><span className="data">{category_services}</span></td>
-                  </tr>
+        
+            return  <tr>
+                        {category_name == "XRAY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                         {category_name == "CARDIOLOGY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                         {category_name == "RADIOLOGY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                    </tr>
         });
+
+        const services_Hematology = Object.keys(groupedServices).map(function(key) {
+            var category_name = key.replace(/_/g, " ").toUpperCase();
+            var category_services = "";
+
+            groupedServices[key].map((info, index) => {
+                if(groupedServices[key].length - 1 == index) {
+                    category_services += info.name; 
+                }
+                else {
+                    category_services += info.name + ", ";
+                }
+            });
+        
+            return  <tr>
+                        {category_name == "HEMATOLOGY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "CHEMISTRY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "ELECTROLYTES (NAKCL, ICA)" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        
+                        {category_name == "LIPID PROFILE" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "GLUCOSE TEST" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "KIDNEY FUNCTION TESTS" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                    </tr>
+        });
+
+        const services_Serology = Object.keys(groupedServices).map(function(key) {
+            var category_name = key.replace(/_/g, " ").toUpperCase();
+            var category_services = "";
+
+            groupedServices[key].map((info, index) => {
+                if(groupedServices[key].length - 1 == index) {
+                    category_services += info.name; 
+                }
+                else {
+                    category_services += info.name + ", ";
+                }
+            });
+        
+            return  <tr>
+                        {category_name == "SEROLOGY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "CLINICAL MICROSCOPY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "IMMUNOLOGY" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "THYROID FLOW" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                         {category_name == "TUMOR MARKERS" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                    </tr>
+        });
+
+        const services_Others = Object.keys(groupedServices).map(function(key) {
+            var category_name = key.replace(/_/g, " ").toUpperCase();
+            var category_services = "";
+
+            groupedServices[key].map((info, index) => {
+                if(groupedServices[key].length - 1 == index) {
+                    category_services += info.name; 
+                }
+                else {
+                    category_services += info.name + ", ";
+                }
+            });
+        
+            return  <tr>
+                        {category_name == "OTHER TESTS" &&
+                          <>
+                             <td><span className="data">{category_name}</span></td>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                    </tr>
+        });
+
+      
 
         const marginTop="10px"
         const marginRight="10px"
@@ -70,6 +211,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
                         <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right-test request-header-test">XRAY-ECG</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -105,7 +247,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
                             </tr>
-                            {services}
+                            {services_XRAY}
                         </table>
                     </div>
 
@@ -129,6 +271,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
                         <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className = "to-right-test request-header-test"> HEMA-CHEM </span>
                     </div>
                     <div className='row'>
                     <table>
@@ -164,7 +307,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
                             </tr>
-                            {services}
+                            {services_Hematology}
                         </table>
                     </div>
 
@@ -191,6 +334,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
                         <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right-test request-header-test">SERO-CLINIC</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -226,7 +370,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
                             </tr>
-                            {services}
+                            {services_Serology}
                         </table>
                     </div>
 
@@ -250,6 +394,7 @@ export class PaymentToPrint extends React.PureComponent {
                     <div class="d-flex justify-content-left">
                         <img src={logo} alt={'logo'} class="payment-logo"></img>
                         <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
+                        <span className="to-right-test request-header-test">OTHERS</span>
                     </div>
                     <div className='row'>
                     <table>
@@ -285,7 +430,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <th><span className="header">Section Head</span></th>
                                 <th><span className="header">Services</span></th>
                             </tr>
-                            {services}
+                            {services_Others}
                         </table>
                     </div>
 

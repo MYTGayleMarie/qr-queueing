@@ -52,6 +52,12 @@
     margin-left: 3%;
 }
 
+.to-right-test {
+    font-weight: bold;
+    margin-left: 3%;
+    font-size: 30px !important;
+}
+
 .payment-row {
     display: flex;
 }
@@ -123,6 +129,11 @@
 .request-header {
     font-size: 10px !important;
     margin-top: 2%;
+}
+
+.request-header-test {
+    font-size: 15px !important;
+    margin-top: 0.5%;
 }
 
 .print-data-dob {
