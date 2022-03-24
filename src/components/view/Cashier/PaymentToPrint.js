@@ -175,65 +175,49 @@ export class PaymentToPrint extends React.PureComponent {
 
         const services_Clinical_Urinalysis = Object.keys(groupedServices).map(function(key) {
            
-            var category_name = key.replace(/_/g, " ").toUpperCase();
+            var category_name = "";
             var category_services = "";
 
+
             groupedServices[key].map((info, index) => {
-                if(groupedServices[key].length - 1 == index) {
-                    category_services += info.name; 
-                }
-                else {
+                console.log(groupedServices[key]);
+                if(info.category === "CLINICAL MICROSCOPY"){
+                    category_name = key.replace(/_/g, " ").toUpperCase();
+                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"){
                     category_services += info.name + ", ";
                 }
+            }
             });
+
+            category_services = category_services.slice(0, -2);
+
             return  <tr>
-                        {(category_services.split(",")).includes("Urinalysis") &&
-                          <>
                              <td><span className="data">{category_name}</span></td>
-                             <td><span className="data">Urinalysis</span></td>
-                          </>
-                        }
-                        {(category_services.split(",")).includes("Urine Ketone") &&
-                          <>
-                             <td><span className="data">{category_name}</span></td>
-                             <td><span className="data">Urine Ketone</span></td>
-                          </>
-                        }
-                        {(category_services.split(",")).includes("Urine RBC Morphology") &&
-                          <>
-                             <td><span className="data">{category_name}</span></td>
-                             <td><span className="data">Urine RBC Morphology</span></td>
-                          </>
-                        }
+                             <td><span className="data">{category_services}</span></td>
                     </tr>
         });
 
         const services_Clinical_Fecalysis = Object.keys(groupedServices).map(function(key) {
-            var category_name = key.replace(/_/g, " ").toUpperCase();
+            var category_name = "";
             var category_services = "";
 
+
             groupedServices[key].map((info, index) => {
-                if(groupedServices[key].length - 1 == index) {
-                    category_services += info.name; 
-                }
-                else {
+                console.log(groupedServices[key]);
+                if(info.category === "CLINICAL MICROSCOPY"){
+                    category_name = key.replace(/_/g, " ").toUpperCase();
+                   if(info.name == "Fecalysis" || info.name == "Feccalt Occult Build"){
                     category_services += info.name + ", ";
-                }
+                }}
             });
+
+            category_services = category_services.slice(0, -2);
         
             return  <tr>
-                        {(category_services.split(",")).includes("Fecalysis") &&
                           <>
                              <td><span className="data">{category_name}</span></td>
-                             <td><span className="data">Fecalysis</span></td>
+                             <td><span className="data">{category_services}</span></td>
                           </>
-                        }
-                        {(category_services.split(",")).includes("Feccalt Occult Build") &&
-                          <>
-                             <td><span className="data">{category_name}</span></td>
-                             <td><span className="data">Feccalt Occult Build</span></td>
-                          </>
-                        }
                     </tr>
         });
 
