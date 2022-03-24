@@ -389,6 +389,23 @@ export class PaymentToPrint extends React.PureComponent {
             }
         ];
 
+        var finalTickets = [];
+        var printTickets = [];
+        
+        //Filter array to non-empty services
+        tickets.map((data) => {
+            if(data.services !== "" && data.services.join("").length !== 0) {
+                finalTickets.push(data);
+            }
+        });
+
+        //Split tickets into 2 
+        const chunkSize = 2;
+        for (let i = 0; i < finalTickets.length; i += chunkSize) {
+            const chunk = finalTickets.slice(i, i + chunkSize);
+            printTickets.push(chunk);
+        }
+
         const marginTop="10px"
         const marginRight="10px"
         const marginBottom="10px"
@@ -402,26 +419,31 @@ export class PaymentToPrint extends React.PureComponent {
         <style>{getPageMargins()}</style>
         <div className="print-area">
 
-            {tickets.map((data) => {
-                if(data.services !== "" && data.services.join("").length !== 0) {
-                    return (
-                        
-                        generateTickets(
-                        this.props.queue,
-                        this.props.patientId,
-                        this.props.name,
-                        this.props.age,
-                        this.props.gender,
-                        this.props.contact,
-                        this.props.email,
-                        this.props.address,
-                        this.props.referral,
-                        this.props.isCompany,
-                        this.props.payment,
-                        this.props.result,
-                        data.name, 
-                        data.services))
-                    }
+            {
+                printTickets.map((data) => {
+                  return (
+                      <div className="print-row">
+                          {data.map((ticket) => {
+                               return (
+                                generateTickets(
+                                this.props.queue,
+                                this.props.patientId,
+                                this.props.name,
+                                this.props.age,
+                                this.props.gender,
+                                this.props.contact,
+                                this.props.email,
+                                this.props.address,
+                                this.props.referral,
+                                this.props.isCompany,
+                                this.props.payment,
+                                this.props.result,
+                                ticket.name, 
+                                ticket.services))
+                          })}
+                      </div>
+                  )
+                
                 })
             }
 
