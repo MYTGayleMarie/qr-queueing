@@ -43,6 +43,12 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }
             });
+
+            if(category_name !== "XRAY" &&
+               category_name !== "CARDIOLOGY" &&
+               category_name !== "RADIOLOGY" ) {
+                return ""
+            }
         
             return  <tr>
                         {category_name == "XRAY" && 
@@ -78,6 +84,10 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }
             });
+
+            if(category_name !== "HEMATOLOGY") {
+                return ""
+            }
         
             return  <tr>
                         {category_name == "HEMATOLOGY" &&
@@ -101,6 +111,20 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }
             });
+
+            if(category_name !== "SEROLOGY" &&
+               category_name !== "IMMUNOLOGY" &&
+               category_name !== "THYROID PROFILE" &&
+               category_name !== "TUMOR MARKERS" &&
+               category_name !== "HEPATITIS PROFILE SCREENING" && 
+               category_name !== "CHEMISTRY" && 
+               category_name !== "ELECTROLYTES" &&
+               category_name !== "LIPID PROFILE" && 
+               category_name !== "GLUCOSE TEST" &&
+               category_name !== "LIVER FUNCTIONS TEST" &&
+               category_name !== "KIDNEY FUNCTION TEST") {
+                return ""
+            }
         
             return  <tr>
                         {category_name == "SEROLOGY" &&
@@ -189,6 +213,10 @@ export class PaymentToPrint extends React.PureComponent {
             }
             });
 
+            if(category_services === "") {
+                return ""
+            }
+
             category_services = category_services.slice(0, -2);
 
             return  <tr>
@@ -210,6 +238,10 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }}
             });
+
+            if(category_services === "") {
+                return ""
+            }
 
             category_services = category_services.slice(0, -2);
         
@@ -234,6 +266,10 @@ export class PaymentToPrint extends React.PureComponent {
                     category_services += info.name + ", ";
                 }
             });
+
+            if(category_name !== "OTHER TESTS") {
+                return ""
+            }
         
             return  <tr>
                         {category_name == "OTHER TESTS" &&
@@ -245,9 +281,113 @@ export class PaymentToPrint extends React.PureComponent {
                     </tr>
         });
 
-        
+        function generateTickets(
+            queue,
+            patientId,
+            name,
+            age,
+            gender,
+            contact,
+            email,
+            address,
+            referral,
+            isCompany,
+            payment,
+            result,
+            serviceName, 
+            services) {
 
-      
+
+            return (
+                <div className="print-column"> 
+                        <div class="d-flex justify-content-left">
+                            <img src={logo} alt={'logo'} class="payment-logo"></img>
+                            <span className="to-right request-header">#{queue} Request Form - Paitient ID:{patientId}</span>
+                            <span className="to-right-test request-header-test">{serviceName}</span>
+                        </div>
+                        <div className='row'>
+                        <table>
+                            <tr>
+                                <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
+                                <td><span className="header">Name: </span><span className="detail-print">{name}</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                                <td><span className="header">Age: </span><span className="detail-print">{age}</span></td>
+                                <td><span className="header">Gender:</span><span className="detail-print detail-gender">{gender == "female" ? "F" : "M"}</span></td>
+                                <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{contact}</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span className="header">Email: </span><span className="detail-print">{email == null ? "NONE" : email} </span></td>
+                                <td><span className="header">Address: </span><span className="detail-print">{address}</span></td>
+                            </tr >
+                            <tr>
+                                <td><span className="header">Physician: </span><span className="detail-print">{referral == null ? "NONE" : referral} </span></td>
+                            </tr>
+                        </table>
+                        </div>
+    
+                        <div className="line"></div>  
+    
+                        <div className='row'>
+                            <table className="services-table">
+                                <tr>
+                                    <th><span className="header">Section Head</span></th>
+                                    <th><span className="header">Services</span></th>
+                                </tr>
+                                {services}
+                            </table>
+                        </div>
+    
+                        <table className='footer'>
+                            <tr className='row'>
+                                <td>
+                                    <span className='footer-header'><b>Payment:</b></span>
+                                    <span className='data'>{isCompany == true ? " CORPORATE ACCOUNT" : payment}</span>
+                                </td>
+                                <td>
+                                    <span className='footer-header'><b>Result:</b></span>
+                                    <span className='data'> {result.toUpperCase()}</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <div className='row'>
+                                <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                        </div>
+                </div>
+            )
+        }
+
+        const tickets = [
+            {
+                name: 'XRAY-ECG',
+                services: services_XRAY
+            },
+            {
+                name: 'OTHER TESTS',
+                services: services_Others
+            },
+            {
+                name: 'HEMO-BTY',
+                services: services_Hematology
+            },
+            {
+                name: 'CHEM-SERO',
+                services: services_Serology
+            },
+            {
+                name: 'CLINC',
+                services: services_Clinical_Urinalysis
+            },
+            {
+                name: 'CLINIC',
+                services: services_Clinical_Fecalysis
+            }
+        ];
 
         const marginTop="10px"
         const marginRight="10px"
@@ -261,374 +401,30 @@ export class PaymentToPrint extends React.PureComponent {
         <div>
         <style>{getPageMargins()}</style>
         <div className="print-area">
-            <div className="print-row">
-            <div className="print-column">
-                
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className="to-right-test request-header-test">XRAY-ECG</span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
 
-                    <div className="line"></div>  
+            {tickets.map((data) => {
+                if(data.services !== "" && data.services.join("").length !== 0) {
+                    return (
+                        
+                        generateTickets(
+                        this.props.queue,
+                        this.props.patientId,
+                        this.props.name,
+                        this.props.age,
+                        this.props.gender,
+                        this.props.contact,
+                        this.props.email,
+                        this.props.address,
+                        this.props.referral,
+                        this.props.isCompany,
+                        this.props.payment,
+                        this.props.result,
+                        data.name, 
+                        data.services))
+                    }
+                })
+            }
 
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_XRAY}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-                <div className="print-column">
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className = "to-right-test request-header-test"> OTHERS </span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
-
-                    <div className="line"></div>  
-
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_Others}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="print-row">
-            <div className="print-column">
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className="to-right-test request-header-test">HEMO-BTY</span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
-
-                    <div className="line"></div>  
-
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_Hematology}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-                <div className="print-column">
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className="to-right-test request-header-test">CHEM-SERO</span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
-
-                    <div className="line"></div>  
-
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_Serology}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="print-row">
-                <div className="print-column">
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className="to-right-test request-header-test">CLINIC</span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
-
-                    <div className="line"></div>  
-
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_Clinical_Urinalysis}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-                <div className="print-column">
-                    <div class="d-flex justify-content-left">
-                        <img src={logo} alt={'logo'} class="payment-logo"></img>
-                        <span className="to-right request-header">#{this.props.queue} Request Form - Paitient ID:{this.props.patientId}</span>
-                        <span className="to-right-test request-header-test">CLINIC</span>
-                    </div>
-                    <div className='row'>
-                    <table>
-                        <tr>
-                            <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                            <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                            <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
-                            <td><span className="header">Gender:</span><span className="detail-print detail-gender">{this.props.gender == "female" ? "F" : "M"}</span></td>
-                            <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                            <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
-                        </tr >
-                        <tr>
-                            <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                        </tr>
-                    </table>
-                    </div>
-
-                    <div className="line"></div>  
-
-                    <div className='row'>
-                        <table className="services-table">
-                            <tr>
-                                <th><span className="header">Section Head</span></th>
-                                <th><span className="header">Services</span></th>
-                            </tr>
-                            {services_Clinical_Fecalysis}
-                        </table>
-                    </div>
-
-                    <table className='footer'>
-                        <tr className='row'>
-                            <td>
-                                <span className='footer-header'><b>Payment:</b></span>
-                                <span className='data'>{this.props.isCompany == true ? " CORPORATE ACCOUNT" : this.props.payment}</span>
-                            </td>
-                            <td>
-                                <span className='footer-header'><b>Result:</b></span>
-                                <span className='data'> {this.props.result.toUpperCase()}</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div className='row'>
-                            <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     
