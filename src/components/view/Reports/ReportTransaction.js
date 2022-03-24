@@ -80,7 +80,7 @@ function ReportTransaction() {
                   bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
                   bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
                   bookingDetails.type = booking.type;
-    
+                  
                   //tests
                   var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
                   var finalArray = details.data.data.booking_details;
@@ -102,8 +102,15 @@ function ReportTransaction() {
                   })
     
                   bookingDetails.tests = tests;
+                  if(booking.result=="print with pickup"){
+                    bookingDetails.results = booking.result;
+                  } else {
+                    bookingDetails.results = booking.result + "\n" + customer.data.email;
+                  }
+                  
                   // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
+                  
 
               });
             })
@@ -121,6 +128,8 @@ function ReportTransaction() {
       });
   }, [render]);
 
+
+
   function filter() {}
 
   return (
@@ -135,7 +144,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS']}
+            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'MODE OF PICKUP']}
             status={printReadyFinal}
              />
           <Table
@@ -143,7 +152,7 @@ function ReportTransaction() {
             type={'no-action'}
             tableData={patientData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS']}
+            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','MODE OF PICKUP']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

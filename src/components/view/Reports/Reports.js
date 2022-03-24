@@ -53,7 +53,6 @@ function Reports() {
     const [role, setRole] = useState('');
     React.useEffect(() => {
       setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
-      console.log(role)
     }, []);
 
     //ALL BOOKINGS
