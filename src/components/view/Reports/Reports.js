@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { getToken, getUser, getRoleId } from '../../../utilities/Common';
 
 //css
 import './Reports.css';
@@ -48,6 +48,13 @@ function Reports() {
     const [credit, setCredit] = useState(0);
 
     const [discounts, setDiscounts] = useState([]);
+
+    //Role 
+    const [role, setRole] = useState('');
+    React.useEffect(() => {
+      setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
+      console.log(role)
+    }, []);
 
     //ALL BOOKINGS
     React.useEffect(() => {
@@ -294,34 +301,34 @@ function Reports() {
                     />
                 </div>
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         services={services.length}
                         packages={packages.length}
                         link={"/reports-services-packages"}
                         title='Services Today'
                         color='maroon'
-                    />
+                    />}
                 </div>
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={homeServices.length}
                         todayData={todayHomeServices.length}
                         link={"/reports-home-services"}
                         title='Home Services'
                         color='maroon'
-                    />
+                    />}
                 </div>
             </div>
             <div className="row">
               <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={"P " + totalSales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         todayData={""}
                         link={"/reports-sales"}
                         title="Today's Total Sales"
                         color='blue'
                         disable={"today"}
-                    />
+                    />}
                 </div>
                 {/* <div className="col-sm-4">
                     <Card 
@@ -332,46 +339,46 @@ function Reports() {
                     />
                 </div> */}
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={pendingPOs.length}
                         todayData={""}
                         link={"/reports-pending-po"}
                         title='POs pending for approval'
                         color='blue'
                         disable={"today"}
-                    />
+                    />}
                 </div>
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={unpaidInvoices.length}
                         todayData={""}
                         link={"/unpaid-invoices"}
                         title='Unpaid Invoices'
                         color='blue'
                         disable={"today"}
-                    />
+                    />}
                 </div>
             </div>
             <div className="row">    
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={"MD REPORTS"}
                         todayData={""}
                         link={"/reports-md"}
                         title=''
                         color='blue'
                         disable={"today"}
-                    />
+                    />}
                 </div>
                 <div className="col-sm-4">
-                    <Card 
+                    {role != 3 && <Card 
                         totalData={credit}
                         todayData={""}
                         link={"/reports-credit"}
                         title='Credit Report'
                         color='blue'
                         disable={"today"}
-                    />
+                    /> }
                 </div>
             </div>
             </Fragment>

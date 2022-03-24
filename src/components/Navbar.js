@@ -175,6 +175,12 @@ function cashierNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Cashier</span>
           </li>
         </NavLink>
+        <NavLink to="/reports" activeClassName="active" class="link">
+          <li href="#" class="nav-link report-nav">
+            <img src={reportIcon} alt={'report'} class="report icon"></img>
+            <span class="mx-2">Reports</span>
+          </li>
+        </NavLink>
         {/* <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
@@ -559,6 +565,10 @@ function CashierNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSuppl
             <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
             <span class="mx-2">Cashier</span>
         </NavLink>
+        <NavLink to="/reports" activeClassName="active" class="link">
+            <img src={reportIcon} alt={'report'} class="report icon mobile-size-icon"></img>
+            <span class="mx-2">Reports</span>
+        </NavLink>
   </div>
 </div>
   )
@@ -659,7 +669,7 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
         <div class="side-nav-content">
           <div className='reports-show-nav' onClick={(e) => setShowSupply(!showSupply)}>
             <img src={supplyIcon} alt={'supply'} class="supply icon mobile-size-icon"></img>
-            <span class="mx-2">Reports</span>
+            <span class="mx-2">Supply</span>
             <span>
               {showSupply == true && caretUp()}
               {showSupply == false && caretDown()}
