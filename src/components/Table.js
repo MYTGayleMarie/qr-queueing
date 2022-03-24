@@ -43,10 +43,22 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
             </tr>
         }
+        else if(type === 'transaction') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} style={{fontSize:'0.8rem'}}>{data.val}</td>)}
+            </tr>
+        }
         else if(type === "discount-detail") {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{data.val}</td>)}
+            </tr>
+        }
+        else if(type === 'transaction') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td className="smaller" key={index} data-heading={data.key}>{data.val}</td>)}
             </tr>
         }
         else if(clickable == false) {
@@ -55,6 +67,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key}>{data.val}</td>)}
             </tr>
         }
+        
         else if (type === 'registration') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -169,7 +182,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
     });
 
-    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits' || type === 'receives') {
+    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits' || type === 'receives'||type === 'transaction') {
 
         const {from_date, to_date, done} = filteredData;
     

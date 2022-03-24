@@ -149,7 +149,7 @@ function ReportTransaction() {
              />
           <Table
             clickable={false}
-            type={'no-action'}
+            type={'transaction'}
             tableData={patientData}
             rowsPerPage={10}
             headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','MODE OF PICKUP']}
