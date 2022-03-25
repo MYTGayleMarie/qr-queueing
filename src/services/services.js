@@ -301,7 +301,7 @@ const Electrocytes = [
     name: 'Electrolytes (NaKCl,iCA)',
     categoryId: '3',
     labTestId: '114',
-    price: '900.00',
+    price: '980.00',
     type: 'lab',
   },
   {
