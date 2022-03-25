@@ -204,7 +204,7 @@ export class PaymentToPrint extends React.PureComponent {
 
 
             groupedServices[key].map((info, index) => {
-                console.log(groupedServices[key]);
+                // console.log(groupedServices[key]);
                 if(info.category === "CLINICAL MICROSCOPY"){
                     category_name = key.replace(/_/g, " ").toUpperCase();
                    if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analyis"|| info.name === "Pregnancy test (RPK-Lateral Flow)"){
@@ -231,7 +231,7 @@ export class PaymentToPrint extends React.PureComponent {
 
 
             groupedServices[key].map((info, index) => {
-                console.log(groupedServices[key]);
+                // console.log(groupedServices[key]);
                 if(info.category === "CLINICAL MICROSCOPY"){
                     category_name = key.replace(/_/g, " ").toUpperCase();
                    if(info.name == "Fecalysis" || info.name == "Feccalt Occult Build"){
@@ -295,14 +295,15 @@ export class PaymentToPrint extends React.PureComponent {
             payment,
             result,
             serviceName, 
-            services) {
+            services,
+            companyCode) {
 
 
             return (
                 <div className="print-column"> 
                         <div class="d-flex justify-content-left">
                             <img src={logo} alt={'logo'} class="payment-logo"></img>
-                            <span className="to-right request-header">#{queue} Request Form - Paitient ID:{patientId}</span>
+                            <span className="to-right request-header">#{queue} Request Form - Patient ID:{patientId}</span>
                             <span className="to-right-test request-header-test">{serviceName}</span>
                         </div>
                         <div className='row'>
@@ -327,6 +328,7 @@ export class PaymentToPrint extends React.PureComponent {
                             </tr >
                             <tr>
                                 <td><span className="header">Physician: </span><span className="detail-print">{referral == null ? "NONE" : referral} </span></td>
+                                <td><span className="header">Company Code: </span><span className="detail-print">{companyCode}</span></td>
                             </tr>
                         </table>
                         </div>
@@ -347,7 +349,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{isCompany == true ? " CORPORATE ACCOUNT" : payment}</span>
+                                    <span className='data'>{(isCompany == true && companyCode==true) ? " CORPORATE ACCOUNT - "+ companyCode :(isCompany == true) ? " CORPORATE ACCOUNT " : payment}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
@@ -439,7 +441,8 @@ export class PaymentToPrint extends React.PureComponent {
                                 this.props.payment,
                                 this.props.result,
                                 ticket.name, 
-                                ticket.services))
+                                ticket.services,
+                                this.props.companyCode))
                           })}
                       </div>
                   )

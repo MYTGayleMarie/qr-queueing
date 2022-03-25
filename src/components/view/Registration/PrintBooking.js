@@ -48,14 +48,17 @@ function PrintBooking() {
        const [seniorPwdId, setID] = useState("");
        const [patientId, setPatientId] = useState("");
        const [discountCode, setDiscountCode] = useState("");
+       const [companyCode, setCompanyCode] = useState("");
 
        //other states
        const [redirect, setRedirect] = useState(false);
        const [printReadyFinal, setPrintReadyFinal] = useState(false);
        const handleRedirect = () => setRedirect(true);
 
+
        //get customer details
        React.useEffect(() => {
+              
 
         axios({
             method: 'post',
@@ -67,6 +70,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
+            console.log(response)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -84,6 +88,7 @@ function PrintBooking() {
                     requester: userId,
                 }
             }).then(function (customer) {
+                // console.log(customer)
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
                 const age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -101,6 +106,29 @@ function PrintBooking() {
             }).catch(function (error) {
                 console.log(error);
             });
+
+            //company code
+            {response.data.company_contract_id && 
+                axios({
+                    method: 'post',
+                    url: window.$link + 'company_contracts/show/'+response.data.company_contract_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (contracts) {
+                    console.log(contracts)
+                    setCompanyCode(contracts.data.company_code)
+                }).catch(function (error) {
+                    console.log(error);
+                }) 
+            }           
+
+            
+
+        
         }).catch(function (error) {
             console.log(error);
         });
@@ -128,8 +156,8 @@ function PrintBooking() {
                     token: userToken.replace(/['"]+/g, ''),
                     requester: userId,
                 }
-            }).then(function (booking) {
-                
+            }).then(function (booking) {      
+                // console.log(booking)      
                 setServices(booking.data);
             }).catch(function (error) {
                 console.log(error);
@@ -150,7 +178,8 @@ function PrintBooking() {
                             requester: userId,
                         }
                     }).then(function (response) {
-
+                                                
+                        
                         response.data.map((packageCat, index2) => {
                             var serviceDetails = {};
                             axios({
@@ -193,6 +222,7 @@ function PrintBooking() {
                             requester: userId,
                         }
                     }).then(function (category) {
+                        
                         var serviceDetails = {};
                         if(category.data.name == "Electrolytes (NaKCl,iCA)") {
                             serviceDetails.key = "Electrolytes";
@@ -236,7 +266,7 @@ function PrintBooking() {
                   const arrangedObj = response.data.bookings.sort((a,b) => a.id - b.id);
              
                   arrangedObj.map((booking,index) => {
-                      console.log(booking.id)
+                    //   console.log(booking.id)
                     var bookingInfo = {};
                     bookingInfo.queue = index;
                     bookingInfo.id = booking.id;
@@ -376,6 +406,7 @@ function PrintBooking() {
                         encodedOn={encodedOn}
                         queue={queueNumber}
                         isCompany={true}
+                        companyCode={companyCode}
                     />
             </div>
 
