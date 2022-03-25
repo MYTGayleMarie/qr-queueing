@@ -120,8 +120,8 @@ export class PaymentToPrint extends React.PureComponent {
                category_name !== "CHEMISTRY" && 
                category_name !== "ELECTROLYTES" &&
                category_name !== "LIPID PROFILE" && 
-               category_name !== "GLUCOSE TEST" &&
-               category_name !== "LIVER FUNCTIONS TEST" &&
+               category_name !== "GLUCOSE TESTS" &&
+               category_name !== "LIVER FUNCTION TESTS" &&
                category_name !== "KIDNEY FUNCTION TEST") {
                 return ""
             }
@@ -176,13 +176,13 @@ export class PaymentToPrint extends React.PureComponent {
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
-                        {category_name == "GLUCOSE TEST" &&
+                        {category_name == "GLUCOSE TESTS" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
-                        {category_name == "LIVER FUNCTIONS TEST" &&
+                        {category_name == "LIVER FUNCTION TESTS" &&
                           <>
                              <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
