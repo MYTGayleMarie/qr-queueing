@@ -157,7 +157,7 @@ function AddPayment() {
             }
         }).then(function (response) {
             console.log(response);
-            console.log(response.data.discount);
+
             setPaymentStatus(response.data.payment_status);
             setPaymentType(response.data.payment_type);
             setTotal(response.data.total_amount);
