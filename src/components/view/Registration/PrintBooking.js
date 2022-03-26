@@ -78,7 +78,12 @@ function PrintBooking() {
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
-            setDiscountCode(response.data.discount_code);
+            if(response.data.discount_code==true){
+                setDiscountCode(response.data.discount_code);
+            } else {
+                setDiscountCode("None")
+            }
+            
             axios({
                 method: 'post',
                 url: window.$link + 'customers/show/' + response.data.customer_id,
