@@ -70,7 +70,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
+            // console.log(response)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -108,7 +108,7 @@ function PrintBooking() {
             });
 
             //company code
-            {response.data.company_contract_id && 
+            if (response.data.company_contract_id == true){
                 axios({
                     method: 'post',
                     url: window.$link + 'company_contracts/show/'+response.data.company_contract_id,
@@ -119,12 +119,15 @@ function PrintBooking() {
                         requester: userId,
                     }
                 }).then(function (contracts) {
-                    console.log(contracts)
-                    setCompanyCode(contracts.data.company_code)
+                    //console.log(contracts)
+                    setCompanyCode(contracts.data.company_code);
                 }).catch(function (error) {
                     console.log(error);
                 }) 
-            }           
+            } else {
+                setCompanyCode("None");
+            }
+
 
             
 

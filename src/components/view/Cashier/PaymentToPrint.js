@@ -349,7 +349,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany == true && companyCode==true) ? " CORPORATE ACCOUNT - "+ companyCode :(isCompany == true) ? " CORPORATE ACCOUNT " : payment}</span>
+                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ companyCode : payment}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
