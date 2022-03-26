@@ -70,7 +70,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            // console.log(response)
+            console.log(response)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -78,6 +78,7 @@ function PrintBooking() {
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
+            setDiscountCode(response.data.discount_code);
             axios({
                 method: 'post',
                 url: window.$link + 'customers/show/' + response.data.customer_id,
@@ -88,7 +89,7 @@ function PrintBooking() {
                     requester: userId,
                 }
             }).then(function (customer) {
-                // console.log(customer)
+                console.log(customer)
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
                 const age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -409,7 +410,7 @@ function PrintBooking() {
                         encodedOn={encodedOn}
                         queue={queueNumber}
                         isCompany={true}
-                        companyCode={companyCode}
+                        discountCode={discountCode}
                     />
             </div>
 

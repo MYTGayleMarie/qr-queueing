@@ -296,7 +296,7 @@ export class PaymentToPrint extends React.PureComponent {
             result,
             serviceName, 
             services,
-            companyCode) {
+            discountCode) {
 
 
             return (
@@ -328,7 +328,7 @@ export class PaymentToPrint extends React.PureComponent {
                             </tr >
                             <tr>
                                 <td><span className="header">Physician: </span><span className="detail-print">{referral == null ? "NONE" : referral} </span></td>
-                                <td><span className="header">Company Code: </span><span className="detail-print">{companyCode}</span></td>
+                                <td><span className="header">Discount Code: </span><span className="detail-print">{discountCode}</span></td>
                             </tr>
                         </table>
                         </div>
@@ -349,7 +349,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ companyCode : payment}</span>
+                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ discountCode : payment}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
@@ -442,7 +442,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 this.props.result,
                                 ticket.name, 
                                 ticket.services,
-                                this.props.companyCode))
+                                this.props.discountCode))
                           })}
                       </div>
                   )
