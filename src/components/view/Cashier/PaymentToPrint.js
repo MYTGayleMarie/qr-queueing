@@ -53,19 +53,16 @@ export class PaymentToPrint extends React.PureComponent {
             return  <tr>
                         {category_name == "XRAY" && 
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "CARDIOLOGY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "RADIOLOGY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
@@ -92,7 +89,6 @@ export class PaymentToPrint extends React.PureComponent {
             return  <tr>
                         {category_name == "HEMATOLOGY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
@@ -129,68 +125,57 @@ export class PaymentToPrint extends React.PureComponent {
             return  <tr>
                         {category_name == "SEROLOGY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "IMMUNOLOGY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "THYROID PROFILE" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "TUMOR MARKERS" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                          {category_name == "HEPATITIS PROFILE SCREENING" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "CHEMISTRY" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "ELECTROLYTES" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         
                         {category_name == "LIPID PROFILE" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "GLUCOSE TESTS" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "LIVER FUNCTION TESTS" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
                         {category_name == "KIDNEY FUNCTION TESTS" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
@@ -220,7 +205,6 @@ export class PaymentToPrint extends React.PureComponent {
             category_services = category_services.slice(0, -2);
 
             return  <tr>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                     </tr>
         });
@@ -247,7 +231,6 @@ export class PaymentToPrint extends React.PureComponent {
         
             return  <tr>
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                     </tr>
@@ -274,7 +257,6 @@ export class PaymentToPrint extends React.PureComponent {
             return  <tr>
                         {category_name == "OTHER TESTS" &&
                           <>
-                             <td><span className="data">{category_name}</span></td>
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
@@ -298,7 +280,7 @@ export class PaymentToPrint extends React.PureComponent {
             services,
             discountCode) {
 
-
+            console.log(discountCode);
             return (
                 <div className="print-column"> 
                         <div class="d-flex justify-content-left">
@@ -338,7 +320,6 @@ export class PaymentToPrint extends React.PureComponent {
                         <div className='row'>
                             <table className="services-table">
                                 <tr>
-                                    <th><span className="header">Section Head</span></th>
                                     <th><span className="header">Services</span></th>
                                 </tr>
                                 {services}
@@ -426,6 +407,7 @@ export class PaymentToPrint extends React.PureComponent {
                   return (
                       <div className="print-row">
                           {data.map((ticket) => {
+                               console.log(this.props.discountCode);
                                return (
                                 generateTickets(
                                 this.props.queue,

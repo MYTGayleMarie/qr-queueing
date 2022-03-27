@@ -157,6 +157,7 @@ function AddPayment() {
             }
         }).then(function (response) {
             console.log(response);
+
             setPaymentStatus(response.data.payment_status);
             setPaymentType(response.data.payment_type);
             setTotal(response.data.total_amount);
@@ -992,7 +993,7 @@ function AddPayment() {
                             queue={queueNumber}
                             encodedOn={encodedOn}
                             referral={referral}
-                            discountCode={false}
+                            discountCode={discountCode}
                         />
                 
                     </div>

@@ -71,6 +71,7 @@ function PrintBooking() {
             }
         }).then(function (response) {
             console.log(response)
+            console.log(response.data)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -78,7 +79,7 @@ function PrintBooking() {
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
-            if(response.data.discount_code==true){
+            if(response.data.discount_code!==""){
                 setDiscountCode(response.data.discount_code);
             } else {
                 setDiscountCode("None")

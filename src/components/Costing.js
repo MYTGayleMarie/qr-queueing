@@ -53,7 +53,7 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
         }
         const grandTotal = parseFloat(total).toFixed(2) - discount;
     
-        // console.log(discount)
+        console.log(discount)
 
         return (
             <div>
