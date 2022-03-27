@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -86,6 +86,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={data.val == "for approval" ? "for-approval" : data.val.replace(/\s/g, '')}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>REVIEW</button></td>
             </tr>
+            
         }
         else if (type == 'receives' && clickable == true) {
             return <tr key={row.id}>
@@ -130,6 +131,14 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id)}>VIEW</button></td>
           
+            </tr>
+        }
+        else if (type === 'receive-items-manager' && clickable==true) {
+            return  <tr key = {row.id}>
+                {rowData.map((data, index) =>
+                    <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>
+                )}
+                <td><button class="action-btn" role="button" onClick={() => link(row.id)}>Receive Items</button></td>                
             </tr>
         }
         else if (type === 'search-patient' && clickable == true) {
@@ -219,8 +228,39 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    else if(type === 'receive-items-manager') {
+          
+        return(
+            <div>
+                <div className="table-container">
+                <div className="search-table-container row">
+                <div className="col-sm-12 d-flex justify-content-start">
+                    <select name="supplier" onChange={selectSupplier} className="dropdown">
+                        <option>Select Supplier</option>
+                        {dropdownData.map((data, key)=>
+                            <option value={data.id}>{data.name}</option>
+                        )}
+                    </select>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+                </div>
+            </div>
+        );
+    }
     else if(type === 'purchase-order') {
-
         const {from_date, to_date, done} = filteredData;
     
         return(
@@ -257,6 +297,10 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+
+
+    
+
     else if (type === "search-patient" || type == 'purchase-order-invoice') {
         return(
             <div className="table-container">

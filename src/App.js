@@ -59,6 +59,7 @@ import AddDiscount from './components/view/Companies/AddDiscount';
 import Discount from './components/view/Discount/Discount';
 import AddDiscountNoCompany from './components/view/Discount/AddDiscountNoCompany';
 import DiscountDetail from './components/view/Discount/DiscountDetail';
+import ReceiveItems from './components/view/Supply/ReceiveItemsManager';
 import { PaymentToPrint } from './components/view/Cashier/PaymentToPrint';
 import { InvoiceToPrint } from './components/view/Companies/InvoiceToPrint';
 import PdfTransaction from './components/ReactToPDF';
@@ -131,6 +132,7 @@ function App() {
         <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
+        <Route path="/receive-items-manager" element={token ? <ReceiveItems/> : <Navigate to="/" />} />
         <Route path="/receives-print/:id/:poId" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />

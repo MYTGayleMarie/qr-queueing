@@ -88,6 +88,9 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                 else if(button === 'receive-items' && statusPO == "printed" && completedOn == null) {
                     return <button className="edit-profile" onClick={receiveItem}>RECEIVE ITEMS</button>
                 }
+                else if(button === 'receive-items-manager') {
+                    return <Link to={linkTo}><button className="header-btn add-company"> RECEIVE ITEMS</button></Link>
+                }
                 else if(button === 'delete-po' && (statusPO == "pending" || statusPO == "for approval")) {
                     return <button className="edit-profile" onClick={deletePO}>DELETE</button>
                 }

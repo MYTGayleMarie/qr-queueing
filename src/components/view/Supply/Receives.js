@@ -129,7 +129,8 @@ function Receives() {
             <Searchbar title='RECEIVES'/>
             <Header 
                 type='thick'
-                title='RECEIVES MANAGER' 
+                title='RECEIVES MANAGER'
+                buttons={['receive-items-manager']} 
             />
             <Table
                 type={'receives'}
