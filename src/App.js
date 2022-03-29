@@ -7,6 +7,7 @@ import './components/FontAwesomeIcons';
 import Login from './components/view/Login/Login';
 import Registration from './components/view/Registration/Registration';
 import PrintBooking from './components/view/Registration/PrintBooking';
+import DeleteBooking from './components/view/Registration/DeleteBooking';
 import SwitchForm from './components/view/Registration/Add New Patient/SwitchForm';
 import SearchPatient from './components/view/Registration/Add Old Patient/SearchPatient';
 import SwitchForm2 from './components/view/Registration/Add Old Patient/SwitchForm2';
@@ -106,6 +107,7 @@ function App() {
         <Route path="/add-new-patient" element={token ? <SwitchForm /> : <Navigate to="/" />} />
         <Route path="/add-old-patient" element={token ? <SearchPatient /> : <Navigate to="/" />} />
         <Route path="/add-booking/:id" element={token ? <SwitchForm2 /> : <Navigate to="/" />} />
+        <Route path="/delete-booking/:id" element={token ? <DeleteBooking /> : <Navigate to="/" />} />
         <Route path="/cashier" element={token ? <Cashier /> : <Navigate to="/" />} />
         <Route path="/add-payment/:id" element={token ? <AddPayment /> : <Navigate to="/" />} />
         <Route path="/extraction" element={token ? <Extraction /> : <Navigate to="/" />} />
