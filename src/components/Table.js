@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, role, deleteBooking}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -73,11 +73,20 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{totalCount == null && index == 0 ? "" : data.val}</td>)}
             {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
-                <td><button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button></td>
+                <td>
+                    <button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button>
+                    { (role==4||role==1) && <><br/>
+                    <button class="action-btn" role="button" onClick={() => deleteBooking(row.id)}>DELETE BOOKING</button></>}
+                </td>
             )}
             {(rowData[5].val == "paid" || rowData[0].val != "no_company_discount") && (
-                <td><button class="action-btn" role="button" onClick={() => print(row.id)}>PRINT BOOKING</button></td>
+                <td>
+                    <button class="action-btn" role="button" onClick={() => print(row.id)}>PRINT BOOKING</button> 
+                    { (role==4||role==1) && <><br/>
+                    <button class="action-btn" role="button" onClick={() => deleteBooking(row.id)}>DELETE BOOKING</button></>}
+                </td>
             )}
+            
             </tr>
         }
         else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type == 'purchase-order-invoice' && clickable == true) {

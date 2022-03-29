@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { getToken, getUser, getRoleId } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,6 +38,8 @@ function Registration() {
   const [finalData, setFinalData] = useState([]);
   const [redirectPay, setRedirectPay] = useState(false);
   const [redirectPrint, setRedirectPrint] = useState(false);
+  const [redirectDelete, setRedirectDelete] = useState(false);
+  const [role, setRole] = useState('');
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -95,6 +97,11 @@ function Registration() {
         console.log(error);
       });
   }, [render]);
+  
+  React.useEffect(() => {
+    setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
+  }, []);
+
 
   // React.useEffect(() => {
   //   patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
@@ -111,6 +118,17 @@ function Registration() {
     id = bookingId;
     setRedirectPrint(true);
   }
+  function deleteBooking(bookingId) {
+    id = bookingId;
+    setRedirectDelete(true);
+  }
+
+  if(redirectDelete == true) {
+    var link =  "/delete-booking/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
 
   if(redirectPay == true) {
     var link =  "/add-payment/" + id;
@@ -126,9 +144,9 @@ function Registration() {
     )
   }
 
-  console.log(patientData);
-
-  return (
+  // console.log(patientData);
+  
+   return (
     <div>
       <Navbar />
       <div className="active-cont">
@@ -147,6 +165,8 @@ function Registration() {
             givenClass={"register-mobile"}
             link={addPayment}
             print={printPayment}
+            role={role}
+            deleteBooking={deleteBooking}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>
