@@ -196,6 +196,8 @@ function AddPayment() {
                     age--;
                 }
 
+                console.log(age)
+
                 setPatientId(response.data.customer_id);
                 setFirstName(customer.data.first_name);
                 setMiddleName(customer.data.middle_name);

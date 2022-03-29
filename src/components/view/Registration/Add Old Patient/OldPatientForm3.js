@@ -131,6 +131,11 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
         var presentDate = new Date();
         var birthDate = new Date(customer.data.birthdate);
         const age = presentDate.getFullYear() - birthDate.getFullYear();
+        var m = presentDate.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
+        {
+                    age--;
+        }
         setFirstName(customer.data.first_name);
         setMiddleName(customer.data.middle_name);
         setLastName(customer.data.last_name);
