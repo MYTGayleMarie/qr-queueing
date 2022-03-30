@@ -218,7 +218,7 @@ export class PaymentToPrint extends React.PureComponent {
                 // console.log(groupedServices[key]);
                 if(info.category === "CLINICAL MICROSCOPY"){
                     category_name = key.replace(/_/g, " ").toUpperCase();
-                   if(info.name == "Fecalysis" || info.name == "Feccalt Occult Build"){
+                   if(info.name == "Fecalysis" || info.name == "Fecal Occult Blood"){
                     category_services += info.name + ", ";
                 }}
             });
