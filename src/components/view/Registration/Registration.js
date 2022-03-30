@@ -107,6 +107,7 @@ function Registration() {
   //   patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
   // });
 
+
   function filter() {}
 
   function addPayment(bookingId) {
@@ -166,6 +167,7 @@ function Registration() {
             link={addPayment}
             print={printPayment}
             role={role}
+            userId={userId}
             deleteBooking={deleteBooking}
           />
           <ToastContainer hideProgressBar={true} />
