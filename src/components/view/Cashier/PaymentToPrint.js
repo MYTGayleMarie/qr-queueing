@@ -280,7 +280,7 @@ export class PaymentToPrint extends React.PureComponent {
             services,
             discountCode) {
 
-            console.log(discountCode);
+            // console.log(discountCode);
             return (
                 <div className="print-column"> 
                         <div class="d-flex justify-content-left">
