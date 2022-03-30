@@ -96,6 +96,7 @@ export class PaymentToPrint extends React.PureComponent {
         });
 
         const services_Serology = Object.keys(groupedServices).map(function(key) {
+            
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
 
@@ -121,6 +122,7 @@ export class PaymentToPrint extends React.PureComponent {
                category_name !== "KIDNEY FUNCTION TESTS") {
                 return ""
             }
+            
         
             return  <tr>
                         {category_name == "SEROLOGY" &&
@@ -250,12 +252,30 @@ export class PaymentToPrint extends React.PureComponent {
                 }
             });
 
-            if(category_name !== "OTHER TESTS") {
+            if(category_name !== "OTHER TESTS" && 
+                category_name !== "MICROBIOLOGY" &&
+                category_name !== "HISTOPATHOLOGY" &&
+                category_name !== "COVID RAPID TESTS" ) {
                 return ""
             }
         
             return  <tr>
                         {category_name == "OTHER TESTS" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "MICROBIOLOGY" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "HISTOPATHOLOGY" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "COVID RAPID TESTS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>
@@ -310,7 +330,7 @@ export class PaymentToPrint extends React.PureComponent {
                             </tr >
                             <tr>
                                 <td><span className="header">Physician: </span><span className="detail-print">{referral == null ? "NONE" : referral} </span></td>
-                                <td><span className="header">Discount Code: </span><span className="detail-print">{discountCode}</span></td>
+                                <td><span className="header">Discount Code: </span><span className="detail-print">{discountCode ? discountCode : "None"}</span></td>
                             </tr>
                         </table>
                         </div>
@@ -330,7 +350,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ discountCode : payment}</span>
+                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ (discountCode ? discountCode : "None") : payment}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
