@@ -71,7 +71,7 @@ function PrintBooking() {
             }
         }).then(function (response) {
             console.log(response)
-            console.log(response.data)
+            console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -408,7 +408,7 @@ function PrintBooking() {
                     <PaymentToPrint 
                         ref={componentRef} 
                         patientId = {patientId}
-                        name={firstName + " " + middleName + " " + lastName}
+                        name={lastName + ", " + firstName + " " + middleName}
                         birthdate={birthDate}
                         gender={gender}
                         age={age}

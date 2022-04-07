@@ -300,7 +300,6 @@ export class PaymentToPrint extends React.PureComponent {
             services,
             discountCode) {
 
-            // console.log(discountCode);
             return (
                 <div className="print-column"> 
                         <div class="d-flex justify-content-left">
@@ -350,7 +349,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany == true) ? " CORPORATE ACCOUNT - "+ (discountCode ? discountCode : "None") : payment}</span>
+                                    <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : " " + payment.toUpperCase()}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
@@ -383,7 +382,7 @@ export class PaymentToPrint extends React.PureComponent {
                 services: services_Serology
             },
             {
-                name: 'CLINC',
+                name: 'CLINIC',
                 services: services_Clinical_Urinalysis
             },
             {

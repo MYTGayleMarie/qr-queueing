@@ -202,7 +202,6 @@ function Cashier() {
       }
     }).then(function (response) {
         console.log(response.data.discount);
-
         if(response.data.discount != null){
           response.data.discount.filter((info) => info.id != null).map((data, index) => {
             if(data.discount_code == discountCode) {
