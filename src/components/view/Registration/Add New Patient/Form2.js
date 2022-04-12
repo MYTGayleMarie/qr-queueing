@@ -46,39 +46,161 @@ var packageDiscountedTotal = 0;
 const userToken = getToken();
 const userId = getUser();
 
-//Package
-const preEmploymentPackageBasic = getPreEmploymentBasic();
-const preEmploymentPackageDiscount = getPreEmploymentDiscount();
-const pregnancyLabPackage = getPregnancyLabPackage();
-const annualWellnessPackageBasic = getAnnualWellnessPackageBasic();
-const thyroidTestPackage = getThyroidTestPackage();
-const annualWellnessPackagePremium = getAnnualWellnessPackagePremium();
-const liverFunctionTest = getLiverFunctionTestPackage();
-const diabetesAndCholesterolPackage = getDiabetesandCholesterolPackage();
+// //Package
+// const preEmploymentPackageBasic = getPreEmploymentBasic();
+// const preEmploymentPackageDiscount = getPreEmploymentDiscount();
+// const pregnancyLabPackage = getPregnancyLabPackage();
+// const annualWellnessPackageBasic = getAnnualWellnessPackageBasic();
+// const thyroidTestPackage = getThyroidTestPackage();
+// const annualWellnessPackagePremium = getAnnualWellnessPackagePremium();
+// const liverFunctionTest = getLiverFunctionTestPackage();
+// const diabetesAndCholesterolPackage = getDiabetesandCholesterolPackage();
 
-//Lab Services
-const clinicalMicroscopy = getClinicalMicroscopy();
-const hematology = getHematology();
-const electrolytes = getElectrolytes();
-const glucoseTests = getGlucoseTests();
-const kidneyFunctionTests = getKidneyFunctionTests();
-const lipidProfile = getLipidProfile();
-const pancreaticTests = getPacreaticTests();
-const liverFunctionTests = getLiverFunctionTests();
-const immunology = getImmunology();
-const hepatitisProfileScreening = getHepatitisProfileScreening();
-const thyroidProfile = getThyroidProfile();
-const tumorMarkers = getTumorMarkers();
-const histopathology = getHistopathology();
-const COVIDRapidTests = getCOVIDRapidTests();
-const microbiology = getMicrobiology();
-const xray = getXray();
-const cardiology = getCardiology();
-const medicalCertificate = getMedicalCertificate();
-const ultrasound = getUltrasound();
-const promo = getPromo();
+// //Lab Services
+// const clinicalMicroscopy = getClinicalMicroscopy();
+// const hematology = getHematology();
+// const electrolytes = getElectrolytes();
+// const glucoseTests = getGlucoseTests();
+// const kidneyFunctionTests = getKidneyFunctionTests();
+// const lipidProfile = getLipidProfile();
+// const pancreaticTests = getPacreaticTests();
+// const liverFunctionTests = getLiverFunctionTests();
+// const immunology = getImmunology();
+// const hepatitisProfileScreening = getHepatitisProfileScreening();
+// const thyroidProfile = getThyroidProfile();
+// const tumorMarkers = getTumorMarkers();
+// const histopathology = getHistopathology();
+// const COVIDRapidTests = getCOVIDRapidTests();
+// const microbiology = getMicrobiology();
+// const xray = getXray();
+// const cardiology = getCardiology();
+// const medicalCertificate = getMedicalCertificate();
+// const ultrasound = getUltrasound();
+// const promo = getPromo();
 
 function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge, discountDetails}) {
+      //get all lab tests
+    const [allLabServices, setAllLabServices] = useState([])
+    React.useEffect(()=>{
+    axios({
+        method: 'post',
+        url: window.$link + 'lab_tests/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    })
+    .then((response)=>{
+        const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
+        console.log(tests)
+        tests.map((test,index)=>{   
+            var testDetails = {};
+            if (test.id == 129){ //otherTest
+                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
+            } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
+                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
+            } else {
+                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
+            }          
+            testDetails.name = test.name;
+            testDetails.categoryId = test.category_id;
+            testDetails.labTestId = test.id;
+            testDetails.price = test.price;
+            testDetails.type = "lab";
+            setAllLabServices(oldArray=>[...oldArray, testDetails]) // append each item to services   
+        })
+        
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+    },[])
+
+
+    // // Lab Tests Categories
+    const clinicalMicroscopy = allLabServices.filter(item=>item.categoryId == 1)
+    const hematology = allLabServices.filter(item=>item.categoryId == 2)
+    const electrolytes = allLabServices.filter(item=>item.categoryId == 3 || item.categoryId == 4)
+    const glucoseTests = allLabServices.filter(item=>item.categoryId == 5)
+    const kidneyFunctionTests = allLabServices.filter(item=>item.categoryId == 6)
+    const lipidProfile = allLabServices.filter(item=>item.categoryId == 7)
+    const pancreaticTests = allLabServices.filter(item=>item.categoryId == 8)
+    const liverFunctionTests = allLabServices.filter(item=>item.categoryId == 9)   
+    const immunology = allLabServices.filter(item=>item.categoryId == 11)
+    const hepatitisProfileScreening = allLabServices.filter(item=>item.categoryId == 12) 
+    const thyroidProfile = allLabServices.filter(item=>item.categoryId == 13)
+    const tumorMarkers = allLabServices.filter(item=>item.categoryId == 14) 
+    const histopathology = allLabServices.filter(item=>item.categoryId == 15) 
+    const COVIDRapidTests = allLabServices.filter(item=>item.categoryId == 16) 
+    const microbiology = allLabServices.filter(item=>item.categoryId == 17) 
+    const xray = allLabServices.filter(item=>item.categoryId == 18) 
+    const cardiology = allLabServices.filter(item=>item.categoryId == 19) 
+    const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
+    const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
+    const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
+    const otherTests = allLabServices.filter(item=>item.categoryId == 29)
+
+    //get all packages
+    const [allPackages, setAllPackages] = useState([])
+    React.useEffect(()=>{
+    axios({
+        method: 'post',
+        url: window.$link + 'packages/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    })
+    .then((response)=>{
+        const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
+        console.log(packagesArray)
+        packagesArray.map((item,index)=>{  
+            console.log(item) 
+            var packageDetails = {};
+            var packageCode = "";
+            if( item.id==1 || item.id==2 || item.id==3){                        
+                packageCode="package1"
+            } else if ( item.id==9 || item.id==10 || item.id==11){
+                packageCode="package2"
+            } else if ( item.id==4){
+                packageCode="package3"
+            } else if ( item.id==12 || item.id==13 || item.id==14){
+                packageCode="package4"
+            } else {
+                packageCode="package"+item.id
+            }
+            packageDetails.category = packageCode
+            packageDetails.key = item.name.replace(/[)}{(,-\s/]/g, '')+"_"+packageCode;  
+            packageDetails.name = item.name;
+
+            packageDetails.labTestId = item.id;
+            packageDetails.price = item.price;
+            packageDetails.type = 'package';
+            setAllPackages(oldArray=>[...oldArray, packageDetails]) // append each item to packages
+            
+        })
+
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+    },[])
+
+    //Packages category
+    const preEmploymentPackageBasic = allPackages.filter(item=>item.category==="package1")   
+    const preEmploymentPackageDiscount = allPackages.filter(item=>item.category==="package2")   
+    const pregnancyLabPackage = allPackages.filter(item=>item.category==="package3") 
+    const annualWellnessPackageBasic = allPackages.filter(item=>item.category==="package4") 
+    const thyroidTestPackage = allPackages.filter(item=>item.category==="package5") 
+    const annualWellnessPackagePremium = allPackages.filter(item=>item.category==="package6") 
+    const liverFunctionTest = allPackages.filter(item=>item.category==="package7") 
+    const diabetesAndCholesterolPackage = allPackages.filter(item=>item.category==="package8") 
+
+  
   document.body.style = 'background: white;';
   window.scrollTo(0, 0);
 
@@ -116,6 +238,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
   if(mdCharge.medical_certificate == true) {
     totalMDCharge += 50.00;
   }
+
 
   checkedServices.map((data, index) => {
     var categoryDetails = data[0].split('_');
@@ -279,6 +402,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 },[discountDetails]);
 
 //Total discount labspackages
+if(typeof checkedServicesDetails[0] !== 'undefined') {
     checkedServicesDetails.map((data, index) => {
         console.log(data);
 
@@ -304,8 +428,9 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
       }
     
     });
-
-checkedServicesDetails.map((data, index) => {
+  }
+if(typeof checkedServicesDetails[0] !== 'undefined') {
+  checkedServicesDetails.map((data, index) => {
     console.log(data);
     //To insert condition for discount for specific labs/packages
     if(index == 0) {
@@ -345,7 +470,7 @@ checkedServicesDetails.map((data, index) => {
     }
     totalPrice += parseFloat(data.price);
 });
-
+}
   return (
     <div>
       <Navbar />
@@ -426,7 +551,8 @@ checkedServicesDetails.map((data, index) => {
             <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
 
-                    {checkedServicesDetails.map((data, index) => (
+                    { typeof checkedServicesDetails[0] !== 'undefined' ?
+                    checkedServicesDetails.map((data, index) => (
                         <div className="row">
                            <div className="col-2">
                                {index + 1}
@@ -438,7 +564,7 @@ checkedServicesDetails.map((data, index) => {
                                <span className="price"><span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                            </div>
                        </div>
-                    ))}
+                    )):null}
                 </div>
 
                 <div className="row">

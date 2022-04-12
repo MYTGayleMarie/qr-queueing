@@ -559,6 +559,7 @@ console.log(checkedServices)
     },[discountDetails])
 
     //Total discount labs/packages
+if(typeof checkedServicesDetails[0] !== 'undefined') {
     checkedServicesDetails.map((data, index) => {
         console.log(data);
 
@@ -582,7 +583,7 @@ console.log(checkedServices)
         });
     }
     });
-
+}
 // console.log(checkedServicesDetails)
 
 if(typeof checkedServicesDetails[0] !== 'undefined') {
@@ -835,7 +836,8 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                 <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
 
-                    {/* {checkedServicesDetails.map((data, index) => (
+                    { typeof checkedServicesDetails[0] !== 'undefined' ?
+                    checkedServicesDetails.map((data, index) => (
                         <div className="row">
                            <div className="col-2">
                                {index + 1}
@@ -847,7 +849,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                                <span className="price"><span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                            </div>
                        </div>
-                    ))} */}
+                    )):null}
                 </div>
 
                 <div className="col d-flex justify-content-end">
