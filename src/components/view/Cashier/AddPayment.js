@@ -521,7 +521,8 @@ function AddPayment() {
                     added_by: userId,
                 }
             }).then(function (response) {
-                var date = new Date();                
+                var date = new Date();      
+                console.log(response)          
                 toast.success("Payment Successful!");
                 refreshPage();
             }).catch(function (error) {

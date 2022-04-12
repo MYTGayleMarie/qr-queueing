@@ -429,7 +429,7 @@ console.log(checkedServices)
     console.log(data)
         var categoryDetails = data[0].split("_");
         var categoryId = parseInt(categoryDetails[1]);
-        // console.log(categoryId)
+        console.log(categoryDetails[1])
 
         //servies
         switch(categoryDetails[1]) {
@@ -451,7 +451,7 @@ console.log(checkedServices)
             break;
         }
 
-
+        console.log(checkedServicesDetails)
        //lab
         switch(categoryId) {
             case 1:
@@ -583,48 +583,50 @@ console.log(checkedServices)
     }
     });
 
+// console.log(checkedServicesDetails)
 
-checkedServicesDetails.map((data, index) => {
-    console.log(data);
-    //To insert condition for discount for specific labs/packages
-    if(index == 0) {
-        newLabTotal = 0;
-        labDiscountedTotal = 0;
-        newPackageTotal = 0;
-        packageDiscountedTotal = 0;
-        setLabPrice(0);
-        setPackagePrice(0);
-    }
-
-    if(data.type == 'lab') {
-        if(discountDetails != null ) {
-            discountDetails.map((detail) => {
-                if(detail.source_id != data.labTestId && detail.type == "service") {
-                    newLabTotal += parseFloat(data.price);
-                    setLabPrice(newLabTotal);
-                }
-            });
-        } else {
-            newLabTotal += parseFloat(data.price);
-            setLabPrice(newLabTotal);
+if(typeof checkedServicesDetails[0] !== 'undefined') {
+    checkedServicesDetails.map((data, index) => {
+        console.log(data);
+        //To insert condition for discount for specific labs/packages
+        if(index == 0) {
+            newLabTotal = 0;
+            labDiscountedTotal = 0;
+            newPackageTotal = 0;
+            packageDiscountedTotal = 0;
+            setLabPrice(0);
+            setPackagePrice(0);
         }
-    }
-    else if (data.type == 'package') {
-        if(discountDetails != null) {
-            discountDetails.map((detail) => {
-                if(detail.source_id != data.labTestId && detail.type == "package") {
-                    newPackageTotal += parseFloat(data.price);
-                    setPackagePrice(newPackageTotal);
-                }
-            });
-        } else {
-            newPackageTotal += parseFloat(data.price);
-            setPackagePrice(newPackageTotal);
+    
+        if(data.type == 'lab') {
+            if(discountDetails != null ) {
+                discountDetails.map((detail) => {
+                    if(detail.source_id != data.labTestId && detail.type == "service") {
+                        newLabTotal += parseFloat(data.price);
+                        setLabPrice(newLabTotal);
+                    }
+                });
+            } else {
+                newLabTotal += parseFloat(data.price);
+                setLabPrice(newLabTotal);
+            }
         }
-    }
-    totalPrice += parseFloat(data.price);
-});
-
+        else if (data.type == 'package') {
+            if(discountDetails != null) {
+                discountDetails.map((detail) => {
+                    if(detail.source_id != data.labTestId && detail.type == "package") {
+                        newPackageTotal += parseFloat(data.price);
+                        setPackagePrice(newPackageTotal);
+                    }
+                });
+            } else {
+                newPackageTotal += parseFloat(data.price);
+                setPackagePrice(newPackageTotal);
+            }
+        }
+        totalPrice += parseFloat(data.price);
+    });
+}
 
   if (print == true) {
     return <Navigate to={"/print-booking/" + bookingId} />;
@@ -833,7 +835,7 @@ checkedServicesDetails.map((data, index) => {
                 <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
 
-                    {checkedServicesDetails.map((data, index) => (
+                    {/* {checkedServicesDetails.map((data, index) => (
                         <div className="row">
                            <div className="col-2">
                                {index + 1}
@@ -845,7 +847,7 @@ checkedServicesDetails.map((data, index) => {
                                <span className="price"><span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                            </div>
                        </div>
-                    ))}
+                    ))} */}
                 </div>
 
                 <div className="col d-flex justify-content-end">

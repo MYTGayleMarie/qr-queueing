@@ -428,47 +428,48 @@ React.useEffect(() => {
     
     });
 
-
-checkedServicesDetails.map((data, index) => {
-    console.log(data);
-    //To insert condition for discount for specific labs/packages
-    if(index == 0) {
-        newLabTotal = 0;
-        labDiscountedTotal = 0;
-        newPackageTotal = 0;
-        packageDiscountedTotal = 0;
-        setLabPrice(0);
-        setPackagePrice(0);
-    }
-
-    if(data.type === 'lab') {
-        if(discountDetails != null ) {
-            discountDetails.map((detail) => {
-                if(detail.source_id != data.labTestId && detail.type == "service") {
-                    newLabTotal += parseFloat(data.price);
-                    setLabPrice(newLabTotal);
-                }
-            });
-        } else {
-            newLabTotal += parseFloat(data.price);
-            setLabPrice(newLabTotal);
+if(typeof checkedServicesDetails[0] !== 'undefined') {
+    checkedServicesDetails.map((data, index) => {
+        console.log(data);
+        //To insert condition for discount for specific labs/packages
+        if(index == 0) {
+            newLabTotal = 0;
+            labDiscountedTotal = 0;
+            newPackageTotal = 0;
+            packageDiscountedTotal = 0;
+            setLabPrice(0);
+            setPackagePrice(0);
         }
-    }
-    else if (data.type === 'package') {
-        if(discountDetails != null) {
-            discountDetails.map((detail) => {
-                if(detail.source_id != data.labTestId && detail.type == "package") {
-                    newPackageTotal += parseFloat(data.price);
-                    setPackagePrice(newPackageTotal);
-                }
-            });
-        } else {
-            newPackageTotal += parseFloat(data.price);
-            setPackagePrice(newPackageTotal);
+    
+        if(data.type === 'lab') {
+            if(discountDetails != null ) {
+                discountDetails.map((detail) => {
+                    if(detail.source_id != data.labTestId && detail.type == "service") {
+                        newLabTotal += parseFloat(data.price);
+                        setLabPrice(newLabTotal);
+                    }
+                });
+            } else {
+                newLabTotal += parseFloat(data.price);
+                setLabPrice(newLabTotal);
+            }
         }
-    }
-    totalPrice += parseFloat(data.price);
-});
+        else if (data.type === 'package') {
+            if(discountDetails != null) {
+                discountDetails.map((detail) => {
+                    if(detail.source_id != data.labTestId && detail.type == "package") {
+                        newPackageTotal += parseFloat(data.price);
+                        setPackagePrice(newPackageTotal);
+                    }
+                });
+            } else {
+                newPackageTotal += parseFloat(data.price);
+                setPackagePrice(newPackageTotal);
+            }
+        }
+        totalPrice += parseFloat(data.price);
+    });
+}
 
     return (
     <div>
