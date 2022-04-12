@@ -126,7 +126,7 @@ const AnnualWellnessPackagePremium = [
 const LiverFunctionTestPackage = [
   {
     key: 'LiverFunction_package7',
-    name: 'Live Function Test',
+    name: 'Liver Function Test',
     services: '',
     labTestId: '7',
     price: '0.00',
@@ -159,7 +159,7 @@ const allPackages = PreEmploymentPackageBasic.concat(
  * SERVICES
  ********************************/
 
-const ClincalMicroscopy = [
+const ClinicalMicroscopy = [
   {
     key: 'Urinalysis_1',
     name: 'Urinalysis',
@@ -1195,7 +1195,7 @@ const OtherTests = [
   },
 ];
 
-const allLabServices = ClincalMicroscopy.concat(
+const allLabServices = ClinicalMicroscopy.concat(
   Hematology,
   Electrocytes,
   GlucoseTests,
@@ -1273,7 +1273,7 @@ export const getAllLabServices = () => {
 
 //Clinical Microscopy
 export const getClinicalMicroscopy = () => {
-  return ClincalMicroscopy;
+  return ClinicalMicroscopy;
 };
 
 //Hematology

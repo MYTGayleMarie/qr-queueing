@@ -70,7 +70,7 @@ const liverFunctionTest = getLiverFunctionTestPackage();
 const diabetesAndCholesterolPackage = getDiabetesandCholesterolPackage();
 
 //Lab Services
-const clincalMicroscopy = getClinicalMicroscopy();
+const clinicalMicroscopy = getClinicalMicroscopy();
 const hematology = getHematology();
 const electrolytes = getElectrolytes();
 const glucoseTests = getGlucoseTests();
@@ -319,7 +319,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     //lab
     switch (categoryId) {
       case 1:
-        getDetails(clincalMicroscopy, data[0]);
+        getDetails(clinicalMicroscopy, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
       case 2:
@@ -507,7 +507,7 @@ totalPrice += parseFloat(data.price);
 
               <ServiceItems
                 category="CLINICAL MICROSCOPY"
-                items={clincalMicroscopy}
+                items={clinicalMicroscopy}
                 formData={service}
                 setForm={setServices}
               />

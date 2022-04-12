@@ -2,9 +2,9 @@ import React from 'react';
 
 
 function ServiceItems({category, items, formData, setForm}) {
- 
+    // console.log(items)
     const itemData = items.map((row, index) => {
-    
+    // console.log(formData)
         return(
             <div className="row">
                 <div className="col-sm-6">
