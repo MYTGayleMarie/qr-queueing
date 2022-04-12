@@ -170,8 +170,4 @@ function Login() {
   );
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
-
 export default Login;

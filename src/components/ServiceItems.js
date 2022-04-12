@@ -4,7 +4,8 @@ import React from 'react';
 function ServiceItems({category, items, formData, setForm}) {
  
     const itemData = items.map((row, index) => {
-    
+        console.log(row)
+        console.log(formData)
         return(
             <div className="row">
                 <div className="col-sm-6">
