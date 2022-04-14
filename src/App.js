@@ -69,6 +69,9 @@ import { useEffect } from 'react';
 import { refreshPage, removeUserSession} from './utilities/Common.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Services from './components/View/Services/Services';
+import AddServices from './components/View/Services/AddServices';
+
 
 function App() {
   document.title = 'QR Diagnostics System';
@@ -159,6 +162,10 @@ function App() {
         <Route path="/reports-credit-details/:discount_code" element={token ? <ReportCreditDetails/> : <Navigate to="/" />} />
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
+        <Route path="/services" element={token ? <Services /> : <Navigate to="/" />} />
+        <Route path="/add-services" element={token ? <AddServices /> : <Navigate to="/" />} />
+        {/* <Route path="/edit-services" element={token ? <Services /> : <Navigate to="/" />} />
+        <Route path="/delete-services" element={token ? <Services /> : <Navigate to="/" />} /> */}
       </Routes>
     </Router>
 

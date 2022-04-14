@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -89,6 +89,20 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             
             </tr>
         }
+        else if (type === "services" ){
+            return <tr key={row.id}>
+                {rowData.map((data, index) => 
+                    <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>
+                )}
+                <td>
+                    <button class="action-btn" role="button" onClick={() => editAction(row.id, row.type)}>EDIT SERVICE</button> 
+                    <br/>
+                    <button class="action-btn" role="button" onClick={() => deleteAction(row.id, row.type)}>DELETE BOOKING</button>
+                </td>
+                
+            </tr>
+        }
+
         else if (type == 'purchase-order' && clickable == true || type == 'release' && clickable == true || type == 'purchase-order-invoice' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -307,9 +321,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
 
-
-    
-
     else if (type === "search-patient" || type == 'purchase-order-invoice') {
         return(
             <div className="table-container">
@@ -393,6 +404,31 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    else if (type === "services"){
+        return (
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">  
+                    {/* container for filters, if there is any */}
+                </div>
+
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+                
+            </div>
+        )
+    }
+
     if(type === 'sales') {
 
         const {from_date, to_date, done} = filteredData;

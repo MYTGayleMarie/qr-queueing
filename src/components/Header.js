@@ -70,6 +70,9 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                 else if(button === 'add-discount') {
                     return <Link to={linkTo}><button className="header-btn add-company"> ADD DISCOUNT</button></Link>
                 }
+                else if(button === 'add-services') {
+                    return <Link to={linkTo}><button className="header-btn add-company"> ADD SERVICES</button></Link>
+                }
 
                 return <Link to={linkTo}><button className={button}> ADD {addBtn[1].toUpperCase()}</button></Link>
             }

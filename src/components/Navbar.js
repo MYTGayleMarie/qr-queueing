@@ -315,6 +315,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
               </Link>
             </ul>
           </li>
+          <NavLink to="/services" activeClassName="active" class="link">
+          <li href="#" class="nav-link users-nav">
+                <img src={usersIcon} alt={'users'} class="users icon"></img>
+                <span class="mx-2">Services</span>
+          </li>
+          </NavLink>
           <NavLink to="/Users" activeClassName="active" class="link">
           <li href="#" class="nav-link users-nav">
                 <img src={usersIcon} alt={'users'} class="users icon"></img>
