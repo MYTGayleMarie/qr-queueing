@@ -18,16 +18,23 @@ const userToken = getToken();
 const userId = getUser();
 
 
-//Table headers = Name, Type, Category Price, Action
 
 //View page
 export default function Services(){
+  const [allServices, setAllServices] = useState([]); //data for the table (including lab tests and packages)
+
+  const [category, setCategory] = useState('lab') // state for the category filter
+  const [render, setRender] = useState([]) //changes state when filter button is clicked
+
 
 	/******** START Fetching Data from API ***********/
-	const [allServices, setAllServices] = useState([]) //for all services (including lab tests and packages)
-	React.useEffect(()=>{
-	// //get all labservices
-    axios({
+
+  React.useEffect(()=>{
+    allServices.length=0; //allServices should be empty (0 content) every render
+
+    //fetch lab tests API if category is lab (default)
+    if (category=='lab'){
+      axios({
         method: 'post',
         url: window.$link + 'lab_tests/getAll',
         withCredentials: false, 
@@ -36,25 +43,29 @@ export default function Services(){
             token: userToken.replace(/['"]+/g, ''),
             requester: userId,
         }
-    })
-    .then((response)=>{
-        const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
-        tests.map((test,index)=>{   
-            var testDetails = {};     
-						testDetails.id = test.id
-            testDetails.name = test.name;
-						testDetails.type = "lab";
-            testDetails.categoryId = test.category_id;
-            testDetails.price = test.price;
-            setAllServices(oldArray=>[...oldArray, testDetails]) // append each item to services   
-        })       
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
+      }).then((response)=>{
+        const resLabTests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all lab tests details
 
-		//get all packages
-    axios({
+
+        //mapping lab tests response to create object for services
+        resLabTests.map((data, index)=>{
+          var labDetails = {}; //object for each lab tests
+          labDetails.id = data.id;
+          labDetails.name = data.name;
+          labDetails.type = 'lab';
+          labDetails.categoryId = data.category_id;
+          labDetails.price = data.price;
+          console.log(labDetails)
+          setAllServices(oldArray=>[...oldArray, labDetails]) //append each lab test detail to all services
+        })
+      }).catch((error)=>{
+        console.log(error)
+      })
+    } 
+    
+    //fetch packages API if package is selected in filter dropdown
+    else if (category=='package'){
+      axios({
         method: 'post',
         url: window.$link + 'packages/getAll',
         withCredentials: false, 
@@ -63,41 +74,42 @@ export default function Services(){
             token: userToken.replace(/['"]+/g, ''),
             requester: userId,
         }
-    })
-    .then((response)=>{
-        const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        packagesArray.map((item,index)=>{  
-            var packageDetails = {};
-						packageDetails.id = item.id;
-						packageDetails.name = item.name;
-						packageDetails.type = 'package';
-            if( item.id==1 || item.id==2 || item.id==3){                        
-							packageDetails.categoryId = 1; //preEmploymentPackageBasic
-            } else if ( item.id==9 || item.id==10 || item.id==11){
-							packageDetails.categoryId = 2; //preEmploymentPackageDiscount
-            } else if ( item.id==4){ 
-							packageDetails.categoryId = 3; //pregnancyLabPackage
-            } else if ( item.id==12 || item.id==13 || item.id==14){
-							packageDetails.categoryId = 4; //annualWellnessPackageBasic
-            } else {
-                packageDetails.categoryId = item.id //others
-            }          
-            packageDetails.price = item.price;
-            
-            //setAllServices(oldArray=>[...oldArray, packageDetails]) // append each item to packages					
+      })
+      .then((response)=>{
+        const resPackages = response.data.packages.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all packages details
+        
+        //mapping packages response to create object for services
+        resPackages.map((res, index)=>{
+          var packageDetails = {};
+          packageDetails.id = res.id;
+          packageDetails.name = res.name;
+          packageDetails.type = 'package';
+
+          //conditionals for categoryId since category is not yet in API
+          if( res.id==1 || res.id==2 || res.id==3){                        
+            packageDetails.categoryId = '1'; //preEmploymentPackageBasic
+          } else if ( res.id==9 || res.id==10 || res.id==11){
+            packageDetails.categoryId = '2'; //preEmploymentPackageDiscount
+          } else if ( res.id==4){ 
+            packageDetails.categoryId = '3'; //pregnancyLabPackage
+          } else if ( res.id==12 || res.id==13 || res.id==14){
+            packageDetails.categoryId = '4'; //annualWellnessPackageBasic
+          } else {
+              packageDetails.categoryId = res.id.toString() //others
+          }    
+
+          packageDetails.price = res.price;
+          console.log(packageDetails)
+          setAllServices(oldArray=>[...oldArray, packageDetails]) //append each package detail to all services
         })
-    })
-    .catch((error)=>{
+
+      })
+      .catch((error)=>{
         console.log(error)
-    })
-		
-	},[])
-	
-
-	// console.log(allLabServices)
-	// console.log(allPackages)
-	console.log(allServices)
-
+      })
+    }
+  },[render])
+console.log(allServices)
 	/******** END Fetching Data from API ***********/
 
 
@@ -150,6 +162,9 @@ export default function Services(){
 						headingColumns={['ID', 'NAME', 'TYPE', 'CATEGORY', 'PRICE', 'ACTION']}
 						editAction = {editService}
 						deleteAction = {deleteService} 
+            setCategory = {setCategory}
+            setRender = {setRender}
+            render = {render}
 					/>
     </Fragment>
 

@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -97,7 +97,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <td>
                     <button class="action-btn" role="button" onClick={() => editAction(row.id, row.type)}>EDIT SERVICE</button> 
                     <br/>
-                    <button class="action-btn" role="button" onClick={() => deleteAction(row.id, row.type)}>DELETE BOOKING</button>
+                    <button class="action-btn" role="button" onClick={() => deleteAction(row.id, row.type)}>DELETE SERVICE</button>
                 </td>
                 
             </tr>
@@ -408,7 +408,12 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         return (
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  
-                    {/* container for filters, if there is any */}
+                    {/* container for filters*/}
+                    <select onChange={(e) => setCategory(e.target.value)}>
+                        <option value='lab'>LAB</option>
+                        <option value='package'>PACKAGE</option>
+                    </select>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
 
                 <table className={tableClass}>
