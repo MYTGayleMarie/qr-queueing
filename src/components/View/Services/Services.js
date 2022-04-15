@@ -10,10 +10,9 @@ import './Services.css'
 import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
-import { getAllPackages } from "../../../services/services";
 
 //constants
-const buttons = ['add-services'];
+const buttons = ['add-lab-test', 'add-package'];
 const userToken = getToken();
 const userId = getUser();
 
@@ -46,17 +45,33 @@ export default function Services(){
       }).then((response)=>{
         const resLabTests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all lab tests details
 
-
         //mapping lab tests response to create object for services
-        resLabTests.map((data, index)=>{
-          var labDetails = {}; //object for each lab tests
-          labDetails.id = data.id;
-          labDetails.name = data.name;
-          labDetails.type = 'lab';
-          labDetails.categoryId = data.category_id;
-          labDetails.price = data.price;
-          console.log(labDetails)
-          setAllServices(oldArray=>[...oldArray, labDetails]) //append each lab test detail to all services
+        resLabTests.map(async (data, index)=>{
+          await axios({
+            method: 'post',
+            url: window.$link + 'categories/show/' + data.category_id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          })
+          .then( (category) => {
+            console.log(category)
+            var labDetails = {}; //object for each lab tests
+            labDetails.id = data.id;
+            labDetails.name = data.name;
+            labDetails.type = 'lab';
+            labDetails.categoryId = category.data.name;
+            labDetails.price = data.price;
+            console.log(labDetails)
+            setAllServices(oldArray=>[...oldArray, labDetails]) //append each lab test detail to all services
+          }
+
+          )
+          .catch((error)=>{console.log(error)})
+          
         })
       }).catch((error)=>{
         console.log(error)
@@ -87,15 +102,15 @@ export default function Services(){
 
           //conditionals for categoryId since category is not yet in API
           if( res.id==1 || res.id==2 || res.id==3){                        
-            packageDetails.categoryId = '1'; //preEmploymentPackageBasic
+            packageDetails.categoryId = 'Pre Employment Basic'; //1 preEmploymentPackageBasic
           } else if ( res.id==9 || res.id==10 || res.id==11){
-            packageDetails.categoryId = '2'; //preEmploymentPackageDiscount
+            packageDetails.categoryId = 'Pre Employment Discounted'; //2 preEmploymentPackageDiscount
           } else if ( res.id==4){ 
-            packageDetails.categoryId = '3'; //pregnancyLabPackage
+            packageDetails.categoryId = 'Pregnancy Lab'; //3 pregnancyLabPackage
           } else if ( res.id==12 || res.id==13 || res.id==14){
-            packageDetails.categoryId = '4'; //annualWellnessPackageBasic
+            packageDetails.categoryId = 'Annual Wellness'; //4 annualWellnessPackageBasic
           } else {
-              packageDetails.categoryId = res.id.toString() //others
+              packageDetails.categoryId = res.name; //res.id.toString()others
           }    
 
           packageDetails.price = res.price;
