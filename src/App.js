@@ -70,7 +70,8 @@ import { refreshPage, removeUserSession} from './utilities/Common.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Services from './components/View/Services/Services';
-import AddServices from './components/View/Services/AddServices';
+import AddLabTest from './components/View/Services/AddLabTest';
+import AddPackage from './components/View/Services/AddPackage';
 
 
 function App() {
@@ -163,7 +164,8 @@ function App() {
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
         <Route path="/services" element={token ? <Services /> : <Navigate to="/" />} />
-        <Route path="/add-services" element={token ? <AddServices /> : <Navigate to="/" />} />
+        <Route path="/add-lab-test" element={token ? <AddLabTest /> : <Navigate to="/" />} />
+        <Route path="/add-package" element={token ? <AddPackage /> : <Navigate to="/" />} />
         {/* <Route path="/edit-services" element={token ? <Services /> : <Navigate to="/" />} />
         <Route path="/delete-services" element={token ? <Services /> : <Navigate to="/" />} /> */}
       </Routes>
