@@ -194,7 +194,7 @@ export class PaymentToPrint extends React.PureComponent {
                 // console.log(groupedServices[key]);
                 if(info.category === "CLINICAL MICROSCOPY"){
                     category_name = key.replace(/_/g, " ").toUpperCase();
-                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analyis"|| info.name === "Pregnancy test (RPK-Lateral Flow)"){
+                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analysis"|| info.name === "Pregnancy test (RPK-Lateral Flow)"){
                     category_services += info.name + ", ";
                 }
             }

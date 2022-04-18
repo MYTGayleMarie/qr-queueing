@@ -1,7 +1,7 @@
 import React from 'react';
 
 //css
-import './View/Results Releasing/MedTechStart.css';
+import './view/Results Releasing/MedTechStart.css';
 
 function getTime(date) {
   return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
