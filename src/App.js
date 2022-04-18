@@ -69,17 +69,11 @@ import { useEffect } from 'react';
 import { refreshPage, removeUserSession} from './utilities/Common.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-<<<<<<< Updated upstream
 import Services from './components/view/Services/Services';
 import AddLabTest from './components/view/Services/AddLabTest';
 import AddPackage from './components/view/Services/AddPackage';
-=======
-import Services from './components/View/Services/Services';
-import AddLabTest from './components/View/Services/AddLabTest';
-import AddPackage from './components/View/Services/AddPackage';
-import ViewLabTest from './components/View/Services/ViewLabTest';
-import ViewPackage from './components/View/Services/ViewPackage';
->>>>>>> Stashed changes
+import ViewLabTest from './components/view/Services/ViewLabTest';
+import ViewPackage from './components/view/Services/ViewPackage';
 
 
 function App() {
