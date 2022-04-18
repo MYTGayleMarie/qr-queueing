@@ -69,9 +69,17 @@ import { useEffect } from 'react';
 import { refreshPage, removeUserSession} from './utilities/Common.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+<<<<<<< Updated upstream
 import Services from './components/view/Services/Services';
 import AddLabTest from './components/view/Services/AddLabTest';
 import AddPackage from './components/view/Services/AddPackage';
+=======
+import Services from './components/View/Services/Services';
+import AddLabTest from './components/View/Services/AddLabTest';
+import AddPackage from './components/View/Services/AddPackage';
+import ViewLabTest from './components/View/Services/ViewLabTest';
+import ViewPackage from './components/View/Services/ViewPackage';
+>>>>>>> Stashed changes
 
 
 function App() {
@@ -166,8 +174,9 @@ function App() {
         <Route path="/services" element={token ? <Services /> : <Navigate to="/" />} />
         <Route path="/add-lab-test" element={token ? <AddLabTest /> : <Navigate to="/" />} />
         <Route path="/add-package" element={token ? <AddPackage /> : <Navigate to="/" />} />
-        {/* <Route path="/edit-services" element={token ? <Services /> : <Navigate to="/" />} />
-        <Route path="/delete-services" element={token ? <Services /> : <Navigate to="/" />} /> */}
+        <Route path="/view/lab/:id" element={token ? <ViewLabTest /> : <Navigate to="/" />} />
+        <Route path="/view/package/:id" element={token ? <ViewPackage /> : <Navigate to="/" />} />
+        
       </Routes>
     </Router>
 
