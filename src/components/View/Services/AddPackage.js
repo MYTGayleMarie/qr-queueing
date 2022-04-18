@@ -20,10 +20,10 @@ const userToken = getToken();
 const userId = getUser();
 const packageData = {
     name: "",
-    category_id: "",
     price:"",
     remarks: "",
 };
+var selectedIds = [];
 
 //name, category, price, remarks
 //array: package_id, lab_test_id, added_by
@@ -33,6 +33,7 @@ export default function AddPackage(){
   const [applyToall, setApplyToAll] = useState("");
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
+  const [selectedId, setSelectedId] = useState([])
 
   //Redirect
   const [redirect, setRedirect] = useState(false);
@@ -56,31 +57,65 @@ export default function AddPackage(){
           var info = {};
           info.label = data.name;
           info.value = data.id;
-
           setLabOptions(oldArray=>[...oldArray, info])
         })
       }).catch((error)=>{console.log(error)})
   },[])
 
+  // React.useEffect(()=>{
+  //   selectedLab.map((data,index)=>{
+  //     setSelectedId(oldArray=>[...oldArray, data.value])
+  //   })
+  // },[selectedLab])
+
 
   //function for submitting create API
 	function submit(e, packageDetail){
 		e.preventDefault();
-		console.log(packageDetail);
-	if(isClicked==false){
-		if(packageDetail.category_id !="" && packageDetail.name != "" && packageDetail.price != ""){
+    selectedIds.length=0; 
+		
+
+		if(packageDetail.name != "" && packageDetail.price != ""){
+      selectedLab.map((data)=>{
+        console.log(data.value)
+        var id = data.value;
+        selectedIds.push(id)
+      })
+      console.log(packageDetail);
+      console.log(selectedIds);
+      axios({
+        method:'post',
+        url: window.$link + 'packages/create',
+        withCredentials: false, 
+        params:{
+          token: userToken.replace(/['"]+/g, ''),
+          api_key: window.$api_key,
+          name: packageDetail.name,
+          price: packageDetail.price,
+          remarks: packageDetail.remarks,
+          lab_tests: selectedIds,
+          added_by: userId
+        }
+      })
+      .then((response)=>{
+        console.log(response)
+        toast.success("Successfully added lab test");
+        setRedirect(true)
+      })
+      .catch((error)=>{console.log(error)})
 
 		} else {
 			toast.warning("Please fill up all required inputs!");	
 		}
-	}
+     console.log(selectedIds)
 	}
   console.log(packageData)
-  console.log(labOptions)
+  console.log(selectedLab)
+ 
 
   if(redirect == true) {
     return (
-        <Navigate to = "/discounts"/>
+        <Navigate to = "/services"/>
     )
   }  
  return(
@@ -101,32 +136,21 @@ export default function AddPackage(){
               <input type="text" className="form-control" id="name" name="name" onChange={setPackageDetails} required/><br />
             </div>
           </div>
+          
           <div className="row">
-          <label for="discount_code" className="form-label">APPLY TO ALL:  </label>
-            <div className="col-sm-1">
-                <input type="radio" value="yes" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/>
-                <label className="radio-label">Yes</label>
-                <br />
-            </div>
-            <div className="col-sm-1">
-                <input type="radio" value="no" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/>
-                <label className="radio-label">No</label>
-                <br />
-            </div>
+              <div className="col-sm-7">
+              <label for="discount_code" className="form-label">ADD SERVICE/S TO PACKAGE: </label><br />
+              <MultiSelect
+                  options={labOptions}
+                  value={selectedLab}
+                  onChange={setSelectedLab}
+                  labelledBy="Select"
+              />
+              <br />
+              </div>
+              <br />
           </div>
-          {applyToall == "no" && (
-            <div className="row">
-                <div className="col-sm-11">
-                <label for="discount_code" className="form-label">ADD SERVICE/S TO PACKAGE: </label><br />
-                <MultiSelect
-                    options={labOptions}
-                    value={selectedLab}
-                    onChange={setSelectedLab}
-                    labelledBy="Select"
-                />
-                </div>
-            </div>
-          )}
+          
           <div className="row">
 	          <div className="col-sm-5">
 						  <label for="price" className="form-label">PRICE <i> (required)</i></label>
