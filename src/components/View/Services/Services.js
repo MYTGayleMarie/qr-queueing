@@ -15,12 +15,14 @@ import Table from '../../Table.js';
 const buttons = ['add-lab-test', 'add-package'];
 const userToken = getToken();
 const userId = getUser();
+var id = '';
 
 
 
 //View page
 export default function Services(){
-  const [allServices, setAllServices] = useState([]); //data for the table (including lab tests and packages)
+  const [allServices, setAllServices] = useState([]); //data for the table (i
+	const [redirectView, setRedirectView] = useState(false) //redirect to edit service link
 
   const [category, setCategory] = useState('lab') // state for the category filter
   const [render, setRender] = useState([]) //changes state when filter button is clicked
@@ -43,7 +45,8 @@ export default function Services(){
             requester: userId,
         }
       }).then((response)=>{
-        const resLabTests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all lab tests details
+        const resLabTests = response.data.lab_tests.sort((x, y)=>x.id-y.id).filter(test=>test.is_deleted != 1); // array of all lab tests details
+        console.log(resLabTests)
 
         //mapping lab tests response to create object for services
         resLabTests.map(async (data, index)=>{
@@ -124,42 +127,26 @@ export default function Services(){
       })
     }
   },[render])
-console.log(allServices)
+
 	/******** END Fetching Data from API ***********/
+//sort services by service id
+   React.useEffect(() => {
+    allServices.sort((a,b) => (a.id - b.id));
+  },[allServices]);
 
 
-	/******** START Redirecting to EDIT DELETE ***********/
-	var id = '';
-	const [redirectEdit, setRedirectEdit] = useState(false) //redirect to edit service link
-	const [redirectDelete, setRedirectDelete] = useState(false) //redirect to delete service link
-
-	//function for redirecting to edit-service/type/id
-  function editService(serviceId, type) {
-		id = type+"/"+serviceId;
-    setRedirectEdit(true);
-  }
-	if(redirectEdit == true) {
-    var link =  "/edit-service/" + id;
-    return (
-        // <Navigate to ={link}/>
-				console.log("edit ", link)
-    )
-  }
-
-	//function for redirecting to delete-service/type/id
-	function deleteService(serviceId, type) {
+	//function for redirecting to review
+	function linkView(serviceId, type) {
     id = type+"/"+serviceId;
-    setRedirectDelete(true);
+    setRedirectView(true);
   }
-	if(redirectDelete == true) {
-    var link =  "/delete-service/" + id;
+  
+	if(redirectView == true) {
+    var link = "/view/"+id
     return (
-        // <Navigate to ={link}/>
-				console.log("delete ", link)
+        <Navigate to ={link}/>
     )
   }
-
-	/******** END Redirecting to EDIT DELETE ***********/
 
 
 	
@@ -175,8 +162,7 @@ console.log(allServices)
 						tableData={allServices}
 						rowsPerPage={10}
 						headingColumns={['ID', 'NAME', 'TYPE', 'CATEGORY', 'PRICE', 'ACTION']}
-						editAction = {editService}
-						deleteAction = {deleteService} 
+						link = {linkView}
             setCategory = {setCategory}
             setRender = {setRender}
             render = {render}

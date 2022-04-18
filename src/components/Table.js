@@ -95,9 +95,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>
                 )}
                 <td>
-                    <button class="action-btn" role="button" onClick={() => editAction(row.id, row.type)}>EDIT SERVICE</button> 
+                    <button class="action-btn" role="button" onClick={() => link(row.id, row.type)}>VIEW</button> 
                     <br/>
-                    <button class="action-btn" role="button" onClick={() => deleteAction(row.id, row.type)}>DELETE SERVICE</button>
                 </td>
                 
             </tr>

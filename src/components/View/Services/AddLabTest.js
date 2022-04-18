@@ -14,6 +14,7 @@ import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 import { MultiSelect } from "react-multi-select-component";
+import { DEFAULT_BREAKPOINTS } from "react-bootstrap/esm/ThemeProvider";
 
 //constants
 const userToken = getToken();
@@ -43,9 +44,10 @@ export default function AddLabTest(){
 
 	//options for the category
 	React.useEffect(()=>{
+		categoryOptions.length = 0;
 		axios({
 			method: 'post',
-			url: window.$link + '/categories/getAll',
+			url: window.$link + 'categories/getAll',
 			withCredentials: false, 
 			params: {
 					api_key: window.$api_key,
@@ -54,6 +56,15 @@ export default function AddLabTest(){
 		}})
 		.then((response)=>{
 			console.log(response)
+			const resCategories = response.data.categories.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id);
+			resCategories.map((data, index)=>{
+				var info = {};
+				info.id = data.id;
+				info.name = data.name.toLowerCase();
+
+				setCategoryOptions((oldArray)=>[...oldArray, info])
+			})
+			
 		})
 		.catch((error)=>{console.log(error)})
 	},[])
@@ -61,14 +72,34 @@ export default function AddLabTest(){
 	//function for create lab test
 	function submit(e, labTest){
 		e.preventDefault();
-		console.log(labTest);
-	if(isClicked==false){
+		
+		// // if(isClicked==false){
 		if(labTest.category_id !="" && labTest.name != "" && labTest.price != ""){
+			axios({
+				method: 'post',
+				url: window.$link + 'lab_tests/create',
+				withCredentials: false, 
+				params: {
+						token: userToken.replace(/['"]+/g, ''),
+						api_key: window.$api_key,
+						name:labTest.name,
+						category:parseInt(labTest.category_id),
+						price:labTest.price,
+						remarks:labTest.remarks,
+						added_by:userId
+				}
+			})
+			.then((response)=>{
+				console.log(response)
+				toast.success("Successfully added lab test");
+				setRedirect(true)
+			})
+			.catch((error)=>{console.log(error)})
 
 		} else {
 			toast.warning("Please fill up all required inputs!");	
 		}
-	}
+	// }
 	}
 
 
@@ -78,14 +109,7 @@ export default function AddLabTest(){
 			<Navigate to = "/services"/>
     )	
 	}
-
-
-
-
-
-
-
-
+ 
 
 	return(
 		<div>
@@ -103,13 +127,14 @@ export default function AddLabTest(){
 					<div className="row">
 					<div className="col-sm-11">
 						<label for="category_id" className="form-label">CATEGORY <i> (required)</i></label>
-						<MultiSelect 
-							options={categoryOptions}
-							value={selectedCategory}
-							onChange={setSelectedCategory}
-							labelledBy="Select"
+						<br />
 
-						/>
+						<select className="input-select" id="category_id" name="category_id" onChange={setLabTest}>
+								<option value="">CHOOSE CLINICAL SERVICE</option>
+								{categoryOptions.map((option,index) => (
+										<option className="category" value={option.id}>{option.name}</option>
+								))}
+						</select> 
 						<br />
 					</div>
 					</div>
