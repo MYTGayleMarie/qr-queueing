@@ -290,6 +290,10 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         getDetails(hematology, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
+      case 3:
+        getDetails(electrolytes, data[0])
+        checkedServicesDetails.push(itemDetails);
+        break;
       case 4:
         getDetails(electrolytes, data[0]);
         checkedServicesDetails.push(itemDetails);

@@ -95,6 +95,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
         }
     })
     .then((response)=>{
+        console.log(response)
         const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
         console.log(tests)
         tests.map((test,index)=>{   
@@ -159,9 +160,9 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     })
     .then((response)=>{
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        console.log(packagesArray)
+        // console.log(packagesArray)
         packagesArray.map((item,index)=>{  
-            console.log(item) 
+            // console.log(item) 
             var packageDetails = {};
             var packageCode = "";
             if( item.id==1 || item.id==2 || item.id==3){                        
@@ -269,10 +270,12 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     }).catch(function (error) {
         console.log(error);
     });
+    console.log(electrolytes)
 
      //functions
      function getDetails(categoryItems, checkedItem) {
         categoryItems.map((data, index) => {
+            console.log(data)
              if(data.key == checkedItem) {
      
                  itemDetails = {
@@ -423,10 +426,10 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     const asArray = Object.entries(service)
     const checkedServices = asArray.filter(([key,value]) => value == true);
     var checkedServicesDetails = [];
-console.log(checkedServices)
+// console.log(checkedServices)
 
     checkedServices.map((data, index) => {
-    console.log(data)
+    // console.log(data)
         var categoryDetails = data[0].split("_");
         var categoryId = parseInt(categoryDetails[1]);
         console.log(categoryDetails[1])
@@ -451,7 +454,7 @@ console.log(checkedServices)
             break;
         }
 
-        console.log(checkedServicesDetails)
+        // console.log(checkedServicesDetails)
        //lab
         switch(categoryId) {
             case 1:
@@ -460,6 +463,10 @@ console.log(checkedServices)
             break;
             case 2:
                 getDetails(hematology, data[0])
+                checkedServicesDetails.push(itemDetails);
+            break;
+            case 3:
+                getDetails(electrolytes, data[0])
                 checkedServicesDetails.push(itemDetails);
             break;
             case 4:
@@ -561,7 +568,7 @@ console.log(checkedServices)
     //Total discount labs/packages
 if(typeof checkedServicesDetails[0] !== 'undefined') {
     checkedServicesDetails.map((data, index) => {
-        console.log(data);
+        // console.log(data);
 
         //To insert condition for discount for specific labs/packages
         if(index == 0) {
@@ -588,7 +595,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
 
 if(typeof checkedServicesDetails[0] !== 'undefined') {
     checkedServicesDetails.map((data, index) => {
-        console.log(data);
+        // console.log(data);
         //To insert condition for discount for specific labs/packages
         if(index == 0) {
             newLabTotal = 0;

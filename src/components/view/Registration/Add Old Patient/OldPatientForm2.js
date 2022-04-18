@@ -289,6 +289,10 @@ checkedServices.map((data, index) => {
             getDetails(hematology, data[0])
             checkedServicesDetails.push(itemDetails);
         break;
+        case 3:
+            getDetails(electrolytes, data[0])
+            checkedServicesDetails.push(itemDetails);
+        break;
         case 4:
             getDetails(electrolytes, data[0])
             checkedServicesDetails.push(itemDetails);
