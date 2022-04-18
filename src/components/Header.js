@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage}) {
 
     var btn = [];
 
@@ -110,6 +110,12 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                 }
                 else if(button === 'delete-lab-test') {
                     return <button className="edit-profile" onClick={deleteLabTest}> DELETE LAB TEST</button>
+                }
+                else if(button === 'edit-package') {
+                    return <button className="edit-profile" onClick={editPackage}> EDIT PACKAGE</button>
+                }
+                else if(button === 'delete-package') {
+                    return <button className="edit-profile" onClick={deletePackage}> DELETE PACKAGE</button>
                 }
                 else if(button === 'delete-supplier') {
                     return <button className="edit-profile" onClick={deleteSupplier}> DELETE SUPPLIER</button>
