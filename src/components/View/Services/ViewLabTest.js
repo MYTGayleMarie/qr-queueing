@@ -59,7 +59,6 @@ export default function ViewLabTest(){
       }
     })
     .then((response)=>{
-      console.log(response)
       setName(response.data.name)
       setPrice(response.data.price)
       setRemarks(response.data.remarks)
@@ -79,7 +78,6 @@ export default function ViewLabTest(){
           requester: userId,
         },
       }).then((response)=>{
-        console.log(response)
         setCategory(response.data.name.toLowerCase())
         
         setEditCategoryName(response.data.name.toLowerCase())
@@ -101,7 +99,6 @@ export default function ViewLabTest(){
 					requester: userId,
 		}})
 		.then((response)=>{
-			console.log(response)
 			const resCategories = response.data.categories.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id);
 			resCategories.map((data, index)=>{
 				var info = {};
@@ -115,7 +112,6 @@ export default function ViewLabTest(){
 
   // submit delete request
   function deleteLabTest(){
-    console.log("delete "+id)
     axios({
       method: 'post',
       url: window.$link + 'lab_tests/delete/' + id,
@@ -139,6 +135,7 @@ export default function ViewLabTest(){
   //submit edit request
   function editLabTest(e){
     e.preventDefault();
+    console.log(editName, editCategoryId, editPrice, editRemarks)
     axios({
       method: 'post',
       url: window.$link + 'lab_tests/update/' + id,
@@ -168,7 +165,7 @@ export default function ViewLabTest(){
         <Navigate to = "/services"/>
     )
   }    
-console.log(categoryOptions)
+
   return(
     <div>
      <Navbar />

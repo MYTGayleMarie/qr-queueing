@@ -65,7 +65,35 @@ export default function ViewPackage(){
     .catch((error)=>{console.log(error)})
   },[])
 
-  //delete request
+  //function edit request
+  function editPackage(e){
+    e.preventDefault();
+  
+    axios({
+      method: 'post',
+      url: window.$link + 'packages/update/' + id,
+      withCredentials: false, 
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        name: editName,
+        price: editPrice,
+        remarks: editRemarks,
+        updated_by: userId
+
+    }})
+    .then((response)=>{
+      console.log(response)
+      toast.success("Successfully updated user profile!");
+      handlePackageClose();
+      setTimeout(function() {
+        setRedirect(true);
+        }, 2000);
+    })
+    .catch((error)=>{console.log(error)})
+  }
+
+  //function delete request
   function deletePackage(){
     console.log("delete "+id)
     axios({
@@ -122,6 +150,53 @@ export default function ViewPackage(){
           </tr>
 
           </table>
+          <Modal show={packageShow} onHide={handlePackageClose} size="md">
+            <Modal.Header>
+              <Modal.Title className='w-100 cash-count-header'>EDIT PACKAGE</Modal.Title>
+            </Modal.Header>
+            <form>
+            <Modal.Body>
+              <div className='row'>
+                <div className='col-sm-12'>
+                  <div className='row'>
+                    <div className='col-sm-3'>
+                      <div className='label text-left'>NAME</div>
+                    </div>
+                    <div className='col-sm-8'>
+                      <input type="text" name="name" className='cash-count-input' value={editName} onChange={(e) => setEditName(e.target.value)}/>
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-sm-3'>
+                      <div className='label text-left'>PRICE</div>
+                    </div>
+                    <div className='col-sm-8'>
+                      <input type="text" name="price" className='cash-count-input' value={editPrice} onChange={(e) => setEditPrice(e.target.value)}/>
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-sm-3'>
+                      <div className='label text-left'>REMARKS</div>
+                    </div>
+                    <div className='col-sm-8'>
+                      <input type="text" name="remarks" className='cash-count-input' value={editRemarks} onChange={(e) =>setEditRemarks(e.target.value)}/>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+
+
+            </Modal.Body>
+            </form>
+            
+            <Modal.Footer>
+              <button type="submit" className='save-btn' onClick={(e) => editPackage(e)}>
+                SAVE
+              </button>
+
+            </Modal.Footer>
+          </Modal>
         </Fragment>
         
 
