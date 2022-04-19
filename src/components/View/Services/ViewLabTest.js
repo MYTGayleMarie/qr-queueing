@@ -110,6 +110,11 @@ export default function ViewLabTest(){
 		.catch((error)=>{console.log(error)})
 	},[])
 
+  //sort category alphabetically
+  React.useEffect(() => {
+    categoryOptions.sort((a,b)=> (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+  },[categoryOptions]);
+
   // submit delete request
   function deleteLabTest(){
     axios({
