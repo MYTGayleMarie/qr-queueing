@@ -6,6 +6,7 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
+import { MultiSelect } from 'react-multi-select-component';
 
 //css
 import './ViewLabTest.css'
@@ -26,12 +27,17 @@ export default function ViewPackage(){
   const {id} = useParams();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [services, setServices] = useState([]);
   const [remarks, setRemarks] = useState("");
 
   // edit package details
   const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
+  const [editServices, setEditServices] = useState([])
   const [editRemarks, setEditRemarks] = useState("");
+
+  //lab tests options
+  const [labOptions, setLabOptions] = useState([]);
 
   //Edit Lab test modal
   const [packageShow, setPackageShow] = useState(false);
@@ -40,6 +46,10 @@ export default function ViewPackage(){
 
   //redirect
   const [redirect, setRedirect] = useState(false)
+
+  //lab test id array
+  // const [labTestsId, setLabTestsId] = useState([])
+  const labTestsId = [];
 
   //fetching package details
   React.useEffect(()=>{
@@ -54,6 +64,7 @@ export default function ViewPackage(){
       }
     })
     .then((response)=>{
+      // console.log(response)
       setName(response.data.name)
       setPrice(response.data.price)
       setRemarks(response.data.remarks)
@@ -65,9 +76,81 @@ export default function ViewPackage(){
     .catch((error)=>{console.log(error)})
   },[])
 
+  //Get all lab tests under package
+  React.useEffect(()=>{
+    axios({
+      method: 'post',
+      url: window.$link + 'Package_detail/show_by_package/' + id,
+      withCredentials: false, 
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId
+      }
+    })
+    .then((response)=>{
+      // console.log(response)
+      response.data.map(async (data,index)=>{
+        // console.log(data)
+        await axios({
+          method: 'post',
+          url: window.$link + 'lab_tests/show/' + data.lab_test_id,
+          withCredentials: false, 
+          params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+        })
+        .then((service)=>{
+          // console.log(service)
+          var info = {};
+          info.label = service.data.name;
+          info.value = data.lab_test_id;
+          setServices(oldArray=>[...oldArray, info])
+          setEditServices(oldArray=>[...oldArray, info])
+          
+
+        })
+        .catch((error)=>{console.log(error)})
+
+      })
+      
+    })
+    .catch((error)=>{console.log(error)})
+  },[])
+
+  //Get all lab tests
+  React.useEffect(()=>{
+    axios({
+        method: 'post',
+        url: window.$link + 'lab_tests/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      }).then((response)=>{
+        const resLabTests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all lab tests details
+        // console.log(resLabTests)
+        resLabTests.map((data, index)=>{
+          var info = {};
+          info.label = data.name;
+          info.value = data.id;
+          setLabOptions(oldArray=>[...oldArray, info])
+        })
+      }).catch((error)=>{console.log(error)})
+  },[])
+
   //function edit request
   function editPackage(e){
     e.preventDefault();
+    
+    editServices.map((data,index)=>{
+      // console.log(data)
+      labTestsId.push(data.value)
+    })
   
     axios({
       method: 'post',
@@ -79,12 +162,13 @@ export default function ViewPackage(){
         name: editName,
         price: editPrice,
         remarks: editRemarks,
+        lab_tests: labTestsId,
         updated_by: userId
 
     }})
     .then((response)=>{
-      console.log(response)
-      toast.success("Successfully updated user profile!");
+      // console.log(response)
+      toast.success("Successfully updated package!");
       handlePackageClose();
       setTimeout(function() {
         setRedirect(true);
@@ -93,9 +177,10 @@ export default function ViewPackage(){
     .catch((error)=>{console.log(error)})
   }
 
+
   //function delete request
   function deletePackage(){
-    console.log("delete "+id)
+    // console.log("delete "+id)
     axios({
       method: 'post',
       url: window.$link + 'packages/delete/' + id,
@@ -106,7 +191,7 @@ export default function ViewPackage(){
         updated_by: userId,
       },
     }).then(function (response) {
-        console.log(response)
+        // console.log(response)
         toast.success("Successfully deleted");
         setTimeout(function () {
           setRedirect(true);
@@ -115,6 +200,8 @@ export default function ViewPackage(){
         console.log(error);
     });
   }
+ 
+  //redirect to services manager after edit/delete
   if(redirect == true) {
   return (
       <Navigate to = "/services"/>
@@ -135,6 +222,7 @@ export default function ViewPackage(){
         />
         <ToastContainer/>
         <h4 className="form-categories-header italic">PACKAGE DETAILS</h4>
+        
           <table className="personal-data-cont">
           <tr>
               <td className="first-name label">NAME</td>
@@ -145,12 +233,22 @@ export default function ViewPackage(){
               <td className="first-name detail">P {price}</td>
           </tr>
           <tr>
+              <td className="first-name label">SERVICES</td>
+              <td className="first-name detail"style={{padding: "20px 0px"}}>
+              
+                {services.map((service)=>
+                  <div>{service.label}</div>
+                )}
+              
+            </td>
+          </tr>
+          <tr>
               <td className="first-name label">REMARKS</td>
               <td className="first-name detail">{remarks}</td>
           </tr>
 
           </table>
-          <Modal show={packageShow} onHide={handlePackageClose} size="md">
+          <Modal show={packageShow} onHide={handlePackageClose} size="lg">
             <Modal.Header>
               <Modal.Title className='w-100 cash-count-header'>EDIT PACKAGE</Modal.Title>
             </Modal.Header>
@@ -172,6 +270,20 @@ export default function ViewPackage(){
                     </div>
                     <div className='col-sm-8'>
                       <input type="text" name="price" className='cash-count-input' value={editPrice} onChange={(e) => setEditPrice(e.target.value)}/>
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-sm-3'>
+                      <div className='label text-left'>SERVICES</div>
+                    </div>
+                    <div className='col-sm-8'>
+                      {/* <input type="text" name="price" className='cash-count-input' value={editServices} onChange={(e) => setEditServices(e.target.value)}/> */}
+                      <MultiSelect
+                        options={labOptions}
+                        value={editServices}
+                        onChange={setEditServices}
+                        labelledBy="Select"
+                      />
                     </div>
                   </div>
                   <div className='row'>
