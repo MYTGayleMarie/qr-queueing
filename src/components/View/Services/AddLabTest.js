@@ -56,7 +56,8 @@ export default function AddLabTest(){
 		}})
 		.then((response)=>{
 			console.log(response)
-			const resCategories = response.data.categories.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id);
+			const resCategories = response.data.categories.filter(test=>test.is_deleted != 1);
+			console.log(resCategories)
 			resCategories.map((data, index)=>{
 				var info = {};
 				info.id = data.id;
@@ -68,6 +69,11 @@ export default function AddLabTest(){
 		})
 		.catch((error)=>{console.log(error)})
 	},[])
+
+	//Sort categories by alphabetical
+	React.useEffect(() => {
+		categoryOptions.sort((a,b)=> (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+  },[categoryOptions]);
 
 	//function for create lab test
 	function submit(e, labTest){
