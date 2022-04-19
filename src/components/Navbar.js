@@ -20,6 +20,7 @@ import discountIcon from '../images/icons/discount-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';
 import reportIcon from '../images/icons/report-icon.png';
 import logoutIcon from '../images/icons/logout.png';
+import servicesIcon from '../images/icons/services-icon.png';
 
 //logo image
 import logo from '../images/logo.png';
@@ -317,7 +318,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
           </li>
           <NavLink to="/services" activeClassName="active" class="link">
           <li href="#" class="nav-link users-nav">
-                <img src={usersIcon} alt={'users'} class="users icon"></img>
+                <img src={servicesIcon} alt={'users'} class="users icon"></img>
                 <span class="mx-2">Services</span>
           </li>
           </NavLink>
