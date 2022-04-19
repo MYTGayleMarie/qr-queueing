@@ -144,14 +144,14 @@ export default function ViewLabTest(){
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         name: editName,
-        category_id: editCategoryId,
+        category: editCategoryId,
         price: editPrice,
         remarks: editRemarks,
         updated_by: userId
     }})
     .then((response)=>{
       console.log(response)
-      toast.success("Successfully updated user profile!");
+      toast.success("Successfully updated lab test!");
       handleLabTestClose();
       setTimeout(function() {
         setRedirect(true);
