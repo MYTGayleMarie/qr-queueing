@@ -205,6 +205,32 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td><button class="action-btn" role="button" onClick={() => endPromo(row.id)}>END PROMO</button></td>
             </tr>
         }
+        else if (type === 'sales') {
+            // return <tr key={row.id} onClick={() => link(row.id)}>
+            // {rowData.map((data, index) => 
+            // <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
+            // </tr>
+                                                                                                           
+            return <tr key={row.id} onClick={() => link(row.id)}>
+                <td key={row.method.replace(/\s/g, '')} data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
+                <td key='1' data-heading='ACCOUNT' className='ACCOUNT'>
+                    {row.account != null && (
+                        row.account.map((data)=>
+                            <div className='account-name'>{data.name}</div>
+                        )
+                    )}      
+                </td>
+                <td key='2' data-heading='METHOD' className='amount'>
+                    {row.account != null && (
+                        row.account.map((data)=>
+                            <div className='account-amount'>P {data.amount}</div>
+                        )
+                    )}         
+                </td>
+                <td key='3' data-heading='TOTAL' className='total'>P {row.total}</td>
+                <td key='4' data-heading='DATE' className={row.date}>{row.date}</td>
+            </tr>
+        }
         else {
             return <tr key={row.id} onClick={() => link(row.id)}>
             {rowData.map((data, index) => 
@@ -212,7 +238,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
     });
-
+ 
+    //table structure
     if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits' || type === 'receives'||type === 'transaction') {
 
         const {from_date, to_date, done} = filteredData;

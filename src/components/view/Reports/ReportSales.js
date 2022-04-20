@@ -36,52 +36,103 @@ function ReportSales() {
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [redirect, setRedirection] = useState(false);
   const [total, setTotal] = useState(0);
+
   
      //SALES REPORT
-     React.useEffect(() => {
-       sales.length = 0;
-        axios({
-            method: 'post',
-            url: window.$link + 'reports/sales',
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              date_from: filteredData.from_date,
-              date_to: filteredData.to_date,
-              requester: userId,
-            },
-          }).then(function (response) {
-              console.log(response.data.data.sales)
-              var totalAmount = 0;
-              response.data.data.sales.map((data,index) => {
-                var info = {};
-                var date = new Date(data.payment_date);
-                var formattedDate = date.toDateString().split(" ");
-                var selectedDate = new Date(filteredData.from_date);
-                var formattedSelectedDate = selectedDate.toDateString().split(" ");
-                info.method = data.type.toUpperCase();
-                info.amount = data.grand_total == null ? "P 0.00" : "P " + data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
-                info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+    //  React.useEffect(() => {
+    //    sales.length = 0;
+    //     axios({
+    //         method: 'post',
+    //         url: window.$link + 'reports/sales',
+    //         withCredentials: false,
+    //         params: {
+    //           api_key: window.$api_key,
+    //           token: userToken.replace(/['"]+/g, ''),
+    //           date_from: filteredData.from_date,
+    //           date_to: filteredData.to_date,
+    //           requester: userId,
+    //         },
+    //       }).then(function (response) {
+    //           console.log(response.data.data.sales)
+    //           var totalAmount = 0;
+    //           response.data.data.sales.map((data,index) => {
+    //             var info = {};
+    //             var date = new Date(data.payment_date);
+    //             var formattedDate = date.toDateString().split(" ");
+    //             var selectedDate = new Date(filteredData.from_date);
+    //             var formattedSelectedDate = selectedDate.toDateString().split(" ");
+    //             info.method = data.type.toUpperCase();
+    //             info.amount = data.grand_total == null ? "P 0.00" : "P " + data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //             totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
+    //             info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                 
-                setSales(oldArray => [...oldArray, info]);
+    //             setSales(oldArray => [...oldArray, info]);
 
-                if(response.data.data.sales.length - 1 == index) {
-                  setTotal(totalAmount);
-                  setPrintReadyFinal(true);
-                }
-              });
+    //             if(response.data.data.sales.length - 1 == index) {
+    //               setTotal(totalAmount);
+    //               setPrintReadyFinal(true);
+    //             }
+    //           });
           
-          }).then(function (error) {
-            console.log(error);
-          });
-    },[render]);
+    //       }).then(function (error) {
+    //         console.log(error);
+    //       });
+    // },[render]);
+
+    React.useEffect(()=>{
+      axios({
+        method: 'post',
+        url: window.$link + 'reports/salesSummary',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
+          requester: userId,
+        }
+      })
+      .then((response)=>{
+        console.log(response)
+        var totalAmount = 0;
+        
+        const salesArray = response.data.data.sales
+        salesArray.map((data,index)=>{
+          var info = {}
+          var date = new Date(data.payment_date);
+          var formattedDate = date.toDateString().split(" ");
+          var selectedDate = new Date(filteredData.from_date);
+          var formattedSelectedDate = selectedDate.toDateString().split(" ");
+
+          //data for the table
+          info.method =  data.type
+          info.account = data.accounts
+          info.total = data.grand_total.toString()
+          info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+          setSales(oldArray=>[...oldArray, info])
+
+          //total amount
+          totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
+          if(salesArray.length - 1 == index) {
+              setTotal(totalAmount);
+              setPrintReadyFinal(true);
+            }
+          })
+
+      })
+      .catch((error)=>{console.log(error)})
+    
+    
+    
+    },[render])
+
+    console.log(sales)
+    console.log(total)
 
   function filter() {}
 
   function toTransaction() {
-    setRedirection(true);
+    // setRedirection(true);
   }
 
   if(redirect == true) {
@@ -101,15 +152,18 @@ function ReportSales() {
             buttons={buttons} 
             tableName={'Home Service Report'}
             tableData={sales}
-            tableHeaders={['METHOD', 'AMOUNT','DATE']}
+            // tableHeaders={['METHOD', 'TOTAL', 'DATE']}
+            tableHeaders={['METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL', 'DATE']}
             status={printReadyFinal}
              />
           <Table
             clickable={true}
+            title="QR DIAGNOSTICS REPORT" 
             type={'sales'}
             tableData={sales}
             rowsPerPage={100}
-            headingColumns={['METHOD', 'AMOUNT','DATE']}
+            // headingColumns={['METHOD', 'TOTAL', 'DATE']}
+            headingColumns={['METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL', 'DATE']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

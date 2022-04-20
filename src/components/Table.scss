@@ -259,3 +259,19 @@ body {
   padding: 0.5%;
   margin-left: 1.5%;
 }
+
+//sales 
+.account-name,.account-amount{
+  // text-align: left;
+  padding:5%;
+  font-family: -apple-system,
+  BlinkMacSystemFont,
+  "Roboto",
+  sans-serif;
+  color: #212529;
+  }
+
+.total {
+  color: #55073a !important;
+  font-weight: bold;
+}
