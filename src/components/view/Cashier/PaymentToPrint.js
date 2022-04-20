@@ -185,16 +185,15 @@ export class PaymentToPrint extends React.PureComponent {
         });
 
         const services_Clinical_Urinalysis = Object.keys(groupedServices).map(function(key) {
-           
-            var category_name = "";
             var category_services = "";
+            var category_name="";
 
 
             groupedServices[key].map((info, index) => {
                 // console.log(groupedServices[key]);
                 if(info.category === "CLINICAL MICROSCOPY"){
                     category_name = key.replace(/_/g, " ").toUpperCase();
-                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analysis"|| info.name === "Pregnancy test (RPK-Lateral Flow)"||info.name === "Serum Pregnancy Test"){
+                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analysis"|| info.name === "Pregnancy Test (RPK Lateral Flow)"||info.name === "Serum Pregnancy Test"){
                     category_services += info.name + ", ";
                 }
             }

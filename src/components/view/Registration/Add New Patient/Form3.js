@@ -439,6 +439,8 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         break;
     }
 
+    
+
     //lab
     switch (categoryId) {
       case 1:
@@ -447,10 +449,6 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         break;
       case 2:
         getDetails(hematology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 3:
-        getDetails(electrolytes, data[0])
         checkedServicesDetails.push(itemDetails);
         break;
       case 4:
@@ -546,7 +544,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
       setDiscountCode(response.data.data.discount.discount_code);
   });
 },[discountDetails]);
-
+ 
 //Total discount labs/packages
 if(typeof checkedServicesDetails[0] !== 'undefined') {
 checkedServicesDetails.map((data, index) => {
