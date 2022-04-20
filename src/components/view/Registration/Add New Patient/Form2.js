@@ -140,7 +140,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
     const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
     const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
-    const otherTests = allLabServices.filter(item=>item.categoryId == 29)
+    const otherTests = allLabServices.filter(item=>item.categoryId == 29||item.categoryId == 22)
 
     //get all packages
     const [allPackages, setAllPackages] = useState([])
@@ -254,30 +254,30 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         getDetails(preEmploymentPackageDiscount, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
-      // case "package3":
-      //     getDetails(pregnancyLabPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
+      case "package3":
+          getDetails(pregnancyLabPackage, data[0])
+          checkedServicesDetails.push(itemDetails);
+      break;
       case 'package4':
         getDetails(annualWellnessPackageBasic, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
-      // case "package5":
-      //     getDetails(thyroidTestPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package6":
-      //     getDetails(annualWellnessPackagePremium, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package7":
-      //     getDetails(liverFunctionTest, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package8":
-      //     getDetails(diabetesAndCholesterolPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
+      case "package5":
+          getDetails(thyroidTestPackage, data[0])
+          checkedServicesDetails.push(itemDetails);
+      break;
+      case "package6":
+          getDetails(annualWellnessPackagePremium, data[0])
+          checkedServicesDetails.push(itemDetails);
+      break;
+      case "package7":
+          getDetails(liverFunctionTest, data[0])
+          checkedServicesDetails.push(itemDetails);
+      break;
+      case "package8":
+          getDetails(diabetesAndCholesterolPackage, data[0])
+          checkedServicesDetails.push(itemDetails);
+      break;
     }
 
     //lab
@@ -365,6 +365,10 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
       case 22:
         getDetails(promo, data[0]);
         checkedServicesDetails.push(itemDetails);
+      case 23:
+          getDetails(otherTests, data[0]);
+          checkedServicesDetails.push(itemDetails);
+      break;
     }
   });
 

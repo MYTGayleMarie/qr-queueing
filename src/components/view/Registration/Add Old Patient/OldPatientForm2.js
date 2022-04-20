@@ -141,7 +141,7 @@ function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackage
     const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
     const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
     const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
-    const otherTests = allLabServices.filter(item=>item.categoryId == 29)
+    const otherTests = allLabServices.filter(item=>item.categoryId == 29||item.categoryId == 22)
 
     //get all packages
     const [allPackages, setAllPackages] = useState([])
@@ -359,6 +359,14 @@ checkedServices.map((data, index) => {
         break;
         case 21:
             getDetails(ultrasound, data[0])
+            checkedServicesDetails.push(itemDetails);
+        break;
+        case 22:
+            getDetails(promo, data[0]);
+            checkedServicesDetails.push(itemDetails);
+        break;
+        case 23:
+            getDetails(otherTests, data[0]);
             checkedServicesDetails.push(itemDetails);
         break;
     }

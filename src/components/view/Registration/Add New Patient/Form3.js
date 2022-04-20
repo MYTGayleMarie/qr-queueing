@@ -111,8 +111,9 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         }
     })
     .then((response)=>{
+      console.log(response)
         const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
-        console.log(tests)
+        // console.log(tests)
         tests.map((test,index)=>{   
             var testDetails = {};
             if (test.id == 129){ //otherTest
@@ -158,7 +159,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
     const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
     const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
-    const otherTests = allLabServices.filter(item=>item.categoryId == 29)
+    const otherTests = allLabServices.filter(item=>item.categoryId == 29||item.categoryId == 22)
 
     //get all packages
     const [allPackages, setAllPackages] = useState([])
@@ -175,9 +176,9 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     })
     .then((response)=>{
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        console.log(packagesArray)
+        // console.log(packagesArray)
         packagesArray.map((item,index)=>{  
-            console.log(item) 
+            // console.log(item) 
             var packageDetails = {};
             var packageCode = "";
             if( item.id==1 || item.id==2 || item.id==3){                        
@@ -291,7 +292,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
           added_by: userId,
         },
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         toast.success(response.data.message.success);
         var packageId = [];
         var packagePrices = [];
@@ -367,7 +368,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             added_by: userId,
           },
         }).then(function (response) {
-          console.log(response);
+          // console.log(response);
           setBookingId(response.data.data.booking_id);
           toast.success(response.data.message.success);
           
@@ -552,7 +553,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 //Total discount labs/packages
 if(typeof checkedServicesDetails[0] !== 'undefined') {
 checkedServicesDetails.map((data, index) => {
-  console.log(data);
+  // console.log(data);
 
   //To insert condition for discount for specific labs/packages
   if(index == 0) {
@@ -578,7 +579,7 @@ checkedServicesDetails.map((data, index) => {
 }
 if(typeof checkedServicesDetails[0] !== 'undefined') {
 checkedServicesDetails.map((data, index) => {
-console.log(data);
+// console.log(data);
 //To insert condition for discount for specific labs/packages
 if(index == 0) {
   newLabTotal = 0;

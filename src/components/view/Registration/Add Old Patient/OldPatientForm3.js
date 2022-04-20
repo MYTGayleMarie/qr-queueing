@@ -143,7 +143,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
     const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
     const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
-    const otherTests = allLabServices.filter(item=>item.categoryId == 29)
+    const otherTests = allLabServices.filter(item=>item.categoryId == 29||item.categoryId == 22)
 
     //get all packages
     const [allPackages, setAllPackages] = useState([])
