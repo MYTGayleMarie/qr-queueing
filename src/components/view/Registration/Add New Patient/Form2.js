@@ -97,13 +97,14 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         console.log(tests)
         tests.map((test,index)=>{   
             var testDetails = {};
-            if (test.id == 129){ //otherTest
-                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
-            } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
-                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
-            } else {
-                testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
-            }          
+            // if (test.id == 129){ //otherTest
+            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
+            // } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
+            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
+            // } else {
+            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
+            // }        
+            testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;  
             testDetails.name = test.name;
             testDetails.categoryId = test.category_id;
             testDetails.labTestId = test.id;
@@ -121,6 +122,8 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
 
     // // Lab Tests Categories
     const clinicalMicroscopy = allLabServices.filter(item=>item.categoryId == 1)
+    const clinicalUrinalysis = allLabServices.filter(item=>item.categoryId == 23)
+    const clinicalFecalysis = allLabServices.filter(item=>item.categoryId == 24)
     const hematology = allLabServices.filter(item=>item.categoryId == 2)
     const electrolytes = allLabServices.filter(item=>item.categoryId == 3 || item.categoryId == 4)
     const glucoseTests = allLabServices.filter(item=>item.categoryId == 5)
@@ -362,12 +365,20 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         getDetails(ultrasound, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
+      // case 22:
+      //   getDetails(promo, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
       case 22:
-        getDetails(promo, data[0]);
+        getDetails(otherTests, data[0]);
         checkedServicesDetails.push(itemDetails);
+      break;
       case 23:
-          getDetails(otherTests, data[0]);
-          checkedServicesDetails.push(itemDetails);
+        getDetails(clinicalUrinalysis, data[0]);
+        checkedServicesDetails.push(itemDetails);
+      break;
+      case 24:
+        getDetails(clinicalFecalysis, data[0]);
+        checkedServicesDetails.push(itemDetails);
       break;
     }
   });

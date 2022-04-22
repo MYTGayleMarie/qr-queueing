@@ -70,8 +70,8 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
-            console.log(response.data.payment_type)
+            // console.log(response)
+            // console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
             setPayment(response.data.payment_type);
@@ -95,7 +95,7 @@ function PrintBooking() {
                     requester: userId,
                 }
             }).then(function (customer) {
-                console.log(customer)
+                // console.log(customer)
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
                 var age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -193,6 +193,7 @@ function PrintBooking() {
                             requester: userId,
                         }
                     }).then(function (response) {
+                        // console.log(response)
                                                 
                         
                         response.data.map((packageCat, index2) => {
@@ -278,6 +279,7 @@ function PrintBooking() {
                   date_to: formattedPresentData,
                 },
               }).then(function (response) {
+                //   console.log(response)
                   const arrangedObj = response.data.bookings.sort((a,b) => a.id - b.id);
              
                   arrangedObj.map((booking,index) => {
@@ -329,7 +331,7 @@ function PrintBooking() {
         return <Navigate to="/registration" />;
     }
     
-    
+    console.log(printServices)
 
   return (
       <div>

@@ -34,7 +34,7 @@ export class PaymentToPrint extends React.PureComponent {
         const services_XRAY = Object.keys(groupedServices).map(function(key) {
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
-
+            
             groupedServices[key].map((info, index) => {
                 if(groupedServices[key].length - 1 == index) {
                     category_services += info.name; 
@@ -185,56 +185,55 @@ export class PaymentToPrint extends React.PureComponent {
         });
 
         const services_Clinical_Urinalysis = Object.keys(groupedServices).map(function(key) {
+            var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
-            var category_name="";
-
 
             groupedServices[key].map((info, index) => {
-                // console.log(groupedServices[key]);
-                if(info.category === "CLINICAL MICROSCOPY"){
-                    category_name = key.replace(/_/g, " ").toUpperCase();
-                   if(info.name === "Urinalysis" || info.name === "Urine Ketone" || info.name === "Urine RBC Morphology"|| info.name === "Sperm Analysis"|| info.name === "Pregnancy Test (RPK Lateral Flow)"||info.name === "Serum Pregnancy Test"){
+                if(groupedServices[key].length - 1 == index) {
+                    category_services += info.name; 
+                }
+                else {
                     category_services += info.name + ", ";
                 }
-            }
             });
 
-            if(category_services === "") {
+            if(category_name !== "CLINICAL MICROSCOPY URINALYSIS") {
                 return ""
             }
-
-            category_services = category_services.slice(0, -2);
-
+        
             return  <tr>
+                        {category_name == "CLINICAL MICROSCOPY URINALYSIS" &&
+                          <>
                              <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
                     </tr>
         });
 
         const services_Clinical_Fecalysis = Object.keys(groupedServices).map(function(key) {
-            var category_name = "";
+            var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
 
-
             groupedServices[key].map((info, index) => {
-                // console.log(groupedServices[key]);
-                if(info.category === "CLINICAL MICROSCOPY"){
-                    category_name = key.replace(/_/g, " ").toUpperCase();
-                   if(info.name == "Fecalysis" || info.name == "Fecal Occult Blood"){
+                if(groupedServices[key].length - 1 == index) {
+                    category_services += info.name; 
+                }
+                else {
                     category_services += info.name + ", ";
-                }}
+                }
             });
 
-            if(category_services === "") {
+            if(category_name !== "CLINICAL MICROSCOPY FECALYSIS") {
                 return ""
             }
-
-            category_services = category_services.slice(0, -2);
         
             return  <tr>
-                          <>
-                             <td><span className="data">{category_services}</span></td>
-                          </>
-                    </tr>
+                {category_name == "CLINICAL MICROSCOPY FECALYSIS" &&
+                    <>
+                        <td><span className="data">{category_services}</span></td>
+                    </>
+                }
+            </tr>
         });
 
 
@@ -381,11 +380,11 @@ export class PaymentToPrint extends React.PureComponent {
                 services: services_Serology
             },
             {
-                name: 'CLINIC',
+                name: 'CLINIC - URINALYSIS',
                 services: services_Clinical_Urinalysis
             },
             {
-                name: 'CLINIC',
+                name: 'CLINIC - FECALYSIS',
                 services: services_Clinical_Fecalysis
             }
         ];
@@ -425,7 +424,7 @@ export class PaymentToPrint extends React.PureComponent {
                   return (
                       <div className="print-row">
                           {data.map((ticket) => {
-                               console.log(this.props.discountCode);
+                            //    console.log(this.props.discountCode);
                                return (
                                 generateTickets(
                                 this.props.queue,
