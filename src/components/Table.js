@@ -213,7 +213,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                                                                                                            
             return <tr key={row.id} onClick={() => link(row.id)}>
                 <td key={row.method.replace(/\s/g, '')} data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
-                <td key='1' data-heading='ACCOUNT' className='ACCOUNT'>
+                <td key='1' data-heading='ACCOUNT' className='account'>
                     {row.account != null && (
                         row.account.map((data)=>
                             <div className='account-name'>{data.name}</div>
@@ -227,7 +227,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         )
                     )}         
                 </td>
-                <td key='3' data-heading='TOTAL' className='total'>P {row.total}</td>
+                <td key='3' data-heading='TOTAL' className='TOTAL'>P {row.total}</td>
                 <td key='4' data-heading='DATE' className={row.date}>{row.date}</td>
             </tr>
         }
