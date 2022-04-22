@@ -223,11 +223,11 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <td key='2' data-heading='METHOD' className='amount'>
                     {row.account != null && (
                         row.account.map((data)=>
-                            <div className='account-amount'>P {data.amount}</div>
+                            <div className='account-amount'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                         )
                     )}         
                 </td>
-                <td key='3' data-heading='TOTAL' className='TOTAL'>P {row.total}</td>
+                <td key='3' data-heading='TOTAL' className='TOTAL'>P {row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 <td key='4' data-heading='DATE' className={row.date}>{row.date}</td>
             </tr>
         }
