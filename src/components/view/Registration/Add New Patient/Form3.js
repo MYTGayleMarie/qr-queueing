@@ -648,12 +648,12 @@ totalPrice += parseFloat(data.price);
             <div className="row clinical-services-container">
               <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
 
-              <ServiceItems
+              {/* <ServiceItems
                 category="CLINICAL MICROSCOPY"
                 items={clinicalMicroscopy}
                 formData={service}
                 setForm={setServices}
-              />
+              /> */}
               <ServiceItems 
                 category='CLINICAL MICROSCOPY URINALYSIS' 
                 items={clinicalUrinalysis}
