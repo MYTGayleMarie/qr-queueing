@@ -31,6 +31,7 @@ export class PaymentToPrint extends React.PureComponent {
 
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
 
+
         const services_XRAY = Object.keys(groupedServices).map(function(key) {
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
@@ -347,7 +348,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : " " + payment.toUpperCase()}</span>
+                                    <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : (payment ? " " + payment.toUpperCase():" ")}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
