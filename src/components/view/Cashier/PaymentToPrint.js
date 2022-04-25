@@ -254,7 +254,8 @@ export class PaymentToPrint extends React.PureComponent {
             if(category_name !== "OTHER TESTS" && 
                 category_name !== "MICROBIOLOGY" &&
                 category_name !== "HISTOPATHOLOGY" &&
-                category_name !== "COVID RAPID TESTS" ) {
+                category_name !== "COVID RAPID TESTS" &&
+                category_name !== "ULTRASOUND") {
                 return ""
             }
         
@@ -275,6 +276,11 @@ export class PaymentToPrint extends React.PureComponent {
                           </>
                         }
                         {category_name == "COVID RAPID TESTS" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "ULTRASOUND" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>
