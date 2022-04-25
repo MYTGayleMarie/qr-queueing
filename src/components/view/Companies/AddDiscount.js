@@ -154,9 +154,9 @@ function submit(e, discount) {
         }).then(function (discount_response) {
             console.log(discount_response)
             toast.success("Successfully added company discount details");
-            // setTimeout(function() {
-            //     setRedirect(true);
-            // }, 2000);
+            setTimeout(function() {
+                setRedirect(true);
+            }, 2000);
         }).catch(function (error) {
             toast.error(error);
         })
@@ -169,7 +169,7 @@ function submit(e, discount) {
 
 if(redirect == true) {
     return (
-        <Navigate to = "/companies"/>
+        <Navigate to = "/company-discounts"/>
     )
 }  
 
