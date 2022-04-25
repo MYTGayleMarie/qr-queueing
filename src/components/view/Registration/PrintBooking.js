@@ -331,7 +331,7 @@ function PrintBooking() {
         return <Navigate to="/registration" />;
     }
     
-    console.log(printServices)
+    
 
   return (
       <div>

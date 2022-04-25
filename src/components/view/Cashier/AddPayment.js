@@ -196,7 +196,7 @@ function AddPayment() {
                     age--;
                 }
 
-                console.log(age)
+                // console.log(age)
 
                 setPatientId(response.data.customer_id);
                 setFirstName(customer.data.first_name);
@@ -468,7 +468,7 @@ function AddPayment() {
                     added_by: userId,
                 }
             }).then(function (booking) {
-                console.log(booking);
+                // console.log(booking);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -990,7 +990,7 @@ function AddPayment() {
                             email={email}
                             address={address}
                             bookingDate={bookingDate}
-                            payment={payment}
+                            payment={paymentType}
                             result={result}
                             services={printServices}
                             queue={queueNumber}

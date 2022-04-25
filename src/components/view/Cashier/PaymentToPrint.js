@@ -31,6 +31,7 @@ export class PaymentToPrint extends React.PureComponent {
 
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
 
+
         const services_XRAY = Object.keys(groupedServices).map(function(key) {
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
@@ -253,7 +254,8 @@ export class PaymentToPrint extends React.PureComponent {
             if(category_name !== "OTHER TESTS" && 
                 category_name !== "MICROBIOLOGY" &&
                 category_name !== "HISTOPATHOLOGY" &&
-                category_name !== "COVID RAPID TESTS" ) {
+                category_name !== "COVID RAPID TESTS" &&
+                category_name !== "ULTRASOUND") {
                 return ""
             }
         
@@ -274,6 +276,11 @@ export class PaymentToPrint extends React.PureComponent {
                           </>
                         }
                         {category_name == "COVID RAPID TESTS" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "ULTRASOUND" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>
@@ -347,7 +354,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr className='row'>
                                 <td>
                                     <span className='footer-header'><b>Payment:</b></span>
-                                    <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : " " + payment.toUpperCase()}</span>
+                                    <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : (payment ? " " + payment.toUpperCase():" ")}</span>
                                 </td>
                                 <td>
                                     <span className='footer-header'><b>Result:</b></span>
