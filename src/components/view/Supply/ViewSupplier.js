@@ -188,50 +188,50 @@ function ViewSupplier() {
               <div className='row'>
                 <div className='col-sm-6'>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>NAME</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>NAME</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="name" className='cash-count-input' value={editName} onChange={(e) => setEditName(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>ADDRESS</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>ADDRESS</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="address" className='cash-count-input' value={editAddress} onChange={(e) => setEditAddress(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>PHONE</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>PHONE</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="phone" className='cash-count-input' value={editPhone} onChange={(e) => setEditPhone(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>EMAIL</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>EMAIL</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="email" className='cash-count-input' value={editEmail} onChange={(e) => setEditEmail(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>TIN</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>TIN</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="tin" className='cash-count-input' value={editTin} onChange={(e) => setEditTin(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row'>
-                    <div className='col-sm-3'>
-                      <div className='label text-center'>REMARKS</div>
+                    <div className='col-sm-5'>
+                      <div className='label text-left'>REMARKS</div>
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-7'>
                       <input type="text" name="remarks" className='cash-count-input' value={editRemarks} onChange={(e) => setEditRemarks(e.target.value)}/>
                     </div>
                   </div>
