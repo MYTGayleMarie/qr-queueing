@@ -226,7 +226,7 @@ export default function ViewLabTest(){
                       <div className='label text-left'>CATEGORY</div>
                     </div>
                   <div className='col-sm-8'>
-                    <select className="input-select" id="category_id" name="category_id" value = {editCategoryId} onChange={(e)=>setEditCategoryId(e.target.value)}>
+                    <select className="input-category" id="category_id" name="category_id" value = {editCategoryId} onChange={(e)=>setEditCategoryId(e.target.value)}>
                       {categoryOptions.map((option,index) => (
 										<option className="category" value={option.id}>{option.name}</option>
 								      ))}
