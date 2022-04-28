@@ -135,7 +135,7 @@ export default function AddLabTest(){
 						<label for="category_id" className="form-label">CATEGORY <i> (required)</i></label>
 						<br />
 
-						<select className="input-select" id="category_id" name="category_id" onChange={setLabTest}>
+						<select className="input-category" id="category_id" name="category_id" onChange={setLabTest}>
 								<option value="">CHOOSE CLINICAL SERVICE</option>
 								{categoryOptions.map((option,index) => (
 										<option className="category" value={option.id}>{option.name}</option>
