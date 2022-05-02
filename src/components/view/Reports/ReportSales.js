@@ -80,6 +80,7 @@ function ReportSales() {
     // },[render]);
 
     React.useEffect(()=>{
+      sales.length=0;
       axios({
         method: 'post',
         url: window.$link + 'reports/salesSummary',
@@ -126,8 +127,7 @@ function ReportSales() {
     
     },[render])
 
-    console.log(sales)
-    console.log(total)
+
 
   function filter() {}
 
