@@ -80,6 +80,7 @@ function ReportSales() {
     // },[render]);
 
     React.useEffect(()=>{
+      sales.length=0;
       axios({
         method: 'post',
         url: window.$link + 'reports/salesSummary',
@@ -97,22 +98,23 @@ function ReportSales() {
         var totalAmount = 0;
         
         const salesArray = response.data.data.sales
+        console.log(salesArray)
         salesArray.map((data,index)=>{
           var info = {}
-          var date = new Date(data.payment_date);
+          var date = new Date(data[0].payment_date);
           var formattedDate = date.toDateString().split(" ");
           var selectedDate = new Date(filteredData.from_date);
           var formattedSelectedDate = selectedDate.toDateString().split(" ");
 
           //data for the table
-          info.method =  data.type
-          info.account = data.accounts
-          info.total = data.grand_total.toString()
-          info.date = data.payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+          info.method =  data[0].type
+          info.account = data[0].accounts
+          info.total = data[0].grand_total.toString()
+          info.date = data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
           setSales(oldArray=>[...oldArray, info])
 
           //total amount
-          totalAmount += data.grand_total == null ? parseFloat("0.00") : parseFloat(data.grand_total);
+          totalAmount += data[0].grand_total == null ? parseFloat("0.00") : parseFloat(data[0].grand_total);
           if(salesArray.length - 1 == index) {
               setTotal(totalAmount);
               setPrintReadyFinal(true);
@@ -126,8 +128,7 @@ function ReportSales() {
     
     },[render])
 
-    console.log(sales)
-    console.log(total)
+
 
   function filter() {}
 

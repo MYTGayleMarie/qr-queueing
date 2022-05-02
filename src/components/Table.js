@@ -477,6 +477,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 </div>
                 <div className="col-sm-10 d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
                 </div>
