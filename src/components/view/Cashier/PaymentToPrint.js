@@ -323,7 +323,7 @@ export class PaymentToPrint extends React.PureComponent {
                             <tr>
                                 <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
                                 <td><span className="header">Age: </span><span className="detail-print">{age}</span></td>
-                                <td><span className="header">Gender:</span><span className="detail-print detail-gender">{gender == "female" ? "F" : "M"}</span></td>
+                                <td><span className="header">Gender:</span><span className="detail-print detail-gender">{gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
                                 <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{contact}</span></td>
                             </tr>
                         </table>

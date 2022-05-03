@@ -95,10 +95,10 @@ function ReceiveItemsManager(){
       <Navbar/>
       <div className="active-cont">
             <Fragment>
-            <Searchbar title='RECEIVE ITEMS'/>
+            <Searchbar title='DELIVERIES'/>
             <Header 
                 type='thick'
-                title='RECEIVE ITEMS MANAGER'
+                title='DELIVERIES MANAGER'
             />
             </Fragment>
             {/* {supplierDropdown} */}

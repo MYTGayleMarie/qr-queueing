@@ -126,10 +126,10 @@ function Receives() {
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='RECEIVES'/>
+            <Searchbar title='DELIVERIES'/>
             <Header 
                 type='thick'
-                title='RECEIVES MANAGER'
+                title='DELIVERIES MANAGER'
                 buttons={['receive-items-manager']} 
             />
             <Table

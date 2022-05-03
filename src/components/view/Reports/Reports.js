@@ -205,7 +205,7 @@ function Reports() {
      React.useEffect(() => {
         axios({
             method: 'post',
-            url: window.$link + 'reports/sales',
+            url: window.$link + 'reports/salesSummary',
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -219,7 +219,8 @@ function Reports() {
               console.log(response.data.data.sales)
               var total = 0;
               response.data.data.sales.map((data,index) => {
-                total += data.grand_total == null ? 0 : parseFloat(data.grand_total);
+                console.log(data[0].grand_total)
+                total += data[0].grand_total == null ? 0 : parseFloat(data[0].grand_total);
               })
               setTotalSales(total);
           }).then(function (error) {

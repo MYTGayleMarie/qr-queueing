@@ -411,7 +411,7 @@ function ReceivesPrint() {
             <div className="active-cont">
                 <Header 
                     type='thin'
-                    title='RECEIVES' 
+                    title='DELIVERIES' 
                     buttons= {['pay-receive']}
                     deletePO={deletePO}
                     payReceive={payReceive}

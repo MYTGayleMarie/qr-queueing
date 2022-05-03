@@ -106,11 +106,11 @@ function ReportSales() {
           var selectedDate = new Date(filteredData.from_date);
           var formattedSelectedDate = selectedDate.toDateString().split(" ");
 
-          //data for the table
+          //data for the table4
+          info.date = data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
           info.method =  data[0].type
           info.account = data[0].accounts
           info.total = data[0].grand_total.toString()
-          info.date = data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
           setSales(oldArray=>[...oldArray, info])
 
           //total amount
@@ -154,7 +154,7 @@ function ReportSales() {
             tableName={'Home Service Report'}
             tableData={sales}
             // tableHeaders={['METHOD', 'TOTAL', 'DATE']}
-            tableHeaders={['METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL', 'DATE']}
+            tableHeaders={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
             status={printReadyFinal}
              />
           <Table
@@ -163,8 +163,7 @@ function ReportSales() {
             type={'sales'}
             tableData={sales}
             rowsPerPage={100}
-            // headingColumns={['METHOD', 'TOTAL', 'DATE']}
-            headingColumns={['METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL', 'DATE']}
+            headingColumns={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

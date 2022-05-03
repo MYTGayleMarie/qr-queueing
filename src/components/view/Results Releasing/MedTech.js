@@ -60,7 +60,7 @@ function MedTech() {
       },
     }).then(function (response) {
         console.log(response.data.bookings);
-
+        console.log(response);
         response.data.bookings.map((data,index) => {
           axios({
             method: 'post',

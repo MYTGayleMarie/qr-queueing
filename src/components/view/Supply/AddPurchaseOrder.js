@@ -256,7 +256,7 @@ function AddPurchaseOrder() {
                           </select>
                         </td>
                         <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost" readOnly/>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost"/>
                         </td>
                         <td>
                           <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item item-discount" />

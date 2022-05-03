@@ -212,23 +212,24 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             // </tr>
                                                                                                            
             return <tr key={row.id} onClick={() => link(row.id)}>
-                <td key={row.method.replace(/\s/g, '')} data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
-                <td key='1' data-heading='ACCOUNT' className='account'>
+                <td key={row.method.replace(/\s/g, '')} data-heading='METHOD' className={row.date}>{row.date}</td>
+                <td key='1' data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
+                <td key='2' data-heading='ACCOUNT' className='account'>
                     {row.account != null && (
                         row.account.map((data)=>
                             <div className='account-name'>{data.name}</div>
                         )
                     )}      
                 </td>
-                <td key='2' data-heading='METHOD' className='amount'>
+                <td key='3' data-heading='METHOD' className='amount'>
                     {row.account != null && (
                         row.account.map((data)=>
                             <div className='account-amount'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                         )
                     )}         
                 </td>
-                <td key='3' data-heading='TOTAL' className='TOTAL'>P {row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td key='4' data-heading='DATE' className={row.date}>{row.date}</td>
+                <td key='4' data-heading='TOTAL' className='TOTAL'>P {row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                {/* <td key='4' data-heading='DATE' className={row.date}>{row.date}</td> */}
             </tr>
         }
         else {

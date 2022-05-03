@@ -279,9 +279,9 @@ function ReviewPurchaseOrder() {
             <div className="col-sm-1">
                 {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
             </div>
-            <div className="col-sm-2">
+            {/* <div className="col-sm-2">
                 {data.received}
-            </div>
+            </div> */}
             {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
               <div className="col-sm-2">
                  <button className="disapprove-btn" onClick={(e) => showDisapprovePrompt(data.id)}>DISAPPROVE</button>
@@ -539,9 +539,9 @@ function ReviewPurchaseOrder() {
                         <div className="col-sm-1 service">
                             TOTAL
                         </div>
-                        <div className="col-sm-2 service">
+                        {/* <div className="col-sm-2 service">
                             RECEIVED
-                        </div>
+                        </div> */}
                         {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
                             <div className="col-sm-1 service">
                             ACTION

@@ -150,7 +150,7 @@ function ReportTransaction() {
           <Table
             clickable={false}
             type={'transaction'}
-            tableData={patientData}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={10}
             headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','MODE OF PICKUP']}
             filteredData={filteredData}
