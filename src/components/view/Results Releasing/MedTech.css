@@ -1,0 +1,129 @@
+.category {
+  height:30px;
+}
+
+.pdf-upload-icon {
+  margin:auto;
+  opacity: 0.8;
+}
+
+.pdfObject{
+  width:80%;
+  height:100vh;
+}
+.upload-res-btn{
+  margin-top:10px;
+  background: #55073A;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: normal;
+  color:#ffffff;
+}
+.result-cont{
+  height:fit-content;
+}
+/* pdf upload area */
+.upload-cont{
+  margin:auto;
+  padding:10px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.file-upload-area {
+  padding:12px;
+  width: 60%;
+  height: 60%;
+  background: #FCFCFC;
+  border: 3px dashed rgba(85, 7, 58, 0.76);
+  box-sizing: border-box;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input-file-upload {
+  display: none;
+}
+.upload-file-icon {
+  opacity: 0.8;
+  width: 50px;
+  margin-bottom: 10px;
+}
+.upload-file-btn {
+  color: rgba(85, 7, 58, 1);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+  font-family: 'Montserrat-Bold';
+}
+.upload-file-btn:hover {
+  text-decoration-line: underline;
+}
+.file-name{
+  font-family: 'Montserrat-Bold';
+  font-size: 1rem;
+  color: #419EA3;
+  margin:0;
+}
+.file-upload-remove{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+
+.file-upload{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.file-upload-btn-wrapper input[type=file] {
+  font-size: 50px;
+  position: relative;
+  z-index:-10000;
+  opacity: 10;
+}
+.form-file-upload {
+  height: 12rem;
+  width: 28rem;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.label-file-upload{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-radius: 1rem;
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+.upload-file-btn{
+  color:rgba(85, 7, 58, 1);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+}
+.upload-file-btn:hover{
+  text-decoration-line: underline;
+}
+.upload-file-txt{
+  font-family: 'Montserrat-Regular';
+  font-size:0.9rem;
+  font-weight: normal;
+  color:dimgray;
+
+} */
