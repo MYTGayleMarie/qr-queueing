@@ -68,9 +68,14 @@ function ReviewPurchaseOrder() {
       const [receiveRedirect, setReceiveRedirect] = useState(false);
 
      //Disapprove Item Prompt Modal
-     const [promptDisapprove, setPromptDisapprove] = useState(false);
-     const handlePromptClose = () => setPromptDisapprove(false);
-     const handlePromptShow = () => setPromptDisapprove(true);
+     const [promptDisapproveItem, setPromptDisapproveItem] = useState(false);
+     const handleItemDeleteClose = () => setPromptDisapproveItem(false);
+     const handleItemDeleteShow = () => setPromptDisapproveItem(true);
+
+     //Disapprove All Prompt Modal
+     const [promptDisapproveAll, setPromptDisapproveAll] = useState(false);
+     const handleAllDeleteClose = () => setPromptDisapproveAll(false);
+     const handleAllDeleteShow = () => setPromptDisapproveAll(true);
 
      //Print PO
      const [isprinted, setIsPrinted] = useState(false);
@@ -195,7 +200,7 @@ function ReviewPurchaseOrder() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response.data);
+            //   console.log(response.data);
             
               response.data.map((data,index) => {
                 
@@ -225,7 +230,7 @@ function ReviewPurchaseOrder() {
                     <button className="po-approve-btn" onClick={approveAll}>APPROVE </button>
                 </div>
                 <div className="col-sm-2">
-                    <button className="po-disapprove-btn" onClick={disapproveAll}>DISAPPROVE </button>
+                    <button className="po-disapprove-btn" onClick={showDisapproveAllPrompt}>DISAPPROVE </button>
                 </div>
                 <div className="col-sm-2">
                     <button className="po-close-btn" onClick={close}>CLOSE </button>
@@ -254,7 +259,7 @@ function ReviewPurchaseOrder() {
               updated_by: userId,
             },
           }).then(function (response) {
-              console.log(response);
+            //   console.log(response);
               toast.success("Successfully updated PO!");
             //   refreshPage();
           }).catch(function (error) {
@@ -284,15 +289,15 @@ function ReviewPurchaseOrder() {
             </div> */}
             {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
               <div className="col-sm-2">
-                 <button className="disapprove-btn" onClick={(e) => showDisapprovePrompt(data.id)}>DISAPPROVE</button>
+                 <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.id)}>DISAPPROVE</button>
               </div>
             )}
         </div>
         )
     });
 
-    function showDisapprovePrompt(itemId) {
-        handlePromptShow();
+    function showDisapproveItemPrompt(itemId) {
+        handleItemDeleteShow();
         setDisapproveItem(itemId);
     }
 
@@ -307,7 +312,7 @@ function ReviewPurchaseOrder() {
               updated_by: userId,
             },
           }).then(function (response) {
-              console.log(response)
+            //   console.log(response)
               toast.success("Successfully deleted");
               setTimeout(function () {
                 setDeleteRedirect(true);
@@ -329,7 +334,7 @@ function ReviewPurchaseOrder() {
               updated_by: userId,
             },
           }).then(function (response) {
-              console.log(response)
+            //   console.log(response)
               toast.success("Disapproved PO item!");
               setTimeout(function () {
                 refreshPage();
@@ -338,6 +343,10 @@ function ReviewPurchaseOrder() {
               console.log(error);
               toast.error("Oops! Something went wrong...");
           });
+    }
+
+    function showDisapproveAllPrompt() {
+        handleAllDeleteShow();
     }
 
     function disapproveAll() {
@@ -353,9 +362,9 @@ function ReviewPurchaseOrder() {
           }).then(function (response) {
               console.log(response)
               toast.success("Disapproved PO!");
-              setTimeout(function () {
-                setDeleteRedirect(true);
-              }, 2000);
+            //   setTimeout(function () {
+            //     setDeleteRedirect(true);
+            //   }, 2000);
           }).then(function (error) {
               console.log(error);
           });
@@ -372,7 +381,7 @@ function ReviewPurchaseOrder() {
               updated_by: userId,
             },
           }).then(function (response) {
-              console.log(response)
+            //   console.log(response)
               toast.success("Approved PO!");
               setTimeout(function () {
                 close();
@@ -393,7 +402,7 @@ function ReviewPurchaseOrder() {
               updated_by: userId,
             },
           }).then(function (response) {
-              console.log(response)
+            //   console.log(response)
               toast.success("Print Successful!");
           }).then(function (error) {
               console.log(error);
@@ -416,7 +425,7 @@ function ReviewPurchaseOrder() {
         setEditRedirect(true);
     }
 
-    console.log(status)
+    // console.log(status)
 
     //Redirections
 
@@ -670,18 +679,48 @@ function ReviewPurchaseOrder() {
                    </form>
             </Modal>
 
-            <Modal show={promptDisapprove} onHide={handlePromptClose} size="md">
+            {/* MODAL FOR DISAPPROVING ITEM */}
+
+            <Modal show={promptDisapproveItem} onHide={handleItemDeleteClose} size="md">
             <Modal.Header closeButton className='text-center'>
                <Modal.Title className='w-100 cash-count-header'>DISAPPROVE ITEM?</Modal.Title>
                 </Modal.Header>
                   <form>
                   <Modal.Body>
-                  <div className='row d-flex justify-content-center'>
-                    Are you sure you want to disapprove this item?
+                  <div className='row d-flex justify-content-center text-center'>
+                    Are you sure you want to disapprove this item? <br/> State reason for disapproving
+                    <div className="reason-input-area">
+                        <textarea cols="50"></textarea>
+                    </div>
+                    
                    </div>
                   </Modal.Body>
                     <Modal.Footer>
                         <button type="submit" className='po-disapprove-btn' onClick={(e) => disapproveItemAction(disapproveItem)}>
+                          DISAPPROVE
+                        </button>
+                   </Modal.Footer>
+                   </form>
+            </Modal>
+
+            {/* MODAL FOR DISAPPROVING PO */}
+
+            <Modal show={promptDisapproveAll} onHide={handleAllDeleteClose} size="md">
+            <Modal.Header closeButton className='text-center'>
+               <Modal.Title className='w-100 cash-count-header'>DISAPPROVE PURCHASE ORDER?</Modal.Title>
+                </Modal.Header>
+                  <form>
+                  <Modal.Body>
+                  <div className='row d-flex justify-content-center text-center'>
+                    Are you sure you want to disapprove this purchase order? <br/> State reason for disapproving
+                    <div className="reason-input-area">
+                        <textarea cols="50"></textarea>
+                    </div>
+                    
+                   </div>
+                  </Modal.Body>
+                    <Modal.Footer>
+                        <button type="submit" className='po-disapprove-btn' onClick={disapproveAll}>
                           DISAPPROVE
                         </button>
                    </Modal.Footer>
