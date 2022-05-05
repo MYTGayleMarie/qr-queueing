@@ -380,6 +380,16 @@ function Reports() {
                         disable={"today"}
                     /> }
                 </div>
+                <div className="col-sm-4">
+                  {role != 3 && <Card 
+                        totalData={123}
+                        todayData={""}
+                        link={"/reports-incomplete-po"}
+                        title='Incomplete PO'
+                        color='blue'
+                        disable={"today"}
+                    /> }
+                </div>
             </div>
             </Fragment>
         </div>

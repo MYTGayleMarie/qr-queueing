@@ -92,7 +92,7 @@ function AddItems() {
       response.data.items.map((data,index) => {
         var itemInfo = {};
         itemInfo.id = data.id;
-        itemInfo.name = data.name;
+        itemInfo.name = data.item_name;
         itemInfo.cost = data.cost;
         setItemInfo(oldArray => [...oldArray, itemInfo]);
       });
