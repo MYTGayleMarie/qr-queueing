@@ -29,6 +29,70 @@ const filterData = {
   };
 
 export default function ReportIncompletePO(){
+
+  const [filteredData, setFilter] = useForm(filterData);
+  const [incompletePo, setIncompletePo] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [render, setRender] = useState([]);
+
+
+  // table data
+
+
+  React.useEffect(()=>{
+    incompletePo.length=0;
+    axios({
+      method: 'post',
+      url: window.$link + '/reports/incompletePOs',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+        date_from: filteredData.from_date,
+        date_to: filteredData.to_date,
+      }
+    })
+    .then((response)=>{
+      const incomplete = response.data.pos;      
+      incomplete.map((data,index)=>{
+        axios({
+          method: 'post',
+          url: window.$link + 'suppliers/show/' + data.supplier_id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            date_from: filteredData.from_date,
+            date_to: filteredData.to_date,
+            requester: userId,
+          },
+        }).then((supplier)=>{
+            var info = {};
+            info.po_number = data.id;
+            var date = new Date(data.added_on);
+            var formattedDate = date.toDateString().split(" ");
+            info.po_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+            info.supplier = supplier.data.name;
+            info.total_amount = data.grand_total;
+            setIncompletePo(oldArray=>[...oldArray, info])
+            })
+        
+            if(incomplete.length - 1 == index) {
+          setPrintReadyFinal(true);
+        }
+
+      })
+
+    })
+    .catch((error)=>{console.log(error)})
+  },[render])
+
+  function review(){
+    console.log("clicked")
+  }
+  function filter() {}
+
   return(
     <div>
       <Navbar />
@@ -40,10 +104,24 @@ export default function ReportIncompletePO(){
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Incomplete PO Report'}
-            // tableData={patientData}
+            tableData={incompletePo}
             tableHeaders={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT', 'ACTION']}
-            // status={printReadyFinal}
+            status={printReadyFinal}
              />
+        <Table 
+          type={'purchase-order'}
+          clickable={true}
+          tableData={incompletePo}
+          rowsPerPage={100}
+          headingColumns={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT', 'ACTION']}
+          filteredData={filteredData}
+          setFilter={setFilter}
+          filter={filter}
+          setRender={setRender}
+          givenClass={"register-mobile"}
+          link={review}
+
+        />
         </Fragment>
       </div>
     </div>
