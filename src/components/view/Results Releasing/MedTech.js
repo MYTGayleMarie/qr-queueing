@@ -72,19 +72,22 @@ function MedTech() {
                 requester: userId,
             }
         }).then(function (booking) {
+            console.log(booking.data.data.booking.customer);
             var filterPackage = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             
             var labServices = booking.data.data.booking_details.filter((info) => info.type == "lab"); 
             var packageServices = filterPackage[0];
             var mergedServices = [];
+            var customer_name = booking.data.data.booking.customer;
 
             mergedServices = labServices.concat(packageServices);
             console.log(mergedServices)
             mergedServices.filter((info) => typeof info !== 'undefined').map((info, index) => {
               console.log(info);
-              var servicesInfo = {};
+              var servicesInfo = {}
               servicesInfo.booking_id = data.id;
               servicesInfo.id = info.id;
+              servicesInfo.customer = customer_name;
               servicesInfo.barcode = info.barcode;
               servicesInfo.test = info.lab_test;
               servicesInfo.type = info.type != undefined ? info.type : "package";
@@ -118,7 +121,7 @@ function MedTech() {
             clickable={true}
             tableData={pendingData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'TEST ID', 'BARCODE NO.', 'TYPE', 'TEST', 'STATUS', 'ACTION']}
+            headingColumns={['BOOKING ID', 'TEST ID', 'NAME', 'BARCODE NO.', 'TYPE', 'TEST', 'STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             link={startExam}
