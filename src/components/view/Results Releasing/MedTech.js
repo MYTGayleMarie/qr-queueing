@@ -36,6 +36,14 @@ const filterData = {
   to_date: formattedPresentData,
 };
 
+function groupArrayOfObjects(list, key) {
+    return list.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
+
+
 function MedTech() {
 
   document.body.style = 'background: white;';
@@ -57,6 +65,10 @@ function MedTech() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+
+  // Lab Tests
+  const [services, setServices] = useState([]);
+  const [labTests, setLabTests] = useState([]);
 
   // Base64 file
   const [file, setFile] = useState("")
@@ -82,7 +94,7 @@ function MedTech() {
     })
     .catch((error)=>{console.log(error)})
 
-    // Get booking details
+    // Get booking details by booking id
     axios({
       method: 'post',
       url: window.$link + 'bookings/getBookingDetails/' + bookingId,
@@ -93,8 +105,8 @@ function MedTech() {
           requester: userId,
       }
     })
-    .then((response)=>{
-      console.log(response)
+    .then((booking)=>{
+      setServices(booking.data)
     })
     .catch((error)=>{console.log(error)})
   }
@@ -132,7 +144,88 @@ function MedTech() {
     })
     .catch((error)=>{console.log(error)})
   },[customerId])
-  
+
+  // Lab tests
+  React.useEffect(()=>{
+    labTests.length=0;
+    services.map((info, index1)=>{
+      // if service is package
+      if(info.category_id == null){
+        axios({
+          method: 'post',
+          url: window.$link + 'bookings/getBookingPackageDetails/' + info.id,
+          withCredentials: false, 
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+          }
+        })
+        .then((response)=>{
+          // console.log(response)
+          response.data.map((packageCat, index2)=>{
+            var serviceDetails = {};
+            axios({
+              method: 'post',
+              url: window.$link + 'categories/show/' + packageCat.category_id,
+              withCredentials: false, 
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+              }
+            })
+            .then((category)=>{
+               if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                  serviceDetails.key = "Electrolytes";
+                }
+                else {
+                  serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                }
+              serviceDetails.category = category.data.name;
+              serviceDetails.name = packageCat.lab_test;
+              setLabTests(oldArray=>[...oldArray, serviceDetails]);
+            })
+
+
+          })
+
+
+        })
+        .catch((error)=>{console.log(error)})
+      }
+      // if service is lab test
+      else {
+        axios({
+          method: 'post',
+          url: window.$link + 'categories/show/' + info.category_id,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+        })
+        .then((category)=>{
+          var serviceDetails = {};
+          if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+              serviceDetails.key = "Electrolytes";
+          }
+          else {
+              serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+          }
+          serviceDetails.category = category.data.name;
+          serviceDetails.name = info.lab_test;
+          setLabTests(oldArray=>[...oldArray, serviceDetails]);
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+      }
+    })
+    
+  },[services])
+
   // Reads file to base64
   function fileToBase64(file, cb){
     const reader = new FileReader();
@@ -170,11 +263,11 @@ function MedTech() {
       }
     })
   }
-function removeFile(){
-  setFile("")
-  setFileName("")
-  setFileLength(0)
-}
+  function removeFile(){
+    setFile("")
+    setFileName("")
+    setFileLength(0)
+  }
   // handle drag events
     const onButtonClick = () => {
       inputRef.current.click();
@@ -187,9 +280,105 @@ function removeFile(){
       <Navigate to={link} />
     }
 
-    /******* CONSOLE LOGS ********/
-    /*****************************/
+  const uploadArea =<div className="upload-cont col-sm-8">
+    <input 
+        ref={inputRef} 
+        type="file"
+        name="pdftobase64" 
+        accept="application/pdf"
+        className="input-file-upload"
+        onChange={onUploadFileChange}
+        />
+    
+    {/* File Upload Button */}
+    {fileLength==0 &&(<button className="upload-res-btn" onClick={onButtonClick}>UPLOAD RESULTS</button>)}
+    
+    {/* File Name and Delete Button */}
+    {fileLength!=0 && (<div className="file-upload-remove">
+        <img src={pdfIcon} alt="pdf" className="pdf-icon"/>
+        <p className="file-name">{fileName}</p>
+        <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
+      </div>)}
+      
+  </div>
 
+  // Per category
+  var groupedServices = groupArrayOfObjects(labTests,"key");
+
+  // Categorize lab test
+  const xray = labTests.filter((info)=>info.key==="xray"||info.key==="cardiology"||info.key==="radiology")
+
+  const hematology = labTests.filter((info)=>info.key==="hematology")
+
+  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="thyroid_profile"||info.key==="tumor_markers"||info.key==="hepatitis_profile_screening"||info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests")
+
+  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis")
+
+  const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
+
+  const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests"||info.key==="ultrasound")
+
+  // Row per category  
+  const services_XRAY =  <div className="result-cont row">
+          <div className="col-sm-4">
+            <div className="category label">XRAY</div>
+            {xray.map((data,index)=>
+              <div className="details">{data.name}</div>
+            )}
+          </div>
+          {uploadArea}
+      </div>
+
+  const services_Hematology =  <div className="result-cont row">
+          <div className="col-sm-4">
+            <div className="category label">HEMATOLOGY</div>
+            {hematology.map((data,index)=>
+              <div className="details">{data.name}</div>
+            )}
+          </div>
+          {uploadArea}
+      </div>
+
+  const services_Serology =  <div className="result-cont row">
+          <div className="col-sm-4">
+            <div className="category label">SEROLOGY</div>
+            {serology.map((data,index)=>
+              <div className="details">{data.name}</div>
+            )}
+          </div>
+          {uploadArea}
+      </div>
+  const services_Clinical_Urinalysis =  <div className="result-cont row">
+          <div className="col-sm-4">
+            <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
+            {clinicalUrinalyis.map((data,index)=>
+              <div className="details">{data.name}</div>
+            )}
+          </div>
+          {uploadArea}
+      </div>
+
+  const services_Clinical_Fecalysis =  <div className="result-cont row">
+        <div className="col-sm-4">
+          <div className="category label">CLINICAL MICROSCOPY FECALYSIS</div>
+          {clinicalFecalysis.map((data,index)=>
+            <div className="details">{data.name}</div>
+          )}
+        </div>
+        {uploadArea}
+    </div>
+
+  const services_Others =  <div className="result-cont row">
+        <div className="col-sm-4">
+          <div className="category label">OTHERS</div>
+          {others.map((data,index)=>
+            <div className="details">{data.name}</div>
+          )}
+        </div>
+        {uploadArea}
+    </div>
+
+ 
   return(
     <div>
       <Navbar />
@@ -272,36 +461,14 @@ function removeFile(){
         {/* LABORATORY TEST UPLOADER */ }
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
         <div className="personal-data-cont">
+        
+        {services_XRAY}
+        {services_Hematology}        
+        {services_Serology}
+        {services_Clinical_Urinalysis}
+        {services_Clinical_Fecalysis}
+        {services_Others}
 
-        <div className="result-cont row">
-          <div className="col-sm-4">
-            <div className="category label">CATEGORY</div>
-            <div className="details">Lab Test 1</div>
-            <div className="details">Lab Test 1</div>
-          </div>
-          <div className="upload-cont col-sm-8">
-            <input 
-                ref={inputRef} 
-                type="file"
-                name="pdftobase64" 
-                accept="application/pdf"
-                className="input-file-upload"
-                onChange={onUploadFileChange}
-                />
-            
-            {/* File Upload Button */}
-            {fileLength==0 &&(<button className="upload-res-btn" onClick={onButtonClick}>UPLOAD RESULTS</button>)}
-            
-            {/* File Name and Delete Button */}
-            {fileLength!=0 && (<div className="file-upload-remove">
-                <img src={pdfIcon} alt="pdf" className="pdf-icon"/>
-                <p className="file-name">{fileName}</p>
-                <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
-              </div>)}
-              
-          </div>
-          
-        </div>
         </div>
         </div>
         )}

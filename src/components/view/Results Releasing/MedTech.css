@@ -1,5 +1,5 @@
 .category {
-  height:30px;
+  height:fit-content !important;
 }
 
 .pdf-upload-icon {
@@ -20,6 +20,7 @@
 }
 .result-cont{
   height:fit-content;
+  margin-bottom: 5rem !important;
 }
 
 .pdf-icon{
