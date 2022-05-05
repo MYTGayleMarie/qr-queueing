@@ -8,25 +8,27 @@
 }
 
 .pdfObject{
-  width:80%;
+  width:100vw;
   height:100vh;
 }
 .upload-res-btn{
-  margin-top:10px;
   background: #55073A;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: normal;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
   color:#ffffff;
 }
 .result-cont{
   height:fit-content;
 }
+
+.pdf-icon{
+  width:1.1rem;
+  margin-right: 2rem;
+}
 /* pdf upload area */
 .upload-cont{
   margin:auto;
-  padding:10px;
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -66,14 +68,12 @@
 .file-name{
   font-family: 'Montserrat-Bold';
   font-size: 1rem;
-  color: #419EA3;
-  margin:0;
+  color: rgba(85, 7, 58, 1);
+  margin:0 2rem 0 0;
 }
 .file-upload-remove{
   display:flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }
 
 /* 

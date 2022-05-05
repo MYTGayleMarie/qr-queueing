@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom';
 import uploadIcon from '../../../images/icons/upload-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import pdfIcon from '../../../images/icons/pdf-icon.png'
 
 
 //css
@@ -40,21 +41,97 @@ function MedTech() {
   document.body.style = 'background: white;';
   const inputRef = React.useRef(null);
 
-    // Patient details
-  const [firstName, setFirstName] = useState("Juana");
-  const [middleName, setMiddleName] = useState("Dela");
-  const [lastName, setLastName] = useState("Cruz");
-  const [birthDate, setBirthDate] = useState("Mon Jan 1 1991");
-  const [gender, setGender] = useState("Female");
-  const [age, setAge] = useState("32");
-  const [contactNo, setContactNo] = useState("099999999");
-  const [email, setEmail] = useState("email@email.com");
-  const [address, setAddress] = useState("somewhere down the road");
+  // search bar
+  const [bookingId, setBookingId] = useState("");
+  const [search, setSearch] = useState(false);
+  const [show, setShow] = useState(false);
+
+  // Patient details
+  const [customerId, setCustomerId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
 
   // Base64 file
   const [file, setFile] = useState("")
   const [fileLength, setFileLength] = useState(0)
   const [fileName, setFileName] = useState("")
+  const [data, setData] = useState("")
+
+  // Get booking details by searched booking id
+  function searchBookingId(){
+    setShow(true)
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getDetails/' + bookingId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    })
+    .then((response)=>{
+      setCustomerId(response.data.data.booking.customer_id);
+    })
+    .catch((error)=>{console.log(error)})
+
+    // Get booking details
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getBookingDetails/' + bookingId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    })
+    .then((response)=>{
+      console.log(response)
+    })
+    .catch((error)=>{console.log(error)})
+  }
+  // Get customer details
+  React.useEffect(()=>{
+    axios({
+      method: 'post',
+      url: window.$link + 'customers/show/' + customerId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }})
+    .then((response)=>{
+      setFirstName(response.data.first_name);
+      setMiddleName(response.data.middle_name);
+      setLastName(response.data.last_name);
+
+      var birthDate = new Date(response.data.birthdate);
+      setBirthDate(birthDate.toDateString());
+
+      setGender(response.data.gender);
+
+      var presentDate = new Date();
+      var age = presentDate.getFullYear() - birthDate.getFullYear();
+      var m = presentDate.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
+        {age--;}
+      setAge(age);
+
+      setContactNo(response.data.contact_no);
+      setEmail(response.data.email);
+      setAddress(response.data.address);
+    })
+    .catch((error)=>{console.log(error)})
+  },[customerId])
   
   // Reads file to base64
   function fileToBase64(file, cb){
@@ -87,8 +164,9 @@ function MedTech() {
     fileToBase64(target.files[0], (err, result)=>{
       if (result){
         const base64 = result.split(',');
-        // setFile(base64[1]);
-        setFile(result)
+        setFile(base64[1]);
+        // setFile(result);
+        setData("data:application/pdf;base64,"+base64[1]);
       }
     })
   }
@@ -101,9 +179,17 @@ function removeFile(){
     const onButtonClick = () => {
       inputRef.current.click();
     };
-console.log(fileName)
-console.log(file)
-console.log(fileLength)
+
+  // Redirect to view pdf
+    function redirectPdf(){
+      var link='/view-pdf/' + file;
+      console.log(link);
+      <Navigate to={link} />
+    }
+
+    /******* CONSOLE LOGS ********/
+    /*****************************/
+
   return(
     <div>
       <Navbar />
@@ -118,8 +204,8 @@ console.log(fileLength)
           <div className="col">
             <div class="wrap d-flex justify-content-center">
               <div class="search-bar">
-                <input type="text" class="searchTerm" name="patientName" placeholder="Search Booking ID" onchange={(e)=>console.log(e.target.value)}/>
-                <button type="submit" class="searchButton">
+                <input type="text" class="searchTerm" name="patientName" placeholder="Search Booking ID" onChange={(e)=>setBookingId(e.target.value)}/>
+                <button type="submit" class="searchButton" onClick={searchBookingId}>
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -127,7 +213,10 @@ console.log(fileLength)
           </div>
         </div>
         <br/>
-        {/* PATIENT INFO */}
+        
+        {show && (
+          <div>
+        {/* PATIENT INFO  */}
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
             <div className="personal-data-cont">
@@ -180,7 +269,7 @@ console.log(fileLength)
             <br/>
             
 
-        {/* LABORATORY TEST UPLOADER */}
+        {/* LABORATORY TEST UPLOADER */ }
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
         <div className="personal-data-cont">
 
@@ -191,8 +280,7 @@ console.log(fileLength)
             <div className="details">Lab Test 1</div>
           </div>
           <div className="upload-cont col-sm-8">
-            <div className="file-upload-area d-flex justify-content-center">
-              <input 
+            <input 
                 ref={inputRef} 
                 type="file"
                 name="pdftobase64" 
@@ -200,27 +288,29 @@ console.log(fileLength)
                 className="input-file-upload"
                 onChange={onUploadFileChange}
                 />
-              <img src={uploadIcon} alt={'upload-here'} className="upload-file-icon"></img>
-              {fileLength==0 &&(<button className="upload-file-btn" onClick={onButtonClick}>Upload a file</button>)}
-              {fileLength!=0 && (<div className="file-upload-remove">
-                <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
+            
+            {/* File Upload Button */}
+            {fileLength==0 &&(<button className="upload-res-btn" onClick={onButtonClick}>UPLOAD RESULTS</button>)}
+            
+            {/* File Name and Delete Button */}
+            {fileLength!=0 && (<div className="file-upload-remove">
+                <img src={pdfIcon} alt="pdf" className="pdf-icon"/>
                 <p className="file-name">{fileName}</p>
+                <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
               </div>)}
               
-            </div>
-            <button className="upload-res-btn">
-              SAVE RESULTS
-            </button>
-
-
           </div>
           
         </div>
         </div>
-        <object 
+        </div>
+        )}
+        {/* <object 
         name={lastName}
-        data={file}  
-        className="pdfObject"/>
+        data={data}  
+        className="pdfObject"/> */}
+
+        
         
 
 
