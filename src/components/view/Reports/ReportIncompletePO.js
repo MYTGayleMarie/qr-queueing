@@ -34,6 +34,7 @@ export default function ReportIncompletePO(){
   const [incompletePo, setIncompletePo] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [render, setRender] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
 
   // table data
@@ -88,8 +89,16 @@ export default function ReportIncompletePO(){
     .catch((error)=>{console.log(error)})
   },[render])
 
-  function review(){
-    console.log("clicked")
+  function review(poId){
+    id=poId;
+    setRedirect(true);
+  }
+
+  if(redirect == true) {
+    var link =  "/reports-incomplete-po/review/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
   }
   function filter() {}
 
@@ -109,8 +118,7 @@ export default function ReportIncompletePO(){
             status={printReadyFinal}
              />
         <Table 
-          type={'purchase-order'}
-          clickable={true}
+          type={'report-incomplete-po'}
           tableData={incompletePo}
           rowsPerPage={100}
           headingColumns={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT', 'ACTION']}

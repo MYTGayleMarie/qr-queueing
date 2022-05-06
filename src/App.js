@@ -75,6 +75,7 @@ import AddPackage from './components/view/Services/AddPackage';
 import ViewLabTest from './components/view/Services/ViewLabTest';
 import ViewPackage from './components/view/Services/ViewPackage';
 import ReportIncompletePO from './components/view/Reports/ReportIncompletePO';
+import ReportIncompletePOReview from './components/view/Reports/ReportIncompletePOReview';
 
 
 function App() {
@@ -163,7 +164,8 @@ function App() {
         <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/reports-md" element={token ? <MdReports/> : <Navigate to="/" />} />
         <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
-        <Route path="//reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
+        <Route path="/reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
+        <Route path="/reports-incomplete-po/review/:id" element={token ? <ReportIncompletePOReview/> : <Navigate to="/" />} />
         <Route path="/reports-credit-details/:discount_code" element={token ? <ReportCreditDetails/> : <Navigate to="/" />} />
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
