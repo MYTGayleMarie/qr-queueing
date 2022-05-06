@@ -76,6 +76,7 @@ import ViewLabTest from './components/view/Services/ViewLabTest';
 import ViewPackage from './components/view/Services/ViewPackage';
 import ReportIncompletePO from './components/view/Reports/ReportIncompletePO';
 import ReportIncompletePOReview from './components/view/Reports/ReportIncompletePOReview';
+import ViewHistory from './components/view/Registration/Add Old Patient/ViewHistory';
 
 
 function App() {
@@ -116,6 +117,7 @@ function App() {
         <Route path="/add-old-patient" element={token ? <SearchPatient /> : <Navigate to="/" />} />
         <Route path="/add-booking/:id" element={token ? <SwitchForm2 /> : <Navigate to="/" />} />
         <Route path="/delete-booking/:id" element={token ? <DeleteBooking /> : <Navigate to="/" />} />
+        <Route path="/view-history/:id" element={token ? <ViewHistory /> : <Navigate to="/" />} />
         <Route path="/cashier" element={token ? <Cashier /> : <Navigate to="/" />} />
         <Route path="/add-payment/:id" element={token ? <AddPayment /> : <Navigate to="/" />} />
         <Route path="/extraction" element={token ? <Extraction /> : <Navigate to="/" />} />

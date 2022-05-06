@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -173,7 +173,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
-            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button></td>
+            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button><button class="button-10" role="button" onClick={() => view(row.id)}>VIEW HISTORY</button></td>
             </tr>
         }
         else if(type === "payment-invoices") {
@@ -422,7 +422,28 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
             </div>
         );
-    } else if (type === "discount-detail") {
+    }
+    else if (type === "patient-history") {
+        return(
+            <div className="table-container">
+
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* {data} */}
+                    </tbody>
+                </table>
+             <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+            </div>
+        );
+    } 
+    else if (type === "discount-detail") {
 
         const {from_date, to_date, done} = filteredData;
 

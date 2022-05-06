@@ -22,7 +22,8 @@ function SearchPatient() {
     document.body.style = 'background: white;';
     const [patientName, setPatientName] = useState("");
     const [patients, setPatients] = useState([]);
-    const [redirect, setRedirect] = useState(false);
+    const [redirectBooking, setRedirectBooking] = useState(false);
+    const [redirectViewHistory, setRedirectViewHistory] = useState(false);
 
     function search() {
         patients.length = 0;
@@ -55,15 +56,25 @@ function SearchPatient() {
 
     function addBooking(customerId) {
         id = customerId;
-        setRedirect(true);
+        setRedirectBooking(true);
     }
 
-    if(redirect == true) {
+    if(redirectBooking == true) {
         var link =  "/add-booking/" + id;
-        console.log(link);
+        // console.log(link);
         return (
             <Navigate to ={link}/>
         )
+    }
+    function viewHistory(customerId){
+      id=customerId;
+      setRedirectViewHistory(true);
+    }
+    if(redirectViewHistory==true){
+      var link ="/view-history/"+id;
+      return(
+        <Navigate to={link} />
+      )
     }
 
     return (
@@ -96,6 +107,7 @@ function SearchPatient() {
                     headingColumns={['ID', 'PATIENT NAME', 'GENDER', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'ACTION']}
                     link={addBooking}
                     givenClass={'search-mobile'}
+                    view={viewHistory}
                 />            
             </Fragment>
             </div>
