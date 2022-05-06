@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -113,7 +113,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val == "for approval" ? "for-approval" : data.val.replace(/\s/g, '')}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.po_number)}>REVIEW</button></td>
+            <td key={row.id}><button class="action-btn" role="button" onClick={() => link(row.po_number)}>REVIEW</button></td>
             </tr> 
         }
         else if (type == 'receives' && clickable == true) {
@@ -238,6 +238,19 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 {/* <td key='4' data-heading='DATE' className={row.date}>{row.date}</td> */}
             </tr>
         }
+        else if(type==='receive-incomplete-po-items'){
+            return <tr key={row.id}>
+            <td key={"particulars"+row.po_item_id} data-heading={'PARTICULARS'} className={row.name}>{row.name}</td>
+            <td key={"ordered"+row.po_item_id} data-heading={'ORDERED'} className={row.qty}>{row.qty}</td>
+            <td key={"prevreceived"+row.po_item_id} data-heading={'PREVRECEIVED'} className={row.prevReceived}>{row.prevReceived}</td>
+            {/* {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)} */}
+            <td key={"delivered"+row.po_item_id}><input type="number" className="input-cell" name="received" value={row.received} onChange={(e)=>{receiveData(e,index)}}/></td>
+            </tr>
+        }
+        // {receiveData(row.po_item_id,row.item_id,row.cost,e.target.value, row.unit)}
+
+
         else {
             return <tr key={row.id} onClick={() => link(row.id)}>
             {rowData.map((data, index) => 
@@ -753,6 +766,44 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
             </div>
         );
+    }
+    else if (type === "incomplete-po-items"){
+      return(
+        <div className="table-container">
+            <table className={tableClass}>
+                <thead>
+                    <tr>
+                        {headingColumns.map((col,index) => (
+                            <th key={index}>{col}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data}
+                </tbody>
+            </table>
+          <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+        </div>
+        );     
+    }
+    else if (type === "receive-incomplete-po-items"){
+      return(
+        <div className="table-container">
+            <table className={tableClass}>
+                <thead>
+                    <tr>
+                        {headingColumns.map((col,index) => (
+                            <th key={index}>{col}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data}
+                </tbody>
+            </table>
+          <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+        </div>
+        );     
     }
 
 }
