@@ -106,6 +106,7 @@ function MedTech() {
       }
     })
     .then((booking)=>{
+      console.log(booking)
       setServices(booking.data)
     })
     .catch((error)=>{console.log(error)})
@@ -162,7 +163,7 @@ function MedTech() {
           }
         })
         .then((response)=>{
-          // console.log(response)
+          console.log(response)
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -184,6 +185,7 @@ function MedTech() {
                 }
               serviceDetails.category = category.data.name;
               serviceDetails.name = packageCat.lab_test;
+              serviceDetails.id = packageCat.test_id;
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
 
@@ -216,6 +218,7 @@ function MedTech() {
           }
           serviceDetails.category = category.data.name;
           serviceDetails.name = info.lab_test;
+          serviceDetails.id = info.test_id;
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
         .catch((error)=>{
@@ -225,7 +228,7 @@ function MedTech() {
     })
     
   },[services])
-
+console.log(labTests)
   // Reads file to base64
   function fileToBase64(file, cb){
     const reader = new FileReader();
@@ -276,9 +279,30 @@ function MedTech() {
   // Redirect to view pdf
     function redirectPdf(){
       var link='/view-pdf/' + file;
-      console.log(link);
+      // console.log(link);
       <Navigate to={link} />
     }
+
+  // Function submit base 64
+  function submitBase65(base64){
+    axios({
+      method: 'post',
+      url: window.$link + 'Bookingdetails/uploadResults/' + bookingId,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        file: base64,
+        added_by:userId
+      }
+    })
+    .then((response)=>{
+      console.log(response)
+
+
+    })
+    .catch((error)=>{console.log(error)})
+  }
 
   const uploadArea =<div className="upload-cont col-sm-8">
     <input 
@@ -319,7 +343,7 @@ function MedTech() {
   const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests"||info.key==="ultrasound")
 
   // Row per category  
-  const services_XRAY =  <div className="result-cont row">
+  const services_XRAY = <div className="result-cont row">
           <div className="col-sm-4">
             <div className="category label">XRAY</div>
             {xray.map((data,index)=>
@@ -462,12 +486,12 @@ function MedTech() {
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
         <div className="personal-data-cont">
         
-        {services_XRAY}
-        {services_Hematology}        
-        {services_Serology}
-        {services_Clinical_Urinalysis}
-        {services_Clinical_Fecalysis}
-        {services_Others}
+        {(xray.length!=0) && services_XRAY}
+        {(hematology.length!=0) && services_Hematology}        
+        {(serology.length!=0) && services_Serology}
+        {(clinicalUrinalyis.length!=0) && services_Clinical_Urinalysis}
+        {(clinicalFecalysis.length!=0) && services_Clinical_Fecalysis}
+        {(others.length!=0) && services_Others}
 
         </div>
         </div>
