@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import uploadIcon from '../../../images/icons/upload-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
-
+import FileUpload from './FileUpload';
 
 //css
 import '../Imaging/Imaging.css';
@@ -29,25 +29,16 @@ const userId = getUser();
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const buttons = ['download'];
-
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
 };
 
-function groupArrayOfObjects(list, key) {
-    return list.reduce(function(rv, x) {
-      (rv[x[key]] = rv[x[key]] || []).push(x);
-      return rv;
-    }, {});
-  };
 
 
 function MedTech() {
 
   document.body.style = 'background: white;';
-  const inputRef = React.useRef(null);
 
   // search bar
   const [bookingId, setBookingId] = useState("");
@@ -69,12 +60,6 @@ function MedTech() {
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
-
-  // Base64 file
-  const [file, setFile] = useState("")
-  const [fileLength, setFileLength] = useState(0)
-  const [fileName, setFileName] = useState("")
-  const [data, setData] = useState("")
 
   // Get booking details by searched booking id
   function searchBookingId(){
@@ -185,7 +170,8 @@ function MedTech() {
                 }
               serviceDetails.category = category.data.name;
               serviceDetails.name = packageCat.lab_test;
-              serviceDetails.id = packageCat.test_id;
+              serviceDetails.type = "package";
+              serviceDetails.id = packageCat.id;
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
 
@@ -218,7 +204,8 @@ function MedTech() {
           }
           serviceDetails.category = category.data.name;
           serviceDetails.name = info.lab_test;
-          serviceDetails.id = info.test_id;
+           serviceDetails.type = "lab";
+          serviceDetails.id = info.id;
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
         .catch((error)=>{
@@ -228,106 +215,6 @@ function MedTech() {
     })
     
   },[services])
-console.log(labTests)
-  // Reads file to base64
-  function fileToBase64(file, cb){
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    // If reader loads the full file
-    reader.onload = function (){
-      cb(null, reader.result);
-    };
-
-    // If there is error reading the file
-    reader.onerror = function (error){
-      cb(error, null)
-    };
-  }
-
-  // Handles file upload
-  function onUploadFileChange({ target }){
-    // set number of files
-    setFileLength(target.files['length'])
-
-    // Set name of file input
-    setFileName(target.files[0].name)
-
-    //if there is no file uploaded or is not valid:
-    if(target.files<1 || !target.validity.valid){
-      return
-    }
-    fileToBase64(target.files[0], (err, result)=>{
-      if (result){
-        const base64 = result.split(',');
-        setFile(base64[1]);
-        // setFile(result);
-        setData("data:application/pdf;base64,"+base64[1]);
-      }
-    })
-  }
-  function removeFile(){
-    setFile("")
-    setFileName("")
-    setFileLength(0)
-  }
-  // handle drag events
-    const onButtonClick = () => {
-      inputRef.current.click();
-    };
-
-  // Redirect to view pdf
-    function redirectPdf(){
-      var link='/view-pdf/' + file;
-      // console.log(link);
-      <Navigate to={link} />
-    }
-
-  // Function submit base 64
-  function submitBase65(base64){
-    axios({
-      method: 'post',
-      url: window.$link + 'Bookingdetails/uploadResults/' + bookingId,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        file: base64,
-        added_by:userId
-      }
-    })
-    .then((response)=>{
-      console.log(response)
-
-
-    })
-    .catch((error)=>{console.log(error)})
-  }
-
-  const uploadArea =<div className="upload-cont col-sm-8">
-    <input 
-        ref={inputRef} 
-        type="file"
-        name="pdftobase64" 
-        accept="application/pdf"
-        className="input-file-upload"
-        onChange={onUploadFileChange}
-        />
-    
-    {/* File Upload Button */}
-    {fileLength==0 &&(<button className="upload-res-btn" onClick={onButtonClick}>UPLOAD RESULTS</button>)}
-    
-    {/* File Name and Delete Button */}
-    {fileLength!=0 && (<div className="file-upload-remove">
-        <img src={pdfIcon} alt="pdf" className="pdf-icon"/>
-        <p className="file-name">{fileName}</p>
-        <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
-      </div>)}
-      
-  </div>
-
-  // Per category
-  var groupedServices = groupArrayOfObjects(labTests,"key");
 
   // Categorize lab test
   const xray = labTests.filter((info)=>info.key==="xray"||info.key==="cardiology"||info.key==="radiology")
@@ -341,66 +228,6 @@ console.log(labTests)
   const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
 
   const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests"||info.key==="ultrasound")
-
-  // Row per category  
-  const services_XRAY = <div className="result-cont row">
-          <div className="col-sm-4">
-            <div className="category label">XRAY</div>
-            {xray.map((data,index)=>
-              <div className="details">{data.name}</div>
-            )}
-          </div>
-          {uploadArea}
-      </div>
-
-  const services_Hematology =  <div className="result-cont row">
-          <div className="col-sm-4">
-            <div className="category label">HEMATOLOGY</div>
-            {hematology.map((data,index)=>
-              <div className="details">{data.name}</div>
-            )}
-          </div>
-          {uploadArea}
-      </div>
-
-  const services_Serology =  <div className="result-cont row">
-          <div className="col-sm-4">
-            <div className="category label">SEROLOGY</div>
-            {serology.map((data,index)=>
-              <div className="details">{data.name}</div>
-            )}
-          </div>
-          {uploadArea}
-      </div>
-  const services_Clinical_Urinalysis =  <div className="result-cont row">
-          <div className="col-sm-4">
-            <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
-            {clinicalUrinalyis.map((data,index)=>
-              <div className="details">{data.name}</div>
-            )}
-          </div>
-          {uploadArea}
-      </div>
-
-  const services_Clinical_Fecalysis =  <div className="result-cont row">
-        <div className="col-sm-4">
-          <div className="category label">CLINICAL MICROSCOPY FECALYSIS</div>
-          {clinicalFecalysis.map((data,index)=>
-            <div className="details">{data.name}</div>
-          )}
-        </div>
-        {uploadArea}
-    </div>
-
-  const services_Others =  <div className="result-cont row">
-        <div className="col-sm-4">
-          <div className="category label">OTHERS</div>
-          {others.map((data,index)=>
-            <div className="details">{data.name}</div>
-          )}
-        </div>
-        {uploadArea}
-    </div>
 
  
   return(
@@ -485,15 +312,45 @@ console.log(labTests)
         {/* LABORATORY TEST UPLOADER */ }
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
         <div className="personal-data-cont">
-        
-        {(xray.length!=0) && services_XRAY}
-        {(hematology.length!=0) && services_Hematology}        
-        {(serology.length!=0) && services_Serology}
-        {(clinicalUrinalyis.length!=0) && services_Clinical_Urinalysis}
-        {(clinicalFecalysis.length!=0) && services_Clinical_Fecalysis}
-        {(others.length!=0) && services_Others}
 
+        {clinicalUrinalyis.length!=0 && 
+          <FileUpload 
+            servicesData={clinicalUrinalyis}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+          />}
+
+        {clinicalFecalysis.length!=0 && 
+          <FileUpload 
+            servicesData={clinicalFecalysis}
+            title={"CLINICAL MICROSCOPY FECALYSIS"}
+          />}
+
+        {hematology.length!=0 && 
+          <FileUpload 
+            servicesData={hematology}
+            title={"HEMATOLOGY"}
+          />}
+        {serology.length!=0 && 
+          <FileUpload 
+            servicesData={serology}
+            title={"SEROLOGY"}
+          />}
+
+        {xray.length!=0 && 
+          <FileUpload 
+            servicesData={xray}
+            title={"XRAY"}
+          />}
+
+        {others.length!=0 && 
+          <FileUpload 
+            servicesData={others}
+            title={"OTHER TESTS"}
+          />}
         </div>
+
+
+
         </div>
         )}
         {/* <object 
@@ -503,7 +360,9 @@ console.log(labTests)
 
         
         
-
+        <br />
+        <br />
+        <br />
 
       </Fragment>
       </div>
