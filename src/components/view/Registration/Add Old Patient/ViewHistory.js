@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
-import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
+import { getTime, getToken, getUser, refreshPage } from "../../../../utilities/Common";
 import axios from 'axios';
 
 //components
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 import Table from '../../../Table.js';
+import { isWindows } from "react-device-detect";
 
 const userToken = getToken();
 const userId = getUser();
@@ -28,44 +29,12 @@ export default function ViewHistory(){
 
   // Patient history
   const [patientHistory, setPatientHistory] = useState([]);
+  const [services, setServices] = useState("");
 
 
   
   React.useEffect(()=>{
-    // Get customer details
-    axios({
-      method: 'post',
-      url: window.$link + 'customers/show/' + id,
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }})
-    .then((response)=>{
-      setFirstName(response.data.first_name);
-      setMiddleName(response.data.middle_name);
-      setLastName(response.data.last_name);
-
-      var birthDate = new Date(response.data.birthdate);
-      setBirthDate(birthDate.toDateString());
-
-      setGender(response.data.gender);
-
-      var presentDate = new Date();
-      var age = presentDate.getFullYear() - birthDate.getFullYear();
-      var m = presentDate.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
-        {age--;}
-      setAge(age);
-
-      setContactNo(response.data.contact_no);
-      setEmail(response.data.email);
-      setAddress(response.data.address);
-    })
-    .catch((error)=>{console.log(error)})
-
-    // Get patient history
+   
     axios({
       method: 'post',
       url: window.$link + 'bookings/getBookingsByCustomer/' + id,
@@ -76,11 +45,83 @@ export default function ViewHistory(){
           requester: userId,
       }      
     })
-    .then((response)=>{console.log(response)})
+    .then((response)=>{
+      // console.log(response)
+      // Customer details
+      const customer = response.data.data.customer;
+      setFirstName(customer.first_name);
+      setMiddleName(customer.middle_name);
+      setLastName(customer.last_name);
+
+      var birthDate = new Date(customer.birthdate);
+      setBirthDate(birthDate.toDateString());
+
+      setGender(customer.gender);
+
+      var presentDate = new Date();
+      var age = presentDate.getFullYear() - birthDate.getFullYear();
+      var m = presentDate.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
+        {age--;}
+      setAge(age);
+
+      setContactNo(customer.contact_no);
+      setEmail(customer.email);
+      setAddress(customer.address);
+
+       //patient history
+       patientHistory.length=0;
+      response.data.data.bookings.map(async(data,index)=>{
+        
+
+        // Formatting date
+        var bookingDate = new Date(data.booking_time);
+        var formattedBookingDate = bookingDate.toDateString().split(" ");
+
+
+
+        var info={};
+        info.id = data.id;
+        info.date = formattedBookingDate[0]+" "+formattedBookingDate[1]+" "+formattedBookingDate[2]+" "+formattedBookingDate[3]+" "+getTime(bookingDate);
+        info.category  = data.type;
+        info.labTest = "";
+        
+        // Get Labtest
+        await axios({
+          method: 'post',
+          url: window.$link + 'bookings/getBookingDetails/' + data.id,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+        })
+        .then((response)=>{
+          // console.log(response.data)
+          const len = response.data.length;
+          response.data.map((data, index)=>{
+
+          if(len-1==index){
+            info.labTest += (data.lab_test || data.package);
+          } else {
+            info.labTest += (data.lab_test || data.package) + ", ";
+          }
+       
+          })
+
+        })
+        .catch((error)=>{console.log(error)})        
+
+
+        info.total = "P "+data.total_amount;
+        setPatientHistory(oldArray=>[...oldArray, info]);
+
+      })
+    })
     .catch((err)=>{console.log(err)})
 
   },[])  
-
 
   return(
     <div>
