@@ -10,44 +10,88 @@ const userId = getUser();
 
 export default function FileUpload({servicesData, title}){
   const inputRef = React.useRef(null);
-  // Function submit base 64
+  const [labIds, setLabIds] = useState([]);
+  const [packageIds, setPackageIds] = useState([]);
+  const [servicesLab, setServicesLab] = useState([]);
+  const [servicesPackage, setServicesPackage] = useState([]);
 
-  function submitPdf(base64, type, id){
+  // const services_package = servicesData.filter((info)=>info.type=='package')
+  // const services_lab = servicesData.filter((info)=>info.type=='lab')
+
+  React.useEffect(()=>{
+    setServicesLab(servicesData.filter((info)=>info.type=='lab'))
+    setServicesPackage(servicesData.filter((info)=>info.type=='package'))
+  },[servicesData])
+
+  React.useEffect(()=>{
+    labIds.length=0;
+    servicesLab.map((data, index)=>{
+      setLabIds(oldArray => [...oldArray, data.id])
+    })
+  }, [servicesLab])
+
+  React.useEffect(()=>{
+  packageIds.length=0;
+  servicesPackage.map((data, index)=>{
+    setPackageIds(oldArray => [...oldArray, data.id])
+  })
+  }, [servicesPackage])
+  
+
+  // Function submit base 64
+  function submitPdf(base64, labIdArray, packageIdArray){
     base64 = file;
-    console.log(base64)
-    // if(type=='lab'){
-    //   axios({
-    //       method: 'post',
-    //       url: window.$link + 'Bookingdetails/uploadResults/' + id,
-    //       withCredentials: false,
-    //       params: {
-    //         api_key: window.$api_key,
-    //         token: userToken.replace(/['"]+/g, ''),
-    //         file: base64,
-    //         added_by:userId
-    //       }
-    //     })
-    //   .then((response)=>{
-    //     console.log(response)
-    //   })
-    //   .catch((error)=>{console.log(error)})}
-    // else {
-    //   axios({
-    //     method: 'post',
-    //     url: window.$link + 'Bookingpackage_details/uploadResults/' + id,
-    //     withCredentials: false,
-    //     params: {
-    //       api_key: window.$api_key,
-    //       token: userToken.replace(/['"]+/g, ''),
-    //       file: base64,
-    //       added_by:userId
-    //     }
-    //   })
-    //   .then((response)=>{
-    //     console.log(response)
-    //   })
-    //   .catch((error)=>{console.log(error)})
-    // }
+    labIdArray = labIds;
+    packageIdArray = packageIds;
+    const formData = new FormData();
+    formData.append("file_result", base64);
+    // console.log(base64)
+    // console.log(labIdArray)
+    // console.log(packageIdArray)
+
+    if(labIdArray.length!=0){
+      labIdArray.map((idLab, index)=>{
+        axios({
+            method: 'post',
+            url: window.$link + 'Bookingdetails/uploadResults/' + idLab,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              added_by:userId
+            }
+          })
+        .then((response)=>{
+          console.log(response)
+        })
+        .catch((error)=>{console.log(error)})
+
+      })
+    }
+    if(packageIdArray.length!=0) {
+      packageIdArray.map((idPackage, index)=>{
+        axios({
+        method: 'post',
+        url: window.$link + 'Bookingpackage_details/uploadResults/' + idPackage,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          added_by:userId
+        }
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      .catch((error)=>{console.log(error)})
+    })
+    }     
+      
+
   }
 
   // Base64 file
@@ -109,7 +153,7 @@ export default function FileUpload({servicesData, title}){
           <div className="col-sm-4">
             <div className="category label">{title}</div>
             {servicesData.map((info,index)=>
-              <div className="details">{info.id} {info.name}</div>
+              <div className={"details"+info.id}>{info.type} {info.id} {info.name}</div>
             )}
           </div>
           {/* Upload button */}
