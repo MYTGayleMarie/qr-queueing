@@ -31,6 +31,7 @@ import ReceivesPrint from './components/view/Supply/ReceivesPrint';
 import Items from './components/view/Supply/Items';
 import MedTech from './components/view/Results Releasing/MedTech';
 import MedTechStart from './components/view/Results Releasing/MedTechStart';
+import ViewPdf from './components/view/Results Releasing/ViewPdf'
 import AddSupplyItems from './components/view/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/view/Supply/UpdateSuppyItems';
 import Suppliers from './components/view/Supply/Suppliers';
@@ -128,6 +129,7 @@ function App() {
         <Route path="/add-release" element={token ? <AddItems /> : <Navigate to="/" />} />
         <Route path="/review-release/:id" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
+        <Route path="/view-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
         <Route path="/medtech-start/:bookId/:serviceId/:type" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />

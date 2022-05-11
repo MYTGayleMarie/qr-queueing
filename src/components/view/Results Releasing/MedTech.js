@@ -148,7 +148,7 @@ function MedTech() {
           }
         })
         .then((response)=>{
-          console.log(response)
+          // console.log(response)
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -172,6 +172,7 @@ function MedTech() {
               serviceDetails.name = packageCat.lab_test;
               serviceDetails.type = "package";
               serviceDetails.id = packageCat.id;
+              serviceDetails.packageId = info.id
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
 
@@ -204,7 +205,8 @@ function MedTech() {
           }
           serviceDetails.category = category.data.name;
           serviceDetails.name = info.lab_test;
-           serviceDetails.type = "lab";
+          serviceDetails.type = "lab";
+          serviceDetails.packageId = "0";
           serviceDetails.id = info.id;
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
@@ -317,35 +319,41 @@ function MedTech() {
           <FileUpload 
             servicesData={clinicalUrinalyis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}
           />}
 
         {clinicalFecalysis.length!=0 && 
           <FileUpload 
             servicesData={clinicalFecalysis}
             title={"CLINICAL MICROSCOPY FECALYSIS"}
+            bookingId = {bookingId}
           />}
 
         {hematology.length!=0 && 
           <FileUpload 
             servicesData={hematology}
             title={"HEMATOLOGY"}
+            bookingId = {bookingId}
           />}
         {serology.length!=0 && 
           <FileUpload 
             servicesData={serology}
             title={"SEROLOGY"}
+            bookingId = {bookingId}
           />}
 
         {xray.length!=0 && 
           <FileUpload 
             servicesData={xray}
             title={"XRAY"}
+            bookingId = {bookingId}
           />}
 
         {others.length!=0 && 
           <FileUpload 
             servicesData={others}
             title={"OTHER TESTS"}
+            bookingId = {bookingId}
           />}
         </div>
 
