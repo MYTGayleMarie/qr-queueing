@@ -46,6 +46,7 @@ function Reports() {
     const [pendingPOs, setPendingPOs] = useState([]);
     const [unpaidInvoices, setUnpaidInvoices] = useState([]);
     const [credit, setCredit] = useState(0);
+    const [incompletePo, setIncompletePo] = useState([])
 
     const [discounts, setDiscounts] = useState([]);
 
@@ -215,11 +216,11 @@ function Reports() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response)
-              console.log(response.data.data.sales)
+              // console.log(response)
+              // console.log(response.data.data.sales)
               var total = 0;
               response.data.data.sales.map((data,index) => {
-                console.log(data[0].grand_total)
+                // console.log(data[0].grand_total)
                 total += data[0].grand_total == null ? 0 : parseFloat(data[0].grand_total);
               })
               setTotalSales(total);
@@ -242,7 +243,7 @@ function Reports() {
                 requester: userId,
               },
             }).then(function (response) {
-                console.log(response);
+                // console.log(response);
 
                 var pending = response.data.company_invoices.filter((info) => info.is_paid == "0");
                 setUnpaidInvoices(pending);
@@ -275,7 +276,55 @@ function Reports() {
         });
   },[]);
 
+  // ALL INCOMPLETE POS
+  React.useEffect(()=>{
+    incompletePo.length=0;
+    // Getting all incomplete POs
+    axios({
+      method: 'post',
+      url: window.$link + 'reports/incompletePOs',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+        date_from: filteredData.from_date,
+        date_to: filteredData.to_date,
+      }
+    })
+    .then((pos)=>{
+      const incomplete = pos.data.pos;  
+      // Getting poItems in each pos
+      incomplete.map(async(pos, index)=>{
+        await axios({
+          method: 'post',
+          url: window.$link + 'pos/getPoItems/' + pos.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+          }
+          })
+          .then((poItems)=>{
+            // console.log(poItems)
+            poItems.data.map((itemDetails, index1)=>{
+            const bal = itemDetails.qty-itemDetails.received
+               //  if there is balance, we include it in table
+               if(bal>0){
+                 setIncompletePo(oldArray=>[...oldArray, pos.id])
+               }
+             })
+          })
+          .catch((error)=>{
+            console.log(error)
+          })
+      })   
 
+
+    })
+    .catch((error)=>{console.log(error)})
+  },[])
 
     return (
         <div>
@@ -382,7 +431,7 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                   {role != 3 && <Card 
-                        totalData={123}
+                        totalData={incompletePo.length}
                         todayData={""}
                         link={"/reports-incomplete-po"}
                         title='Incomplete PO'

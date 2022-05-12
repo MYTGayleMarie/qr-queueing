@@ -48,6 +48,7 @@ export default function ReportIncompletePOReview(){
 
   // Get PO Details
   React.useEffect(()=>{
+      poItems.length=0;
     axios({
       method: 'post',
       url: window.$link + 'pos/show/' + id,
@@ -97,7 +98,7 @@ export default function ReportIncompletePOReview(){
       }
     })
     .then((response)=>{
-      // console.log(response)
+      console.log(response)
       setUnfilteredPoItems(response.data)
       response.data.map((data,index)=>{
 
@@ -251,7 +252,7 @@ return(
         type={'incomplete-po-items'}
         tableData={poItems}
         rowsPerPage={20}
-        headingColumns={['ITEM NAME','UNI','ORDERED QTY','RECEIVED QTY','BALANCE']}
+        headingColumns={['ITEM NAME','UNIT','ORDERED QTY','RECEIVED QTY','BALANCE']}
       />
       <div className="button-area">
         <button className="upload-res-btn blue" onClick={()=>{setReceiveTable(true)}}>RECEIVE ITEMS</button>

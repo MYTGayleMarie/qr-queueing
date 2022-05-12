@@ -35,6 +35,7 @@ export default function ReportIncompletePO(){
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [render, setRender] = useState([]);
   const [redirect, setRedirect] = useState(false);
+  const [posTempData, setPoTempData] = useState([]);
 
 
   // table data
@@ -42,9 +43,10 @@ export default function ReportIncompletePO(){
 
   React.useEffect(()=>{
     incompletePo.length=0;
+    // Getting all incomplete POs
     axios({
       method: 'post',
-      url: window.$link + '/reports/incompletePOs',
+      url: window.$link + 'reports/incompletePOs',
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -54,40 +56,73 @@ export default function ReportIncompletePO(){
         date_to: filteredData.to_date,
       }
     })
-    .then((response)=>{
-      const incomplete = response.data.pos;      
-      incomplete.map((data,index)=>{
-        axios({
+    .then((pos)=>{
+      // console.log(pos)
+      const incomplete = pos.data.pos;  
+      setPoTempData(incomplete) 
+      // Getting poItems in each pos
+      incomplete.map(async(pos, index)=>{
+        await axios({
           method: 'post',
-          url: window.$link + 'suppliers/show/' + data.supplier_id,
+          url: window.$link + 'pos/getPoItems/' + pos.id,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
             token: userToken.replace(/['"]+/g, ''),
-            date_from: filteredData.from_date,
-            date_to: filteredData.to_date,
             requester: userId,
-          },
-        }).then((supplier)=>{
-            var info = {};
-            info.po_number = data.id;
-            var date = new Date(data.added_on);
-            var formattedDate = date.toDateString().split(" ");
-            info.po_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-            info.supplier = supplier.data.name;
-            info.total_amount = data.grand_total;
-            setIncompletePo(oldArray=>[...oldArray, info])
-            })
-        
-            if(incomplete.length - 1 == index) {
-          setPrintReadyFinal(true);
-        }
+          }
+          })
+          .then((poItems)=>{
+            // console.log(poItems)
+             poItems.data.map((itemDetails, index1)=>{
+                const bal = itemDetails.qty-itemDetails.received
+ 
+  
 
-      })
+              //  if there is balance, we include it in table
+               if(bal>0){
+                //  console.log(itemDetails)
+                axios({
+                  method: 'post',
+                  url: window.$link + 'suppliers/show/' + pos.supplier_id,
+                  withCredentials: false,
+                  params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    date_from: filteredData.from_date,
+                    date_to: filteredData.to_date,
+                    requester: userId,
+                  }
+                  })
+                  .then((supplier)=>{
+                    var info = {};
+                    info.po_number = pos.id;
+                    var date = new Date(pos.added_on);
+                    var formattedDate = date.toDateString().split(" ");
+                    info.po_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+                    info.supplier = supplier.data.name;
+                    info.total_amount = pos.grand_total;
+                    setIncompletePo(oldArray=>[...oldArray, info])
+                  })
+
+               }
+             })
+            // Set status for printing
+            if(incomplete.length - 1 == index) {
+              setPrintReadyFinal(true);
+            }
+          })
+          .catch((error)=>{
+            console.log(error)
+          })
+      })   
+
 
     })
     .catch((error)=>{console.log(error)})
   },[render])
+
+
 
   function review(poId){
     id=poId;
