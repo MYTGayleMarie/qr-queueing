@@ -19,6 +19,12 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [withResults, setWithResults] = useState(false);
   const [redirectPdf, setRedirectPdf] = useState(false);
   const [upload, setUpload] = useState(false);
+  
+  // Base64 file
+  const [file, setFile] = useState("")
+  const [fileLength, setFileLength] = useState(0)
+  const [fileName, setFileName] = useState("")
+  const [data, setData] = useState("")
 
 
   // Categorizing services into lab and packages
@@ -60,7 +66,7 @@ export default function FileUpload({servicesData, title, bookingId}){
     .then((lab)=>{
       // console.log(lab)
       const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
-      console.log(labDetail)
+      // console.log(labDetail)
       if (labDetail[0].result_id>0){
         setWithResults(true)
       }
@@ -82,7 +88,7 @@ export default function FileUpload({servicesData, title, bookingId}){
     .then((packages)=>{
       // console.log(packages)
       const packageDetail = packages.data.filter((details)=>details.id==servicesData[0].id)
-      console.log(packageDetail)
+      // console.log(packageDetail)
       if (packageDetail[0].result_id>0){
         setWithResults(true)
       }
@@ -91,13 +97,47 @@ export default function FileUpload({servicesData, title, bookingId}){
   }
 
   },[upload])
-  
+
+  // Convert file to base 64
+  function convertToBase64(e){
+    //read file
+    // var selectedFile=document.getElementById("pdftobase64").files
+    var selectedFile = e.target.files;
+    // Check if file is empty
+         
+    if(selectedFile.length > 0){
+      setFileLength(selectedFile.length)
+      // select first file from list
+      setFileName(selectedFile[0].name)
+      var fileToLoad = selectedFile[0]
+      var fileReader = new FileReader();
+      var base64;
+      fileReader.onload = function(fileLoadedEvent){
+        base64 = fileLoadedEvent.target.result;
+        setFile(base64)
+        
+      }
+      fileReader.readAsDataURL(fileToLoad)
+    }
+
+  }
+
+  function removeFile(){
+    setFile("")
+    setFileName("")
+    setFileLength(0)
+  }
+  // handle drag events
+  const onButtonClick = () => {
+    inputRef.current.click();
+  };
+
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray){
     base64 = file;
     labIdArray = labIds;
     packageIdArray = packageIds;
-    console.log(base64)
+    // console.log(base64)
 
     if(labIdArray.length!=0){
       labIdArray.map((idLab, index)=>{
@@ -161,61 +201,6 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   }
 
-
-
-  // Base64 file
-  const [file, setFile] = useState("")
-  const [fileLength, setFileLength] = useState(0)
-  const [fileName, setFileName] = useState("")
-  const [data, setData] = useState("")
-
-   // Reads file to base64
-  function fileToBase64(file, cb){
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    // If reader loads the full file
-    reader.onload = function (){
-      cb(null, reader.result);
-    };
-
-    // If there is error reading the file
-    reader.onerror = function (error){
-      cb(error, null)
-    };
-  }
-
-  // Handles file upload
-  function onUploadFileChange({ target }){
-    // set number of files
-    setFileLength(target.files['length'])
-
-    // Set name of file input
-    setFileName(target.files[0].name)
-
-    //if there is no file uploaded or is not valid:
-    if(target.files<1 || !target.validity.valid){
-      return
-    }
-    fileToBase64(target.files[0], (err, result)=>{
-      if (result){
-        // const base64 = result.split(',');
-        // setFile(base64[1]);
-        setFile(result);
-        // setData("data:application/pdf;base64,"+base64[1]);
-      }
-    })
-  }
-  function removeFile(){
-    setFile("")
-    setFileName("")
-    setFileLength(0)
-  }
-  // handle drag events
-  const onButtonClick = () => {
-    inputRef.current.click();
-  };
-
   // Handle view results button click
   function handleViewResults(){
     setRedirectPdf(true)
@@ -246,11 +231,12 @@ export default function FileUpload({servicesData, title, bookingId}){
           <div className="upload-cont col-sm-8">
             <input 
                 ref={inputRef} 
-                type="file"
+                type="file"                
+                id="pdftobase64"
                 name="pdftobase64" 
                 accept="application/pdf"
                 className="input-file-upload"
-                onChange={onUploadFileChange}
+                onChange={(e)=>convertToBase64(e)}
                 />
             
             {/* File Upload Button */}

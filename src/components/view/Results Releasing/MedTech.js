@@ -91,7 +91,7 @@ function MedTech() {
       }
     })
     .then((booking)=>{
-      console.log(booking)
+      // console.log(booking)
       setServices(booking.data)
     })
     .catch((error)=>{console.log(error)})
@@ -361,10 +361,7 @@ function MedTech() {
 
         </div>
         )}
-        {/* <object 
-        name={lastName}
-        data={data}  
-        className="pdfObject"/> */}
+
 
         
         

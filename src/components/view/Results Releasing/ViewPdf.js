@@ -28,9 +28,9 @@ export default function ViewPdf(){
       }
     })
     .then((lab)=>{
-      console.log(lab)
+      // console.log(lab)
       const labDetail = lab.data.filter((details)=>details.id==serviceId)
-      console.log(labDetail)
+      // console.log(labDetail)
       setBase64(labDetail[0].file)
       
     })
@@ -49,9 +49,9 @@ export default function ViewPdf(){
       }
     })
     .then((packages)=>{
-      console.log(packages)
+      // console.log(packages)
       const packageDetail = packages.data.filter((details)=>details.id==serviceId)
-      console.log(packageDetail)
+      // console.log(packageDetail)
       setBase64(packageDetail[0].file)
     })
     .catch((error)=>{console.log(error)})
@@ -59,7 +59,7 @@ export default function ViewPdf(){
 
   },[])
 
-console.log(base64)
+// console.log(base64)
   return(
 //    <div>
 // {type}
