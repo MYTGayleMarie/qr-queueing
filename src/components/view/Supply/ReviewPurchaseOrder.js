@@ -113,7 +113,7 @@ function ReviewPurchaseOrder() {
             requester: userId,
           },
         }).then(function (response) {
-            console.log(response)
+            // console.log(response)
 
             //format date
             var pDate = new Date(response.data.purchase_date);
@@ -205,7 +205,7 @@ function ReviewPurchaseOrder() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response);
+              // console.log(response);
             
               response.data.map((data,index) => {
                 
@@ -360,7 +360,6 @@ function ReviewPurchaseOrder() {
     function disapproveAll(poId, reason) {
     poId = id;
     reason = deleteAllReason;
-    console.log(id, deleteAllReason)
         axios({
             method: 'post',
             url: window.$link + 'pos/mark_disapproved/' + poId,
@@ -372,7 +371,7 @@ function ReviewPurchaseOrder() {
               reason: reason,
             },
           }).then(function (response) {
-              console.log(response)
+              // console.log(response)
               toast.success("Disapproved PO!");
               setTimeout(function () {
                 // setDeleteRedirect(true);
