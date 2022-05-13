@@ -33,9 +33,15 @@ function ReportSales() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
+  const [cashSales, setCashSales] = useState(0);
+  const [checkSales, setCheckSales] = useState(0);
+  const [cardSales, setCardSales] = useState(0);
+  const [othersSales, setOthersSales] = useState(0);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [redirect, setRedirection] = useState(false);
   const [total, setTotal] = useState(0);
+
+  const [accountDetails, setAccountDetails] = useState([]);
 
   
      //SALES REPORT
@@ -99,24 +105,59 @@ function ReportSales() {
         
         const salesArray = response.data.data.sales
         console.log(salesArray)
+
         salesArray.map((data,index)=>{
           var info = {}
-          var date = new Date(data[0].payment_date);
-          var formattedDate = date.toDateString().split(" ");
-          var selectedDate = new Date(filteredData.from_date);
-          var formattedSelectedDate = selectedDate.toDateString().split(" ");
+          var tempAccount = [];
 
-          //data for the table4
-          info.date = data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-          info.method =  data[0].type
-          info.account = data[0].accounts
-          info.total = data[0].grand_total.toString()
+
+          // Date From
+          var selectedDateFrom = new Date(filteredData.from_date);
+          var formattedSelectedDateFrom = selectedDateFrom.toDateString().split(" ");
+          info.dateFrom = formattedSelectedDateFrom[1] + " " + formattedSelectedDateFrom[2] + " " + formattedSelectedDateFrom[3]
+
+          // Date To
+          var selectedDateTo = new Date(filteredData.to_date);
+          var formattedSelectedDateTo = selectedDateTo.toDateString().split(" ");
+          info.dateTo = formattedSelectedDateTo[1] + " " + formattedSelectedDateTo[2] + " " + formattedSelectedDateTo[3]
+
+          info.method = data[0].type
+          info.accounts = [];
+          info.grandTotal= 0.00;
+          // accounts
+          data.map((items, index)=>{
+            info.grandTotal+=parseFloat(items.grand_total);
+            if(items.accounts != null){
+              items.accounts.map((accounts, index2)=>{
+                var accountInfo = {};
+                accountInfo.account = accounts.name;
+                accountInfo.amount = accounts.amount;
+                tempAccount.push(accountInfo)
+              })
+              info.accounts = Array.from(tempAccount.reduce(
+                (m, {account, amount}) => m.set(account, (m.get(account) || 0) + parseFloat(amount)), new Map),
+                ([account, amount]) => ({account, amount}))
+            }
+          })
+
           setSales(oldArray=>[...oldArray, info])
 
-          //total amount
-          totalAmount += data[0].grand_total == null ? parseFloat("0.00") : parseFloat(data[0].grand_total);
+          // var date = new Date(data[0].payment_date);
+          // var formattedDate = date.toDateString().split(" ");
+          // var selectedDate = new Date(filteredData.from_date);
+          // var formattedSelectedDate = selectedDate.toDateString().split(" ");
+
+          // info.date= data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+          // info.method =  data[0].type
+          // info.account = data[0].accounts
+          // info.total = data[0].grand_total.toString()
+          // setSales(oldArray=>[...oldArray, info])
+
+          // //total amount
+          // totalAmount += data[0].grand_total == null ? parseFloat("0.00") : parseFloat(data[0].grand_total);
+
+
           if(salesArray.length - 1 == index) {
-              setTotal(totalAmount);
               setPrintReadyFinal(true);
             }
           })
@@ -128,8 +169,16 @@ function ReportSales() {
     
     },[render])
 
+    React.useEffect(()=>{
+      setTotal(0)
+      var tempTotal = 0;
+      sales.map((data, index)=>{
+        tempTotal+=data.grandTotal
+        setTotal(tempTotal)
+      })
+    },[sales])
 
-
+console.log(total)
   function filter() {}
 
   function toTransaction() {

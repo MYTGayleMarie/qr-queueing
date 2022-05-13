@@ -212,30 +212,24 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
         else if (type === 'sales') {
-            // return <tr key={row.id} onClick={() => link(row.id)}>
-            // {rowData.map((data, index) => 
-            // <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
-            // </tr>
-                                                                                                           
-            return <tr key={row.id} onClick={() => link(row.id)}>
-                <td key={row.method.replace(/\s/g, '')} data-heading='METHOD' className={row.date}>{row.date}</td>
-                <td key='1' data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
-                <td key='2' data-heading='ACCOUNT' className='account'>
-                    {row.account != null && (
-                        row.account.map((data)=>
-                            <div className='account-name'>{data.name}</div>
+            return <tr key={row.id}>
+                <td key={row.dateFrom.replace(/\s/g, '')+row.grandTotal} data-heading='DATE' className='date'>{row.dateFrom} - {row.dateTo}</td>
+                <td key={row.method+row.grandTotal} data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
+                <td key={"account"+row.grandTotal} data-heading='ACCOUNT' className='account'>
+                    {row.accounts != null && (
+                        row.accounts.map((data, index)=>
+                            <div className='account-name'>{data.account}</div>
                         )
                     )}      
                 </td>
-                <td key='3' data-heading='METHOD' className='amount'>
-                    {row.account != null && (
-                        row.account.map((data)=>
+                <td key={"amount"+row.grandTotal} data-heading='AMOUNT' className='amount'>
+                    {row.accounts != null && (
+                        row.accounts.map((data, index)=>
                             <div className='account-amount'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                         )
-                    )}         
+                    )}      
                 </td>
-                <td key='4' data-heading='TOTAL' className='TOTAL'>P {row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                {/* <td key='4' data-heading='DATE' className={row.date}>{row.date}</td> */}
+                <td key='4' data-heading='TOTAL' className='TOTAL'>P {row.grandTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
             </tr>
         }
         else if(type==='receive-incomplete-po-items'){
@@ -555,7 +549,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <div className="col-sm-10 d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
-                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(render=>!render) : ""}>FILTER</button>
                 </div>
                 </div>
                 <table className={tableClass}>
