@@ -59,6 +59,8 @@ function ReviewPurchaseOrder() {
 
       //Disapproved PO Item
       const [disapproveItem, setDisapproveItem] = useState("");
+      const [deleteItemReason, setDeleteItemReason] = useState("");
+      const [deleteAllReason, setDeleteAllReason] = useState("");
 
       //Redirect Edit 
       const [editRedirect, setEditRedirect] = useState(false);
@@ -111,7 +113,7 @@ function ReviewPurchaseOrder() {
             requester: userId,
           },
         }).then(function (response) {
-            console.log(response.data)
+            console.log(response)
 
             //format date
             var pDate = new Date(response.data.purchase_date);
@@ -170,6 +172,7 @@ function ReviewPurchaseOrder() {
             });
 
             //Approved By
+            if(response.data.approvedBy>0){
             axios({
                 method: 'post',
                 url: window.$link + 'users/show/' + response.data.approved_by,
@@ -183,7 +186,9 @@ function ReviewPurchaseOrder() {
                 setApprovedBy(response.data.name);
             }).catch(function (error) {
                 console.log(error);
-            });
+            });              
+            }
+
 
 
         }).catch(function (error) {
@@ -200,7 +205,7 @@ function ReviewPurchaseOrder() {
               requester: userId,
             },
           }).then(function (response) {
-            //   console.log(response.data);
+              console.log(response);
             
               response.data.map((data,index) => {
                 
@@ -322,7 +327,8 @@ function ReviewPurchaseOrder() {
           });
     }
 
-    function disapproveItemAction(itemId) {
+    function disapproveItemAction(itemId, reason) {
+      reason = deleteItemReason;
         axios({
             method: 'post',
             url: window.$link + 'po_items/mark_disapproved/' + itemId,
@@ -331,7 +337,9 @@ function ReviewPurchaseOrder() {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
               po: id,
+              reason: reason,
               updated_by: userId,
+        
             },
           }).then(function (response) {
             //   console.log(response)
@@ -349,22 +357,27 @@ function ReviewPurchaseOrder() {
         handleAllDeleteShow();
     }
 
-    function disapproveAll() {
+    function disapproveAll(poId, reason) {
+    poId = id;
+    reason = deleteAllReason;
+    console.log(id, deleteAllReason)
         axios({
             method: 'post',
-            url: window.$link + 'pos/mark_disapproved/' + id,
+            url: window.$link + 'pos/mark_disapproved/' + poId,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
               updated_by: userId,
+              reason: reason,
             },
           }).then(function (response) {
               console.log(response)
               toast.success("Disapproved PO!");
-            //   setTimeout(function () {
-            //     setDeleteRedirect(true);
-            //   }, 2000);
+              setTimeout(function () {
+                // setDeleteRedirect(true);
+                refreshPage();
+              }, 2000);
           }).then(function (error) {
               console.log(error);
           });
@@ -685,12 +698,12 @@ function ReviewPurchaseOrder() {
             <Modal.Header closeButton className='text-center'>
                <Modal.Title className='w-100 cash-count-header'>DISAPPROVE ITEM?</Modal.Title>
                 </Modal.Header>
-                  <form>
+                  <div>
                   <Modal.Body>
                   <div className='row d-flex justify-content-center text-center'>
                     Are you sure you want to disapprove this item? <br/> State reason for disapproving
                     <div className="reason-input-area">
-                        <textarea cols="50"></textarea>
+                        <textarea cols="50" onChange={(e) => setDeleteItemReason(e.target.value)}></textarea>
                     </div>
                     
                    </div>
@@ -700,7 +713,7 @@ function ReviewPurchaseOrder() {
                           DISAPPROVE
                         </button>
                    </Modal.Footer>
-                   </form>
+                   </div>
             </Modal>
 
             {/* MODAL FOR DISAPPROVING PO */}
@@ -709,12 +722,12 @@ function ReviewPurchaseOrder() {
             <Modal.Header closeButton className='text-center'>
                <Modal.Title className='w-100 cash-count-header'>DISAPPROVE PURCHASE ORDER?</Modal.Title>
                 </Modal.Header>
-                  <form>
+                  <div>
                   <Modal.Body>
                   <div className='row d-flex justify-content-center text-center'>
                     Are you sure you want to disapprove this purchase order? <br/> State reason for disapproving
                     <div className="reason-input-area">
-                        <textarea cols="50"></textarea>
+                        <textarea cols="50" onChange={(e) => setDeleteAllReason(e.target.value)}></textarea>
                     </div>
                     
                    </div>
@@ -724,7 +737,7 @@ function ReviewPurchaseOrder() {
                           DISAPPROVE
                         </button>
                    </Modal.Footer>
-                   </form>
+                   </div>
             </Modal>
             </div>
         </div>

@@ -222,7 +222,7 @@ function AddPurchaseOrder() {
           general_discount: generalDiscount,
           qty: qty,
           unit: units,
-          remarks: '',
+          remarks: info.remarks,
           added_by: userId,
         },
       }).then(function (response) {
