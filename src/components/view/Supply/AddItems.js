@@ -35,7 +35,7 @@ function AddItems() {
         quantity: "",
         unit: "",
         item: "",
-    }]);
+    }]); 
 
     const [existingItems, setRemoveItems]  = useState(items);
     const [redirect, setRedirect] = useState(false);
@@ -152,6 +152,8 @@ function AddItems() {
     if (redirect == true) {
         return <Navigate to="/release-item" />;
     }
+
+    console.log(info);
     
 
     return (
@@ -179,7 +181,13 @@ function AddItems() {
                     <span className="requistioner-label">REQUISITIONER</span>
                 </div>
                 <div className="col-sm-9">
-                    <input type="text" name="requisitioner" className="requistioner-input" onChange={setInfo}/>
+                    {/* <input type="text" name="requisitioner" className="requistioner-input" onChange={setInfo}/> */}
+                    <select name="requisitioner" className="requistioner-input" onChange={setInfo}>
+                        <option value="Admin">Admin</option>
+                        <option value="Laboratory">Laboratory</option>
+                        <option value="Reception">Reception</option>
+                        <option value="XRAY">Xray</option>
+                    </select>
                 </div>
             </div>
             <div className="row">
@@ -191,7 +199,6 @@ function AddItems() {
                 </div>
             </div>
         </div>
-
         <div className="add-items-cont">
             <div className="row">
                 <div className="col-sm-4">

@@ -84,7 +84,7 @@ function ReleaseItems() {
                         info.requisitioner = data.requisitioner;
                         info.grandTotal = data.grand_total;
                         info.remarks = data.remarks;
-        
+                        console.log(data);
                         setReleaseData(oldArray => [...oldArray, info]);
                   }).then(function (error) {
                       console.log(error);
