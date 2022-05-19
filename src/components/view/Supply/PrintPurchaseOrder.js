@@ -4,8 +4,6 @@ import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import { withRouter } from "react-router";
 import axios from 'axios';
 // import { adminSign } from "./Signatures";
-import admin_sign from "../../../images/signs/admin_sign.png"
-
 //css
 import './PrintPurchaseOrder.css';
 
