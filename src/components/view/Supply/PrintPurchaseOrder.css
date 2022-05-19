@@ -54,8 +54,16 @@
 }
 .po-print-approval {
     display: inline-block !important;
-    margin-right: 1%;
+    margin-right: 5%;
 }
 .margin-right-2 {
     margin-right: 2% !important;
+}
+.signature-printedby{
+  width:10%;
+  margin-left:10%;
+}
+.signature-approvedby {
+  width: 10%;
+  margin-left: 20%;
 }

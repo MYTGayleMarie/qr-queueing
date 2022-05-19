@@ -3,16 +3,28 @@ import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import { withRouter } from "react-router";
 import axios from 'axios';
+// import { adminSign } from "./Signatures";
+import admin_sign from "../../../images/signs/admin_sign.png"
 
 //css
 import './PrintPurchaseOrder.css';
 
 //logo image
 import logo from '../../../images/logo-black.png';
+import { adminSign } from "./Signatures";
 
 export class PrintPurchaseOrder extends React.PureComponent {
     render() {
-           //components
+      let signaturePrintedBy;
+      if(this.props.printedBy==="Admin"){
+        signaturePrintedBy = <img src={adminSign} alt="adminSign" className="signature-printedby" />
+      } 
+      let signatureApprovedBy;
+      if(this.props.approvedBy==="Admin"){
+        signatureApprovedBy = <img src={adminSign} alt="adminSign" className="signature-approvedby" />
+      } 
+
+    //components
     const listItems = this.props.poItems.map((data,index) => {
         return (
         <tr>
@@ -88,7 +100,7 @@ export class PrintPurchaseOrder extends React.PureComponent {
          
                     <div className='po-print-breakdown-cont'>
                         <div className='print-label po-print-breakdown'><b>SUBTOTAL </b></div><div className="margin-right-2"> {this.props.subTotal}</div>
-                    </div>
+                    </div><br />
                     <div className='po-print-breakdown-cont'>
                         <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div> {this.props.grandTotal}</div>
                     </div>
@@ -96,15 +108,18 @@ export class PrintPurchaseOrder extends React.PureComponent {
                     <hr></hr>
 
                     <div className="po-print-approval-cont">
+                      {signaturePrintedBy} {signatureApprovedBy} <br/>
                         <div className='po-print-approval'>
                             <span className='print-label'><b>PRINTED BY</b></span>
                             <span> {this.props.printedBy}</span>
                         </div>
+                        
                         <div className='po-print-approval'>
                             <span className='print-label'><b>APPROVED BY</b></span>
                             <span> {this.props.approvedBy}</span>
                         </div>
                     </div>
+                  
                 </div>
             </div>
 
