@@ -224,7 +224,7 @@ export default function FileUpload({servicesData, title, bookingId}){
           <div className="col-sm-4">
             <div className="category label">{title}</div>
             {servicesData.map((info,index)=>
-              <div className={"details"+info.id}>{info.type} {info.id} {info.name}</div>
+              <div className={"details"+info.id}>{info.name}</div>
             )}
           </div>
           {/* Upload button */}
