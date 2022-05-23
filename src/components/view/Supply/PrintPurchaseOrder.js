@@ -24,6 +24,8 @@ export class PrintPurchaseOrder extends React.PureComponent {
 
     //components
     const listItems = this.props.poItems.map((data,index) => {
+        console.log("testing")
+        console.log(data);
         return (
         <tr>
             <td>
@@ -31,6 +33,9 @@ export class PrintPurchaseOrder extends React.PureComponent {
             </td>
             <td>
                 {parseFloat(data.qty).toFixed(2)}                
+            </td>
+            <td>
+                {parseFloat(data.received).toFixed(2)}                
             </td>
             <td>
                 {data.unit}
@@ -88,6 +93,7 @@ export class PrintPurchaseOrder extends React.PureComponent {
                             <tr>
                                 <th>ITEM</th>
                                 <th>QTY</th>
+                                <th>RECEIVED QTY</th>
                                 <th>UNIT</th>
                                 <th>AMOUNT</th>
                                 <th>DISCOUNT</th>

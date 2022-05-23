@@ -183,7 +183,7 @@ export class PaymentToPrint extends React.PureComponent {
                              <td><span className="data">{category_services}</span></td>
                           </>
                         }
-                        {category_name == "PANCREATIC TEST" &&
+                        {category_name == "PANCREATIC TESTS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>

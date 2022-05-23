@@ -47,6 +47,7 @@ function ReviewPurchaseOrder() {
       const [approvedBy, setApprovedBy] = useState("");
       const [completedOn, setCompletedOn] = useState("");
       const [paidAmount, setPaidAmount] = useState("");
+      const [receive_qty, setReceiveQty] = useState("");
 
       //Edit PO details
       const [editSupplier, setEditSupplier] = useState("");
@@ -206,10 +207,9 @@ function ReviewPurchaseOrder() {
               requester: userId,
             },
           }).then(function (response) {
-              // console.log(response);
-            
               response.data.map((data,index) => {
-                
+                console.log(data.received);
+                setReceiveQty(data.received);
                 if(data.status != "disapprove") {
                     var itemData = {};
                     itemData.id = data.id;
@@ -643,6 +643,7 @@ function ReviewPurchaseOrder() {
                 remarks={remarks}
                 poItems={poItems} 
                 status={status}
+                receive_qty={receive_qty}
                 subTotal={subTotal}
                 grandTotal={grandTotal}
                 printedBy={printedBy}
