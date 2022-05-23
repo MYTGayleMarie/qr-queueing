@@ -156,7 +156,7 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             setPaymentStatus(response.data.payment_status);
             setPaymentType(response.data.payment_type);
@@ -493,7 +493,7 @@ function AddPayment() {
                     added_by: userId,
                 }
             }).then(function (booking) {
-                console.log(booking);
+                // console.log(booking);
             }).catch(function (error) {
                 console.log(error);
             });

@@ -343,6 +343,11 @@ export class PaymentToPrint extends React.PureComponent {
                                 <td><span className="header">Discount Code: </span><span className="detail-print">{discountCode ? discountCode : "None"}</span></td>
                             </tr>
                         </table>
+                        <table> 
+                            <tr>
+                                <td><span className="header">Diagnosis: </span><span className="detail-print">______________________________________________________________________________</span></td>
+                            </tr>
+                        </table>
                         </div>
     
                         <div className="line"></div>  

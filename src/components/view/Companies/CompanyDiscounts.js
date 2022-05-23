@@ -62,7 +62,7 @@ function CompanyDiscounts() {
                         requester: userId,
                     }
                 }).then(function (company) {
-                    console.log(company.data);
+                    // console.log(company.data);
                     var info = {};
                     info.company_id = company.data.id;
                     info.id = data.id;
