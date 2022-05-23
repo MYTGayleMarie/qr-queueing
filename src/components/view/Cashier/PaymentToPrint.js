@@ -120,7 +120,8 @@ export class PaymentToPrint extends React.PureComponent {
                category_name !== "LIPID PROFILE" && 
                category_name !== "GLUCOSE TESTS" &&
                category_name !== "LIVER FUNCTION TESTS" &&
-               category_name !== "KIDNEY FUNCTION TESTS") {
+               category_name !== "KIDNEY FUNCTION TESTS" &&
+               category_name !== "PANCREATIC TEST") {
                 return ""
             }
             
@@ -178,6 +179,11 @@ export class PaymentToPrint extends React.PureComponent {
                           </>
                         }
                         {category_name == "KIDNEY FUNCTION TESTS" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "PANCREATIC TEST" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>
