@@ -107,7 +107,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
             // } else {
             //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
             // } 
-            testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;         
+            testDetails.key = test.name.replace(/[2)}{(.,&-\s/]/g, '')+"_"+test.category_id;         
             testDetails.name = test.name;
             testDetails.categoryId = test.category_id;
             testDetails.labTestId = test.id;

@@ -72,8 +72,8 @@ export class PrintPurchaseOrder extends React.PureComponent {
                                 <td><span className="header-po">Delivery Date</span><span className="detail-po"> {deliveryDateformat.toDateString()}</span> </td>
                             </tr>
                             <tr>
-                                <td><span className="header-po">Requisitioner</span><span className="detail-po"> {this.props.requisitioner}</span></td>
-                                <td><span className="header-po">Forwarder</span><span className="detail-po"> {this.props.forwarder}</span></td>
+                                {/* <td><span className="header-po">Requisitioner</span><span className="detail-po"> {this.props.requisitioner}</span></td>
+                                <td><span className="header-po">Forwarder</span><span className="detail-po"> {this.props.forwarder}</span></td> */}
                                 <td><span className="header-po">Delivery Address</span><span className="detail-po"> {this.props.deliveryAddress}</span> </td>
                             </tr>
                             <tr>

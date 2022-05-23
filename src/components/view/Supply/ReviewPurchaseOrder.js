@@ -133,6 +133,7 @@ function ReviewPurchaseOrder() {
             }).then(function (error) {
                 console.log(error);
             })
+            console.log(response.data);
             setPurchaseDate(pDate.toDateString());
             setDeliveryDate(dDate.toDateString());
             setDeliveryAddress(response.data.delivery_address);
