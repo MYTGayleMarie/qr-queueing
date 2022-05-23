@@ -265,13 +265,27 @@ body {
 }
 
 //sales 
-.account-name,.account-amount{
-  // text-align: left;
-  padding:5%;
-  font-family: -apple-system,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue', sans-serif;
-  color: #212529;
-  }
 
+// .account-details{
+//   margin-bottom: 1rem;
+// }
+.account-method, .account-name, .account-amount {
+  width:33% !important;
+}
+.sales-row{
+  border-bottom: 0.5px solid #d6d6d6;
+  // margin-bottom: 2rem;
+}
+.method-row {
+  width:50vw;
+}
+.heading-details{
+  width:18vw!important;
+}
+.sales-row:last-child {
+  border-bottom: none;
+  margin-bottom: 2rem;
+}
 .TOTAL {
   color: #55073a !important;
   font-weight: bold;
