@@ -24,8 +24,6 @@ export class PrintPurchaseOrder extends React.PureComponent {
 
     //components
     const listItems = this.props.poItems.map((data,index) => {
-        console.log("testing")
-        console.log(data);
         return (
         <tr>
             <td>
