@@ -123,7 +123,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             // } else {
             //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
             // }    
-            testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;      
+            testDetails.key = test.name.replace(/[2)}{(.,&-\s/]/g, '')+"_"+test.category_id;      
             testDetails.name = test.name;
             testDetails.categoryId = test.category_id;
             testDetails.labTestId = test.id;
@@ -178,6 +178,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         }
     })
     .then((response)=>{
+      console.log(response)
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
         // console.log(packagesArray)
         packagesArray.map((item,index)=>{  
