@@ -26,6 +26,12 @@ const filterData = {
   to_date: formattedPresentData,
   done: false,
 };
+function groupArrayOfObjects(list, key) {
+  return list.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
 
 function ReportSales() {
 
@@ -33,18 +39,141 @@ function ReportSales() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
-  const [cashSales, setCashSales] = useState(0);
-  const [checkSales, setCheckSales] = useState(0);
-  const [cardSales, setCardSales] = useState(0);
-  const [othersSales, setOthersSales] = useState(0);
+  const [salesData, setSalesData] = useState([]);
+  
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [redirect, setRedirection] = useState(false);
   const [total, setTotal] = useState(0);
 
   const [accountDetails, setAccountDetails] = useState([]);
+  const [byDate, setByDate] = useState([]);
+  const [byMethod, setByMethod] = useState([]);
+  
 
   
-     //SALES REPORT
+    
+
+    React.useEffect(()=>{
+      sales.length=0;
+      axios({
+        method: 'post',
+        url: window.$link + 'reports/salesSummary',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
+          requester: userId,
+        }
+      })
+      .then((response)=>{
+        // console.log(response)        
+        const salesArray = response.data.data.sales
+        
+        salesArray.map((arr, index1)=>{
+          arr.map((method, index2)=>{
+            if(method.accounts!=null){
+              method.accounts.map((account, index3)=>{
+                var info = {};
+                var date = new Date(method.payment_date);
+                var formattedDate = date.toDateString().split(" ");
+               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                // info.date = method.payment_date
+                info.method = method.type
+                info.account = account.name 
+                info.amount = account.amount
+                setSales(oldArray=>[...oldArray, info])
+              })   
+            }
+
+          })
+        })
+
+
+      })
+      .catch((error)=>{console.log(error)})
+    
+    
+    
+    },[render])
+
+    React.useEffect(()=>{
+
+      byMethod.length=0;
+      const res = Array.from(sales.reduce(
+          (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
+          ([date, amount]) => ({date, amount}))
+      setSalesData(res)
+    },[sales])
+    
+    React.useEffect(()=>{
+      const tempData = salesData.concat(sales)
+      setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
+      setTotal(0);
+      var tempTotal = 0.00;
+      salesData.map((details, index)=>{
+        tempTotal+=parseFloat(details.amount)
+        setTotal(tempTotal)       
+      })
+
+    },[salesData])
+   
+
+  function filter() {}
+
+  function toTransaction() {
+    // setRedirection(true);
+  }
+
+  if(redirect == true) {
+    return <Navigate to={"/reports-transaction"} />;
+  }
+
+  return (
+    <div>
+      <Navbar />
+      <div className="active-cont">
+        <Fragment>
+
+        <Searchbar title='SALES'/>
+          <Header 
+            type="thick" 
+            title="QR DIAGNOSTICS REPORT" 
+            buttons={buttons} 
+            tableName={'Sales Report'}
+            tableData={sales}
+            // tableHeaders={['METHOD', 'TOTAL', 'DATE']}
+            tableHeaders={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
+            status={printReadyFinal}
+             />
+          <Table
+            clickable={true}
+            title="QR DIAGNOSTICS REPORT" 
+            type={'sales'}
+            tableData={byDate}
+            rowsPerPage={100}
+            headingColumns={['DATE', 'METHOD,  ACCOUNT,  AMOUNT', 'TOTAL']}
+            filteredData={filteredData}
+            setFilter={setFilter}
+            filter={filter}
+            setRender={setRender}
+            render={render}
+            link={toTransaction}
+            totalCount={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            givenClass={"register-mobile"}
+          />
+
+          <ToastContainer hideProgressBar={true} />
+        </Fragment>
+      </div>
+    </div>
+  );
+}
+
+export default ReportSales;
+
+ //SALES REPORT
     //  React.useEffect(() => {
     //    sales.length = 0;
     //     axios({
@@ -84,150 +213,3 @@ function ReportSales() {
     //         console.log(error);
     //       });
     // },[render]);
-
-    React.useEffect(()=>{
-      sales.length=0;
-      axios({
-        method: 'post',
-        url: window.$link + 'reports/salesSummary',
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          date_from: filteredData.from_date,
-          date_to: filteredData.to_date,
-          requester: userId,
-        }
-      })
-      .then((response)=>{
-        console.log(response)
-        var totalAmount = 0;
-        
-        const salesArray = response.data.data.sales
-        console.log(salesArray)
-
-        salesArray.map((data,index)=>{
-          var info = {}
-          var tempAccount = [];
-
-
-          // Date From
-          var selectedDateFrom = new Date(filteredData.from_date);
-          var formattedSelectedDateFrom = selectedDateFrom.toDateString().split(" ");
-          info.dateFrom = formattedSelectedDateFrom[1] + " " + formattedSelectedDateFrom[2] + " " + formattedSelectedDateFrom[3]
-
-          // Date To
-          var selectedDateTo = new Date(filteredData.to_date);
-          var formattedSelectedDateTo = selectedDateTo.toDateString().split(" ");
-          info.dateTo = formattedSelectedDateTo[1] + " " + formattedSelectedDateTo[2] + " " + formattedSelectedDateTo[3]
-
-          info.method = data[0].type
-          info.accounts = [];
-          info.grandTotal= 0.00;
-          // accounts
-          data.map((items, index)=>{
-            info.grandTotal+=parseFloat(items.grand_total);
-            if(items.accounts != null){
-              items.accounts.map((accounts, index2)=>{
-                var accountInfo = {};
-                accountInfo.account = accounts.name;
-                accountInfo.amount = accounts.amount;
-                tempAccount.push(accountInfo)
-              })
-              info.accounts = Array.from(tempAccount.reduce(
-                (m, {account, amount}) => m.set(account, (m.get(account) || 0) + parseFloat(amount)), new Map),
-                ([account, amount]) => ({account, amount}))
-            }
-          })
-
-          setSales(oldArray=>[...oldArray, info])
-
-          // var date = new Date(data[0].payment_date);
-          // var formattedDate = date.toDateString().split(" ");
-          // var selectedDate = new Date(filteredData.from_date);
-          // var formattedSelectedDate = selectedDate.toDateString().split(" ");
-
-          // info.date= data[0].payment_date == null ? formattedSelectedDate[1] + " " + formattedSelectedDate[2] + " " + formattedSelectedDate[3]: formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-          // info.method =  data[0].type
-          // info.account = data[0].accounts
-          // info.total = data[0].grand_total.toString()
-          // setSales(oldArray=>[...oldArray, info])
-
-          // //total amount
-          // totalAmount += data[0].grand_total == null ? parseFloat("0.00") : parseFloat(data[0].grand_total);
-
-
-          if(salesArray.length - 1 == index) {
-              setPrintReadyFinal(true);
-            }
-          })
-
-      })
-      .catch((error)=>{console.log(error)})
-    
-    
-    
-    },[render])
-
-    React.useEffect(()=>{
-      setTotal(0)
-      var tempTotal = 0;
-      sales.map((data, index)=>{
-        tempTotal+=data.grandTotal
-        setTotal(tempTotal)
-      })
-    },[sales])
-
-console.log(total)
-  function filter() {}
-
-  function toTransaction() {
-    // setRedirection(true);
-  }
-
-  if(redirect == true) {
-    return <Navigate to={"/reports-transaction"} />;
-  }
-
-  return (
-    <div>
-      <Navbar />
-      <div className="active-cont">
-        <Fragment>
-
-        <Searchbar title='SALES'/>
-          <Header 
-            type="thick" 
-            title="QR DIAGNOSTICS REPORT" 
-            buttons={buttons} 
-            tableName={'Home Service Report'}
-            tableData={sales}
-            // tableHeaders={['METHOD', 'TOTAL', 'DATE']}
-            tableHeaders={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
-            status={printReadyFinal}
-             />
-          <Table
-            clickable={true}
-            title="QR DIAGNOSTICS REPORT" 
-            type={'sales'}
-            tableData={sales}
-            rowsPerPage={100}
-            headingColumns={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
-            filteredData={filteredData}
-            setFilter={setFilter}
-            filter={filter}
-            setRender={setRender}
-            render={render}
-            link={toTransaction}
-            totalCount={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            givenClass={"register-mobile"}
-          />
-
-          <ToastContainer hideProgressBar={true} />
-        </Fragment>
-      </div>
-    </div>
-  );
-}
-
-export default ReportSales;

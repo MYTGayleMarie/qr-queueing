@@ -266,6 +266,7 @@ function Reports() {
             date_to: filteredData.to_date,
           },
         }).then(function (response) {
+          console.log(response)
             var count = 0;
             response.data.data.data.map((data) => {
               setCredit(count += parseFloat(data.total_count));

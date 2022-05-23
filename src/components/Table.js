@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -24,7 +24,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     } else if(breakOn === 'large') {
         tableClass += ' table-container_table--break-lg';
     }
-
+    
     const data = slice.map((row, index) => {
 
         let rowData = [];
@@ -219,25 +219,71 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
         else if (type === 'sales') {
-            return <tr key={row.id}>
-                <td key={row.dateFrom.replace(/\s/g, '')+row.grandTotal} data-heading='DATE' className='date'>{row.dateFrom} - {row.dateTo}</td>
-                <td key={row.method+row.grandTotal} data-heading='METHOD' className={row.method.toUpperCase()}>{row.method.toUpperCase()}</td>
-                <td key={"account"+row.grandTotal} data-heading='ACCOUNT' className='account'>
-                    {row.accounts != null && (
-                        row.accounts.map((data, index)=>
-                            <div className='account-name'>{data.account}</div>
-                        )
-                    )}      
-                </td>
-                <td key={"amount"+row.grandTotal} data-heading='AMOUNT' className='amount'>
-                    {row.accounts != null && (
-                        row.accounts.map((data, index)=>
-                            <div className='account-amount'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        )
-                    )}      
-                </td>
-                <td key='4' data-heading='TOTAL' className='TOTAL'>P {row.grandTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-            </tr>
+          // console.log(row)
+          
+          var card = row.filter(info=>info.method=="card")
+          var check = row.filter(info=>info.method=="check")
+          var others = row.filter(info=>info.method=="others")
+          var cash = row.filter(info=>info.method=="cash")
+ 
+          var cashItems= cash.length>0 ? <>
+              <td className='account-method'>Cash</td>
+              <td data-heading='ACCOUNT' className='account-name'>{cash.map((data, index)=><div  className='account-details'>{data.account}</div>)}</td>
+              <td data-heading='AMOUNT' className='account-name'>{cash.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>
+            </> : <>
+              <td className='account-method'>Cash</td>
+              <td data-heading='ACCOUNT' className='account-name'></td>
+              <td data-heading='AMOUNT' className='account-name'></td>
+            </>       
+
+          var cardItems= card.length>0 ? <>
+            <td className='account-method'>Card</td>
+            <td data-heading='ACCOUNT' className='account-name'>{card.map((data, index)=><div  className='account-details'> {data.account}</div>)}</td>
+            <td data-heading='AMOUNT' className='account-name'>{card.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>
+          </> : <>
+            <td className='account-method'>Card</td>
+            <td data-heading='ACCOUNT' className='account-name'></td>
+            <td data-heading='AMOUNT' className='account-name'></td>
+          </>
+          
+          var checkItems= check.length>0 ? <>
+            <td className='account-method'>Check</td>
+            <td data-heading='ACCOUNT' className='account-name'>{check.map((data, index)=><div  className='account-details'>{data.account}</div>)}</td>
+            <td data-heading='AMOUNT' className='account-name'>{check.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>
+          </> : <>
+            <td className='account-method'>Check</td>
+            <td data-heading='ACCOUNT' className='account-name'></td>
+            <td data-heading='AMOUNT' className='account-name'></td>
+          </>
+
+          var othersItems= others.length>0 ? <>
+            <td className='account-method'>Others</td>
+            <td data-heading='ACCOUNT' className='account-name'>{others.map((data, index)=><div  className='account-details'>{data.account}</div>)}</td>
+            <td data-heading='AMOUNT' className='account-name'>{others.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>
+          </> : <>
+            <td className='account-method'>Others</td>
+            <td data-heading='ACCOUNT' className='account-name'></td>
+            <td data-heading='AMOUNT' className='account-name'></td>
+          </>
+
+          const rowElements = <tr key={row.id} className="sales-row">
+            <td key={row[0].date.replace(/\s/g, '')}data-heading="DATE"className='DATE'>{row[0].date}</td>
+            <table className="method-row" >
+              {cashItems}
+            </table>
+            <table className="method-row" >
+              {cardItems}
+            </table>
+            <table className="method-row" >
+              {checkItems}
+            </table>
+            <table className="method-row" >
+              {othersItems}
+            </table>
+            <td key={row[0].amount}data-heading="TOTAL"className='TOTAL'>P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+          </tr>
+          return rowElements;
+          // return <tr></tr>
         }
         else if(type==='receive-incomplete-po-items'){
             return <tr key={row.id}>
@@ -578,7 +624,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     if(type === 'sales') {
 
         const {from_date, to_date, done} = filteredData;
-    
         return(
             <div className="table-container">
                 <div className="search-table-container row">
@@ -599,9 +644,17 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <table className={tableClass}>
                     <thead>
                         <tr>
-                            {headingColumns.map((col,index) => (
+                            {/* {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
-                            ))}
+                            ))} */}
+
+                          <th>DATE</th>
+                          <th className="method-row">
+                            <td className='heading-details'>METHOD</td>
+                            <td className='heading-details'>ACCOUNT</td>
+                            <td className='heading-details'>AMOUNT</td>
+                          </th>
+                          <th>TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
