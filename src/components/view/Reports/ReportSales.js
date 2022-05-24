@@ -88,6 +88,9 @@ function ReportSales() {
             }
 
           })
+          if(arr.length - 1 == index1) {
+            setPrintReadyFinal(true);
+          }
         })
 
 
@@ -119,7 +122,7 @@ function ReportSales() {
 
     },[salesData])
    
-
+console.log(salesData)
   function filter() {}
 
   function toTransaction() {
@@ -142,8 +145,9 @@ function ReportSales() {
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Sales Report'}
-            tableData={sales}
-            // tableHeaders={['METHOD', 'TOTAL', 'DATE']}
+            tableData={byDate}
+            typeData={'sales'}
+            total={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             tableHeaders={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
             status={printReadyFinal}
              />

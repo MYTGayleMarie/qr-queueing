@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total}) {
 
     var btn = [];
 
@@ -27,18 +27,21 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                 if(status == true) {
                     return (
                         <PdfTransaction
+                            type={typeData}
+                            total = {total}
                             name={tableName}
                             header={tableHeaders}
                             data={tableData}
                         />
                     )
-                } else {
+                }
+                 else {
                     return (
                         <button className="download">Loading Data...</button>
                     )
                 }
             }
-    
+
             if (button.includes("add-")) {
                 const addBtn = button.split("-");
                 const linkTo = "/" + button;
