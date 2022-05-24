@@ -47,7 +47,12 @@ const CheckPaymentDetails = {
     check_date: "",
 }
 
-
+function groupArrayOfObjects(list, key) {
+    return list.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
 function AddInvoicePayment() {
   document.body.style = 'background: white;';
 
@@ -64,6 +69,8 @@ function AddInvoicePayment() {
   const [discountId, setDiscountId] = useState("");
   const [discountDescription, setDiscountDescription] = useState("");
   const [user, setUser] = useState("");
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [invoiceStatus, setInvoiceStatus] = useState(false);
 
   //Payment details
   const [payment, setPayment] = useState("");
@@ -215,7 +222,7 @@ function AddInvoicePayment() {
                     setHasLogs(false);
                 }
 
-                console.log(array);
+                // console.log(array);
             }
 
       }).then(function(error) {
@@ -235,17 +242,17 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       var invoice = response.data.data.company_invoices;
+      setInvoiceData(invoice)
+      setInvoiceStatus(old=>!old)
       var date = new Date(invoice[0].added_on);
       var formattedDate = date.toDateString().split(" ");
           //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
         var info = {};
         info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-        info.code = invoice[0].discount_code;
-        info.price = invoice[0].price;
-        info.qty = invoice.total_qty;
-        info.total = invoice.total;
+
+
       var payments = response.data.data.payments;
       var paymentTotal;
       if(payments.length<1){
@@ -257,7 +264,6 @@ function AddInvoicePayment() {
         })
         paymentTotal = parseFloat(tempTotal).toFixed(2);
       }
-      console.log(paymentTotal)
       const promisePrint = new Promise((resolve,reject) => {
           resolve('Success');
           setGrandTotal(invoice.total);
@@ -266,7 +272,7 @@ function AddInvoicePayment() {
           setPayments(payments);
           setInfoId(invoice[0].id);
           setHasPay(paymentTotal>0.00 || paymentTotal>=invoice.total ? true : false);
-          setInfo(oldArray => [...oldArray, info]);
+          // setInfo(oldArray => [...oldArray, info]);
       }); 
 
         promisePrint.then((value) => {
@@ -283,6 +289,24 @@ function AddInvoicePayment() {
     });
   },[]);
 
+  React.useEffect(()=>{
+    info.length=0;
+    const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
+    // console.log(tempData)
+    delete tempData["undefined"]
+    var keys = Object.keys(tempData)
+    keys.map((data, index)=>{
+      var info={};
+      var date = new Date(tempData[data][0].added_on);
+      var formattedDate = date.toDateString().split(" ");
+      info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
+      info.code = tempData[data][0].discount_code
+      info.price = parseFloat(data)
+      info.qty = tempData[data].length
+      info.total = parseFloat(data)*tempData[data].length
+      setInfo(oldArray=>[...oldArray, info])
+    })
+  }, [invoiceStatus])
   React.useEffect(() => {
     axios({
         method: 'post',
@@ -294,13 +318,13 @@ function AddInvoicePayment() {
             requester: userId,
         }
       }).then(function (response) {
-          console.log(response);
+          // console.log(response);
           setDiscountDescription(response.data.data.discount.description);
           
       });
   },[discountId]);
 
-  // console.log(info);
+  // console.log(tempData);
 
   function submit (e) {
     e.preventDefault();
@@ -337,7 +361,7 @@ function AddInvoicePayment() {
                 added_by: userId,
             }
         }).then(function (response) {
-            console.log(response)            
+            // console.log(response)            
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -370,7 +394,7 @@ function AddInvoicePayment() {
                 added_by: userId,
             }
         }).then(function (response) {
-            console.log(response);
+            // console.log(response);
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -405,7 +429,7 @@ function AddInvoicePayment() {
                 added_by: userId,
             }
         }).then(function (response) {
-            console.log(response);
+            // console.log(response);
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -437,7 +461,7 @@ function AddInvoicePayment() {
                 added_by: userId,
             }
         }).then(function (response) {
-            console.log(response);
+            // console.log(response);
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
