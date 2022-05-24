@@ -184,7 +184,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
         else if(type === "payment-invoices") {
-            return <tr key={row.id}>
+            return <tr key={row.id} style={{color:"black"}}>
             {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 && index != 3 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}

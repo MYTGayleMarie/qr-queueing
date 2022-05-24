@@ -140,8 +140,6 @@ function AddInvoicePayment() {
     pageStyle: () => "@page { size: letter;}"
   });
 
-  
-
   React.useEffect(() => {
     axios({
       method: 'post',
@@ -229,7 +227,7 @@ function AddInvoicePayment() {
     info.length = 0;
     axios({
       method: 'post',
-      url: window.$link + 'company_invoices/show/' + id,
+      url: window.$link + 'Company_invoices/show/' + id,
       withCredentials: false, 
       params: {
           api_key: window.$api_key,
@@ -238,35 +236,45 @@ function AddInvoicePayment() {
       }
     }).then(function (response) {
       console.log(response);
-      var invoice = response.data.data.company_invoice;
-      var date = new Date(invoice.added_on);
+      var invoice = response.data.data.company_invoices;
+      var date = new Date(invoice[0].added_on);
       var formattedDate = date.toDateString().split(" ");
-      var payments = response.data.data.payments;
-    //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
+          //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
         var info = {};
         info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-        info.code = invoice.discount_code;
-        info.price = invoice.price;
-        info.qty = invoice.qty;
+        info.code = invoice[0].discount_code;
+        info.price = invoice[0].price;
+        info.qty = invoice.total_qty;
         info.total = invoice.total;
-
-        const promisePrint = new Promise((resolve,reject) => {
-            resolve('Success');
-            setGrandTotal(invoice.total);
-            setDiscountCode(invoice.discount_code);
-            setPaidAmount(invoice.paid_amount);
-            setPayments(payments);
-            setInfoId(invoice.id);
-            setHasPay(invoice.paid_amount != "0.00" || invoice.paidAmount != null ? true : false);
-            setInfo(oldArray => [...oldArray, info]);
-        }); 
+      var payments = response.data.data.payments;
+      var paymentTotal;
+      if(payments.length<1){
+        paymentTotal=parseFloat(0).toFixed(2);
+      } else {
+        var tempTotal=0.00;
+        payments.map((data, index)=>{
+          tempTotal += parseFloat(data.grand_total)
+        })
+        paymentTotal = parseFloat(tempTotal).toFixed(2);
+      }
+      console.log(paymentTotal)
+      const promisePrint = new Promise((resolve,reject) => {
+          resolve('Success');
+          setGrandTotal(invoice.total);
+          setDiscountCode(invoice[0].discount_code);
+          setPaidAmount(paymentTotal);
+          setPayments(payments);
+          setInfoId(invoice[0].id);
+          setHasPay(paymentTotal>0.00 || paymentTotal>=invoice.total ? true : false);
+          setInfo(oldArray => [...oldArray, info]);
+      }); 
 
         promisePrint.then((value) => {
-            console.log(value);
+            // console.log(value);
             setPrintData(true);
         })
 
-        setDiscountId(invoice.discount_id);
+        setDiscountId(invoice[0].discount_id);
         
     //   });
 
@@ -292,7 +300,7 @@ function AddInvoicePayment() {
       });
   },[discountId]);
 
-  console.log(info);
+  // console.log(info);
 
   function submit (e) {
     e.preventDefault();
