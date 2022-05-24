@@ -122,7 +122,7 @@ function ReportSales() {
 
     },[salesData])
    
-console.log(salesData)
+
   function filter() {}
 
   function toTransaction() {
@@ -150,6 +150,7 @@ console.log(salesData)
             total={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             tableHeaders={['DATE', 'METHOD', 'ACCOUNT', 'AMOUNT', 'TOTAL']}
             status={printReadyFinal}
+            totalExcel={total}
              />
           <Table
             clickable={true}

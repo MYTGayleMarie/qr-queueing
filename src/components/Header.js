@@ -7,15 +7,102 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel}) {
 
     var btn = [];
+    
 
     if(buttons) {
         btn = buttons.map((button) => {
 
             if(button === 'export-excel') {
-                if(status == true) {
+                if(status == true&&typeData=="sales") {
+                  var salesData=[];
+                  tableData.map((data, index1)=>{
+                    var sales = Object.values(data)
+                    var saleTotal = {};
+                    saleTotal.date = sales[0].date
+                    saleTotal.method=""
+                    saleTotal.account=""
+                    saleTotal.amount=""
+                    saleTotal.total = sales[0].amount
+                    salesData.push(saleTotal)
+                    const cash = sales.filter(info=>info.method=="cash")
+                    const card = sales.filter(info=>info.method=="card")
+                    const check = sales.filter(info=>info.method=="check")
+                    const others = sales.filter(info=>info.method=="others")
+                    if(cash.length<1){
+                      var details={
+                      date: "",
+                      method:"cash",
+                      account:"",
+                      amount:""
+                      };
+                      salesData.push(details)
+                    }
+                    cash.map((cash, index)=>{
+                      var details={
+                      date: "",
+                      method:"cash",
+                      account:cash.account,
+                      amount:parseFloat(cash.amount)
+                      };
+                      salesData.push(details)})
+                    if(card.length<1){
+                      var details={
+                      date: "",
+                      method:"card",
+                      account:"",
+                      amount:""
+                      };
+                      salesData.push(details)
+                    }
+                    card.map((card, index)=>{
+                      var details={
+                        date: "",
+                        method:"card",
+                        account:card.account,
+                        amount:parseFloat(card.amount)
+                      };
+                      salesData.push(details)})
+                    if(check.length<1){
+                      var details={
+                      date: "",
+                      method:"check",
+                      account:"",
+                      amount:""
+                      };
+                      salesData.push(details)
+                    }
+                    check.map((check, index)=>{
+                      var details={
+                      date: "",
+                      method:"check",
+                      account:check.account,
+                      amount:parseFloat(check.amount)
+                      };
+                      salesData.push(details)})
+                    if(others.length<1){
+                      var details={
+                      date: "",
+                      method:"others",
+                      account:"",
+                      amount:""
+                      };
+                      salesData.push(details)
+                    }
+                    others.map((others, index)=>{
+                      var details={
+                      date: "",
+                      method:"others",
+                      account:others.account,
+                      amount:parseFloat(others.amount)
+                      };
+                      salesData.push(details)}) 
+                  })
+                  salesData.push({date:"GRAND TOTAL", total:totalExcel})
+                    return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL sales</CSVLink></button>
+                } else if(status == true) {
                     return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
                 } else {
                     return (

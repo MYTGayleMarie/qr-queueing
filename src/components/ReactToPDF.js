@@ -13,7 +13,7 @@ function PdfTransaction({type, name, data, header, total}) {
         // console.log(Object.values(info))
         infos.push(Object.values(info));
     });
-    console.log(data)
+    // console.log(data)
     var saleInfos =[];
     data.map((info, index)=>{
 
@@ -96,7 +96,7 @@ function PdfTransaction({type, name, data, header, total}) {
         };
         saleInfos.push(details)}) 
     })
-    console.log(saleInfos)
+    // console.log(saleInfos)
 
     function salesPrint(){
       const doc = new jsPDF();
