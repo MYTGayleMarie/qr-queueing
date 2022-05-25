@@ -1,0 +1,29 @@
+.print-column {
+  color:black;
+}
+.slip-title {
+  font-size:10px !important;
+}
+.slip-label {
+  font-size: 10px !important;
+}
+
+.slip-detail {
+  font-size: 10px !important;
+  font-weight: 600;
+  margin-left: 5px;
+}
+.slip-header{
+  margin:0px;
+  padding:0px;
+  /* border:1px solid red; */
+}
+.particulars {
+  border-bottom: 0.5px dotted #353535;
+  border-top: 0.5px dotted #353535;
+}
+.slip-th {
+  font-size: 10px !important;
+  font-weight: 600;
+  margin-left: 5px;
+}

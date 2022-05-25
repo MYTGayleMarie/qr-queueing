@@ -16,6 +16,7 @@ import { ReceiptToPrint } from "./ReceiptToPrint";
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+import { ChargeSlip } from "./ChargeSlip";
 
 //variables
 const userToken = getToken();
@@ -146,7 +147,12 @@ function AddInvoicePayment() {
     onAfterPrint: handlePrintReceiptShow,
     pageStyle: () => "@page { size: letter;}"
   });
-
+  const chargeSlipRef = useRef();
+  const handleChargeSlipPrint = useReactToPrint({
+    content: () => chargeSlipRef.current,
+    // onAfterPrint: handlePrintReceiptShow,
+    pageStyle: () => "@page { size: letter;}"
+  });
   React.useEffect(() => {
     axios({
       method: 'post',
@@ -242,17 +248,11 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-      // console.log(response);
+      console.log(response);
       var invoice = response.data.data.company_invoices;
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
-      var date = new Date(invoice[0].added_on);
-      var formattedDate = date.toDateString().split(" ");
-          //   response.data.data.company_invoices.filter((info) => info.is_paid != 1).map((data,index) => {
-        var info = {};
-        info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-
-
+      setDiscountId(invoice[0].discount_id)
       var payments = response.data.data.payments;
       var paymentTotal;
       if(payments.length<1){
@@ -318,13 +318,30 @@ function AddInvoicePayment() {
             requester: userId,
         }
       }).then(function (response) {
-          // console.log(response);
+          console.log(response);
           setDiscountDescription(response.data.data.discount.description);
           
       });
   },[discountId]);
-
-  // console.log(tempData);
+console.log(discountCode)
+  // Get booking under this discount
+  React.useEffect(()=>{
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getByDiscountCode' ,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+         discount_code:discountCode
+      }
+    }).then((response)=>{
+      console.log(response)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
 
   function submit (e) {
     e.preventDefault();
@@ -528,6 +545,15 @@ function AddInvoicePayment() {
             </button>
         ) 
     }
+  // Charge Slip
+  function printChargeSlip(){
+    return(
+      <button className="invoice-btn" onClick={handleChargeSlipPrint}>
+        <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
+            PRINT CHARGE SLIP
+      </button>
+    )    
+  }
 
     //Acknowledgement Print
     function printButton() {
@@ -821,6 +847,7 @@ function othersForm() {
                         {hasPay == true && (printButton())}
                         {hasPay == false && (printInvoiceButton())}
                         {hasPay == false && (emailButton())}
+                        {printChargeSlip()}
                     </div>
                 </div>
 
@@ -951,7 +978,14 @@ function othersForm() {
                             payments={payments}
                         />
                 
-                    </div>
+            </div>
+
+            <div style={{ display: "none" }}>
+                  <ChargeSlip 
+                    ref={chargeSlipRef}
+                  />
+
+            </div>
 
     </div>
   );
