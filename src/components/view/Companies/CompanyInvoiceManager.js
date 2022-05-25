@@ -67,7 +67,21 @@ function CompanyInvoiceManager() {
                     requester: userId,
                 }
             }).then(function (company) {
-                console.log(company);
+                // var totalInvoice = 0.00;
+                axios({
+                  method: 'post',
+                  url: window.$link + 'Company_invoices/show/' + row.id,
+                  withCredentials: false, 
+                  params: {
+                      api_key: window.$api_key,
+                      token: userToken.replace(/['"]+/g, ''),
+                      requester: userId,
+                  }
+                }).then((response)=>{
+                  var totalInvoice = parseFloat(response.data.data.company_invoices.total).toFixed(2)
+                  // companyDetails.total = totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                
+                // console.log(company);
                 var date = new Date(row.added_on);
                 var formattedDate = date.toDateString().split(" ");
                 if(status == 'UNPAID' && row.is_paid == 0) {
@@ -77,7 +91,8 @@ function CompanyInvoiceManager() {
                     companyDetails.description = company.data.name;
                     companyDetails.discountCode = row.discount_code;
                     companyDetails.remarks = company.data.remarks;
-                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.total = "P "+totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
                     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
@@ -90,7 +105,8 @@ function CompanyInvoiceManager() {
                     companyDetails.description = company.data.name;
                     companyDetails.discountCode = row.discount_code;
                     companyDetails.remarks = company.data.remarks;
-                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
                     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
@@ -103,11 +119,13 @@ function CompanyInvoiceManager() {
                     companyDetails.description = company.data.name;
                     companyDetails.discountCode = row.discount_code;
                     companyDetails.remarks = company.data.remarks;
-                    companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
                     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
                 }
+                }).catch((error)=>{console.log(error)})
             }).catch(function (error) {
                 console.log(error);
             });
