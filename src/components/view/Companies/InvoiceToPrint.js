@@ -90,8 +90,9 @@ export class InvoiceToPrint extends React.PureComponent {
                         <span className="received-from-label"> PREPARED BY <span className="not-bold">{this.props.user}</span></span><br/>
                         <span className="received-from-label"> RECEIVED BY ________________________</span><br/>
                         <br/>
-            </div>         
-        </div>
+            </div>   
+        </div>        
+        
       );
     }
 }
