@@ -1,5 +1,6 @@
 .to-right {
-  margin-left: 3%;
+  margin-left: 2%;
+  margin-top: 3%;
   font-size: 8px !important;
 }
 
@@ -7,16 +8,17 @@
   color:black;
 }
 .slip-title {
-  font-size:10px !important;
+  font-size:8px !important;
 }
 .slip-label {
-  font-size: 10px !important;
+  margin-top: 0.5px;
+  font-size: 8px !important;
 }
 
 .slip-detail {
-  font-size: 10px !important;
+  font-size: 8px !important;
   font-weight: 600;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 .slip-header{
   margin:0px;
@@ -30,10 +32,16 @@
 .slip-th {
   font-size: 10px !important;
   font-weight: 600;
+  margin-top: 3px;
   margin-left: 5px;
 }
 .slip-logo {
   width: 70px;
   height: 35px;
   margin-left: -2.7%;
+} 
+
+.slip-table {
+  margin-top: 2px;
+  margin-left: 5px;
 }

@@ -362,15 +362,16 @@ function AddInvoicePayment() {
                 requester: userId,
             }
           }).then((response)=>{
-            var booking = response.data.data.booking
-            var bookingDetails = response.data.data.booking_details
+            var booking = response.data.data.booking;
+            var bookingDetails = response.data.data.booking_details;
             var info ={};
+            console.log(booking.contact_no);
             var date = new Date(booking.booking_time);
             var formattedDate = date.toDateString().split(" ");
             info.patient_name = booking.customer;
             info.transaction_no = booking.id;
             info.patient_address = booking.customer_address;
-            info.patient_contact = booking.contact; 
+            info.patient_contact = booking.contact_no;
             info.patient_email = booking.customer_email;
             info.discount_code = booking.discount_code;
             info.date =  formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
@@ -419,8 +420,8 @@ function AddInvoicePayment() {
             info.total = booking.total_amount
             info.discount = booking.discount
             info.grand_total = booking.grand_total
-            setChargeSlip(oldArray=>[...oldArray, info])
-            console.log(chargeSlip);
+            setChargeSlip(oldArray=>[...oldArray, info]);
+            console.log(info);
           }).catch((err)=>{console.log(err)})
         })
     }).catch((error)=>{
