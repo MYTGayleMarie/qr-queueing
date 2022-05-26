@@ -204,6 +204,7 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
+        console.log(response.data); 
       setDiscountCodes(response.data);
     }).then(function(error) {
       console.log(error);
@@ -363,12 +364,15 @@ function AddInvoicePayment() {
           }).then((response)=>{
             var booking = response.data.data.booking
             var bookingDetails = response.data.data.booking_details
-            // console.log(booking)
             var info ={};
             var date = new Date(booking.booking_time);
             var formattedDate = date.toDateString().split(" ");
             info.patient_name = booking.customer;
             info.transaction_no = booking.id;
+            info.patient_address = booking.customer_address;
+            info.patient_contact = booking.contact; 
+            info.patient_email = booking.customer_email;
+            info.discount_code = booking.discount_code;
             info.date =  formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
             info.doctors_referal = booking.doctors_referal;
             info.lab_tests = [];
@@ -416,6 +420,7 @@ function AddInvoicePayment() {
             info.discount = booking.discount
             info.grand_total = booking.grand_total
             setChargeSlip(oldArray=>[...oldArray, info])
+            console.log(chargeSlip);
           }).catch((err)=>{console.log(err)})
         })
     }).catch((error)=>{

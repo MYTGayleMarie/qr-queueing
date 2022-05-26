@@ -1,6 +1,10 @@
 import React from "react"
 import { getTime } from "../../../utilities/Common"
 import './ChargeSlip.css'
+//logo image
+import logo from '../../../images/logo-black.png';
+
+
 export class ChargeSlip extends React.PureComponent {
     render() {
       const marginTop="10px"
@@ -30,10 +34,27 @@ export class ChargeSlip extends React.PureComponent {
     function generateSlip(patient_name,transaction_no,date,doctors_referal,lab_tests,total, grand_total, discount, requested_by, prepared_by, request_time, received_time, packages){
 
       return (
+       
         <div className="print-column m-0">
-          <div className="row slip-header mb-2">
-            <h3 className="m-0 p-0 slip-title">Laboratory</h3>
+          <div class="d-flex justify-content-left">
+                            <img src={logo} alt={'logo'} class="slip-logo"></img>
+                            <span className="to-right p-2 slip-title">Quest and Reliance Diagnostics</span>
+          </div>
+          <div className="row slip-header mb-2 mt-2">
+            <h3 className="m-0 p-0 slip-title">Company details</h3>
             <div className="row m-0 p-0">
+              <table className="m-0">
+                <tr>
+                  <td><span className="slip-label">Company Name</span><span className="slip-detail">QR Diagnostics</span></td>
+                </tr>
+                <tr>
+                  <td><span className="slip-label">Contact Number</span><span className="slip-detail">09998886694</span></td>
+                  <td><span className="slip-label">Address</span><span className="slip-detail">Marasbaras Tacloban City</span></td>
+                </tr>
+              </table>          
+            </div>
+            <div className="row m-0 p-0">
+              <h3 className="m-0 p-0 slip-title">Laboratory Details</h3>
               <table className="m-0">
                 <tr>
                   <td><span className="slip-label">Patient Name:</span><span className="slip-detail">{patient_name}</span></td>

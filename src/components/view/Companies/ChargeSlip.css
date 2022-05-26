@@ -1,3 +1,8 @@
+.to-right {
+  margin-left: 3%;
+  font-size: 8px !important;
+}
+
 .print-column {
   color:black;
 }
@@ -26,4 +31,9 @@
   font-size: 10px !important;
   font-weight: 600;
   margin-left: 5px;
+}
+.slip-logo {
+  width: 70px;
+  height: 35px;
+  margin-left: -2.7%;
 }
