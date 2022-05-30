@@ -136,6 +136,8 @@ function AddInvoicePayment() {
 
   // Charge SLip
   const [chargeSlip, setChargeSlip] = useState([]);
+  const [chargeSlipReady, setChargeSlipReady] = useState(false);
+
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -350,6 +352,7 @@ function AddInvoicePayment() {
       }
     }).then((response)=>{
       console.log(response)
+      var dataLength = response.data.data.particulars.length;
         response.data.data.particulars.map((data, index)=>{
           // Get Booking Details
           axios({
@@ -365,7 +368,6 @@ function AddInvoicePayment() {
             var booking = response.data.data.booking;
             var bookingDetails = response.data.data.booking_details;
             var info ={};
-            console.log(booking.contact_no);
             var date = new Date(booking.booking_time);
             var formattedDate = date.toDateString().split(" ");
             info.patient_name = booking.customer;
@@ -421,13 +423,22 @@ function AddInvoicePayment() {
             info.discount = booking.discount
             info.grand_total = booking.grand_total
             setChargeSlip(oldArray=>[...oldArray, info]);
-            console.log(info);
-          }).catch((err)=>{console.log(err)})
+            console.log(info + index)      
+            if(dataLength-1 == index){
+              setTimeout(
+                setChargeSlipReady(true)
+                ,5000
+              )
+            }   
+          })
+          .catch((err)=>{console.log(err)})
+
         })
     }).catch((error)=>{
       console.log(error)
     })
   },[discountCode])
+  
 
   React.useEffect(() => {
     var totalAmount;
@@ -684,21 +695,26 @@ function AddInvoicePayment() {
 
   //Invoice Print
   function printInvoiceButton() {
-        return (
+    return (
             <button className="invoice-btn" onClick={handlePrint}>
             <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
                 PRINT INVOICE
             </button>
-        ) 
-    }
+    )    }
   // Charge Slip
   function printChargeSlip(){
-    return(
+   if(chargeSlipReady) {return(
       <button className="invoice-btn" onClick={handleChargeSlipPrint}>
         <FontAwesomeIcon icon={"print"} alt={"print"} aria-hidden="true" className="print-icon"/>
             PRINT CHARGE SLIP
       </button>
     )    
+    }
+    else {
+      return(<button className="invoice-btn">
+        Loading Charge Slip...
+      </button>)
+    }
   }
 
     //Acknowledgement Print

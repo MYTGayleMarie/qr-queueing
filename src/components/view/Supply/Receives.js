@@ -25,7 +25,7 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
-  status: 'for approval',
+  status: 'UNPAID',
 };
 
 function Receives() {
@@ -53,7 +53,12 @@ function Receives() {
         }).then(function (receives) {
             console.log(receives);
             var receivesData = receives.data.receives;
-
+            if(filteredData.status === "UNPAID") {
+                var receivesData =  receives.data.receives.filter((data) => data.paid_amount<data.grand_total);
+            }
+            else if (filteredData.status === "PAID") {
+                var receivesData =   receives.data.receives.filter((data) => data.paid_amount>=data.grand_total);
+            }
             receivesData.map((data) => {
                 axios({
                     method: 'post',
@@ -79,8 +84,6 @@ function Receives() {
                           requester: userId,
                         },
                       }).then(function (user) {
-                          console.log(user);
-
                           var date = new Date(data.receive_date);
                           var formattedDate = date.toDateString().split(" ");
 
@@ -92,7 +95,7 @@ function Receives() {
                           info.paid_amount = data.paid_amount;
                           info.balance = data.balance;
                           info.received_by = user.data.name;
-                          info.payment_stauts = data.balance == "0.00" ? "PAID" : "UNPAID";
+                          info.payment_status = data.paid_amount>=data.grand_total?"PAID":"UNPAID"
                           info.status = po.data.status;
 
                           setPoData(oldArray => [...oldArray, info]);
