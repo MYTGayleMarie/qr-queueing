@@ -429,6 +429,66 @@ function AddInvoicePayment() {
     })
   },[discountCode])
 
+  React.useEffect(() => {
+    var totalAmount;
+    var discount;
+    var customer;
+    var type;
+
+     axios({
+        method: 'post',
+        url: window.$link + 'bookings/show/' + id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
+        discount = response.data.discount;
+        customer = response.data.customer_id;
+        type = response.data.type;
+
+        axios({
+            method: 'post',
+            url: window.$link + 'customers/show/' + response.data.customer_id,
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (customer) {
+
+            //AGE
+            var presentDate = new Date();
+            var birthDate = new Date(customer.data.birthdate);
+            var age = presentDate.getFullYear() - birthDate.getFullYear();
+            var m = presentDate.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            var info = [];
+            
+            // setPatientId(response.data.customer_id);
+            // setFirstName(customer.data.first_name);
+            // setMiddleName(customer.data.middle_name);
+            // setLastName(customer.data.last_name);
+            // setBirthDate(birthDate.toDateString());
+            // setGender(customer.data.gender);
+            // setAge(age);
+            // setContactNo(customer.data.contact_no);
+            // setEmail(customer.data.email);
+            // setAddress(customer.data.address);
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }).catch(function (error) {
+        console.log(error);
+    });  
+}, []);
+
   function submit (e) {
     e.preventDefault();
 
