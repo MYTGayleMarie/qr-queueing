@@ -134,6 +134,9 @@ function purchasingNavbar(showNavbar,setShowNavbar) {
               <Link to="/purchase-order" className="sub-link">
                 <li class="sub-list">PURCHASE ORDER</li>
               </Link>
+              <Link to="/receives" className="sub-link">
+                <li class="sub-list">RECEIVES</li>
+              </Link>
               <Link to="/items" className="sub-link">
                 <li class="sub-list">ITEMS</li>
               </Link>
