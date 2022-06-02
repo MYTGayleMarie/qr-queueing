@@ -9,18 +9,23 @@ import './PrintPurchaseOrder.css';
 
 //logo image
 import logo from '../../../images/logo-black.png';
-import { adminSign } from "./Signatures";
+import { adminSign, poSign } from "./Signatures";
 
 export class PrintPurchaseOrder extends React.PureComponent {
     render() {
       let signaturePrintedBy;
       if(this.props.printedBy==="Admin"){
         signaturePrintedBy = <img src={adminSign} alt="adminSign" className="signature-printedby" />
-      } 
+      }
+      else if(this.props.printedBy==="Purchase Order Officer"){
+        signaturePrintedBy = <img src={poSign} alt="adminSign" className="signature-printedby" />
+      }  
       let signatureApprovedBy;
       if(this.props.approvedBy==="Admin"){
         signatureApprovedBy = <img src={adminSign} alt="adminSign" className="signature-approvedby" />
       } 
+
+      console.log(this.props.approvedBy);
 
     //components
     const listItems = this.props.poItems.map((data,index) => {
@@ -117,8 +122,8 @@ export class PrintPurchaseOrder extends React.PureComponent {
                         </div>
                         
                         <div className='po-print-approval'>
-                            <span className='print-label'><b>APPROVED BY</b></span>
-                            <span> {this.props.approvedBy}</span>
+                                <span className='print-label'><b>APPROVED BY</b></span>
+                                <span> {this.props.approvedBy}</span>
                         </div>
                     </div>
                   

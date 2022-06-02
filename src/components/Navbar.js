@@ -609,6 +609,12 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
             <img src={cashierIcon} alt={'cashier'} class="cashier icon mobile-size-icon"></img>
             <span class="mx-2">Cashier</span>
         </NavLink>
+        <NavLink to="/medtech" activeClassName="active" class="link">
+          <li href="/medtech" class="nav-link imaging-nav">
+            <img src={medTechIcon} alt={'medTech'} class="medTech icon"></img>
+            <span class="mx-2">Results Releasing</span>
+          </li>
+        </NavLink>
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
           <span class="mx-2 logout-text">Log Out</span>

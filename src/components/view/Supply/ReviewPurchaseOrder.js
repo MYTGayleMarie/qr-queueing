@@ -172,9 +172,8 @@ function ReviewPurchaseOrder() {
             }).catch(function (error) {
                 console.log(error);
             });
-
+            console.log(response.data);
             //Approved By
-            if(response.data.approvedBy>0){
             axios({
                 method: 'post',
                 url: window.$link + 'users/show/' + response.data.approved_by,
@@ -185,11 +184,12 @@ function ReviewPurchaseOrder() {
                     requester: userId,
                 }
             }).then(function (response) {
+                console.log(response);
                 setApprovedBy(response.data.name);
             }).catch(function (error) {
                 console.log(error);
             });              
-            }
+            
 
 
 
@@ -513,7 +513,7 @@ function ReviewPurchaseOrder() {
                         <span className='detail'>{deliveryDate}</span>
                 </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
                 <div className="col-sm-2">
                         <div className='label'>REQUISITIONER</div>
                 </div>
@@ -526,7 +526,7 @@ function ReviewPurchaseOrder() {
                 <div className="col-sm-2">
                         <div className='detail'>{forwarder}</div>
                 </div>
-            </div>
+            </div> */}
             <div className="row">
                 <div className="col-sm-2">
                         <div className='label'>REMARKS</div>

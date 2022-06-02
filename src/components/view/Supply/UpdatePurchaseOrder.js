@@ -231,7 +231,7 @@ function UpdatePurchaseOrder() {
 }
 
   var purchaseItems = items.map((row, index) => {
-    console.log(items);
+    console.log(row);
     return (
                     <tr key={index}>
                         <td>
@@ -242,14 +242,14 @@ function UpdatePurchaseOrder() {
                         </td>
                         <td>
                           <select className='purchase-select' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
-                            <option  value="" selected disabled>Select Item</option>
+                            <option  value="">Select Item</option>
                             {itemInfo.map((data,info) => {
                                 return <option value={data.id}>{data.name}</option>
                             })}
                           </select>
                         </td>
                         <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item" disabled readOnly/>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item" disabled readOnly/>
                         </td>
                         <td>
                           <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
@@ -298,14 +298,14 @@ function UpdatePurchaseOrder() {
                 <input type="text" name="supplier" className="item-name-input" value={editSupplier} onChange={(e) => setEditSupplier(e.target.value)}/>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">FORWARDER</span>
               </div>
-              <div className="col-sm-8">
+               <div className="col-sm-8">
                 <input type="text" name="forwarder" className="item-name-input" value={editForwarder} onChange={(e) => setEditForwarder(e.target.value)}/>
-              </div>
-            </div>
+              </div> 
+            </div> */}
           </div>
 
           <h1 className="item-header">ADDITIONAL INFO</h1>
@@ -319,14 +319,14 @@ function UpdatePurchaseOrder() {
                 <input type="date" name="delivery_date" className="item-name-input" value={editDeliveryDate} onChange={(e) => setEditDeliveryDate(e.target.value)}/>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">REQUISITIONER</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="requisitioner" className="item-name-input" value={editRequisitioner} onChange={(e) => setEditRequisitioner(e.target.value)}/>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">DELIVERY ADDRESS</span>
@@ -356,7 +356,7 @@ function UpdatePurchaseOrder() {
                         <th>Item</th>
                         <th>Cost</th>
                         <th>Item Discount -optional-</th>
-                        <th>Action</th>
+                        {/* <th>Action</th> */}
                         </tr>
                     </thead>
                     <tbody>
