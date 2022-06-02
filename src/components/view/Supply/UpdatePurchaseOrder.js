@@ -356,7 +356,7 @@ function UpdatePurchaseOrder() {
                         <th>Item</th>
                         <th>Cost</th>
                         <th>Item Discount -optional-</th>
-                        {/* <th>Action</th> */}
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
