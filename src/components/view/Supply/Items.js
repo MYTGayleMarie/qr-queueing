@@ -18,6 +18,7 @@ import Table from '../../Table.js';
 const userToken = getToken();
 const userId = getUser();
 var id = "";
+var unit = "";
 
 const buttons = ['add-supply-items'];
 
@@ -31,6 +32,7 @@ const itemsData = [
         itemID: '1',
         itemName: 'Hotplate Stirrer',
         itemDescription: 'none',
+        itemUnit: 'unit',
         beginningBalance: '1000',
         remarks: ' ',
         action: ' ',
@@ -70,11 +72,12 @@ function Items() {
             console.log(response.data.items);
             response.data.items.map((data,index) => {
                 var item = {};
-                item.id = data.id;
+                item.id = data.item_id;
                 item.item_name = data.item_name;
                 item.item_description = data.description;
-                item.beginning_balance = data.beginning_inventory + " " + data.default_unit;
-                item.current_balance = parseFloat(data.qty).toFixed(2) + " " + data.default_unit;
+                item.unit=data.default_unit;
+                item.beginning_balance = data.beginning_inventory;
+                item.current_balance = parseFloat(data.qty).toFixed(2);
                 item.remarks = data.remarks;
 
                 setItems(oldArray => [...oldArray, item]);
@@ -85,9 +88,10 @@ function Items() {
         });
     },[]);
 
-
-    function update(itemId) {
+    console.log(id);
+    function update(itemId,itemUnit) {
         id = itemId;
+        unit = itemUnit;
         setRedirect(true);
     }
 
@@ -96,7 +100,7 @@ function Items() {
     }
 
     if(redirect == true) {
-        var link =  "/update-supply-item/" + id;
+        var link =  "/update-supply-item/" + id  +'/'+ unit;
         console.log(link);
         return (
             <Navigate to ={link}/>
@@ -117,12 +121,13 @@ function Items() {
                 buttons={buttons} 
                 addInventory={handleShow}
             />
+            {console.log(update)}
             <Table
                 type={'items'}
                 clickable={true}
                 tableData={items.sort((a,b) => (a.item_name > b.item_name) ? 1 : ((b.item_name > a.item_name) ? -1 : 0))}
                 rowsPerPage={10}
-                headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
+                headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter} 
                 link={update}

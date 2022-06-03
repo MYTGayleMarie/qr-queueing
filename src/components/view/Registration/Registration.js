@@ -78,6 +78,8 @@ function Registration() {
               var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
 
+              console.log(booking);
+
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
               bookingDetails.name =

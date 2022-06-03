@@ -157,7 +157,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{index == 0 ? "" : data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>UPDATE</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.id,row.unit)}>UPDATE</button></td>
             </tr>
         }
         else if (type === 'suppliers' && clickable == true) {

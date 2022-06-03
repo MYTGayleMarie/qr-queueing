@@ -209,7 +209,7 @@ function ReviewPurchaseOrder() {
                 setReceiveQty(data.received);
                 if(data.status != "disapprove") {
                     var itemData = {};
-                    itemData.id = data.id;
+                    itemData.id = data.item_id;
                     itemData.item = data.item;
                     itemData.qty = data.qty;
                     itemData.unit = data.unit;

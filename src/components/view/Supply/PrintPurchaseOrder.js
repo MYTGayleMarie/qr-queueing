@@ -14,14 +14,14 @@ import { adminSign, poSign } from "./Signatures";
 export class PrintPurchaseOrder extends React.PureComponent {
     render() {
       let signaturePrintedBy;
-      if(this.props.printedBy==="Admin"){
+      if(this.props.printedBy==="Leanne Julio"){
         signaturePrintedBy = <img src={adminSign} alt="adminSign" className="signature-printedby" />
       }
       else if(this.props.printedBy==="Purchase Order Officer"){
         signaturePrintedBy = <img src={poSign} alt="adminSign" className="signature-printedby" />
       }  
       let signatureApprovedBy;
-      if(this.props.approvedBy==="Admin"){
+      if(this.props.approvedBy==="Leanne Julio"){
         signatureApprovedBy = <img src={adminSign} alt="adminSign" className="signature-approvedby" />
       } 
 

@@ -156,7 +156,7 @@ function App() {
         <Route path="/receive-purchase-order/:id" element={token ? <ReceivePurchaseOrder/> : <Navigate to="/" />} />
         <Route path="/items" element={token ? <Items /> : <Navigate to="/" />} />
         <Route path="/add-supply-items" element={token ? <AddSupplyItems /> : <Navigate to="/" />} />
-        <Route path="/update-supply-item/:id" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
+        <Route path="/update-supply-item/:id/:unit" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/view-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />

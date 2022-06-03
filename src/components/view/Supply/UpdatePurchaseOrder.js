@@ -65,7 +65,6 @@ function UpdatePurchaseOrder() {
           },
         }).then(function (response) {
             console.log(response.data)
-
             setEditSupplier(response.data.supplier_id);
             setEditPurchaseDate(response.data.purchase_date);
             setEditDeliveryDate(response.data.delivery_date);
@@ -73,7 +72,6 @@ function UpdatePurchaseOrder() {
             setEditRequisitioner(response.data.requisitioner);
             setEditForwarder(response.data.forwarder);
             setEditRemarks(response.data.remarks);
-
 
         }).catch(function (error) {
             console.log(error);
@@ -90,7 +88,6 @@ function UpdatePurchaseOrder() {
             },
           }).then(function (response) {
               console.log(response.data);
-            
               response.data.map((data,index) => {
                 var itemData = {};
                 itemData.order_quantity = data.qty;
