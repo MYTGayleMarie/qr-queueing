@@ -164,8 +164,8 @@ function UpdatePurchaseOrder() {
       console.log(response.data.items)
       response.data.items.map((data,index) => {
         var itemInfo = {};
-        itemInfo.id = data.id;
-        itemInfo.name = data.name;
+        itemInfo.id = data.item_id;
+        itemInfo.name = data.item_name;
         itemInfo.cost = data.cost;
         setItemInfo(oldArray => [...oldArray, itemInfo]);
       });
@@ -246,7 +246,7 @@ function UpdatePurchaseOrder() {
                           </select>
                         </td>
                         <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item" disabled readOnly/>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item"/>
                         </td>
                         <td>
                           <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />

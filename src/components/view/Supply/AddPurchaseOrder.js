@@ -183,7 +183,7 @@ function AddPurchaseOrder() {
 
   },[]);
   
-  console.log(items);
+
   //API submit call
   function submit(e, info, items) {
     e.preventDefault();
@@ -195,7 +195,6 @@ function AddPurchaseOrder() {
     var units = [];
 
     items.map((data, index) => {
-
       item_ids.push(data.item);
       costs.push(data.cost);
       qty.push(data.order_quantity);
