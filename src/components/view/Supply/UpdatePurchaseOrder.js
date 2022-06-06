@@ -228,7 +228,6 @@ function UpdatePurchaseOrder() {
 }
 
   var purchaseItems = items.map((row, index) => {
-    console.log(row);
     return (
                     <tr key={index}>
                         <td>

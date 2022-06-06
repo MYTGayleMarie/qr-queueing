@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Modal } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; 
 import { useForm, useStep } from "react-hooks-helper";
 import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -158,6 +158,12 @@ function AddInvoicePayment() {
     // onAfterPrint: handlePrintReceiptShow,
     pageStyle: () => "@page { size: letter;}"
   });
+
+  const twoGoRef = useRef();
+  const handlge2GoPrint = useReactToPrint({
+      content: () => twoGoRef.current, 
+      pageStyle:()=>"@page{ size:letter;}"
+  })
   React.useEffect(() => {
     axios({
       method: 'post',
@@ -270,11 +276,7 @@ function AddInvoicePayment() {
         })
         paymentTotal = parseFloat(tempTotal).toFixed(2);
       }
-      // console.log(invoice.total);
-      // console.log(invoice[0].discount_code);
-      // console.log(paymentTotal);
-      // console.log(payments);
-      // console.log(invoice[0].id);
+      
       const promisePrint = new Promise((resolve,reject) => {
           resolve('Success');
           setGrandTotal(invoice.total);
@@ -716,7 +718,6 @@ function AddInvoicePayment() {
       </button>)
     }
   }
-
     //Acknowledgement Print
     function printButton() {
         return (

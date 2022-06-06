@@ -63,10 +63,7 @@ function ReportServicesPackages() {
                 if(response.data.data.data.length - 1 == index) {
                   setPrintReadyFinal(true);
                 }
-              });
-
-              
-
+              })
           });
     },[render]);
     

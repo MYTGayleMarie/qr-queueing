@@ -76,6 +76,7 @@ function ReportTransaction() {
                 },
               }).then(function (customer) {
                   var bookingDetails = {};
+                  console.log(booking);
                   bookingDetails.id = booking.id;
                   bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
                   bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
