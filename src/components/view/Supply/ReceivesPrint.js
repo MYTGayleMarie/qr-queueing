@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReactToPrint } from 'react-to-print';
 import PrintPurchaseOrder from "./PrintPurchaseOrder";
 import PrintPurchaseOrderInvoice from "./PrintPurchaseOrderInvoice";
+import PrintReceipt from "./PrintReceipt";
 import useDetectPrint from "react-detect-print";
 
 
@@ -92,6 +93,12 @@ function ReceivesPrint() {
        content: () => componentRefInvoice.current,
        pageStyle: () => "@page { size: letter; margin: 0mm; }",
      });
+
+    const componentRefReceipt = useRef();
+    const handlePrintReceipt = useReactToPrint ({
+        content:() => componentRefReceipt.current,
+        pageStyle: () => "@page { size: letter; margin: 0mm; }",
+    });
 
      //Fetch PO details
      React.useEffect(() => {
@@ -511,6 +518,12 @@ function ReceivesPrint() {
                         aria-hidden="true"
                         className="print-icon"
                       />PRINT INVOICE</button>
+                      {/* <button className="po-print-btn" onClick={handlePrintReceipt}><FontAwesomeIcon
+                        icon={'print'}
+                        alt={'eye'}
+                        aria-hidden="true"
+                        className="print-icon"
+                      />PRINT RECEIPT</button> */}
                     </div>
                  )}
                 </div>
@@ -537,6 +550,7 @@ function ReceivesPrint() {
                 approvedBy={approvedBy}
                 receivePo={receivePo}
             />
+            {/* <PrintReceipt ref={componentRefReceipt}></PrintReceipt> */}
             </div>
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">

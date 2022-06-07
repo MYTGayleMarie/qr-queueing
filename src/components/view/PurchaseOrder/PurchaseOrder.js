@@ -38,7 +38,7 @@ function PurchaseOrder() {
       <div className="active-cont">
         <Fragment>
           <Searchbar title="PURCHASE ORDER" />
-          <Header type="thick" title="SUPPLIES RELEASING MANAGER" buttons={buttons} tableData={patientData} />
+          <Header type="thick" title="SUPPLIES RELEASING MANAGER" buttons={buttons} tableData={purchaseData} />
           <Table
             type={'no-action'}
             tableData={purchaseData}

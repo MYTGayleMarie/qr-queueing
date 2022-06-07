@@ -90,7 +90,7 @@ function ReportServicesPackages() {
             clickable={false}
             type={'no-action'}
             tableData={servicesPackages}
-            rowsPerPage={10}
+            rowsPerPage={5}
             headingColumns={['SERVICE NAME', 'QUANTITY']}
             filteredData={filteredData}
             setFilter={setFilter}

@@ -15,87 +15,107 @@ function PdfTransaction({type, name, data, header, total}) {
     });
     // console.log(data)
     var saleInfos =[];
-    data.map((info, index)=>{
+    if(type=="sales"){
+      data.map((info, index)=>{
 
-      var saleDetails = Object.values(info)
-      const cash = saleDetails.filter(info=>info.method=="cash")
-      const card = saleDetails.filter(info=>info.method=="card")
-      const check = saleDetails.filter(info=>info.method=="check")
-      const others = saleDetails.filter(info=>info.method=="others")
-      
-      var saleTotal = {};
-      saleTotal.dateTotal = saleDetails[0].date 
-      saleTotal.total = "P "+parseFloat(saleDetails[0].amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      saleInfos.push(saleTotal)
-      if(cash.length<1){
-        var details={
-        date: "",
-        method:"cash",
-        account:"",
-        amount:""
-        };
-        saleInfos.push(details)
-      }
-      cash.map((cash, index)=>{
-        var details={
-        date: cash.date,
-        method:"cash",
-        account:cash.account,
-        amount:"P "+parseFloat(cash.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        };
-        saleInfos.push(details)})
-      if(card.length<1){
-        var details={
-        date: "",
-        method:"card",
-        account:"",
-        amount:""
-        };
-        saleInfos.push(details)
-      }
-      card.map((card, index)=>{
-        var details={
-          date: card.date,
+        var saleDetails = Object.values(info)
+        const cash = saleDetails.filter(info=>info.method=="cash")
+        const card = saleDetails.filter(info=>info.method=="card")
+        const check = saleDetails.filter(info=>info.method=="check")
+        const others = saleDetails.filter(info=>info.method=="others")
+        const none = saleDetails.filter(info=>info.method=="null")
+        
+        var saleTotal = {};
+        saleTotal.dateTotal = saleDetails[0].date 
+        saleTotal.total = "P "+parseFloat(saleDetails[0].amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        saleInfos.push(saleTotal)
+        if(cash.length<1){
+          var details={
+          date: "",
+          method:"cash",
+          account:"",
+          amount:""
+          };
+          saleInfos.push(details)
+        }
+        cash.map((cash, index)=>{
+          var details={
+          date: cash.date,
+          method:"cash",
+          account:cash.account,
+          amount:"P "+parseFloat(cash.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          };
+          saleInfos.push(details)})
+        if(card.length<1){
+          var details={
+          date: "",
           method:"card",
-          account:card.account,
-          amount:"P "+parseFloat(card.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        };
-        saleInfos.push(details)})
-      if(check.length<1){
-        var details={
-        date: "",
-        method:"check",
-        account:"",
-        amount:""
-        };
-        saleInfos.push(details)
-      }
-      check.map((check, index)=>{
-        var details={
-        date: check.date,
-        method:"check",
-        account:check.account,
-        amount:"P "+parseFloat(check.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        };
-        saleInfos.push(details)})
-      if(others.length<1){
-        var details={
-        date: "",
-        method:"others",
-        account:"",
-        amount:""
-        };
-        saleInfos.push(details)
-      }
-      others.map((others, index)=>{
-        var details={
-        date: others.date,
-        method:"others",
-        account:others.account,
-        amount:"P "+parseFloat(others.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        };
-        saleInfos.push(details)}) 
-    })
+          account:"",
+          amount:""
+          };
+          saleInfos.push(details)
+        }
+        card.map((card, index)=>{
+          var details={
+            date: card.date,
+            method:"card",
+            account:card.account,
+            amount:"P "+parseFloat(card.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          };
+          saleInfos.push(details)})
+        if(check.length<1){
+          var details={
+          date: "",
+          method:"check",
+          account:"",
+          amount:""
+          };
+          saleInfos.push(details)
+        }
+        check.map((check, index)=>{
+          var details={
+          date: check.date,
+          method:"check",
+          account:check.account,
+          amount:"P "+parseFloat(check.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          };
+          saleInfos.push(details)})
+        if(others.length<1){
+          var details={
+          date: "",
+          method:"others",
+          account:"",
+          amount:""
+          };
+          saleInfos.push(details)
+        }
+        others.map((others, index)=>{
+          var details={
+          date: others.date,
+          method:"others",
+          account:others.account,
+          amount:"P "+parseFloat(others.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          };
+          saleInfos.push(details)})
+        if(none.length<1){
+            var details={
+            date: "",
+            method:"none",
+            account:"",
+            amount:""
+            };
+            saleInfos.push(details)
+          }
+          none.map((none, index)=>{
+            var details={
+            date:none.date,
+            method:"none",
+            account:"none",
+            amount:"none"
+            };
+            saleInfos.push(details)})   
+       })
+  }
     // console.log(saleInfos)
 
     function salesPrint(){

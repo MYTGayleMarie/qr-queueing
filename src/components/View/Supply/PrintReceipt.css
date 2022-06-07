@@ -1,0 +1,85 @@
+.hr-po{
+    border-top: 3px solid black;
+    margin-top: 2% !important;
+    margin-bottom:1% !important;
+}
+.col-left-po{
+    font-size:12px !important;
+    /* margin-left:10px !important; */
+}
+
+.print-area-po {
+    margin: 5%;
+}
+
+.break-area-po{
+    margin-top:3%; 
+    margin-bottom:3%;
+}
+
+.print-area-receives {
+    margin: 5%;
+}
+
+.print-area-receives td { 
+    font-size: 12px !important;
+}
+
+.print-area-receives th { 
+    font-size: 12px !important;
+}
+
+.print-area-receives span { 
+    font-size: 13px !important;
+}
+
+.table-header-po {
+    font-size: 14px !important;
+    font-weight: bold;
+}
+.header-po {
+    font-size: 16px !important;
+}
+.po-gap {
+    width: 250px !important;
+}
+.table-header-po {
+    font-size: 18px;
+}
+.print-po-row {
+    margin-top: 2% !important;
+    margin-left: 3% !important;
+}
+.po-print-breakdown-cont {
+    display: flex;
+    float:right;
+}
+.po-print-payment-cont {
+    display: flex;
+    float:right;
+}
+
+.po-print-payment-details-cont {
+    display: flex;
+    float:right;
+}
+
+.po-print-breakdown {
+    display: inline-block !important;
+    margin-right: 1%;
+}
+.po-print-approval {
+    display: inline-block !important;
+    margin-right: 5%;
+}
+.margin-right-2 {
+    margin-right: 2% !important;
+}
+.signature-printedby{
+  width:10%;
+  margin-left:10%;
+}
+.signature-approvedby {
+  width: 10%;
+  margin-left: 20%;
+}
