@@ -26,6 +26,8 @@ const filterData = {
   done: false,
 };
 
+
+
 function ReportTransaction() {
 
   document.body.style = 'background: white;';
@@ -76,7 +78,6 @@ function ReportTransaction() {
                 },
               }).then(function (customer) {
                   var bookingDetails = {};
-                  console.log(booking);
                   bookingDetails.id = booking.id;
                   bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
                   bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
@@ -103,6 +104,8 @@ function ReportTransaction() {
                   })
     
                   bookingDetails.tests = tests;
+                  bookingDetails.payment_type = booking.payment_type.toUpperCase();
+                  bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
                   if(booking.result=="print with pickup"){
                     bookingDetails.results = booking.result;
                   } else {
@@ -145,7 +148,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'MODE OF PICKUP']}
+            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', ' DISCOUNT', 'MODE OF PICKUP']}
             status={printReadyFinal}
              />
           <Table
@@ -153,7 +156,7 @@ function ReportTransaction() {
             type={'transaction'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','MODE OF PICKUP']}
+            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','PAYMENT TYPE','DISCOUNT','MODE OF PICKUP']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

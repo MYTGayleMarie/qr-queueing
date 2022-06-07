@@ -24,8 +24,9 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
-  done: false,
+  status: 'all',
 };
+
 
 function ReportServicesPackages() {
 
@@ -35,7 +36,7 @@ function ReportServicesPackages() {
   const [servicesPackages, setServicesPackages] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
-  
+
   //ALL PACKAGES AND SERVICES
     React.useEffect(() => {
         servicesPackages.length = 0;
@@ -49,14 +50,19 @@ function ReportServicesPackages() {
               requester: userId,
               date_from: filteredData.from_date,
               date_to: filteredData.to_date,
+              type: filteredData.status,
             },
           }).then(function (response) {
-              console.log(response.data.data.data);
+              var servicesData = response.data.data.data;
+              console.log(filteredData.status);
+              console.log(servicesData);
               var count = 0;
-              response.data.data.data.map((data,index) => {
+              servicesData.map((data,index) => {
                 var info = {};
-                info.service = data.lab_test ? data.lab_test : data.package;
-                info.total_count = data.total_count;
+                if(data.lab_test !== null || data.package !==null){
+                  info.service = data.lab_test ? data.lab_test : data.package;
+                  info.total_count = data.total_count;
+                }
                 setServicesPackages(oldArray => [...oldArray, info]);
                 setTotalCount(count += parseFloat(info.total_count));
 
@@ -88,7 +94,7 @@ function ReportServicesPackages() {
              />
           <Table
             clickable={false}
-            type={'no-action'}
+            type={'services'}
             tableData={servicesPackages}
             rowsPerPage={5}
             headingColumns={['SERVICE NAME', 'QUANTITY']}

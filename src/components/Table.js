@@ -324,7 +324,51 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 </div>
                 <div className="col-sm-10 d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    {console.log(from_date)}
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    {console.log(to_date)}
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'services') {
+
+        const {from_date, to_date, status} = filteredData;
+    
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <select name="status" onChange={setFilter}>
+                        <option value="all" selected>ALL</option>
+                        <option value="service">SERVICES</option>
+                        <option value="package">PACKAGES</option>
+                    </select>
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
                 </div>

@@ -87,6 +87,7 @@ function Registration() {
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
               bookingDetails.serviceType = booking.type;
               bookingDetails.paymentStatus = booking.payment_status;
+              bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
@@ -159,7 +160,7 @@ function Registration() {
             type={'registration'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

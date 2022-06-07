@@ -23,6 +23,7 @@ const filteredData = {
   from_date: "2022-01-06",
   to_date: formattedPresentData,
   done: false,
+  status: "all",
 };
 
 function Reports() {
@@ -108,6 +109,7 @@ function Reports() {
               requester: userId,
               date_from: filteredData.to_date,
               date_to: filteredData.to_date,
+              type: filteredData.status
             },
           }).then(function (response) {
               setServicesPackages(response.data.booking_details);

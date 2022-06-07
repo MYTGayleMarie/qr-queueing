@@ -101,7 +101,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                       salesData.push(details)}) 
                   })
                   salesData.push({date:"GRAND TOTAL", total:totalExcel})
-                    return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL sales</CSVLink></button>
+                    return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL SALES</CSVLink></button>
                 } else if(status == true) {
                     return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
                 } else {

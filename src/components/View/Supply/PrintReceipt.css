@@ -1,20 +1,30 @@
 .hr-po{
-    border-top: 3px solid black;
-    margin-top: 2% !important;
-    margin-bottom:1% !important;
+    border-top: 2px solid black;
 }
 .col-left-po{
-    font-size:12px !important;
+    font-size:10px !important;
     /* margin-left:10px !important; */
+}
+.official-rcpt{
+    margin-left: 140px !important;
+}
+
+.signature-customer{
+    margin-left: 80px !important;
+}
+
+.signature-agent{
+    margin-left: 20px !important;
 }
 
 .print-area-po {
     margin: 5%;
+    font-family: 'Fira Mono', monospace;
 }
 
 .break-area-po{
-    margin-top:3%; 
-    margin-bottom:3%;
+    margin-top:2%; 
+    margin-bottom:2%;
 }
 
 .print-area-receives {
@@ -35,17 +45,18 @@
 
 .table-header-po {
     font-size: 14px !important;
+    margin-bottom: -2px;
     font-weight: bold;
 }
 .header-po {
-    font-size: 16px !important;
+    font-size: 12px !important;
 }
 .po-gap {
-    width: 250px !important;
+    width: 30px !important;
 }
-.table-header-po {
+/* .table-header-po {
     font-size: 18px;
-}
+} */
 .print-po-row {
     margin-top: 2% !important;
     margin-left: 3% !important;
@@ -59,18 +70,13 @@
     float:right;
 }
 
-.po-print-payment-details-cont {
-    display: flex;
-    float:right;
-}
 
 .po-print-breakdown {
     display: inline-block !important;
-    margin-right: 1%;
 }
 .po-print-approval {
     display: inline-block !important;
-    margin-right: 5%;
+    margin-right: 2%;
 }
 .margin-right-2 {
     margin-right: 2% !important;

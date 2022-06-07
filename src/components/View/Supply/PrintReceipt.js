@@ -72,13 +72,40 @@ export class PrintReceipt extends React.PureComponent {
                         <img src={logo} alt={'logo'} class="po-logo"></img>
                     </div> */}
                     <div className='row'>
-                        <h1 className='table-header-po'>2GO Express</h1>
-                        <span className="header-po">9th Floor Double Dragon Tower</span>
-                        <span className="header-po">Telephone : 7799222</span>
-                        <span className="header-po">VAT-REG TIN : 1234567890</span>
+                        <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><h1 className='table-header-po'>2GO Express</h1></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"> <span className="header-po">9th Floor Double Dragon Tower</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><span className="header-po">Telephone : 7799222</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><span className="header-po">VAT-REG TIN : 1234567890</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><h1 className='table-header-po'></h1></div>
+                                    </div>
+                                    <div className="break-area-po"></div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po official-rcpt"> <span className="header-po">OR NO : TG12093012</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><span className="header-po"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-left-po"><span className="header-po"></span></div>
+                                    </div>
+                                </div>
+                        </div>
                         <hr className="hr-po"></hr>
                     </div>
-                    <h1 className="table-header-po">PAYMENT DETAILS</h1>
+                    <h1 className="table-header-po col-left-po">PAYMENT DETAILS</h1>
                     <div className='row print-po-row'>
                         <div class="row">
                             <div class="col-6">
@@ -128,7 +155,7 @@ export class PrintReceipt extends React.PureComponent {
                                 </div>
                             </div>
                     
-                            <div class="col-6">
+                            <div class="col-6 col-right-po">
                                 <div class="row">
                                     <div class="col-6 col-left-po">TENDER TYPE</div>
                                     <div class="col-6 col-left-po">CARD</div>
@@ -173,26 +200,25 @@ export class PrintReceipt extends React.PureComponent {
                     </div>
                     <hr className="hr-po"></hr>
                     <div className='po-print-breakdown-cont'>
-                        <div className='print-label po-print-breakdown'> Date Issued:</div><div className="margin-right-2">05/28/2022 at 1:00PM</div>
+                        <div className='text-right col-left-po'> DATE ISSUED:</div><div className="text-right col-left-po">05/28/2022 at 1:00PM</div>
                     </div><br />
                     <div className='po-print-breakdown-cont'>
-                        <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div> {this.props.grandTotal}</div>
+                        <div className='text-right col-left-po'> BRANCH:</div><div className="text-right col-left-po">CEBU Lahug Branch</div>
                     </div>
 
-                    <hr></hr>
-
-                    {/* <div className="po-print-approval-cont">
-                      {signaturePrintedBy} {signatureApprovedBy} <br/>
+                    <div className="po-print-approval-cont">
+                      __________________ _______________________<br/>
                         <div className='po-print-approval'>
-                            <span className='print-label'><b>PRINTED BY</b></span>
-                            <span> {this.props.printedBy}</span>
+                            <span className='col-left-po signature-agent'>SIGNATURE OF AGENT</span>
                         </div>
                         
                         <div className='po-print-approval'>
-                                <span className='print-label'><b>APPROVED BY</b></span>
-                                <span> {this.props.approvedBy}</span>
+                                <span className='col-left-po signature-customer'>SIGNATURE OF CUSTOMER</span>
                         </div>
-                    </div> */}
+                        <div className='po-print-approval'>
+                                <span className='col-left-po official-rcpt'>**THIS SERVES AS AN OFFICIAL RECEIPT**</span>
+                        </div>
+                    </div>
                   
                 </div>
             </div>
