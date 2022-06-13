@@ -352,6 +352,7 @@ function Reports() {
                         color='maroon'
                     />
                 </div>
+                
                 <div className="col-sm-4">
                     {role != 3 && <Card 
                         services={services.length}
@@ -391,21 +392,21 @@ function Reports() {
                     />
                 </div> */}
                 <div className="col-sm-4">
-                    {role != 3 && <Card 
-                        totalData={pendingPOs.length}
+                  {role != 3 && <Card 
+                        totalData={credit}
                         todayData={""}
-                        link={"/reports-pending-po"}
-                        title='POs pending for approval'
+                        link={"/reports-credit"}
+                        title='Credit Report'
                         color='blue'
                         disable={"today"}
-                    />}
+                    /> }
                 </div>
                 <div className="col-sm-4">
                     {role != 3 && <Card 
                         totalData={unpaidInvoices.length}
                         todayData={""}
                         link={"/unpaid-invoices"}
-                        title='Unpaid Invoices'
+                        title='Receivables'
                         color='blue'
                         disable={"today"}
                     />}
@@ -418,19 +419,19 @@ function Reports() {
                         todayData={""}
                         link={"/reports-md"}
                         title=''
-                        color='blue'
+                        color='maroon'
                         disable={"today"}
                     />}
                 </div>
                 <div className="col-sm-4">
                     {role != 3 && <Card 
-                        totalData={credit}
+                        totalData={pendingPOs.length}
                         todayData={""}
-                        link={"/reports-credit"}
-                        title='Credit Report'
-                        color='blue'
+                        link={"/reports-pending-po"}
+                        title='POs pending for approval'
+                        color='maroon'
                         disable={"today"}
-                    /> }
+                    />}
                 </div>
                 <div className="col-sm-4">
                   {role != 3 && <Card 
@@ -438,7 +439,7 @@ function Reports() {
                         todayData={""}
                         link={"/reports-incomplete-po"}
                         title='Incomplete PO'
-                        color='blue'
+                        color='maroon'
                         disable={"today"}
                     /> }
                 </div>

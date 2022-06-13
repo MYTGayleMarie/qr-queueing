@@ -43,7 +43,7 @@ function Login() {
         },
       })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           localStorage.setItem('token', JSON.stringify(response.data.token));
           localStorage.setItem('user', JSON.stringify(response.data.id));
           localStorage.setItem('role_id', JSON.stringify(response.data.role_id));
@@ -127,7 +127,6 @@ function Login() {
                       value={data.email}
                       type="text"
                       className="login-input"
-                      id="email"
                       name="email"
                       placeholder="Email"
                     />

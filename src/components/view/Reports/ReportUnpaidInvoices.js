@@ -65,7 +65,7 @@ function ReportUnpaidInvoices() {
                   info.id = data.id;
                   info.company = company.data.name;
                   info.discount_code = data.discount_code;
-                  info.price = "P " + data.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  // info.price = "P " + data.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   info.total_amount = "P " + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   info.paid_amount = "P " + data.paid_amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -93,14 +93,14 @@ function ReportUnpaidInvoices() {
       <div className="active-cont">
         <Fragment>
 
-        <Searchbar title='UNPAID INVOICES'/>
+        <Searchbar title='RECEIVABLES'/>
           <Header 
             type="thick" 
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Unpaid Invoice Report'}
             tableData={unpaidInvoices}
-            tableHeaders={['INVOICE ID', 'COMPANY', 'DISCOUNT CODE','PRICE', 'TOTAL AMOUNT', 'PAID AMOUNT']}
+            tableHeaders={['INVOICE ID', 'COMPANY', 'DISCOUNT CODE', 'TOTAL AMOUNT', 'PAID AMOUNT']}
             status={printReadyFinal}
              />
           <Table
@@ -108,7 +108,7 @@ function ReportUnpaidInvoices() {
             type={'no-action'}
             tableData={unpaidInvoices}
             rowsPerPage={100}
-            headingColumns={['INVOICE ID', 'COMPANY', 'DISCOUNT CODE','PRICE', 'TOTAL AMOUNT', 'PAID AMOUNT']}
+            headingColumns={['INVOICE ID', 'COMPANY', 'DISCOUNT CODE', 'TOTAL AMOUNT', 'PAID AMOUNT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

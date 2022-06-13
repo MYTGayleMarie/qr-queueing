@@ -78,7 +78,7 @@ function Registration() {
               var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
 
-              console.log(booking);
+              // console.log(booking);
 
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
@@ -105,10 +105,6 @@ function Registration() {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
   }, []);
 
-
-  // React.useEffect(() => {
-  //   patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
-  // });
 
 
   function filter() {}

@@ -845,9 +845,12 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
 
     }
     else if(type === 'company-invoices') {
+        const {from_date, to_date, done} = filteredData;
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <select onChange={(e) => setStatus(e.target.value)}>
                         <option value="UNPAID">UNPAID</option>
                         <option value="PAID">PAID</option>

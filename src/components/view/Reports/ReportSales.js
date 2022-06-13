@@ -70,7 +70,7 @@ function ReportSales() {
       .then((response)=>{
         // console.log(response)        
         const salesArray = response.data.data.sales
-        
+        console.log(salesArray)
         salesArray.map((arr, index1)=>{
           arr.map((method, index2)=>{
             if(method.accounts!=null){
@@ -112,6 +112,7 @@ function ReportSales() {
     
     React.useEffect(()=>{
       const tempData = salesData.concat(sales)
+      console.log(tempData)
       setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
       setTotal(0);
       var tempTotal = 0.00;

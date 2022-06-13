@@ -25,7 +25,7 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [fileLength, setFileLength] = useState(0)
   const [fileName, setFileName] = useState("")
   const [data, setData] = useState("")
-
+  const [md, setMd] = useState("")
 
   // Categorizing services into lab and packages
   React.useEffect(()=>{
@@ -248,6 +248,15 @@ export default function FileUpload({servicesData, title, bookingId}){
                 <p className="file-name">{fileName}</p>
                 <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
                 <button className="submit-btn" onClick={submitPdf}>SAVE</button>
+
+                <div className='row more-gap'>
+                
+                <div className='col-sm-12 d-flex justify-content-end'>
+                    <span className='md-label'>MD :</span>
+                    <input name="md" className='md-input' onChange={(e) => setMd(e.target.value)}/>
+                </div>
+            </div>
+
               </div>)}
             
             {/* View File Button */}
