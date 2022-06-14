@@ -15,7 +15,7 @@ import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
 
-const buttons = ['add-company'];
+const buttons = ['export-excel'];
 const userToken = getToken();
 const userId = getUser();
 var id;
@@ -41,7 +41,8 @@ function CompanyInvoiceManager() {
   const [redirect, setRedirect] = useState("");
   const [toAddPayment, setToAddPayment] = useState(false);
   const [status, setStatus] = useState('UNPAID');
-  
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
+
   React.useEffect(() => {
     finalCompanyData.length = 0;
     axios({
@@ -54,7 +55,6 @@ function CompanyInvoiceManager() {
             requester: userId,
         }
     }).then(function (response) {
-        console.log(response);
         response.data.company_invoices.map((row, index) => {
             var companyDetails = {};
             axios({
@@ -125,6 +125,11 @@ function CompanyInvoiceManager() {
     
                     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
                 }
+                
+                if(finalCompanyData){
+                    setPrintReadyFinal(true)
+                }
+                  
                 }).catch((error)=>{console.log(error)})
             }).catch(function (error) {
                 console.log(error);
@@ -147,6 +152,8 @@ function CompanyInvoiceManager() {
     )
   }
 
+  console.log(printReadyFinal)
+
   function filter() {}
 
     return (
@@ -155,7 +162,7 @@ function CompanyInvoiceManager() {
             <Navbar />
             <div className="active-cont">
                 <Fragment>
-                <Header type="thick" title="COMPANY INVOICE" tableData={patientData} />
+                <Header type="thick" title="COMPANY INVOICE" tableData={finalCompanyData.sort((a,b) => (new Date(a.date) > new Date(b.date) ? 1 : ((new Date(b.date) > new Date(a.date)) ? -1 : 0)))} buttons={buttons} status={printReadyFinal}/>
                 <Table
                     clickable={true}
                     type={'company-invoices'}
