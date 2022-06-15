@@ -185,7 +185,21 @@ function cashierNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Reports</span>
           </li>
         </NavLink>
-        z
+        <NavLink to="/medtech" activeClassName="active" class="link">
+            <li href="/medtech" class="nav-link imaging-nav">
+              <img src={medTechIcon} alt={'medTech'} class="medTech icon"></img>
+              <span class="mx-2">Results Releasing</span>
+            </li>
+        </NavLink>
+        <li href="#" class="nav-link supply-nav">
+            <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
+            <span class="mx-2">Companies</span>
+            <ul class="sub-menu">
+              <Link to="/company-invoices" className="sub-link">
+                <li class="sub-list">COMPANY INVOICE</li>
+              </Link>
+            </ul>
+          </li>
         {/* <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
           <span class="mx-2">Log Out</span>

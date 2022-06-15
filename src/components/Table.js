@@ -346,7 +346,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'services') {
+    else if(type === 'services-packages-2') {
 
         const {from_date, to_date, status} = filteredData;
     

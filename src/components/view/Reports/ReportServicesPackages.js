@@ -94,7 +94,7 @@ function ReportServicesPackages() {
              />
           <Table
             clickable={false}
-            type={'services'}
+            type={'services-packages-2'}
             tableData={servicesPackages}
             rowsPerPage={5}
             headingColumns={['SERVICE NAME', 'QUANTITY']}
