@@ -64,9 +64,9 @@ function ReportSales() {
       }
     })
     .then((response)=>{
-      // console.log(response)        
+      console.log(response)        
       const salesArray = response.data.data.sales
-      console.log(salesArray)
+      // console.log(salesArray)
       salesArray.map((arr, index1)=>{
         arr.map((method, index2)=>{
           if(method.accounts!=null){
@@ -79,6 +79,7 @@ function ReportSales() {
               info.method = method.type
               info.account = account.name 
               info.amount = account.amount
+              info.creditAmount = method.grand_total
               setSales(oldArray=>[...oldArray, info])
             })   
           }
@@ -143,20 +144,20 @@ function ReportSales() {
     
     
     // },[render])
-
+// console.log(sales)
     React.useEffect(()=>{
-
+      // sales.map((data.index))
       byMethod.length=0;
       const res = Array.from(sales.reduce(
           (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
           ([date, amount]) => ({date, amount}))
-          
+          // get total per date
       setSalesData(res)
     },[sales])
-    
+
     React.useEffect(()=>{
       const tempData = salesData.concat(sales)
-      console.log(tempData)
+      // console.log(tempData)
       setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
       setTotal(0);
       var tempTotal = 0.00;
@@ -166,7 +167,39 @@ function ReportSales() {
       })
 
     },[salesData])
-   
+  //  console.log(byDate)
+
+   const [withCredit, setWithCredit] = useState([])
+   const [creditMethod, setCreditMethod] = useState([])
+   React.useEffect(()=>{
+      setWithCredit([])
+      // var tempByDate =[]
+      byDate.map((perDate, index)=>{
+        var tempByDate = []
+        let amount = 0.00
+        var info = {}
+        // info.date = perDate[1].date
+        // info.method = "credit"
+        // info.amount = perDate[1].creditAmount
+        console.log(perDate)
+        // perDate.map((data, index)=>{
+        //   tempByDate.push(data)
+        //   let info={}
+        //   info.date = data.date
+        //   info.method = "credit"
+        //   if(data.creditAmount){
+        //     amount +=parseFloat(data.creditAmount) //sakto na jud ni pagkaadd
+        //   }
+        //   info.amount = amount.toFixed(2) 
+        //   if(perDate.length-1==index){
+        //     tempByDate.push(info)
+        //   }
+        // })
+        // setWithCredit(oldArray=>[...oldArray, tempByDate])
+      })
+   },[byDate])
+
+  //  console.log(withCredit)
 
   function filter() {}
 

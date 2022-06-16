@@ -266,6 +266,12 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td data-heading='AMOUNT' className='account-name'></td>
           </>
 
+          var creditItems = row.length>1?<>
+            <td className='account-method'>Credit</td>
+            <td data-heading='ACCOUNT' className='account-name'></td>
+            <td data-heading='AMOUNT' className='account-name'>P {row[1].creditAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+          </>:null
+
           const rowElements = <tr key={row.id} className="sales-row">
             <td key={row[0].date.replace(/\s/g, '')}data-heading="DATE"className='DATE'>{row[0].date}</td>
             <table className="method-row" >
@@ -279,6 +285,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </table>
             <table className="method-row" >
               {othersItems}
+            </table>
+            <table className="method-row" >
+              {creditItems}
             </table>
             <td key={row[0].amount}data-heading="TOTAL"className='TOTAL'>P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
