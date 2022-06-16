@@ -39,6 +39,7 @@ function ReportSales() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
+  const [credits, setCredits] = useState([]);
   const [salesData, setSalesData] = useState([]);
   
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
@@ -48,58 +49,100 @@ function ReportSales() {
   const [accountDetails, setAccountDetails] = useState([]);
   const [byDate, setByDate] = useState([]);
   const [byMethod, setByMethod] = useState([]);
-  
+  React.useEffect(()=>{
+    sales.length=0;
+    axios({
+      method: 'post',
+      url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        date_from: filteredData.from_date,
+        date_to: filteredData.to_date,
+        requester: userId,
+      }
+    })
+    .then((response)=>{
+      // console.log(response)        
+      const salesArray = response.data.data.sales
+      console.log(salesArray)
+      salesArray.map((arr, index1)=>{
+        arr.map((method, index2)=>{
+          if(method.accounts!=null){
+            method.accounts.map((account, index3)=>{
+              var info = {};
+              var date = new Date(method.payment_date);
+              var formattedDate = date.toDateString().split(" ");
+             info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+              // info.date = method.payment_date
+              info.method = method.type
+              info.account = account.name 
+              info.amount = account.amount
+              setSales(oldArray=>[...oldArray, info])
+            })   
+          }
 
-  
-    
-
-    React.useEffect(()=>{
-      sales.length=0;
-      axios({
-        method: 'post',
-        url: window.$link + 'reports/salesSummary',
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          date_from: filteredData.from_date,
-          date_to: filteredData.to_date,
-          requester: userId,
+        })
+        if(arr.length - 1 == index1) {
+          setPrintReadyFinal(true);
         }
       })
-      .then((response)=>{
-        // console.log(response)        
-        const salesArray = response.data.data.sales
-        console.log(salesArray)
-        salesArray.map((arr, index1)=>{
-          arr.map((method, index2)=>{
-            if(method.accounts!=null){
-              method.accounts.map((account, index3)=>{
-                var info = {};
-                var date = new Date(method.payment_date);
-                var formattedDate = date.toDateString().split(" ");
-               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-                // info.date = method.payment_date
-                info.method = method.type
-                info.account = account.name 
-                info.amount = account.amount
-                setSales(oldArray=>[...oldArray, info])
-              })   
-            }
-
-          })
-          if(arr.length - 1 == index1) {
-            setPrintReadyFinal(true);
-          }
-        })
 
 
-      })
-      .catch((error)=>{console.log(error)})
+    })
+    .catch((error)=>{console.log(error)})
+  
+  },[render])
+    
+
+    // React.useEffect(()=>{
+    //   sales.length=0;
+    //   axios({
+    //     method: 'post',
+    //     url: window.$link + 'reports/salesSummary',
+    //     withCredentials: false,
+    //     params: {
+    //       api_key: window.$api_key,
+    //       token: userToken.replace(/['"]+/g, ''),
+    //       date_from: filteredData.from_date,
+    //       date_to: filteredData.to_date,
+    //       requester: userId,
+    //     }
+    //   })
+    //   .then((response)=>{
+    //     // console.log(response)        
+    //     const salesArray = response.data.data.sales
+    //     console.log(salesArray)
+    //     salesArray.map((arr, index1)=>{
+    //       arr.map((method, index2)=>{
+    //         if(method.accounts!=null){
+    //           method.accounts.map((account, index3)=>{
+    //             var info = {};
+    //             var date = new Date(method.payment_date);
+    //             var formattedDate = date.toDateString().split(" ");
+    //            info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+    //             // info.date = method.payment_date
+    //             info.method = method.type
+    //             info.account = account.name 
+    //             info.amount = account.amount
+    //             setSales(oldArray=>[...oldArray, info])
+    //           })   
+    //         }
+
+    //       })
+    //       if(arr.length - 1 == index1) {
+    //         setPrintReadyFinal(true);
+    //       }
+    //     })
+
+
+    //   })
+    //   .catch((error)=>{console.log(error)})
     
     
     
-    },[render])
+    // },[render])
 
     React.useEffect(()=>{
 
@@ -107,6 +150,7 @@ function ReportSales() {
       const res = Array.from(sales.reduce(
           (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
           ([date, amount]) => ({date, amount}))
+          
       setSalesData(res)
     },[sales])
     
