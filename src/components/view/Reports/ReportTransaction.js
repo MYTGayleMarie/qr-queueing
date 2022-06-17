@@ -77,12 +77,18 @@ function ReportTransaction() {
                   requester: userId,
                 },
               }).then(function (customer) {
+                  console.log(customer)
+                  console.log(booking)
+                  if(booking.customer_id == "2574"){
+                    console.log("Hello")
+                    console.log(customer.data.first_name)
+                  }
                   var bookingDetails = {};
                   bookingDetails.id = booking.id;
                   bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
                   bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
                   bookingDetails.type = booking.type;
-                  
+                  console.log(bookingDetails)
                   //tests
                   var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
                   var finalArray = details.data.data.booking_details;
@@ -102,9 +108,10 @@ function ReportTransaction() {
                         }
                     }
                   })
+
     
                   bookingDetails.tests = tests;
-                  bookingDetails.payment_type = booking.payment_type.toUpperCase();
+                  bookingDetails.payment_type = booking.payment_type === null ? "NONE": booking.payment_type.toUpperCase();
                   bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
                   if(booking.result=="print with pickup"){
                     bookingDetails.results = booking.result;
