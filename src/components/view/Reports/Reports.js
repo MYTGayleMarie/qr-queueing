@@ -37,6 +37,7 @@ function Reports() {
     const [servicesPackages, setServicesPackages] = useState([]);
     const [services, setServices] = useState([]);
     const [packages, setPackages] = useState([]);
+    const [poCount, setPoCount] = useState("");
 
     const [homeServices, setHomeServices] = useState([]);
     const [todayHomeServices, setTodayHomeServices] = useState([]);
@@ -254,6 +255,22 @@ function Reports() {
             });
       },[]);
 
+      React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'pos/getPoCountWithReceiveItems',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+              setPoCount(response.data.data.po_count)
+          }).then(function (error) {
+            console.log(error);
+          });
+    },[]);
     //ALL CREDITS
     React.useEffect(() => {
       axios({
@@ -440,6 +457,18 @@ function Reports() {
                         link={"/reports-incomplete-po"}
                         title='Incomplete PO'
                         color='maroon'
+                        disable={"today"}
+                    /> }
+                </div>
+            </div>
+            <div className="row">
+            <div className="col-sm-4">
+                  {role != 3 && <Card 
+                        totalData={poCount}
+                        todayData={""}
+                        link={"/receives"}
+                        title='Payables'
+                        color='blue'
                         disable={"today"}
                     /> }
                 </div>
