@@ -269,6 +269,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
           var creditItems = row.length>1?<>
             <td className='account-method'>Credit</td>
             <td data-heading='ACCOUNT' className='account-name'></td>
+            {console.log(row[1])}
             <td data-heading='AMOUNT' className='account-name'>P {row[1].creditAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </>:null
 

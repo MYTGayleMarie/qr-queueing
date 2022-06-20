@@ -20,6 +20,10 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
     render() {
+        const presentDate = new Date();
+        const curTime = presentDate.getHours() + ':' + presentDate.getMinutes();
+        const today = presentDate.toDateString().split(' ')
+
         const bookDate = new Date(this.props.bookingDate);
         const birthDate = new Date(this.props.birthdate);
         const encodedDate = new Date(this.props.encodedOn);
@@ -375,6 +379,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </table>
                         <div className='row'>
                                 <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                                <span className="encoded-on">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
                         </div>
                 </div>
             )
@@ -467,6 +472,36 @@ export class PaymentToPrint extends React.PureComponent {
                 })
             }
 
+            <div className="print-column"> 
+                        <div class="d-flex justify-content-left">
+                            <img src={logo} alt={'logo'} class="payment-logo"></img>
+                            <span className="to-right request-header">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
+                                <td><span className="header">Name: </span><span className="detail-print">{this.props.name}</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                                <td><span className="header">Age: </span><span className="detail-print">{this.props.age}</span></td>
+                                <td><span className="header">Gender:</span><span className="detail-print">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
+                                <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{this.props.contact}</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span className="header">Email: </span><span className="detail-print">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                                <td><span className="header">Address: </span><span className="detail-print">{this.props.address}</span></td>
+                            </tr >
+                            <tr>
+                                <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                                <td><span className="header">Discount Code: </span><span className="detail-print">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
+                            </tr>
+                        </table>
+            </div>
         </div>
     </div>
     

@@ -64,9 +64,8 @@ function ReportSales() {
       }
     })
     .then((response)=>{
-      console.log(response)        
+      console.log(response)  
       const salesArray = response.data.data.sales
-      // console.log(salesArray)
       salesArray.map((arr, index1)=>{
         arr.map((method, index2)=>{
           if(method.accounts!=null){
@@ -97,53 +96,53 @@ function ReportSales() {
   },[render])
     
 
-    // React.useEffect(()=>{
-    //   sales.length=0;
-    //   axios({
-    //     method: 'post',
-    //     url: window.$link + 'reports/salesSummary',
-    //     withCredentials: false,
-    //     params: {
-    //       api_key: window.$api_key,
-    //       token: userToken.replace(/['"]+/g, ''),
-    //       date_from: filteredData.from_date,
-    //       date_to: filteredData.to_date,
-    //       requester: userId,
-    //     }
-    //   })
-    //   .then((response)=>{
-    //     // console.log(response)        
-    //     const salesArray = response.data.data.sales
-    //     console.log(salesArray)
-    //     salesArray.map((arr, index1)=>{
-    //       arr.map((method, index2)=>{
-    //         if(method.accounts!=null){
-    //           method.accounts.map((account, index3)=>{
-    //             var info = {};
-    //             var date = new Date(method.payment_date);
-    //             var formattedDate = date.toDateString().split(" ");
-    //            info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-    //             // info.date = method.payment_date
-    //             info.method = method.type
-    //             info.account = account.name 
-    //             info.amount = account.amount
-    //             setSales(oldArray=>[...oldArray, info])
-    //           })   
-    //         }
+    React.useEffect(()=>{
+      sales.length=0;
+      axios({
+        method: 'post',
+        url: window.$link + 'reports/salesSummary',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
+          requester: userId,
+        }
+      })
+      .then((response)=>{
+        // console.log(response)        
+        const salesArray = response.data.data.sales
+        console.log(salesArray)
+        salesArray.map((arr, index1)=>{
+          arr.map((method, index2)=>{
+            if(method.accounts!=null){
+              method.accounts.map((account, index3)=>{
+                var info = {};
+                var date = new Date(method.payment_date);
+                var formattedDate = date.toDateString().split(" ");
+               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                // info.date = method.payment_date
+                info.method = method.type
+                info.account = account.name 
+                info.amount = account.amount
+                setSales(oldArray=>[...oldArray, info])
+              })   
+            }
 
-    //       })
-    //       if(arr.length - 1 == index1) {
-    //         setPrintReadyFinal(true);
-    //       }
-    //     })
+          })
+          if(arr.length - 1 == index1) {
+            setPrintReadyFinal(true);
+          }
+        })
 
 
-    //   })
-    //   .catch((error)=>{console.log(error)})
+      })
+      .catch((error)=>{console.log(error)})
     
     
     
-    // },[render])
+    },[render])
 // console.log(sales)
     React.useEffect(()=>{
       // sales.map((data.index))
@@ -188,7 +187,7 @@ function ReportSales() {
         //   info.date = data.date
         //   info.method = "credit"
         //   if(data.creditAmount){
-        //     amount +=parseFloat(data.creditAmount) //sakto na jud ni pagkaadd
+        //     amount +=parseFloat(data.creditAmount)
         //   }
         //   info.amount = amount.toFixed(2) 
         //   if(perDate.length-1==index){
