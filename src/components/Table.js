@@ -225,7 +225,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
           var check = row.filter(info=>info.method=="check")
           var others = row.filter(info=>info.method=="others")
           var cash = row.filter(info=>info.method=="cash")
- 
+          var credit = row.filter(info=>info.method=="credit")
           var cashItems= cash.length>0 ? <>
               <td className='account-method'>Cash</td>
               <td data-heading='ACCOUNT' className='account-name'>{cash.map((data, index)=><div  className='account-details'>{data.account}</div>)}</td>
@@ -266,12 +266,15 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td data-heading='AMOUNT' className='account-name'></td>
           </>
 
-          var creditItems = row.length>1?<>
+          var creditItems = credit.length>1 ? <>
             <td className='account-method'>Credit</td>
             <td data-heading='ACCOUNT' className='account-name'></td>
-            {console.log(row[1])}
-            <td data-heading='AMOUNT' className='account-name'>P {row[1].creditAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-          </>:null
+            <td data-heading='AMOUNT' className='account-name'>{credit.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>
+          </>:<>
+            <td className='account-method'>Credit</td>
+            <td data-heading='ACCOUNT' className='account-name'></td>
+            <td data-heading='AMOUNT' className='account-name'></td>
+           </>
 
           const rowElements = <tr key={row.id} className="sales-row">
             <td key={row[0].date.replace(/\s/g, '')}data-heading="DATE"className='DATE'>{row[0].date}</td>

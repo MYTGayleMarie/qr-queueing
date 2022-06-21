@@ -49,55 +49,9 @@ function ReportSales() {
   const [accountDetails, setAccountDetails] = useState([]);
   const [byDate, setByDate] = useState([]);
   const [byMethod, setByMethod] = useState([]);
-  React.useEffect(()=>{
-    sales.length=0;
-    axios({
-      method: 'post',
-      url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ''),
-        date_from: filteredData.from_date,
-        date_to: filteredData.to_date,
-        requester: userId,
-      }
-    })
-    .then((response)=>{
-      console.log(response)  
-      const salesArray = response.data.data.sales
-      salesArray.map((arr, index1)=>{
-        arr.map((method, index2)=>{
-          if(method.accounts!=null){
-            method.accounts.map((account, index3)=>{
-              var info = {};
-              var date = new Date(method.payment_date);
-              var formattedDate = date.toDateString().split(" ");
-             info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-              // info.date = method.payment_date
-              info.method = method.type
-              info.account = account.name 
-              info.amount = account.amount
-              info.creditAmount = method.grand_total
-              setSales(oldArray=>[...oldArray, info])
-            })   
-          }
-
-        })
-        if(arr.length - 1 == index1) {
-          setPrintReadyFinal(true);
-        }
-      })
-
-
-    })
-    .catch((error)=>{console.log(error)})
-  
-  },[render])
-    
 
     React.useEffect(()=>{
-      sales.length=0;
+      sales.length=0; 
       axios({
         method: 'post',
         url: window.$link + 'reports/salesSummary',
@@ -111,46 +65,75 @@ function ReportSales() {
         }
       })
       .then((response)=>{
-        // console.log(response)        
-        const salesArray = response.data.data.sales
-        console.log(salesArray)
-        salesArray.map((arr, index1)=>{
-          arr.map((method, index2)=>{
-            if(method.accounts!=null){
-              method.accounts.map((account, index3)=>{
-                var info = {};
-                var date = new Date(method.payment_date);
-                var formattedDate = date.toDateString().split(" ");
-               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-                // info.date = method.payment_date
-                info.method = method.type
-                info.account = account.name 
-                info.amount = account.amount
-                setSales(oldArray=>[...oldArray, info])
-              })   
-            }
-
-          })
-          if(arr.length - 1 == index1) {
-            setPrintReadyFinal(true);
+        axios({
+          method: 'post',
+          url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            date_from: filteredData.from_date,
+            date_to: filteredData.to_date,
+            requester: userId,
           }
         })
-
-
+        .then((credit_response)=>{
+          const salesArray = credit_response.data.data.sales
+          salesArray.map((arr, index1)=>{
+            arr.map((method, index2)=>{
+              if(method.accounts!=null){
+                var info = {};
+                var date = new Date(method.booking_date);
+                var formattedDate = date.toDateString().split(" ");
+               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                info.method = method.type
+                info.creditAmount = method.grand_total
+                setCredits(oldArray=>[...oldArray, info]) 
+              }
+            })
+          })
+        console.log(credits)
+        credits.map((credit, index) => {
+          var info = {};
+          info.date = credit.date
+          info.method = "credit"
+          info.amount = credit.creditAmount
+          setSales(oldArray=>[...oldArray, info])
+        })
+        const sales_Array = response.data.data.sales
+        sales_Array.map((arr, index1)=>{
+          arr.map((method, index2)=>{
+            if(method.accounts!=null){
+              var date = new Date(method.payment_date);
+              var formattedDate = date.toDateString().split(" ");
+              const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                method.accounts.map((account, index3)=>{
+                  var info = {};
+                  info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                  info.method = method.type
+                  info.account = account.name 
+                  info.amount = account.amount
+                  setSales(oldArray=>[...oldArray, info])
+                })   
+              }
+            })
+            if(arr.length - 1 == index1) {
+              setPrintReadyFinal(true);
+            }
+          })
       })
       .catch((error)=>{console.log(error)})
-    
-    
+    })
     
     },[render])
-// console.log(sales)
+
     React.useEffect(()=>{
-      // sales.map((data.index))
+      
       byMethod.length=0;
       const res = Array.from(sales.reduce(
           (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
           ([date, amount]) => ({date, amount}))
-          // get total per date
+
       setSalesData(res)
     },[sales])
 
@@ -168,37 +151,8 @@ function ReportSales() {
     },[salesData])
   //  console.log(byDate)
 
-   const [withCredit, setWithCredit] = useState([])
-   const [creditMethod, setCreditMethod] = useState([])
-   React.useEffect(()=>{
-      setWithCredit([])
-      // var tempByDate =[]
-      byDate.map((perDate, index)=>{
-        var tempByDate = []
-        let amount = 0.00
-        var info = {}
-        // info.date = perDate[1].date
-        // info.method = "credit"
-        // info.amount = perDate[1].creditAmount
-        console.log(perDate)
-        // perDate.map((data, index)=>{
-        //   tempByDate.push(data)
-        //   let info={}
-        //   info.date = data.date
-        //   info.method = "credit"
-        //   if(data.creditAmount){
-        //     amount +=parseFloat(data.creditAmount)
-        //   }
-        //   info.amount = amount.toFixed(2) 
-        //   if(perDate.length-1==index){
-        //     tempByDate.push(info)
-        //   }
-        // })
-        // setWithCredit(oldArray=>[...oldArray, tempByDate])
-      })
-   },[byDate])
-
-  //  console.log(withCredit)
+  //  const [withCredit, setWithCredit] = useState([])
+  //  const [creditMethod, setCreditMethod] = useState([])
 
   function filter() {}
 
