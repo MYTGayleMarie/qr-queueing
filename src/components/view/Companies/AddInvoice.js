@@ -30,7 +30,7 @@ function AddInvoice() {
   //Invoice details
   const {id, discount} = useParams();
   const [redirect, setRedirect] = useState(false);
-  const [info, setInfo] = useState([invoice]);
+  const [info, setInfo] = useState([]);
   const [particulars, setParticulars] = useState([]);
   const [dataset, setTempData] = useState([]);
   const [price, setPrice] = useState("");
@@ -65,6 +65,7 @@ function AddInvoice() {
   };
 
   React.useEffect(() => {
+    setInfo([])
     axios({
       method: 'post',
       url: window.$link + 'companies/show/' + id,
@@ -116,24 +117,15 @@ function AddInvoice() {
 
       }
     }).then(function (response){
+      // console.log(response)
       var output = [];
       var array = response.data.data.particulars;
-        array.map((arr, index) => {
-              console.log(arr)
-              var info = {};
-              info.discount_code = arr.discount_code
-              info.price = arr.total_amount
-              info.quantity = (arr.customer).length
-              info.amount = arr.total_amount
-              setInfo(oldArray=>[...oldArray, info])
-        })
          array.forEach(function(item, index) {
              var existing = output.filter(function(v, i) {
                  var vDate = v.booking_time.split(" ");
                  var iDate = item.booking_time.split(" ");
                  return vDate[0] == iDate[0];
              });
-  
              if (existing.length) {
                  var existingIndex = output.indexOf(existing[0]);
                  output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
@@ -148,7 +140,20 @@ function AddInvoice() {
       console.log(error);
     });
   },[discountInfo]);
-  console.log(info)
+
+  React.useEffect(()=>{
+    setInfo([])
+    particulars.map((arr, index)=>{
+      var info = {};
+      info.discount_code = arr.discount_code
+      info.price = arr.total_amount
+      info.quantity = arr.customer.length
+      info.amount = arr.customer.length*arr.total_amount
+      setInfo(oldArray=>[...oldArray, info])
+    })
+  }, [particulars])
+
+  
   function addInvoice() {
     if(isClicked == false) {
       setIsClicked(true);
@@ -168,7 +173,7 @@ function AddInvoice() {
             added_by: userId,
         }
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         toast.success("Successfully added invoice!");
           setTimeout(function() {
             setRedirect(true);
@@ -252,7 +257,7 @@ function AddInvoice() {
                     </div>
                 </div>
 
-                {info[0].discount_code != '' && (
+                {info.length>0 && (
                 <Table
                     clickable={true}
                     type={'add-invoice'}
@@ -261,13 +266,13 @@ function AddInvoice() {
                     headingColumns={['DISCOUNT CODE', 'PRICE','QUANTITY', 'TOTAL']}
                     givenClass={'company-mobile'}
                 />
-                )}
+               )}
 
-                {info[0].discount_code == '' && (
+                {info.length<1 && (
                   <div className="row d-flex justify-content-center info">
                        NO COMPANY DISCOUNT BOOKINGS FOR THIS INVOICE
                   </div>
-                )}
+               )}
 
                 <div className="po-details">
                     {particulars.length != 0 && (
@@ -299,7 +304,7 @@ function AddInvoice() {
                     })}
                 </div>
                 
-                {info[0].discount_code != '' && (
+                {info.length>0 && (
                 <div className="row d-flex justify-content-end">
                   <button className="back-btn less-width" onClick={() => addInvoice()}>GENERATE INVOICE</button>
                 </div>

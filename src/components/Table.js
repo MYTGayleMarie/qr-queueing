@@ -24,7 +24,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     } else if(breakOn === 'large') {
         tableClass += ' table-container_table--break-lg';
     }
-    console.log(tableData)
+    // console.log(tableData)
     const data = slice.map((row, index) => {
 
         let rowData = [];
@@ -765,7 +765,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
-        console.log(data)
+        // console.log(data)
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
