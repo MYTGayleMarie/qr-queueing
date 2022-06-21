@@ -212,7 +212,6 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-        console.log(response.data); 
       setDiscountCodes(response.data);
     }).then(function(error) {
       console.log(error);

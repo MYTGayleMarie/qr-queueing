@@ -32,6 +32,7 @@ function AddInvoice() {
   const [redirect, setRedirect] = useState(false);
   const [info, setInfo] = useState([invoice]);
   const [particulars, setParticulars] = useState([]);
+  const [dataset, setTempData] = useState([]);
   const [price, setPrice] = useState("");
   const [total, setTotal] = useState("");
   
@@ -45,6 +46,7 @@ function AddInvoice() {
   const [contactPerson, setContactPerson] = useState("");
   const [remarks, setRemarks] = useState("");
   const [discountInfo, setDiscountInfo] = useState("");
+  const [invoiceStatus, setInvoiceStatus] = useState(false)
 
   //Discount Details
   const [discountDetails, setDiscountDetails] = useState("");
@@ -54,6 +56,13 @@ function AddInvoice() {
   const [toAddInvoice, setToAddInvoice] = useState(false);
 
   const [isClicked, setIsClicked] = useState(false);
+
+  function groupArrayOfObjects(list, key) {
+    return list.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
 
   React.useEffect(() => {
     axios({
@@ -66,7 +75,6 @@ function AddInvoice() {
           requester: userId,
       }
     }).then(function (company) {
-      console.log(company);
       setCompanyId(company.data.id);
       setRemarks(company.data.remarks);
       setName(company.data.name);
@@ -89,7 +97,6 @@ function AddInvoice() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response);
       setDiscountInfo(response.data.data.discount);
     }).then(function(error) {
       console.log(error);
@@ -108,25 +115,22 @@ function AddInvoice() {
           requester: userId,
 
       }
-    }).then(function (response) {
-      console.log(response.data.data)
-      var data = {};
-      data.discount_code = discountInfo.discount_code;
-      data.price = response.data.data.price;
-      data.quantity = response.data.data.quantity;
-      data.total = response.data.data.total;
-
-      setInfo([data]);
-      setPrice(response.data.data.price);
-      setTotal(response.data.data.total);
-   
+    }).then(function (response){
       var output = [];
       var array = response.data.data.particulars;
+        array.map((arr, index) => {
+              console.log(arr)
+              var info = {};
+              info.discount_code = arr.discount_code
+              info.price = arr.total_amount
+              info.quantity = (arr.customer).length
+              info.amount = arr.total_amount
+              setInfo(oldArray=>[...oldArray, info])
+        })
          array.forEach(function(item, index) {
              var existing = output.filter(function(v, i) {
                  var vDate = v.booking_time.split(" ");
                  var iDate = item.booking_time.split(" ");
-          
                  return vDate[0] == iDate[0];
              });
   
@@ -139,15 +143,13 @@ function AddInvoice() {
              output.push(item);
              }
          });
-  
          setParticulars(output)
     }).then(function(error) {
       console.log(error);
     });
   },[discountInfo]);
-
+  console.log(info)
   function addInvoice() {
-    
     if(isClicked == false) {
       setIsClicked(true);
       axios({
@@ -182,8 +184,6 @@ function AddInvoice() {
         <Navigate to = {"/company-invoices"}/>
     )
   }
-
-  console.log(info)
 
   return (
     <div>
