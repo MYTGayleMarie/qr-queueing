@@ -265,8 +265,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td data-heading='ACCOUNT' className='account-name'></td>
             <td data-heading='AMOUNT' className='account-name'></td>
           </>
+          // console.log(credit)
 
-          var creditItems = credit.length>1 ? <>
+          var creditItems = credit.length>0 ? <>
             <td className='account-method'>Credit</td>
             <td data-heading='ACCOUNT' className='account-name'></td>
             <td data-heading='AMOUNT' className='account-name'>{credit.map((data, index)=><div  className='account-details'>P {data.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>)}</td>

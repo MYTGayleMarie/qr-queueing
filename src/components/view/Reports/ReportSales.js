@@ -39,6 +39,7 @@ function ReportSales() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
   const [sales, setSales] = useState([]);
+  const [salesTemp, setSalesTemp] = useState([]);
   const [credits, setCredits] = useState([]);
   const [salesData, setSalesData] = useState([]);
   
@@ -52,6 +53,8 @@ function ReportSales() {
 
     React.useEffect(()=>{
       sales.length=0; 
+      salesTemp.length=0
+      credits.length=0
       axios({
         method: 'post',
         url: window.$link + 'reports/salesSummary',
@@ -65,6 +68,7 @@ function ReportSales() {
         }
       })
       .then((response)=>{
+        // console.log(response)
         axios({
           method: 'post',
           url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
@@ -77,7 +81,8 @@ function ReportSales() {
             requester: userId,
           }
         })
-        .then((credit_response)=>{
+        .then( (credit_response)=>{
+          // console.log(credit_response)
           const salesArray = credit_response.data.data.sales
           salesArray.map((arr, index1)=>{
             arr.map((method, index2)=>{
@@ -86,13 +91,12 @@ function ReportSales() {
                 var date = new Date(method.booking_date);
                 var formattedDate = date.toDateString().split(" ");
                info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-                info.method = method.type
-                info.creditAmount = method.grand_total
+                info.method = "credit"
+                info.amount = method.grand_total
                 setCredits(oldArray=>[...oldArray, info]) 
               }
             })
           })
-        console.log(credits)
         credits.map((credit, index) => {
           var info = {};
           info.date = credit.date
@@ -114,6 +118,7 @@ function ReportSales() {
                   info.account = account.name 
                   info.amount = account.amount
                   setSales(oldArray=>[...oldArray, info])
+                  setSalesTemp(oldArray=>[...oldArray, info])
                 })   
               }
             })
@@ -123,14 +128,22 @@ function ReportSales() {
           })
       })
       .catch((error)=>{console.log(error)})
-    })
+      })
     
     },[render])
+
+ 
+    React.useEffect(()=>{
+      sales.length=0
+      let tempData=credits.concat(salesTemp)
+      setSales(tempData)
+    },[credits, salesTemp])
+
 
     React.useEffect(()=>{
       
       byMethod.length=0;
-      const res = Array.from(sales.reduce(
+      const res = Array.from(salesTemp.reduce(
           (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
           ([date, amount]) => ({date, amount}))
 
@@ -138,7 +151,7 @@ function ReportSales() {
     },[sales])
 
     React.useEffect(()=>{
-      const tempData = salesData.concat(sales)
+      let tempData = salesData.concat(sales)
       // console.log(tempData)
       setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
       setTotal(0);
@@ -154,6 +167,7 @@ function ReportSales() {
   //  const [withCredit, setWithCredit] = useState([])
   //  const [creditMethod, setCreditMethod] = useState([])
 
+  
   function filter() {}
 
   function toTransaction() {

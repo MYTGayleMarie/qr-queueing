@@ -23,7 +23,7 @@ function PdfTransaction({type, name, data, header, total}) {
         const card = saleDetails.filter(info=>info.method=="card")
         const check = saleDetails.filter(info=>info.method=="check")
         const others = saleDetails.filter(info=>info.method=="others")
-        const none = saleDetails.filter(info=>info.method=="null")
+        const credit = saleDetails.filter(info=>info.method=="credit")
         
         var saleTotal = {};
         saleTotal.dateTotal = saleDetails[0].date 
@@ -97,21 +97,21 @@ function PdfTransaction({type, name, data, header, total}) {
           amount:"P "+parseFloat(others.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           };
           saleInfos.push(details)})
-        if(none.length<1){
+        if(credit.length<1){
             var details={
             date: "",
-            method:"none",
+            method:"credits",
             account:"",
             amount:""
             };
             saleInfos.push(details)
           }
-          none.map((none, index)=>{
+          credit.map((credits, index)=>{
             var details={
-            date:none.date,
-            method:"none",
-            account:"none",
-            amount:"none"
+            date:credits.date,
+            method:"credits",
+            account:"",
+            amount:"P "+parseFloat(credits.amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             };
             saleInfos.push(details)})   
        })

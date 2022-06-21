@@ -31,6 +31,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                     const card = sales.filter(info=>info.method=="card")
                     const check = sales.filter(info=>info.method=="check")
                     const others = sales.filter(info=>info.method=="others")
+                    const credit = sales.filter(info=>info.method=="credit")
                     if(cash.length<1){
                       var details={
                       date: "",
@@ -99,9 +100,27 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                       amount:parseFloat(others.amount)
                       };
                       salesData.push(details)}) 
+                    if(credit.length<1){
+                      var details={
+                      date: "",
+                      method:"credits",
+                      account:"",
+                      amount:""
+                      };
+                      salesData.push(details)
+                    }
+                    credit.map((credits, index)=>{
+                      var details={
+                      date: "",
+                      method:"credits",
+                      account:"",
+                      amount:parseFloat(credits.amount)
+                      };
+                      salesData.push(details)}) 
                   })
                   salesData.push({date:"GRAND TOTAL", total:totalExcel})
-                    return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL SALES</CSVLink></button>
+                  // console.log(salesData)
+                  return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL SALES</CSVLink></button>
                 } else if(status == true) {
                     return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
                 } else {
