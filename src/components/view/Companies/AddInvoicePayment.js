@@ -352,7 +352,6 @@ function AddInvoicePayment() {
 
       }
     }).then((response)=>{
-      console.log(response)
       var dataLength = response.data.data.particulars.length;
         response.data.data.particulars.map((data, index)=>{
           // Get Booking Details

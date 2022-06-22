@@ -143,8 +143,6 @@ function AddCompany() {
                 discounts: "",
             }
         }).then(function (response) {
-            console.log(response);
-            console.log(response.data.message[0]);
             toast.success(response.data.message.success);
             axios({
                 method: 'post',
@@ -160,7 +158,6 @@ function AddCompany() {
                     added_by: userId
                 }
             }).then(function (discount_response) {
-                console.log(discount_response)
                 toast.success("Successfully added company discount details");
                 setTimeout(function() {
                     setRedirect(true);

@@ -69,41 +69,41 @@ function ReportSales() {
       })
       .then((response)=>{
         // console.log(response)
-        axios({
-          method: 'post',
-          url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            date_from: filteredData.from_date,
-            date_to: filteredData.to_date,
-            requester: userId,
-          }
-        })
-        .then( (credit_response)=>{
-          console.log(credit_response)
-          const salesArray = credit_response.data.data.sales
-          salesArray.map((arr, index1)=>{
-            arr.map((method, index2)=>{
-              if(method.accounts!=null){
-                var info = {};
-                var date = new Date(method.booking_date);
-                var formattedDate = date.toDateString().split(" ");
-               info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-                info.method = "credit"
-                info.amount = method.grand_total
-                setCredits(oldArray=>[...oldArray, info]) 
-              }
-            })
-          })
-        credits.map((credit, index) => {
-          var info = {};
-          info.date = credit.date
-          info.method = "credit"
-          info.amount = credit.creditAmount
-          setSales(oldArray=>[...oldArray, info])
-        })
+        // axios({
+        //   method: 'post',
+        //   url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
+        //   withCredentials: false,
+        //   params: {
+        //     api_key: window.$api_key,
+        //     token: userToken.replace(/['"]+/g, ''),
+        //     date_from: filteredData.from_date,
+        //     date_to: filteredData.to_date,
+        //     requester: userId,
+        //   }
+        // })
+        // .then( (credit_response)=>{
+        //   console.log(credit_response)
+        //   const salesArray = credit_response.data.data.sales
+          // salesArray.map((arr, index1)=>{
+          //   arr.map((method, index2)=>{
+          //     if(method.accounts!=null){
+          //       var info = {};
+          //       var date = new Date(method.booking_date);
+          //       var formattedDate = date.toDateString().split(" ");
+          //      info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+          //       info.method = "credit"
+          //       info.amount = method.grand_total
+          //       setCredits(oldArray=>[...oldArray, info]) 
+          //     }
+          //   })
+          // })
+        // credits.map((credit, index) => {
+        //   var info = {};
+        //   info.date = credit.date
+        //   info.method = "credit"
+        //   info.amount = credit.creditAmount
+        //   setSales(oldArray=>[...oldArray, info])
+        // })
         const sales_Array = response.data.data.sales
         sales_Array.map((arr, index1)=>{
           arr.map((method, index2)=>{
@@ -118,7 +118,7 @@ function ReportSales() {
                   info.account = account.name 
                   info.amount = account.amount
                   setSales(oldArray=>[...oldArray, info])
-                  setSalesTemp(oldArray=>[...oldArray, info])
+                  // setSalesTemp(oldArray=>[...oldArray, info])
                 })   
               }
             })
@@ -126,18 +126,18 @@ function ReportSales() {
               setPrintReadyFinal(true);
             }
           })
-      })
+      // })
       .catch((error)=>{console.log(error)})
       })
     
     },[render])
 
  
-    React.useEffect(()=>{
-      sales.length=0
-      let tempData=credits.concat(salesTemp)
-      setSales(tempData)
-    },[credits, salesTemp])
+    // React.useEffect(()=>{
+    //   sales.length=0
+    //   let tempData=credits.concat(salesTemp)
+    //   setSales(tempData)
+    // },[credits, salesTemp])
 
 
     React.useEffect(()=>{
@@ -157,6 +157,7 @@ function ReportSales() {
       setTotal(0);
       var tempTotal = 0.00;
       salesData.map((details, index)=>{
+        console.log(details)
         tempTotal+=parseFloat(details.amount)
         setTotal(tempTotal)       
       })

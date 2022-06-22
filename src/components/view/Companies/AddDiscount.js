@@ -55,7 +55,6 @@ function AddDiscount() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response.data);
             setCompany(response.data);
         }).then(function (error) {
             console.log(error);
@@ -152,7 +151,6 @@ function submit(e, discount) {
                 discounts: "",
             }
         }).then(function (discount_response) {
-            console.log(discount_response)
             toast.success("Successfully added company discount details");
             setTimeout(function() {
                 setRedirect(true);

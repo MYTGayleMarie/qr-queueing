@@ -105,7 +105,6 @@ function Cashier() {
   }, []);
 
   React.useEffect(() => {
-    console.log(bookingDetails)
     bookingDetails.map((booking, index) => {
       axios({
         method: 'post',
@@ -199,7 +198,6 @@ function Cashier() {
           requester: userId,
       }
     }).then(function (response) {
-        console.log(response.data.discount);
         if(response.data.discount != null){
           response.data.discount.filter((info) => info.id != null).map((data, index) => {
             if(data.discount_code == discountCode) {
@@ -243,7 +241,6 @@ function Cashier() {
         },
       })
         .then(function (response) {
-          console.log(response)
           removeUserSession();
         })
         .catch(function (error) {
@@ -254,9 +251,6 @@ function Cashier() {
     }
   }
   var cashCounts = calculate();
-  console.log(cashCounts.toLocaleString() == cashSales);
-  console.log(cashCounts)
-  console.log(cashSales)
 
   function filter() {}
 

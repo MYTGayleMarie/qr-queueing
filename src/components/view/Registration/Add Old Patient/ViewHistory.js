@@ -114,7 +114,7 @@ export default function ViewHistory(){
         .catch((error)=>{console.log(error)})        
 
 
-        info.total = "P "+data.total_amount;
+        info.total = "P "+data.grand_total;
         setPatientHistory(oldArray=>[...oldArray, info]);
 
       })
