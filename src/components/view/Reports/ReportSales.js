@@ -144,12 +144,12 @@ function ReportSales() {
     //   let tempData=credits.concat(salesTemp)
     //   setSales(tempData)
     // },[credits, salesTemp])
-
+console.log(sales)
 
     React.useEffect(()=>{
       
-      byMethod.length=0;
-      const res = Array.from(salesTemp.reduce(
+      const noCredit = sales.filter(info=>info.method!=='credit')
+      const res = Array.from(noCredit.reduce(
           (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
           ([date, amount]) => ({date, amount}))
 
