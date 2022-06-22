@@ -34,7 +34,7 @@ function AddInvoice() {
   const [particulars, setParticulars] = useState([]);
   const [dataset, setTempData] = useState([]);
   const [price, setPrice] = useState("");
-  const [total, setTotal] = useState("");
+  const [total, setTotal] = useState(0);
   
 
   //Company details
@@ -50,6 +50,7 @@ function AddInvoice() {
 
   //Discount Details
   const [discountDetails, setDiscountDetails] = useState("");
+  const [grandTotal, setGrandTotal] = useState(0);
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -129,6 +130,7 @@ function AddInvoice() {
              if (existing.length) {
                  var existingIndex = output.indexOf(existing[0]);
                  output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
+                 output[existingIndex].total_amount = output[existingIndex].total_amount.concat(" " + item.total_amount)
              } else {
              if (typeof item.customer == 'string')
                  item.customer = [item.customer];
@@ -143,17 +145,36 @@ function AddInvoice() {
 
   React.useEffect(()=>{
     setInfo([])
+    var temp_total = 0
     particulars.map((arr, index)=>{
-      var info = {};
-      info.discount_code = arr.discount_code
-      info.price = arr.total_amount
-      info.quantity = arr.customer.length
-      info.amount = arr.customer.length*arr.total_amount
-      setInfo(oldArray=>[...oldArray, info])
+      var amt = arr.total_amount.split(" ");
+      amt.map((temp_amt, index) => {
+        var info = {};
+        var date = new Date(arr.booking_time)
+        var formattedDate = date.toDateString().split(" ")
+        const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+        info.date=temp_date
+        // info.discount_code = arr.discount_code
+        info.price = temp_amt
+        temp_total = parseFloat(info.price) + parseFloat(temp_total)
+        info.total = temp_total
+        setGrandTotal(grandTotal+temp_total)
+        setInfo(oldArray=>[...oldArray, info])
+      })
     })
   }, [particulars])
 
-  
+  // React.useEffect(()=>{
+  //   setGrandTotal(0)
+  //   info.map((arr, index)=>{
+  //     const temp_price = parseFloat(arr.price)
+  //     temp_price = temp_price + grandTotal
+  //     setGrandTotal(temp_price)
+  //   })
+  // }, [info])
+
+  // console.log(grandTotal)
+
   function addInvoice() {
     if(isClicked == false) {
       setIsClicked(true);
@@ -263,16 +284,26 @@ function AddInvoice() {
                     type={'add-invoice'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['DISCOUNT CODE', 'PRICE','QUANTITY', 'TOTAL']}
+                    headingColumns={['DATE','PRICE', 'TOTAL']}
                     givenClass={'company-mobile'}
                 />
-               )}
+                )}
+                
+                {grandTotal != null && grandTotal != 0 && (
+                  <div className="row">
+                      <div className="col d-flex justify-content-end grand-total">
+                          <span className="label">GRAND TOTAL: <b className="invoice-total">P {parseFloat(grandTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                      </div>
+                  </div>
+                )}  
+               
 
                 {info.length<1 && (
                   <div className="row d-flex justify-content-center info">
                        NO COMPANY DISCOUNT BOOKINGS FOR THIS INVOICE
                   </div>
                )}
+  
 
                 <div className="po-details">
                     {particulars.length != 0 && (

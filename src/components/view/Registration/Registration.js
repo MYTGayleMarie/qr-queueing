@@ -28,7 +28,7 @@ const filterData = {
   to_date: formattedPresentData,
   done: false,
 };
-console.log(filterData.from_date)
+
 function Registration() {
 
   document.body.style = 'background: white;';
@@ -60,7 +60,6 @@ function Registration() {
       },
     })
       .then( function (response) {
-        console.log(response);
         response.data.bookings.map( async (booking, index) => {
           await axios({
             method: 'post',

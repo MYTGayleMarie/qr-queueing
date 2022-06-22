@@ -82,7 +82,7 @@ function ReportSales() {
           }
         })
         .then( (credit_response)=>{
-          // console.log(credit_response)
+          console.log(credit_response)
           const salesArray = credit_response.data.data.sales
           salesArray.map((arr, index1)=>{
             arr.map((method, index2)=>{

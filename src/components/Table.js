@@ -135,7 +135,10 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index == 2 ? "company_name" : data.val.replace(/\s/g, '')}>{index == 0 || index == 1 ? "" : data.val}</td>
             )}
-            <td><button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>VIEW DETAILS</button></td>
+            <td>
+            <button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>VIEW DETAILS</button>
+            <button class="action-btn" role="button" onClick={() => link(row.company_id, row.id)}>DELETE DISCOUNT</button>
+            </td>
             </tr>
         }
         else if (type === 'credits' && clickable == true) {
@@ -193,7 +196,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if(type === "add-invoice") {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 && index != 2 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
         }
         else if(type === 'companies') {
