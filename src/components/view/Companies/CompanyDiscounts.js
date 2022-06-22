@@ -48,8 +48,6 @@ function CompanyDiscounts() {
             requester: userId,
         }
     }).then(function (response) {
-        console.log(response.data.discounts);
-
         response.data.discounts.map((data,index) => {
             if(data.company_id != null) {
                 axios({
@@ -93,10 +91,8 @@ function CompanyDiscounts() {
   if (redirect == true) {
     var link = '/add-invoice/' + id + "/" + discount_code;
     return <Navigate to={link} />;
-  }
-
-  console.log(discount)
-
+  } 
+  
     return (
         <div>
             <div>

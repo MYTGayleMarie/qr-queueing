@@ -54,7 +54,6 @@ function ReportCredits() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response);
               response.data.data.data.map((data, index) => {
                 var info = {};
                 info.company_discount = data.discount_code;

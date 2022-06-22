@@ -95,7 +95,6 @@ function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackage
     })
     .then((response)=>{
         const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
-        console.log(tests)
         tests.map((test,index)=>{   
             var testDetails = {};
             testDetails.key = test.name.replace(/[2)}{(.,&-\s/]/g, '')+"_"+test.category_id;        
@@ -154,9 +153,7 @@ function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackage
     })
     .then((response)=>{
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        console.log(packagesArray)
         packagesArray.map((item,index)=>{  
-            console.log(item) 
             var packageDetails = {};
             var packageCode = "";
             if( item.id==1 || item.id==2 || item.id==3){                        
@@ -223,7 +220,6 @@ const asArray = Object.entries(service)
 const checkedServices = asArray.filter(([key,value]) => value == true);
 var checkedServicesDetails = [];
 var totalMDCharge = 0;
-console.log(checkedServicesDetails)
 if(mdCharge.physical_exam == true) {
   totalMDCharge += 50.00;
 }
@@ -232,10 +228,7 @@ if(mdCharge.medical_certificate == true) {
   totalMDCharge += 50.00;
 }
 
-console.log(checkedServices)
 checkedServices.map((data, index) => {
-    console.log(data)
-    console.log(data)
     var categoryDetails = data[0].split("_");
     var categoryId = parseInt(categoryDetails[1]);
 
@@ -394,7 +387,6 @@ React.useEffect(() => {
                         requester: userId,
                     }
                 }).then(function (response) {
-                    console.log(response.data.name);
                     setAppliedTo(oldArray => [...oldArray, response.data.name]);
                 });
             } else {
@@ -408,7 +400,6 @@ React.useEffect(() => {
                         requester: userId,
                     }
                 }).then(function (response) {
-                    console.log(response.data.name);
                     setAppliedTo(oldArray => [...oldArray, response.data.name]);
                 });
             }
@@ -420,7 +411,6 @@ React.useEffect(() => {
 
 //Total discount labs/packages
     checkedServicesDetails.map((data, index) => {
-        console.log(data);
 
         //To insert condition for discount for specific labs/packages
         if(index == 0) {
@@ -447,7 +437,6 @@ React.useEffect(() => {
 
 if(typeof checkedServicesDetails[0] !== 'undefined') {
     checkedServicesDetails.map((data, index) => {
-        console.log(data);
         //To insert condition for discount for specific labs/packages
         if(index == 0) {
             newLabTotal = 0;

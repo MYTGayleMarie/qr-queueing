@@ -92,7 +92,6 @@ function ImagingTests() {
 
      const updateImaging = () => {
         ImagingInfo.map((row, index) => {
-            console.log("hereee")
             console.log(row);
             console.log(row.type == "lab");
             console.log(row.type == "package");

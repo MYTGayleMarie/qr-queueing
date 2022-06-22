@@ -42,8 +42,6 @@ function ReportCreditDetails() {
 
       }
     }).then(function (response) {
-      console.log(response.data.data)
-
       var output = [];
       var array = response.data.data.particulars;
          array.forEach(function(item, index) {

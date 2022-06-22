@@ -56,7 +56,6 @@ function ReportPendingPO() {
             },
           }).then(function (response) {
               var pending = response.data.pos.filter((info) => info.status == "pending");
-              console.log(pending);
               pending.map((data,index) => {
                 var info = {};
                 axios({

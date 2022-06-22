@@ -98,7 +98,6 @@ export default function ReportIncompletePOReview(){
       }
     })
     .then((response)=>{
-      console.log(response)
       setUnfilteredPoItems(response.data)
       response.data.map((data,index)=>{
 

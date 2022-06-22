@@ -71,7 +71,6 @@ function ReportHomeServices() {
                   requester: userId,
                 },
               }).then(function (response) {
-                console.log(response.data)
                 var date = new Date(data.booking_time);
                 var formattedDate = date.toDateString().split(" ");
                 info.booking_number = data.id;

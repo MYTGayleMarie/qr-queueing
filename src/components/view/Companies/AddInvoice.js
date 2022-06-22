@@ -30,6 +30,7 @@ function AddInvoice() {
   //Invoice details
   const {id, discount} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [redirect_discount, setRedirectDiscount] = useState(false);
   const [info, setInfo] = useState([]);
   const [particulars, setParticulars] = useState([]);
   const [dataset, setTempData] = useState([]);
@@ -164,20 +165,10 @@ function AddInvoice() {
     })
   }, [particulars])
 
-  // React.useEffect(()=>{
-  //   setGrandTotal(0)
-  //   info.map((arr, index)=>{
-  //     const temp_price = parseFloat(arr.price)
-  //     temp_price = temp_price + grandTotal
-  //     setGrandTotal(temp_price)
-  //   })
-  // }, [info])
-
-  // console.log(grandTotal)
-
   function addInvoice() {
     if(isClicked == false) {
       setIsClicked(true);
+      console.log(isClicked)
       axios({
         method: 'post',
         url: window.$link + 'Company_invoices/create',
@@ -188,13 +179,13 @@ function AddInvoice() {
             company_id: discountInfo.company_id,
             discount_id: discount, 
             discount_code: discountInfo.discount_code,
-            price: price,
-            qty: info[0].quantity,
+            price: info[0].price,
+            qty: info[0].grandTotal,
             total: total,
             added_by: userId,
         }
       }).then(function (response) {
-        // console.log(response);
+        console.log(response);
         toast.success("Successfully added invoice!");
           setTimeout(function() {
             setRedirect(true);
@@ -209,6 +200,28 @@ function AddInvoice() {
       return (
         <Navigate to = {"/company-invoices"}/>
     )
+  }
+  function handleDelete(){
+    axios({
+              method: 'post',
+              url: window.$link + 'discounts/deleteCompanyDiscount/' + discount,
+              withCredentials: false, 
+              params: {
+                  api_key: window.$api_key,
+                  token: userToken.replace(/['"]+/g, ''),
+                  updated_by: userId,
+              }
+          }).then(function (booking) {      
+              toast.success("Discount successfully deleted!");
+              setTimeout(function () {
+                  setRedirectDiscount(true);
+              }, 2000);
+          }).catch(function (error) {
+              console.log(error);
+          });
+        }
+     if(redirect_discount == true) {
+      return <Navigate to="/company-discounts" />;
   }
 
   return (
@@ -340,6 +353,12 @@ function AddInvoice() {
                   <button className="back-btn less-width" onClick={() => addInvoice()}>GENERATE INVOICE</button>
                 </div>
                 )}
+
+                {info.length == 0 && (
+                <div className="row d-flex justify-content-end">
+                  <button className="back-btn less-width" onClick={handleDelete}>DELETE DISCOUNT</button>
+                </div>
+                )}    
             </div>
     </div>
   );

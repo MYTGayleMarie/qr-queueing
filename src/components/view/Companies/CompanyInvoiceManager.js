@@ -152,8 +152,6 @@ function CompanyInvoiceManager() {
     )
   }
 
-  console.log(printReadyFinal)
-
   function filter() {}
 
     return (

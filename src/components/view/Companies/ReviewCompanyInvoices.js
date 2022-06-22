@@ -54,14 +54,11 @@ function ReviewCompanyInvoices() {
           requester: userId,
       }
     }).then(function (company) {
-      console.log(company);
-
       setName(company.data.name);
       setContactNo(company.data.contact_no);
       setEmail(company.data.company_email);
       setAddress(company.data.address);
       setContactPerson(company.data.contact_person); 
-
     }).then(function(error) {
       console.log(error);
     });

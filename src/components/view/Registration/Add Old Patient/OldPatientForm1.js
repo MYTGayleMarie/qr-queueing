@@ -169,7 +169,6 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response);
             setCompanyId(response.data.data.discount.company_id);
             setDiscount(response.data.data.discount.percentage);
             setDiscountDetails(response.data.data.discount_details);

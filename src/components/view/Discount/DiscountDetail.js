@@ -98,8 +98,6 @@ function DiscountDetail() {
         })
     },[particulars]);
 
-    console.log(finalData)
-
   return (
     <div>
         <Navbar/>

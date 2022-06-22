@@ -148,11 +148,8 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking);
             setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "for examination"));
             setPendingPack(booking.data.data.booking_package_details);
-
-            console.log(pendingLab);
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
             setPendingPackServices(finalArray.filter((info) => info.status != "for examination"));
@@ -230,7 +227,6 @@ function LaboratoryTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data.data);
             setPackages(booking.data.data.booking_package_details);
             setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id != xrayId && info.status != "for examination"));
 

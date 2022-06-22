@@ -54,7 +54,6 @@ function ReportServicesPackages() {
             },
           }).then(function (response) {
               var servicesData = response.data.data.data;
-              console.log(filteredData.status);
               console.log(servicesData);
               var count = 0;
               servicesData.map((data,index) => {

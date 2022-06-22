@@ -95,9 +95,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
         }
     })
     .then((response)=>{
-        console.log(response)
         const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
-        console.log(tests)
         tests.map((test,index)=>{   
             var testDetails = {};
             // if (test.id == 129){ //otherTest
@@ -273,7 +271,6 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     }).catch(function (error) {
         console.log(error);
     });
-    console.log(electrolytes)
 
      //functions
      function getDetails(categoryItems, checkedItem) {
@@ -435,7 +432,6 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
     console.log(data)
         var categoryDetails = data[0].split("_");
         var categoryId = parseInt(categoryDetails[1]);
-        console.log(categoryDetails[1])
 
         //servies
         switch(categoryDetails[1]) {

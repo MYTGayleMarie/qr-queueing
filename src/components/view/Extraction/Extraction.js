@@ -54,7 +54,6 @@ function Extraction() {
           },
         })
           .then(function (response) {
-            console.log(response);
             response.data.bookings.map((booking, index) => {
               axios({
                 method: 'post',
@@ -67,7 +66,6 @@ function Extraction() {
                 },
               })
                 .then(function (customer) {
-                    console.log(customer)
                   var formatBookingTime = new Date(customer.data.birthdate);
                   var bookingDetails = {};
                   bookingDetails.id = booking.id;

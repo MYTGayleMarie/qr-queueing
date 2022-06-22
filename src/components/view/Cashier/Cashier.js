@@ -76,13 +76,11 @@ function Cashier() {
         requester: userId,
       },
     }).then(function (response) {
-      console.log(response)
+      // console.log(response)
       var cash = parseFloat(response.data.data.total_cash_sales);
       setCashSales(cash);
     });
   }, []);
-
-  console.log(filteredData.from_date);
 
   React.useEffect(() => {
     axios({
