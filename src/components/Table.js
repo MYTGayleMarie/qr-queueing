@@ -228,6 +228,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
           var others = row.filter(info=>info.method=="others")
           var cash = row.filter(info=>info.method=="cash")
           var credit = row.filter(info=>info.method=="credit")
+          
           var cashItems= cash.length>0 ? <>
               <td className='account-method'>Cash</td>
               <td data-heading='ACCOUNT' className='account-name'>{cash.map((data, index)=><div  className='account-details'>{data.account}</div>)}</td>
@@ -267,7 +268,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td data-heading='ACCOUNT' className='account-name'></td>
             <td data-heading='AMOUNT' className='account-name'></td>
           </>
-          // console.log(credit)
+    
 
           var creditItems = credit.length>0 ? <>
             <td className='account-method'>Credit</td>
