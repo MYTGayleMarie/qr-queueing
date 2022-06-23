@@ -223,8 +223,9 @@ function Reports() {
               // console.log(response.data.data.sales)
               var total = 0;
               response.data.data.sales.map((data,index) => {
-                // console.log(data[0].grand_total)
-                total += data[0].grand_total == null ? 0 : parseFloat(data[0].grand_total);
+                if(data[0].type != "credit"){
+                  total += data[0].grand_total == null ? 0 : parseFloat(data[0].grand_total);
+                }
               })
               setTotalSales(total);
           }).then(function (error) {
