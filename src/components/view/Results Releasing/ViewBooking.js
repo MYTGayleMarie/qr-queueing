@@ -44,7 +44,7 @@ export default function ViewBooking() {
   const {id} = useParams();
 
   // search bar
-  const [bookingId, setBookingId] = useState("");
+  const [bookingId, setBookingId] = useState(id);
   const [search, setSearch] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -77,7 +77,7 @@ export default function ViewBooking() {
       }
     })
     .then((response)=>{
-      console.log(response)
+      // console.log(response)
       const customerId=response.data.data.booking.customer_id;
       axios({
         method: 'post',
@@ -125,7 +125,7 @@ export default function ViewBooking() {
       }
     })
     .then((booking)=>{
-      console.log(booking)
+      // console.log(booking)
       setServices(booking.data)
     })
     .catch((error)=>{console.log(error)})
@@ -203,11 +203,13 @@ export default function ViewBooking() {
                 else {
                   serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
                 }
+                
               serviceDetails.category = category.data.name;
               serviceDetails.name = packageCat.lab_test;
               serviceDetails.type = "package";
               serviceDetails.id = packageCat.id;
               serviceDetails.packageId = info.id
+              // serviceDetails.md = 
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
 
@@ -219,6 +221,7 @@ export default function ViewBooking() {
         .catch((error)=>{console.log(error)})
       }
       // if service is lab test
+     
       else {
         axios({
           method: 'post',
@@ -238,11 +241,13 @@ export default function ViewBooking() {
           else {
               serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
           }
+          console.log(info)
           serviceDetails.category = category.data.name;
           serviceDetails.name = info.lab_test;
           serviceDetails.type = "lab";
           serviceDetails.packageId = "0";
           serviceDetails.id = info.id;
+          serviceDetails.md = info.md;
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
         .catch((error)=>{
@@ -253,12 +258,13 @@ export default function ViewBooking() {
     
   },[services])
 
+
   // Categorize lab test
   const xray = labTests.filter((info)=>info.key==="xray"||info.key==="cardiology"||info.key==="radiology")
 
   const hematology = labTests.filter((info)=>info.key==="hematology")
 
-  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="thyroid_profile"||info.key==="tumor_markers"||info.key==="hepatitis_profile_screening"||info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests")
+  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="thyroid_profile"||info.key==="tumor_markers"||info.key==="hepatitis_profile_screening"||info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
 
   const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis")
 
