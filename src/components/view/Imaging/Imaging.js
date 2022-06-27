@@ -66,7 +66,7 @@ function Imaging() {
                 },
               })
                 .then(function (customer) {
-                  console.log(customer)
+                  // console.log(customer)
                   var formatBookingTime = new Date(customer.data.birthdate);
                   var bookingDetails = {};
                   bookingDetails.id = booking.id;

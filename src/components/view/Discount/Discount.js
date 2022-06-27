@@ -51,7 +51,7 @@ function Discount() {
               requester: userId,
           }
       }).then(function (response) {
-          console.log(response);
+          // console.log(response);
 
           response.data.discounts.map((data,index) => {
               var info = {};
@@ -78,7 +78,7 @@ function Discount() {
               requester: userId,
           }
       }).then(function (response) {
-          console.log(response);
+          // console.log(response);
 
           response.data.discounts.filter((info) => info.company_id == null).map((data,index) => {
               var info = {};

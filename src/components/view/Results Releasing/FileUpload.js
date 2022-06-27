@@ -4,8 +4,10 @@ import { Navigate } from 'react-router-dom';
 import { getToken, getUser, refreshPage } from '../../../utilities/Common';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
+import "./FileUpload.css"
 
 const userToken = getToken();
 const userId = getUser();
@@ -19,6 +21,11 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [withResults, setWithResults] = useState(false);
   const [redirectPdf, setRedirectPdf] = useState(false);
   const [upload, setUpload] = useState(false);
+
+  // md
+  const [doctorName, setDoctorName] = useState("")
+  const [withMD, setWithMD] = useState(false)
+  const [MDReadOnly, setMDReadOnly] = useState(false)
   
   // Base64 file
   const [file, setFile] = useState("")
@@ -67,12 +74,19 @@ export default function FileUpload({servicesData, title, bookingId}){
       // console.log(lab)
       const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
       // console.log(labDetail)
-      if (labDetail[0].result_id>0){
+      if (labDetail[0].file){
         setWithResults(true)
+      }
+      // Check if there is md already
+      if (labDetail[0].md){
+        setWithMD(true)
+        setMDReadOnly(true)
+        setDoctorName(labDetail[0].md)
       }
     })
     .catch((error)=>{console.log(error)})
   }
+
   // Type is package
   if(servicesData[0].type=="package"){
     axios({
@@ -89,8 +103,14 @@ export default function FileUpload({servicesData, title, bookingId}){
       // console.log(packages)
       const packageDetail = packages.data.filter((details)=>details.id==servicesData[0].id)
       // console.log(packageDetail)
-      if (packageDetail[0].result_id>0){
+      // check if naa nay result
+      if (packageDetail[0].file){
         setWithResults(true)
+      }
+      if (packageDetail[0].md){
+        setWithMD(true)
+        setMDReadOnly(true)
+        setDoctorName(packageDetail[0].md)
       }
     })
     .catch((error)=>{console.log(error)})
@@ -205,6 +225,70 @@ export default function FileUpload({servicesData, title, bookingId}){
   function handleViewResults(){
     setRedirectPdf(true)
   }
+  // Handle md
+  function submitMD(){
+    servicesData.map(async (data, index)=>{
+      // console.log(data)
+      if(data.type==="lab"){
+      await axios({
+          method: 'post',
+          url: window.$link + 'Bookingdetails/update/'+data.id ,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              updated_by: userId,
+              test_start: "",
+              test_finish: "",
+              md: doctorName,
+          }
+      })
+      .then(()=>{
+        toast.success("MD updated successfully!")
+        setTimeout(()=>{
+          refreshPage()
+        }, 3000)
+      })
+      .catch((error)=>{
+        toast.error("Error updating MD!")
+        console.log(error)
+      })
+      } 
+      else if (data.type==="package")      {
+        await axios({
+          method: 'post',
+          url: window.$link + 'Bookingpackage_details/update/'+data.id ,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              updated_by: userId,
+              test_start: "",
+              test_finish: "",
+              md: doctorName,
+          }
+      })
+      .then(()=>{
+        toast.success("MD updated successfully!")
+        setTimeout(()=>{
+          refreshPage()
+        }, 3000)
+      })
+      .catch((error)=>{
+        toast.error("Error updating MD!")
+        console.log(error)
+      })
+      }
+
+    })
+  }
+
+  const [showEdit, setShowEdit] = useState(false)
+  function editMD(){
+    setMDReadOnly(false)
+    setShowEdit(true)
+    // console.log("Edit" + doctorName)
+  }
 
     // Redirect to view pdf results
   if(redirectPdf==true){
@@ -220,6 +304,7 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   return(
     <div>
+      <ToastContainer />
       <div className="result-cont row">
           <div className="col-sm-4">
             <div className="category label">{title}</div>
@@ -229,6 +314,7 @@ export default function FileUpload({servicesData, title, bookingId}){
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
+            <div>
             <input 
                 ref={inputRef} 
                 type="file"                
@@ -249,13 +335,13 @@ export default function FileUpload({servicesData, title, bookingId}){
                 <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
                 <button className="submit-btn" onClick={submitPdf}>SAVE</button>
 
-                <div className='row more-gap'>
+                {/* <div className='row more-gap'>
                 
                 <div className='col-sm-12 d-flex justify-content-end'>
                     <span className='md-label'>MD :</span>
                     <input name="md" className='md-input' onChange={(e) => setMd(e.target.value)}/>
                 </div>
-            </div>
+                </div> */}
 
               </div>)}
             
@@ -263,9 +349,40 @@ export default function FileUpload({servicesData, title, bookingId}){
             {withResults && (
               <button className="upload-res-btn blue" onClick={handleViewResults}>VIEW RESULTS</button>
             )}
+            </div>
+            <br/>
+            
+            {!showEdit && <div className="md-row"> 
+            <h3 className="md-label label">MD: </h3>
+            <input 
+            type="text"
+            className="form-control full md-input"
+            value={doctorName}
+            onChange={e=>setDoctorName(e.target.value)}
+            readOnly={MDReadOnly}
+            />
+            {!withMD && <button className="submit-btn md-button" onClick={submitMD} disabled={doctorName? false:true}>Save</button>}
+            {withMD && <button className="submit-btn md-button" onClick={editMD}>Edit</button>}
+            </div>}
+
+          
+
+            {showEdit && <div className="md-row"> 
+            <h3 className="md-label label">MD: </h3>
+            <input 
+            type="text"
+            className="form-control full md-input"
+            value={doctorName}
+            onChange={e=>setDoctorName(e.target.value)}
+            />
+            <button className="submit-btn md-button" onClick={submitMD} disabled={doctorName? false:true}>Save</button>
+            </div>}
+
               
-          </div>          
+          </div>  
+                  
       </div>
+      
     </div>
   )
 

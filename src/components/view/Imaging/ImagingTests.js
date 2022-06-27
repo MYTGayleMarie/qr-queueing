@@ -92,9 +92,9 @@ function ImagingTests() {
 
      const updateImaging = () => {
         ImagingInfo.map((row, index) => {
-            console.log(row);
-            console.log(row.type == "lab");
-            console.log(row.type == "package");
+            // console.log(row);
+            // console.log(row.type == "lab");
+            // console.log(row.type == "package");
             if(row.type == "lab") {
                 axios({
                     method: 'post',
@@ -109,7 +109,7 @@ function ImagingTests() {
                         updated_by: userId,
                     }
                 }).then(function (response) {
-                    console.log(response.data);
+                    // console.log(response.data);
                 }).catch(function (error) {
                     console.log(error);
                     toast.error("Oops! Something went wrong...");
@@ -129,7 +129,7 @@ function ImagingTests() {
                         updated_by: userId,
                     }
                 }).then(function (response) {
-                   console.log(response);
+                  //  console.log(response);
                 
                 }).catch(function (error) {
                     console.log(error);
@@ -148,11 +148,11 @@ function ImagingTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking);
+            // console.log(booking);
             setPendingLab(booking.data.data.booking_details.filter((info) => info.type == "lab" && info.status != "for examination"));
             setPendingPack(booking.data.data.booking_package_details);
 
-            console.log(pendingLab);
+            // console.log(pendingLab);
             var mergedArray = [].concat.apply([], Object.entries(booking.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
             const finalArray = mergedArray[0];
             setPendingPackServices(finalArray.filter((info) => info.category_id == xrayId && info.status != "for examination"));
@@ -225,7 +225,7 @@ function ImagingTests() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking.data.data.booking_details);
+            // console.log(booking.data.data.booking_details);
             setPackages(booking.data.data.booking_package_details);
             setServices(booking.data.data.booking_details.filter((info) => info.type != "package" && info.category_id == xrayId && info.status != "for examination"));
 
@@ -312,7 +312,7 @@ function ImagingTests() {
         );
     });
 
-    console.log(ImagingInfo);
+    // console.log(ImagingInfo);
    
 
 

@@ -85,7 +85,7 @@ function DeleteBooking() {
                     requester: userId,
                 }
             }).then(function (customer) {
-                console.log(customer)
+                // console.log(customer)
                 var presentDate = new Date();
                 var birthDate = new Date(customer.data.birthdate);
                 const age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -131,7 +131,7 @@ function DeleteBooking() {
                     requester: userId,
                 }
             }).then(function (booking) {      
-                console.log(booking)      
+                // console.log(booking)      
                 setServices(booking.data);
                 setBookingDetailsId(booking.data[0].id)
             }).catch(function (error) {
@@ -148,7 +148,7 @@ function DeleteBooking() {
                     requester: userId,
                 }
             }).then(function (response) {      
-                console.log(response) 
+                // console.log(response) 
             }).catch(function (error) {
                 console.log(error);
             });
@@ -157,7 +157,7 @@ function DeleteBooking() {
     
 
     function handleDelete(){
-      console.log("delete "+id)
+      // console.log("delete "+id)
       axios({
                 method: 'post',
                 url: window.$link + 'bookings/delete/' + id,
@@ -168,7 +168,7 @@ function DeleteBooking() {
                     updated_by: userId,
                 }
             }).then(function (booking) {      
-                console.log(booking) 
+                // console.log(booking) 
                 toast.success("Booking successfully deleted!");
                 setTimeout(function () {
                     setRedirect(true);

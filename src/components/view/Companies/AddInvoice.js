@@ -168,7 +168,7 @@ function AddInvoice() {
   function addInvoice() {
     if(isClicked == false) {
       setIsClicked(true);
-      console.log(isClicked)
+      // console.log(isClicked)
       axios({
         method: 'post',
         url: window.$link + 'Company_invoices/create',
@@ -185,7 +185,7 @@ function AddInvoice() {
             added_by: userId,
         }
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         toast.success("Successfully added invoice!");
           setTimeout(function() {
             setRedirect(true);

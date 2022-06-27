@@ -689,7 +689,7 @@ function AddInvoicePayment() {
             emailed_to: email,
         }
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
       });
   }
 

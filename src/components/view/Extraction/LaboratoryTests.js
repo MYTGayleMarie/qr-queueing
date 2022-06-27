@@ -129,7 +129,7 @@ function LaboratoryTests() {
                         updated_by: userId,
                     }
                 }).then(function (response) {
-                   console.log(response.data);
+                  //  console.log(response.data);
                 
                 }).catch(function (error) {
                     console.log(error);
