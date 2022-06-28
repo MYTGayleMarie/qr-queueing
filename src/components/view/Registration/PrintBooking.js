@@ -70,7 +70,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            // console.log(response)
+            console.log(response)
             // console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
@@ -424,6 +424,7 @@ function PrintBooking() {
                         queue={queueNumber}
                         isCompany={true}
                         discountCode={discountCode}
+                        grandTotal={grandTotal}
                     />
             </div>
 

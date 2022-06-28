@@ -387,113 +387,12 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
+            console.log(booking)
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
         });
     }
-    // React.useEffect(()=>{
-    //     chargeSlip.length=0;
-    //     axios({
-    //       method: 'post',
-    //       url: window.$link + 'bookings/getAllByDiscountCode',
-    //       withCredentials: false, 
-    //       params: {
-    //           api_key: window.$api_key,
-    //           token: userToken.replace(/['"]+/g, ''),
-    //           discount_code: discountCode,
-    //           requester: userId,
-    
-    //       }
-    //     }).then((response)=>{
-    //       console.log(response)
-    //       var dataLength = response.data.data.particulars.length;
-    //         response.data.data.particulars.map((data, index)=>{
-    //           // Get Booking Details
-    //           axios({
-    //             method: 'post',
-    //             url: window.$link + 'bookings/getDetails/'+data.id,
-    //             withCredentials: false, 
-    //             params: {
-    //                 api_key: window.$api_key,
-    //                 token: userToken.replace(/['"]+/g, ''),
-    //                 requester: userId,
-    //             }
-    //           }).then((response)=>{
-    //             var booking = response.data.data.booking;
-    //             var bookingDetails = response.data.data.booking_details;
-    //             var info ={};
-    //             var date = new Date(booking.booking_time);
-    //             var formattedDate = date.toDateString().split(" ");
-    //             info.patient_name = booking.customer;
-    //             info.transaction_no = booking.id;
-    //             info.patient_address = booking.customer_address;
-    //             info.patient_contact = booking.contact_no;
-    //             info.patient_email = booking.customer_email;
-    //             info.discount_code = booking.discount_code;
-    //             info.date =  formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-    //             info.doctors_referal = booking.doctors_referal;
-    //             info.lab_tests = [];
-    //             const lab_test = groupArrayOfObjects(bookingDetails, "lab_test")
-    //             delete lab_test["null"]
-    //             Object.keys(lab_test).map((data, index)=>{
-    //               var test = {};
-    //               test.service = data
-    //               test.qty = lab_test[data].length
-    //               test.total = lab_test[data].length*lab_test[data][0].price
-    //               info.lab_tests.push(test)
-    //             })
-    //             info.packages = [];
-    //             const packages = groupArrayOfObjects(bookingDetails, "package")
-    //             // console.log(packages)
-    //             delete packages["null"]
-    //             Object.keys(packages).map((data, index)=>{
-    //               var test = {};
-    //               test.name=data;
-    //               test.service = "";
-    //               axios({
-    //                 method: 'post',
-    //                 url: window.$link + 'bookings/getBookingPackageDetails/' + packages[data][0].id,
-    //                 withCredentials: false, 
-    //                 params: {
-    //                     api_key: window.$api_key,
-    //                     token: userToken.replace(/['"]+/g, ''),
-    //                     requester: userId,
-    //                   }
-    //               }).then((response)=>{
-    //                 response.data.map((data, index)=>{
-    //                   if(response.data.length-1==0){
-    //                     test.service += data.lab_test;
-    //                   } else {
-    //                     test.service += data.lab_test +", ";
-    //                   }
-    //                 })
-    //               }).catch((err)=>{console.log(err)})
-    //               test.qty = packages[data].length;
-    //               test.total = packages[data].length * packages[data][0].price;
-    //               info.packages.push(test)
-    //             })
-                
-    //             info.total = booking.total_amount
-    //             info.discount = booking.discount
-    //             info.grand_total = booking.grand_total
-    //             setChargeSlip(oldArray=>[...oldArray, info]);
-    //             console.log(info + index)      
-    //             if(dataLength-1 == index){
-    //               setTimeout(
-    //                 setChargeSlipReady(true)
-    //                 ,5000
-    //               )
-    //             }   
-    //           })
-    //           .catch((err)=>{console.log(err)})
-    
-    //         })
-    //     }).catch((error)=>{
-    //       console.log(error)
-    //     })
-    //   },[discountCode])
-
 
     function showAvailableLab() {
         const labServices = getAllLabServices();

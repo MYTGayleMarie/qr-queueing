@@ -500,7 +500,14 @@ export class PaymentToPrint extends React.PureComponent {
                                 <td><span className="header">Physician: </span><span className="detail-print">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
                                 <td><span className="header">Discount Code: </span><span className="detail-print">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
                             </tr>
+                            <tr>
+                                <td><span className="header">GRAND TOTAL: </span><span className="detail-print">P {this.props.grandTotal}</span></td>
+                            </tr>
                         </table>
+                        <div className='row'>
+                                <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                                <span className="encoded-on">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
+                        </div>
             </div>
         </div>
     </div>
