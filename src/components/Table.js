@@ -24,7 +24,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     } else if(breakOn === 'large') {
         tableClass += ' table-container_table--break-lg';
     }
-    // console.log(tableData)
+
     const data = slice.map((row, index) => {
 
         let rowData = [];

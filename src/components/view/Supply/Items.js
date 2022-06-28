@@ -169,8 +169,7 @@ function Items() {
                         </button>
                     </div>
                 </div>
-            <br/>
-            <br/>
+ 
             <Table
                 type={'items'}
                 clickable={true}
