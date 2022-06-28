@@ -22,6 +22,13 @@ const presentDate = new Date();
 const userToken = getToken();
 const userId = getUser();
 
+function groupArrayOfObjects(list, key) {
+    return list.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
+  };
+
 function PrintBooking() {
     document.body.style = 'background: white;';
 
@@ -33,6 +40,8 @@ function PrintBooking() {
        const [remarks, setRemarks] = useState("");
        const [discount, setDiscount] = useState(0);
        const [encodedOn, setEncodedOn] = useState("");
+       const [labTests, setLabTests] = useState([])
+       const [packages, setPackages] = useState([])
 
        //customer details
        const {id} = useParams();
@@ -138,10 +147,7 @@ function PrintBooking() {
                 }) 
             } else {
                 setCompanyCode("None");
-            }
-
-
-            
+            }          
 
         
         }).catch(function (error) {
@@ -178,11 +184,19 @@ function PrintBooking() {
                 console.log(error);
             });
         }, []);
-    
+
         React.useEffect(() => {
             printServices.length = 0;
+            labTests.length=0
+            packages.length=0
             services.map((info, index1) => {
-                if(info.category_id == null) {
+              let packageInfo = {}
+              packageInfo.name= info.package
+              packageInfo.qty = "1"
+              packageInfo.price = info.price
+              packageInfo.details = ""
+              // console.log(info)
+                if(info.type=== "package") {
                     axios({
                         method: 'post',
                         url: window.$link + 'bookings/getBookingPackageDetails/' + info.id,
@@ -194,9 +208,15 @@ function PrintBooking() {
                         }
                     }).then(function (response) {
                         // console.log(response)
-                                                
                         
                         response.data.map((packageCat, index2) => {
+                        console.log(packageCat)
+                        if(index2<response.data.length-1){
+                          packageInfo.details+=packageCat.lab_test+", "
+                        } else {
+                          packageInfo.details+=packageCat.lab_test
+                        }
+                        
                             var serviceDetails = {};
                             axios({
                                 method: 'post',
@@ -218,6 +238,8 @@ function PrintBooking() {
                                 serviceDetails.category = category.data.name;
                                 serviceDetails.name = packageCat.lab_test;
                                 setPrintServices(oldArray => [...oldArray, serviceDetails]);
+
+                                
 
                                 if(services.length - 1 == index1 && response.data.length - 1 == index2) {
                                     setPrintReadyFinal(true);
@@ -248,7 +270,9 @@ function PrintBooking() {
                         }
                         serviceDetails.category = category.data.name;
                         serviceDetails.name = info.lab_test;
+                        let labTest={name:info.lab_test, qty:"1", price:info.price}
                         setPrintServices(oldArray => [...oldArray, serviceDetails]);
+                        setLabTests(prev=>[...prev, labTest])
                     }).catch(function (error) {
                         console.log(error);
                     })
@@ -257,10 +281,11 @@ function PrintBooking() {
                         setPrintReadyFinal(true);
                     }
                 }
+              setPackages(prev=>[...prev, packageInfo])
             });
         },[services]);
-
-   
+console.log(labTests)
+console.log(packages)
 
         React.useEffect(() => {
             var presentDate = new Date();
@@ -312,7 +337,16 @@ function PrintBooking() {
         const handlePrint = useReactToPrint({
           onAfterPrint: handleRedirect,
           content: () => componentRef.current,
-          pageStyle: () => "@page { size: letter;}"
+          pageStyle: () => `
+          @page { size: letter;}
+          @media print {
+            .print-row {
+              margin-top: 1rem;
+              display: block;
+              page-break-before: always;
+            }
+          }
+          `,
     
         });
 
@@ -408,6 +442,7 @@ function PrintBooking() {
                 style={{ display: "none" }}// This make ComponentToPrint show   only while printing
             > 
                     <PaymentToPrint 
+                        bookingID={id}
                         ref={componentRef} 
                         patientId = {patientId}
                         name={lastName + ", " + firstName + " " + middleName}
@@ -425,6 +460,8 @@ function PrintBooking() {
                         isCompany={true}
                         discountCode={discountCode}
                         grandTotal={grandTotal}
+                        labTests={labTests}
+                        packages = {packages}
                     />
             </div>
 

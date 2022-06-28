@@ -133,7 +133,7 @@
 }
 
 .request-header {
-    font-size: 10px !important;
+    font-size: 10px ;
     margin-top: 1%;
 }
 
@@ -171,8 +171,39 @@
     vertical-align: top;
     border: 1px solid black;
  }
- 
-
-
-
+ .slip-span{
+  font-size: 6px !important;
+  margin-top:0 !important;
+ }
+.charge-slip{
+  padding-left:3%;
+  /* float:left; */
+  width:50%;
+  height:fit-content;
+}
+.claim-stub{
+  /* float:right; */
+  margin:0px !important;
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  height:50% !important;
+  /* width:fit-content !important; */
+  /* border:1px solid red; */
+  /* width:10rem !important; */
+  /* height:50% !important; */
+}
+.row-column{
+  display:flex;
+  width:50%;
+  /* border:1px solid red; */
+}
+.small-logo{
+  width:30px !important;
+  height:15px !important;
+  margin-left: -2.7%
+}
+.charge-slip-table{
+  width:100%;
+  padding-left:2%;
+}
 

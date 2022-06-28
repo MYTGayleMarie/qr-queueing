@@ -1,22 +1,22 @@
 .to-right {
   margin-left: 2%;
   margin-top: 3%;
-  font-size: 8px !important;
+  font-size: 8px;
 }
 
 .print-column {
   color:black;
 }
 .slip-title {
-  font-size:8px !important;
+  font-size:8px ;
 }
 .slip-label {
   margin-top: 0.5px;
-  font-size: 8px !important;
+  font-size: 8px ;
 }
 
 .slip-detail {
-  font-size: 8px !important;
+  font-size: 8px ;
   font-weight: 600;
   margin-left: 3px;
 }
