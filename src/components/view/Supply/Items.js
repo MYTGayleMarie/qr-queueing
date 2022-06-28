@@ -45,6 +45,7 @@ function Items() {
     document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [items, setItems] = useState([]);
+    const [displayItems, setDisplayItems] = useState([])
     const [inventoryItem, setInventoryItem] = useState("");
     const [inventoryQty, setInventoryQty] = useState("");
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -69,7 +70,7 @@ function Items() {
             requester: userId,
           },
         }).then(function (response) {
-            console.log(response.data.items);
+            // console.log(response.data.items);
             response.data.items.map((data,index) => {
                 var item = {};
                 item.id = data.item_id;
@@ -81,6 +82,7 @@ function Items() {
                 item.remarks = data.remarks;
 
                 setItems(oldArray => [...oldArray, item]);
+                // setDisplayItems(oldArray => [...oldArray, item]);
             });
             
         }).catch(function (error) {
@@ -88,7 +90,44 @@ function Items() {
         });
     },[]);
 
-    console.log(id);
+
+    // search function
+
+    const [searchName, setSearchName] = useState("")
+    const [searchItem, setSearchItem] = useState(true)
+    // function searchItem(){
+    //   console.log(searchName)
+    // }
+    console.log(searchName)
+    
+    // I use useeffect para no need to call api request everytime naa isearch na items
+    React.useEffect(()=>{
+    setDisplayItems([])
+      // if wala ray gi search, displayed items will be all the items na na call sa api
+      if(searchName===""||searchName===" "){
+        setDisplayItems(items.filter(info=>info.item_name!==null || info.item_name==="") )
+      } 
+      // else, search item using regex
+      else {
+        // store items to temporary variable para complete gihapon ang tanan items, but filter out null ang name
+        let tempItems = items.filter(info=>info.item_name!==null || info.item_name==="" )
+        // console.log(tempItems)
+        // Create regex using the searched word, lowercase para dili case sensitive ig search
+        let searchWord = new RegExp(searchName.toLowerCase())
+
+        // filter the temporary items to match the regex, replace double spaces if naa with single space, and transform to lowercase
+
+        let filteredItems = tempItems.filter(info => searchWord.test(info.item_name.replace(/\s\s+/g, ' ').toLowerCase()))
+
+        // display filtered Items
+        setDisplayItems(filteredItems)
+      }
+
+    }, [items, searchName])
+
+    console.log(displayItems)
+    console.log(items)
+
     function update(itemId,itemUnit) {
         id = itemId;
         unit = itemUnit;
@@ -114,24 +153,36 @@ function Items() {
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='ITEMS'/>
+            <Searchbar title='ITEMS' />
             <Header 
                 type='thick'
                 title='ITEM MANAGER' 
                 buttons={buttons} 
                 addInventory={handleShow}
             />
-            {console.log(update)}
+            <br/>
+            <div class="wrap d-flex justify-content-center">
+                    <div class="search-bar">
+                        <input type="text" class="searchTerm" name="itemName" placeholder="Search Item" onChange={e=>setSearchName(e.target.value)}/>
+                        <button type="submit" class="searchButton" onClick={e=>setSearchItem(prev=>!prev)} >
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            <br/>
+            <br/>
             <Table
                 type={'items'}
                 clickable={true}
-                tableData={items.sort((a,b) => (a.item_name > b.item_name) ? 1 : ((b.item_name > a.item_name) ? -1 : 0))}
+                tableData={displayItems.sort((a,b) => (a.item_name > b.item_name) ? 1 : ((b.item_name > a.item_name) ? -1 : 0))}
                 rowsPerPage={10}
                 headingColumns={['ITEM ID', 'ITEM NAME', 'ITEM DESCRIPTION','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter} 
                 link={update}
             />
+            <br />
+            <br />
             </Fragment>
 
             <Modal show={show} onHide={handleClose} size="md">

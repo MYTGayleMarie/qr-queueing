@@ -25,6 +25,7 @@ function UpdateSupplyItems() {
 
     //current info
     const [name, setName] = useState("");
+    const [labTestQty, setLabTestQty] = useState("");
     const [cost, setCost] = useState("");
     const [balance, setBalance] = useState("");
     const [remarks, setRemarks] = useState("");
@@ -131,16 +132,22 @@ function UpdateSupplyItems() {
                         <div className="col-sm-1">
                             <input disabled type="text" name="item_unit" className="unit-input" value={item_unit} onChange={(e) => setUnit(e.target.value)}/>
                         </div>
+                        <div className="col-sm-2">
+                            <span className="item-name-label">LAB TEST QTY</span>
+                        </div>
+                        <div className="col-sm-1">
+                            <input type="number" name="item_lab_test_qty" className="beginning-balance-input" value={labTestQty} onChange={(e) => setLabTestQty(e.target.value)}/>
+                        </div>
                         <div className="col-sm-1">
                             <span className="item-name-label">COST</span>
                         </div>
-                        <div className="col-sm-2">
+                        <div className="col-sm-1">
                             <input type="number" name="item_cost" className="beginning-balance-input" value={cost} onChange={(e) => setCost(e.target.value)}/>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                             <span className="beginning-balance-label">BEGINNING BALANCE </span>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-1">
                             <input type="number" name="item_balance" className="beginning-balance-input" value={balance} onChange={(e) => setBalance(e.target.value)}/>
                         </div>
                     </div>

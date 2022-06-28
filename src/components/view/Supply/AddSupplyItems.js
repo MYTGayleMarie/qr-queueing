@@ -25,6 +25,7 @@ function AddSupplyItems() {
     //states
     const itemInfo = {
         item_name: "",
+        item_lab_test_qty: "",
         item_cost: "",
         item_unit: "",
         item_balance: "",
@@ -36,7 +37,7 @@ function AddSupplyItems() {
 
     //redirection
     const [redirect, setRedirect] = useState(false); 
-
+console.log(item)
     //API submit call
     function submit(e, info) {
         e.preventDefault();
@@ -102,16 +103,21 @@ function AddSupplyItems() {
                         <div className="col-sm-1">
                             <input type="text" name="item_unit" className="beginning-balance-input" onChange={setItem}/>
                         </div>
+                        <div className="col-sm-2">
+                            <span className="item-name-label">LAB TEST QTY</span>
+                        </div>
                         <div className="col-sm-1">
+                            <input type="number" name="item_lab_test_qty" className="beginning-balance-input" onChange={setItem}/>
+                        </div> <div className="col-sm-1">
                             <span className="item-name-label">COST</span>
                         </div>
-                        <div className="col-sm-2">
+                        <div className="col-sm-1">
                             <input type="number" name="item_cost" className="beginning-balance-input" onChange={setItem}/>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                             <span className="beginning-balance-label">BEGINNING BALANCE </span>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-1">
                             <input type="number" name="item_balance" className="beginning-balance-input" onChange={setItem}/>
                         </div>
                     </div>
