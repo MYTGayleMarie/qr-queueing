@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, {Component} from 'react'
+import {render} from 'react-dom'
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import { withRouter } from "react-router";
@@ -36,6 +37,7 @@ export class PaymentToPrint extends React.PureComponent {
         var formattedDate = date.toDateString().split(" ");
         var dateTime = formattedDate[1]+" "+formattedDate[2]+" "+formattedDate[3]+" "+getTime(presentDate)
 
+       
         var groupedServices = groupArrayOfObjects(this.props.services,"key");
 
 
@@ -251,6 +253,7 @@ export class PaymentToPrint extends React.PureComponent {
         });
 
 
+
         const services_Others = Object.keys(groupedServices).map(function(key) {
             var category_name = key.replace(/_/g, " ").toUpperCase();
             var category_services = "";
@@ -440,6 +443,9 @@ export class PaymentToPrint extends React.PureComponent {
             return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`;
         };
 
+
+
+
       return (
         <div>
         <style>{getPageMargins()}</style>
@@ -479,7 +485,7 @@ export class PaymentToPrint extends React.PureComponent {
             
             <div className="row-column ">
               {/* Charge slip */}
-            {this.props.discountCode&&<div className="print-column m-0 charge-slip">
+            {this.props.discountCode&&<div className="m-0 charge-slip" id="charge-slip">
               <div class="d-flex justify-content-left">
                   <img src={logo} alt={'logo'} class="small-logo"></img>
                   <span className="to-right slip-span">Quest and Reliance Diagnostics</span>
@@ -554,7 +560,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </tbody>
                 </table> 
               </div>
-              <div className="row mt-2 p-0 mb-2">
+              <div className="row charge-slip-footer  mb-2">
                 <table>
                   <tr>
                     <td className="slip-label slip-span" width="40%">Requested By:</td>
@@ -582,45 +588,52 @@ export class PaymentToPrint extends React.PureComponent {
             </div>}
 
             {/* Claim Stub */}
-            <div className="print-column claim-stub"> 
-                        <div class="d-flex justify-content-left">
-                            <img src={logo} alt={'logo'} class="small-logo"></img>
-                            <span className="to-right request-header slip-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
-                        </div>
-                        <table>
-                            <tr>
-                                <td className="print-data-header"><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                                <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td><span className="header slip-span">DOB: </span><span className="detail-print slip-span">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                                <td><span className="header slip-span">Age: </span><span className="detail-print slip-span">{this.props.age}</span></td>
-                                <td><span className="header slip-span">Gender:</span><span className="detail-print slip-span">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
-                                <td className="print-data-contact"><span className="header slip-span">Contact: </span><span className="detail-print slip-span">{this.props.contact}</span></td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td><span className="header slip-span">Email: </span><span className="detail-print slip-span">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                                <td><span className="header slip-span">Address: </span><span className="detail-print slip-span">{this.props.address}</span></td>
-                            </tr >
-                            <tr>
-                                <td><span className="header slip-span">Physician: </span><span className="detail-print slip-span">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
-                                <td><span className="header slip-span">Discount Code: </span><span className="detail-print slip-span">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
-                            </tr>
-                            <tr>
-                                <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print slip-span">P {this.props.grandTotal}</span></td>
-                            </tr>
-                        </table>
-                        <div className='row'>
-                                <span className="encoded-on slip-span">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                                <span className="encoded-on slip-span">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
-                        </div>
+            <div className="claim-stub-container">
+              <div className="claim-stub-outer">
+                <div className="claim-stub-inner">
+                  <div className="claim-stub-rotate"> 
+                              <div class="d-flex justify-content-left">
+                                  <img src={logo} alt={'logo'} class="small-logo"></img>
+                                  <span className="to-right request-header slip-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
+                              </div>
+                              <table>
+                                  <tr>
+                                      <td className="print-data-header"><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
+                                      <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
+                                  </tr>
+                              </table>
+                              <table>
+                                  <tr>
+                                      <td><span className="header slip-span">DOB: </span><span className="detail-print slip-span">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
+                                      <td><span className="header slip-span">Age: </span><span className="detail-print slip-span">{this.props.age}</span></td>
+                                      <td><span className="header slip-span">Gender:</span><span className="detail-print slip-span">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
+                                      <td className="print-data-contact"><span className="header slip-span">Contact: </span><span className="detail-print slip-span">{this.props.contact}</span></td>
+                                  </tr>
+                              </table>
+                              <table>
+                                  <tr>
+                                      <td><span className="header slip-span">Email: </span><span className="detail-print slip-span">{this.props.email == null ? "NONE" : this.props.email} </span></td>
+                                      <td><span className="header slip-span">Address: </span><span className="detail-print slip-span">{this.props.address}</span></td>
+                                  </tr >
+                                  <tr>
+                                      <td><span className="header slip-span">Physician: </span><span className="detail-print slip-span">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                                      <td><span className="header slip-span">Discount Code: </span><span className="detail-print slip-span">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
+                                  </tr>
+                                  <tr>
+                                      <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print slip-span">P {this.props.grandTotal}</span></td>
+                                  </tr>
+                              </table>
+                              <div className='row'>
+                                      <span className="encoded-on slip-span">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                                      <span className="encoded-on slip-span">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
+                              </div>
+                  
+                  
+                  
+                  </div>
+                </div>
+              </div>          
             </div>
-
-            
             </div>
         </div>
     </div>
