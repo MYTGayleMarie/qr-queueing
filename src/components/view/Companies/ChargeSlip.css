@@ -12,13 +12,13 @@
 }
 .slip-label {
   margin-top: 0.5px;
-  font-size: 8px ;
+  font-size: 10px ;
 }
 
 .slip-detail {
   font-size: 8px ;
   font-weight: 600;
-  margin-left: 3px;
+  margin-left: 10px;
 }
 .slip-header{
   margin:0px;
@@ -36,8 +36,8 @@
   margin-left: 5px;
 }
 .slip-logo {
-  width: 70px;
-  height: 35px;
+  width: 90px;
+  height: 45px;
   margin-left: -2.7%;
 } 
 

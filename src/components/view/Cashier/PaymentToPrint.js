@@ -593,34 +593,35 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="claim-stub-inner">
                   <div className="claim-stub-rotate"> 
                               <div class="d-flex justify-content-left">
-                                  <img src={logo} alt={'logo'} class="small-logo"></img>
-                                  <span className="to-right request-header slip-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
+                                  <img src={logo} alt={'logo'} class="large-logo"></img>
+                                  <span className="to-right request-header claim-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
                               </div>
                               <table>
                                   <tr>
-                                      <td className="print-data-header"><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
+                                      <td><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                                       <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
+                                      <td><span className="header slip-span">Address: </span><span className="detail-print slip-span">{this.props.address}</span></td>
+                                      <td><span className="header slip-span">Email: </span><span className="detail-print slip-span">{this.props.email == null ? "NONE" : this.props.email}</span></td>
+                                  </tr>
+                                  <tr>
+                                    
                                   </tr>
                               </table>
                               <table>
                                   <tr>
                                       <td><span className="header slip-span">DOB: </span><span className="detail-print slip-span">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
                                       <td><span className="header slip-span">Age: </span><span className="detail-print slip-span">{this.props.age}</span></td>
-                                      <td><span className="header slip-span">Gender:</span><span className="detail-print slip-span">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
+                                      <td><span className="header slip-span">Gender: </span><span className="detail-print slip-span">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
                                       <td className="print-data-contact"><span className="header slip-span">Contact: </span><span className="detail-print slip-span">{this.props.contact}</span></td>
                                   </tr>
                               </table>
                               <table>
                                   <tr>
-                                      <td><span className="header slip-span">Email: </span><span className="detail-print slip-span">{this.props.email == null ? "NONE" : this.props.email} </span></td>
-                                      <td><span className="header slip-span">Address: </span><span className="detail-print slip-span">{this.props.address}</span></td>
-                                  </tr >
-                                  <tr>
-                                      <td><span className="header slip-span">Physician: </span><span className="detail-print slip-span">{this.props.referral == null ? "NONE" : this.props.referral} </span></td>
+                                      <td><span className="header slip-span">Physician: </span><span className="detail-print slip-span">{this.props.referral == null ? "NONE" : this.props.referral}</span></td>
                                       <td><span className="header slip-span">Discount Code: </span><span className="detail-print slip-span">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
                                   </tr>
                                   <tr>
-                                      <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print slip-span">P {this.props.grandTotal}</span></td>
+                                      <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print bold-slip-span">P {this.props.grandTotal}</span></td>
                                   </tr>
                               </table>
                               <div className='row'>
