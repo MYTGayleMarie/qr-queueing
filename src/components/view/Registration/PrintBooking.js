@@ -79,7 +79,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
+            // console.log(response)
             // console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
@@ -190,13 +190,14 @@ function PrintBooking() {
             labTests.length=0
             packages.length=0
             services.map((info, index1) => {
-              let packageInfo = {}
-              packageInfo.name= info.package
-              packageInfo.qty = "1"
-              packageInfo.price = info.price
-              packageInfo.details = ""
+              
               // console.log(info)
                 if(info.type=== "package") {
+                  let packageInfo = {}
+                  packageInfo.name= info.package
+                  packageInfo.qty = "1"
+                  packageInfo.price = info.price
+                  packageInfo.details = ""
                     axios({
                         method: 'post',
                         url: window.$link + 'bookings/getBookingPackageDetails/' + info.id,
@@ -210,7 +211,7 @@ function PrintBooking() {
                         // console.log(response)
                         
                         response.data.map((packageCat, index2) => {
-                        console.log(packageCat)
+                        // console.log(packageCat)
                         if(index2<response.data.length-1){
                           packageInfo.details+=packageCat.lab_test+", "
                         } else {
@@ -249,6 +250,8 @@ function PrintBooking() {
                             })
                         });
                     });
+                  setPackages(prev=>[...prev, packageInfo])
+
                 } else {
                     axios({
                         method: 'post',
@@ -281,11 +284,9 @@ function PrintBooking() {
                         setPrintReadyFinal(true);
                     }
                 }
-              setPackages(prev=>[...prev, packageInfo])
             });
         },[services]);
-console.log(labTests)
-console.log(packages)
+
 
         React.useEffect(() => {
             var presentDate = new Date();
@@ -339,17 +340,17 @@ console.log(packages)
           content: () => componentRef.current,
           pageStyle: () => `
           @page { size: letter;}
-          @media print {
-            .print-row {
-              margin-top: 1rem;
-              display: block;
-              page-break-before: always;
-            }
-          }
+          
           `,
     
         });
-
+        // @media print {
+        //     .print-row {
+        //       margin-top: 1rem;
+        //       display: block;
+        //       page-break-before: always;
+        //     }
+        //   }
 
     function printButton() {
         return (
@@ -437,7 +438,7 @@ console.log(packages)
             discount={discount}
             toPay={false}
             />
-
+{console.log(packages)}
             <div
                 style={{ display: "none" }}// This make ComponentToPrint show   only while printing
             > 
