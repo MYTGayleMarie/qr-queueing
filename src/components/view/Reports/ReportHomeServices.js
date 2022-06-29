@@ -48,7 +48,6 @@ function ReportHomeServices() {
           date_to: filteredData.to_date,
         },
       }).then(function (booking) {
-          console.log(booking)
           var array = booking.data.bookings;
           array.map((data, index1) => {
             var info = {};
@@ -99,6 +98,7 @@ function ReportHomeServices() {
                   
                 });
                 info.tests = tests;
+                info.home_service_fee = data.home_service_fee;
                 info.total_amount = data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 setHomeServices(oldArray => [...oldArray, info]);
               }).then(function (error) {
@@ -138,7 +138,7 @@ function ReportHomeServices() {
             type={'no-action'}
             tableData={homeServices}
             rowsPerPage={100}
-            headingColumns={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'TOTAL AMOUNT']}
+            headingColumns={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'HOME SERVICE FEE', 'TOTAL AMOUNT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

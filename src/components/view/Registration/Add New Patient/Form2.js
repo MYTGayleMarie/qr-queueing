@@ -165,9 +165,9 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             console.log(item) 
             var packageDetails = {};
             var packageCode = "";
-            if( item.id==1 || item.id==2 || item.id==3){                        
+            if( item.id==1 || item.id==2 || item.id==3 || item.id==44){                        
                 packageCode="package1"
-            } else if ( item.id==9 || item.id==10 || item.id==11){
+            } else if ( item.id==9 || item.id==10 || item.id==11 || item.id==45){
                 packageCode="package2"
             } else if ( item.id==4){
                 packageCode="package3"
