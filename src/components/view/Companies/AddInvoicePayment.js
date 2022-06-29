@@ -259,7 +259,7 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-      // console.log(response);
+      console.log(response.data.data.company_invoices);
       var invoice = response.data.data.company_invoices;
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
@@ -304,10 +304,11 @@ function AddInvoicePayment() {
   React.useEffect(()=>{
     info.length=0;
     const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
-    // console.log(tempData)
     delete tempData["undefined"]
     var keys = Object.keys(tempData)
+    console.log(keys)
     keys.map((data, index)=>{
+      console.log(keys[25])
       var info={};
       var date = new Date(tempData[data][0].added_on);
       var formattedDate = date.toDateString().split(" ");
@@ -422,8 +423,7 @@ function AddInvoicePayment() {
             info.total = booking.total_amount
             info.discount = booking.discount
             info.grand_total = booking.grand_total
-            setChargeSlip(oldArray=>[...oldArray, info]);
-            console.log(info + index)      
+            setChargeSlip(oldArray=>[...oldArray, info]);   
             if(dataLength-1 == index){
               setTimeout(
                 setChargeSlipReady(true)

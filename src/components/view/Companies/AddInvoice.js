@@ -179,13 +179,12 @@ function AddInvoice() {
             company_id: discountInfo.company_id,
             discount_id: discount, 
             discount_code: discountInfo.discount_code,
-            price: info[0].price,
-            qty: info[0].grandTotal,
+            price:total,
+            qty: info.length,
             total: total,
             added_by: userId,
         }
       }).then(function (response) {
-        // console.log(response);
         toast.success("Successfully added invoice!");
           setTimeout(function() {
             setRedirect(true);
@@ -195,6 +194,7 @@ function AddInvoice() {
       });
     }
   }
+
 
   if(redirect == true) {
       return (

@@ -932,7 +932,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         {data}
                     </tbody>
                 </table>
-                {/* <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} /> */}
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} />
              </div>
         );
 

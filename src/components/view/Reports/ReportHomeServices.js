@@ -48,6 +48,7 @@ function ReportHomeServices() {
           date_to: filteredData.to_date,
         },
       }).then(function (booking) {
+          console.log(booking)
           var array = booking.data.bookings;
           array.map((data, index1) => {
             var info = {};
