@@ -485,7 +485,7 @@ export class PaymentToPrint extends React.PureComponent {
             
             <div className="row-column ">
               {/* Charge slip */}
-            {this.props.discountCode&&<div className="m-0 charge-slip" id="charge-slip">
+            {this.props.discountCode && <div className="m-0 charge-slip" id="charge-slip">
               <div class="d-flex justify-content-left">
                   <img src={logo} alt={'logo'} class="small-logo"></img>
                   <span className="to-right slip-span">Quest and Reliance Diagnostics</span>
@@ -497,32 +497,32 @@ export class PaymentToPrint extends React.PureComponent {
                   {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
                   <table className="slip-table">
                     <tr>
-                      <td><span className="slip-label slip-span">Patient Name:</span><span className="slip-detail slip-span">{this.props.name}</span></td>
-                      <td><span className="slip-label slip-span">Email:</span><span className="slip-detail slip-span">{this.props.email === "" ? "NONE" : this.props.email} </span></td>
+                      <td><span className="slip-label charge-slip-span">Patient Name:</span><span className="slip-detail slip-span">{this.props.name}</span></td>
+                      <td><span className="slip-label charge-slip-span">Email:</span><span className="slip-detail slip-span">{this.props.email == null ? "NONE" : this.props.email}</span></td>
                     </tr>
                   </table>          
                 </div>
                 <div className="row m-0 p-0">
                   <table className="slip-table">
                     <tr>
-                      <td><span className="slip-label slip-span">Address:</span><span className="slip-detail slip-span">{this.props.address}</span></td>
-                      <td><span className="slip-label slip-span">Contact No.:</span><span className="slip-detail slip-span">{this.props.contact}</span></td>
+                      <td><span className="slip-label charge-slip-span">Address:</span><span className="slip-detail slip-span">{this.props.address}</span></td>
+                      <td><span className="slip-label charge-slip-span">Contact No.:</span><span className="slip-detail slip-span">{this.props.contact}</span></td>
                     </tr>
                   </table> 
                 </div>
                 <div className="row m-0 p-0">
                   <table className="slip-table">
                     <tr>
-                      <td><span className="slip-label slip-span">Transaction No.:</span><span className="slip-detail slip-span">{this.props.bookingID}</span></td>
-                      <td><span className="slip-label slip-span">Date:</span><span className="slip-detail slip-span">{this.props.bookingDate}</span></td>
+                      <td><span className="slip-label charge-slip-span">Transaction No.:</span><span className="slip-detail slip-span">{this.props.bookingID}</span></td>
+                      <td><span className="slip-label charge-slip-span">Date:</span><span className="slip-detail slip-span">{this.props.bookingDate}</span></td>
                     </tr>
                   </table> 
                 </div>
                 <div className="row m-0 p-0">
                   <table className="slip-table">
                     <tr>
-                      <td><span className="slip-label slip-span">Physician(s):</span><span className="slip-detail slip-span">{this.props.referral||""}</span></td>
-                      <td><span className="slip-label slip-span">Discount Code:</span><span className="slip-detail slip-span">{this.props.discountCode}</span></td>
+                      <td><span className="slip-label charge-slip-span">Physician(s):</span><span className="slip-detail slip-span">{this.props.referral||"NONE"}</span></td>
+                      <td><span className="slip-label charge-slip-span">Discount Code:</span><span className="slip-detail slip-span">{this.props.discountCode}</span></td>
                     </tr>
                   </table> 
                 </div>
@@ -532,30 +532,30 @@ export class PaymentToPrint extends React.PureComponent {
                 <table>
                   <thead className="particulars">
                     <tr>
-                      <th className="slip-detail slip-span">Particulars</th>
-                      <th className="slip-detail slip-span">Qty</th>
-                      <th className="slip-detail slip-span">Price</th>
+                      <th className="slip-detail charge-slip-span">Particulars</th>
+                      <th className="slip-detail charge-slip-span">Qty</th>
+                      <th className="slip-detail bold-slip-span">Price</th>
                     </tr>
                   </thead>
                   <tbody>
                     {this.props.labTests.map((data, index)=>
                       <tr>
-                        <td className="slip-label slip-span">{data.name}</td>
-                        <td className="slip-label slip-span">{data.qty}</td>
-                        <td className="slip-label slip-span">P {parseFloat(data.price).toFixed(2)}</td>
+                        <td className="slip-label charge-slip-span">{data.name}</td>
+                        <td className="slip-label charge-slip-span">{data.qty}</td>
+                        <td className="slip-label bold-charge-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}  
                     {this.props.packages.map((data, index)=>
                       <tr>
-                        <td className="slip-label slip-span">{data.name}<br/><span className="slip-span">{data.details}</span></td>
-                        <td className="slip-label slip-span">{data.qty}</td>
-                        <td className="slip-label slip-span">P {parseFloat(data.price).toFixed(2)}</td>
+                        <td className="slip-label charge-slip-span">{data.name}<br/><span className="slip-span">{data.details}</span></td>
+                        <td className="slip-label charge-slip-span">{data.qty}</td>
+                        <td className="slip-label charge-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}              
                     <tr>
                       <td></td>
-                      <td className="slip-detail slip-span">Total:</td>
-                      <td className="slip-detail slip-span">P {this.props.grandTotal}</td>
+                      <td className="slip-detail bold-charge-slip-span">Total:</td>
+                      <td className="slip-detail bold-charge-slip-span">P {this.props.grandTotal}</td>
                     </tr>
                   </tbody>
                 </table> 
@@ -563,24 +563,24 @@ export class PaymentToPrint extends React.PureComponent {
               <div className="row charge-slip-footer  mb-2">
                 <table>
                   <tr>
-                    <td className="slip-label slip-span" width="40%">Requested By:</td>
+                    <td className="slip-label charge-slip-span" width="40%">Requested By:</td>
                     {/* <td className="slip-label">{requested_by}</td> */}
-                    <td className="slip-label slip-span">Admin</td>
+                    <td className="slip-label charge-slip-span">Admin</td>
                   </tr>
                   <tr>
-                    <td className="slip-label slip-span" >Prepared By:</td>
+                    <td className="slip-label charge-slip-span" >Prepared By:</td>
                     {/* <td className="slip-label">{prepared_by}</td> */}
-                    <td className="slip-label slip-span">Admin</td>
+                    <td className="slip-label charge-slip-span">Admin</td>
                   </tr>
                   <tr>
-                    <td className="slip-label slip-span" >Requested Time & Date:</td>
+                    <td className="slip-label charge-slip-span" >Requested Time & Date:</td>
                     {/* <td className="slip-label">{request_time}</td> */}
-                    <td className="slip-label slip-span">{dateTime}</td>
+                    <td className="slip-label charge-slip-span">{dateTime}</td>
                   </tr>
                   <tr>
-                    <td className="slip-label slip-span" >Received Time & Date:</td>
+                    <td className="slip-label charge-slip-span" >Received Time & Date:</td>
                     {/* <td className="slip-label">{received_time}</td> */}
-                    <td className="slip-label slip-span">{dateTime}</td>
+                    <td className="slip-label charge-slip-span">{dateTime}</td>
                   </tr>
                 </table>
                 <p  className="slip-label slip-span p-0 m-0">Outpatient Requisition Slip</p>
@@ -600,37 +600,13 @@ export class PaymentToPrint extends React.PureComponent {
                                   <tr>
                                       <td><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                                       <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
-                                      <td><span className="header slip-span">Address: </span><span className="detail-print slip-span">{this.props.address}</span></td>
-                                      <td><span className="header slip-span">Email: </span><span className="detail-print slip-span">{this.props.email == null ? "NONE" : this.props.email}</span></td>
-                                  </tr>
-                                  <tr>
-                                    
-                                  </tr>
-                              </table>
-                              <table>
-                                  <tr>
-                                      <td><span className="header slip-span">DOB: </span><span className="detail-print slip-span">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
-                                      <td><span className="header slip-span">Age: </span><span className="detail-print slip-span">{this.props.age}</span></td>
-                                      <td><span className="header slip-span">Gender: </span><span className="detail-print slip-span">{this.props.gender.toLowerCase() == "female" ? "F" : "M"}</span></td>
-                                      <td className="print-data-contact"><span className="header slip-span">Contact: </span><span className="detail-print slip-span">{this.props.contact}</span></td>
-                                  </tr>
-                              </table>
-                              <table>
-                                  <tr>
-                                      <td><span className="header slip-span">Physician: </span><span className="detail-print slip-span">{this.props.referral == null ? "NONE" : this.props.referral}</span></td>
-                                      <td><span className="header slip-span">Discount Code: </span><span className="detail-print slip-span">{this.props.discountCode ? this.props.discountCode : "None"}</span></td>
-                                  </tr>
-                                  <tr>
                                       <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print bold-slip-span">P {this.props.grandTotal}</span></td>
                                   </tr>
                               </table>
                               <div className='row'>
                                       <span className="encoded-on slip-span">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
                                       <span className="encoded-on slip-span">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
-                              </div>
-                  
-                  
-                  
+                              </div>            
                   </div>
                 </div>
               </div>          

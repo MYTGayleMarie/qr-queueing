@@ -93,6 +93,7 @@ function PrintBooking() {
             } else {
                 setDiscountCode("None")
             }
+            console.log(response.data.isCompany)
             
             axios({
                 method: 'post',
@@ -438,7 +439,7 @@ function PrintBooking() {
             discount={discount}
             toPay={false}
             />
-{console.log(packages)}
+
             <div
                 style={{ display: "none" }}// This make ComponentToPrint show   only while printing
             > 

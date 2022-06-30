@@ -110,9 +110,7 @@ function Items() {
           // console.log(data)
           var item = {}
             item.id = data.item_id;
-            item.temp = data.item_name+data.item_id
             item.item_name = data.item_name;
-            item.item_description = data.description;
             item.unit=data.default_unit.toUpperCase();
             item.beginning_balance = data.beginning_inventory;
             item.current_balance = parseFloat(data.qty).toFixed(2);
@@ -171,7 +169,7 @@ function Items() {
               type={'items'}
               clickable={true}
               tableData={displayItems}
-              headingColumns={['ITEM NAME', 'ITEM DESCRIPTION','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
+              headingColumns={['ITEM NAME','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
               link={update}
             />
             

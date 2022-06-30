@@ -61,6 +61,8 @@ function AddPayment() {
     const [remarks, setRemarks] = useState("");
     const [discount, setDiscount] = useState(0);
     const {id} = useParams();
+    const [labTests, setLabTests] = useState([])
+    const [packages, setPackages] = useState([])
 
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -195,8 +197,6 @@ function AddPayment() {
                 if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
                     age--;
                 }
-
-                // console.log(age)
 
                 setPatientId(response.data.customer_id);
                 setFirstName(customer.data.first_name);
@@ -357,6 +357,99 @@ function AddPayment() {
         });
     },[services]);
 
+    React.useEffect(() => {
+        printServices.length = 0;
+        labTests.length=0
+        packages.length=0
+        services.map((info, index1) => {
+          
+          // console.log(info)
+            if(info.type=== "package") {
+              let packageInfo = {}
+              packageInfo.name= info.package
+              packageInfo.qty = "1"
+              packageInfo.price = info.price
+              packageInfo.details = ""
+                axios({
+                    method: 'post',
+                    url: window.$link + 'bookings/getBookingPackageDetails/' + info.id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    // console.log(response)
+                    
+                    response.data.map((packageCat, index2) => {
+                    // console.log(packageCat)
+                    if(index2<response.data.length-1){
+                      packageInfo.details+=packageCat.lab_test+", "
+                    } else {
+                      packageInfo.details+=packageCat.lab_test
+                    }
+                    
+                        var serviceDetails = {};
+                        axios({
+                            method: 'post',
+                            url: window.$link + 'categories/show/' + packageCat.category_id,
+                            withCredentials: false, 
+                            params: {
+                                api_key: window.$api_key,
+                                token: userToken.replace(/['"]+/g, ''),
+                                requester: userId,
+                            }
+                        }).then(function (category) {
+                            
+                            if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                                serviceDetails.key = "Electrolytes";
+                            }
+                            else {
+                                serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                            }
+                            serviceDetails.category = category.data.name;
+                            serviceDetails.name = packageCat.lab_test;
+                            setPrintServices(oldArray => [...oldArray, serviceDetails]);
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                    });
+                });
+              setPackages(prev=>[...prev, packageInfo])
+
+            } else {
+                axios({
+                    method: 'post',
+                    url: window.$link + 'categories/show/' + info.category_id,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (category) {
+                    
+                    var serviceDetails = {};
+                    if(category.data.name == "Electrolytes (NaKCl,iCA)") {
+                        serviceDetails.key = "Electrolytes";
+                    }
+                    else {
+                        serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
+                    }
+                    serviceDetails.category = category.data.name;
+                    serviceDetails.name = info.lab_test;
+                    let labTest={name:info.lab_test, qty:"1", price:info.price}
+                    setPrintServices(oldArray => [...oldArray, serviceDetails]);
+                    setLabTests(prev=>[...prev, labTest])
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            }
+        });
+    },[services]);
+
+
     function removeService() {
         axios({
             method: 'post',
@@ -387,7 +480,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (booking) {
-            console.log(booking)
             setServices(booking.data);
         }).catch(function (error) {
             console.log(error);
@@ -993,6 +1085,10 @@ function AddPayment() {
                             payment={paymentType}
                             result={result}
                             services={printServices}
+                            isCompany={true}
+                            packages={packages}
+                            labTests={labTests}
+                            grandTotal={grandTotal}
                             queue={queueNumber}
                             encodedOn={encodedOn}
                             referral={referral}
