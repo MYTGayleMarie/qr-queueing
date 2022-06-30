@@ -94,12 +94,12 @@ function ViewSupplier() {
                 contact_no: editPhone,
                 tin: editTin,
                 remarks: editRemarks,
-                // email: editEmail,
+                email: editEmail,
                 updated_by: userId,
             }
         }).then(function (response) {
           console.log(response);
-          toast.success("Successfully updated user profile!");
+          toast.success("Successfully updated supplier profile!");
           handleSupplierClose();
           setTimeout(function () {
             setRedirect(true);
