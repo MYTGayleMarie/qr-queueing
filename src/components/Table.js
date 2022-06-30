@@ -25,6 +25,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         tableClass += ' table-container_table--break-lg';
     }
 
+   
     const data = slice.map((row, index) => {
 
         let rowData = [];
@@ -157,8 +158,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>
-            {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{index == 0 ? "" : data.val}</td>)}
+            {rowData.splice(2).map((data, index) => 
+            <td key={index} data-heading={data.key} className={"text-left"}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id,row.unit)}>UPDATE</button></td>
             </tr>
         }
@@ -322,7 +323,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
     });
- 
+
+
+    
     //table structure
     if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits'||type === 'transaction') {
 
@@ -798,7 +801,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index}>{index == 0 ? "" : col}</th>
+                                <th key={index}>{col}</th>
                             ))}
                         </tr>
                     </thead>

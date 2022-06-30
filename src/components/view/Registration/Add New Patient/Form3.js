@@ -178,16 +178,15 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         }
     })
     .then((response)=>{
-      console.log(response)
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        // console.log(packagesArray)
+        console.log(packagesArray)
         packagesArray.map((item,index)=>{  
             // console.log(item) 
             var packageDetails = {};
             var packageCode = "";
-            if( item.id==1 || item.id==2 || item.id==3){                        
+            if( item.id==1 || item.id==2 || item.id==3 || item.id==44){                        
                 packageCode="package1"
-            } else if ( item.id==9 || item.id==10 || item.id==11){
+            } else if ( item.id==9 || item.id==10 || item.id==11 || item.id==45){
                 packageCode="package2"
             } else if ( item.id==4){
                 packageCode="package3"
@@ -197,7 +196,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
                 packageCode="package"+item.id
             }
             packageDetails.category = packageCode
-            packageDetails.key = item.name.replace(/[)}{(,-\s/]/g, '')+"_"+packageCode;  
+            packageDetails.key = item.name.replace(/[1234567890)}{(,-\s/]/g, '')+item.id+"_"+"package";  
             packageDetails.name = item.name;
 
             packageDetails.labTestId = item.id;
@@ -408,40 +407,44 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     var categoryDetails = data[0].split('_');
     var categoryId = parseInt(categoryDetails[1]);
 
-    //servies
+    //packages
     switch (categoryDetails[1]) {
-      case 'package1':
-        getDetails(preEmploymentPackageBasic, data[0]);
+      case 'package':
+        getDetails(allPackages, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
-      case 'package2':
-        getDetails(preEmploymentPackageDiscount, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package3':
-        getDetails(pregnancyLabPackage, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package4':
-        getDetails(annualWellnessPackageBasic, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package5':
-        getDetails(thyroidTestPackage, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package6':
-        getDetails(annualWellnessPackagePremium, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package7':
-        getDetails(liverFunctionTest, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case 'package8':
-        getDetails(diabetesAndCholesterolPackage, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+      // case 'package1':
+      //   getDetails(preEmploymentPackageBasic, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case 'package2':
+      //   getDetails(preEmploymentPackageDiscount, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case "package3":
+      //     getDetails(pregnancyLabPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case 'package4':
+      //   getDetails(annualWellnessPackageBasic, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case "package5":
+      //     getDetails(thyroidTestPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package6":
+      //     getDetails(annualWellnessPackagePremium, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package7":
+      //     getDetails(liverFunctionTest, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package8":
+      //     getDetails(diabetesAndCholesterolPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
     }
 
     
