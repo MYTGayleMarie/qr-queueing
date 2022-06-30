@@ -162,7 +162,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
         console.log(packagesArray)
         packagesArray.map((item,index)=>{  
-            console.log(item) 
+            // console.log(item) 
             var packageDetails = {};
             var packageCode = "";
             if( item.id==1 || item.id==2 || item.id==3 || item.id==44){                        
@@ -177,7 +177,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
                 packageCode="package"+item.id
             }
             packageDetails.category = packageCode
-            packageDetails.key = item.name.replace(/[)}{(,-\s/]/g, '')+"_"+packageCode;  
+            packageDetails.key = item.name.replace(/[1234567890)}{(,-\s/]/g, '')+item.id+"_"+"package";  
             packageDetails.name = item.name;
 
             packageDetails.labTestId = item.id;
@@ -203,7 +203,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     const liverFunctionTest = allPackages.filter(item=>item.category==="package7") 
     const diabetesAndCholesterolPackage = allPackages.filter(item=>item.category==="package8") 
 
-  
+    
   document.body.style = 'background: white;';
   window.scrollTo(0, 0);
 
@@ -242,45 +242,50 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     totalMDCharge += 50.00;
   }
 
-
+console.log(checkedServicesDetails)
   checkedServices.map((data, index) => {
     var categoryDetails = data[0].split('_');
     var categoryId = parseInt(categoryDetails[1]);
 
-    //servies
+
+    // packages
     switch (categoryDetails[1]) {
-      case 'package1':
-        getDetails(preEmploymentPackageBasic, data[0]);
+      case 'package':
+        getDetails(allPackages, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
-      case 'package2':
-        getDetails(preEmploymentPackageDiscount, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case "package3":
-          getDetails(pregnancyLabPackage, data[0])
-          checkedServicesDetails.push(itemDetails);
-      break;
-      case 'package4':
-        getDetails(annualWellnessPackageBasic, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
-      case "package5":
-          getDetails(thyroidTestPackage, data[0])
-          checkedServicesDetails.push(itemDetails);
-      break;
-      case "package6":
-          getDetails(annualWellnessPackagePremium, data[0])
-          checkedServicesDetails.push(itemDetails);
-      break;
-      case "package7":
-          getDetails(liverFunctionTest, data[0])
-          checkedServicesDetails.push(itemDetails);
-      break;
-      case "package8":
-          getDetails(diabetesAndCholesterolPackage, data[0])
-          checkedServicesDetails.push(itemDetails);
-      break;
+      // case 'package1':
+      //   getDetails(preEmploymentPackageBasic, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case 'package2':
+      //   getDetails(preEmploymentPackageDiscount, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case "package3":
+      //     getDetails(pregnancyLabPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case 'package4':
+      //   getDetails(annualWellnessPackageBasic, data[0]);
+      //   checkedServicesDetails.push(itemDetails);
+      //   break;
+      // case "package5":
+      //     getDetails(thyroidTestPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package6":
+      //     getDetails(annualWellnessPackagePremium, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package7":
+      //     getDetails(liverFunctionTest, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
+      // case "package8":
+      //     getDetails(diabetesAndCholesterolPackage, data[0])
+      //     checkedServicesDetails.push(itemDetails);
+      // break;
     }
 
     //lab
@@ -490,6 +495,10 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
     totalPrice += parseFloat(data.price);
 });
 }
+
+
+console.log(allPackages)
+
   return (
     <div>
       <Navbar />
@@ -511,6 +520,13 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
               </div>
 
               <ServiceItems
+                category="All Packages"
+                items={allPackages}
+                formData={service}
+                setForm={setServices}
+              />
+
+              {/* <ServiceItems
                 category="PRE EMPLOYMENT PACKAGE"
                 items={preEmploymentPackageBasic}
                 formData={service}
@@ -522,7 +538,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                 items={preEmploymentPackageDiscount}
                 formData={service}
                 setForm={setServices}
-              />
+              /> */}
 
               {/* <ServiceItems
                 category="PREGNANCY LAB PACKAGE"
@@ -531,12 +547,12 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                 setForm={setServices}
               /> */}
 
-              <ServiceItems
+              {/* <ServiceItems
                 category="ANNUAL WELLNESS PACKAGE BASIC"
                 items={annualWellnessPackageBasic}
                 formData={service}
                 setForm={setServices}
-              />
+              /> */}
 
               {/* <ServiceItems
                 category="ANNUAL WELLNESS PACKAGE PREMIUM"
@@ -566,7 +582,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                 setForm={setServices}
               /> */}
             </div>
-
+{console.log(checkedServicesDetails)}
             <div className="row summary-text">
                     <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
 
