@@ -483,7 +483,7 @@ export class PaymentToPrint extends React.PureComponent {
 
             <br />
             
-            <div className="row-column ">
+            <div className={this.props.discountCode?"row-column":"row-column no-border"}>
               {/* Charge slip */}
             {this.props.discountCode && <div className="m-0 charge-slip" id="charge-slip">
               <div class="d-flex justify-content-left">
@@ -492,7 +492,7 @@ export class PaymentToPrint extends React.PureComponent {
                   <span className="to-right slip-span">09998886694</span>
                   <span className="to-right slip-span">Marasbaras Tacloban City</span>
               </div>
-              <div className="row slip-header mb-2">
+              <div className="row slip-header">
                 <div className="row m-0 p-0">
                   {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
                   <table className="slip-table">
@@ -560,7 +560,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </tbody>
                 </table> 
               </div>
-              <div className="row charge-slip-footer  mb-2">
+              <div className="row charge-slip-footer">
                 <table>
                   <tr>
                     <td className="slip-label charge-slip-span" width="40%">Requested By:</td>
@@ -588,7 +588,7 @@ export class PaymentToPrint extends React.PureComponent {
             </div>}
 
             {/* Claim Stub */}
-            <div className="claim-stub-container">
+            <div className={this.props.discountCode?"claim-stub-container":"claim-stub-container with-border"}>
               <div className="claim-stub-outer">
                 <div className="claim-stub-inner">
                   <div className="claim-stub-rotate"> 

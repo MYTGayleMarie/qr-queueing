@@ -82,7 +82,7 @@ function ReleaseItems() {
                         info.id = data.id;        
                         info.items = items;
                         info.requisitioner = data.requisitioner;
-                        info.grandTotal = data.grand_total;
+                        info.grandTotal ="P " + data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                         info.remarks = data.remarks;
                         console.log(data);
                         setReleaseData(oldArray => [...oldArray, info]);

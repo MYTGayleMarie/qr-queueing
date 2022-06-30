@@ -74,7 +74,7 @@ function PurchaseOrder() {
                   posData.supplier = response.data.name;
                   posData.date = date.toDateString();
         
-                  posData.total = data.grand_total;
+                  posData.total = "P " + data.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   posData.status = data.status;
                   posData.payment = data.paid_amount == data.grand_total ? "paid" : "unpaid";
   
