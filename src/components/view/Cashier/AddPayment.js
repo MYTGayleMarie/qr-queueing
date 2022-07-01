@@ -410,7 +410,6 @@ function AddPayment() {
                             }
                             serviceDetails.category = category.data.name;
                             serviceDetails.name = packageCat.lab_test;
-                            setPrintServices(oldArray => [...oldArray, serviceDetails]);
                         }).catch(function (error) {
                             console.log(error);
                         })
@@ -440,7 +439,6 @@ function AddPayment() {
                     serviceDetails.category = category.data.name;
                     serviceDetails.name = info.lab_test;
                     let labTest={name:info.lab_test, qty:"1", price:info.price}
-                    setPrintServices(oldArray => [...oldArray, serviceDetails]);
                     setLabTests(prev=>[...prev, labTest])
                 }).catch(function (error) {
                     console.log(error);

@@ -94,7 +94,6 @@ function Receives() {
                           info.amount = data.grand_total;
                           info.paid_amount = data.paid_amount;
                           info.balance = data.balance;
-                          info.received_by = user.data.name;
                           info.payment_status = data.paid_amount>=data.grand_total?"PAID":"UNPAID"
                           info.status = po.data.status;
 
@@ -140,7 +139,7 @@ function Receives() {
                 clickable={true}
                 tableData={poData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
                 rowsPerPage={4}
-                headingColumns={['RECEIVE ID','PO NO.', 'DATE', 'AMOUNT', 'PAID AMOUNT','BALANCE','RECEIVED BY', 'PAYMENT STATUS', 'PO STATUS', 'ACTION']}
+                headingColumns={['RECEIVE ID','PO NO.', 'DATE', 'AMOUNT', 'PAID AMOUNT','BALANCE', 'PAYMENT STATUS', 'PO STATUS', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter}
                 link={view}

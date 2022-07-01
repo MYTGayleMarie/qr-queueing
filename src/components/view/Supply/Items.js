@@ -111,8 +111,8 @@ function Items() {
           var item = {}
             item.id = data.item_id;
             item.id_item = data.item_id;
-            item.item_name = data.item_name.toUpperCase();
-            item.unit=data.default_unit.toUpperCase();
+            item.item_name = data.item_name;
+            item.unit=data.default_unit;
             item.beginning_balance = data.beginning_inventory;
             item.current_balance = parseFloat(data.qty).toFixed(2);
             item.remarks = data.remarks;

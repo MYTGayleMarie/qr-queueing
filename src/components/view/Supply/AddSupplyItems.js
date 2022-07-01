@@ -103,9 +103,9 @@ console.log(item)
                         <div className="col-sm-1">
                             <input type="text" name="item_unit" className="beginning-balance-input" onChange={setItem}/>
                         </div>
-                        <div className="col-sm-2">
+                        {/* <div className="col-sm-2">
                             <span className="item-name-label">LAB TEST QTY</span>
-                        </div>
+                        </div> */}
                         <div className="col-sm-1">
                             <input type="number" name="item_lab_test_qty" className="beginning-balance-input" onChange={setItem}/>
                         </div> <div className="col-sm-1">

@@ -25,11 +25,10 @@ function UpdateSupplyItems() {
 
     //current info
     const [name, setName] = useState("");
-    const [labTestQty, setLabTestQty] = useState("");
     const [cost, setCost] = useState("");
     const [balance, setBalance] = useState("");
     const [remarks, setRemarks] = useState("");
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState();
     const [item_unit, setUnit]=useState("");
     // const [inventory_id, setInventoryID] = useState("");
 
@@ -46,11 +45,9 @@ function UpdateSupplyItems() {
               requester: userId,
             }
         }).then(function (response) {
-            console.log(response);
-            // setInventoryID(response.data.id)
             setName(response.data.item_name);
             setCost(response.data.cost);
-            setBalance(response.data.qty);
+            setBalance(response.data.beginning_inventory);
             setUnit(response.data.default_unit);
             setRemarks(response.data.remarks);
             setDescription(response.data.description);
@@ -82,11 +79,13 @@ function UpdateSupplyItems() {
           description: description,
           cost: cost,
           beg_balance: balance,
-          unit:item_unit,
+          new_unit:item_unit,
+          old_unit:item_unit,
           remarks: remarks,
           updated_by: userId,
         }
     }).then(function (response) {
+        console.log(response)
         toast.success("Succussfully updated item!")
         setTimeout(function () {
             setRedirect(true);
@@ -130,14 +129,14 @@ function UpdateSupplyItems() {
                             <span className="item-name-label">UNIT</span>
                         </div>
                         <div className="col-sm-1">
-                            <input disabled type="text" name="item_unit" className="unit-input" value={item_unit} onChange={(e) => setUnit(e.target.value)}/>
+                            <input disabled type="text" name="item_unit" className="unit-input" value={item_unit}/>
                         </div>
-                        <div className="col-sm-2">
+                        {/* <div className="col-sm-2">
                             <span className="item-name-label">LAB TEST QTY</span>
-                        </div>
-                        <div className="col-sm-1">
-                            <input type="number" name="item_lab_test_qty" className="beginning-balance-input" value={labTestQty} onChange={(e) => setLabTestQty(e.target.value)}/>
-                        </div>
+                        </div> */}
+                            {/* <div className="col-sm-1">
+                                <input type="number" name="item_lab_test_qty" className="beginning-balance-input" value={labTestQty} onChange={(e) => setLabTestQty(e.target.value)}/>
+                            </div> */}
                         <div className="col-sm-1">
                             <span className="item-name-label">COST</span>
                         </div>
