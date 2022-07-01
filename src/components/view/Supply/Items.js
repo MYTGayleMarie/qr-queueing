@@ -107,10 +107,11 @@ function Items() {
         let itemData = res.data.items.filter(info=>info.item_name!==null)
         let data = itemData.sort((a, b) => a.id - b.id)
         data.map((data, index)=>{
-          // console.log(data)
+          console.log(data)
           var item = {}
             item.id = data.item_id;
-            item.item_name = data.item_name;
+            item.id_item = data.item_id;
+            item.item_name = data.item_name.toUpperCase();
             item.unit=data.default_unit.toUpperCase();
             item.beginning_balance = data.beginning_inventory;
             item.current_balance = parseFloat(data.qty).toFixed(2);
