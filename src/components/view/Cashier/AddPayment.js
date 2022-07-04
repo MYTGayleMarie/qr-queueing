@@ -20,6 +20,7 @@ import Header from '../../Header.js';
 import PersonalDetails from '../../PersonalDetails';
 import Costing from '../../Costing';
 
+
 const userToken = getToken();
 const userId = getUser();
 
@@ -63,6 +64,7 @@ function AddPayment() {
     const {id} = useParams();
     const [labTests, setLabTests] = useState([])
     const [packages, setPackages] = useState([])
+    const [click, setClick] = useState(false)
 
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -595,7 +597,10 @@ function AddPayment() {
 
     function submit (e) {
         e.preventDefault();
-        if(payment === 'cash') {
+        if(click===false)
+        {
+          setClick(true)
+          if(payment === 'cash') {
             axios({
                 method: 'post',
                 url: window.$link + 'payments/create',
@@ -621,95 +626,96 @@ function AddPayment() {
                 console.log(error);
                 toast.error("Payment Unsuccessful!");
             });
-        }
-        if(payment === 'check') {
-            axios({
-                method: 'post',
-                url: window.$link + 'payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    booking: id,
-                    type: payment,
-                    amount: grandTotal,
-                    check_no: checkNo,
-                    check_bank: checkBank,
-                    check_date: checkDate,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grand_total: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                // console.log(response);
-                toast.success("Payment Successful!");
-                refreshPage();
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
-        if(payment === 'card') {
-            axios({
-                method: 'post',
-                url: window.$link + 'payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    booking: id,
-                    type: payment,
-                    amount: grandTotal,
-                    cardName: cardName,
-                    card_no: cardNo,
-                    card_type: cardType,
-                    card_expiry: cardExpiry,
-                    card_bank: cardBank,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grand_total: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                // console.log(response);
-                toast.success("Payment Successful!");
-                refreshPage();
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
-        if(payment === 'others') {
-            axios({
-                method: 'post',
-                url: window.$link + 'payments/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    booking: id,
-                    type: payment,
-                    amount: grandTotal,
-                    other_source: source,
-                    other_reference_no: reference,
-                    senior_pwd_id: seniorPwdId,
-                    discount: discount,
-                    grand_total: grandTotal,
-                    remarks: remarks,
-                    added_by: userId,
-                }
-            }).then(function (response) {
-                // console.log(response);
-                toast.success("Payment Successful!");
-                refreshPage();
-            }).catch(function (error) {
-                console.log(error);
-                toast.error("Payment Unsuccessful!");
-            });
-        }
+          }
+          if(payment === 'check') {
+              axios({
+                  method: 'post',
+                  url: window.$link + 'payments/create',
+                  withCredentials: false, 
+                  params: {
+                      token: userToken,
+                      api_key: window.$api_key, 
+                      booking: id,
+                      type: payment,
+                      amount: grandTotal,
+                      check_no: checkNo,
+                      check_bank: checkBank,
+                      check_date: checkDate,
+                      senior_pwd_id: seniorPwdId,
+                      discount: discount,
+                      grand_total: grandTotal,
+                      remarks: remarks,
+                      added_by: userId,
+                  }
+              }).then(function (response) {
+                  // console.log(response);
+                  toast.success("Payment Successful!");
+                  refreshPage();
+              }).catch(function (error) {
+                  console.log(error);
+                  toast.error("Payment Unsuccessful!");
+              });
+          }
+          if(payment === 'card') {
+              axios({
+                  method: 'post',
+                  url: window.$link + 'payments/create',
+                  withCredentials: false, 
+                  params: {
+                      token: userToken,
+                      api_key: window.$api_key, 
+                      booking: id,
+                      type: payment,
+                      amount: grandTotal,
+                      cardName: cardName,
+                      card_no: cardNo,
+                      card_type: cardType,
+                      card_expiry: cardExpiry,
+                      card_bank: cardBank,
+                      senior_pwd_id: seniorPwdId,
+                      discount: discount,
+                      grand_total: grandTotal,
+                      remarks: remarks,
+                      added_by: userId,
+                  }
+              }).then(function (response) {
+                  // console.log(response);
+                  toast.success("Payment Successful!");
+                  refreshPage();
+              }).catch(function (error) {
+                  console.log(error);
+                  toast.error("Payment Unsuccessful!");
+              });
+          }
+          if(payment === 'others') {
+              axios({
+                  method: 'post',
+                  url: window.$link + 'payments/create',
+                  withCredentials: false, 
+                  params: {
+                      token: userToken,
+                      api_key: window.$api_key, 
+                      booking: id,
+                      type: payment,
+                      amount: grandTotal,
+                      other_source: source,
+                      other_reference_no: reference,
+                      senior_pwd_id: seniorPwdId,
+                      discount: discount,
+                      grand_total: grandTotal,
+                      remarks: remarks,
+                      added_by: userId,
+                  }
+              }).then(function (response) {
+                  // console.log(response);
+                  toast.success("Payment Successful!");
+                  refreshPage();
+              }).catch(function (error) {
+                  console.log(error);
+                  toast.error("Payment Unsuccessful!");
+              });
+          }
+      }
     }
 
     function printButton() {
