@@ -21,7 +21,7 @@
 .header {
     font-weight: bold;
     color: black;
-    font-size: 9px;
+    font-size: 7px;
 }
 
 .claim-header {
@@ -54,7 +54,7 @@
 
 .print-column {
     flex: 50%;
-    padding: 2%;
+    padding: 1%;
     max-width: 50%;
     border: 2px solid black;
 }
@@ -183,19 +183,17 @@
  }
 
  .slip-span{
-  font-size: 7px !important;
+  font-size: 5px !important;
   margin-top:0 !important;
  }
 
  .charge-slip-span{
-    font-size: 8px !important;
+    font-size: 6px !important;
     margin-top:0 !important;
    }
- 
-
 
  .bold-slip-span{
-    font-size: 7px !important;
+    font-size: 5px !important;
     margin-top:0 !important;
     font-weight: bold;
    }
@@ -212,40 +210,22 @@
    }
 
 .charge-slip{
-  padding-left:3%;
-  /* float:left; */
-  /* width:12rem!important; */
- 
-  /* flex: 50%; */
   padding: 2%;
   padding-left: 0.5rem !important;
   margin:0px !important;
-  width: 50% !important;
-  min-height:fit-content !important;
-  /* height: 25rem; */
-  border:none;
-  border-right: 2px solid black;
+  width: 80% !important;
+  min-height:250px !important;
+
 }
-/* .claim-stub{ */
-  /* float:right; */
-  /* margin-left:3% !important; */
-  /* transform: rotate(-90deg); */
-  /* white-space: nowrap; */
-  /* height:10rem !important; */
-  /* width:100% !important; */
-  /* padding: 2%; */
-  /* border: 2px solid black; */
-/* } */
+
 .claim-stub-rotate{
   /* display:block; */
   transform-origin: top left;
   transform: rotate(-90deg) translate(-100%);
-  margin-top: -50%;
-  /* border: 2px solid black; */
-  padding: 3%;
-  width:25rem;
+  margin-top:-30%;
+  padding: 1%;
+  width: 20rem;
   height: 13rem;
-  /* min-width: fit-content; */
 }
 .with-border{
   border: 2px solid black;
@@ -254,10 +234,11 @@
   border:none !important;
 }
 .claim-stub-inner{
-  /* border:1px solid red; */
-  padding: 50% 0;
+  font-size: 3px !important;
+  padding: 5% 0;
   display: flex;
   flex: 100%;
+  border-left:2px solid black;
 }
 .claim-stub-outer{
   /* border:1px solid yellowgreen; */
@@ -267,7 +248,7 @@
 .claim-stub-container{
   /* border:1px solid orange; */
   display:flex; 
-  width:50%;
+  width:20%;
   /* min-width: fit-content; */
 }
 .row-column{
@@ -276,6 +257,7 @@
   border:2px solid black;
   /* border:1px solid red; */
 }
+
 .small-logo{
   width:30px !important;
   height:15px !important;
@@ -295,5 +277,4 @@
 }
 .charge-slip-footer{
   padding:0.5rem;
-
 }

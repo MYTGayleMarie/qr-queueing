@@ -362,8 +362,6 @@ function AddPayment() {
         labTests.length=0
         packages.length=0
         services.map((info, index1) => {
-          
-          // console.log(info)
             if(info.type=== "package") {
               let packageInfo = {}
               packageInfo.name= info.package

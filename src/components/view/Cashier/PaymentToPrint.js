@@ -483,9 +483,9 @@ export class PaymentToPrint extends React.PureComponent {
 
             <br />
             
-            <div className={this.props.discountCode?"row-column":"row-column no-border"}>
+            <div className={"row-column"}>
               {/* Charge slip */}
-            {this.props.discountCode && <div className="m-0 charge-slip" id="charge-slip">
+            <div className="m-0 charge-slip" id="charge-slip">
               <div class="d-flex justify-content-left">
                   <img src={logo} alt={'logo'} class="small-logo"></img>
                   <span className="to-right slip-span">Quest and Reliance Diagnostics</span>
@@ -498,31 +498,15 @@ export class PaymentToPrint extends React.PureComponent {
                   <table className="slip-table">
                     <tr>
                       <td><span className="slip-label charge-slip-span">Patient Name:</span><span className="slip-detail slip-span">{this.props.name}</span></td>
-                      <td><span className="slip-label charge-slip-span">Email:</span><span className="slip-detail slip-span">{this.props.email == null ? "NONE" : this.props.email}</span></td>
+                      <td><span className="slip-label charge-slip-span">Birthdate:</span><span className="slip-detail slip-span">{this.props.birthdate}</span></td>
                     </tr>
                   </table>          
                 </div>
                 <div className="row m-0 p-0">
                   <table className="slip-table">
                     <tr>
-                      <td><span className="slip-label charge-slip-span">Address:</span><span className="slip-detail slip-span">{this.props.address}</span></td>
-                      <td><span className="slip-label charge-slip-span">Contact No.:</span><span className="slip-detail slip-span">{this.props.contact}</span></td>
-                    </tr>
-                  </table> 
-                </div>
-                <div className="row m-0 p-0">
-                  <table className="slip-table">
-                    <tr>
                       <td><span className="slip-label charge-slip-span">Transaction No.:</span><span className="slip-detail slip-span">{this.props.bookingID}</span></td>
                       <td><span className="slip-label charge-slip-span">Date:</span><span className="slip-detail slip-span">{this.props.bookingDate}</span></td>
-                    </tr>
-                  </table> 
-                </div>
-                <div className="row m-0 p-0">
-                  <table className="slip-table">
-                    <tr>
-                      <td><span className="slip-label charge-slip-span">Physician(s):</span><span className="slip-detail slip-span">{this.props.referral||"NONE"}</span></td>
-                      <td><span className="slip-label charge-slip-span">Discount Code:</span><span className="slip-detail slip-span">{this.props.discountCode}</span></td>
                     </tr>
                   </table> 
                 </div>
@@ -552,7 +536,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <td className="slip-label charge-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}              
-                    <tr>
+                    <tr c>
                       <td></td>
                       <td className="slip-detail bold-charge-slip-span">Total:</td>
                       <td className="slip-detail bold-charge-slip-span">P {this.props.grandTotal}</td>
@@ -585,15 +569,15 @@ export class PaymentToPrint extends React.PureComponent {
                 </table>
                 <p  className="slip-label slip-span p-0 m-0">Outpatient Requisition Slip</p>
               </div>
-            </div>}
+            </div>
 
             {/* Claim Stub */}
-            <div className={this.props.discountCode?"claim-stub-container":"claim-stub-container with-border"}>
+            <div className={"claim-stub-container"}>
               <div className="claim-stub-outer">
                 <div className="claim-stub-inner">
                   <div className="claim-stub-rotate"> 
                               <div class="d-flex justify-content-left">
-                                  <img src={logo} alt={'logo'} class="large-logo"></img>
+                                  <img src={logo} alt={'logo'} class="small-logo"></img>
                                   <span className="to-right request-header claim-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
                               </div>
                               <table>
@@ -602,11 +586,11 @@ export class PaymentToPrint extends React.PureComponent {
                                       <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
                                       <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print bold-slip-span">P {this.props.grandTotal}</span></td>
                                   </tr>
-                              </table>
-                              <div className='row'>
-                                      <span className="encoded-on slip-span">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                                      <span className="encoded-on slip-span">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
-                              </div>            
+                                  <tr>
+                                  <td><span className="header slip-span">Encoded on: </span><span className="detail-print bold-slip-span">{formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span></td>
+                                  <td><span className="header slip-span">Printed on: </span><span className="detail-print bold-slip-span">{today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span></td>
+                                  </tr>
+                              </table>          
                   </div>
                 </div>
               </div>          
