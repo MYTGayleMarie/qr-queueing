@@ -60,7 +60,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr>
+            return  <tr className='print-table'>
                         {category_name == "XRAY" && 
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -96,7 +96,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr>
+            return  <tr className='print-table'>
                         {category_name == "HEMATOLOGY" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -135,7 +135,7 @@ export class PaymentToPrint extends React.PureComponent {
             }
             
         
-            return  <tr>
+            return  <tr className='print-table'>
                         {category_name == "SEROLOGY" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -217,7 +217,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr>
+            return  <tr className='print-table'>
                         {category_name == "CLINICAL MICROSCOPY URINALYSIS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -243,7 +243,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr>
+            return  <tr className='print-table'>
                 {category_name == "CLINICAL MICROSCOPY FECALYSIS" &&
                     <>
                         <td><span className="data">{category_services}</span></td>
@@ -275,7 +275,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr>
+            return  <tr className='print-table'>
                         {category_name == "OTHER TESTS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -323,19 +323,19 @@ export class PaymentToPrint extends React.PureComponent {
 
             return (
                 <div className="print-column"> 
-                        <div class="d-flex justify-content-left">
-                            <img src={logo} alt={'logo'} class="payment-logo"></img>
+                        <div class="d-flex justify-content-left mx-0">
+                            <img src={logo} alt={'logo'} className="payment-logo"></img>
                             <span className="to-right request-header">#{queue} Request Form - Patient ID:{patientId}</span>
                             <span className="to-right-test request-header-test">{serviceName}</span>
                         </div>
-                        <div className='row'>
-                        <table>
+                        <div className='row mx-0'>
+                        <table className="print-table">
                             <tr>
                                 <td className="print-data-header"><span className="header">Booking Date: </span><span className="detail-print">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
                                 <td><span className="header">Name: </span><span className="detail-print">{name}</span></td>
                             </tr>
                         </table>
-                        <table>
+                        <table className="print-table">
                             <tr>
                                 <td><span className="header">DOB: </span><span className="detail-print">{parseInt(birthDate.getMonth()+1) + "-" + birthDate.getDate() + "-" + birthDate.getFullYear() + " "}</span> </td>
                                 <td><span className="header">Age: </span><span className="detail-print">{age}</span></td>
@@ -343,7 +343,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <td className="print-data-contact"><span className="header">Contact: </span><span className="detail-print">{contact}</span></td>
                             </tr>
                         </table>
-                        <table>
+                        <table className="print-table">
                             <tr>
                                 <td><span className="header">Email: </span><span className="detail-print">{email == null ? "NONE" : email} </span></td>
                                 <td><span className="header">Address: </span><span className="detail-print">{address}</span></td>
@@ -353,7 +353,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 <td><span className="header">Discount Code: </span><span className="detail-print">{discountCode ? discountCode : "None"}</span></td>
                             </tr>
                         </table>
-                        <table> 
+                        <table className="print-table"> 
                             <tr>
                                 <td><span className="header">Diagnosis: </span><span className="detail-print">______________________________________________________________________________</span></td>
                             </tr>
@@ -362,8 +362,8 @@ export class PaymentToPrint extends React.PureComponent {
     
                         <div className="line"></div>  
     
-                        <div className='row'>
-                            <table className="services-table">
+                        <div className='row mx-0' >
+                            <table className="services-table print-table">
                                 <tr>
                                     <th><span className="header">Services</span></th>
                                 </tr>
@@ -371,22 +371,36 @@ export class PaymentToPrint extends React.PureComponent {
                             </table>
                         </div>
     
-                        <table className='footer'>
-                            <tr className='row'>
-                                <td>
-                                    <span className='footer-header'><b>Payment:</b></span>
+                        <table className='print-table mx-0'>
+                            <tr >
+                                <td className="print-table">
+                                    <span className='footer-header mx-0 px-0'><b>Payment:</b></span>
                                     <span className='data'>{(isCompany && discountCode) ? " CORPORATE ACCOUNT - "+ (discountCode) : (payment ? " " + payment.toUpperCase():" ")}</span>
                                 </td>
-                                <td>
+                              </tr>
+                              <tr>
+                                <td className="print-table">
                                     <span className='footer-header'><b>Result:</b></span>
                                     <span className='data'> {result.toUpperCase()}</span>
                                 </td>
-                            </tr>
+                              </tr>
+                              <tr><td></td></tr>
+                              <tr><td></td></tr>
+                              <tr>
+                                <td className="print-table">
+                                    <span className="data">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="print-table">
+                                     <span className="data">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
+                                </td>
+                              </tr>
                         </table>
-                        <div className='row'>
-                                <span className="encoded-on">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                                <span className="encoded-on">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
-                        </div>
+                        {/* <div className='mx-0'>
+                                <span className="data">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
+                                <span className="data">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
+                        </div> */}
                 </div>
             )
         }
@@ -452,7 +466,10 @@ export class PaymentToPrint extends React.PureComponent {
         <div className="print-area">
 
             {
-                printTickets.map((data) => {
+                printTickets.map((data, index) => {
+                  if(printTickets.length-1===index){
+                    this.props.setPrintReadyFinal(true)
+                  }
                   return (
                       <div className="print-row">
                           {data.map((ticket) => {
@@ -486,7 +503,7 @@ export class PaymentToPrint extends React.PureComponent {
             <div className={"row-column"}>
               {/* Charge slip */}
             <div className="m-0 charge-slip" id="charge-slip">
-              <div class="d-flex justify-content-left">
+              <div class="d-flex justify-content-left mx-0">
                   <img src={logo} alt={'logo'} class="small-logo"></img>
                   <span className="to-right slip-span">Quest and Reliance Diagnostics</span>
                   <span className="to-right slip-span">09998886694</span>
@@ -495,76 +512,76 @@ export class PaymentToPrint extends React.PureComponent {
               <div className="row slip-header">
                 <div className="row m-0 p-0">
                   {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
-                  <table className="slip-table">
-                    <tr>
-                      <td><span className="slip-label charge-slip-span">Patient Name:</span><span className="slip-detail slip-span">{this.props.name}</span></td>
-                      <td><span className="slip-label charge-slip-span">Birthdate:</span><span className="slip-detail slip-span">{this.props.birthdate}</span></td>
+                  <table className="slip-table print-table">
+                    <tr className='print-table'>
+                      <td><span className="slip-label slip-span">Patient Name:</span><span className="slip-detail slip-span">{this.props.name}</span></td>
+                      <td><span className="slip-label slip-span">Birthdate:</span><span className="slip-detail slip-span">{this.props.birthdate}</span></td>
                     </tr>
                   </table>          
                 </div>
                 <div className="row m-0 p-0">
-                  <table className="slip-table">
-                    <tr>
-                      <td><span className="slip-label charge-slip-span">Transaction No.:</span><span className="slip-detail slip-span">{this.props.bookingID}</span></td>
-                      <td><span className="slip-label charge-slip-span">Date:</span><span className="slip-detail slip-span">{this.props.bookingDate}</span></td>
+                  <table className="slip-table print-table">
+                    <tr className='print-table'>
+                      <td><span className="slip-label slip-span">Transaction No.:</span><span className="slip-detail slip-span">{this.props.bookingID}</span></td>
+                      <td><span className="slip-label slip-span">Date:</span><span className="slip-detail slip-span">{this.props.bookingDate}</span></td>
                     </tr>
                   </table> 
                 </div>
               </div>
           
-              <div className="row charge-slip-table">
-                <table>
+              <div className="row charge-slip-table mb-0 mr-0">
+                <table className="print-table">
                   <thead className="particulars">
                     <tr>
-                      <th className="slip-detail charge-slip-span">Particulars</th>
-                      <th className="slip-detail charge-slip-span">Qty</th>
+                      <th className="slip-detail slip-span">Particulars</th>
+                      <th className="slip-detail slip-span">Qty</th>
                       <th className="slip-detail bold-slip-span">Price</th>
                     </tr>
                   </thead>
                   <tbody>
                     {this.props.labTests.map((data, index)=>
-                      <tr>
-                        <td className="slip-label charge-slip-span">{data.name}</td>
-                        <td className="slip-label charge-slip-span">{data.qty}</td>
-                        <td className="slip-label bold-charge-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
+                      <tr className='print-table'>
+                        <td className="slip-label slip-span">{data.name}</td>
+                        <td className="slip-label slip-span">{data.qty}</td>
+                        <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}  
                     {this.props.packages.map((data, index)=>
-                      <tr>
-                        <td className="slip-label charge-slip-span">{data.name}<br/><span className="slip-span">{data.details}</span></td>
-                        <td className="slip-label charge-slip-span">{data.qty}</td>
-                        <td className="slip-label charge-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
+                      <tr className='print-table'>
+                        <td className="slip-label slip-span">{data.name}<br/><span className="slip-span-details">{data.details}</span></td>
+                        <td className="slip-label slip-span">{data.qty}</td>
+                        <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}              
                     <tr c>
                       <td></td>
-                      <td className="slip-detail bold-charge-slip-span">Total:</td>
-                      <td className="slip-detail bold-charge-slip-span">P {this.props.grandTotal}</td>
+                      <td className="slip-label bold-slip-span">Total:</td>
+                      <td className="slip-label bold-slip-span">P {this.props.grandTotal}</td>
                     </tr>
                   </tbody>
                 </table> 
               </div>
-              <div className="row charge-slip-footer">
-                <table>
-                  <tr>
-                    <td className="slip-label charge-slip-span" width="40%">Requested By:</td>
+              <div className="row charge-slip-table mb-0 mr-0">
+                <table className="print-table">
+                  <tr className='print-table'>
+                    <td className="slip-label slip-span" width="40%">Requested By:</td>
                     {/* <td className="slip-label">{requested_by}</td> */}
-                    <td className="slip-label charge-slip-span">Admin</td>
+                    <td className="slip-label slip-span">Admin</td>
                   </tr>
-                  <tr>
-                    <td className="slip-label charge-slip-span" >Prepared By:</td>
+                  <tr className='print-table'>
+                    <td className="slip-label slip-span" >Prepared By:</td>
                     {/* <td className="slip-label">{prepared_by}</td> */}
-                    <td className="slip-label charge-slip-span">Admin</td>
+                    <td className="slip-label slip-span">Admin</td>
                   </tr>
-                  <tr>
-                    <td className="slip-label charge-slip-span" >Requested Time & Date:</td>
+                  <tr className='print-table'>
+                    <td className="slip-label slip-span" >Requested Time & Date:</td>
                     {/* <td className="slip-label">{request_time}</td> */}
-                    <td className="slip-label charge-slip-span">{dateTime}</td>
+                    <td className="slip-label slip-span">{dateTime}</td>
                   </tr>
-                  <tr>
-                    <td className="slip-label charge-slip-span" >Received Time & Date:</td>
+                  <tr className='print-table'>
+                    <td className="slip-label slip-span" >Received Time & Date:</td>
                     {/* <td className="slip-label">{received_time}</td> */}
-                    <td className="slip-label charge-slip-span">{dateTime}</td>
+                    <td className="slip-label slip-span">{dateTime}</td>
                   </tr>
                 </table>
                 <p  className="slip-label slip-span p-0 m-0">Outpatient Requisition Slip</p>
@@ -573,27 +590,29 @@ export class PaymentToPrint extends React.PureComponent {
 
             {/* Claim Stub */}
             <div className={"claim-stub-container"}>
-              <div className="claim-stub-outer">
+
                 <div className="claim-stub-inner">
                   <div className="claim-stub-rotate"> 
-                              <div class="d-flex justify-content-left">
-                                  <img src={logo} alt={'logo'} class="small-logo"></img>
-                                  <span className="to-right request-header claim-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
-                              </div>
-                              <table>
-                                  <tr>
-                                      <td><span className="header slip-span">Booking Date: </span><span className="detail-print slip-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
-                                      <td><span className="header slip-span">Name: </span><span className="detail-print slip-span">{this.props.name}</span></td>
-                                      <td><span className="header slip-span">GRAND TOTAL: </span><span className="detail-print bold-slip-span">P {this.props.grandTotal}</span></td>
-                                  </tr>
-                                  <tr>
-                                  <td><span className="header slip-span">Encoded on: </span><span className="detail-print bold-slip-span">{formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span></td>
-                                  <td><span className="header slip-span">Printed on: </span><span className="detail-print bold-slip-span">{today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span></td>
-                                  </tr>
-                              </table>          
+                    <div class="d-flex justify-content-left mx-0">
+                        <img src={logo} alt={'logo'} class="small-logo"></img>
+                        <span className="to-right claim-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><span className="header claim-span">Booking Date: </span><span className="detail-print claim-span">{formattedBookDate[1] + ' ' + formattedBookDate[2] + ' ' + formattedBookDate[3] + ' ' + getTime(bookDate)}</span></td>
+                            <td><span className="header claim-span">Name: </span><span className="detail-print claim-span">{this.props.name}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span className="header claim-span">GRAND TOTAL: </span><span className="detail-print bold-claim-span">P {this.props.grandTotal}</span></td>
+                        </tr>
+                        <tr>
+                        <td><span className="header claim-span">Encoded on: </span><span className="detail-print bold-claim-span">{formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span></td>
+                        <td><span className="header claim-span">Printed on: </span><span className="detail-print bold-claim-span">{today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span></td>
+                        </tr>
+                    </table>          
                   </div>
                 </div>
-              </div>          
+
             </div>
             </div>
         </div>

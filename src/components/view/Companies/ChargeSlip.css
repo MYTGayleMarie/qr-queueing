@@ -26,8 +26,8 @@
   /* border:1px solid red; */
 }
 .particulars {
-  border-bottom: 0.5px dotted #353535;
-  border-top: 0.5px dotted #353535;
+  border-bottom: 0.2px dotted #353535;
+  border-top: 0.2px dotted #353535;
 }
 .slip-th {
   font-size: 10px !important;

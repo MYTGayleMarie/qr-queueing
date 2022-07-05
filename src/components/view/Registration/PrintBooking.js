@@ -243,9 +243,9 @@ function PrintBooking() {
 
                                 
 
-                                if(services.length - 1 == index1 && response.data.length - 1 == index2) {
-                                    setPrintReadyFinal(true);
-                                }
+                                // if(services.length - 1 == index1 && response.data.length - 1 == index2) {
+                                //     setPrintReadyFinal(true);
+                                // }
                             }).catch(function (error) {
                                 console.log(error);
                             })
@@ -464,6 +464,7 @@ function PrintBooking() {
                         grandTotal={grandTotal}
                         labTests={labTests}
                         packages = {packages}
+                        setPrintReadyFinal = {setPrintReadyFinal}
                     />
             </div>
 
