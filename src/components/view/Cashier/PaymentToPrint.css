@@ -7,6 +7,11 @@
   padding:0;
 }
 
+.print-table-services{
+    line-height: -50% !important;
+    padding:5px;
+  }
+
 .table-header {
     color: black;
     font-size:6px;
@@ -27,6 +32,13 @@
     font-weight: bold;
     color: black;
     font-size: 7px;
+}
+
+.header-services {
+    font-weight: bold;
+    color: black;
+    font-size: 7px;
+    margin-bottom: 50px;
 }
 
 .claim-header {
@@ -136,11 +148,6 @@
 .row-bottom-margin {
     margin-bottom:1px !important;
 }
-
-/* .services-table { */
-    /* margin-left: 1%; */
-    /* padding: 3% !important; */
-/* } */
 
 .footer-header {
     font-size: 0.5em !important;

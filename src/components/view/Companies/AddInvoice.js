@@ -320,8 +320,9 @@ function AddInvoice() {
 
                 <div className="po-details">
                     {particulars.length != 0 && (
-                        <div className='label'>PARTICULARS</div>
+                        <div className='label'>PARTICULARS<br/>Total: {info.length}<br/> </div>
                     )}
+
                     {particulars.map((data,index) => {
 
                       var date = new Date(data.booking_time);

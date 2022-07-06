@@ -363,7 +363,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <div className="line"></div>  
     
                         <div className='row mx-0' >
-                            <table className="services-table print-table">
+                            <table>
                                 <tr>
                                     <th><span className="header">Services</span></th>
                                 </tr>
