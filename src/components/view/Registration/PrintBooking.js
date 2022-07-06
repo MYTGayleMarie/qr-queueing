@@ -341,7 +341,13 @@ function PrintBooking() {
           content: () => componentRef.current,
           pageStyle: () => `
           @page { size: letter;}
-          
+          @media print {
+            .print-break {
+              margin-top: 1rem;
+              display: block;
+              page-break-before: always;
+            }
+          }
           `,
     
         });

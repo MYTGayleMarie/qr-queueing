@@ -434,6 +434,8 @@ export class PaymentToPrint extends React.PureComponent {
 
         var finalTickets = [];
         var printTickets = [];
+        var ticketsBy4 = []
+        var ticketsBy2 = []
         
         //Filter array to non-empty services
         tickets.map((data) => {
@@ -448,6 +450,25 @@ export class PaymentToPrint extends React.PureComponent {
             const chunk = finalTickets.slice(i, i + chunkSize);
             printTickets.push(chunk);
         }
+
+        // split tickets into 4
+        const chunkLen = 4;
+        for (let i = 0; i < finalTickets.length; i += chunkLen) {
+            const chunk = finalTickets.slice(i, i + chunkLen);
+            ticketsBy4.push(chunk);
+        }
+
+        // split tickets by 4 into 2
+        const tixLen = 2;
+        for (let i = 0; i < ticketsBy4.length; i++) {
+          let arr = []
+            for (let j=0; j<ticketsBy4[i].length; j+=tixLen) {
+              const chunk = ticketsBy4[i].slice(j, j + tixLen);
+              arr.push(chunk)
+            }
+          ticketsBy2.push(arr)
+        }
+        // console.log(ticketsBy2)
 
         const marginTop="10px"
         const marginRight="10px"
@@ -465,7 +486,7 @@ export class PaymentToPrint extends React.PureComponent {
         <style>{getPageMargins()}</style>
         <div className="print-area">
 
-            {
+            {/* {
                 printTickets.map((data, index) => {
                   if(printTickets.length-1===index){
                     this.props.setPrintReadyFinal(true)
@@ -496,6 +517,46 @@ export class PaymentToPrint extends React.PureComponent {
                   )
                 
                 })
+            } */}
+
+            {
+              ticketsBy2.map((by4, index1)=>{
+                 if(ticketsBy2.length-1===index1){
+                    setTimeout(()=>{
+                      this.props.setPrintReadyFinal(true)
+                    }, 3000)
+                  }
+                return (
+                  <div className="print-break">
+                    {by4.map((by2, index2)=>{
+                      return (
+                      <div className="print-row">
+                          {by2.map((ticket) => {
+                            //    console.log(this.props.discountCode);
+                               return (
+                                generateTickets(
+                                this.props.queue,
+                                this.props.patientId,
+                                this.props.name,
+                                this.props.age,
+                                this.props.gender,
+                                this.props.contact,
+                                this.props.email,
+                                this.props.address,
+                                this.props.referral,
+                                this.props.isCompany,
+                                this.props.payment,
+                                this.props.result,
+                                ticket.name, 
+                                ticket.services,
+                                this.props.discountCode))
+                          })}
+                      </div>
+                  )
+                    })}
+                  </div>
+                )
+              })
             }
 
             <br />
