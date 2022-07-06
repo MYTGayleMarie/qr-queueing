@@ -71,7 +71,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
         </div>
       );
     } else {
-      console.log('Incomplete');
+      // console.log('Incomplete');
     }
   }
 
@@ -120,7 +120,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
       </div>
       );
     } else {
-      console.log('Error. No home service fee');
+      // console.log('Error. No home service fee');
     }
   }
 
@@ -138,7 +138,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
     }).then(function (response) {
         setDiscountList(response.data.discounts);
     }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
 },[]);
 
@@ -153,7 +153,7 @@ React.useEffect(() => {
           requester: userId,
       }
   }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       setCompanyId(response.data.data.discount.company_id);
       setDiscount(response.data.data.discount.percentage);
       setDiscountDetails(response.data.data.discount_details);
@@ -188,6 +188,38 @@ React.useEffect(() => {
 
 },[companyId]);
 
+  // auto suggest
+  const [suggestions, setSuggestions] = useState([])
+  const [allAddress, setAllAddress] = useState([])
+  const [renderSuggest, setRenderSuggest] = useState(true)
+  React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'customers/searchByAddress',
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+      }).then(function (response) {
+          setAllAddress(response.data)
+      }).catch(function (error) {
+          setAllAddress([])
+          console.log(error);
+      });
+  },[]);
+
+
+  React.useEffect(()=>{
+    if(address!==""&&allAddress.length>0){
+      let searchWord = new RegExp(address.toLowerCase()) // create regex for input address
+      let filteredAddress = allAddress.filter(info=>searchWord.test(info.toLowerCase())) // test if there is a match
+      setSuggestions(filteredAddress) // set all matches to suggestions
+    }
+  },[address])
+  console.log(customer)
+
   const listOfDiscount = discountList.map((row, index) => {
     return (
       <option key={index} value={row.id}>
@@ -203,17 +235,17 @@ React.useEffect(() => {
     //calculate days
     const days = Math.floor(diffInMilliSeconds / 86400);
     diffInMilliSeconds -= days * 86400;
-    console.log('calculated days', days);
+    // console.log('calculated days', days);
 
     // calculate hours
     const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
     diffInMilliSeconds -= hours * 3600;
-    console.log('calculated hours', hours);
+    // console.log('calculated hours', hours);
 
     // calculate minutes
     const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
     diffInMilliSeconds -= minutes * 60;
-    console.log('minutes', minutes);
+    // console.log('minutes', minutes);
 
     let difference = '';
     if (days > 0) {
@@ -358,10 +390,17 @@ React.useEffect(() => {
                 name="address"
                 value={address}
                 onChange={setPersonal}
+                onFocus={()=>{setRenderSuggest(true);console.log("focus")}}
+                // onBlur={()=>{setRenderSuggest(false);console.log("blur")}}
                 required
               />
               <br />
             </div>
+            {suggestions.length!==0 && renderSuggest && <div className="suggestions-list">
+              {suggestions.map((data, index)=>
+                <><button key = {index} className="suggestions-item" name="address" value={data} onClick={(e)=>{setPersonal(e);setRenderSuggest(false)}}>{data}</button><br/></>
+              )}
+            </div>}
             <div className="row">
               <label for="address" className="form-label">
                 REFERRAL <i>(required)</i>
