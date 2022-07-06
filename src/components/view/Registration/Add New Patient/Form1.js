@@ -188,7 +188,7 @@ React.useEffect(() => {
 
 },[companyId]);
 
-  // auto suggest
+  // auto suggest address
   const [suggestions, setSuggestions] = useState([])
   const [allAddress, setAllAddress] = useState([])
   const [renderSuggest, setRenderSuggest] = useState(true)
@@ -218,7 +218,40 @@ React.useEffect(() => {
       setSuggestions(filteredAddress) // set all matches to suggestions
     }
   },[address])
-  console.log(customer)
+ 
+ // auto suggest address
+  const [MDSuggestions, setMDSuggestions] = useState([])
+  const [allMD, setAllMD] = useState([])
+  const [renderMDSuggest, setRenderMDSuggest] = useState(true)
+  React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'bookings/searchByDR',
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+      }).then(function (response) {
+          setAllMD(response.data)
+      }).catch(function (error) {
+          setAllAddress([])
+          console.log(error);
+      });
+  },[]);
+
+
+  React.useEffect(()=>{
+    if(referral!==""&&setAllMD.length>0){
+      let searchWord = new RegExp(referral.toLowerCase()) // create regex for input address
+      let filteredMD = allMD.filter(info=>searchWord.test(info.toLowerCase())) // test if there is a match
+      setMDSuggestions(filteredMD) // set all matches to suggestions
+    }
+  },[referral])
+ 
+
+
 
   const listOfDiscount = discountList.map((row, index) => {
     return (
@@ -390,8 +423,7 @@ React.useEffect(() => {
                 name="address"
                 value={address}
                 onChange={setPersonal}
-                onFocus={()=>{setRenderSuggest(true);console.log("focus")}}
-                // onBlur={()=>{setRenderSuggest(false);console.log("blur")}}
+                onFocus={()=>{setRenderSuggest(true)}}
                 required
               />
               <br />
@@ -413,9 +445,15 @@ React.useEffect(() => {
                 name="referral"
                 value={referral}
                 onChange={setPersonal}
+                onFocus={()=>{setRenderMDSuggest(true)}}
               />
               <br />
             </div>
+            {MDSuggestions.length!==0 && renderMDSuggest && <div className="suggestions-list">
+              {MDSuggestions.map((data, index)=>
+                <><button key = {index} className="suggestions-item" name="referral" value={data} onClick={(e)=>{setPersonal(e);setRenderMDSuggest(false)}}>{data}</button><br/></>
+              )}
+            </div>}
             <div className="row">
               <div className="col-sm-6">
                 <label for="address" className="form-label">
