@@ -7,10 +7,16 @@
   padding:0;
 }
 
+.print-table-double{
+  line-height: 120% !important;
+}
+
+
 .print-table-services{
     line-height: -50% !important;
     padding:5px;
   }
+
 
 .table-header {
     color: black;

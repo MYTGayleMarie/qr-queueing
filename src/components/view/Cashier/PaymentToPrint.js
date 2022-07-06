@@ -60,7 +60,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                         {category_name == "XRAY" && 
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -96,7 +96,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                         {category_name == "HEMATOLOGY" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -135,7 +135,7 @@ export class PaymentToPrint extends React.PureComponent {
             }
             
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                         {category_name == "SEROLOGY" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -217,7 +217,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                         {category_name == "CLINICAL MICROSCOPY URINALYSIS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -243,7 +243,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                 {category_name == "CLINICAL MICROSCOPY FECALYSIS" &&
                     <>
                         <td><span className="data">{category_services}</span></td>
@@ -275,7 +275,7 @@ export class PaymentToPrint extends React.PureComponent {
                 return ""
             }
         
-            return  <tr className='print-table'>
+            return  <tr className='print-table-double'>
                         {category_name == "OTHER TESTS" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
@@ -363,7 +363,9 @@ export class PaymentToPrint extends React.PureComponent {
                         <div className="line"></div>  
     
                         <div className='row mx-0' >
-                            <table>
+
+                            <table className="services-table print-table-double">
+
                                 <tr>
                                     <th><span className="header">Services</span></th>
                                 </tr>
