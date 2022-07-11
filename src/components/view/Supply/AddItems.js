@@ -224,7 +224,7 @@ function AddItems() {
                     <select className='items-item' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
                             <option  value="" selected disabled>Select Item</option>
                             {itemInfo.map((data,info) => {
-                                return <option value={data.id}>{data.name}</option>
+                                return<option value={data.id}>{data.name}</option>
                             })}
                     </select>
                 </div>
