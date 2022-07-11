@@ -523,9 +523,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [infoId],
-                prices: [info[0].price],
-                totals: [info[0].total], 
+                invoice_no: infoId,
+                // prices: [info[0].price],
+                // totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 senior_pwd_id: seniorPwdId,
