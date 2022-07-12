@@ -93,7 +93,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if (type === 'medtech') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{totalCount == null && index == 0 ? "" : data.val}</td>)}
+              <td key={index} data-heading={data.key} className={data.val}>{totalCount == null && index == 0 ? "" : data.val}</td>)}
               <td><button class="button-10" role="button" onClick={() => link(row.id)}>VIEW BOOKING</button></td>
             </tr>
         }

@@ -252,6 +252,32 @@ export class PaymentToPrint extends React.PureComponent {
             </tr>
         });
 
+        const ultrasound = Object.keys(groupedServices).map(function(key) {
+          var category_name = key.replace(/_/g, " ").toUpperCase();
+          var category_services = "";
+
+          groupedServices[key].map((info, index) => {
+              if(groupedServices[key].length - 1 == index) {
+                  category_services += info.name; 
+              }
+              else {
+                  category_services += info.name + ", ";
+              }
+          });
+
+          if(category_name !== "ULTRASOUND") {
+              return ""
+          }
+      
+          return  <tr className='print-table-double'>
+              {category_name == "ULTRASOUND" &&
+                  <>
+                      <td><span className="data">{category_services}</span></td>
+                  </>
+              }
+          </tr>
+      });
+
 
 
         const services_Others = Object.keys(groupedServices).map(function(key) {

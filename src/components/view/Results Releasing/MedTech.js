@@ -46,8 +46,8 @@ export default function MedTech() {
   React.useEffect(() => {
     patientData.length = 0;
      axios({
-      method: 'post',
-      url: window.$link + 'bookings/getAll',
+      method: 'get',
+      url: window.$link + 'bookings/medtech',
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -59,42 +59,47 @@ export default function MedTech() {
     })
       .then( function (response) {
         console.log(response);
-        response.data.bookings.map( async (booking, index) => {
-          await axios({
-            method: 'post',
-            url: window.$link + 'customers/show/' + booking.customer_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          }).then(function (customer) {
-              var bookingTime = new Date(booking.booking_time);
+        response.data.bookings.map((booking, index) => {
+              var bookingTime = new Date(booking.added_on);
               var formatBookingTime = bookingTime.toDateString().split(" ");
-              var addedOn = new Date(booking.added_on);
-              var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
+              var upload_stat = ""
 
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
-              bookingDetails.name =
-                customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+              bookingDetails.name = booking.customer;
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.serviceType = booking.type;
+              bookingDetails.serviceType = booking.service_type;
               bookingDetails.paymentStatus = booking.payment_status;
-              bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
+              bookingDetails.uploadStatus = booking.upload_status;
+              // bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
-            .then (function (error) {
-              console.log(error);
-            });
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   }, [render]);
+
+  
+  // React.useEffect(() => {
+  //   patientData.length = 0;
+  //    axios({
+  //     method: 'get',
+  //     url: window.$link + 'bookings/medtech',
+  //     withCredentials: false,
+  //     params: {
+  //       api_key: window.$api_key,
+  //       token: userToken.replace(/['"]+/g, ''),
+  //       requester: userId,
+  //       date_from: filteredData.from_date,
+  //       date_to: filteredData.to_date,
+  //     },
+  //   })
+  //     .then( function (response) {
+  //       console.log(response);
+  //       })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, [render]);
   
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
@@ -153,7 +158,7 @@ export default function MedTech() {
             type={'medtech'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

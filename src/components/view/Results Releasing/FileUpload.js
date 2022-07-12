@@ -335,14 +335,6 @@ export default function FileUpload({servicesData, title, bookingId}){
                 <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
                 <button className="submit-btn" onClick={submitPdf}>SAVE</button>
 
-                {/* <div className='row more-gap'>
-                
-                <div className='col-sm-12 d-flex justify-content-end'>
-                    <span className='md-label'>MD :</span>
-                    <input name="md" className='md-input' onChange={(e) => setMd(e.target.value)}/>
-                </div>
-                </div> */}
-
               </div>)}
             
             {/* View File Button */}
@@ -352,7 +344,7 @@ export default function FileUpload({servicesData, title, bookingId}){
             </div>
             <br/>
             
-            {!showEdit && <div className="md-row"> 
+            {!showEdit && (title==="XRAY-ECG" || title ==="ULTRASOUND") && <div className="md-row"> 
             <h3 className="md-label label">MD: </h3>
             <input 
             type="text"
@@ -367,7 +359,7 @@ export default function FileUpload({servicesData, title, bookingId}){
 
           
 
-            {showEdit && <div className="md-row"> 
+            {showEdit && (title==="XRAY-ECG" || title ==="ULTRASOUND") && <div className="md-row"> 
             <h3 className="md-label label">MD: </h3>
             <input 
             type="text"

@@ -131,40 +131,6 @@ export default function ViewBooking() {
     .catch((error)=>{console.log(error)})
   },[])
 
-  // Get customer details
-  // React.useEffect(()=>{
-  //   axios({
-  //     method: 'post',
-  //     url: window.$link + 'customers/show/' + customerId,
-  //     withCredentials: false, 
-  //     params: {
-  //         api_key: window.$api_key,
-  //         token: userToken.replace(/['"]+/g, ''),
-  //         requester: userId,
-  //     }})
-  //   .then((response)=>{
-  //     setFirstName(response.data.first_name);
-  //     setMiddleName(response.data.middle_name);
-  //     setLastName(response.data.last_name);
-
-  //     var birthDate = new Date(response.data.birthdate);
-  //     setBirthDate(birthDate.toDateString());
-
-  //     setGender(response.data.gender);
-
-  //     var presentDate = new Date();
-  //     var age = presentDate.getFullYear() - birthDate.getFullYear();
-  //     var m = presentDate.getMonth() - birthDate.getMonth();
-  //     if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
-  //       {age--;}
-  //     setAge(age);
-
-  //     setContactNo(response.data.contact_no);
-  //     setEmail(response.data.email);
-  //     setAddress(response.data.address);
-  //   })
-  //   .catch((error)=>{console.log(error)})
-  // },[customerId])
 
   // Lab tests
   React.useEffect(()=>{
@@ -270,7 +236,9 @@ export default function ViewBooking() {
 
   const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
 
-  const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests"||info.key==="ultrasound")
+  const ultrasound = labTests.filter((info) => info.key === "ultrasound")
+
+  const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests")
 
  
   return(
@@ -372,7 +340,14 @@ export default function ViewBooking() {
         {xray.length!=0 && 
           <FileUpload 
             servicesData={xray}
-            title={"XRAY"}
+            title={"XRAY-ECG"}
+            bookingId = {bookingId}
+          />}
+
+        {ultrasound.length!=0 && 
+          <FileUpload 
+            servicesData={ultrasound}
+            title={"ULTRASOUND"}
             bookingId = {bookingId}
           />}
 
