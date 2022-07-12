@@ -503,7 +503,7 @@ function AddInvoicePayment() {
   function submit (e) {
     e.preventDefault();
 
-    var invoice_nos = [];
+    var invoice_nos = 0;
     var prices = [];
     var totals = [];
 
@@ -553,9 +553,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [infoId],
-                prices: [info[0].price],
-                totals: [info[0].total], 
+                invoice_no: infoId,
+                // prices: [info[0].price],
+                // totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 check_no: checkNo,
@@ -586,9 +586,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [infoId],
-                prices: [info[0].price],
-                totals: [info[0].total], 
+                invoice_no: infoId,
+                // prices: [info[0].price],
+                // totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 cardName: cardName,
@@ -621,9 +621,9 @@ function AddInvoicePayment() {
             params: {
                 token: userToken,
                 api_key: window.$api_key, 
-                invoice_nos: [infoId],
-                prices: [info[0].price],
-                totals: [info[0].total], 
+                invoice_no: infoId,
+                // prices: [info[0].price],
+                // totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 other_source: source,
@@ -734,26 +734,24 @@ function AddInvoicePayment() {
             </button>
         ) 
     }
-
+ 
     function paymentDetails() {
+        var new_payments = payments[0];
+        var date = new Date(payments[0].added_on);
+        var formattedDate = date.toDateString().split(" ");
+
         return (
             <div className="paymentDetails">
                 <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
-                {payments.map((data,index) => {
-                    var date = new Date(data.added_on);
-                    var formattedDate = date.toDateString().split(" ");
-                    return(
                     <div>
                         <span className="label">PAYMENT DATE: <b className="invoice-total"> {formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]} </b></span>
                         <br/>
-                        <span className="label">PAYMENT TYPE: <b className="invoice-total"> {data.type} </b></span>
+                        <span className="label">PAYMENT TYPE: <b className="invoice-total"> {new_payments.type} </b></span>
                         <br/>
-                        <span className="label">PAID AMOUNT: <b className="invoice-total">P {parseFloat(data.amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
+                        <span className="label">PAID AMOUNT: <b className="invoice-total">P {parseFloat(new_payments.amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
                         <br/>
                         <br/>
                     </div>
-                    )
-                })}
             </div>
         )
     }
