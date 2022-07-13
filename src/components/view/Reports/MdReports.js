@@ -49,7 +49,6 @@ function MdReports() {
           requester: userId,
         },
       }).then(function (response) {
-          console.log(response)
           var data = response.data.data.data;
 
           data.map((value, index) => {
@@ -58,6 +57,7 @@ function MdReports() {
             info.referrals = value.referrals == null ? "0" : value.referrals;
             info.xray = value.xray == null ? "0" : value.xray;
             info.ecg = value.ecg == null ? "0" : value.ecg;
+            info.ultrasound = value.ultrasound == null ? "0" : value.ultrasound;
             setMds(oldArray => [...oldArray, info]);
 
             if(data.length - 1 == index) {
@@ -83,7 +83,7 @@ function MdReports() {
             buttons={buttons} 
             tableName={'Unpaid Invoice Report'}
             tableData={mds}
-            tableHeaders={['MD NAME', 'REFERRAL', 'XRAY','ECG']}
+            tableHeaders={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND']}
             status={printReadyFinal}
              />
           <Table
@@ -91,7 +91,7 @@ function MdReports() {
             type={'no-action'}
             tableData={mds}
             rowsPerPage={100}
-            headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG']}
+            headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

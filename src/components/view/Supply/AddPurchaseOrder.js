@@ -25,6 +25,7 @@ function AddPurchaseOrder() {
   //states
   const PoInfoData = {
     purchase_date: "",
+    payment_date:"",
     supplier: "",
     forwarder: "",
     delivery_date: "",
@@ -213,6 +214,7 @@ function AddPurchaseOrder() {
           api_key: window.$api_key,
           supplier: info.supplier,
           purchase_date: info.purchase_date,
+          payment_date: info.payment_date,
           delivery_date: info.delivery_date,
           delivery_address: info.delivery_address,
           requisitioner: info.requisitioner,
@@ -296,6 +298,14 @@ function AddPurchaseOrder() {
               </div>
               <div className="col-sm-8">
                 <input type="date" name="purchase_date" className="item-name-input" onChange={setInfo}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-4">
+                <span className="item-id-label">PAYMENT DATE</span>
+              </div>
+              <div className="col-sm-8">
+                <input type="date" name="payment_date" className="item-name-input" onChange={setInfo}/>
               </div>
             </div>
             <div className="row">
@@ -417,7 +427,6 @@ function AddPurchaseOrder() {
               <span className="item-name-label">DISCOUNT TOTAL</span>
           </div>
           <div className="col-sm-2">
-              {/* <span>P {discount != null ? parseFloat(discount).toFixed(2) : "0.00"}</span> */}
               P <input type="number" name="general_discount" className="discount-input" onChange={(e) => setGeneralDiscount(e.target.value)}/>
           </div>
         </div>     

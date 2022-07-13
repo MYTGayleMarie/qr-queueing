@@ -127,7 +127,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if (type == 'receives' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={index == 3 ? "text-right" : data.val}>{data.val}</td>)}
+            <td key={index} data-heading={data.key} className={index == 5 ? "text-right" : data.val}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.po_no)}>REVIEW</button></td>
             </tr>
         }

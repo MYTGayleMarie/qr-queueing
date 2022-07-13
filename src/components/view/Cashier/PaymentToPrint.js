@@ -419,10 +419,6 @@ export class PaymentToPrint extends React.PureComponent {
                                 </td>
                               </tr>
                         </table>
-                        {/* <div className='mx-0'>
-                                <span className="data">Encoded on: {formattedEncodedDate[1] + ' ' + formattedEncodedDate[2] + ', ' + getTime(encodedDate)}</span>
-                                <span className="data">Printed on: {today[1] + ' ' + today[2] + ', ' + today[3] + ', ' + curTime}</span>
-                        </div> */}
                 </div>
             )
         }
@@ -512,46 +508,13 @@ export class PaymentToPrint extends React.PureComponent {
         <style>{getPageMargins()}</style>
         <div className="print-area">
 
-            {/* {
-                printTickets.map((data, index) => {
-                  if(printTickets.length-1===index){
-                    this.props.setPrintReadyFinal(true)
-                  }
-                  return (
-                      <div className="print-row">
-                          {data.map((ticket) => {
-                            //    console.log(this.props.discountCode);
-                               return (
-                                generateTickets(
-                                this.props.queue,
-                                this.props.patientId,
-                                this.props.name,
-                                this.props.age,
-                                this.props.gender,
-                                this.props.contact,
-                                this.props.email,
-                                this.props.address,
-                                this.props.referral,
-                                this.props.isCompany,
-                                this.props.payment,
-                                this.props.result,
-                                ticket.name, 
-                                ticket.services,
-                                this.props.discountCode))
-                          })}
-                      </div>
-                  )
-                
-                })
-            } */}
-
             {
               ticketsBy2.map((by4, index1)=>{
-                 if(ticketsBy2.length-1===index1){
-                    setTimeout(()=>{
-                      this.props.setPrintReadyFinal(true)
-                    }, 3000)
-                  }
+                //  if(ticketsBy2.length-1===index1){
+                //     setTimeout(()=>{
+                //       this.props.setPrintReadyFinal(true)
+                //     }, 3000)
+                //   }
                 return (
                   <div className="print-break">
                     {by4.map((by2, index2)=>{
