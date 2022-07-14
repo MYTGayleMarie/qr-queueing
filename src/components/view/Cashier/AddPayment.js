@@ -484,9 +484,62 @@ function AddPayment() {
         });
     }
 
+    //GET OPTION DETAILS
+    const [labOptions, setLabOptions] = useState([])
+    const [packageOptions, setPackageOptions] = useState([])
+    React.useEffect(() => {
+        labOptions.length = 0;  
+        axios({
+            method: 'post',
+            url: window.$link + '/lab_tests/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+          console.log(response)
+            response.data.lab_tests.filter(info=>info.is_deleted==="0").map((data) => {
+                var info = {};
+
+                info.labTestId = data.id
+                info.price = data.price
+                info.name = data.name;
+                info.type = "lab";
+
+                setLabOptions(oldArray => [...oldArray, info]);
+            });
+        }).then(function (error) {
+            console.log(error);
+        });
+
+        axios({
+            method: 'post',
+            url: window.$link + '/packages/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            response.data.packages.map((data) => {
+                var info = {};
+                info.labTestId = data.id
+                info.price = data.price
+                info.name = data.name;
+                info.type = "package";
+
+                setPackageOptions(oldArray => [...oldArray, info]);
+            });
+        }).then(function (error) {
+            console.log(error);
+        });
+    },[]);
     function showAvailableLab() {
-        const labServices = getAllLabServices();
-        const orderedServices = labServices.sort(function(a, b) {
+        // const labServices = getAllLabServices();
+        const orderedServices = labOptions.sort(function(a, b) {
             var textA = a.name.toUpperCase();
             var textB = b.name.toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
@@ -506,8 +559,8 @@ function AddPayment() {
     }
 
     function showAvailablePackages() {
-        const packages = getAllPackages();
-        const orderedServices = packages.sort(function(a, b) {
+        // const packages = getAllPackages();
+        const orderedServices = packageOptions.sort(function(a, b) {
             var textA = a.name.toUpperCase();
             var textB = b.name.toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
