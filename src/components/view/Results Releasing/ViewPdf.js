@@ -54,24 +54,29 @@ export default function ViewPdf(){
       // console.log(packageDetail)
       setBase64(packageDetail[0].file)
     })
-    .catch((error)=>{console.log(error)})
+    .catch((error)=>{
+      setBase64(false)
+      console.log(error)})
   }
 
   },[])
 
-// console.log(base64)
-  return(
-//    <div>
-// {type}
-// {bookingId}
-// {packageId}
-// {serviceId}
-//    </div> 
-
-
-    // <object 
-    //   data={base64}  
-    //   className="pdfObject"/>
-    <embed src={base64} className="pdfObject" />
-)
+  if(base64!==""){
+    return(
+  
+      <embed src={base64} className="pdfObject" />
+    )   
+  } else if (base64 === false) {
+    return (
+      <div>
+        <p>Error occured while loading results. Please try again</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
 }
