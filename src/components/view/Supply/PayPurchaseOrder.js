@@ -252,7 +252,7 @@ function PayPurchaseOrder() {
                     withCredentials: false, 
                     params: {
                         token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
+                        api_key: window.$api_key, 
                         po_receive_id: id,
                         type: payment,
                         amount: pay,
@@ -284,7 +284,7 @@ function PayPurchaseOrder() {
                     withCredentials: false, 
                     params: {
                         token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
+                        api_key: window.$api_key, 
                         po_receive_id: id,
                         type: payment,
                         amount: pay,
@@ -318,7 +318,7 @@ function PayPurchaseOrder() {
                     withCredentials: false, 
                     params: {
                         token: userToken,
-                        api_key: userToken.replace(/['"]+/g, ''), 
+                        api_key: window.$api_key, 
                         po_receive_id: id,
                         type: payment,
                         amount: pay,

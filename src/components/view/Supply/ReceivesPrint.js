@@ -41,6 +41,7 @@ function ReceivesPrint() {
       const [subTotal, setSubTotal] = useState("");
       const [poItems, setPoItems] = useState([]);
       const [status, setStatus] = useState("");
+      const [payDate, setPaymentDate] = useState("");
       const [paymentStatus, setPaymentStatus] = useState("");
       const [printedBy, setPrintedBy] = useState("");
       const [approvedBy, setApprovedBy] = useState("");
@@ -118,6 +119,7 @@ function ReceivesPrint() {
             //format date
             var pDate = new Date(response.data.purchase_date);
             var dDate = new Date(response.data.delivery_date);
+            var payDate = new Date(response.data.payment_date);
 
             axios({
                 method: 'post',
@@ -133,6 +135,7 @@ function ReceivesPrint() {
             }).then(function (error) {
                 console.log(error);
             })
+            console.log(response.data)
             setPurchaseDate(pDate.toDateString());
             setDeliveryDate(dDate.toDateString());
             setDeliveryAddress(response.data.delivery_address);
@@ -140,6 +143,7 @@ function ReceivesPrint() {
             setForwarder(response.data.forwarder);
             setRemarks(response.data.remarks);
             setStatus(response.data.status);
+            setPaymentDate(payDate.toDateString());
             setPaymentStatus(response.data.payment_status);
             setCompletedOn(response.data.completed_on);
             setPaidAmount(response.data.paid_amount)
@@ -199,8 +203,6 @@ function ReceivesPrint() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response.data);
-            
               response.data.map((data,index) => {
                 
                 if(data.status != "disapprove") {
@@ -228,7 +230,6 @@ function ReceivesPrint() {
               requester: userId,
             },
           }).then(function (response) {
-              console.log(response.data);
               setReceivePo(response.data);
               setIsPaid(response.data[0].paid_amount == response.data[0].grand_total ? "paid" : "unpaid")
               setGrandTotal(response.data[0].grand_total);
@@ -402,8 +403,6 @@ function ReceivesPrint() {
         setPayRedirect(true);
     }
 
-    console.log(status)
-
     //Redirections
     if(payRedirect == true) {
         var link =  "/pay-purchase-order/" + id + "/" + poId;
@@ -445,19 +444,23 @@ function ReceivesPrint() {
                         <span className='label'>SUPPLIER</span>
                         <span className='detail'>{supplier}</span>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-6">
                         <span className='label'>PURCHASE DATE</span>
                         <span className='detail'>{purchaseDate}</span>
                 </div>
             </div>
             <div className="row ">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                         <span className='label'>DELIVERY DATE</span>
                         <span className='detail'>{deliveryDate}</span>
                 </div>
+                <div className="col-sm-6">
+                        <span className='label'>PAYMENT DATE</span>
+                        <span className='detail'>{payDate}</span>
+                </div>
             </div>
             <div className="row">
-                <div className="col-sm-2">
+                <div className="col-sm-6">
                         <span className='label'>REMARKS</span>
                         <span className='detail'>{remarks}</span>
                 </div>
