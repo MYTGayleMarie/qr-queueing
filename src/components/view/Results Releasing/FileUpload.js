@@ -305,9 +305,9 @@ export default function FileUpload({servicesData, title, bookingId}){
   return(
     <div>
       <ToastContainer />
-      <div className="result-cont row">
+      <div className="result-cont row p-1 mb-5">
           <div className="col-sm-4">
-            <div className="category label">{title}</div>
+            {/* <div className="category label">{title}</div> */}
             {servicesData.map((info,index)=>
               <div className={"details"+info.id}>{info.name}</div>
             )}

@@ -174,6 +174,7 @@ export default function ViewBooking() {
               serviceDetails.name = packageCat.lab_test;
               serviceDetails.type = "package";
               serviceDetails.id = packageCat.id;
+              serviceDetails.test_id = packageCat.test_id;
               serviceDetails.packageId = info.id
               // serviceDetails.md = 
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
@@ -207,12 +208,13 @@ export default function ViewBooking() {
           else {
               serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
           }
-          console.log(info)
+          // console.log(info)
           serviceDetails.category = category.data.name;
           serviceDetails.name = info.lab_test;
           serviceDetails.type = "lab";
           serviceDetails.packageId = "0";
           serviceDetails.id = info.id;
+          serviceDetails.test_id = info.test_id;
           serviceDetails.md = info.md;
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
@@ -228,19 +230,54 @@ export default function ViewBooking() {
   // Categorize lab test
   const xray = labTests.filter((info)=>info.key==="xray"||info.key==="cardiology"||info.key==="radiology")
 
-  const hematology = labTests.filter((info)=>info.key==="hematology")
+  /****************/
+  const hematology = labTests.filter((info)=>info.key==="hematology" && info.test_id!=="8" && info.test_id!=="13" && info.test_id!=="15")
+  
+  const cbc = labTests.filter((info)=>info.test_id==="8")
 
-  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="thyroid_profile"||info.key==="tumor_markers"||info.key==="hepatitis_profile_screening"||info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
+  const esr = labTests.filter((info)=>info.test_id==="13")
 
-  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis")
+  const clotting = labTests.filter((info)=>info.test_id==="15")
 
-  const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
+  /****************/
+
+  // previously serology
+  const chemistry = labTests.filter((info)=>info.key==="chemistry")
+  const thyroid_profile = labTests.filter((info)=>info.key==="thyroid_profile")
+  const tumor_markers = labTests.filter((info)=>info.key==="tumor_markers")
+
+  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="hepatitis_profile_screening"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
+
+  /****************/
+
+  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis" &&info.test_id!=="1"  &&info.test_id!=="7" && info.test_id!=="130")
+
+  const urinalysis = labTests.filter((info)=>info.test_id==="1")
+
+  const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
+  
+  const serumPT = labTests.filter((info)=>info.test_id==="130")
+
+  /****************/
+
+  const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis" &&info.test_id!=="4")
+  
+  const fecalysis = labTests.filter((info)=>info.test_id==="4")
+
+  /****************/
 
   const ultrasound = labTests.filter((info) => info.key === "ultrasound")
 
-  const others = labTests.filter((info)=>info.key==="other_tests"||info.key==="microbiology"||info.key==="histopathology"||info.key==="covid_rapid_tests")
+  /****************/
 
- 
+  // Previously others
+  const histopathology = labTests.filter((info) => info.key === "histopathology")
+  const microbiology = labTests.filter((info) => info.key === "microbiology")
+
+
+  const others = labTests.filter((info)=>info.key==="other_tests" ||info.key==="covid_rapid_tests")
+
+ console.log(labTests)
   return(
     <div>
       <Navbar />
@@ -310,53 +347,204 @@ export default function ViewBooking() {
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
         <div className="personal-data-cont">
 
-        {clinicalUrinalyis.length!=0 && 
-          <FileUpload 
+        
+        {/* CLINICAL MICROSCOPY URINALYSIS */}
+
+        {(clinicalUrinalyis.length!=0||urinalysis.length!=0||spermAnalysis.length!=0||serumPT.length!=0) &&  
+        <div>
+          <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
+          
+          {urinalysis.length!=0 &&<FileUpload 
+            servicesData={urinalysis}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}
+          />}
+          {serumPT.length!=0 &&<FileUpload 
+            servicesData={serumPT}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}
+          />}
+          {spermAnalysis.length!=0 &&<FileUpload 
+            servicesData={spermAnalysis}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}
+          />}
+          {clinicalUrinalyis.length!=0 &&<FileUpload 
             servicesData={clinicalUrinalyis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
           />}
 
-        {clinicalFecalysis.length!=0 && 
-          <FileUpload 
-            servicesData={clinicalFecalysis}
-            title={"CLINICAL MICROSCOPY FECALYSIS"}
-            bookingId = {bookingId}
-          />}
+          <hr className="labtest-line mb-5" />
+        </div>
+        }
 
-        {hematology.length!=0 && 
+        {/* CLINICAL URINALYSIS FECALYSIS */}
+        {clinicalFecalysis.length!=0 && 
+        <div>
+          <div className="category label">CLINICAL MICROSCOPY FECALYSIS</div>
+          {fecalysis.length!=0 &&
+            <FileUpload 
+              servicesData={fecalysis}
+              title={"CLINICAL MICROSCOPY FECALYSIS"}
+              bookingId = {bookingId}
+            />
+          }
+          {clinicalFecalysis.length!=0 &&
+            <FileUpload 
+              servicesData={clinicalFecalysis}
+              title={"CLINICAL MICROSCOPY FECALYSIS"}
+              bookingId = {bookingId}
+            />
+          }
+
+          <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* HEMATOLOGY */}
+        {(hematology.length!=0 || cbc.length!=0 || esr.length!=0 || clotting.length!=0) && 
+        <div>
+          <div className="category label">HEMATOLOGY</div>
+          {cbc.length!=0 &&
+            <FileUpload 
+              servicesData={cbc}
+              title={"HEMATOLOGY"}
+              bookingId = {bookingId}
+            />
+          }
+          {esr.length!=0 &&
+            <FileUpload 
+              servicesData={esr}
+              title={"HEMATOLOGY"}
+              bookingId = {bookingId}
+            />
+          }
+          {clotting.length!=0 &&
+            <FileUpload 
+              servicesData={clotting}
+              title={"HEMATOLOGY"}
+              bookingId = {bookingId}
+            />
+          }
+          {hematology.length!=0 &&
+            <FileUpload 
+              servicesData={hematology}
+              title={"HEMATOLOGY"}
+              bookingId = {bookingId}
+            />
+          }
+          <hr className="labtest-line mb-5" />
+
+        </div>}
+
+        {/* CHEMISTRY */}
+        {chemistry.length!=0 && 
+        <div>
+          <div className="category label">CHEMISTRY</div>
           <FileUpload 
-            servicesData={hematology}
-            title={"HEMATOLOGY"}
+            servicesData={chemistry}
+            title={"CHEMISTRY"}
             bookingId = {bookingId}
-          />}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* SEROLOGY */}
         {serology.length!=0 && 
+        <div>
+          <div className="category label">SEROLOGY</div>
           <FileUpload 
             servicesData={serology}
             title={"SEROLOGY"}
             bookingId = {bookingId}
-          />}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
 
+        {/* THYROID PROFILE */}
+        {thyroid_profile.length!=0 && 
+        <div>
+          <div className="category label">THYROID PROFILE</div>
+          <FileUpload 
+            servicesData={thyroid_profile}
+            title={"THYROID PROFILE"}
+            bookingId = {bookingId}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* TUMOR MARKERS */}
+        {tumor_markers.length!=0 && 
+        <div>
+          <div className="category label">TUMOR MARKERS</div>
+          <FileUpload 
+            servicesData={tumor_markers}
+            title={"TUMOR MARKERS"}
+            bookingId = {bookingId}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* HISTOPATHOLOGY */}
+        {histopathology.length!=0 && 
+        <div>
+          <div className="category label">HISTOPATHOLOGY</div>
+          <FileUpload 
+            servicesData={histopathology}
+            title={"HISTOPATHOLOGY"}
+            bookingId = {bookingId}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* MICROBIOLOGY */}
+        {microbiology.length!=0 && 
+        <div>
+          <div className="category label">MICROBIOLOGY</div>
+          <FileUpload 
+            servicesData={microbiology}
+            title={"MICROBIOLOGY"}
+            bookingId = {bookingId}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* XRAY ECG RADIOLOGY */}
         {xray.length!=0 && 
+        <div>
+          <div className="category label">XRAY-ECG</div>
           <FileUpload 
             servicesData={xray}
             title={"XRAY-ECG"}
             bookingId = {bookingId}
-          />}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
 
+        {/* ULTRASOUND */}
         {ultrasound.length!=0 && 
+        <div>
+          <div className="category label">ULTRASOUND</div>
           <FileUpload 
             servicesData={ultrasound}
             title={"ULTRASOUND"}
             bookingId = {bookingId}
-          />}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
 
+        {/* OTHERS */}
         {others.length!=0 && 
+        <div>
+          <div className="category label">OTHER TESTS</div>
           <FileUpload 
             servicesData={others}
             title={"OTHER TESTS"}
             bookingId = {bookingId}
-          />}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
         </div>
 
 
