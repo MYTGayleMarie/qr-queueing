@@ -134,7 +134,16 @@ function AddPayment() {
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
       content: () => componentRef.current,
-      pageStyle: () => "@page { size: letter;}"
+      pageStyle: () => `
+          @page { size: letter;}
+          @media print {
+            .print-break {
+              margin-top: 1rem;
+              display: block;
+              page-break-before: always;
+            }
+          }
+          `,
     });
 
     function handleRemove(service_id) {
