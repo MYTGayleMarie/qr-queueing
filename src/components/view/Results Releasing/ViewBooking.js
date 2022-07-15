@@ -252,9 +252,7 @@ export default function ViewBooking() {
 
   /****************/
 
-  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis" &&info.test_id!=="1"  &&info.test_id!=="7" && info.test_id!=="130")
-
-  const urinalysis = labTests.filter((info)=>info.test_id==="1")
+  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  &&info.test_id!=="7" && info.test_id!=="130")
 
   const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
   
@@ -262,9 +260,9 @@ export default function ViewBooking() {
 
   /****************/
 
-  const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis" &&info.test_id!=="4")
+  const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
   
-  const fecalysis = labTests.filter((info)=>info.test_id==="4")
+  // const fecalysis = labTests.filter((info)=>info.test_id==="4")
 
   /****************/
 
@@ -352,15 +350,15 @@ export default function ViewBooking() {
         
         {/* CLINICAL MICROSCOPY URINALYSIS */}
 
-        {(clinicalUrinalyis.length!=0||urinalysis.length!=0||spermAnalysis.length!=0||serumPT.length!=0) &&  
+        {(clinicalUrinalyis.length!=0||spermAnalysis.length!=0||serumPT.length!=0) &&  
         <div>
           <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
-          
+{/*           
           {urinalysis.length!=0 &&<FileUpload 
             servicesData={urinalysis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
-          />}
+          />} */}
           {serumPT.length!=0 &&<FileUpload 
             servicesData={serumPT}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
@@ -385,13 +383,13 @@ export default function ViewBooking() {
         {clinicalFecalysis.length!=0 && 
         <div>
           <div className="category label">CLINICAL MICROSCOPY FECALYSIS</div>
-          {fecalysis.length!=0 &&
+          {/* {fecalysis.length!=0 &&
             <FileUpload 
               servicesData={fecalysis}
               title={"CLINICAL MICROSCOPY FECALYSIS"}
               bookingId = {bookingId}
             />
-          }
+          } */}
           {clinicalFecalysis.length!=0 &&
             <FileUpload 
               servicesData={clinicalFecalysis}
