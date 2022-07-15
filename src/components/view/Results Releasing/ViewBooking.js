@@ -228,7 +228,9 @@ export default function ViewBooking() {
 
 
   // Categorize lab test
-  const xray = labTests.filter((info)=>info.key==="xray"||info.key==="cardiology"||info.key==="radiology")
+
+  const xray = labTests.filter((info)=>info.key==="xray" ||info.key==="radiology")
+  const ecg = labTests.filter((info)=>info.key==="cardiology")
 
   /****************/
   const hematology = labTests.filter((info)=>info.key==="hematology" && info.test_id!=="8" && info.test_id!=="13" && info.test_id!=="15")
@@ -509,13 +511,25 @@ export default function ViewBooking() {
            <hr className="labtest-line mb-5" />
         </div>}
 
-        {/* XRAY ECG RADIOLOGY */}
+        {/* XRAY RADIOLOGY */}
         {xray.length!=0 && 
         <div>
-          <div className="category label">XRAY-ECG</div>
+          <div className="category label">XRAY</div>
           <FileUpload 
             servicesData={xray}
-            title={"XRAY-ECG"}
+            title={"XRAY"}
+            bookingId = {bookingId}
+          />
+           <hr className="labtest-line mb-5" />
+        </div>}
+
+        {/* CARDIOLOGY */}
+        {ecg.length!=0 && 
+        <div>
+          <div className="category label">ECG</div>
+          <FileUpload 
+            servicesData={ecg}
+            title={"ECG"}
             bookingId = {bookingId}
           />
            <hr className="labtest-line mb-5" />

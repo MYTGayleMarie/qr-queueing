@@ -344,7 +344,7 @@ export default function FileUpload({servicesData, title, bookingId}){
             </div>
             <br/>
             
-            {!showEdit && (title==="XRAY-ECG" || title ==="ULTRASOUND") && <div className="md-row"> 
+            {!showEdit && (title==="XRAY" ||title==="ECG" || title ==="ULTRASOUND") && <div className="md-row"> 
             <h3 className="md-label label">MD: </h3>
             <input 
             type="text"
