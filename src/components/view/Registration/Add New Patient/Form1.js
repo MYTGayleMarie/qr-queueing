@@ -424,6 +424,7 @@ React.useEffect(() => {
                 value={address}
                 onChange={setPersonal}
                 onFocus={()=>{setRenderSuggest(true)}}
+                onBlur={()=>{setTimeout(()=>{setRenderSuggest(false)},200)}} 
                 required
               />
               <br />
@@ -446,6 +447,8 @@ React.useEffect(() => {
                 value={referral}
                 onChange={setPersonal}
                 onFocus={()=>{setRenderMDSuggest(true)}}
+                onBlur={()=>{setTimeout(()=>{setRenderMDSuggest(false)},200)}} 
+
               />
               <br />
             </div>
