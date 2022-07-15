@@ -466,15 +466,6 @@ function ReceivesPrint() {
                 </div>
             </div>
 
-            {/* <h5 className="form-categories-subheader italic">INVOICES</h5>
-            <Table
-                type={'purchase-order-invoice'}
-                clickable={true}
-                tableData={[]}
-                rowsPerPage={4}
-                headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','PAYMENT', 'ACTION']}
-                /> */}
-
             <h5 className="form-categories-subheader italic">LIST OF RECEIVED ITEMS</h5>
 
                 <div className="summary-services">

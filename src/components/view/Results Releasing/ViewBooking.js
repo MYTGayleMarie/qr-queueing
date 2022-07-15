@@ -244,11 +244,11 @@ export default function ViewBooking() {
   /****************/
 
   // previously serology
-  const chemistry = labTests.filter((info)=>info.key==="chemistry")
+  const chemistry = labTests.filter((info)=>info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
   const thyroid_profile = labTests.filter((info)=>info.key==="thyroid_profile")
   const tumor_markers = labTests.filter((info)=>info.key==="tumor_markers")
 
-  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="hepatitis_profile_screening"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
+  const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="hepatitis_profile_screening")
 
   /****************/
 
