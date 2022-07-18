@@ -110,6 +110,7 @@ function AddPayment() {
     const [source, setSource] = useState("");
     const [reference, setReference] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [printReadyFinal, setPrintReadyFinal] = useState(false);
 
     //add Test states
     const [addTestType, setAddTestType] = useState("");
@@ -1157,6 +1158,7 @@ function AddPayment() {
                             encodedOn={encodedOn}
                             referral={referral}
                             discountCode={discountCode}
+                            setPrintReadyFinal = {setPrintReadyFinal}
                         />
                 
                     </div>

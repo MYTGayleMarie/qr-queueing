@@ -93,7 +93,7 @@ function PrintBooking() {
             } else {
                 setDiscountCode("None")
             }
-            console.log(response.data.isCompany)
+
             
             axios({
                 method: 'post',
@@ -209,8 +209,6 @@ function PrintBooking() {
                             requester: userId,
                         }
                     }).then(function (response) {
-                        // console.log(response)
-                        
                         response.data.map((packageCat, index2) => {
                         // console.log(packageCat)
                         if(index2<response.data.length-1){
@@ -230,7 +228,6 @@ function PrintBooking() {
                                     requester: userId,
                                 }
                             }).then(function (category) {
-                                
                                 if(category.data.name == "Electrolytes (NaKCl,iCA)") {
                                     serviceDetails.key = "Electrolytes";
                                 }
@@ -239,13 +236,9 @@ function PrintBooking() {
                                 }
                                 serviceDetails.category = category.data.name;
                                 serviceDetails.name = packageCat.lab_test;
+                                console.log(serviceDetails)
                                 setPrintServices(oldArray => [...oldArray, serviceDetails]);
 
-                                
-
-                                // if(services.length - 1 == index1 && response.data.length - 1 == index2) {
-                                //     setPrintReadyFinal(true);
-                                // }
                             }).catch(function (error) {
                                 console.log(error);
                             })
@@ -317,9 +310,7 @@ function PrintBooking() {
                     setQueue(oldArray => [...oldArray, bookingInfo]);
                   });
     
-              }).then(function (error) {
-                    console.log(error);
-              });
+              })
         },[]);
 
     
@@ -351,13 +342,7 @@ function PrintBooking() {
           `,
     
         });
-        // @media print {
-        //     .print-row {
-        //       margin-top: 1rem;
-        //       display: block;
-        //       page-break-before: always;
-        //     }
-        //   }
+    
 
     function printButton() {
         return (
@@ -373,8 +358,8 @@ function PrintBooking() {
         return <Navigate to="/registration" />;
     }
     
-    
-
+    // console.log(printServices)
+    // console.log(packages)
   return (
       <div>
  <Navbar/>

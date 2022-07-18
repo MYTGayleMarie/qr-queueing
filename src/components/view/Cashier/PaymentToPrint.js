@@ -21,6 +21,7 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
     render() {
+        console.log(this.props)
         const presentDate = new Date();
         const curTime = presentDate.getHours() + ':' + presentDate.getMinutes();
         const today = presentDate.toDateString().split(' ')
@@ -323,7 +324,7 @@ export class PaymentToPrint extends React.PureComponent {
                         }
                     </tr>
         });
-
+        
         function generateTickets(
             queue,
             patientId,
@@ -499,9 +500,7 @@ export class PaymentToPrint extends React.PureComponent {
         const getPageMargins = () => {
             return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`;
         };
-
-
-
+        
 
       return (
         <div>
@@ -510,11 +509,11 @@ export class PaymentToPrint extends React.PureComponent {
 
             {
               ticketsBy2.map((by4, index1)=>{
-                //  if(ticketsBy2.length-1===index1){
-                //     setTimeout(()=>{
-                //       this.props.setPrintReadyFinal(true)
-                //     }, 3000)
-                //   }
+                 if(ticketsBy2.length-1===index1){
+                    setTimeout(()=>{
+                      this.props.setPrintReadyFinal(true)
+                    }, 3000)
+                  }
                 return (
                   <div className="print-break">
                     {by4.map((by2, index2)=>{

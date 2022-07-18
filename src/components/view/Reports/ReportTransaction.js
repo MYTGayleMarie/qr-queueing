@@ -133,7 +133,7 @@ function ReportTransaction() {
       });
   }, [render]);
 
-
+console.log(patientData)
 
   function filter() {}
 
