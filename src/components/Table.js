@@ -863,6 +863,29 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
 
     }
+    else if(type === 'send-out-results') {
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index} >{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+                            }
+
     else if(type === 'company-invoices') {
         const {from_date, to_date, done} = filteredData;
         return(

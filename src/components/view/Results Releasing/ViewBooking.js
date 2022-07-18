@@ -13,7 +13,7 @@ import FileUpload from './FileUpload';
 
 //css
 import '../Imaging/Imaging.css';
-import '../Results Releasing/MedTech.css';
+import './MedTech.css';
 
 //components
 import Searchbar from '../../Searchbar.js';
@@ -35,6 +35,17 @@ const filterData = {
   to_date: formattedPresentData,
 };
 
+const sendOutResults = [
+  { id: '1', 
+    file_name: 'Result 1',
+    date: 'July 18, 2022',
+  },
+  { 
+     id: '2', 
+     file_name: 'Result 2',
+     date: 'July 18, 2022',
+  },
+]
 
 
 export default function ViewBooking() {
@@ -558,6 +569,45 @@ export default function ViewBooking() {
         </div>}
 
         </div>
+        
+        {/* SEND OUT RESULTS */ }
+        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
+        <div className="personal-data-cont">
+          <button className='upload-res-btn'>UPLOAD FILE</button>
+          {/* <div className='row'>
+          <h6 className='files-uploaded'>Files Uploaded</h6>
+          </div> */}
+        </div>
+        <div className='row'>
+            <Table
+                type={'send-out-results'}
+                withSubData={false}
+                tableData={sendOutResults}
+                rowsPerPage={5}
+                headingColumns={[
+                'ID',
+                'FILE NAME',
+                'DATE',
+                ]}
+                />
+              </div>
+
+
+        {/* <Table
+            type={'medtech'}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            rowsPerPage={20}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
+            filteredData={filteredData}
+            setFilter={setFilter}
+            filter={filter}
+            setRender={setRender}
+            render={render}
+            givenClass={"register-mobile"}
+            link={viewBooking}
+            role={role}
+            userId={userId}
+          /> */}
 
 
 

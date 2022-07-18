@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //css
-import "../Reports/Reports.css"
+import "./Reports.css"
 // components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
