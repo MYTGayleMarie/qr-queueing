@@ -52,6 +52,9 @@ function Login() {
         })
         .catch(function (error) {
           toast.error('Invalid Login');
+          setTimeout(() => {
+            refreshPage();
+          },2000);
         });
     }
 

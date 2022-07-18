@@ -115,6 +115,7 @@ function ReportHomeServices() {
 
   function filter() {}
 
+
   return (
     <div>
       <Navbar />
@@ -136,7 +137,7 @@ function ReportHomeServices() {
           <Table
             clickable={false}
             type={'no-action'}
-            tableData={homeServices}
+            tableData={homeServices.sort((a,b) => (a.booking_number > b.booking_number ? 1 : ((b.booking_number > a.booking_number) ? -1 : 0)))}
             rowsPerPage={100}
             headingColumns={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'HOME SERVICE FEE', 'TOTAL AMOUNT']}
             filteredData={filteredData}
