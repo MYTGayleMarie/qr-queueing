@@ -9,7 +9,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, download}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -219,6 +219,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => endPromo(row.id)}>END PROMO</button></td>
+            </tr>
+        }
+        else if(type === 'send-out-results'){
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => download(row.id)}>DOWNLOAD</button></td>
             </tr>
         }
         else if (type === 'sales') {
@@ -873,12 +880,15 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
-                                <th key={index} >{col}</th>
+                                <th key={index}>{col}</th>
                             ))}
                         </tr>
                     </thead>
+
                     <tbody>
                         {data}
+                        {/* <button className="filter-btn" name="download" onClick={setRender != null ? (e) => setRender(!render) : ""}>DOWNLOAD</button> */}
+
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>

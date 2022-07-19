@@ -1,25 +1,29 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { RingLoader } from "react-spinners";
 import { Navigate } from 'react-router-dom';
 import uploadIcon from '../../../images/icons/upload-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
 import FileUpload from './FileUpload';
 
+
 //css
 import '../Imaging/Imaging.css';
 import './MedTech.css';
-
+// import '..Loader/PageLoader.css';
 //components
 import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+
+
 
 //variables
 var servId = "";
@@ -39,6 +43,7 @@ const sendOutResults = [
   { id: '1', 
     file_name: 'Result 1',
     date: 'July 18, 2022',
+    
   },
   { 
      id: '2', 
@@ -74,6 +79,15 @@ export default function ViewBooking() {
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
+  const [loading, setLoading] = useState(true)
+// React.useEffect(()=>
+// {
+//   // setLoading(true)
+//   // setTimeout(()=>
+//   // {
+//   //   setLoading(false)
+//   // }, 2000)
+// },[])
 
   // Get booking details by searched booking id
   React.useEffect(()=>{
@@ -100,6 +114,7 @@ export default function ViewBooking() {
             requester: userId,
         }})
       .then((response)=>{
+        setLoading(false)
         setFirstName(response.data.first_name);
         setMiddleName(response.data.middle_name);
         setLastName(response.data.last_name);
@@ -290,7 +305,9 @@ export default function ViewBooking() {
 
  console.log(labTests)
   return(
+   
     <div>
+
       <Navbar />
       <div className="active-cont">
       <Fragment>
@@ -299,11 +316,17 @@ export default function ViewBooking() {
             title="RESULTS RELEASING MANAGER"
             />
      
- 
-          <div>
+     <div >
+     <div className='spinner d-flex justify-content-center'>
+        
+          {loading &&
+            <RingLoader color={'#3a023a'} loading={loading} size={200} />
+          }
+         </div>
         {/* PATIENT INFO  */}
+        {!loading && <>
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
-
+        
             <div className="personal-data-cont">
             <div className="row">
                 <div className="col-sm-4">
@@ -588,40 +611,20 @@ export default function ViewBooking() {
                 'ID',
                 'FILE NAME',
                 'DATE',
+                'ACTION',
                 ]}
                 />
               </div>
-
-
-        {/* <Table
-            type={'medtech'}
-            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
-            rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
-            filteredData={filteredData}
-            setFilter={setFilter}
-            filter={filter}
-            setRender={setRender}
-            render={render}
-            givenClass={"register-mobile"}
-            link={viewBooking}
-            role={role}
-            userId={userId}
-          /> */}
-
-
-
+              </>}
         </div>
-
-
-
+       
+        <br />
+        <br />
+        <br />
         
-        
-        <br />
-        <br />
-        <br />
-
       </Fragment>
       </div>
+      
     </div>
+    
   )}
