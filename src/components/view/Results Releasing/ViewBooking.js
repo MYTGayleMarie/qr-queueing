@@ -594,14 +594,14 @@ export default function ViewBooking() {
         </div>
         
         {/* SEND OUT RESULTS */ }
-        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
+        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
         <div className="personal-data-cont">
           <button className='upload-res-btn'>UPLOAD FILE</button>
-          {/* <div className='row'>
+          <div className='row'>
           <h6 className='files-uploaded'>Files Uploaded</h6>
-          </div> */}
-        </div>
-        <div className='row'>
+          </div>
+        </div> */}
+        {/* <div className='row'>
             <Table
                 type={'send-out-results'}
                 withSubData={false}
@@ -614,7 +614,7 @@ export default function ViewBooking() {
                 'ACTION',
                 ]}
                 />
-              </div>
+              </div> */}
               </>}
         </div>
        

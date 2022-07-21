@@ -21,7 +21,6 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
     render() {
-        console.log(this.props)
         const presentDate = new Date();
         const curTime = presentDate.getHours() + ':' + presentDate.getMinutes();
         const today = presentDate.toDateString().split(' ')

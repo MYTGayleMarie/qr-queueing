@@ -69,7 +69,6 @@ export default function MedTech() {
               bookingDetails.id = booking.id;
               bookingDetails.name = booking.customer;
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.serviceType = booking.service_type;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.uploadStatus = booking.upload_status;
               // bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
@@ -107,8 +106,6 @@ export default function MedTech() {
 
 
   function searchBookingId(){
-    // const results = patientData.filter((info)=>info.id==bookingId)
-    // console.log(results)
     id = bookingId
     setRedirectBooking(true)
   }
@@ -158,7 +155,7 @@ export default function MedTech() {
             type={'medtech'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE','PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

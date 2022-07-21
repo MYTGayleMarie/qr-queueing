@@ -33,9 +33,10 @@ function Receives() {
     document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [poData, setPoData] = useState([]);
+    const [render,setRender] = useState([])
 
     //redirect
-    const [redirect, setRedirect] = useState(false);
+    const [redirect, setRedirect] = useState(false); 
 
     React.useEffect(() => {
         poData.length = 0;
@@ -109,7 +110,7 @@ function Receives() {
         }).catch(function (error) {
             console.log(error);
         });
-    },[filteredData]);
+    },[render]);
 
     function view(receiveId, poId) {
         id = receiveId;
@@ -145,6 +146,8 @@ function Receives() {
                 filteredData={filteredData}
                 setFilter={setFilter}
                 link={view}
+                setRender={setRender}
+                render={render}
             />
             </Fragment>
         </div>
