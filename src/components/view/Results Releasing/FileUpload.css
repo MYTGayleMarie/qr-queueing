@@ -1,3 +1,8 @@
+.whole-cont{
+  margin-right: 0.5rem !important;
+  z-index: 1;
+
+}
 .md-row{
   display: flex;
 
@@ -15,3 +20,14 @@
   margin-right: 0.5rem !important;
 }
 
+/* .results-cont{
+  height:fit-content;
+  /* margin-bottom: 3rem !important; */
+  .multiple-cont{
+    margin:auto;
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    /* align-items: center; */
+    
+  }

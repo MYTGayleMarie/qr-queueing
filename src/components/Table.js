@@ -3,17 +3,22 @@ import PropTypes from 'prop-types';
 import useTable from "../utilities/Pagination";
 import TableFooter from "./TableFooter";
 import { Link, NavLink } from 'react-router-dom';
+import { RingLoader } from "react-spinners";
+import PageLoader from "./view/Loader/PageLoader";
+
 
 //css 
 import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, download}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, sendOut, useLoader = false, isReady}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
-    const {slice, range} = useTable(tableData, page, rowsPerPage);
+    const {slice, range} = useTable(tableData, page, rowsPerPage);  
+    const [loading, setLoading] = useState(true);
+
 
     let tableClass = 'table-container__table';
 
@@ -225,7 +230,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => download(row.id)}>DOWNLOAD</button></td>
+            <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>SEND OUT</button></td>
             </tr>
         }
         else if (type === 'sales') {
@@ -340,8 +345,11 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     
         return(
             <div className="table-container">
+                
+       
                 <div className="search-table-container row">
-
+               
+       
                 <div className="col-sm-2">
                     {totalCount != null && (
                         <div className="total-count-container">
@@ -353,8 +361,14 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
+            {/* <div>
+            {loading &&
+        <RingLoader color={'#3a023a'} loading={loading} size={200} />
+      }   </div> */}
                 </div>
-                </div>
+                {/* {!loading && <> */}
+
                 <table className={tableClass}>
                     <thead>
                         <tr>
@@ -364,9 +378,11 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
+                    {/* {!isReady && useLoader ? <PageLoader tableHeaders={headingColumns}/> : data} */}
                         {data}
                     </tbody>
                 </table>
+              {/* </> }  */}
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
@@ -874,7 +890,11 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
-
+                <div className="col-sm-10 d-flex justify-content-end">
+                    {/* <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} /> */}
+                    {/* <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>SEND</button> */}
+                </div>
                 </div>
                 <table className={tableClass}>
                     <thead>

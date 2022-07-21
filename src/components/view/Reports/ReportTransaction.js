@@ -7,6 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { getTime } from '../../../utilities/Common';
+import { RingLoader } from "react-spinners";
+import PageLoader from "../Loader/PageLoader";
+
+
 
 //components
 import Header from '../../Header.js';
@@ -35,7 +39,8 @@ function ReportTransaction() {
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
-  
+  const [loading, setLoading] = useState(true)
+
   React.useEffect(() => {
     patientData.length = 0;
     axios({
@@ -151,6 +156,13 @@ console.log(patientData)
             tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', ' DISCOUNT', 'MODE OF PICKUP']}
             status={printReadyFinal}
              />
+             <div className='spinner d-flex justify-content-center'>
+        
+        {/* {loading &&
+          <RingLoader color={'#3a023a'} loading={loading} size={200} />
+        } */}
+       </div>
+       {/* {!loading && <> */}
           <Table
             clickable={false}
             type={'transaction'}
@@ -163,10 +175,14 @@ console.log(patientData)
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            useLoader={true}
+            // useLoader={true}
+
           />
 
 
           <ToastContainer hideProgressBar={true} />
+          {/* </>} */}
         </Fragment>
       </div>
     </div>

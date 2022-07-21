@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import "./FileUpload.css"
+import "./FileUpload.css";
+import './MedTech.css';
 
 const userToken = getToken();
 const userId = getUser();
@@ -304,6 +305,7 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   return(
     <div>
+      <div className="whole-cont">
       <ToastContainer />
       <div className="result-cont row p-1 mb-5">
           <div className="col-sm-4">
@@ -369,12 +371,40 @@ export default function FileUpload({servicesData, title, bookingId}){
             />
             <button className="submit-btn md-button" onClick={submitMD} disabled={doctorName? false:true}>Save</button>
             </div>}
-
-              
-          </div>  
-                  
+          </div>          
       </div>
+      </div>
+     {/* <button className="upload-res-btn" onClick={onButtonClick}>UPLOAD FILE</button> */}
+
       
+      {/* <div>
+            <div className="multiple-cont">
+            <input 
+                ref={inputRef} 
+                type="file"                
+                id="pdftobase64"
+                name="pdftobase64" 
+                accept="application/pdf"
+                className="input-file-upload"
+                onChange={(e)=>convertToBase64(e)}
+                />
+            <tr3>
+            File Upload Button
+            <td>
+            {(fileLength==0&&withResults==false) &&(<button className="upload-res-btn" onClick={onButtonClick}>UPLOAD FILE</button>)}
+            </td></tr3>
+            {/* File Name and Delete Button */}
+            {/* {(fileLength!=0&&withResults==false) && (<div className="file-upload-remove">
+                <img src={pdfIcon} alt="pdf" className="pdf-icon"/>
+                <p className="file-name">{fileName}</p>
+                <button className="delete-btn" onClick={removeFile}><FontAwesomeIcon icon={"minus-square"} alt={"minus"} aria-hidden="true" className="delete-icon"/></button>
+                <button className="submit-btn" onClick={submitPdf}>SAVE</button>
+
+              </div>)}
+              </div>
+              </div>   */}
+              
+
     </div>
   )
 

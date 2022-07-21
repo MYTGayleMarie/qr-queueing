@@ -324,7 +324,7 @@ export default function ViewBooking() {
           }
          </div>
         {/* PATIENT INFO  */}
-        {!loading && <>
+     
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
         
             <div className="personal-data-cont">
@@ -596,12 +596,13 @@ export default function ViewBooking() {
         {/* SEND OUT RESULTS */ }
         {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
         <div className="personal-data-cont">
-          <button className='upload-res-btn'>UPLOAD FILE</button>
-          <div className='row'>
-          <h6 className='files-uploaded'>Files Uploaded</h6>
-          </div>
-        </div> */}
-        {/* <div className='row'>
+        <button className="upload-res-btn" >UPLOAD FILE</button>
+          {/* <FileUpload 
+            servicesData={serumPT}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}/> */}
+        </div>
+        <div className='row'>
             <Table
                 type={'send-out-results'}
                 withSubData={false}

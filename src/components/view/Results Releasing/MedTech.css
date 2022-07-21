@@ -94,6 +94,27 @@
   flex-direction: row;
 }
 
+.email-btn {
+  background: #55073A;
+  position: absolute;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color:#ffffff;
+  right: 30%;
+  background-size: 20%;
+}
+.pass-btn {
+  background: #55073A;
+  position: absolute;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color:#ffffff;
+  right: 30%;
+  /* bottom: 15%; */
+}
+
 /* 
 
 .file-upload{
