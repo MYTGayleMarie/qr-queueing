@@ -35,6 +35,7 @@ function ReleaseItems() {
     const [releaseData, setReleaseData] = useState([]);
     const [filteredData, setFilter] = useForm(filterData);
     const [redirect, setRedirect] = useState(false);
+    const [render, setRender] = useState([]);
 
     function review(releaseId) {
         id = releaseId;
@@ -94,7 +95,7 @@ function ReleaseItems() {
           .catch(function (error) {
             console.log(error);
           });
-      }, [filteredData]);
+      }, [render]);
 
       if (redirect == true) {
         var link = '/review-release/' + id;
@@ -115,10 +116,12 @@ function ReleaseItems() {
             <Table
                 type={'release'}
                 clickable={true}
-                tableData={releaseData}
+                tableData={releaseData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
                 rowsPerPage={4}
                 headingColumns={['ID','ITEMS', 'REQUISTIONER','GRAND TOTAL', 'REMARKS', 'ACTION']}
                 filteredData={filteredData}
+                setRender={setRender}
+                render={render}
                 setFilter={setFilter}
                 link={review}
             />

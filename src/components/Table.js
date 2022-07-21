@@ -201,7 +201,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if(type === "add-invoice") {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 && index!=2 ? "P " + parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)}
             </tr>
         }
         else if(type === 'companies') {

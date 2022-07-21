@@ -68,7 +68,6 @@ function ReportTransaction() {
             },
           })
             .then(function (details) {
-              console.log(details)
               var bookingTime = new Date(booking.booking_time);
               var formattedBookingTime = bookingTime.toDateString().split(" ");
 
@@ -101,7 +100,7 @@ function ReportTransaction() {
                   finalArray.map((test,index) => {
                     if(test.lab_test != null) {
                         if(finalArray.length - 1 != index){
-                            tests += test.lab_test + ",";
+                            tests += test.lab_test + ", ";
                         }else {
                             tests += test.lab_test;
                         }

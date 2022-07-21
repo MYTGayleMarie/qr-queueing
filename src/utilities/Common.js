@@ -59,11 +59,12 @@ export const removeUserSession = () => {
     refreshPage();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('role_id')
     localStorage.removeItem('token_expiry');
 }
 
 //set the token and user from local storage
-export const setUserSession = (token, user) => {
+export const setUserSession = (token, user,token_expiry) => {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
 }

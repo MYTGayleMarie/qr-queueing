@@ -52,6 +52,7 @@ function AddInvoice() {
   //Discount Details
   const [discountDetails, setDiscountDetails] = useState("");
   const [grandTotal, setGrandTotal] = useState(0);
+  const [qty, setQty] = useState(0);
 
   //Redirection
   const [toAddPayment, setToAddPayment] = useState(false);
@@ -121,6 +122,8 @@ function AddInvoice() {
     }).then(function (response){
       // console.log(response)
       var output = [];
+      setGrandTotal(response.data.data.total);
+      setQty(response.data.data.quantity);
       var array = response.data.data.particulars;
          array.forEach(function(item, index) {
              var existing = output.filter(function(v, i) {
@@ -148,18 +151,17 @@ function AddInvoice() {
     setInfo([])
     var temp_total = 0
     particulars.map((arr, index)=>{
-      var amt = arr.total_amount.split(" ");
+      var amt = arr.grand_total.split(" ");
       amt.map((temp_amt, index) => {
         var info = {};
         var date = new Date(arr.booking_time)
         var formattedDate = date.toDateString().split(" ")
         const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
         info.date=temp_date
-        // info.discount_code = arr.discount_code
         info.price = temp_amt
-        temp_total = parseFloat(info.price) + parseFloat(temp_total)
+        info.booking = arr.customer.length
+        temp_total = (parseFloat(info.price)*parseFloat(info.booking)) + parseFloat(temp_total)
         info.total = temp_total
-        setGrandTotal(grandTotal+temp_total)
         setInfo(oldArray=>[...oldArray, info])
       })
     })
@@ -297,7 +299,7 @@ function AddInvoice() {
                     type={'add-invoice'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['DATE','PRICE', 'TOTAL']}
+                    headingColumns={['DATE','PRICE', 'QTY','TOTAL']}
                     givenClass={'company-mobile'}
                 />
                 )}
@@ -320,7 +322,7 @@ function AddInvoice() {
 
                 <div className="po-details">
                     {particulars.length != 0 && (
-                        <div className='label'>PARTICULARS<br/>Total: {info.length}<br/> </div>
+                        <div className='label'>PARTICULARS<br/>Total: {qty}<br/> </div>
                     )}
 
                     {particulars.map((data,index) => {
