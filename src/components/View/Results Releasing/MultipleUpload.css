@@ -1,0 +1,22 @@
+.addfile-res-btn{
+    position: absolute;
+    background-color: darkseagreen;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    color:#ffffff;
+    margin: 3px;
+    left: 17%;
+}
+
+.multipleupload-res-btn{
+    position: absolute;
+    background: #55073A;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    color:#ffffff;
+    margin: 3px;
+    left: 40%;
+    /* top: 100%; */
+}

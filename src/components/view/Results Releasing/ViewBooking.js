@@ -11,7 +11,7 @@ import uploadIcon from '../../../images/icons/upload-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
 import FileUpload from './FileUpload';
-
+import MultipleUpload from './MultipleUpload';
 
 //css
 import '../Imaging/Imaging.css';
@@ -596,7 +596,11 @@ export default function ViewBooking() {
         {/* SEND OUT RESULTS */ }
         <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
         <div className="personal-data-cont">
-        <button className="upload-res-btn" >UPLOAD FILE</button>
+          {/* <input type="text" name="email">Email</input>
+          <input  className="addfile-res-btn" type="file"  name="Email"/> */}
+        {/* <button className="upload-res-btn" >UPLOAD FILE</button> */}
+        {/* <h2>TechGeekNext Multiple File Upload Example</h2> */}
+        <MultipleUpload />
           {/* <FileUpload 
             servicesData={serumPT}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
@@ -612,7 +616,7 @@ export default function ViewBooking() {
                 'ID',
                 'FILE NAME',
                 'DATE',
-                'ACTION',
+                // 'ACTION',
                 ]}
                 />
               </div>
