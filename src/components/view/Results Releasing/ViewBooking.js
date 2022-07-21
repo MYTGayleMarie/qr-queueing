@@ -324,7 +324,7 @@ export default function ViewBooking() {
           }
          </div>
         {/* PATIENT INFO  */}
-     
+           {!loading && <>
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
         
             <div className="personal-data-cont">
@@ -592,19 +592,11 @@ export default function ViewBooking() {
         </div>}
 
         </div>
-        
+       
         {/* SEND OUT RESULTS */ }
         <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
         <div className="personal-data-cont">
-          {/* <input type="text" name="email">Email</input>
-          <input  className="addfile-res-btn" type="file"  name="Email"/> */}
-        {/* <button className="upload-res-btn" >UPLOAD FILE</button> */}
-        {/* <h2>TechGeekNext Multiple File Upload Example</h2> */}
         <MultipleUpload />
-          {/* <FileUpload 
-            servicesData={serumPT}
-            title={"CLINICAL MICROSCOPY URINALYSIS"}
-            bookingId = {bookingId}/> */}
         </div>
         <div className='row'>
             <Table
@@ -620,6 +612,7 @@ export default function ViewBooking() {
                 ]}
                 />
               </div>
+              </>}
         </div>
        
         <br />
@@ -627,8 +620,9 @@ export default function ViewBooking() {
         <br />
         
       </Fragment>
-    
+  
       </div>
+    
     </div>
   )
 }
