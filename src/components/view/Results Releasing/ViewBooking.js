@@ -594,7 +594,7 @@ export default function ViewBooking() {
         </div>
         
         {/* SEND OUT RESULTS */ }
-        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3>
+        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
         <div className="personal-data-cont">
           {/* <input type="text" name="email">Email</input>
           <input  className="addfile-res-btn" type="file"  name="Email"/> */}
@@ -619,8 +619,7 @@ export default function ViewBooking() {
                 // 'ACTION',
                 ]}
                 />
-              </div> */}
-              </>}
+              </div>
         </div>
        
         <br />
@@ -628,8 +627,8 @@ export default function ViewBooking() {
         <br />
         
       </Fragment>
-      </div>
-      
-    </div>
     
-  )}
+      </div>
+    </div>
+  )
+}
