@@ -473,6 +473,18 @@ function Reports() {
                         disable={"today"}
                     /> }
                 </div>
+                <div className="col-sm-4">
+                  {role != 3 && <Card 
+                        totalData={3}
+                        todayData={2}
+                        link={"/reports-results-releasing"}
+                        title='Released Items'
+                        color='blue'
+                        // disable={"today"}
+                    /> }
+                </div>
+            </div>
+            <div className="row">
             </div>
             </Fragment>
         </div>
