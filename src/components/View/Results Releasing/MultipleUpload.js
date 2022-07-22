@@ -68,6 +68,9 @@ const MultipleUpload = () => {
         <div className='personal-data-cont'>
          <input  className="addfile-res-btn" type="file"  multiple onChange={uploadFileHandler}/>
          <button className="multipleupload-res-btn" type='submit'>Upload</button>
+         <input className="email-input" type='text' placeholder='Email'></input>
+         <input className="pass-input" type='text' placeholder='Passcode'></input>
+         <button className="send-btn" type='send'>Send Out</button>
          {!fileSize && <p style={{color:'red'}}>File size exceeded!!</p>}
          {fileUploadProgress && <p style={{color:'red'}}>Uploading File(s)</p>}
         {fileUploadResponse!=null && <p style={{color:'green'}}>{fileUploadResponse}</p>}

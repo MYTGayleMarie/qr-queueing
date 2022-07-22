@@ -597,6 +597,7 @@ export default function ViewBooking() {
         <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
         <div className="personal-data-cont">
         <MultipleUpload />
+        
         </div>
         <div className='row'>
             <Table
