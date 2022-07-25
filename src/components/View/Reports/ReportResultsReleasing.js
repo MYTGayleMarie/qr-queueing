@@ -8,14 +8,12 @@ import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate } from 'react-router-dom';
 
-
-
-//components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
+import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
 
-const buttons = ['add-new-patient', 'add-old-patient'];
+// const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
@@ -28,12 +26,13 @@ const filterData = {
   done: false,
 };
 
-export default function MedTech() {
+export default function ResultsReleasing() {
 
   document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
+  const [finalData, setFinalData] = useState([]);
   const [redirectBooking, setRedirectBooking] = useState(false);
   const [role, setRole] = useState('');
   const [bookingId, setBookingId] = useState("");
@@ -57,53 +56,25 @@ export default function MedTech() {
       },
     })
       .then( function (response) {
+        console.log(response)
         response.data.bookings.map((booking, index) => {
               var bookingTime = new Date(booking.added_on);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var bookingDetails = {};
               
-
-              bookingDetails.withDiscount = booking.discount_detail;
-              bookingDetails.id = booking.id;
+              bookingDetails.date = formatBookingTime[1] + " " + formatBookingTime[2] + " " + formatBookingTime[3];
               bookingDetails.name = booking.customer;
-              bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.paymentStatus = booking.payment_status;
-              bookingDetails.uploadStatus = booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
+              bookingDetails.service_type = booking.service_type
+              bookingDetails.bookingTime = getTime(bookingTime);
+              bookingDetails.releasing_time = getTime(new Date(booking.releasing_time));
+              bookingDetails.booking_details = booking.booking_interval
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
         });
   }, [render]);
 
 
-  
-  React.useEffect(() => {
-    setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
-  }, []);
-
-
-  function searchBookingId(){
-    id = bookingId
-    setRedirectBooking(true)
-  }
-
-
   function filter() {}
-
-  function viewBooking(bookingId) {
-    id = bookingId;
-    setRedirectBooking(true);
-
-  }
-
-
-
-  if(redirectBooking == true) {
-    var link =  "/view-booking/" + id;
-    return (
-        <Navigate to ={link}/>
-    )
-  }
-
 
 
    return (
@@ -111,43 +82,37 @@ export default function MedTech() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
-          <Header type="thick" title="RESULTS RELEASING MANAGER"/>
-
-          {/* SEARCH BAR */}
-          <div className="row">
-            <div className="col">
-              <div class="wrap d-flex justify-content-center">
-                <div class="search-bar">
-                  <input type="text" class="searchTerm" name="patientName" placeholder="Search Booking ID" onChange={(e)=>setBookingId(e.target.value)}/>
-                  <button type="submit" class="searchButton" onClick={searchBookingId}>
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+         <Searchbar title='RESULTS RELEASING REPORT'/>
+         <Header 
+            type="thick" 
+            title="QR DIAGNOSTICS REPORT" 
+            tableName={'Results Releasing Report'}
+            tableData={filteredData}
+            tableHeaders={['BOOKING DATE', 'PATIENT NAME', 'TESTS','TIME REGISTERED', 'TIME UPLOADED', 'TIME DIFFERENCE']}
+             />
           <Table
-            type={'medtech'}
+            type={'no-action'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
-            rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE','PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
+            rowsPerPage={10}
+            headingColumns={['BOOKING DATE', 'PATIENT NAME', 'TESTS','TIME REGISTERED', 'TIME UPLOADED', 'TIME DIFFERENCE']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
+            givenClass={"register-mobile"}
             setRender={setRender}
             render={render}
-            givenClass={"register-mobile"}
-            link={viewBooking}
-            role={role}
-            userId={userId}
           />
-          <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
 
 
 

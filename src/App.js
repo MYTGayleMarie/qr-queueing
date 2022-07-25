@@ -44,6 +44,7 @@ import ReportHomeServices from './components/view/Reports/ReportHomeServices';
 import ReportClinicalServices from './components/view/Reports/ReportClinicalServices';
 import ReportPendingPO from './components/view/Reports/ReportPendingPO';
 import ReportSales from './components/view/Reports/ReportSales';
+import ResultsReleasing from './components/view/Reports/ReportResultsReleasing.js';
 import ReportUnpaidInvoices from './components/view/Reports/ReportUnpaidInvoices';
 import MdReports from './components/view/Reports/MdReports';
 import ReportCredits from './components/view/Reports/ReportCredits';
@@ -172,6 +173,7 @@ function App() {
         <Route path="/reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po/review/:id" element={token ? <ReportIncompletePOReview/> : <Navigate to="/" />} />
         <Route path="/reports-credit-details/:discount_code" element={token ? <ReportCreditDetails/> : <Navigate to="/" />} />
+        <Route path="/reports-results-releasing" element={token ? <ResultsReleasing/> : <Navigate to="/" />} />
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />
         <Route path="/services" element={token ? <Services /> : <Navigate to="/" />} />
