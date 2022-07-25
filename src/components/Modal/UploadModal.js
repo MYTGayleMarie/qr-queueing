@@ -10,16 +10,16 @@ import Link from 'react-csv/lib/components/Link';
 function Upload({screen, show, handleClose, item, type, table, id, link = '', details }) {
   const [redirect, setRedirect] = useState(false);
 
-  async function updateOutletStatus(status) {
-    const response = await updateStatus(table, status, id);
+  async function MultiUpload(upload) {
+    const response = await updateStatus(table, upload, id);
     console.log(response)
     if(response.data) {
       if(response.data.status === 200) {
-        toast.success("Successful status update!" );
+        toast.success("Uploaded!" );
       }
     } else {
       if(response.error.status === 500) {
-        toast.error("Unsuccessful status update" );
+        toast.error("Something is wrong" );
       }
     }   
     setTimeout(function () {

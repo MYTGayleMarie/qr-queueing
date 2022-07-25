@@ -66,3 +66,51 @@
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+.uploaded{
+    position: absolute;
+    color: red;
+    font-size: 90%;
+    bottom: 10%;
+}
+
+.upload-cancel{
+    position: absolute;
+ right: 3%;
+ bottom: 5%; 
+ padding: 8px 17px;
+ font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+ border-radius: 6px;
+ border: none;
+ margin: 3px;
+ color: #fff;
+ background: linear-gradient(180deg, #55073A 0%, #55073A 100%);
+ background-origin: border-box;
+ box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+   inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+ user-select: none;
+ -webkit-user-select: none;
+ touch-action: manipulation;
+}
+.uploading-btn{
+ position: absolute;
+ bottom: 5%;
+ right:21%; 
+ padding: 8px 17px;
+ font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+ border-radius: 6px;
+ border: none;
+ margin: 3px;
+ color: #fff;
+ background: linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%);
+ background-origin: border-box;
+ box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+   inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+ user-select: none;
+ -webkit-user-select: none;
+ touch-action: manipulation;
+}
+
+.modal-cont{
+    width: auto;
+    height: 70%;
+}

@@ -901,7 +901,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
-                            ))}
+                            )
+                            )}
                         </tr>
                     </thead>
 
