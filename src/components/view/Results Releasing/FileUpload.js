@@ -136,7 +136,6 @@ export default function FileUpload({servicesData, title, bookingId}){
       fileReader.onload = function(fileLoadedEvent){
         base64 = fileLoadedEvent.target.result;
         setFile(base64)
-        
       }
       fileReader.readAsDataURL(fileToLoad)
     }

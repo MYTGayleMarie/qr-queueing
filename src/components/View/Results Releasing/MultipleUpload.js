@@ -25,17 +25,44 @@ const MultipleUpload = (bookingId, details) => {
     const [attempCancel, setAttemptCancel] = useState(false)
     const [withResults, setWithResults] = useState(false);
     const [filenames, setFileNames] = useState([])
+    const [fileLength, setFileLength] = useState(0)
 
  
 
     const uploadFileHandler = (event) => {
         setFiles(event.target.files);
-        var filelength = event.target.files.length
+        // var filelength = event.target.files.length
+        var selectedFile = event.target.files;
+        if(selectedFile.length > 0){
+          setFileLength(selectedFile.length)
+          // select first file from list
+          // setFileNames(selectedFile[0].name)
+          var fileToLoad = selectedFile[0]
+          var fileReader = new FileReader();
+          var base64;
+          fileReader.onload = function(fileLoadedEvent){
+            base64 = fileLoadedEvent.target.result;
+            setFiles(base64)
+          }
+          fileReader.readAsDataURL(fileToLoad)
+        }
         for (let i = 0; i < event.target.files.length; i++) {
           filenames.push(event.target.files[i].name)
         }
-        
+
+        console.log(files)
        };
+
+
+
+       // Convert file to base 64
+      function convertToBase64(e){
+      //   //read file
+        var selectedFile=document.getElementById("pdftobase64").files
+          var selectedFile = e.target.files;
+        // Check if file is empty 
+        
+      }
 
        const handleModalClose = () => {
         setAttemptCancel(false)
@@ -85,6 +112,8 @@ const MultipleUpload = (bookingId, details) => {
         setFileUploadProgress(false);
       };
 
+    
+
 
     return(
 
@@ -124,7 +153,7 @@ const MultipleUpload = (bookingId, details) => {
           </section>
         </div>
         <div className="col-4">
-              <button type="submit" className="uploading-btn" onClick={()=>navigate('/medtech')} > Upload </button>
+              <button type="submit" className="uploading-btn" onClick={()=>navigate('/medtech')} > SAVE </button>
               </div>
           </div>
           <div className="col-3">
