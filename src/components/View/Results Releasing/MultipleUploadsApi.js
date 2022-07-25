@@ -58,7 +58,7 @@ export const createMultipleUploads = async (data, attachments) => {
         const response = await postAPICall(process.env.REACT_APP_LINK + 'api/Bookingpackage_details/uploadResults/${$id}', {
             requester: user,
             token: token,
-            name: data.loyalty_type,
+            name: data.name,
             attachments: attachmentsData.join("^"), //comma separated values
         });
         return ({data:response});   
