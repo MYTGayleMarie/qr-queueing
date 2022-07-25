@@ -230,7 +230,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
-            {/* <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>SEND OUT</button></td> */}
+            <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>DOWNLOAD</button></td>
             </tr>
         }
         else if (type === 'sales') {

@@ -606,10 +606,10 @@ export default function ViewBooking() {
                 tableData={sendOutResults}
                 rowsPerPage={5}
                 headingColumns={[
-                // 'ID',
+                'ID',
                 'FILE NAME',
                 'DATE',
-                // 'ACTION',
+                'ACTION',
                 ]}
                 />
               </div>

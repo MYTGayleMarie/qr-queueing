@@ -10,7 +10,7 @@ const userToken = getToken();
 const userId = getUser();
 
 const MultipleUpload = (bookingId, details) => {
-  // console.log(bookingId.bookingId)
+  console.log(bookingId.bookingId)
     const [files, setFiles] = useState([]);
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
@@ -52,6 +52,7 @@ const MultipleUpload = (bookingId, details) => {
           setFileLength(selectedFile.length)
           // select first file from list
           // setFileNames(selectedFile[0].name)
+          // var selectedFile=document.getElementById("pdftobase64").files
           var fileToLoad = selectedFile[i]
           var fileReader = new FileReader();
           var base64;
@@ -158,13 +159,13 @@ const MultipleUpload = (bookingId, details) => {
 
       <form onSubmit={fileSubmitHandler}>
         <div className='personal-data-cont'>
-         <input  className="addfile-res-btn" type="file" multiple onChange={uploadFileHandler}/>
+         <input  className="addfile-res-btn" type="file" accept="application/pdf" multiple onChange={uploadFileHandler}/>
          {/* <button className="multipleupload-res-btn" type='submit' onClick={()=>navigate('/dashboard')}>Upload</button> */}
          <button className="multipleupload-res-btn" type='submit' onClick={()=>setAttemptCancel(true)} >Upload</button>
 
-         <input className="email-input" type='text' placeholder='Email'></input>
+         {/* <input className="email-input" type='text' placeholder='Email'></input>
          <input className="pass-input" type='text' placeholder='Passcode'></input>
-         <button className="send-btn" type='send'>Send Out</button>
+         <button className="send-btn" type='send'>Send Out</button> */}
          {!fileSize && <p style={{color:'red'}}>File size exceeded!!</p>}
          {fileUploadProgress && <p style={{color:'red'}}>Uploading File(s)</p>}
         {fileUploadResponse!=null && <p style={{color:'green'}}>{fileUploadResponse}</p>}
