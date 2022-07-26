@@ -149,6 +149,7 @@ const MultipleUpload = (bookingId, details) => {
             booking_id: bookingId.bookingId,
         }
     }).then(function (response) {
+      
       // console.log(response)
     }).catch(function (error) {
         // console.log(error);
@@ -156,26 +157,26 @@ const MultipleUpload = (bookingId, details) => {
     }
 
 
-    const {id} = useParams();
+    // const {id} = useParams();
 
-    async function getUploads(){
+    // async function getUploads(){
       
-      axios({
-        method: 'get',
-        url: window.$link + '/booking_attachments/getByBooking/'+ id,
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-      setData(response.data)
-      console.log(response)
-    }).catch(function (error) {
-        console.log(error);
-    });
-    }
+    //   axios({
+    //     method: 'get',
+    //     url: window.$link + '/booking_attachments/getByBooking/'+ id,
+    //     withCredentials: false, 
+    //     params: {
+    //         api_key: window.$api_key,
+    //         token: userToken.replace(/['"]+/g, ''),
+    //         requester: userId,
+    //     }
+    // }).then(function (response) {
+    //   setData(response.data)
+    //   console.log(response)
+    // }).catch(function (error) {
+    //     console.log(error);
+    // });
+    // }
 
     
 
@@ -218,7 +219,7 @@ const MultipleUpload = (bookingId, details) => {
           </section>
         </div>
         <div className="col-4">
-              <button type="submit" className="uploading-btn" onClick={getUploads} > SAVE </button>
+              <button type="submit" className="uploading-btn" onClick={saveUpload} > SAVE </button>
               {/* <p className='add-item-btn' onClick={() => addSubType()}>Add another subtype</p> */}
               </div>
           </div>

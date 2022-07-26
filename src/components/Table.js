@@ -899,8 +899,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <table className={tableClass}>
                     <thead>
                         <tr>
-                            {headingColumns.map((col, index) => (
-                                <th key={index}>{col}</th>
+                            {headingColumns.map((row, index) => (
+                                <th key={index}>{row}</th>
                             )
                             )}
                         </tr>

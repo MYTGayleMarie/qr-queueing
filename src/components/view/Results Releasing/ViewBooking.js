@@ -300,11 +300,49 @@ export default function ViewBooking() {
   // Previously others
   const histopathology = labTests.filter((info) => info.key === "histopathology")
   const microbiology = labTests.filter((info) => info.key === "microbiology")
+  // const {id} = useParams();   
+   const [data, setData] = useState([]);
 
 
   const others = labTests.filter((info)=>info.key==="other_tests" ||info.key==="covid_rapid_tests")
+  const [uploadsData, setUploadsData] = useState([]);
 
  console.log(labTests)
+
+ 
+
+ async function getUploads(){
+  // uploadsData.length = 0;
+   axios({
+     method: 'get',
+     url: window.$link + '/booking_attachments/getByBooking/'+ id,
+     withCredentials: false, 
+     params: {
+         api_key: window.$api_key,
+         token: userToken.replace(/['"]+/g, ''),
+         requester: userId,
+     }
+ }).then(function (response) {
+   setData(response.data)
+   console.log(response.data)
+ }).catch(function (error) {
+     console.log(error);
+ });
+ }
+
+//  React.useEffect(()=>{
+//   getUploads();
+// }), []
+
+ 
+
+//  if(redirectBooking == true) {
+//   var link =  "/view-booking/" + id;
+//   return (
+//       <Navigate to ={link}/>
+//   )
+// }
+
   return(
    
     <div>
@@ -605,13 +643,21 @@ export default function ViewBooking() {
                 type={'send-out-results'}
                 withSubData={false}
                 tableData={sendOutResults}
-                rowsPerPage={5}
+                rowsPerPage={10}
                 headingColumns={[
                 // 'ID',
                 'FILE NAME',
                 'DATE',
                 'ACTION',
                 ]}
+                // filteredData={filteredData}
+                // setFilter={setFilter}
+                // filter={filter}
+                // setRender={setRender}
+                // render={render}
+                // givenClass={"register-mobile"}
+                // link={viewBooking}
+                // userId={userId}
                 />
               </div>
               </>}
