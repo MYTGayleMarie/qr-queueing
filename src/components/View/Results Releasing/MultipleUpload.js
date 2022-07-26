@@ -28,7 +28,7 @@ const MultipleUpload = (bookingId, details) => {
     const [withResults, setWithResults] = useState(false);
     const [filenames, setFileNames] = useState([])
     const [fileLength, setFileLength] = useState(0)
-
+    const [data, setData] = useState([]);
  
 
     const uploadFileHandler = (event) => {
@@ -127,6 +127,7 @@ const MultipleUpload = (bookingId, details) => {
             });
         setFileUploadProgress(false);
       };
+      
 
     async function saveUpload(base64){
       base64 = files
@@ -153,6 +154,30 @@ const MultipleUpload = (bookingId, details) => {
         // console.log(error);
     });
     }
+
+
+    const {id} = useParams();
+
+    async function getUploads(){
+      
+      axios({
+        method: 'get',
+        url: window.$link + '/booking_attachments/getByBooking/'+ id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
+      setData(response.data)
+      console.log(response)
+    }).catch(function (error) {
+        console.log(error);
+    });
+    }
+
+    
 
 
     return(
@@ -193,7 +218,7 @@ const MultipleUpload = (bookingId, details) => {
           </section>
         </div>
         <div className="col-4">
-              <button type="submit" className="uploading-btn" onClick={saveUpload} > SAVE </button>
+              <button type="submit" className="uploading-btn" onClick={getUploads} > SAVE </button>
               {/* <p className='add-item-btn' onClick={() => addSubType()}>Add another subtype</p> */}
               </div>
           </div>

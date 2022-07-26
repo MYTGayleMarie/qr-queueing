@@ -40,13 +40,14 @@ const filterData = {
 };
 
 const sendOutResults = [
-  { id: '1', 
+  { 
+    // id: '1', 
     file_name: 'Result 1',
     date: 'July 18, 2022',
     
   },
   { 
-     id: '2', 
+    //  id: '2', 
      file_name: 'Result 2',
      date: 'July 18, 2022',
   },
@@ -606,7 +607,7 @@ export default function ViewBooking() {
                 tableData={sendOutResults}
                 rowsPerPage={5}
                 headingColumns={[
-                'ID',
+                // 'ID',
                 'FILE NAME',
                 'DATE',
                 'ACTION',

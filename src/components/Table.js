@@ -230,7 +230,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)}
-            <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>DOWNLOAD</button></td>
+            {/* <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>DOWNLOAD</button></td> */}
             </tr>
         }
         else if (type === 'sales') {
@@ -899,7 +899,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <table className={tableClass}>
                     <thead>
                         <tr>
-                            {headingColumns.map((col,index) => (
+                            {headingColumns.map((col, index) => (
                                 <th key={index}>{col}</th>
                             )
                             )}
@@ -907,9 +907,19 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
 
                     <tbody>
-                        {data}
-                        {/* <button className="filter-btn" name="download" onClick={setRender != null ? (e) => setRender(!render) : ""}>DOWNLOAD</button> */}
-
+                        {data?.map((row, index) => (
+                            <tr key={index}
+                            >
+                                <td align="left">{row.name}</td>
+                                <td align="left">{row.date}</td>
+                                <td align="left">{row.action}
+                                <button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>DOWNLOAD</button>
+                                </td>
+                            </tr>
+                        )
+                        )}
+                            {/* <button className="filter-btn" name="download" onClick={setRender != null ? (e) => setRender(!render) : ""}>DOWNLOAD</button> */}
+    
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
