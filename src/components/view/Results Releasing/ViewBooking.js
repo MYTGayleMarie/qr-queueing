@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
 import FileUpload from './FileUpload';
 import MultipleUpload from './MultipleUpload';
+// import Browser from 'browser';
 
 //css
 import '../Imaging/Imaging.css';
@@ -136,9 +137,13 @@ export default function ViewBooking() {
         setEmail(response.data.email);
         setAddress(response.data.address);
       })
-      .catch((error)=>{console.log(error)})
+      .catch((error)=>{
+        // console.log(error)
       })
-    .catch((error)=>{console.log(error)})
+      })
+    .catch((error)=>{
+      // console.log(error)
+    })
 
     // Get booking details by booking id
     axios({
@@ -155,9 +160,18 @@ export default function ViewBooking() {
       // console.log(booking)
       setServices(booking.data)
     })
-    .catch((error)=>{console.log(error)})
+    .catch((error)=>{
+      // console.log(error)
+    })
   },[])
 
+  React.useEffect(()=>{
+    getUploads(data);
+    }, [])
+
+    // React.useEffect(()=>{
+    //   downloadFile(data);
+    //   }, []) 
 
   // Lab tests
   React.useEffect(()=>{
@@ -212,7 +226,9 @@ export default function ViewBooking() {
 
 
         })
-        .catch((error)=>{console.log(error)})
+        .catch((error)=>{
+          // console.log(error)
+        })
       }
       // if service is lab test
      
@@ -246,7 +262,7 @@ export default function ViewBooking() {
           setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
         .catch((error)=>{
-          console.log(error)
+          // console.log(error)
         })
       }
     })
@@ -306,35 +322,33 @@ export default function ViewBooking() {
 
   const others = labTests.filter((info)=>info.key==="other_tests" ||info.key==="covid_rapid_tests")
   const [uploadsData, setUploadsData] = useState([]);
+  const [download, setDOwnload] = useState("")
 
- console.log(labTests)
+//  console.log(labTests)
 
- 
-
- async function getUploads(){
-  // uploadsData.length = 0;
-   axios({
-     method: 'get',
-     url: window.$link + '/booking_attachments/getByBooking/'+ id,
-     withCredentials: false, 
-     params: {
-         api_key: window.$api_key,
-         token: userToken.replace(/['"]+/g, ''),
-         requester: userId,
-     }
- }).then(function (response) {
-   setData(response.data)
-   console.log(response.data)
- }).catch(function (error) {
-     console.log(error);
- });
- }
-
-//  React.useEffect(()=>{
-//   getUploads();
-// }), []
-
- 
+    async function getUploads(){
+      
+      axios({
+        method: 'get',
+        url: window.$link + '/booking_attachments/getByBooking/'+ id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
+      // var responsedata = response.data.message.booking_attachments
+      setData(response.data.message.booking_attachments)
+      // data.push(response.data.message.booking_attachments)
+      // console.log(response.data.message.booking_attachments)
+      // console.log(data)
+    }).catch(function (error) {
+        // console.log(error);
+    });
+    }
+    //Download
+    
 
 //  if(redirectBooking == true) {
 //   var link =  "/view-booking/" + id;
@@ -637,17 +651,18 @@ export default function ViewBooking() {
         <div className="personal-data-cont">
         <MultipleUpload bookingId={bookingId}/>
         
-        </div>
+        </div >
+        
+        {/* <div className="personal-data-cont"> */}
         <div className='row'>
             <Table
                 type={'send-out-results'}
                 withSubData={false}
-                tableData={sendOutResults}
+                tableData={data}
                 rowsPerPage={10}
                 headingColumns={[
                 // 'ID',
                 'FILE NAME',
-                'DATE',
                 'ACTION',
                 ]}
                 // filteredData={filteredData}
@@ -660,6 +675,8 @@ export default function ViewBooking() {
                 // userId={userId}
                 />
               </div>
+              
+              {/* </div> */}
               </>}
         </div>
        

@@ -214,7 +214,9 @@ export default function FileUpload({servicesData, title, bookingId}){
 
         },2000);
       })
-      .catch((error)=>{console.log(error)})
+      .catch((error)=>{
+        // console.log(error)
+      })
     })
     }     
       
@@ -251,7 +253,7 @@ export default function FileUpload({servicesData, title, bookingId}){
       })
       .catch((error)=>{
         toast.error("Error updating MD!")
-        console.log(error)
+        // console.log(error)
       })
       } 
       else if (data.type==="package")      {
@@ -276,7 +278,7 @@ export default function FileUpload({servicesData, title, bookingId}){
       })
       .catch((error)=>{
         toast.error("Error updating MD!")
-        console.log(error)
+        // console.log(error)
       })
       }
 

@@ -10,7 +10,7 @@ const userToken = getToken();
 const userId = getUser();
 
 const MultipleUpload = (bookingId, details) => {
-  console.log(bookingId.bookingId)
+  // console.log(bookingId.bookingId)
     const [files, setFiles] = useState([]);
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
@@ -50,15 +50,19 @@ const MultipleUpload = (bookingId, details) => {
         // }
         for (let i = 0; i < event.target.files.length; i++) {
           setFileLength(selectedFile.length)
+          
           // select first file from list
           // setFileNames(selectedFile[0].name)
           // var selectedFile=document.getElementById("pdftobase64").files
           var fileToLoad = selectedFile[i]
           var fileReader = new FileReader();
           var base64;
+          var file_name = [];
           fileReader.onload = function(fileLoadedEvent){
             base64 = fileLoadedEvent.target.result;
+            // filename = fileLoadedEvent.target.result;
             files.push(base64.toString())
+          
             // console.log(files)
           }
           fileReader.readAsDataURL(fileToLoad)
@@ -78,6 +82,11 @@ const MultipleUpload = (bookingId, details) => {
         // Check if file is empty 
         
       }
+
+      // function fileName(){
+      //   setFileNames(data)
+      // }
+      
 
       const handleModalClose = () => {
         setAttemptCancel(false)
@@ -131,9 +140,14 @@ const MultipleUpload = (bookingId, details) => {
 
     async function saveUpload(base64){
       base64 = files
+      // filename = files
       const formData = new FormData();
+      // console.log(files)
       // formData.append("attachments[]", base64);
       base64.forEach(data => formData.append('attachments[]', data))
+      // formData.append('file_name[]', data)
+      filenames.forEach(data => formData.append('file_name[]', data))
+
       // console.log(base64)
       // console.log(formData)
       axios({
@@ -147,16 +161,20 @@ const MultipleUpload = (bookingId, details) => {
             token: userToken.replace(/['"]+/g, ''),
             requester: userId,
             booking_id: bookingId.bookingId,
+            // file_name: filenames,
         }
     }).then(function (response) {
-      
+      setFileNames(data)
+      // console.log(filenames)
       // console.log(response)
     }).catch(function (error) {
         // console.log(error);
     });
     }
 
+    // console.log(filenames)
 
+    
     // const {id} = useParams();
 
     // async function getUploads(){
@@ -177,14 +195,13 @@ const MultipleUpload = (bookingId, details) => {
     //     console.log(error);
     // });
     // }
-
-    
-
+    // ('#myModal').modal('hide');
 
     return(
-
+<div className='result-cont row p-1 mb-5'>
       <form onSubmit={fileSubmitHandler}>
-        <div className='personal-data-cont'>
+        {/* <div className='personal-data-cont'> */}
+          
          <input  className="addfile-res-btn" type="file" accept="application/pdf" multiple onChange={uploadFileHandler}/>
          {/* <button className="multipleupload-res-btn" type='submit' onClick={()=>navigate('/dashboard')}>Upload</button> */}
          <button className="multipleupload-res-btn" type='submit' onClick={()=>setAttemptCancel(true)} >Upload</button>
@@ -219,7 +236,7 @@ const MultipleUpload = (bookingId, details) => {
           </section>
         </div>
         <div className="col-4">
-              <button type="submit" className="uploading-btn" onClick={saveUpload} > SAVE </button>
+              <button type="submit" className="uploading-btn" onClick={()=>saveUpload(true)}> SAVE </button>
               {/* <p className='add-item-btn' onClick={() => addSubType()}>Add another subtype</p> */}
               </div>
           </div>
@@ -229,9 +246,9 @@ const MultipleUpload = (bookingId, details) => {
        </div>
         </Modal.Body>
     </Modal> 
-        </div>
+        {/* </div> */}
       </form>
-
+      </div>
     );
 }
 export default MultipleUpload;
