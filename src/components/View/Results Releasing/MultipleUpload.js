@@ -167,6 +167,7 @@ const MultipleUpload = (bookingId, details) => {
       setFileNames(data)
       // console.log(filenames)
       // console.log(response)
+      refreshPage()
     }).catch(function (error) {
         // console.log(error);
     });
