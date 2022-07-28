@@ -4,15 +4,14 @@ import useTable from "../utilities/Pagination";
 import TableFooter from "./TableFooter";
 import { Link, NavLink } from 'react-router-dom';
 import { RingLoader } from "react-spinners";
-import PageLoader from "./view/Loader/PageLoader";
-
+import TableLoader from "./TableLoader";
 
 //css 
 import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, download, useLoader = false, isReady}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -61,12 +60,12 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{data.val}</td>)}
             </tr>
         }
-        else if(type === 'transaction') {
-            return <tr key={row.id}>
-            {rowData.map((data, index) => 
-            <td className="smaller" key={index} data-heading={data.key}>{data.val}</td>)}
-            </tr>
-        }
+        // else if(type === 'transaction') {
+        //     return <tr key={row.id}>
+        //     {rowData.map((data, index) => 
+        //     <td className="smaller" key={index} data-heading={data.key}>{data.val}</td>)}
+        //     </tr>
+        // }
         else if(clickable == false) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -229,7 +228,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if(type === 'send-out-results'){
             return <tr key={row.id}>
                 <td td key={row.id} onClick={() => link(row.id)}>{row.file_name}</td>
-                <td><a href={row.file} download={row.file_name}><button class="filter-btn" role="button" >DOWNLOAD</button></a></td>
+                <td><a href={row.file} download={row.file_name}><button class="filter-btn" role="button" >DOWNLOAD</button></a>
+               <button class="multipleupload-res-btn" role="button" onClick={() => handleRemoveItem(row.id)}>DELETE</button></td>
                 
             {/* {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)} */}
@@ -343,7 +343,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     
     //table structure
     if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits'||type === 'transaction') {
-
+    
         const {from_date, to_date, done} = filteredData;
     
         return(
@@ -365,24 +365,29 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
             </div>
-            {/* <div>
-            {loading &&
-        <RingLoader color={'#3a023a'} loading={loading} size={200} />
-      }   </div> */}
                 </div>
-                {/* {!loading && <> */}
-
                 <table className={tableClass}>
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
                                 <th key={index}>{col}</th>
-                            ))}
+                            ))
+                            }
+
                         </tr>
                     </thead>
                     <tbody>
-                    {/* {!isReady && useLoader ? <PageLoader tableHeaders={headingColumns}/> : data} */}
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns}/> : data}
+
+                    {/* {!isReady && useLoader ? ( 
+                    <TableLoader tableHeaders={headingColumns} data={data}/>
+                    ):(
+                     {data}
+                     )
+                    }   */}
+                    
+                        {/* {data}      */}
                     </tbody>
                 </table>
               {/* </> }  */}

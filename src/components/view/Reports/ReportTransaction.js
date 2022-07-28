@@ -40,6 +40,7 @@ function ReportTransaction() {
   const [patientData, setPatientData] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [loading, setLoading] = useState(true)
+  const [isReady, setIsReady] = useState(false)
 
   React.useEffect(() => {
     patientData.length = 0;
@@ -56,6 +57,7 @@ function ReportTransaction() {
       },
     })
       .then(function (response) {
+        setIsReady(false)
         response.data.bookings.map((booking, index) => {
           axios({
             method: 'post',
@@ -68,6 +70,7 @@ function ReportTransaction() {
             },
           })
             .then(function (details) {
+              setIsReady(false)
               var bookingTime = new Date(booking.booking_time);
               var formattedBookingTime = bookingTime.toDateString().split(" ");
 
@@ -119,21 +122,27 @@ function ReportTransaction() {
                   
                   // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
-                  
+                  setIsReady(true)
 
               });
             })
             .catch(function (error) {
+              setIsReady(false)
               console.log(error);
             });
 
             if(response.data.bookings.length - 1 == index) {
               setPrintReadyFinal(true);
+              setIsReady(true)
+            }
+            else{
+              setIsReady(false)
             }
         });
       })
       .catch(function (error) {
         console.log(error);
+        setIsReady(false)
       });
   }, [render]);
 
@@ -176,6 +185,7 @@ console.log(patientData)
             render={render}
             givenClass={"register-mobile"}
             useLoader={true}
+            isReady={isReady}
             // useLoader={true}
 
           />

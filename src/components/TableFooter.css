@@ -14,6 +14,10 @@
     flex-wrap: wrap;
   }
 
+  .td-3 {
+    color: black
+  }
+
   .page-count-cont {
     margin-top: 1% !important;
   }

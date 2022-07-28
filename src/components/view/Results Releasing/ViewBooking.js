@@ -23,6 +23,7 @@ import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+import { compileAsync } from 'sass';
 
 
 
@@ -318,11 +319,13 @@ export default function ViewBooking() {
   const microbiology = labTests.filter((info) => info.key === "microbiology")
   // const {id} = useParams();   
    const [data, setData] = useState([]);
-
+   const [render, setRender] = useState("");
 
   const others = labTests.filter((info)=>info.key==="other_tests" ||info.key==="covid_rapid_tests")
   const [uploadsData, setUploadsData] = useState([]);
   const [download, setDOwnload] = useState("")
+  const [rows, setRows] = useState([])
+  const [showConfirm, setShowConfirm] = React.useState(false);
 
 //  console.log(labTests)
 
@@ -347,15 +350,18 @@ export default function ViewBooking() {
         // console.log(error);
     });
     }
-    //Download
-    
 
-//  if(redirectBooking == true) {
-//   var link =  "/view-booking/" + id;
-//   return (
-//       <Navigate to ={link}/>
-//   )
-// }
+    
+    
+    const [items, setItems] = useState([{ file_name: '' }]);
+
+    function handleRemoveItem(id) {
+        const rowId = id;
+        const newItemList = [...items];
+        newItemList.splice(rowId, 1);
+        setItems(newItemList);
+    }
+  
 
   return(
    
@@ -659,7 +665,7 @@ export default function ViewBooking() {
                 type={'send-out-results'}
                 withSubData={false}
                 tableData={data}
-                rowsPerPage={10}
+                rowsPerPage={5}
                 headingColumns={[
                 // 'ID',
                 'FILE NAME',
@@ -690,4 +696,4 @@ export default function ViewBooking() {
     
     </div>
   )
-}
+ } 
