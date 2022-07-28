@@ -50,6 +50,7 @@ function AddItems() {
             itemInfo.map((data,i) => {
               if(data.id == value){
                   list[index]['cost'] = data.cost;
+                  list[index]['unit'] = data.unit;
               }
             })
           }
@@ -88,13 +89,15 @@ function AddItems() {
         requester: userId,
       },
     }).then(function (response) {
-      console.log(response.data.items)
       response.data.items.map((data,index) => {
-        var itemInfo = {};
-        itemInfo.id = data.id;
-        itemInfo.name = data.item_name;
-        itemInfo.cost = data.cost;
-        setItemInfo(oldArray => [...oldArray, itemInfo]);
+        if(data.item_id != "0" || data.is_deleted == 1){
+            var itemInfo = {};
+            itemInfo.id = data.item_id;
+            itemInfo.name = data.item_name;
+            itemInfo.unit = data.default_unit;
+            itemInfo.cost = data.cost;
+            setItemInfo(oldArray => [...oldArray, itemInfo]);
+        }
       });
     }).catch(function(error) {
       console.log(error)
@@ -103,6 +106,8 @@ function AddItems() {
 
     //API submit call
    function submit(e) {
+
+    console.log(items)
 
     e.preventDefault();
 
@@ -145,8 +150,27 @@ function AddItems() {
           }).then(function (error) {
               console.log(error);
           });
-    }
-   }
+    }}
+
+    var purchaseItems = items.map((row, index) => {
+        return (
+                        <tr key={index}>
+                            <td>
+                              <input type="number" name="quantity" id="quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="quantity-item" />
+                            </td>
+                            <td>
+                              <input type="text" name="unit" id="unit" value={row.unit} className="quantity-item" readOnly/>
+                            </td>
+                            <td>
+                              <select className='items-item' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
+                                <option  value="" selected disabled>Select Item</option>
+                                {itemInfo.map((data,info) => {
+                                    return <option value={data.id}>{data.name}</option>
+                                })}
+                              </select>
+                            </td>
+                          </tr>
+        )})
 
     //redirect
     if (redirect == true) {
@@ -211,14 +235,14 @@ function AddItems() {
                     <h1 className="item-header left-2">ITEMS</h1>
                 </div>
             </div>
-
-            {items.map((item, index) => (
+            {purchaseItems}
+            {/* {items.map((item, index) => (
                 <div className="row">
                  <div className="col-sm-2">
                      <input key={item.id} type="number" name="quantity" className="quantity-item" onChange={(e) => handleItemChange(e, index)}/>
                  </div>
                  <div className="col-sm-2">
-                     <input key={item.id} type="text" name="unit" className="quantity-item" onChange={(e) => handleItemChange(e, index)}/>
+                     <input key={item.id} type="text" name="unit" value={} className="quantity-item" onChange={(e) => handleItemChange(e, index)}/>
                  </div>
                  <div className="col-sm-7">
                     <select className='items-item' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
@@ -229,7 +253,7 @@ function AddItems() {
                     </select>
                 </div>
              </div>
-            ))}
+            ))} */}
         </div>
 
         </form>

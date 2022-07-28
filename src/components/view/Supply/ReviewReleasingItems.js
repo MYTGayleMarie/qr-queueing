@@ -28,6 +28,7 @@ function ReviewReleasingItems() {
     const [grandTotal, setGrandTotal] = useState("");
     const [remarks, setRemarks] = useState("");
     const [items, setItems] = useState([]);
+    const [redirect, setRedirect] = useState(false);
 
      
     React.useEffect(() => {
@@ -120,12 +121,19 @@ function ReviewReleasingItems() {
                   updated_by: userId,
                 },
               }).then(function (response) {
-                 console.log(response);
                  toast.success("Release item succussfully deleted!")
-              }).then(function (error) {
+                 setTimeout(function () {
+                   setRedirect(true);
+                 }, 2000);
+              }).catch(function (error) {
                   console.log(error);
               })
       }
+
+    if (redirect == true) {
+        return <Navigate to="/release-item" />;
+    }
+    
 
   return (<div>
       <Navbar/>
