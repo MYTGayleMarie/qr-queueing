@@ -33,6 +33,7 @@ function MdReports() {
   const [render, setRender] = useState(false);
   const [mds, setMds] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false)
   
      //SALES REPORT
      React.useEffect(() => {
@@ -49,6 +50,7 @@ function MdReports() {
           requester: userId,
         },
       }).then(function (response) {
+        setIsReady(false)
           var data = response.data.data.data;
 
           data.map((value, index) => {
@@ -62,6 +64,7 @@ function MdReports() {
 
             if(data.length - 1 == index) {
               setPrintReadyFinal(true);
+              setIsReady(true)
             }
           })
       });
@@ -98,6 +101,7 @@ function MdReports() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />
