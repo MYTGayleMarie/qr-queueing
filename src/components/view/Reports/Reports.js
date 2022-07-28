@@ -43,6 +43,7 @@ function Reports() {
     const [todayHomeServices, setTodayHomeServices] = useState([]);
 
     const [clinicServices, setClinicServices] = useState([]);
+    const [resultsData, setResultsData] = useState([]);
 
     const [totalSales, setTotalSales] = useState(0);
     const [pendingPOs, setPendingPOs] = useState([]);
@@ -204,6 +205,30 @@ function Reports() {
             console.log(error);
           },[]);
     },[]);
+
+    // Results Releasing
+    React.useEffect(() => {
+       axios({
+        method: 'get',
+        url: window.$link + 'bookings/medtech',
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+          date_from: filteredData.from_date,
+          date_to: filteredData.to_date,
+        },
+      })
+        .then( function (response) {
+          console.log(response)
+          response.data.bookings.map((booking, index) => {
+            if(booking.upload_status === "0"){
+              setResultsData(oldArray => [...oldArray, booking]);
+            }
+              })
+          });
+    }, []);
 
      //SALES REPORT
      React.useEffect(() => {
@@ -475,12 +500,12 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                   {role != 3 && <Card 
-                        totalData={3}
-                        todayData={2}
+                        totalData={resultsData.length}
+                        todayData={""}
                         link={"/reports-results-releasing"}
-                        title='Released Items'
+                        title="Results Releasing"
                         color='blue'
-                        // disable={"today"}
+                        disable={"today"}
                     /> }
                 </div>
             </div>

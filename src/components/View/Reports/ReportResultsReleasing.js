@@ -61,10 +61,12 @@ export default function ResultsReleasing() {
               var bookingTime = new Date(booking.added_on);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var bookingDetails = {};
+
               
               bookingDetails.date = formatBookingTime[1] + " " + formatBookingTime[2] + " " + formatBookingTime[3];
               bookingDetails.name = booking.customer;
-              bookingDetails.service_type = booking.service_type
+              bookingDetails.service_type = booking.service_type;
+              bookingDetails.uploadStatus = booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
               bookingDetails.bookingTime = getTime(bookingTime);
               bookingDetails.releasing_time = getTime(new Date(booking.releasing_time));
               bookingDetails.booking_details = booking.booking_interval

@@ -61,7 +61,6 @@ export default function MedTech() {
               var bookingTime = new Date(booking.added_on);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var bookingDetails = {};
-              
 
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;

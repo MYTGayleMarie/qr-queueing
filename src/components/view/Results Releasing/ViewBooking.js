@@ -269,6 +269,8 @@ export default function ViewBooking() {
     
   },[services])
 
+  console.log(labTests)
+
 
   // Categorize lab test
 
@@ -287,7 +289,7 @@ export default function ViewBooking() {
   /****************/
 
   // previously serology
-  const chemistry = labTests.filter((info)=>info.key==="chemistry"||info.key==="electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
+  const chemistry = labTests.filter((info)=>info.key==="chemistry"||info.key==="Electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
   const thyroid_profile = labTests.filter((info)=>info.key==="thyroid_profile")
   const tumor_markers = labTests.filter((info)=>info.key==="tumor_markers")
 
@@ -647,7 +649,7 @@ export default function ViewBooking() {
         </div>
        
         {/* SEND OUT RESULTS */ }
-        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
+        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
         <div className="personal-data-cont">
         <MultipleUpload bookingId={bookingId}/>
         
@@ -665,14 +667,6 @@ export default function ViewBooking() {
                 'FILE NAME',
                 'ACTION',
                 ]}
-                // filteredData={filteredData}
-                // setFilter={setFilter}
-                // filter={filter}
-                // setRender={setRender}
-                // render={render}
-                // givenClass={"register-mobile"}
-                // link={viewBooking}
-                // userId={userId}
                 />
               </div>
               
