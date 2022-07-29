@@ -228,8 +228,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if(type === 'send-out-results'){
             return <tr key={row.id}>
                 <td td key={row.id} onClick={() => link(row.id)}>{row.file_name}</td>
-                <td><a href={row.file} download={row.file_name}><button class="filter-btn" role="button" >DOWNLOAD</button></a>
-               <button class="multipleupload-res-btn" role="button" onClick={() => handleRemoveItem(row.id)}>DELETE</button></td>
+                <td><a href={row.file} download={row.file_name}><button class="filter-btn" role="button" >DOWNLOAD</button></a></td>
+               {/* <button class="multipleupload-res-btn" role="button" onClick={() => handleRemoveItem(row.id)}>DELETE</button></td> */}
                 
             {/* {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)} */}

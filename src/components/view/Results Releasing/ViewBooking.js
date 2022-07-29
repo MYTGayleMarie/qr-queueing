@@ -329,6 +329,7 @@ export default function ViewBooking() {
   const [showConfirm, setShowConfirm] = React.useState(false);
 
 //  console.log(labTests)
+
 // Get Multiple Uploads
     async function getUploads(){
       axios({
@@ -346,9 +347,8 @@ export default function ViewBooking() {
     }).catch(function (error) {
     });
     }
-
     
-    
+    //Delete Multiple Uploads
     const [items, setItems] = useState([{ file_name: '' }]);
 
     function handleRemoveItem(id) {
