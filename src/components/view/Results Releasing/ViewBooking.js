@@ -655,7 +655,7 @@ export default function ViewBooking() {
         
         </div >
         
-         <div className="personal-data-cont">
+         {/* <div className="labtest-line mb-5 justify-content-center"> */}
         <div className='row'>
             <Table
                 type={'send-out-results'}
@@ -670,7 +670,7 @@ export default function ViewBooking() {
                 />
               </div>
               
-               </div> 
+               {/* </div>  */}
               </>}
         </div>
        
