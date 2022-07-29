@@ -332,6 +332,7 @@ export default function ViewBooking() {
 
 // Get Multiple Uploads
     async function getUploads(){
+      if(id == null){
       axios({
         method: 'get',
         url: window.$link + '/booking_attachments/getByBooking/'+ id,
@@ -346,7 +347,7 @@ export default function ViewBooking() {
       console.log(response)
     }).catch(function (error) {
     });
-    }
+    }}
     
     //Delete Multiple Uploads
     const [items, setItems] = useState([{ file_name: '' }]);
