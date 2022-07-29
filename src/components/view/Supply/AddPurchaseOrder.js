@@ -229,7 +229,6 @@ function AddPurchaseOrder() {
           added_by: userId,
         },
       }).then(function (response) {
-        console.log(response)
         toast.success("Successfully added PO!");
         setTimeout(function () {
           setRedirect(true);
