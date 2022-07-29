@@ -17,7 +17,6 @@ import MultipleUpload from './MultipleUpload';
 //css
 import '../Imaging/Imaging.css';
 import './MedTech.css';
-// import '..Loader/PageLoader.css';
 //components
 import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
@@ -330,9 +329,8 @@ export default function ViewBooking() {
   const [showConfirm, setShowConfirm] = React.useState(false);
 
 //  console.log(labTests)
-
+// Get Multiple Uploads
     async function getUploads(){
-      
       axios({
         method: 'get',
         url: window.$link + '/booking_attachments/getByBooking/'+ id,
@@ -343,13 +341,9 @@ export default function ViewBooking() {
             requester: userId,
         }
     }).then(function (response) {
-      // var responsedata = response.data.message.booking_attachments
       setData(response.data.message.booking_attachments)
-      // data.push(response.data.message.booking_attachments)
-      // console.log(response.data.message.booking_attachments)
-      // console.log(data)
+      console.log(response)
     }).catch(function (error) {
-        // console.log(error);
     });
     }
 
@@ -655,13 +649,13 @@ export default function ViewBooking() {
         </div>
        
         {/* SEND OUT RESULTS */ }
-        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
+        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
         <div className="personal-data-cont">
         <MultipleUpload bookingId={bookingId}/>
         
         </div >
         
-        {/* <div className="personal-data-cont"> */}
+         <div className="personal-data-cont">
         <div className='row'>
             <Table
                 type={'send-out-results'}
@@ -676,7 +670,7 @@ export default function ViewBooking() {
                 />
               </div>
               
-              {/* </div> */}
+               </div> 
               </>}
         </div>
        
