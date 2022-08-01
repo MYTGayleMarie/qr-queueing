@@ -166,7 +166,7 @@ export default function ViewBooking() {
   },[])
 
   React.useEffect(()=>{
-    getUploads(data);
+    getUploads();
     }, [])
 
     // React.useEffect(()=>{
@@ -332,7 +332,7 @@ export default function ViewBooking() {
 
 // Get Multiple Uploads
     async function getUploads(){
-      if(id == null){
+      if(id != null ){
       axios({
         method: 'get',
         url: window.$link + '/booking_attachments/getByBooking/'+ id,
@@ -346,8 +346,10 @@ export default function ViewBooking() {
       setData(response.data.message.booking_attachments)
       console.log(response)
     }).catch(function (error) {
+      setData(error)
     });
-    }}
+    }
+  }
     
     //Delete Multiple Uploads
     const [items, setItems] = useState([{ file_name: '' }]);
