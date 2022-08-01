@@ -166,7 +166,7 @@ export default function ViewBooking() {
   },[])
 
   React.useEffect(()=>{
-    getUploads();
+    getUploads(data);
     }, [])
 
     // React.useEffect(()=>{
@@ -332,8 +332,8 @@ export default function ViewBooking() {
 
 // Get Multiple Uploads
     async function getUploads(){
-      if(id != null ){
-      axios({
+      if(id != null)  {    
+        axios({
         method: 'get',
         url: window.$link + '/booking_attachments/getByBooking/'+ id,
         withCredentials: false, 
@@ -660,7 +660,19 @@ export default function ViewBooking() {
         
          {/* <div className="labtest-line mb-5 justify-content-center"> */}
         <div className='row'>
-            <Table
+          {data == null && (<Table
+                type={'send-out-results'}
+                withSubData={false}
+                tableData=""
+                rowsPerPage={5}
+                headingColumns={[
+                // 'ID',
+                'FILE NAME',
+                'ACTION',
+                ]}
+                />)
+          }
+          {data != null && (<Table
                 type={'send-out-results'}
                 withSubData={false}
                 tableData={data}
@@ -670,7 +682,8 @@ export default function ViewBooking() {
                 'FILE NAME',
                 'ACTION',
                 ]}
-                />
+                />)}
+            
               </div>
               
                {/* </div>  */}
