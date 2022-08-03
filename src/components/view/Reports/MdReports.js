@@ -50,7 +50,7 @@ function MdReports() {
           requester: userId,
         },
       }).then(function (response) {
-        setIsReady(false)
+        setIsReady(true)
           var data = response.data.data.data;
 
           data.map((value, index) => {
@@ -101,6 +101,7 @@ function MdReports() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            useLoader={true}
             isReady={isReady}
           />
 

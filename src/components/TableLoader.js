@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RingLoader } from "react-spinners";
 
 import "./TableFooter.css"
+import "../components/view/Imaging/Imaging.css"
 
 function TableLoader({tableHeaders, data}) {
-
     const [showLoading, setShowLoading] = useState(true);
 
     React.useEffect(() => {
@@ -37,23 +37,35 @@ function TableLoader({tableHeaders, data}) {
       return (
         <>
           <tr>
-            {tableHeaders.map((data, index) => {
-              return (
-                <td 
-                class="td-3">
-                  <span></span>
-                </td>
-              );
-            })}
+            {/* {tableHeaders.map((data, index) => { */}
+              {/* return ( */}
+                {/* <td 
+                class=""
+                > */}
+                  
+                  <span >       
+                        
+                  
+                    <RingLoader className="spinner" color={'#3a023a'} showLoading={showLoading} size={70} />
+                    
+                  </span>
+                 
+                {/* </td> */}
+              {/* );
+            })} */}
           </tr>
           <tr>
-            {tableHeaders.map((data, index) => {
+          <span >              
+                    <RingLoader className='spinner'color={'#3a023a'} showLoading={showLoading} size={70} />
+                  </span>
+            {/* {tableHeaders.map((data, index) => {
               return (
                 <td class="td-3">
                   <span></span>
                 </td>
               );
-            })}
+            })} */}
+            
           </tr>
           <tr>
             {tableHeaders.map((data, index) => {
@@ -112,3 +124,4 @@ function TableLoader({tableHeaders, data}) {
 }
 
 export default TableLoader
+

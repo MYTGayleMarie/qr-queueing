@@ -1,0 +1,7 @@
+.spinner {
+    position:fixed;
+    left:370%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}

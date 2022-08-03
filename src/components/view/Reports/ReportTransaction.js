@@ -166,12 +166,7 @@ console.log(patientData)
             status={printReadyFinal}
              />
              <div className='spinner d-flex justify-content-center'>
-        
-        {/* {loading &&
-          <RingLoader color={'#3a023a'} loading={loading} size={200} />
-        } */}
        </div>
-       {/* {!loading && <> */}
           <Table
             clickable={false}
             type={'transaction'}

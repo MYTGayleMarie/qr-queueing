@@ -42,7 +42,8 @@ function ReportSales() {
   const [salesTemp, setSalesTemp] = useState([]);
   const [credits, setCredits] = useState([]);
   const [salesData, setSalesData] = useState([]);
-  
+
+  const [isReady, setIsReady] = useState(false);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [redirect, setRedirection] = useState(false);
   const [total, setTotal] = useState(0);
@@ -68,7 +69,7 @@ function ReportSales() {
         }
       })
       .then((response)=>{
-       
+       setIsReady(false)
         // console.log(response)
         axios({
           method: 'post',
@@ -84,7 +85,7 @@ function ReportSales() {
         })
         .then( (credit_response)=>{
           // console.log(credit_response)
-          
+          setIsReady(false)
           const salesArray = credit_response.data.data.sales
           salesArray.map((arr, index1)=>{
             arr.map((method, index2)=>{
@@ -96,6 +97,7 @@ function ReportSales() {
                 info.method = "credit"
                 info.amount = method.grand_total
                 setCredits(oldArray=>[...oldArray, info]) 
+                setIsReady(true)
               }
             })
           })
@@ -105,6 +107,7 @@ function ReportSales() {
           info.method = "credit"
           info.amount = credit.creditAmount
           setSales(oldArray=>[...oldArray, info])
+          setIsReady(true)
         })
         var temp_total = 0;
         const sales_Array = response.data.data.sales
@@ -124,16 +127,20 @@ function ReportSales() {
                     console.log(temp_total)
                   }
                   setSales(oldArray=>[...oldArray, info])
+                  setIsReady(true)
                 })   
               }
             })
             if(arr.length - 1 == index1) {
               setPrintReadyFinal(true);
+              setIsReady(true)
             }
             setTotal(temp_total)
+            setIsReady(true)
           })
       })
       .catch((error)=>{console.log(error)})
+      setIsReady(false)
       })
     
     },[render])
@@ -154,12 +161,14 @@ console.log(sales)
           ([date, amount]) => ({date, amount}))
 
       setSalesData(res)
+      setIsReady(true)
     },[sales])
 
     React.useEffect(()=>{
       let tempData = salesData.concat(sales)
       // console.log(tempData)
       setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
+      setIsReady(true)
     },[salesData])
   
   function filter() {}
@@ -206,6 +215,8 @@ console.log(sales)
             link={toTransaction}
             totalCount={"P "+ total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             givenClass={"register-mobile"}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />
