@@ -40,6 +40,7 @@ function Registration() {
   const [redirectPrint, setRedirectPrint] = useState(false);
   const [redirectDelete, setRedirectDelete] = useState(false);
   const [role, setRole] = useState('');
+  const [isReady, setIsReady] = useState(false)
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -60,6 +61,7 @@ function Registration() {
       },
     })
       .then( function (response) {
+        setIsReady(false)
         response.data.bookings.map( async (booking, index) => {
           await axios({
             method: 'post',
@@ -71,6 +73,7 @@ function Registration() {
               requester: userId,
             },
           }).then(function (customer) {
+            setIsReady(false)
               var bookingTime = new Date(booking.booking_time);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var addedOn = new Date(booking.added_on);
@@ -89,14 +92,17 @@ function Registration() {
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
+              setIsReady(true)
             })
             .then (function (error) {
               console.log(error);
+              setIsReady(true)
             });
         });
       })
       .catch(function (error) {
         console.log(error);
+        setIsReady(false)
       });
   }, [render]);
   
@@ -167,6 +173,8 @@ function Registration() {
             role={role}
             userId={userId}
             deleteBooking={deleteBooking}
+            useLoader={true}
+            isReady={isReady}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>
