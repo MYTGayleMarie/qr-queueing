@@ -61,7 +61,7 @@ function Registration() {
       },
     })
       .then( function (response) {
-        setIsReady(false)
+        // setIsReady(false)
         response.data.bookings.map( async (booking, index) => {
           await axios({
             method: 'post',
@@ -73,7 +73,7 @@ function Registration() {
               requester: userId,
             },
           }).then(function (customer) {
-            setIsReady(false)
+            // setIsReady(false)
               var bookingTime = new Date(booking.booking_time);
               var formatBookingTime = bookingTime.toDateString().split(" ");
               var addedOn = new Date(booking.added_on);
@@ -92,7 +92,7 @@ function Registration() {
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
-              setIsReady(true)
+              // setIsReady(true)
             })
             .then (function (error) {
               console.log(error);

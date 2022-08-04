@@ -67,7 +67,6 @@ export default function ViewBooking() {
   const [show, setShow] = useState(false);
 
   // Patient details
-  // const [customerId, setCustomerId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -81,15 +80,7 @@ export default function ViewBooking() {
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
-  const [loading, setLoading] = useState(true)
-// React.useEffect(()=>
-// {
-//   // setLoading(true)
-//   // setTimeout(()=>
-//   // {
-//   //   setLoading(false)
-//   // }, 2000)
-// },[])
+  const [loading, setLoading] = useState(true);
 
   // Get booking details by searched booking id
   React.useEffect(()=>{
@@ -104,7 +95,6 @@ export default function ViewBooking() {
       }
     })
     .then((response)=>{
-      // console.log(response)
       const customerId=response.data.data.booking.customer_id;
       axios({
         method: 'post',
@@ -138,11 +128,9 @@ export default function ViewBooking() {
         setAddress(response.data.address);
       })
       .catch((error)=>{
-        // console.log(error)
       })
       })
     .catch((error)=>{
-      // console.log(error)
     })
 
     // Get booking details by booking id
@@ -157,21 +145,15 @@ export default function ViewBooking() {
       }
     })
     .then((booking)=>{
-      // console.log(booking)
       setServices(booking.data)
     })
     .catch((error)=>{
-      // console.log(error)
     })
   },[])
 
   React.useEffect(()=>{
     getUploads(data);
     }, [])
-
-    // React.useEffect(()=>{
-    //   downloadFile(data);
-    //   }, []) 
 
   // Lab tests
   React.useEffect(()=>{
@@ -190,7 +172,6 @@ export default function ViewBooking() {
           }
         })
         .then((response)=>{
-          // console.log(response)
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -220,11 +201,7 @@ export default function ViewBooking() {
               // serviceDetails.md = 
               setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
-
-
           })
-
-
         })
         .catch((error)=>{
           // console.log(error)
@@ -653,12 +630,9 @@ export default function ViewBooking() {
        
         {/* SEND OUT RESULTS */ }
         <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
-        <div className="personal-data-cont">
-        <MultipleUpload bookingId={bookingId}/>
-        
-        </div >
-        
-         {/* <div className="labtest-line mb-5 justify-content-center"> */}
+          <div className="personal-data-cont">
+            <MultipleUpload bookingId={bookingId}/>
+          </div >
         <div className='row'>
           {data == null && (<Table
                 type={'send-out-results'}
@@ -678,18 +652,14 @@ export default function ViewBooking() {
                 tableData={data}
                 rowsPerPage={5}
                 headingColumns={[
-                // 'ID',
                 'FILE NAME',
                 'ACTION',
                 ]}
                 />)}
             
               </div>
-              
-               {/* </div>  */}
               </>}
         </div>
-       
         <br />
         <br />
         <br />

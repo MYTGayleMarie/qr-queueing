@@ -5,6 +5,10 @@ import TableFooter from "./TableFooter";
 import { Link, NavLink } from 'react-router-dom';
 import { RingLoader } from "react-spinners";
 import TableLoader from "./TableLoader";
+import TableLoader1 from "./TableLoader1";
+import TableLoader2 from "./TableLoader2";
+import TableLoader3 from "./TableLoader3";
+
 
 //css 
 import './Table.scss';
@@ -60,12 +64,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={index != 0 ? "text-left" : ""}>{data.val}</td>)}
             </tr>
         }
-        // else if(type === 'transaction') {
-        //     return <tr key={row.id}>
-        //     {rowData.map((data, index) => 
-        //     <td className="smaller" key={index} data-heading={data.key}>{data.val}</td>)}
-        //     </tr>
-        // }
         else if(clickable == false) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -229,11 +227,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
                 <td td key={row.id} onClick={() => link(row.id)}>{row.file_name}</td>
                 <td><a href={row.file} download={row.file_name}><button class="filter-btn" role="button" >DOWNLOAD</button></a></td>
-               {/* <button class="multipleupload-res-btn" role="button" onClick={() => handleRemoveItem(row.id)}>DELETE</button></td> */}
-                
-            {/* {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val} onClick={() => link(row.id)}>{index == 0 ? "": data.val}</td>)} */}
-            {/* <td><button class="filter-btn" role="button" onClick={() => sendOut(row.id)}>DOWNLOAD</button></td> */}
             </tr>
         }
         else if (type === 'sales') {
@@ -339,10 +332,53 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
     });
 
-
-    
     //table structure
-    if(type === 'no-action' || type === 'release' || type === 'reports-sales' || type === 'credits'||type === 'transaction') {
+    if(type === 'no-action') {
+    
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                
+       
+                <div className="search-table-container row">
+               
+       
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader2 tableHeaders={headingColumns}/> : data}
+                    </tbody>
+                </table>
+              {/* </> }  */}
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    
+    if( type === 'release' || type === 'reports-sales' || type === 'credits'||type === 'transaction') {
     
         const {from_date, to_date, done} = filteredData;
     
@@ -379,18 +415,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <tbody>
                     {!isReady && useLoader ? 
                     <TableLoader tableHeaders={headingColumns}/> : data}
-
-                    {/* {!isReady && useLoader ? ( 
-                    <TableLoader tableHeaders={headingColumns} data={data}/>
-                    ):(
-                     {data}
-                     )
-                    }   */}
-                    
-                        {/* {data}      */}
                     </tbody>
                 </table>
-              {/* </> }  */}
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
@@ -682,7 +708,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns}/> : data}
+                    <TableLoader3 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -794,7 +820,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns}/> : data}
+                    <TableLoader1 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
