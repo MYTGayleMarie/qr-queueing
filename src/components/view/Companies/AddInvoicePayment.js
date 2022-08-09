@@ -259,7 +259,6 @@ function AddInvoicePayment() {
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response.data.data.company_invoices);
       var invoice = response.data.data.company_invoices;
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
@@ -308,7 +307,6 @@ function AddInvoicePayment() {
     var keys = Object.keys(tempData)
     console.log(keys)
     keys.map((data, index)=>{
-      console.log(keys[25])
       var info={};
       var date = new Date(tempData[data][0].added_on);
       var formattedDate = date.toDateString().split(" ");

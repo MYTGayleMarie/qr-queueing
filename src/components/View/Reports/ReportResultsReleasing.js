@@ -67,8 +67,8 @@ export default function ResultsReleasing() {
               bookingDetails.name = booking.customer;
               bookingDetails.service_type = booking.service_type;
               bookingDetails.bookingTime = getTime(bookingTime);
-              bookingDetails.releasing_time = getTime(new Date(booking.releasing_time));
-              bookingDetails.booking_details = booking.booking_interval
+              bookingDetails.releasing_time = getTime(new Date(booking.releasing_time)) === "Invalid Date" ? "No Results Found" : getTime(new Date(booking.releasing_time));
+              bookingDetails.booking_details = booking.booking_interval === "" ? '-' : booking.booking_interval;
               setPatientData(oldArray => [...oldArray, bookingDetails]);
             })
         });

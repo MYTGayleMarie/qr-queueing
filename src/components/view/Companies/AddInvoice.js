@@ -134,7 +134,8 @@ function AddInvoice() {
              if (existing.length) {
                  var existingIndex = output.indexOf(existing[0]);
                  output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
-                 output[existingIndex].total_amount = output[existingIndex].total_amount.concat(" " + item.total_amount)
+                 output[existingIndex].total_amount = output[existingIndex].total_amount.concat(" " + item.total_amount) 
+                 console.log(output[existingIndex].total_amount)
              } else {
              if (typeof item.customer == 'string')
                  item.customer = [item.customer];
@@ -147,11 +148,13 @@ function AddInvoice() {
     });
   },[discountInfo]);
 
+  console.log(particulars)
+
   React.useEffect(()=>{
     setInfo([])
     var temp_total = 0
     particulars.map((arr, index)=>{
-      var amt = arr.grand_total.split(" ");
+      var amt = arr.total_amount.split(" ");
       amt.map((temp_amt, index) => {
         var info = {};
         var date = new Date(arr.booking_time)
@@ -159,13 +162,12 @@ function AddInvoice() {
         const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
         info.date=temp_date
         info.price = temp_amt
-        info.booking = arr.customer.length
-        temp_total = (parseFloat(info.price)*parseFloat(info.booking)) + parseFloat(temp_total)
-        info.total = temp_total
         setInfo(oldArray=>[...oldArray, info])
       })
     })
   }, [particulars])
+
+  console.log(info)
 
   function addInvoice() {
     if(isClicked == false) {
@@ -299,7 +301,7 @@ function AddInvoice() {
                     type={'add-invoice'}
                     tableData={info}
                     rowsPerPage={4}
-                    headingColumns={['DATE','PRICE', 'QTY','TOTAL']}
+                    headingColumns={['DATE','PRICE']}
                     givenClass={'company-mobile'}
                 />
                 )}
