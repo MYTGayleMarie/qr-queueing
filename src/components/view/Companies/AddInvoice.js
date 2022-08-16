@@ -135,7 +135,6 @@ function AddInvoice() {
                  var existingIndex = output.indexOf(existing[0]);
                  output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
                  output[existingIndex].total_amount = output[existingIndex].total_amount.concat(" " + item.total_amount) 
-                 console.log(output[existingIndex].total_amount)
              } else {
              if (typeof item.customer == 'string')
                  item.customer = [item.customer];
@@ -148,7 +147,6 @@ function AddInvoice() {
     });
   },[discountInfo]);
 
-  console.log(particulars)
 
   React.useEffect(()=>{
     setInfo([])
@@ -183,9 +181,9 @@ function AddInvoice() {
             company_id: discountInfo.company_id,
             discount_id: discount, 
             discount_code: discountInfo.discount_code,
-            price:total,
+            price:grandTotal,
             qty: info.length,
-            total: total,
+            total: grandTotal,
             added_by: userId,
         }
       }).then(function (response) {

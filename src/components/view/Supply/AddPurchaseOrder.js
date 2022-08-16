@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
+import { format } from 'date-fns'
 import 'react-toastify/dist/ReactToastify.css';
 
 //css
@@ -46,6 +47,8 @@ function AddPurchaseOrder() {
   const [generalDiscount, setGeneralDiscount] = useState(0);
   const [items, setItems] = useState([{ 
     order_quantity: 0, 
+    with_conversion: null,
+    inventory_quantity: 0,
     unit: " ", 
     item: " ",
     cost: " ",
@@ -66,17 +69,17 @@ function AddPurchaseOrder() {
         if(data.id == value){
             list[index]['cost'] = data.cost;
             list[index]['unit'] = data.unit;
+            list[index]['with_conversion'] = data.with_conversion;
         }
       })
     }
 
-    console.log(list[index]["item_discount"]);
     var item_discount = list[index]["item_discount"] == null ? 0 : list[index]["item_discount"];
 
     if(list[index]["order_quantity"] != " " && list[index]["cost"]) {
       list[index]["total"] = parseFloat((list[index]["order_quantity"] * list[index]["cost"]) - item_discount).toFixed(2);
     }
-
+    console.log(list)
     setItems(list);
 
 
@@ -118,6 +121,8 @@ function AddPurchaseOrder() {
       ...items,
       {
         order_quantity: " ", 
+        with_conversion: null,
+        inventory_quantity: " ",
         unit: " ", 
         item: " ",
         cost: " ",
@@ -148,6 +153,7 @@ function AddPurchaseOrder() {
         itemInfo.name = data.item_name;
         itemInfo.cost = data.cost;
         itemInfo.unit = data.default_unit;
+        itemInfo.with_conversion = data.with_conversion;
         setItemInfo(oldArray => [...oldArray, itemInfo]);
       });
     }).catch(function(error) {
@@ -191,6 +197,7 @@ function AddPurchaseOrder() {
 
     var item_ids = [];
     var costs = [];
+    var inventory_qty = []; 
     var item_discounts = [];
     var qty = [];
     var units = [];
@@ -199,6 +206,7 @@ function AddPurchaseOrder() {
       item_ids.push(data.item);
       costs.push(data.cost);
       qty.push(data.order_quantity);
+      inventory_qty.push(data.inventory_quantity);
       item_discounts.push(data.item_discount)
       units.push(data.unit);
     });
@@ -213,13 +221,14 @@ function AddPurchaseOrder() {
           token: userToken.replace(/['"]+/g, ''),
           api_key: window.$api_key,
           supplier: info.supplier,
-          purchase_date: info.purchase_date,
-          payment_date: info.payment_date,
-          delivery_date: info.delivery_date,
+          purchase_date: format(new Date(info.purchase_date),'MM/dd/yyyy'),
+          payment_date: format(new Date(info.payment_date),'MM/dd/yyyy'),
+          delivery_date: format(new Date(info.delivery_date),'MM/dd/yyyy'),
           delivery_address: info.delivery_address,
           requisitioner: info.requisitioner,
           forwarder: info.forwarder,
           items: item_ids,
+          inventory_qty: inventory_qty, 
           cost: costs,
           item_discount: item_discounts,
           general_discount: generalDiscount,
@@ -240,12 +249,19 @@ function AddPurchaseOrder() {
   };
 
 
-  var purchaseItems = items.map((row, index) => {
+  var purchaseItems = items.map((row, index) => {   
     return (
                     <tr key={index}>
                         <td>
                           <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
                         </td>
+                        {row.with_conversion === "0" ? 
+                        <td>
+                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} className="purchase-item qty" readonly/>
+                        </td> : 
+                        <td>
+                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
+                        </td>}
                         <td>
                           <input type="text" name="unit" id="unit" value={row.unit} className="purchase-item unit" readOnly/>
                         </td>
@@ -392,6 +408,7 @@ function AddPurchaseOrder() {
                     <thead>
                         <tr>
                         <th>Order Qty</th>
+                        <th>Inventory Quantity</th>
                         <th>Unit</th>
                         <th>Item</th>
                         <th>Cost</th>

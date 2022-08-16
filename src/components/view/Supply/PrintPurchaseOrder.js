@@ -25,28 +25,29 @@ export class PrintPurchaseOrder extends React.PureComponent {
         signatureApprovedBy = <img src={adminSign} alt="adminSign" className="signature-approvedby" />
       } 
 
-      console.log(this.props.approvedBy);
-
     //components
     const listItems = this.props.poItems.map((data,index) => {
         return (
-        <tr>
+        <tr className="po-items-list">
             <td>
                 {data.item}
             </td>
-            <td>
+            <td className="po-items-float">
                 {parseFloat(data.qty).toFixed(2)}                
             </td>
-            <td>
+            <td className="po-items-float">
+                {parseFloat(data.inventory_qty).toFixed(2)}                
+            </td>
+            <td className="po-items-float">
                 {parseFloat(data.received).toFixed(2)}                
             </td>
             <td>
                 {data.unit}
             </td>
-            <td>
+            <td className="po-items-float">
                 {data.amount}
             </td>
-            <td>
+            <td className="po-items-float">
                 {data.discount}
             </td>
         </tr>
@@ -73,29 +74,37 @@ export class PrintPurchaseOrder extends React.PureComponent {
                     </div>
                     <div className='row'>
                         <h1 className='table-header-po'>Purchase Order #{this.props.id} Details</h1>
+                        <hr></hr>
                         <table>
                             <tr>
-                                <td className="po-gap"><span className="header-po">Supplier</span><span className="detail-po"> {this.props.supplier}</span></td>
-                                <td><span className="header-po">Purchase Date</span><span className="detail-po"> {purchaseDateformat.toDateString()}</span> </td>
-                                <td><span className="header-po">Delivery Date</span><span className="detail-po"> {deliveryDateformat.toDateString()}</span> </td>
+                                <td className="po-gap"><span className="header-po">Supplier: </span><span className="detail-po"> {this.props.supplier}</span></td>
                             </tr>
+                        </table> 
+                        <table>
                             <tr>
-                                {/* <td><span className="header-po">Requisitioner</span><span className="detail-po"> {this.props.requisitioner}</span></td>
-                                <td><span className="header-po">Forwarder</span><span className="detail-po"> {this.props.forwarder}</span></td> */}
-                                <td><span className="header-po">Delivery Address</span><span className="detail-po"> {this.props.deliveryAddress}</span> </td>
+                                <td><span className="header-po">Purchase Date: </span><span className="detail-po"> {purchaseDateformat.toDateString()}</span> </td>
+                                <td><span className="header-po">Delivery Date: </span><span className="detail-po"> {deliveryDateformat.toDateString()}</span> </td>
                             </tr>
+                        </table>
+                        <table>
                             <tr>
-                                <td><span className="header-po">Remarks</span><span className="detail-po">{this.props.remarks}</span></td>
+                                <td><span className="header-po">Delivery Address: </span><span className="detail-po"> {this.props.deliveryAddress}</span> </td>
                             </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span className="header-po">Remarks: </span><span className="detail-po">{this.props.remarks}</span></td>
+                            </tr>   
                         </table>
                     </div>
                     <hr></hr>
                     <div className='row print-po-row'>
                         <h1 className='table-header-po'>List of Purchased Items</h1>
-                        <table>
+                        <table className="table-header">
                             <tr>
                                 <th>ITEM</th>
                                 <th>QTY</th>
+                                <th>INVENTORY QTY</th>
                                 <th>RECEIVED QTY</th>
                                 <th>UNIT</th>
                                 <th>AMOUNT</th>
@@ -109,7 +118,7 @@ export class PrintPurchaseOrder extends React.PureComponent {
                         <div className='print-label po-print-breakdown'><b>SUBTOTAL </b></div><div className="margin-right-2"> {this.props.subTotal}</div>
                     </div><br />
                     <div className='po-print-breakdown-cont'>
-                        <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div> {this.props.grandTotal}</div>
+                        <div className='print-label po-print-breakdown'><b> GRANDTOTAL </b></div><div className="margin-right-2"> {this.props.grandTotal}</div>
                     </div>
 
                     <hr></hr>

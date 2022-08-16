@@ -106,7 +106,7 @@ function TableLoader({tableHeaders, data}) {
         </>
       );
     }
- 
+  
     if(data && data.length != 0) {
      return (
         loadingDisplay()

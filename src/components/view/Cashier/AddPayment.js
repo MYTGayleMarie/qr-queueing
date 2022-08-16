@@ -509,7 +509,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-          console.log(response)
             response.data.lab_tests.filter(info=>info.is_deleted==="0").map((data) => {
                 var info = {};
 

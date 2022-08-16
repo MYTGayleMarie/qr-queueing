@@ -68,7 +68,7 @@ function PayPurchaseOrder() {
     const handleItemChange = (e,index) => {
         const {name, value} = e.target;
         const list = [...releaseItems];
-        if(list[index]["qty"] >= value && value >= 0) {
+        if(list[index]["qty"] >= && value >= 0) {
             list[index][name] = value;
             setReleaseItems(list);
         }
@@ -147,6 +147,7 @@ function PayPurchaseOrder() {
                     itemData.id = data.id;
                     itemData.item = data.item;
                     itemData.qty = data.qty;
+                    itemData.inventory_qty = data.inventory_qty;
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
                     itemData.discount = data.discount;
@@ -167,28 +168,27 @@ function PayPurchaseOrder() {
             info.item_id = data.item_id;
             info.cost = data.cost;
             info.name = data.item;
+            info.inventory_qty = data.
             info.qty = data.qty - data.received;
             info.unit = data.unit; 
             info.discount = data.discount;
             info.received = 0;
             setReleaseItems(oldArray => [...oldArray, info]);
         });
-        console.log(releaseItems);
 
     },[unfilteredPoItems]);
 
     //components
     const listItems = releaseItems.map((data,index) => {
+        const data_info = data.name + " " + data.unit;
+        const data_qty = parseFloat(data.qty).toFixed(2)
         return (
-        <div className="row">
+        <div className="row receives-po-div">
             <div className="col-sm-3">
-                {data.name} 
+                {data_info}
             </div>
             <div className="col-sm-1">
-                {parseFloat(data.qty).toFixed(2)}                
-            </div>
-            <div className="col-sm-1">
-                {data.unit}
+                {data_qty}                
             </div>
             <div className="col-sm-1 text-right">
                 {data.cost}
@@ -202,6 +202,9 @@ function PayPurchaseOrder() {
             <div className="col-sm-2">
                {parseFloat((data.received)* data.cost - data.discount).toFixed(2)}
             </div>
+            <div className="col-sm-1">
+               {parseFloat(((data.inventory_qty) / data.qty )*data.received).toFixed(2)}
+            </div>
         </div>
         )
     });
@@ -214,6 +217,7 @@ function PayPurchaseOrder() {
             var po_item_ids = [];
             var cost = [];
             var received = [];
+            var inventory_qty = [];
             var unit = [];
             var names = [];
             var item_ids = [];
@@ -223,6 +227,7 @@ function PayPurchaseOrder() {
                 item_ids.push(data.item_id);
                 cost.push(data.cost);
                 received.push(data.received);
+                inventory_qty.push(data.inventory_qty)
                 unit.push(data.unit);
                 names.push(data.name);
             });
@@ -235,6 +240,7 @@ function PayPurchaseOrder() {
                     token: userToken.replace(/['"]+/g, ''),
                     api_key: window.$api_key, 
                     po_item_ids: po_item_ids,
+                    inventory_qty: inventory_qty,
                     items: item_ids,
                     cost: cost,
                     qty: received,
@@ -248,135 +254,6 @@ function PayPurchaseOrder() {
                 setTimeout(function () {
                     setRedirect(true);
                 }, 2000);
-            //     var receive_id = response.data.data.receive_id;
-            //     console.log(receive_id);
-            // if(payment === 'cash') {
-            //     axios({
-            //         method: 'post',
-            //         url: window.$link + 'po_payments/create',
-            //         withCredentials: false, 
-            //         params: {
-            //             token: userToken.replace(/['"]+/g, ''),
-            //             api_key: window.$api_key, 
-            //             po_receive_id: receive_id,
-            //             type: payment,
-            //             amount: pay,
-            //             senior_pwd_id: seniorPwdId, //not included, just empty
-            //             discount: discount,
-            //             grand_total: grandTotal,
-            //             remarks: remarks,
-            //             added_by: userId,
-            //         }
-            //     }).then(function (response) {
-            //         var date = new Date();    
-            //         console.log(response)            
-            //         toast.success("Payment Successful!");
-            //         setPrint(true);
-            //         setTimeout(function () {
-            //             setRedirect(true);
-            //           }, 2000);
-            //     }).catch(function (error) {
-            //         console.log(error);
-            //         toast.error("Payment Unsuccessful!");
-            //     });
-            // }
-            // if(payment === 'check') {
-            //     axios({
-            //         method: 'post',
-            //         url: window.$link + 'po_payments/create',
-            //         withCredentials: false, 
-            //         params: {
-            //             token: userToken,
-            //             api_key: userToken.replace(/['"]+/g, ''), 
-            //             po_receive_id: response.data.data.received_id,
-            //             type: payment,
-            //             amount: pay,
-            //             check_no: checkNo,
-            //             check_bank: checkBank,
-            //             check_date: checkDate,
-            //             senior_pwd_id: seniorPwdId,
-            //             discount: discount,
-            //             grand_total: grandTotal,
-            //             remarks: remarks,
-            //             added_by: userId,
-            //         }
-            //     }).then(function (response) {
-            //         console.log(response);
-            //         toast.success("Payment Successful!");
-            //         setPrint(true);
-            //         setTimeout(function () {
-            //             setRedirect(true);
-            //         }, 2000);
-            //     }).catch(function (error) {
-            //         console.log(error);
-            //         toast.error("Payment Unsuccessful!");
-            //     });
-            // }
-            // if(payment === 'card') {
-            //     axios({
-            //         method: 'post',
-            //         url: window.$link + 'po_payments/create',
-            //         withCredentials: false, 
-            //         params: {
-            //             token: userToken,
-            //             api_key: userToken.replace(/['"]+/g, ''), 
-            //             po_receive_id: response.data.data.received_id,
-            //             type: payment,
-            //             amount: pay,
-            //             cardName: cardName,
-            //             card_no: cardNo,
-            //             card_type: cardType,
-            //             card_expiry: cardExpiry,
-            //             card_bank: cardBank,
-            //             senior_pwd_id: seniorPwdId,
-            //             discount: discount,
-            //             grand_total: grandTotal,
-            //             remarks: remarks,
-            //             added_by: userId,
-            //         }
-            //     }).then(function (response) {
-            //         console.log(response);
-            //         toast.success("Payment Successful!");
-            //         setPrint(true);
-            //         setTimeout(function () {
-            //             setRedirect(true);
-            //           }, 2000);
-            //     }).catch(function (error) {
-            //         console.log(error);
-            //         toast.error("Payment Unsuccessful!");
-            //     });
-            // }
-            // if(payment === 'others') {
-            //     axios({
-            //         method: 'post',
-            //         url: window.$link + 'po_payments/create',
-            //         withCredentials: false, 
-            //         params: {
-            //             token: userToken,
-            //             api_key: userToken.replace(/['"]+/g, ''), 
-            //             po_receive_id: response.data.data.received_id,
-            //             type: payment,
-            //             amount: pay,
-            //             other_source: source,
-            //             other_reference_no: reference,
-            //             senior_pwd_id: seniorPwdId,
-            //             discount: discount,
-            //             grand_total: grandTotal,
-            //             remarks: remarks,
-            //             added_by: userId,
-            //         }
-            //     }).then(function (response) {
-            //         console.log(response);
-            //         toast.success("Payment Successful!");
-            //         setPrint(true);
-            //         setTimeout(function () {
-            //             setRedirect(true);
-            //           }, 2000);
-            //     }).catch(function (error) {
-            //         console.log(error);
-            //         toast.error("Payment Unsuccessful!");
-            //     });
-            // }
             });
         }
     }
@@ -645,9 +522,6 @@ function PayPurchaseOrder() {
                             QTY
                         </div>
                         <div className="col-sm-1 service">
-                            UNIT
-                        </div>
-                        <div className="col-sm-1 service">
                             AMOUNT
                         </div>
                         <div className="col-sm-2 service">
@@ -658,6 +532,9 @@ function PayPurchaseOrder() {
                         </div>
                         <div className="col-sm-2 service">
                             TOTAL
+                        </div>
+                        <div className="col-sm-1 service">
+                            INVENTORY QTY
                         </div>
                     </div>
 

@@ -378,7 +378,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     
-    if( type === 'release' || type === 'reports-sales' || type === 'credits'||type === 'transaction') {
+    if( type === 'release'|| type === 'credits'||type === 'transaction') {
     
         const {from_date, to_date, done} = filteredData;
     
@@ -819,8 +819,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader1 tableHeaders={headingColumns}/> : data}
+                        {data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>

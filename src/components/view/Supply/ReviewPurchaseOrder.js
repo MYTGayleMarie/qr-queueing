@@ -205,13 +205,13 @@ function ReviewPurchaseOrder() {
             },
           }).then(function (response) {
               response.data.map((data,index) => {
-                console.log(data.received);
                 setReceiveQty(data.received);
                 if(data.status != "disapprove") {
                     var itemData = {};
                     itemData.id = data.item_id;
                     itemData.item = data.item;
                     itemData.qty = data.qty;
+                    itemData.inventory_qty = data.inventory_qty;
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
                     itemData.discount = data.discount;
@@ -278,6 +278,9 @@ function ReviewPurchaseOrder() {
             <div className="col-sm-3">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
             </div>
+            <div className="col-sm-3">
+                {parseFloat(data.inventory_qty).toFixed(2)}
+            </div>
             <div className="col-sm-2">
                 {data.amount}
             </div>
@@ -287,9 +290,6 @@ function ReviewPurchaseOrder() {
             <div className="col-sm-1">
                 {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
             </div>
-            {/* <div className="col-sm-2">
-                {data.received}
-            </div> */}
             {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
               <div className="col-sm-2">
                  <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.id)}>DISAPPROVE</button>
@@ -549,6 +549,9 @@ function ReviewPurchaseOrder() {
                         <div className="col-sm-3 service">
                             PARTICULARS
                         </div>
+                        <div className="col-sm-3 service">
+                            INVENTORY QUANTITY
+                        </div>
                         <div className="col-sm-2 service">
                             AMOUNT
                         </div>
@@ -558,9 +561,9 @@ function ReviewPurchaseOrder() {
                         <div className="col-sm-1 service">
                             TOTAL
                         </div>
-                        {/* <div className="col-sm-2 service">
+                        <div className="col-sm-2 service">
                             RECEIVED
-                        </div> */}
+                        </div>
                         {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
                             <div className="col-sm-1 service">
                             ACTION

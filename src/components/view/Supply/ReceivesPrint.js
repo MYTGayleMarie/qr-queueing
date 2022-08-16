@@ -210,6 +210,7 @@ function ReceivesPrint() {
                     itemData.id = data.id;
                     itemData.item = data.item;
                     itemData.qty = data.qty;
+                    itemData.inventory_qty = data.inventory_qty;
                     itemData.unit = data.unit;
                     itemData.amount = data.cost;
                     itemData.total = data.amount;
@@ -273,8 +274,11 @@ function ReceivesPrint() {
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
-            <div className="col-sm-4">
+            {/* <div className="col-sm-4">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
+            </div> */}
+            <div className="col-sm-4">
+                { parseFloat(data.qty).toFixed(2)}
             </div>
             <div className="col-sm-4 text-center">
                 {parseFloat(data.amount).toFixed(2)}
@@ -470,8 +474,11 @@ function ReceivesPrint() {
 
                 <div className="summary-services">
                     <div className="row">
-                        <div className="col-sm-5 service">
+                        {/* <div className="col-sm-5 service">
                             PARTICULARS
+                        </div> */}
+                        <div className="col-sm-2 service">
+                           QTY
                         </div>
                         <div className="col-sm-4 service">
                             COST

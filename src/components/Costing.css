@@ -6,7 +6,7 @@
 }
 
 .summary-services {
-  margin: 2% 0 0 4%;
+  margin: 1% 0 0 2%;
 }
 
 .summary-total {
@@ -23,8 +23,13 @@
 .homeservice {
   font-family: "Montserrat-Bold";
   color: #419ea3;
-}
+  font-size: 12px !important;
 
+}
+.receives-po-div{
+  font-size: 12px !important;
+}
+ 
 .total-price {
   font-family: "Montserrat-Regular";
   color: #55073a;

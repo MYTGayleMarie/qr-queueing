@@ -96,7 +96,6 @@ function Cashier() {
       },
     })
       .then(function (response) {
-        console.log(response);
         setBookingDetails(response.data.bookings);
       })
       .catch(function (error) {

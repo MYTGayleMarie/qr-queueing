@@ -305,7 +305,7 @@ function AddInvoicePayment() {
     const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
     delete tempData["undefined"]
     var keys = Object.keys(tempData)
-    console.log(keys)
+
     keys.map((data, index)=>{
       var info={};
       var date = new Date(tempData[data][0].added_on);
@@ -330,9 +330,7 @@ function AddInvoicePayment() {
             requester: userId,
         }
       }).then(function (response) {
-          // console.log(response.data.data.discount);
           setDiscountDescription(response.data.data.discount.description);
-          // setIsBilled(response.data.data.discount.is_billed==1?true:false)
       });
   },[discountId]);
   
@@ -620,8 +618,6 @@ function AddInvoicePayment() {
                 token: userToken,
                 api_key: window.$api_key, 
                 invoice_no: infoId,
-                // prices: [info[0].price],
-                // totals: [info[0].total], 
                 type: payment,
                 amount: grandTotal,
                 other_source: source,

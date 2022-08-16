@@ -92,9 +92,6 @@ function ImagingTests() {
 
      const updateImaging = () => {
         ImagingInfo.map((row, index) => {
-            // console.log(row);
-            // console.log(row.type == "lab");
-            // console.log(row.type == "package");
             if(row.type == "lab") {
                 axios({
                     method: 'post',

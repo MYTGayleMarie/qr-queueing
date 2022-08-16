@@ -50,7 +50,6 @@ function PurchaseOrder() {
             date_to: filteredData.to_date,
           },
         }).then(function (response) {
-            console.log(response.data.pos);
             var pos =  response.data.pos;
             if(filteredData.status != "") {
                 pos =  response.data.pos.filter((info) => info.status == filteredData.status);
