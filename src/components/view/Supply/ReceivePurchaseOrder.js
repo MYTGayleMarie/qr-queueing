@@ -68,7 +68,7 @@ function PayPurchaseOrder() {
     const handleItemChange = (e,index) => {
         const {name, value} = e.target;
         const list = [...releaseItems];
-        if(list[index]["qty"] >= && value >= 0) {
+        if(list[index]["qty"] >= value >= 0) {
             list[index][name] = value;
             setReleaseItems(list);
         }

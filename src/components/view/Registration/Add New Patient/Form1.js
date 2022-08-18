@@ -91,6 +91,8 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
             <option value={0}>Within 2km or less</option>
             <option value={1}>More than 2km</option>
             <option value={2}>Outside Tacloban or Palo</option>
+            <option value={3}>Tacloban</option>
+            <option value={4}>Samar and Other Provinces</option>
           </select>
         </div>
         <div className="col">
@@ -111,6 +113,18 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
                       <option value="" selected>Select</option>
                       <option value={300}>(1 - 2 PAX) - P 300</option>
                       <option value={180}>(3 or more) - P 180</option>
+                    </select>
+                )}
+                {location == 3 && (
+                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                      <option value="" selected>Select</option>
+                      <option value={25}>(Tacloban) - Company Onsite Fee</option>
+                    </select>
+                )}
+                {location == 4 && (
+                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                      <option value="" selected>Select</option>
+                      <option value={100}>(Samar and Other Provinces) - Company Onsite Fee</option>
                     </select>
                 )}
                 {location == 2 && (
