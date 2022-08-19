@@ -91,8 +91,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
             <option value={0}>Within 2km or less</option>
             <option value={1}>More than 2km</option>
             <option value={2}>Outside Tacloban or Palo</option>
-            <option value={3}>Tacloban</option>
-            <option value={4}>Samar and Other Provinces</option>
+            <option value={3}>Company</option>
           </select>
         </div>
         <div className="col">
@@ -116,10 +115,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
                     </select>
                 )}
                 {location == 3 && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={25}>(Tacloban) - Company Onsite Fee</option>
-                    </select>
+                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
                 )}
                 {location == 4 && (
                     <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
@@ -128,7 +124,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
                     </select>
                 )}
                 {location == 2 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value) }/>
+                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
                 )}
         </div>
       </div>

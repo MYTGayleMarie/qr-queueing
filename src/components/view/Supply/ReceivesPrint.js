@@ -274,13 +274,13 @@ function ReceivesPrint() {
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
-            {/* <div className="col-sm-4">
+            <div className="col-sm-3">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
-            </div> */}
-            <div className="col-sm-4">
+            </div>
+            <div className="col-sm-2">
                 { parseFloat(data.qty).toFixed(2)}
             </div>
-            <div className="col-sm-4 text-center">
+            <div className="col-sm-2 text-center">
                 {parseFloat(data.amount).toFixed(2)}
             </div>
             <div className="col-sm-2 text-right">
@@ -474,13 +474,13 @@ function ReceivesPrint() {
 
                 <div className="summary-services">
                     <div className="row">
-                        {/* <div className="col-sm-5 service">
+                        <div className="col-sm-3 service">
                             PARTICULARS
-                        </div> */}
+                        </div>
                         <div className="col-sm-2 service">
                            QTY
                         </div>
-                        <div className="col-sm-4 service">
+                        <div className="col-sm-2 service">
                             COST
                         </div>
                         <div className="col-sm-3 service">

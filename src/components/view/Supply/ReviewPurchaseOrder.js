@@ -278,7 +278,7 @@ function ReviewPurchaseOrder() {
             <div className="col-sm-3">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
             </div>
-            <div className="col-sm-3">
+            <div className="col-sm-2">
                 {parseFloat(data.inventory_qty).toFixed(2)}
             </div>
             <div className="col-sm-2">
@@ -549,7 +549,7 @@ function ReviewPurchaseOrder() {
                         <div className="col-sm-3 service">
                             PARTICULARS
                         </div>
-                        <div className="col-sm-3 service">
+                        <div className="col-sm-2 service">
                             INVENTORY QUANTITY
                         </div>
                         <div className="col-sm-2 service">
@@ -560,9 +560,6 @@ function ReviewPurchaseOrder() {
                         </div>
                         <div className="col-sm-1 service">
                             TOTAL
-                        </div>
-                        <div className="col-sm-2 service">
-                            RECEIVED
                         </div>
                         {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
                             <div className="col-sm-1 service">

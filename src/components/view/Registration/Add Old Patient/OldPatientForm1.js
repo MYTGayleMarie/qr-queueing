@@ -96,14 +96,15 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
               </label>
               <br />
               <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
-                <option value="" selected disabled>Select</option>
-                <option value={0}>Within 2km or less</option>
-                <option value={1}>More than 2km</option>
-                <option value={2}>Outside Tacloban or Palo</option>
-              </select>
-            </div>
-            <div className="col">
-                {location != "" && (
+            <option value="" selected disabled>Select</option>
+            <option value={0}>Within 2km or less</option>
+            <option value={1}>More than 2km</option>
+            <option value={2}>Outside Tacloban or Palo</option>
+            <option value={3}>Company</option>
+          </select>
+        </div>
+        <div className="col">
+        {location != "" && (
                 <label for="result" className="radio-header">
                     SERVICE FEE
                 </label>
@@ -122,10 +123,19 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
                       <option value={180}>(3 or more) - P 180</option>
                     </select>
                 )}
-                {location == 2 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value) }/>
+                {location == 3 && (
+                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
                 )}
-            </div>
+                {location == 4 && (
+                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+                      <option value="" selected>Select</option>
+                      <option value={100}>(Samar and Other Provinces) - Company Onsite Fee</option>
+                    </select>
+                )}
+                {location == 2 && (
+                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
+                )}
+         </div>
           </div>
           );
         } else {

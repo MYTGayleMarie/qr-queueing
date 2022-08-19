@@ -148,13 +148,15 @@ function AddPurchaseOrder() {
       },
     }).then(function (response) {
       response.data.items.map((data,index) => {
-        var itemInfo = {};
-        itemInfo.id = data.item_id;
-        itemInfo.name = data.item_name;
-        itemInfo.cost = data.cost;
-        itemInfo.unit = data.default_unit;
-        itemInfo.with_conversion = data.with_conversion;
-        setItemInfo(oldArray => [...oldArray, itemInfo]);
+        if(data.item_id != 0 && data.is_deleted == 0 && data.cost != null){
+          var itemInfo = {};
+          itemInfo.id = data.item_id;
+          itemInfo.name = data.item_name;
+          itemInfo.cost = data.cost;
+          itemInfo.unit = data.default_unit;
+          itemInfo.with_conversion = data.with_conversion;
+          setItemInfo(oldArray => [...oldArray, itemInfo]);
+        }
       });
     }).catch(function(error) {
       console.log(error)
