@@ -17,6 +17,7 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 import { ChargeSlip } from "./ChargeSlip";
+import ModalPopUp from "../../../components/Modal/UploadModal";
 
 //variables
 const userToken = getToken();
@@ -134,10 +135,21 @@ function AddInvoicePayment() {
   const handlePrintReceiptClose = () => setIsPrintedReceipt(false);
   const handlePrintReceiptShow = () => setIsPrintedReceipt(true);
 
+//check modal
+const [isModalCheck, setIsModalCheck] = useState(false);
+const handleCheckClose = () => setIsModalCheck(false);
+const handleCheckShow = () => setIsModalCheck(true);
+
   // Charge SLip
   const [chargeSlip, setChargeSlip] = useState([]);
   const [chargeSlipReady, setChargeSlipReady] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
+
+
+  const handlePrintInvoice= () => {
+    setShowModal(false)
+  }
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -825,7 +837,7 @@ function checkForm () {
             {paymentStatus == "paid" && printButton()}
             <button className="save-btn" onClick={(e) => submit(e)}>SAVE PAYMENT </button>
         </div>
-
+        
     </div>
     )
 }
@@ -995,14 +1007,7 @@ function othersForm() {
                 </div>
                 )}
 
-                <div className="row">
-                    <div className="col-sm-12 d-flex justify-content-center">
-                        {hasPay == true && (printButton())}
-                        {hasPay == false && (printInvoiceButton())}
-                        {hasPay == false && (emailButton())}
-                        {(printChargeSlip())}
-                    </div>
-                </div>
+               
 
                 {haslogs == true && hasPay == false && (
                     <div className="payment-cont">
@@ -1013,7 +1018,7 @@ function othersForm() {
                     <span className="method-label">METHOD</span>
                     <input type="radio" id="cash" name="payment_method" value="cash" onClick={()=> setPayment('cash')}/>
                     <span className="cash method">CASH</span>
-                    <input type="radio" id="check" name="payment_method" value="check" onClick={()=> setPayment('check')}/>
+                    <input type="radio" id="check" name="payment_method" value="check" onClick={()=> setIsModalCheck(true)}/>
                     <span className="check method">CHECK</span>
                     <input type="radio" id="card" name="payment_method" value="card" onClick={()=> setPayment('card')}/>
                     <span className="check method">CARD</span>
@@ -1028,10 +1033,21 @@ function othersForm() {
                  
 
                     <ToastContainer hideProgressBar={true}/>
-
                 </div>
+                
                 )}
+                
+                 <div className="row pt-5">
+                    <div className="col-sm-12 d-flex justify-content-center">
+                        {hasPay == true && (printButton())}
+                        {hasPay == false && (printInvoiceButton())}
+                        {hasPay == false && (emailButton())}
+                        {(printChargeSlip())}
+                    </div>
+                </div>
+                
             </div>
+
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">
             <Modal.Header closeButton className='text-center'>
@@ -1053,6 +1069,28 @@ function othersForm() {
                         </button>
                    </Modal.Footer>
                    </form>
+            </Modal>
+
+            <Modal show={isModalCheck} onHide={handleCheckClose} size="md">
+            <Modal.Header closeButton className='text-center'>
+               <Modal.Title className='w-100 cash-count-header'>PRINT INVOICE FIRST!</Modal.Title>
+                </Modal.Header>
+                  
+                  <Modal.Body>
+
+                  <div className='row d-flex justify-content-center'>
+                  {hasPay == false && (printInvoiceButton())}
+                   </div>
+                  </Modal.Body>
+                    <Modal.Footer>
+                        <button type="submit" className='po-yes-btn' onClick={()=> setPayment('check')}>
+                          YES
+                        </button>
+                        <button type="submit" className='po-no-btn'>
+                          NO
+                        </button>
+                   </Modal.Footer>
+                   
             </Modal>
 
             <Modal show={isprintedReceipt} onHide={handlePrintReceiptClose} size="md">
@@ -1140,7 +1178,11 @@ function othersForm() {
                   />
 
             </div>
-
+            {/* <ModalPopUp
+                type="print-invoice"
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+            /> */}
     </div>
   );
 }

@@ -1,116 +1,110 @@
-import React, { useState } from 'react';
-import { updateStatus } from '../../Helpers/apiCalls/commonApi';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './ApprovalModal.css';
-import { refreshPage } from '../../Helpers/Utils/Common';
-import { Navigate } from 'react-router-dom';
-import Link from 'react-csv/lib/components/Link';
+// import React from "react";
+import PropTypes from "prop-types";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import Button from "Components/Button/Button";
 
-function Upload({screen, show, handleClose, item, type, table, id, link = '', details }) {
-  const [redirect, setRedirect] = useState(false);
+//css
+import "./UploadModal.css";
 
-  async function MultiUpload(upload) {
-    const response = await updateStatus(table, upload, id);
-    console.log(response)
-    if(response.data) {
-      if(response.data.status === 200) {
-        toast.success("Uploaded!" );
-      }
-    } else {
-      if(response.error.status === 500) {
-        toast.error("Something is wrong" );
-      }
-    }   
-    setTimeout(function () {
-      refreshPage();
-    }, 2000);
-  }
+const ModalPopUp = ({ type, show, handleClose, title, item, content }) => {
+  const showHideClassName = show ? "modal-pop display-block" : "modal-pop display-none";
+  // if (type === "reset-password") {
 
-  if(redirect) {
-    return <Navigate to={link}/>
-  }
-  //console.log(details);
+  //   return (
+  //     <div className={showHideClassName}>
+  //       <section className="modal-main modal-reset">
+  //         <div className="modal-cont-header d-flex justify-content-center">
+  //           <div className="modal-header-label">Reset Password</div>
+  //         </div>
+  //         <hr className="modal-line" />
+  //         <div className="modal-content-body">
+  //           <div className="input-label mt-4">Email</div>
+  //           <input type="text" className="input-2" />
 
-  if(type === 'manager') {
-//     if(screen === 'outlets') {  
-//       return (
-//       <div className={show ? "modal display-block" : "modal display-none"}>
-//         <section className="modal-main">
-//             <p className='modal-content-admin'>Do you want this <b>{item}</b> to be approved?</p>
-//             <p><b>DETAILS</b></p>
-//             <p><b>Outlet: </b> {details.branch}</p>
-//             <p><b>Outlet Type: </b> {details.outlet_type}</p>
-//             <p><b>Status: </b> {details.status}</p>
-//             {/* <p><b>Services: </b> {details.services}</p> */}
-//             <p><b>Fusion Loc. Code: </b> {details.code}</p>
-//             <p><b>Contact Number: </b> {details.contact_number}</p>
-//             <p><b>Description: </b> {details.description}</p>
-//             <p><b>Province: </b> {details.province}</p>
-//             <p><b>Address: </b> {details.address}</p>
-//             <p><b>Remarks 1: </b> {details.remarks_1}</p>
-//             <p><b>Remarks 2: </b> {details.remarks_2}</p>
-//             <p><b>Remarks 3: </b> {details.remarks_3}</p>
-//           <button type="button" className='modal-cancel-btn-admin' onClick={handleClose}>
-//             Close
-//           </button>
-//           <button type="button" className='modal-accept-btn-admin' onClick={() => updateOutletStatus("active")}>
-//             Approve
-//           </button>
-//           <button type="button" className='modal-delete-btn-admin' onClick={() => updateOutletStatus("disapproved")}>
-//             Disapprove
-//           </button>
-//         </section>
-//       </div>
-//       )
-//     }
-    if(screen === 'view-booking') {  
-        return (
-        <div className={show ? "modal display-block" : "modal display-none"}>
-          <section className="modal-main">
-              <p className='modal-content-admin'>Are you sure you want to upload this files/s?</p>
-              <p><b>DETAILS</b></p>
-              {/* <p><b>Outlet: </b> {details.branch}</p>
-              <p><b>Outlet Type: </b> {details.outlet_type}</p>
-              <p><b>Status: </b> {details.status}</p>
-              {/* <p><b>Services: </b> {details.services}</p> */}
-              {/* <p><b>Fusion Loc. Code: </b> {details.code}</p>
-              <p><b>Contact Number: </b> {details.contact_number}</p>
-              <p><b>Description: </b> {details.description}</p>
-              <p><b>Province: </b> {details.province}</p>
-              <p><b>Address: </b> {details.address}</p>
-              <p><b>Remarks 1: </b> {details.remarks_1}</p>
-              <p><b>Remarks 2: </b> {details.remarks_2}</p>
-              <p><b>Remarks 3: </b> {details.remarks_3}</p>  */}
-            <button type="button" className='modal-cancel-btn-admin' onClick={handleClose}>
-              Close
-            </button>
-            <button type="button" className='modal-accept-btn-admin' onClick={() => updateOutletStatus("active")}>
-              Approve
-            </button>
-            <button type="button" className='modal-delete-btn-admin' onClick={() => updateOutletStatus("disapproved")}>
-              Disapprove
-            </button>
-          </section>
-        </div>
-        )
-      }
-  
-  else {
+  //           <div className="input-label mt-4">New Password</div>
+  //           <input type="text" className="input-2" />
+
+  //           <div className="input-label mt-4">Confirm Password</div>
+  //           <input type="text" className="input-2" />
+  //         </div>
+  //         <div className="btn-cont">
+  //           <button type="button" className="btn-cancel" onClick={handleClose}>
+  //             Cancel
+  //           </button>
+  //           <button type="button" className="btn-done" onClick={handleClose}>
+  //             Done
+  //           </button>
+  //         </div>
+  //       </section>
+  //     </div>
+  //   );
+  // }
+
+  if (type === "print-invoice") {
+
     return (
-        <div className={show ? "modal display-block" : "modal display-none"}>
-          <section className="modal-main">
-              <p className='modal-content-admin'><b>{item}</b> is pending for approval</p>
-            <button type="button" className='modal-cancel-btn-admin' onClick={handleClose}>
-              Close
+      <div className={showHideClassName}>
+<section className="modal-main modal-reset">
+          <div className="modal-cont-header d-flex justify-content-center">
+            <div className="modal-header-label">MAKE A PLEDGE</div>
+          </div>
+          <div className="row">
+          <div className="cont"></div>
+          </div>
+          <div className="modal-content-body">
+            <p className="c-box btn-green mt-4">PHP 50,000.00</p>
+            {/* <input type="text" className="input-2" /> */}
+          </div>
+          <div className=" row pt-4 ">
+            <div className=" col-6 pt-4">
+            <input type="checkbox" className="ms-5 me-2 name-t" />
+            <div className="input-label name-t mt-4">IN-KIND</div>
+            </div>
+            </div>
+            <div className=" row pt-4 ">
+            <div className=" col-12 pt-0 ">
+            <input type="checkbox" className="ms-5 me-2 name-t" />
+            <div className="input-label name-t mt-4">MAKE ME ANONYMOUS</div>
+            </div>
+            </div>
+          <div className="btn-cont">
+            <button type="button" className="btn-mar me-4" onClick={handleClose}>
+              Cancel
             </button>
-            <button type="button" className='modal-edit-btn-admin' onClick={() => setRedirect(true)}>
-              Edit
+            <button type="button" className="label-maroon" onClick={handleClose}>
+              pledge
             </button>
-          </section>
-        </div>
-    )
+          </div>
+        </section>
+      </div>
+    );
   }
-}
-}
-export default Upload 
+
+
+  return (
+    <div className={showHideClassName}>
+      <section className="modal-main">
+          Here
+        <button type="button" onClick={handleClose}>
+          Close
+        </button>
+      </section>
+    </div>
+  );
+
+ 
+
+};
+
+ModalPopUp.propTypes = {
+  type: PropTypes.string,
+  show: PropTypes.bool,
+  handleClose: PropTypes.func,
+  title: PropTypes.string,
+  item: PropTypes.string,
+  content: PropTypes.string,
+};
+
+export default ModalPopUp;
