@@ -76,7 +76,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
                 {totalCount == null && index == 0 ? "" : data.val}
-                {console.log(data.val.replace(/\s/g, ''))}
             </td>)}
             {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
                 <td>

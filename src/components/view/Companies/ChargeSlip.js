@@ -44,7 +44,6 @@ export class ChargeSlip extends React.PureComponent {
           </div>
           <div className="row slip-header mb-2">
             <div className="row m-0 p-0">
-              {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
               <table className="slip-table">
                 <tr>
                   <td><span className="slip-label">Patient Name:</span><span className="slip-detail">{patient_name}</span></td>
@@ -79,7 +78,7 @@ export class ChargeSlip extends React.PureComponent {
           </div>
           
           <div className="row">
-            <table>
+            <table className = "particulars-lab">
               <thead className="particulars">
                 <tr>
                   <th className="slip-detail" width="60%">Particulars</th>
@@ -99,18 +98,23 @@ export class ChargeSlip extends React.PureComponent {
                   <tr>
                     <td className="slip-label">{data.name}<br/>{data.service}</td>
                     <td className="slip-label">{data.qty}</td>
-                    <td className="slip-label">P {parseFloat(data.total).toFixed(2)}</td>
+                    <td className="slip-label">P {parseFloat(data.grand_total).toFixed(2)}</td>
                   </tr>
-                )}              
+                )}
+                <tr>
+                  <td></td>
+                  <td className="slip-detail">Discount Fee:</td>
+                  <td className="slip-detail">P {discount}</td>
+                </tr>              
                 <tr>
                   <td></td>
                   <td className="slip-detail">Total:</td>
-                  <td className="slip-detail">P {total}</td>
+                  <td className="slip-detail">P {grand_total}</td>
                 </tr>
               </tbody>
             </table> 
           </div>
-          <div className="row mt-2 p-0 mb-2">
+          <div className="row mt-2 p-0 mb-2 particulars-requests">
             <table>
               <tr>
                 <td className="slip-label" width="40%">Requested By:</td>
