@@ -1080,52 +1080,12 @@ function othersForm() {
                    </div>
                   </Modal.Body>
                     <Modal.Footer>
-                        <button type="submit" className='po-yes-btn' onClick={() => checkAddPayment()}>
-                          YES
-                        </button>
-                        <button type="submit" className='po-no-btn'>
-                          NO
-                        </button>
-                   </Modal.Footer>
-                  
-            </Modal>
-            
-
-            <Modal show={isprinted} onHide={handlePrintClose} size="md">
-            <Modal.Header closeButton className='text-center'>
-               <Modal.Title className='w-100 cash-count-header'>PRINT SUCCESSFUL?</Modal.Title>
-                </Modal.Header>
-                  {/* <form> */}
-                  <Modal.Body>
-
-                  <div className='row d-flex justify-content-center'>
-                    Was printing successful?
-                   </div>
-                  </Modal.Body>
-                    <Modal.Footer>
-                        <button type="submit" className='po-yes-btn' onClick={() => cardAddPayment()}>
-                          YES
-                        </button>
-                        <button type="submit" className='po-no-btn'>
-                          NO
-                        </button>
-                   </Modal.Footer>
-            </Modal>
-         
-
-            <Modal show={isprinted} onHide={handlePrintClose} size="md">
-            <Modal.Header closeButton className='text-center'>
-               <Modal.Title className='w-100 cash-count-header'>PRINT SUCCESSFUL?</Modal.Title>
-                </Modal.Header>
-                  {/* <form> */}
-                  <Modal.Body>
-
-                  <div className='row d-flex justify-content-center'>
-                    Was printing successful?
-                   </div>
-                  </Modal.Body>
-                    <Modal.Footer>
-                        <button type="submit" className='po-yes-btn' onClick={() => otherAddPayment()}>
+                        <button type="submit" className='po-yes-btn' onClick={()=>{
+setPayment('check');
+// setIsModalCard(true); 
+handlePrintClose();
+handleCheckClose()
+}}>
                           YES
                         </button>
                         <button type="submit" className='po-no-btn'>
@@ -1147,28 +1107,6 @@ function othersForm() {
                   </Modal.Body>
                     {/* <Modal.Footer>
                         <button type="submit" className='po-yes-btn' onClick={()=> checkAddPayment()}>
-                          YES
-                        </button>
-                        <button type="submit" className='po-no-btn'>
-                          NO
-                        </button>
-                   </Modal.Footer> */}
-                   
-            </Modal>
-
-            <Modal show={isModalCard} onClick={()=> handleCardClose(false)} size="md">
-            <Modal.Header closeButton className='text-center'>
-               <Modal.Title className='w-100 cash-count-header'>PRINT INVOICE FIRST!</Modal.Title>
-                </Modal.Header>
-                  
-                  <Modal.Body>
-
-                  <div className='row d-flex justify-content-center'>
-                  {hasPay == false && (printInvoiceButton())}
-                   </div>
-                  </Modal.Body>
-                    {/* <Modal.Footer>
-                        <button type="submit" className='po-yes-btn' onClick={()=> setPayment('check')}>
                           YES
                         </button>
                         <button type="submit" className='po-no-btn'>
