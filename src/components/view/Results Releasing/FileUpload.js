@@ -35,6 +35,38 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [data, setData] = useState("")
   const [md, setMd] = useState("")
 
+  // auto suggest address
+  const [MDSuggestions, setMDSuggestions] = useState([])
+  const [allMD, setAllMD] = useState([])
+  const [renderMDSuggest, setRenderMDSuggest] = useState(true)
+  React.useEffect(() => {
+      axios({
+          method: 'post',
+          url: window.$link + 'bookings/searchByDR',
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+      }).then(function (response) {
+          setAllMD(response.data)
+      }).catch(function (error) {
+          setAllAddress([])
+          console.log(error);
+      });
+  },[]);
+
+
+  React.useEffect(()=>{
+    if(referral!==""&&setAllMD.length>0){
+      let searchWord = new RegExp(referral.toLowerCase()) // create regex for input address
+      let filteredMD = allMD.filter(info=>searchWord.test(info.toLowerCase())) // test if there is a match
+      setMDSuggestions(filteredMD) // set all matches to suggestions
+    }
+  },[referral])
+ 
+
   // Categorizing services into lab and packages
   React.useEffect(()=>{
     setServicesLab(servicesData.filter((info)=>info.type=='lab'))
