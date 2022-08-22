@@ -63,26 +63,6 @@ export default function ReportIncompletePO(){
       // Getting poItems in each pos
       incomplete.map(async(pos, index)=>{
         await axios({
-          method: 'post',
-          url: window.$link + 'pos/getPoItems/' + pos.id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-          }
-          })
-          .then((poItems)=>{
-            // console.log(poItems)
-             poItems.data.map((itemDetails, index1)=>{
-                const bal = itemDetails.qty-itemDetails.received
- 
-  
-
-              //  if there is balance, we include it in table
-               if(bal>0){
-                //  console.log(itemDetails)
-                axios({
                   method: 'post',
                   url: window.$link + 'suppliers/show/' + pos.supplier_id,
                   withCredentials: false,
@@ -104,25 +84,17 @@ export default function ReportIncompletePO(){
                     info.total_amount = pos.grand_total;
                     setIncompletePo(oldArray=>[...oldArray, info])
                   })
-
-               }
-             })
+          
             // Set status for printing
             if(incomplete.length - 1 == index) {
               setPrintReadyFinal(true);
             }
-          })
-          .catch((error)=>{
-            console.log(error)
-          })
-      })   
-
-
+      })
     })
     .catch((error)=>{console.log(error)})
   },[render])
 
-
+  console.log(incompletePo)
 
   function review(poId){
     id=poId;
@@ -148,13 +120,13 @@ export default function ReportIncompletePO(){
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Incomplete PO Report'}
-            tableData={incompletePo}
+            tableData={incompletePo.sort((a,b) => (a.po_number > b.po_number ? 1 : ((b.po_number > a.po_number) ? -1 : 0)))}
             tableHeaders={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT', 'ACTION']}
             status={printReadyFinal}
              />
         <Table 
           type={'report-incomplete-po'}
-          tableData={incompletePo}
+          tableData={incompletePo.sort((a,b) => (a.po_number > b.po_number ? 1 : ((b.po_number > a.po_) ? -1 : 0)))}
           rowsPerPage={100}
           headingColumns={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT', 'ACTION']}
           filteredData={filteredData}
