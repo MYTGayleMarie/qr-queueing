@@ -122,11 +122,12 @@ function Cashier() {
           var addedOn = new Date(booking.added_on);
           var formatAddedOn = addedOn.toDateString().split(" ");
           var bookingDetails = {};
+          var booking_service = booking.type;
           
           bookingDetails.id = booking.id;
           bookingDetails.name = customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
           bookingDetails.bookingTime =  formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-          bookingDetails.serviceType = booking.type;
+          bookingDetails.serviceType = booking_service.toUpperCase();
           bookingDetails.amount = booking.grand_total;
 
           //fully paid or not
