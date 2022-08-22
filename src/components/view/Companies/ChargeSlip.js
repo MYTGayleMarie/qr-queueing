@@ -81,7 +81,7 @@ export class ChargeSlip extends React.PureComponent {
             <table className = "particulars-lab">
               <thead className="particulars">
                 <tr>
-                  <th className="slip-detail" width="60%">Particulars</th>
+                  <th className="slip-detail" width="50%">Particulars</th>
                   <th className="slip-detail">Qty</th>
                   <th className="slip-detail">Price</th>
                 </tr>
