@@ -39,32 +39,6 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [MDSuggestions, setMDSuggestions] = useState([])
   const [allMD, setAllMD] = useState([])
   const [renderMDSuggest, setRenderMDSuggest] = useState(true)
-  React.useEffect(() => {
-      axios({
-          method: 'post',
-          url: window.$link + 'bookings/searchByDR',
-          withCredentials: false, 
-          params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-          }
-      }).then(function (response) {
-          setAllMD(response.data)
-      }).catch(function (error) {
-          setAllAddress([])
-          console.log(error);
-      });
-  },[]);
-
-
-  React.useEffect(()=>{
-    if(referral!==""&&setAllMD.length>0){
-      let searchWord = new RegExp(referral.toLowerCase()) // create regex for input address
-      let filteredMD = allMD.filter(info=>searchWord.test(info.toLowerCase())) // test if there is a match
-      setMDSuggestions(filteredMD) // set all matches to suggestions
-    }
-  },[referral])
  
 
   // Categorizing services into lab and packages
@@ -255,7 +229,7 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   }
 
-  // Handle view results button click
+  // Handle View results button click
   function handleViewResults(){
     setRedirectPdf(true)
   }
@@ -324,14 +298,14 @@ export default function FileUpload({servicesData, title, bookingId}){
     // console.log("Edit" + doctorName)
   }
 
-    // Redirect to view pdf results
+    // Redirect to View pdf results
   if(redirectPdf==true){
     let location = window.location.origin
     let type = servicesData[0].type;
     let bookId= bookingId;
     let packageId = servicesData[0].packageId;
     let serviceId = servicesData[0].id;
-    var link = location+"/view-results/"+type+"/"+bookId+"/"+packageId+"/"+serviceId;
+    var link = location+"/View-results/"+type+"/"+bookId+"/"+packageId+"/"+serviceId;
     window.open(link)
     // console.log(link)
   }

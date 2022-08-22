@@ -112,7 +112,7 @@ function Receives() {
         });
     },[render]);
 
-    function view(receiveId, poId) {
+    function View(receiveId, poId) {
         id = receiveId;
         po_id = poId;
         setRedirect(true);
@@ -145,7 +145,7 @@ function Receives() {
                 headingColumns={['RECEIVE ID','PO NO.', 'DATE','PAYMENT DATE', 'SUPPLIER','AMOUNT', 'PAYMENT STATUS', 'PO STATUS', 'ACTION']}
                 filteredData={filteredData}
                 setFilter={setFilter}
-                link={view}
+                link={View}
                 setRender={setRender}
                 render={render}
             />

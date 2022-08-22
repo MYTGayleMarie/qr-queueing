@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RingLoader } from "react-spinners";
 
 import "./TableFooter.css"
-import "../components/view/Imaging/Imaging.css"
+import "../components/View/Imaging/Imaging.css"
 
 function TableLoader({tableHeaders, data}) {
     const [showLoading, setShowLoading] = useState(true);

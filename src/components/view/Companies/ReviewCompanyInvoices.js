@@ -211,37 +211,6 @@ function ReviewCompanyInvoices() {
                   <button className="back-btn less-width" onClick={() => setRedirect(true)}>BACK</button>
                 </div>
             </div>
-
-            {/* <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>ADD INVOICE</Modal.Title>
-              </Modal.Header>
-              <form>
-              <Modal.Body>
-                
-              <span>Choose discount code to add invoice:</span>
-              <select name="discountCode" className="invoice-select" value={selectedCode} onChange={(e) => setSelectedCode(e.target.value)}>
-                <option value="" disabled selected>Select</option>
-                {discountCodes != "" && discountCodes.map((data,index) => {
-                  return (
-                    <option value={data.id}>{data.discount_code}</option>
-                  )
-                })}
-              </select>
-
-
-              </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button type="submit" variant="primary" onClick={addInvoice}>
-                    Go
-                  </Button>
-                </Modal.Footer>
-              </form>
-            </Modal> */}
-
     </div>
   );
 }

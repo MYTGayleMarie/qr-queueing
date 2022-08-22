@@ -80,6 +80,8 @@ function Registration() {
               var formatAddedOn = addedOn.toDateString().split(" ");
               var bookingDetails = {};
 
+              var booking_service = booking.type.toUpperCase();
+
               // console.log(booking);
 
               bookingDetails.withDiscount = booking.discount_detail;
@@ -87,7 +89,7 @@ function Registration() {
               bookingDetails.name =
                 customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.serviceType = booking.type;
+              bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
@@ -149,8 +151,6 @@ function Registration() {
     )
   }
 
-  // console.log(patientData);
-  
    return (
     <div>
       <Navbar />
