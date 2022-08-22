@@ -1152,6 +1152,7 @@ function AddPayment() {
                             isCompany={true}
                             packages={packages}
                             labTests={labTests}
+                            discount = {discount}
                             grandTotal={grandTotal}
                             queue={queueNumber}
                             encodedOn={encodedOn}
