@@ -66,7 +66,7 @@ function Suppliers() {
 
     
     if (redirect == true) {
-        var link = '/view-supplier/' + id;
+        var link = '/View-supplier/' + id;
         return <Navigate to={link} />;
     }
 

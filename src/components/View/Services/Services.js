@@ -142,7 +142,7 @@ export default function Services(){
   }
   
 	if(redirectView == true) {
-    var link = "/view/"+id
+    var link = "/View/"+id
     return (
         <Navigate to ={link}/>
     )

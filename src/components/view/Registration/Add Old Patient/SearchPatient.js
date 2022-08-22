@@ -71,7 +71,7 @@ function SearchPatient() {
       setRedirectViewHistory(true);
     }
     if(redirectViewHistory==true){
-      var link ="/view-history/"+id;
+      var link ="/View-history/"+id;
       return(
         <Navigate to={link} />
       )
@@ -107,7 +107,7 @@ function SearchPatient() {
                     headingColumns={['ID', 'PATIENT NAME', 'GENDER', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'ACTION']}
                     link={addBooking}
                     givenClass={'search-mobile'}
-                    view={viewHistory}
+                    View={viewHistory}
                 />            
             </Fragment>
             </div>

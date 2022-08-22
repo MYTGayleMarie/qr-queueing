@@ -35,6 +35,12 @@ export default function FileUpload({servicesData, title, bookingId}){
   const [data, setData] = useState("")
   const [md, setMd] = useState("")
 
+  // auto suggest address
+  const [MDSuggestions, setMDSuggestions] = useState([])
+  const [allMD, setAllMD] = useState([])
+  const [renderMDSuggest, setRenderMDSuggest] = useState(true)
+ 
+
   // Categorizing services into lab and packages
   React.useEffect(()=>{
     setServicesLab(servicesData.filter((info)=>info.type=='lab'))
@@ -223,7 +229,7 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   }
 
-  // Handle view results button click
+  // Handle View results button click
   function handleViewResults(){
     setRedirectPdf(true)
   }
@@ -292,14 +298,14 @@ export default function FileUpload({servicesData, title, bookingId}){
     // console.log("Edit" + doctorName)
   }
 
-    // Redirect to view pdf results
+    // Redirect to View pdf results
   if(redirectPdf==true){
     let location = window.location.origin
     let type = servicesData[0].type;
     let bookId= bookingId;
     let packageId = servicesData[0].packageId;
     let serviceId = servicesData[0].id;
-    var link = location+"/view-results/"+type+"/"+bookId+"/"+packageId+"/"+serviceId;
+    var link = location+"/View-results/"+type+"/"+bookId+"/"+packageId+"/"+serviceId;
     window.open(link)
     // console.log(link)
   }

@@ -15,7 +15,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, view, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -74,7 +74,10 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         else if (type === 'registration') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{totalCount == null && index == 0 ? "" : data.val}</td>)}
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
+                {totalCount == null && index == 0 ? "" : data.val}
+                {console.log(data.val.replace(/\s/g, ''))}
+            </td>)}
             {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
                 <td>
                     <button class="action-btn" role="button" onClick={() => link(row.id)}>ADD PAYMENT</button>
@@ -185,7 +188,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
-            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button><button class="button-10" role="button" onClick={() => view(row.id)}>VIEW HISTORY</button></td>
+            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button><button class="button-10" role="button" onClick={() => View(row.id)}>VIEW HISTORY</button></td>
             </tr>
         }
         else if(type === "payment-invoices") {
@@ -756,7 +759,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         return (
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  
-                    {/* container for filters*/}
                     <select onChange={(e) => setCategory(e.target.value)}>
                         <option value='lab'>LAB</option>
                         <option value='package'>PACKAGE</option>
