@@ -21,6 +21,7 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
     render() {
+        console.log(this.props)
         const presentDate = new Date();
         const curTime = presentDate.getHours() + ':' + presentDate.getMinutes();
         const today = presentDate.toDateString().split(' ')
@@ -600,11 +601,16 @@ export class PaymentToPrint extends React.PureComponent {
                         <td className="slip-label slip-span">{data.qty}</td>
                         <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
-                    )}              
-                    <tr c>
+                    )} 
+                    <tr>
+                      <td></td>
+                      <td className="slip-label bold-slip-span">Discount Feee:</td>
+                      <td className="slip-label bold-slip-span"> {parseFloat(this.props.discount).toFixed(2) == null ? "NONE" : parseFloat(this.props.discount).toFixed(2)}</td>
+                    </tr>             
+                    <tr>
                       <td></td>
                       <td className="slip-label bold-slip-span">Total:</td>
-                      <td className="slip-label bold-slip-span">P {this.props.grandTotal}</td>
+                      <td className="slip-label bold-slip-span">{this.props.grandTotal}</td>
                     </tr>
                   </tbody>
                 </table> 

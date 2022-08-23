@@ -79,7 +79,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            // console.log(response)
+            console.log(response)
             // console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
@@ -451,6 +451,7 @@ function PrintBooking() {
                         encodedOn={encodedOn}
                         queue={queueNumber}
                         isCompany={true}
+                        discount = {discount}
                         discountCode={discountCode}
                         grandTotal={grandTotal}
                         labTests={labTests}
