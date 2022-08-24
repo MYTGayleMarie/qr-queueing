@@ -45,6 +45,8 @@ function Reports() {
     const [clinicServices, setClinicServices] = useState([]);
     const [resultsData, setResultsData] = useState([]);
 
+    const [counts_results_releasing, setResultsCount] = useState(0);
+
     const [totalSales, setTotalSales] = useState(0);
     const [pendingPOs, setPendingPOs] = useState([]);
     const [unpaidInvoices, setUnpaidInvoices] = useState([]);
@@ -221,12 +223,7 @@ function Reports() {
         },
       })
         .then( function (response) {
-          console.log(response)
-          response.data.bookings.map((booking, index) => {
-            if(booking.upload_status === "0"){
-              setResultsData(oldArray => [...oldArray, booking]);
-            }
-              })
+          setResultsCount(response.data.complete_releasing_count)
           });
     }, []);
 
@@ -500,7 +497,7 @@ function Reports() {
                 </div>
                 <div className="col-sm-4">
                   {role != 3 && <Card 
-                        totalData={resultsData.length}
+                        totalData={counts_results_releasing}
                         todayData={""}
                         link={"/reports-results-releasing"}
                         title="Results Releasing"
