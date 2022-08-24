@@ -47,6 +47,7 @@ import ReportSales from './components/View/Reports/ReportSales';
 import ResultsReleasing from './components/View/Reports/ReportResultsReleasing.js';
 import ReportUnpaidInvoices from './components/View/Reports/ReportUnpaidInvoices';
 import MdReports from './components/View/Reports/MdReports';
+import MdReferral from './components/View/Reports/MdReferral';
 import ReportCredits from './components/View/Reports/ReportCredits';
 import ReportCreditDetails from './components/View/Reports/ReportCreditDetails';
 import Users from './components/View/Users/Users';
@@ -80,6 +81,7 @@ import ReportIncompletePO from './components/View/Reports/ReportIncompletePO';
 import ReportIncompletePOReview from './components/View/Reports/ReportIncompletePOReview';
 import ViewHistory from './components/View/Registration/Add Old Patient/ViewHistory';
 import ViewBooking from './components/View/Results Releasing/ViewBooking';
+
 
 function App() {
   document.title = 'QR Diagnostics System';
@@ -169,6 +171,7 @@ function App() {
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/reports-md" element={token ? <MdReports/> : <Navigate to="/" />} />
+        <Route path="/reports-referrals" element={token ? <MdReferral/> : <Navigate to="/" />} />
         <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po/review/:id" element={token ? <ReportIncompletePOReview/> : <Navigate to="/" />} />

@@ -146,11 +146,6 @@ function ReportSales() {
     },[render])
 
  
-    // React.useEffect(()=>{
-    //   sales.length=0
-    //   let tempData=credits.concat(salesTemp)
-    //   setSales(tempData)
-    // },[credits, salesTemp])
 console.log(sales)
 
     React.useEffect(()=>{

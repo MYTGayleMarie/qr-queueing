@@ -26,6 +26,13 @@ const filterData = {
   done: false,
 };
 
+function groupArrayOfObjects(list, key) {
+  return list.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
 function MdReferral() {
 
   document.body.style = 'background: white;';
@@ -33,14 +40,16 @@ function MdReferral() {
   const [render, setRender] = useState(false);
   const [mds, setMds] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false);
+  const [byDate, setByDate] = useState([]);
+  const [md_res,setMdsData] = useState([]);
   
-     //SALES REPORT
+
      React.useEffect(() => {
        mds.length = 0;
        axios({
         method: 'post',
-        url: window.$link + 'reports/md',
+        url: window.$link + 'reports/referrals',
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -52,24 +61,40 @@ function MdReferral() {
       }).then(function (response) {
         setIsReady(true)
           var data = response.data.data.data;
-
           data.map((value, index) => {
             var info = {};
-            info.md = value.md;
-            info.referrals = value.referrals == null ? "0" : value.referrals;
-            info.xray = value.xray == null ? "0" : value.xray;
-            info.ecg = value.ecg == null ? "0" : value.ecg;
-            info.ultrasound = value.ultrasound == null ? "0" : value.ultrasound;
+            var date = new Date(value.booking_date);
+            var formattedDate = date.toDateString().split(" ");
+            var booking_date = formattedDate[1]+" "+formattedDate[2]+" "+formattedDate[3]
+  
+            info.date = booking_date;
+            info.md = value.doctors_referal;
+            info.qty = value.referrals_count;
+            info.amount = value.total_amount;
             setMds(oldArray => [...oldArray, info]);
 
             if(data.length - 1 == index) {
               setPrintReadyFinal(true);
               setIsReady(true)
             }
-          })
+          });
       });
        
     },[render]);
+
+    React.useEffect(()=>{
+      const md_results = mds.filter(info=>info.date!==null)
+      const res = Array.from(md_results.reduce(
+          (m, {date, amount}) => m.set(date, (m.get(date) || 0) + parseFloat(amount)), new Map),
+          ([date, amount]) => ({date, amount}));
+      
+      setMdsData(res)
+    },[mds])
+
+    React.useEffect(()=>{
+      let tempData = md_res.concat(mds)
+      setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
+    },[md_res])
 
   function filter() {}
 
@@ -79,22 +104,22 @@ function MdReferral() {
       <div className="active-cont">
         <Fragment>
 
-        <Searchbar title='MD REPORTS'/>
+        <Searchbar title='REFERRALS REPORT'/>
           <Header 
             type="thick" 
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
-            tableName={'Unpaid Invoice Report'}
-            tableData={mds}
-            tableHeaders={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND']}
+            tableName={'REFERRALS REPORT'}
+            tableData={mds.sort((a,b) => (a.date > b.date ? 1 : ((b.date > a.date) ? -1 : 0)))}
+            tableHeaders={['DATE', 'MD NAME', 'REFERRAL QTY','AMOUNT']}
             status={printReadyFinal}
              />
           <Table
             clickable={false}
             type={'no-action'}
-            tableData={mds}
+            tableData={mds.sort((a,b) => (a.date > b.date ? 1 : ((b.date > a.date) ? -1 : 0)))}
             rowsPerPage={100}
-            headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND']}
+            headingColumns={['DATE', 'MD NAME', 'REFERRAL QTY','AMOUNT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
@@ -112,4 +137,4 @@ function MdReferral() {
   );
 }
 
-export default MdReports;
+export default MdReferral;

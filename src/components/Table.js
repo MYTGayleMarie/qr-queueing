@@ -22,6 +22,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
     const {slice, range} = useTable(tableData, page, rowsPerPage);  
     const [loading, setLoading] = useState(true);
 
+    console.log(tableData)
 
     let tableClass = 'table-container__table';
 
@@ -35,7 +36,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
 
    
     const data = slice.map((row, index) => {
-
+        console.log(row)
         let rowData = [];
         let i = 0;
         
@@ -232,8 +233,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
         else if (type === 'sales') {
-          // console.log(row)
-          
           var card = row.filter(info=>info.method=="card")
           var check = row.filter(info=>info.method=="check")
           var others = row.filter(info=>info.method=="others")
@@ -313,6 +312,28 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
           return rowElements;
           // return <tr></tr>
         }
+
+        else if (type === 'md-referrals') {
+            console.log("hello")
+            var data = row.length > 0 ? <>
+                <td data-heading='MD NAME'> {data.map((data,index)=><div className='account-details'>{data.md}</div>)}</td>
+                <td data-heading='REFERRALS QTY'> {data.map((data,index)=><div className='account-details'>{data.qty}</div>)}</td>
+                <td data-heading='AMOUNT'> {data.map((data,index)=><div className='account-details'>{data.amount}</div>)}</td>
+            </> : <>
+                <td data-heading='MD NAME'> {data.map((data,index)=><div className='account-details'>{" "}</div>)}</td>
+                <td data-heading='REFERRALS QTY'> {data.map((data,index)=><div className='account-details'>{" "}</div>)}</td>
+                <td data-heading='AMOUNT'> {data.map((data,index)=><div className='account-details'>{" "}</div>)}</td>
+            </>
+  
+            const rowElements = <tr key={row.id} className="sales-row">
+            <td key={row[0].date.replace(/\s/g, '')}data-heading="DATE"className='DATE'>{row[0].date}</td>
+            <table className="method-row" >
+              {data}
+            </table>
+            <td key={row[0].amount}data-heading="TOTAL"className='TOTAL'>P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+          </tr>
+          return rowElements;
+          }
         else if(type==='receive-incomplete-po-items'){
             return <tr key={row.id}>
             <td key={"particulars"+row.po_item_id} data-heading={'PARTICULARS'} className={row.name}>{row.name}</td>
@@ -827,6 +848,47 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    if(type === 'md-referrals') {
+        console.log("hello here")
+        const {from_date, to_date, done} = filteredData;
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                {/* <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div> */}
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(render=>!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+
+                          <th>DATE</th>
+                          <th className="method-row">
+                            <td className='heading-details'>MD NAME</td>
+                            <td className='heading-details'>REFERRAL QTY</td>
+                            <td className='heading-details'>AMOUNT</td>
+                          </th>
+                          <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
     else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         // console.log(data)
         return(
@@ -872,6 +934,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    
     else if(type === 'discount') {
         return(
             <div className="table-container">
