@@ -10,8 +10,10 @@
 
 .HOMESERVICE {
     color: #419EA3 !important;
+    font-weight: bold;
 }
 
 .CLINIC {
     color: #55073A;
+    font-weight: bold;
 }

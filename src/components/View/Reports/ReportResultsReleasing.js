@@ -13,7 +13,7 @@ import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
 
-// const buttons = ['add-new-patient', 'add-old-patient'];
+const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
@@ -36,6 +36,7 @@ export default function ResultsReleasing() {
   const [redirectBooking, setRedirectBooking] = useState(false);
   const [role, setRole] = useState('');
   const [bookingId, setBookingId] = useState("");
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -56,7 +57,6 @@ export default function ResultsReleasing() {
       },
     })
       .then( function (response) {
-        console.log(response)
         response.data.bookings.map((booking, index) => {
               var bookingTime = new Date(booking.added_on);
               var formatBookingTime = bookingTime.toDateString().split(" ");
@@ -70,6 +70,10 @@ export default function ResultsReleasing() {
               bookingDetails.releasing_time = getTime(new Date(booking.releasing_time)) === "Invalid Date" ? "No Results Found" : getTime(new Date(booking.releasing_time));
               bookingDetails.booking_details = booking.booking_interval === "" ? '-' : booking.booking_interval;
               setPatientData(oldArray => [...oldArray, bookingDetails]);
+
+              if((response.data.bookings.length) - 1 === index) {
+                setPrintReadyFinal(true);
+              }
             })
         });
   }, [render]);
@@ -86,10 +90,12 @@ export default function ResultsReleasing() {
          <Searchbar title='RESULTS RELEASING REPORT'/>
          <Header 
             type="thick" 
+            buttons={buttons}
             title="QR DIAGNOSTICS REPORT" 
             tableName={'Results Releasing Report'}
-            tableData={filteredData}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             tableHeaders={['BOOKING DATE', 'PATIENT NAME', 'TESTS','TIME REGISTERED', 'TIME UPLOADED', 'TIME DIFFERENCE']}
+            status = {printReadyFinal}
              />
           <Table
             type={'no-action'}

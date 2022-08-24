@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import logo from '../images/logo-black.png';
 
 function PdfTransaction({type, name, data, header, total}) {
-    
+    console.log(data)
     
     var infos = [];
 
