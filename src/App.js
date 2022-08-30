@@ -47,6 +47,7 @@ import ReportSales from './components/View/Reports/ReportSales';
 import ResultsReleasing from './components/View/Reports/ReportResultsReleasing.js';
 import ReportUnpaidInvoices from './components/View/Reports/ReportUnpaidInvoices';
 import MdReports from './components/View/Reports/MdReports';
+import MDReportDetail from './components/View/Reports/ReportMDDetails';
 import MdReferral from './components/View/Reports/MdReferral';
 import ReportCredits from './components/View/Reports/ReportCredits';
 import ReportCreditDetails from './components/View/Reports/ReportCreditDetails';
@@ -171,6 +172,7 @@ function App() {
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/reports-md" element={token ? <MdReports/> : <Navigate to="/" />} />
+        <Route path="/reports-md-details/:name/:lab" element={token ? <MDReportDetail/> : <Navigate to="/" />} />
         <Route path="/reports-referrals" element={token ? <MdReferral/> : <Navigate to="/" />} />
         <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />

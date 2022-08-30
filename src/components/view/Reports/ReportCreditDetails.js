@@ -55,9 +55,12 @@ function ReportCreditDetails() {
              if (existing.length) {
                  var existingIndex = output.indexOf(existing[0]);
                  output[existingIndex].customer = output[existingIndex].customer.concat(item.customer);
+                 output[existingIndex].doctors_referral = output[existingIndex].doctors_referral.concat(item.doctors_referal);
              } else {
-             if (typeof item.customer == 'string')
-                 item.customer = [item.customer];
+             if (typeof item.customer == 'string'){
+                item.customer = [item.customer];
+                item.doctors_referral = [item.doctors_referral]
+             }
              output.push(item);
              }
          });
@@ -97,16 +100,33 @@ function ReportCreditDetails() {
                           <div className="col-sm-2">
                               <div className='particulars'>{formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</div>
                           </div>
-                          <div className="col-sm-8">
+                          <div className="col-sm-4">
                               <div className='detail'>
                               {data.customer.map((customer, index) => {
                                 if(data.customer.length - 1 != index) {
-                                  return customer + ", "
+                                  return <>
+                                  {customer} <br/>
+                                 </>
                                 } else {
                                   return customer 
                                 }
-
-                              })}</div>
+                                <br/>
+                              })}
+                              </div>
+                          </div>
+                          <div className="col-sm-4">
+                              <div className='detail'>
+                              {data.doctors_referral.map((doctors, index) => {
+                                if(data.doctors_referral.length - 1 != index) {
+                                  return <>
+                                   {doctors} <br/>
+                                  </>
+                                } 
+                                else {
+                                  return doctors 
+                                }
+                              })}
+                              </div>
                           </div>
                       </div>
                       )

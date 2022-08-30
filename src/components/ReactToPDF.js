@@ -13,7 +13,7 @@ function PdfTransaction({type, name, data, header, total}) {
         // console.log(Object.values(info))
         infos.push(Object.values(info));
     });
-    // console.log(data)
+  
     var saleInfos =[];
     if(type=="sales"){
       data.map((info, index)=>{

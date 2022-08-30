@@ -485,7 +485,7 @@ function Reports() {
                 </div>
             </div>
             <div className="row">
-            <div className="col-sm-4">
+               <div className="col-sm-4">
                   {role != 3 && <Card 
                         totalData={poCount}
                         todayData={""}
@@ -505,6 +505,16 @@ function Reports() {
                         disable={"today"}
                     /> }
                 </div>
+                {/* <div className="col-sm-4">
+                    {role != 3 && <Card 
+                        totalData={"REFERRALS"}
+                        todayData={""}
+                        link={"/reports-referrals"}
+                        title=''
+                        color='blue'
+                        disable={"today"}
+                    />}
+                </div> */}
             </div>
             <div className="row">
             </div>

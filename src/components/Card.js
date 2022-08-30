@@ -16,7 +16,7 @@ function Card({totalData, todayData, services, packages, link, title, color, dis
                 </div>
                 <div className='row'>
                     <div className='col-sm-3 d-flex justify-content-end'>
-                        {totalData != "MD REPORTS" && (
+                        {totalData != "MD REPORTS" && totalData!= "REFERRALS" && (
                             <img src={cashierIcon} alt={"report"} class="report-card icon"></img>
                         )}
                     </div>
@@ -37,7 +37,7 @@ function Card({totalData, todayData, services, packages, link, title, color, dis
                                 <span className='card-title'>{todayData == null ? "SERVICES" : "TODAY"}</span>
                             </div>
                             )}
-                            {totalData != "MD REPORTS" && (
+                            {totalData != "MD REPORTS" && totalData!= "REFERRALS"&& (
                             <div className='col d-flex justify-content-end'>
                                 <span className='card-title'>{todayData == null ? "PACKAGES" : "TOTAL"}</span>
                             </div>
