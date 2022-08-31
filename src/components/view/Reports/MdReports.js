@@ -4,6 +4,7 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { getTime } from '../../../utilities/Common';
@@ -13,8 +14,11 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 const buttons = ['export-excel', 'export-pdf'];
+var name = ""; 
+var category = 0;
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
@@ -23,17 +27,31 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
-  done: false,
+  done: false
 };
+
+const labDetails = {
+  md:"",
+  lab_category:"",
+};
+
 
 function MdReports() {
 
   document.body.style = 'background: white;';
+   
   const [filteredData, setFilter] = useForm(filterData);
+  const [link_md_details, setLink] = useState("");
+  const [lab_details, setLabDetails] = useState("");
+  const [md_name, setMDName] = useState("");
+  const [lab, selectLab] = useState("")
   const [render, setRender] = useState(false);
   const [mds, setMds] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [name, setName] = useState("");
   const [isReady, setIsReady] = useState(false)
+
+  const [redirect, setRedirect] = useState(false);
   
      //SALES REPORT
      React.useEffect(() => {
@@ -73,6 +91,36 @@ function MdReports() {
 
   function filter() {}
 
+
+  function handleOnChange(e, md_name){
+    setLink("/reports-md-details/" + md_name + "/" + e.target.value)
+    setRedirect(true)
+  }
+
+//   function approve(temp_name, temp_category) {
+//     if(lab === "XRAY"){
+//       category = 18;
+//     }
+//     else if(lab === "ULTRASOUND"){
+//       category = 21;
+//     }
+//     else if(lab === "ECG"){
+//       category = 21;
+//     }
+//     else{
+//       category = 0;
+//     }
+//     name = temp_name;
+//     setRedirect(true);
+// }
+
+  if(redirect == true) {
+    return (
+        <Navigate to ={link_md_details}/>
+    )
+}
+
+
   return (
     <div>
       <Navbar />
@@ -90,20 +138,21 @@ function MdReports() {
             status={printReadyFinal}
              />
           <Table
-            clickable={false}
-            type={'no-action'}
+            clickable={true}
+            type={'mds'}
             tableData={mds}
             rowsPerPage={100}
-            headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND']}
+            headingColumns={['MD NAME', 'REFERRAL', 'XRAY','ECG','ULTRASOUND', 'ACTIONS']}
             filteredData={filteredData}
             setFilter={setFilter}
+            handleOnChange={handleOnChange}
             filter={filter}
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
             useLoader={true}
             isReady={isReady}
-          />
+s          />
 
           <ToastContainer hideProgressBar={true} />
         </Fragment>

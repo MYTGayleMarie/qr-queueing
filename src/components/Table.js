@@ -15,7 +15,7 @@ import './Table.scss';
 import { useNavigate } from "react-router-dom";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setName, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, handleOnChange, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -154,6 +154,22 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td><button class="action-btn" role="button" onClick={() => link(row.company_discount)}>VIEW DETAILS</button></td>
             </tr>
         }
+        else if (type === 'mds' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>
+            )}
+            <td>
+                     <select name="lab_category" onChange={(e) => handleOnChange(e, row.md)} className="action-btn">
+                        <option>VIEW DETAILS</option>
+                        <option value="18">XRAY</option>
+                        <option value = "19">ECG</option>
+                        <option value = "21">ULTRASOUND</option>
+                    </select>
+            </td>
+            </tr>
+        }
+
         else if (type === 'med-tech' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -401,7 +417,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     
-    if( type === 'release'|| type === 'credits'||type === 'transaction') {
+    if( type === 'release'|| type === 'credits'||type === 'transaction'||type === 'mds') {
     
         const {from_date, to_date, done} = filteredData;
     
