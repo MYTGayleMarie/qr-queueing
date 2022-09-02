@@ -172,23 +172,23 @@ function ReviewPurchaseOrder() {
             }).catch(function (error) {
                 console.log(error);
             });
-            console.log(response.data);
             //Approved By
-            axios({
-                method: 'post',
-                url: window.$link + 'users/show/' + response.data.approved_by,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (response) {
-                console.log(response);
-                setApprovedBy(response.data.name);
-            }).catch(function (error) {
-                console.log(error);
-            });              
+            if(response.data.approved_by !== null){
+                axios({
+                    method: 'post',
+                    url: window.$link + 'users/show/' + response.data.approved_by,
+                    withCredentials: false, 
+                    params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                    }
+                }).then(function (response) {
+                    setApprovedBy(response.data.name);
+                }).catch(function (error) {
+                    console.log(error);
+                }); 
+            }             
 
         }).catch(function (error) {
             console.log(error);
@@ -206,9 +206,11 @@ function ReviewPurchaseOrder() {
           }).then(function (response) {
               response.data.map((data,index) => {
                 setReceiveQty(data.received);
+                console.log(data)
                 if(data.status != "disapprove") {
                     var itemData = {};
                     itemData.id = data.item_id;
+                    itemData.po_id = data.id;
                     itemData.item = data.item;
                     itemData.qty = data.qty;
                     itemData.inventory_qty = data.inventory_qty;
@@ -292,7 +294,7 @@ function ReviewPurchaseOrder() {
             </div>
             {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
               <div className="col-sm-2">
-                 <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.id)}>DISAPPROVE</button>
+                 <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.po_id)}>DISAPPROVE</button>
               </div>
             )}
         </div>
@@ -327,9 +329,10 @@ function ReviewPurchaseOrder() {
 
     function disapproveItemAction(itemId, reason) {
       reason = deleteItemReason;
+      console.log(deleteItemReason)
         axios({
             method: 'post',
-            url: window.$link + 'po_items/mark_disapproved/' + itemId,
+            url: window.$link + 'po_items/mark_disapproved/' + disapproveItem,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -347,7 +350,6 @@ function ReviewPurchaseOrder() {
               }, 2000);
           }).then(function (error) {
               console.log(error);
-              toast.error("Oops! Something went wrong...");
           });
     }
 
@@ -646,24 +648,6 @@ function ReviewPurchaseOrder() {
                 printedBy={printedBy}
                 approvedBy={approvedBy}
             />
-
-            {/* <PrintPurchaseOrderInvoice
-                ref={componentRefInvoice}
-                id={id}
-                supplier={supplier}
-                purchaseDate={purchaseDate}
-                deliveryDate={deliveryDate}
-                deliveryAddress={deliveryAddress}
-                requisitioner={requisitioner}
-                forwarder={forwarder}
-                remarks={remarks}
-                poItems={poItems} 
-                status={status}
-                subTotal={subTotal}
-                grandTotal={grandTotal}
-                printedBy={printedBy}
-                approvedBy={approvedBy}
-            /> */}
 
 
             </div>
