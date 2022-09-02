@@ -97,23 +97,6 @@ function MdReports() {
     setRedirect(true)
   }
 
-//   function approve(temp_name, temp_category) {
-//     if(lab === "XRAY"){
-//       category = 18;
-//     }
-//     else if(lab === "ULTRASOUND"){
-//       category = 21;
-//     }
-//     else if(lab === "ECG"){
-//       category = 21;
-//     }
-//     else{
-//       category = 0;
-//     }
-//     name = temp_name;
-//     setRedirect(true);
-// }
-
   if(redirect == true) {
     return (
         <Navigate to ={link_md_details}/>

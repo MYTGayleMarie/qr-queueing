@@ -505,7 +505,7 @@ function Reports() {
                         disable={"today"}
                     /> }
                 </div>
-                {/* <div className="col-sm-4">
+                <div className="col-sm-4">
                     {role != 3 && <Card 
                         totalData={"REFERRALS"}
                         todayData={""}
@@ -514,7 +514,7 @@ function Reports() {
                         color='blue'
                         disable={"today"}
                     />}
-                </div> */}
+                </div>
             </div>
             <div className="row">
             </div>

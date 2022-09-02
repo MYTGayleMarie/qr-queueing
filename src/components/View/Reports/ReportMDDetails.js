@@ -52,7 +52,6 @@ function ReportMDDetails() {
 
       }
     }).then(function (response) {
-      console.log(response)
       var output = [];
       var array = response.data.data.data;
          array.forEach(function(item, index) {
@@ -82,7 +81,6 @@ function ReportMDDetails() {
     });
   },[]);
   
-  console.log(particulars)
   function filter() {}
 
   return (

@@ -355,12 +355,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={"particulars"+row.po_item_id} data-heading={'PARTICULARS'} className={row.name}>{row.name}</td>
             <td key={"ordered"+row.po_item_id} data-heading={'ORDERED'} className={row.qty}>{row.qty}</td>
             <td key={"prevreceived"+row.po_item_id} data-heading={'PREVRECEIVED'} className={row.prevReceived}>{row.prevReceived}</td>
-            {/* {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val}>{isNaN(data.val) != true && index != 0 ? parseFloat(data.val).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2}) : data.val}</td>)} */}
             <td key={"delivered"+row.po_item_id}><input type="number" className="input-cell" name="received" value={row.received} onChange={(e)=>{receiveData(e,index)}}/></td>
             </tr>
         }
-        // {receiveData(row.po_item_id,row.item_id,row.cost,e.target.value, row.unit)}
 
 
         else {
@@ -407,8 +404,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader2 tableHeaders={headingColumns}/> : data}
+                            {data}
                     </tbody>
                 </table>
               {/* </> }  */}
@@ -452,8 +448,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns}/> : data}
+                    {data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
