@@ -19,6 +19,7 @@ import Imaging from './components/View/Imaging/Imaging';
 import ImagingTests from './components/View/Imaging/ImagingTests';
 import ReleaseItems from './components/View/Supply/ReleaseItems';
 import Inventory from './components/View/Supply/InventoryManager';
+import AddInventory from './components/View/Supply/AddInventory';
 import ReviewReleasingItems from './components/View/Supply/ReviewReleasingItems';
 import AddItems from './components/View/Supply/AddItems';
 import PurchaseOrder from './components/View/Supply/PurchaseOrder';
@@ -164,6 +165,7 @@ function App() {
         <Route path="/update-supply-item/:id/:unit" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/inventory" element={token ? <Inventory/> : <Navigate to="/"/>} />
+        <Route path="/add-inventory" element={token ? <AddInventory/> : <Navigate to="/"/>} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/View-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />

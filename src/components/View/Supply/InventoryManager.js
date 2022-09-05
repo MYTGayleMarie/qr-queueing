@@ -12,6 +12,7 @@ import Searchbar from '../../Searchbar.js';
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+import { useEffect } from 'react';
 
 //variables
 const userToken = getToken();
@@ -27,11 +28,17 @@ const filterData = {
   status: 'for approval',
 };
 
+
 function InventoryManager() {
 
     document.body.style = 'background: white;';
     const [filteredData, setFilter] = useForm(filterData);
     const [inventoryData, setInventoryData] = useState([]);
+    const [redirectAdd, setRedirectAdd] = useState(false);
+
+    function AddInventory() {
+    setRedirectAdd(true);
+    }
 
     //redirect
     const [redirect, setRedirect] = useState(false);
@@ -87,6 +94,12 @@ function InventoryManager() {
             <Navigate to ={link}/>
         )
     }
+
+    if(redirectAdd) {
+        return (
+            <Navigate to = "/add-inventory"/>
+        )
+    }
         
     return (
         <div>
@@ -99,6 +112,7 @@ function InventoryManager() {
                 type='thick'
                 title='INVENTORY MANAGER' 
                 buttons={buttons} 
+                addInventory={AddInventory}
             />
             <Table
                 type={'purchase-order'}
