@@ -101,6 +101,7 @@ function AddInventory() {
         params: param_obj,
       })
       .then((res)=>{
+          // console.log(res)
           if(res.status === 201) {
             toast.success("Successfully submitted!");
             setInterval(setRedirect(true), 1000);

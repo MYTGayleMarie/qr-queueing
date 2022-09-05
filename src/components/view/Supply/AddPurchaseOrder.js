@@ -5,6 +5,7 @@ import { getToken, getUser, removeUserSession } from '../../../utilities/Common'
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import { format } from 'date-fns'
+import Select from 'react-select';
 import 'react-toastify/dist/ReactToastify.css';
 
 //css
@@ -43,6 +44,7 @@ function AddPurchaseOrder() {
 
   //ITEMS
   const [info, setInfo] = useForm(PoInfoData);
+  const [selectedSuppliers, setSelectedSuppliers] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [generalDiscount, setGeneralDiscount] = useState(0);
   const [items, setItems] = useState([{ 
@@ -176,13 +178,13 @@ function AddPurchaseOrder() {
       response.data.suppliers.map((data, index) => {
           var supplierInfo = {};
 
-          supplierInfo.id = data.id;
-          supplierInfo.name = data.name;
-          supplierInfo.address = data.address;
-          supplierInfo.phone = data.contact_no;
-          supplierInfo.email = ''; //to add email
-          supplierInfo.tin = data.tin;
-          supplierInfo.remarks = data.remarks;
+          supplierInfo.value = data.id;
+          supplierInfo.label = data.name;
+          // supplierInfo.address = data.address;
+          // supplierInfo.phone = data.contact_no;
+          // supplierInfo.email = ''; //to add email
+          // supplierInfo.tin = data.tin;
+          // supplierInfo.remarks = data.remarks;
 
           setSuppliers(oldArray => [...oldArray, supplierInfo]);
       });
@@ -203,6 +205,7 @@ function AddPurchaseOrder() {
     var item_discounts = [];
     var qty = [];
     var units = [];
+    var suppliers = [];
 
     items.map((data, index) => {
       item_ids.push(data.item);
@@ -211,6 +214,10 @@ function AddPurchaseOrder() {
       inventory_qty.push(data.inventory_quantity);
       item_discounts.push(data.item_discount)
       units.push(data.unit);
+    });
+
+    selectedSuppliers.map((data) => {
+      suppliers.push(data.value)
     });
 
     if(isClicked == false) {
@@ -222,7 +229,7 @@ function AddPurchaseOrder() {
         params: {
           token: userToken.replace(/['"]+/g, ''),
           api_key: window.$api_key,
-          supplier: info.supplier,
+          supplier: suppliers,
           purchase_date: format(new Date(info.purchase_date),'MM/dd/yyyy'),
           payment_date: format(new Date(info.payment_date),'MM/dd/yyyy'),
           delivery_date: format(new Date(info.delivery_date),'MM/dd/yyyy'),
@@ -330,14 +337,21 @@ function AddPurchaseOrder() {
                 <span className="item-name-label">SUPPLIER</span>
               </div>
               <div className="col-sm-8">
-                <select name="supplier" className="item-supplier-input" onChange={setInfo}>
+                <Select 
+                  isSearchable
+                  defaultValue={selectedSuppliers}
+                  onChange={setSelectedSuppliers}
+                  options={suppliers}
+                  className="supplier-input"
+                />
+                {/* <select name="supplier" className="item-supplier-input" onChange={setInfo}>
                 <option value="" selected disabled>Choose here</option>
                   {suppliers.map((data,index) => {
                     return (
                       <option value={data.id}>{data.name}</option>
                     )
                   })}
-                </select>
+                </select> */}
               </div>
             </div>
             {/* <div className="row">

@@ -89,7 +89,7 @@ function InventoryManager() {
     }
 
     if(redirect == true) {
-        var link =  "/review-purchase-order/" + id;
+        var link =  "/review-inventory/" + id;
         return (
             <Navigate to ={link}/>
         )

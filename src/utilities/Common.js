@@ -10,7 +10,25 @@ export const refreshPage = () => {
 
 export const getTime = (date) => {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+}
+
+export const formatDate = (date) => {
+  //if date is null or empty string return nothin
+  if (!date || date == "") {
+    return "";
   }
+
+  var formatDate = new Date(date);
+  var stringDate = formatDate.toDateString().split(" ");
+
+  return (
+    stringDate[1] +
+    " " +
+    stringDate[2] +
+    ", " +
+    stringDate[3] 
+  );
+};
 
 
 /***************************
@@ -29,6 +47,12 @@ export const getUser = () => {
 export const getRoleId = () => {
     return localStorage.getItem('role_id') || null;
 }
+
+//return role  from local storage
+export const getRole = () => {
+    return localStorage.getItem('role').replace(/['"]+/g, '') || null;
+}
+
 
 //return token from local storage
 export const getToken = () => {

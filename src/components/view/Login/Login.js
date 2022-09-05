@@ -51,10 +51,11 @@ function Login() {
           refreshPage();
         })
         .catch(function (error) {
+          console.log(error)
           toast.error('Invalid Login');
-          setTimeout(() => {
-            refreshPage();
-          },2000);
+          // setTimeout(() => {
+          //   refreshPage();
+          // },2000);
         });
     }
 
