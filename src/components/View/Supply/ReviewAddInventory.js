@@ -105,6 +105,9 @@ function ReviewAddInventory() {
             <div className="col-sm-2">
                 {data.physical_count}
             </div>
+            <div className="col-sm-2">
+                {data.computer_count}
+            </div>
             {data.status != "approved" && data.status  != "disapproved" && data.status != "completed" && (
               <div className="col-sm-2">
                  <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.po_id)}>DISAPPROVE</button>
@@ -216,7 +219,7 @@ function ReviewAddInventory() {
                         <span className='detail'>{inventoryDetails.requester}</span>
                 </div>
                 <div className="col-sm-6">
-                        <span className='label'>COUNT DATE</span>
+                        <span className='label'>REQUEST DATE</span>
                         <span className='detail'>{formatDate(inventoryDetails.count_date)}</span>
                 </div>
             </div>
@@ -228,8 +231,11 @@ function ReviewAddInventory() {
                         <div className="col-sm-5 service">
                             ITEM
                         </div>
+                         <div className="col-sm-2 service">
+                            ITEM REQUEST VALUE
+                        </div>
                         <div className="col-sm-2 service">
-                            COUNT
+                            COMPUTER VALUE
                         </div>
                         {inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" && inventoryDetails.status != "printed" && inventoryDetails.status != "completed" && (
                             <div className="col-sm-1 service">
