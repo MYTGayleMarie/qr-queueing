@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage, formatDate, getRole} from "../../../utilities/Common";
+import { getToken, getUser, refreshPage, formatDate, getRoleId} from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
@@ -16,7 +16,9 @@ import Navbar from '../../Navbar';
 //variables
 const userToken = getToken();
 const userId = getUser();
-const role = getRole();
+const roleId = getRoleId();
+
+console.log(roleId)
 
 function ReviewAddInventory() {
     document.body.style = 'background: white;';
@@ -81,7 +83,8 @@ function ReviewAddInventory() {
     function showInventoryButtons() {
         return (
             <div className="row d-flex justify-content-center po-btn">
-                {inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" &&  inventoryDetails.status !="completed" && (role === "BU head" || role === "Admin") && (
+                 {console.log(roleId)}
+                {inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" &&  inventoryDetails.status !="completed" && (roleId === "4") && (
                 <>
                 <div className="col-sm-2">
                     <button className="po-approve-btn" onClick={approveAll}>APPROVE </button>

@@ -140,6 +140,9 @@ function purchasingNavbar(showNavbar,setShowNavbar) {
               <Link to="/items" className="sub-link">
                 <li class="sub-list">ITEMS</li>
               </Link>
+              <Link to="/inventory" className="sub-link">
+                <li class="sub-list">INVENTORY</li>
+              </Link>
               <Link to="/suppliers" className="sub-link">
                 <li class="sub-list">SUPPLIERS</li>
               </Link>
@@ -345,6 +348,9 @@ function adminNavbar(showNavbar,setshowNavbar) {
               </Link>
               <Link to="/items" className="sub-link">
                 <li class="sub-list">ITEMS</li>
+              </Link>
+              <Link to="/inventory" className="sub-link">
+                <li class="sub-list">INVENTORY</li>
               </Link>
               <Link to="/suppliers" className="sub-link">
                 <li class="sub-list">SUPPLIERS</li>

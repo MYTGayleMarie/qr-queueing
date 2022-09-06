@@ -50,6 +50,7 @@ export const getRoleId = () => {
 
 //return role  from local storage
 export const getRole = () => {
+    console.log(localStorage)
     return localStorage.getItem('role').replace(/['"]+/g, '') || null;
 }
 

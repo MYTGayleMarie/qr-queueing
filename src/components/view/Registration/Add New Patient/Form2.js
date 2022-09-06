@@ -96,14 +96,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
         console.log(tests)
         tests.map((test,index)=>{   
-            var testDetails = {};
-            // if (test.id == 129){ //otherTest
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
-            // } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
-            // } else {
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
-            // }        
+            var testDetails = {};     
             testDetails.key = test.name.replace(/[2)}{(.,&-\s/]/g, '')+"_"+test.category_id;  
             testDetails.name = test.name;
             testDetails.categoryId = test.category_id;
@@ -254,38 +247,6 @@ console.log(checkedServicesDetails)
         getDetails(allPackages, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
-      // case 'package1':
-      //   getDetails(preEmploymentPackageBasic, data[0]);
-      //   checkedServicesDetails.push(itemDetails);
-      //   break;
-      // case 'package2':
-      //   getDetails(preEmploymentPackageDiscount, data[0]);
-      //   checkedServicesDetails.push(itemDetails);
-      //   break;
-      // case "package3":
-      //     getDetails(pregnancyLabPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case 'package4':
-      //   getDetails(annualWellnessPackageBasic, data[0]);
-      //   checkedServicesDetails.push(itemDetails);
-      //   break;
-      // case "package5":
-      //     getDetails(thyroidTestPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package6":
-      //     getDetails(annualWellnessPackagePremium, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package7":
-      //     getDetails(liverFunctionTest, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
-      // case "package8":
-      //     getDetails(diabetesAndCholesterolPackage, data[0])
-      //     checkedServicesDetails.push(itemDetails);
-      // break;
     }
 
     //lab
