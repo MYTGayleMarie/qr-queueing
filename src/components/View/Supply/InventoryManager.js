@@ -107,7 +107,7 @@ function InventoryManager() {
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='PURCHASE ORDER'/>
+            <Searchbar title='INVENTORY'/>
             <Header 
                 type='thick'
                 title='INVENTORY MANAGER' 

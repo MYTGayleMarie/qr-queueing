@@ -151,7 +151,10 @@ function AddInventory() {
           }
 
           <div className='row d-flex justify-content-end mt-5'>
-            <button type="button" className="proceed-btn" onClick={() => Submit()}>
+            <button type="button" className="close-btn" onClick={() => setRedirect(true)}>
+              CLOSE
+            </button>
+            <button type="button" className="proceed-btn ml-5" onClick={() => Submit()}>
               SUBMIT
             </button>
           </div>

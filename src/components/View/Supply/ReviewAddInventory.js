@@ -26,7 +26,6 @@ function ReviewAddInventory() {
       const [items, setItems] = useState([]);
       const [inventoryDetails, setInventoryDetails] = useState({requester: "", count_date: ""});
 
-
       //Disapproved PO Item
       const [disapproveItem, setDisapproveItem] = useState("");
       const [deleteItemReason, setDeleteItemReason] = useState("");
@@ -82,12 +81,16 @@ function ReviewAddInventory() {
     function showInventoryButtons() {
         return (
             <div className="row d-flex justify-content-center po-btn">
+                {inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" &&  inventoryDetails.status !="completed" && (role === "BU head" || role === "Admin") && (
+                <>
                 <div className="col-sm-2">
                     <button className="po-approve-btn" onClick={approveAll}>APPROVE </button>
                 </div>
                 <div className="col-sm-2">
                     <button className="po-disapprove-btn" onClick={showDisapproveAllPrompt}>DISAPPROVE </button>
                 </div>
+                </>
+                )}
                 <div className="col-sm-2">
                     <button className="po-close-btn" onClick={close}>CLOSE </button>
                 </div>
@@ -108,9 +111,9 @@ function ReviewAddInventory() {
             <div className="col-sm-2">
                 {data.computer_count}
             </div>
-            {data.status != "approved" && data.status  != "disapproved" && data.status != "completed" && (
+            {data.status != "approved" && data.status  != "disapproved" && data.status != "completed" && inventoryDetails.status != "approved"  && inventoryDetails.status != "disapproved" && (
               <div className="col-sm-2">
-                 <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.po_id)}>DISAPPROVE</button>
+                 <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.id)}>DISAPPROVE</button>
               </div>
             )}
         </div>
@@ -122,22 +125,21 @@ function ReviewAddInventory() {
         setDisapproveItem(itemId);
     }
 
-    function disapproveItemAction(itemId, reason) {
-      reason = deleteItemReason;
-      console.log(deleteItemReason)
+    function disapproveItemAction(itemId) {
         axios({
             method: 'post',
-            url: window.$link + 'po_items/mark_disapproved/' + disapproveItem,
+            url: window.$link + 'inventory_count_details/mark_disapproved/' + itemId,
             withCredentials: false,
             params: {
               api_key: window.$api_key,
               token: userToken.replace(/['"]+/g, ''),
-              po: id,
-              reason: reason,
               updated_by: userId,
+              inventory_count_id: id,
+              reason: deleteItemReason,
             },
           }).then(function (response) {
-              toast.success("Disapproved PO item!");
+            console.log(response)
+            toast.success("Disapproved Inventory Item!");
               setTimeout(function () {
                 refreshPage();
               }, 2000);
@@ -150,29 +152,28 @@ function ReviewAddInventory() {
         handleAllDeleteShow();
     }
 
-    function disapproveAll(reason) {
-    reason = deleteAllReason;
-        axios({
-            method: 'post',
-            url: window.$link + 'inventory_count_details/mark_disapproved/' + id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              updated_by: userId,
-              inventory_count_id: id,
-              reason: reason,
-            },
-          }).then(function (response) {
-            console.log(response)
-            toast.success("Disapproved Inventory!");
-            //   setTimeout(function () {
-            //     // setDeleteRedirect(true);
-            //     refreshPage();
-            //   }, 2000);
-          }).then(function (error) {
-              console.log(error);
-          });
+    function disapproveAll() {
+            console.log("heree")
+            console.log(deleteAllReason)
+            axios({
+                method: 'post',
+                url: window.$link + 'inventory_counts/mark_disapproved/' + id,
+                withCredentials: false,
+                params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                updated_by: userId,
+                reason: deleteAllReason,
+                },
+            }).then(function (response) {
+                console.log(response);
+                toast.success("Disapproved Inventory!");
+                setTimeout(function () {
+                close();
+              }, 2000);
+            }).then(function (error) {
+                console.log(error);
+            });
     }
 
     function approveAll() {
@@ -188,9 +189,9 @@ function ReviewAddInventory() {
           }).then(function (response) {
               console.log(response)
               toast.success("Approved Inventory!");
-            //   setTimeout(function () {
-            //     close();
-            //   }, 2000);
+              setTimeout(function () {
+                close();
+              }, 2000);
           }).then(function (error) {
               console.log(error);
           });
@@ -198,6 +199,10 @@ function ReviewAddInventory() {
 
     function close() {
         setCloseRedirect(true);
+    }
+
+    if(closeRedirect) {
+        return <Navigate to="/inventory"/>
     }
 
     return (
@@ -249,7 +254,7 @@ function ReviewAddInventory() {
                 </div>
             </div>
 
-            {items.length != 0 && inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" &&  inventoryDetails.status !="completed" && (role === "BU head" || role === "Admin") && showInventoryButtons()}
+            {items.length != 0 && showInventoryButtons()}
             </div>
 
             {/* MODAL FOR DISAPPROVING ITEM */}
@@ -276,7 +281,7 @@ function ReviewAddInventory() {
                    </div>
             </Modal>
 
-            {/* MODAL FOR DISAPPROVING PO */}
+            {/* MODAL FOR DISAPPROVING INVENTORY */}
 
             <Modal show={promptDisapproveAll} onHide={handleAllDeleteClose} size="md">
             <Modal.Header closeButton className='text-center'>
@@ -293,7 +298,7 @@ function ReviewAddInventory() {
                    </div>
                   </Modal.Body>
                     <Modal.Footer>
-                        <button type="submit" className='po-disapprove-btn' onClick={disapproveAll}>
+                        <button type="submit" className='po-disapprove-btn' onClick={() => disapproveAll()}>
                           DISAPPROVE
                         </button>
                    </Modal.Footer>
