@@ -45,7 +45,7 @@ export const getUser = () => {
 
 //return role id from local storage
 export const getRoleId = () => {
-    return localStorage.getItem('role_id').replace(/['"]+/g, '') || null;
+    return localStorage.getItem('role_id')|| null;
 }
 
 //return role  from local storage
