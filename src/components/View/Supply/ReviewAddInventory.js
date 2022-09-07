@@ -83,7 +83,6 @@ function ReviewAddInventory() {
     function showInventoryButtons() {
         return (
             <div className="row d-flex justify-content-center po-btn">
-                 {console.log(roleId)}
                 {inventoryDetails.status != "approved" && inventoryDetails.status != "disapproved" &&  inventoryDetails.status !="completed" && (roleId === "4") && (
                 <>
                 <div className="col-sm-2">
