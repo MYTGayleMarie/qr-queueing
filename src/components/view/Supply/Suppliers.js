@@ -1,4 +1,8 @@
-import React, {Fragment} from 'react';
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
+import { useForm } from "react-hooks-helper";
 
 //css
 import './Suppliers.css';
@@ -9,23 +13,64 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 
-const buttons = ['download','add-supplier'];
+const userToken = getToken();
+const userId = getUser();
+var id = '';
 
-const supplierData = [
-    {
-        supplierID: '1',
-        companyName: 'SAMPLE COMPANY',
-        address: 'Cebu City, Cebu',
-        phone: '221-1234',
-        email: 'sample@gmail.com',
-        tin: '0000',
-        remarks: 'none',
-        action: ' ',
-    },
-];
-
+const buttons = ['add-supplier'];
 
 function Suppliers() {
+    document.body.style = 'background: white;';
+    const [render, setRender] = useState([]);
+    const [redirect, setRedirect] = useState(false);
+    const [supplierData, setSupplierData] = useState([]);
+
+
+    function SupplierDetails(supplierId) {
+        id = supplierId;
+        setRedirect(true);
+    }
+
+    React.useEffect(() => {
+        axios({
+            method: 'post',
+            url: window.$link + 'suppliers/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            console.log(response.data.suppliers);
+
+            response.data.suppliers.map((data, index) => {
+                var supplierInfo = {};
+
+                supplierInfo.id = data.id;
+                supplierInfo.name = data.name;
+                supplierInfo.address = data.address;
+                supplierInfo.phone = data.contact_no;
+                supplierInfo.email = data.email;
+                supplierInfo.tin = data.tin;
+                supplierInfo.remarks = data.remarks;
+
+                setSupplierData(oldArray => [...oldArray, supplierInfo]);
+            });
+         
+            
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }, []);
+
+    
+    if (redirect == true) {
+        var link = '/View-supplier/' + id;
+        return <Navigate to={link} />;
+    }
+
+
     return (
         <div>
         <div>
@@ -35,14 +80,16 @@ function Suppliers() {
             <Searchbar title='SUPPLIER'/>
             <Header 
                 type='thick'
-                title='SUPPLIES RELEASING MANAGER' 
+                title='SUPPLIER MANAGER' 
                 buttons={buttons} 
-                tableData={supplierData}
             />
             <Table
-                type={'no-action'}
+                clickable={true}
+                type={'suppliers'}
+                rowsPerPage={4}
                 tableData={supplierData}
                 headingColumns={['SUPPLIER ID', 'COMPANY NAME', 'ADDRESS', 'PHONE', 'EMAIL', 'TIN', 'REMARKS', 'ACTION']}
+                link={SupplierDetails}
             />
             </Fragment>
         </div>

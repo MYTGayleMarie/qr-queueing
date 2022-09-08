@@ -1,0 +1,58 @@
+.add-payment-btn {
+    width: 15% !important;
+    height: 20px;
+    margin-right: 6%;
+    font-size: 80%;
+    font-weight: bold;
+    color: #55073A;
+    border: 1px solid #55073A;
+    box-sizing: border-box;
+    background-color: transparent;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 11px;
+    overflow: hidden;
+}
+
+.less-width {
+    width: 15% !important;
+    margin-right: 5%;
+    margin-top: 10% !important;
+}
+
+.invoice-select {
+    margin-left: 3% !important;
+}
+
+.grand-total {
+    float:right;
+    padding-right: 6% !important;
+}
+
+.invoice-total {
+    color: #000000;
+}
+
+.info {
+    font-size: 18px;
+    background-color: rgba(194, 194, 194, 0.575);
+}
+
+.invoice-remarks-input {
+    margin-left: 10%;
+}
+
+.invoice-btn {
+    background-color: #094b5b;
+    color: white;
+    border: none;
+    width: 15% !important;
+    border-radius: 1em;
+    padding:  0.5%;
+    margin-top: -2%;
+    margin-right: 5%;
+}
+
+.paymentDetails {
+    margin-top: -3%;
+    padding-left: 5% !important;
+}

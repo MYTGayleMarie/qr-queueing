@@ -12,10 +12,10 @@ function Searchbar({title}) {
                     <h1 className="searchbar-header">{title}</h1>
                 </div>
                 <div className="col d-flex justify-content-end">
-                <div className="searchContainer">
+                {/* <div className="searchContainer">
                 <i className="fa fa-search searchIcon fa-flip-horizontal"></i>
                 <input className="searchBox" type="search" name="search"/>
-                </div>
+                </div> */}
                 </div>
             </div>
         </div>

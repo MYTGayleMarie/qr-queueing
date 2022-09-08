@@ -15,6 +15,14 @@
     border-color: #55073A;
 }
 
+.unit-input {
+    width: 50%;
+    margin-left: -5%;
+    border-width: 1px;
+    border-color: #55073A;
+}
+
+
 .remarks-items-input, .description-input {
     width: 95%;
     border-color: #55073A;

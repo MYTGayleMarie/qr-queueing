@@ -49,3 +49,7 @@
 .row > * {
     padding-left: 0.5rem !important;
 }
+
+.info {
+    margin-left: -10%;
+}

@@ -1,0 +1,28 @@
+.spinner {
+    position:fixed;
+    left:370%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinners {
+    position:fixed;
+    left:287%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spin {
+    position:fixed;
+    left:208%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spins {
+    position:fixed;
+    left:1460%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}

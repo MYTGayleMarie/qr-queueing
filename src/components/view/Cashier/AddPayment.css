@@ -29,8 +29,8 @@
     width: 50% !important;
 }
 
-.check {
-    width: 40%;
+.check, .cash-input {
+    width: 40% !important;
     margin-left: 3%;
 }
 
@@ -39,7 +39,7 @@
     color: #BFBC4B;
 }
 
-.check-label {
+.check-label, .amount-label {
     font-family: 'Montserrat-Italic';
     color: #BFBC4B;
     margin-left: 1.5%;
@@ -55,3 +55,54 @@
     margin-top: 10%;
     margin-right: 5%;
 }
+
+/* .remarks-input {
+    margin-left: 5%;
+} */
+
+.remarks-payment-input {
+    margin-left: 5% !important;
+}
+
+.remarks-payment-label {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    margin-left: 3%;
+}
+
+.add-tests-btn {
+    width: 10rem;
+    background: #084B5A;
+    border-radius: 79px;
+    color: #ffff;
+    border: none;
+    padding: 0.5rem;
+}
+
+.add-test-header {
+    font-family: 'Montserrat-Italic';
+    color: #BFBC4B;
+    margin-left: 1.5%;
+}
+
+.input-select {
+    margin-left: 1rem !important;
+}
+
+.discount-details-input, .discount-option {
+    margin-left: -5% !important;
+    width: 30% !important;
+}
+
+.discount-header {
+    margin-left: 10%;
+}
+
+.print-icon {
+    margin-right: 5%;
+}
+
+.print-row {
+    display: flex;
+}
+

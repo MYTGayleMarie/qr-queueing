@@ -7,8 +7,11 @@
     font-family: 'Montserrat-Bold';
 }
 
+.add-td-gap {
+    width: 160px !important;
+}
+
 .detail {
-    margin-left: 8%;
     font-family: 'Montserrat-Regular';
 }
 

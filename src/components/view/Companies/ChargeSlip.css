@@ -1,0 +1,54 @@
+  .to-right {
+    margin-left: 3%;
+    margin-top: 3%;
+    font-size: 8px;
+  }
+
+  .particulars-lab {
+    margin-left: 2% !important;
+  }
+  .particulars-requests {
+    margin-left: 1.5% !important;
+  }
+
+  .print-column {
+    color:black;
+  }
+  .slip-title {
+    font-size:8px ;
+  }
+  .slip-label {
+    margin-top: 0.5px;
+    font-size: 10px ;
+  }
+
+  .slip-detail {
+    font-size: 8px ;
+    font-weight: 600;
+    margin-left: 5px;
+  }
+  .slip-header{
+    margin:0px;
+    padding:0px;
+    /* border:1px solid red; */
+  }
+  .particulars {
+    border-bottom: 0.2px dotted #353535;
+    border-top: 0.2px dotted #353535;
+  }
+  .slip-th {
+    font-size: 10px !important;
+    font-weight: 600;
+    margin-top: 3px;
+    margin-left: 5px;
+  }
+  .slip-logo {
+    width: 80px;
+    height: 45px;
+    margin-left: -2.7%;
+  } 
+
+  .slip-table {
+    margin-top: 2px;
+    margin-left: 5px;
+  }

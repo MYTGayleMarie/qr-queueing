@@ -1,0 +1,7 @@
+.category {
+  text-transform: capitalize;
+}
+.input-category {
+  margin-left: 0rem !important;
+  padding: 0.3rem;
+}

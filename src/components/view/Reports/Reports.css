@@ -1,0 +1,12 @@
+.particulars-cont {
+    margin: 3%;
+}
+.button-area {
+  display:flex;
+  justify-content: space-evenly;
+  margin:4rem;
+}
+.blue {
+  background-color: #084B5A !important;
+  border-color: #084B5A !important;
+}

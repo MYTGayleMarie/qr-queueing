@@ -5,31 +5,48 @@ import './Card.css';
 
 //image
 import cashierIcon from '../images/icons/cashier-icon.png';
+import { NavLink } from 'react-router-dom';
 
-function Card({data, title, color}) {
+function Card({totalData, todayData, services, packages, link, title, color, disable}) {
     return (
-        <div>
+        <NavLink to={link} class="report-link">
             <div className='card-container'>
-                <div className={`card-head ${color}`}></div>
+                <div className={`card-head ${color}`}>
+                    <span className='card-head-title'>{title}</span>
+                </div>
                 <div className='row'>
                     <div className='col-sm-3 d-flex justify-content-end'>
-                        <img src={cashierIcon} alt={"report"} class="report-card icon"></img>
+                        {totalData != "MD REPORTS" && totalData!= "REFERRALS" && (
+                            <img src={cashierIcon} alt={"report"} class="report-card icon"></img>
+                        )}
                     </div>
-                    <div className='col-sm-9'>
+                    <div className='col-sm-9 report-data'>
                         <div className='row'>
+                            {disable != "today" && (
                             <div className='col d-flex justify-content-end'>
-                                <span className='card-data'>{data}</span>
+                                <span className='card-data'>{todayData == null ? services : todayData}</span>
+                            </div>
+                            )}
+                            <div className='col d-flex justify-content-end'>
+                                <span className='card-data'>{todayData == null ? packages : totalData}</span>
                             </div>
                         </div>
                         <div className='row'>
-                        <div className='col d-flex justify-content-end'>
-                                <span className='card-title'>{title}</span>
+                            {disable != "today" && (
+                            <div className='col d-flex justify-content-end'>
+                                <span className='card-title'>{todayData == null ? "SERVICES" : "TODAY"}</span>
                             </div>
+                            )}
+                            {totalData != "MD REPORTS" && totalData!= "REFERRALS"&& (
+                            <div className='col d-flex justify-content-end'>
+                                <span className='card-title'>{todayData == null ? "PACKAGES" : "TOTAL"}</span>
+                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </NavLink>
     )
 }
 

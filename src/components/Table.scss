@@ -1,23 +1,22 @@
 /**Search**/
 
 .search-table-container {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .search {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
-
 
 /**Table**/
 $bg-color: #f1f1f1;
 $primary-color: #000;
 $light-color: #fff;
 $border-color: #ddd;
-$header-bg-color: #C4C4C438;
-$header-text-color: #55073A;
-$ff-primary: 'Poppins', sans-serif;
+$header-bg-color: #c4c4c438;
+$header-text-color: #55073a;
+$ff-primary: "Poppins", sans-serif;
 
 @mixin break {
   thead {
@@ -58,10 +57,12 @@ $ff-primary: 'Poppins', sans-serif;
   }
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
-} 
+}
 
 body {
   font-family: $ff-primary;
@@ -71,27 +72,27 @@ body {
   max-width: 1500px;
   width: 90%;
   margin: 0 auto 10px;
+  overflow-x: auto !important;
 
   table tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
-   }
+    border-bottom-left-radius: 0px;
+  }
 
   table tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
-   }
+    border-bottom-right-radius: 0px;
+  }
 
-   table th:first-child {
-     border-radius: 8px 0 0 0;
-     -moz-border-radius: 8px 0 0 0;
-     -webkit-border-radius: 8px 0 0 0;
-    }
+  table th:first-child {
+    border-radius: 8px 0 0 0;
+    -moz-border-radius: 8px 0 0 0;
+    -webkit-border-radius: 8px 0 0 0;
+  }
 
-    table th:last-child {
-     border-radius: 0 8px 0 0;
-     -moz-border-radius: 0 8px 0 0;
-     -webkit-border-radius: 0 8px 0 0;
-    }
-
+  table th:last-child {
+    border-radius: 0 8px 0 0;
+    -moz-border-radius: 0 8px 0 0;
+    -webkit-border-radius: 0 8px 0 0;
+  }
 
   &__table {
     width: 100%;
@@ -103,7 +104,8 @@ body {
       }
     }
 
-    td, th{
+    td,
+    th {
       border: none;
       padding: 10px;
       text-align: center;
@@ -113,33 +115,189 @@ body {
       border: none !important;
       background-color: $header-bg-color;
       color: $header-text-color;
-      font-size: 0.90rem;
+      font-size: 0.9rem;
       padding: 1rem;
     }
 
     tr {
-        background-color: #E5E5E5;
+      background-color: #e5e5e5;
     }
 
     &--break-lg {
-
       @media (max-width: 991px) {
         @include break;
       }
     }
 
     &--break-md {
-
       @media (max-width: 767px) {
         @include break;
       }
     }
 
     &--break-sm {
-
       @media (max-width: 575px) {
         @include break;
       }
     }
   }
+}
+
+.filter-btn {
+  padding: 0.5%;
+  margin-left: 1.5%;
+}
+
+/** Buttons **/
+.button-10,
+.filter-btn {
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  color: #fff;
+  background: linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.button-10 {
+  margin:3px;
+  
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+/** Report Table **/
+.report-table-th-top {
+  color: #bfbc4b !important;
+  background-color: #bfbc4b !important;
+  padding: 0.5rem !important;
+}
+.report-table-th {
+  padding: 0.5rem !important;
+}
+
+.report-table-container {
+  width: 50% !important;
+  margin-left: 3% !important;
+}
+
+.action-btn {
+  background: transparent;
+  border: 1px solid #55073a;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 9px;
+}
+
+.table-checkbox {
+  width: 20px !important;
+}
+
+.company_name {
+  text-align: left !important;
+}
+
+.total-count-container {
+  margin-left: 2%;
+  margin-top: 2%;
+  padding: 1%;
+  background-color: #f6f0f2;
+  border-radius: 0.5em;
+}
+
+.total-count-header-table {
+  color: #04b4cc;
+  font-weight: bolder;
+  padding: 3%;
+  margin-left: 5%;
+}
+
+.ACTIVE {
+  color: rgb(55, 175, 65);
+  font-weight: bold;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+/*** Medtech ***/
+.forexamination,
+.ongoing,
+.completed {
+  color: #04b4cc !important;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.lab,
+.package {
+  text-transform: uppercase;
+}
+.lab {
+  color: #04b4cc !important;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.package {
+  color: #bfbc4b !important;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+// dropdown
+.dropdown {
+  padding: 0.5%;
+  margin-left: 1.5%;
+}
+
+//sales 
+
+// .account-details{
+//   margin-bottom: 1rem;
+// }
+.account-method, .account-name, .account-amount {
+  width:33% !important;
+}
+.sales-row{
+  border-bottom: 0.5px solid #d6d6d6;
+  // margin-bottom: 2rem;
+}
+.method-row {
+  width:50vw;
+}
+.heading-details{
+  width:18vw!important;
+}
+.sales-row:last-child {
+  border-bottom: none;
+  margin-bottom: 2rem;
+}
+
+.TOTAL {
+  color: #55073a !important;
+  font-weight: bold;
+}
+
+.input-cell{
+  width:5rem;
+  // margin-left:30%;
+}
+
+.action-btn{
+  background-color: #04b4cc;
+  border-color: #04b4cc;
 }

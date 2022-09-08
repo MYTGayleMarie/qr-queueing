@@ -1,0 +1,90 @@
+.print-area-po {
+    margin: 5%;
+}
+
+.print-label {
+   font-size: 12px;
+}
+.detail-po {
+    font-size: 12px;
+ }
+
+.print-area-receives {
+    margin: 5%;
+}
+
+.print-area-receives td { 
+    font-size: 10px !important;
+}
+
+.print-area-receives th { 
+    font-size: 10px !important;
+}
+
+.print-area-receives span { 
+    font-size: 10px !important;
+}
+
+.header-po {
+    font-size: 12px;
+    font-weight: bold;
+}
+.po-gap {
+    width: 250px !important;
+}
+.table-header-po {
+    font-size: 18px !important;
+}
+
+.print-po-row th{
+    font-size: 10px;
+    padding: 10px;  
+    text-align: center;
+}
+.print-po-row {
+    margin-right: 50px !important;
+    margin-top: -1% !important;
+}
+.po-print-breakdown-cont {
+    display: flex;
+    float:right;
+}
+.po-print-payment-cont {
+    display: flex;
+    float:right;
+}
+
+.po-print-payment-details-cont {
+    display: flex;
+    float:right;
+}
+
+.po-print-breakdown {
+    display: inline-block !important;
+    margin-right: 1%;
+}
+.po-print-approval {
+    display: inline-block !important;
+    margin-right: 5%;
+}
+.margin-right-2 {
+    font-size: 12px;
+    margin-right: 10% !important;
+}
+.signature-printedby{
+  width:10%;
+  margin-left:10%;
+}
+.signature-approvedby {
+  width: 10%;
+  margin-left: 20%;
+}
+
+.po-items-list td{
+   font-size: 10px !important;
+   padding: 10px;
+  }
+
+.po-items-float{
+    text-align: right !important;
+   }
