@@ -12,7 +12,7 @@ import cancelIcon from '../images/cancel.png';
 const userToken = getToken();
 const userId = getUser();
 
-function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, serviceFee, mdCharge, setGrandTotal, setDiscount, discount, toPay, paymentStatus}) {
+function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal, serviceFee, mdCharge, setGrandTotal, setDiscount, discount, toPay, paymentStatus, paidAmount}) {
 
     var totalCost = 0;
     var labTotal = 0;
@@ -128,6 +128,31 @@ function Costing({data, deleteService, withDiscount, total, setTotal, grandTotal
                         </div>
                         <div className="col-sm-4">
                             <span className="amount">P {parseFloat(grandTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
+                        </div>
+                </div>
+
+                <div className="row">
+                        <div className="col-sm-4">
+                            <span class="summary-total-label">PAID AMOUNT</span>
+                        </div>
+                        <div className="col-sm-4">
+
+                        </div>
+                        <div className="col-sm-4">
+                            <span className="amount">P {parseFloat(paidAmount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
+                        </div>
+                </div>
+
+
+                <div className="row">
+                        <div className="col-sm-4">
+                            <span class="summary-total-label">BALANCE</span>
+                        </div>
+                        <div className="col-sm-4">
+
+                        </div>
+                        <div className="col-sm-4">
+                            <span className="amount">P {(parseFloat(grandTotal) - parseFloat(paidAmount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
                         </div>
                 </div>
 

@@ -65,6 +65,7 @@ function AddPayment() {
     const [labTests, setLabTests] = useState([])
     const [packages, setPackages] = useState([])
     const [click, setClick] = useState(false)
+    const [paidAmount, setPaidAmount] = useState(0);
 
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -170,8 +171,8 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            // console.log(response);
-
+            console.log(response);
+            setPaidAmount(response.data.paid_amount);
             setPaymentStatus(response.data.payment_status);
             setPaymentType(response.data.payment_type);
             setTotal(response.data.total_amount);
@@ -668,7 +669,7 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: grandTotal,
+                    amount: pay,
                     senior_pwd_id: seniorPwdId,
                     discount: discount,
                     grand_total: grandTotal,
@@ -695,7 +696,7 @@ function AddPayment() {
                       api_key: window.$api_key, 
                       booking: id,
                       type: payment,
-                      amount: grandTotal,
+                      amount: pay,
                       check_no: checkNo,
                       check_bank: checkBank,
                       check_date: checkDate,
@@ -724,7 +725,7 @@ function AddPayment() {
                       api_key: window.$api_key, 
                       booking: id,
                       type: payment,
-                      amount: grandTotal,
+                      amount: pay,
                       cardName: cardName,
                       card_no: cardNo,
                       card_type: cardType,
@@ -803,7 +804,7 @@ function AddPayment() {
                                 <span class="amount-label">CHANGE</span>
                             </div>
                             <div className="row">
-                                <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(pay-grandTotal).toFixed(2)}  placeholder="P"/>
+                                <input type="number" id="changeAmount" name="changeAmount" class="cash-input pay" value={(pay-(grandTotal-paidAmount)).toFixed(2)}  placeholder="P"/>
                             </div>
                         </div>
                     </div>
@@ -828,6 +829,12 @@ function AddPayment() {
     function checkForm () {
         return (
         <div class="pay-check-cont">
+            <div className="row">
+                <div className="col-sm-8">
+                    <span class="amount-label">AMOUNT</span>
+                    <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-sm-8">
                     <span class="check-label">CHECK NO</span>
@@ -868,6 +875,10 @@ function AddPayment() {
     function cardForm () {
         return (
         <div class="pay-check-cont">
+             <div className="row">
+                <span class="amount-label">AMOUNT</span>
+                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+            </div>
             <div className="row">
                 <span class="check-label">CARD NAME</span>
                 <input type="text" id="card" name="card_name" class="check" onChange={(e) => setCardName(e.target.value)}/>
@@ -911,6 +922,14 @@ function AddPayment() {
         return (
             <div class="pay-cash-cont">
                 <div className="row">
+                        <div className="col-sm-6">
+                             <div className="row">
+                                <span class="amount-label">AMOUNT</span>
+                            </div>
+                            <div className="row">
+                                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                            </div>
+                        </div>
                         <div className="col-sm-6">
                              <div className="row">
                                 <span class="amount-label">SOURCE</span>
@@ -1023,6 +1042,7 @@ function AddPayment() {
             setGrandTotal={setGrandTotal}
             setDiscount={setDiscount}
             discount={discount}
+            paidAmount={paidAmount}
             toPay={paymentStatus == "paid" ? false : true}
          />
 

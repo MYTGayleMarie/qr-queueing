@@ -73,6 +73,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
         
         else if (type === 'registration') {
+            console.log(rowData)
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
