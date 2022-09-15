@@ -216,9 +216,11 @@ function AddPurchaseOrder() {
       units.push(data.unit);
     });
 
-    selectedSuppliers.map((data) => {
-      suppliers.push(data.value)
-    });
+    suppliers.push(selectedSuppliers.value);
+
+    // selectedSuppliers.map((data) => {
+    //   suppliers.push(data.value)
+    // });
 
     if(isClicked == false) {
       setIsClicked(true);
