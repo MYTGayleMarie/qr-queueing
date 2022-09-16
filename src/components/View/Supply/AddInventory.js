@@ -150,7 +150,7 @@ function AddInventory() {
           })
           }
 
-          <div className='row d-flex justify-content-end mt-5'>
+          <div className='row d-flex justify-content-end ml-5'>
             <button type="button" className="close-btn" onClick={() => setRedirect(true)}>
               CLOSE
             </button>

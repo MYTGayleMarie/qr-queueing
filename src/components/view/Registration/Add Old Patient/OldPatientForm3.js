@@ -37,6 +37,7 @@ import { getAnnualWellnessPackageBasic,
          getPromo, 
          getOtherTests
         } from '../../../../services/services';
+import { ConsoleView } from 'react-device-detect';
 
 /*********************************
  * FUNCTIONS
@@ -80,7 +81,7 @@ const userId = getUser();
 // const promo = getPromo();
 // const otherTests = getOtherTests();
 //
-function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
+function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
       //get all lab tests
     const [allLabServices, setAllLabServices] = useState([])
     React.useEffect(()=>{
@@ -290,7 +291,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
          });
      }
     
-    function submit(e, customer, services, totalPrice) {
+    function submit(e, customer, location, services, totalPrice) {
 
         e.preventDefault();
         
@@ -344,6 +345,7 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
             var resultDates = []; 
             var fileResults = [];
             var finalMdCharge = [];
+            var location_value = "";
 
             if(mdCharge.physical_exam == true){
                 finalMdCharge.push("physical exam");
@@ -352,6 +354,17 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
                 finalMdCharge.push("medical certificate");
             }
             
+            if(location === "3"){
+                location_value = "Company"
+              }
+              if(location === "0" || location === "1" || location === "2"){
+                location_value = "Home Service"
+              }
+              if(location === "4"){
+                location_value = "Mobile Charge"
+              }
+
+           console.log(location)
 
             axios({
                 method: 'post',
@@ -363,9 +376,11 @@ function OldPatientForm3({ service, customer, packagePrice, labPrice,  setPackag
                     customer: id,
                     discount_id: customer.discountId,
                     booking_time: dateOfTesting,
+                    service_location: location_value,
                     company_contract_id: '',
                     doctors_referal: customer.referral, 
                     type: customer.serviceLocation,
+
                     result: customer.result,
                     total_amount: totalPrice,
                     grand_total: "",
@@ -682,7 +697,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
             />
 
             <div className="booking-form">
-            <form className="needs-validation" onSubmit={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}>
+            <form className="needs-validation" onSubmit={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}>
             <div className="row clinical-services-container">
                 <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
 
@@ -1002,7 +1017,7 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button type="submit" variant="primary" onClick={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}>
+                    <Button type="submit" variant="primary" onClick={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}>
                         Submit
                     </Button>
                     </Modal.Footer>

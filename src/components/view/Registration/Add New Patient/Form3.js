@@ -96,7 +96,7 @@ const userId = getUser();
  * RENDER VIEW
  ********************************/
 
-function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting, discountDetails }) {
+function Form2({ service, customer, location, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting, discountDetails }) {
     //get all lab tests
     const [allLabServices, setAllLabServices] = useState([])
     React.useEffect(()=>{
@@ -266,7 +266,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
     });
   }
 
-  function submit(e, customer, services, totalPrice) {
+  function submit(e, customer, location, services, totalPrice) {
     e.preventDefault();
 
     if(isClicked == false) {
@@ -301,6 +301,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
         var packagePrices = [];
         var testId = [];
         var labPrices = [];
+        var location_value = "";
 
         services.map((data, index) => {
           if (data.type == 'lab') {
@@ -328,7 +329,15 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             finalMdCharge.push("medical certificate");
         }
         
-
+        if(location === "3"){
+          location_value = "Company"
+        }
+        if(location === "0" || location === "1" || location === "2"){
+          location_value = "Home Service"
+        }
+        if(location === "4"){
+          location_value = "Mobile Charge"
+        } 
 
         axios({
           method: 'post',
@@ -347,6 +356,7 @@ function Form2({ service, customer, packagePrice, labPrice,  setPackagePrice, se
             total_amount: totalPrice,
             discount_reference_no: customer.discountDetail,
             home_service_fee: serviceFee,
+            service_location:location_value, 
             md_charge: finalMdCharge,
             grand_total: totalPrice,
             status: 'pending',
@@ -648,7 +658,7 @@ totalPrice += parseFloat(data.price);
         <Header type="thin" title="ADD PATIENT" />
 
         <div className="booking-form">
-          <form className="needs-validation" onSubmit={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}>
+          <form className="needs-validation" onSubmit={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}>
             <div className="row clinical-services-container">
               <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
 
@@ -926,7 +936,7 @@ totalPrice += parseFloat(data.price);
                 <Button
                   type="submit"
                   variant="primary"
-                  onClick={(e) => submit(e, customer, checkedServicesDetails, totalPrice)}
+                  onClick={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}
                 >
                   Submit
                 </Button>

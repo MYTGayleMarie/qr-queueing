@@ -230,6 +230,8 @@ React.useEffect(() => {
       setSuggestions(filteredAddress) // set all matches to suggestions
     }
   },[address])
+
+console.log(location)
  
  // auto suggest address
   const [MDSuggestions, setMDSuggestions] = useState([])
