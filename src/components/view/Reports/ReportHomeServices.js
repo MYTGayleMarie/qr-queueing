@@ -23,8 +23,11 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
+  service_location: "",
   done: false,
 };
+
+
 
 function ReportHomeServices() {
   document.body.style = 'background: white;';
@@ -32,6 +35,8 @@ function ReportHomeServices() {
   const [render, setRender] = useState([]);
   const [homeServices, setHomeServices] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+
+  console.log(filteredData)
   
   //ALL HOME SERVICES
    React.useEffect(() => {
@@ -46,6 +51,7 @@ function ReportHomeServices() {
           requester: userId,
           date_from: filteredData.from_date,
           date_to: filteredData.to_date,
+          service_location: filteredData.service_location
         },
       }).then(function (booking) {
           var array = booking.data.bookings;
@@ -115,7 +121,7 @@ function ReportHomeServices() {
 
   function filter() {}
 
-
+ 
   return (
     <div>
       <Navbar />
@@ -136,7 +142,7 @@ function ReportHomeServices() {
              />
           <Table
             clickable={false}
-            type={'no-action'}
+            type={'home-service-booking'}
             tableData={homeServices.sort((a,b) => (a.booking_number > b.booking_number ? 1 : ((b.booking_number > a.booking_number) ? -1 : 0)))}
             rowsPerPage={100}
             headingColumns={['BOOKING NUMBER', 'BOOKING DATE', 'ADDRESS', 'TESTS', 'HOME SERVICE FEE', 'TOTAL AMOUNT']}
@@ -147,6 +153,7 @@ function ReportHomeServices() {
             render={render}
             givenClass={"register-mobile"}
           />
+
 
           <ToastContainer hideProgressBar={true} />
         </Fragment>
