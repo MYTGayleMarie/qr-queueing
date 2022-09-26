@@ -720,10 +720,8 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
           </div>         
         </div>
         <NavLink to="/discounts" activeClassName="active" class="link">
-          <li href="#" class="nav-link cashier-nav">
-            <img src={discountIcon} alt={'discount'} class="discount icon"></img>
-            <span class="mx-2">DISCOUNTS</span>
-          </li>
+            <img src={discountIcon} alt={'discount'} class="discount icon mobile-size-icon"></img>
+            <span class="mx-2">Discounts</span>
         </NavLink> 
         <NavLink to="/reports" activeClassName="active" class="link">
             <img src={reportIcon} alt={'report'} class="report icon mobile-size-icon"></img>
