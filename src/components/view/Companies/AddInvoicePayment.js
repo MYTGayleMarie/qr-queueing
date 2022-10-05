@@ -309,6 +309,7 @@ const [ifYes, setIfYes] = useState(false);
           requester: userId,
       }
     }).then(function (response) {
+      console.log(response)
       var invoice = response.data.data.company_invoices;
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
@@ -354,9 +355,11 @@ const [ifYes, setIfYes] = useState(false);
     info.length=0;
     const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
     delete tempData["undefined"]
+    console.log(tempData)
     var keys = Object.keys(tempData)
 
     keys.map((data, index)=>{
+      console.log(tempData)
       var info={};
       var date = new Date(tempData[data][0].added_on);
       var formattedDate = date.toDateString().split(" ");
@@ -401,6 +404,7 @@ const [ifYes, setIfYes] = useState(false);
     }).then((response)=>{
       var dataLength = response.data.data.particulars.length;
         response.data.data.particulars.map((data, index)=>{
+          console.log(data)
           // Get Booking Details
           axios({
             method: 'post',
@@ -699,7 +703,7 @@ const [ifYes, setIfYes] = useState(false);
         withCredentials: false, 
         params: {
             api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
+            tQoken: userToken.replace(/['"]+/g, ''),
             requester: userId,
         }
       }).then(function (response) {

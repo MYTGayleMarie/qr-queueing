@@ -120,7 +120,7 @@ function AddInvoice() {
 
       }
     }).then(function (response){
-      // console.log(response)
+      console.log(response.data.data)
       var output = [];
       setGrandTotal(response.data.data.total);
       setQty(response.data.data.quantity);

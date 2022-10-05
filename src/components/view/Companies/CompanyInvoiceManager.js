@@ -14,6 +14,7 @@ import './Companies.css';
 import Navbar from '../../Navbar';
 import Header from '../../Header.js';
 import Table from '../../Table.js';
+import { ro } from 'date-fns/locale';
 
 const buttons = ['export-excel'];
 const userToken = getToken();
@@ -92,7 +93,7 @@ function CompanyInvoiceManager() {
                     companyDetails.discountCode = row.discount_code;
                     companyDetails.remarks = company.data.remarks;
                     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.total = "P "+totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
                     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
