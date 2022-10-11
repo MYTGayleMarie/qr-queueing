@@ -669,7 +669,7 @@ function AddPayment() {
                     api_key: window.$api_key, 
                     booking: id,
                     type: payment,
-                    amount: pay >= grandTotal ? grandTotal : pay,
+                    amount: grandTotal,
                     senior_pwd_id: seniorPwdId,
                     discount: discount,
                     grand_total: grandTotal,
