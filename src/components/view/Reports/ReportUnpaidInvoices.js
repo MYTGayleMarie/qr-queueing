@@ -21,7 +21,7 @@ var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
-  from_date: formattedPresentData,
+  from_date: "2022-01-06",
   to_date: formattedPresentData,
   done: false,
 };
