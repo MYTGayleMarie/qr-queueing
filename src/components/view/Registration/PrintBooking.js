@@ -58,6 +58,7 @@ function PrintBooking() {
        const [patientId, setPatientId] = useState("");
        const [discountCode, setDiscountCode] = useState("");
        const [companyCode, setCompanyCode] = useState("");
+       const [paidAmount,setPaidAmount] = useState(0)
 
        //other states
        const [redirect, setRedirect] = useState(false);
@@ -79,7 +80,7 @@ function PrintBooking() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
+            // console.log(response)
             // console.log(response.data.payment_type)
             setEncodedOn(response.data.added_on);
             setBookingDate(response.data.booking_time);
@@ -88,6 +89,7 @@ function PrintBooking() {
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
+            setPaidAmount(response.data.paid_amount)
             if(response.data.discount_code!==""){
                 setDiscountCode(response.data.discount_code);
             } else {
@@ -426,6 +428,7 @@ function PrintBooking() {
             setTotal={setTotal}
             grandTotal={grandTotal}
             setGrandTotal={setGrandTotal}
+            paidAmount={paidAmount}
             setDiscount={setDiscount}
             discount={discount}
             toPay={false}

@@ -171,7 +171,6 @@ function AddPayment() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response);
             setPaidAmount(response.data.paid_amount);
             setPaymentStatus(response.data.payment_status);
             setPaymentType(response.data.payment_type);
@@ -1045,6 +1044,7 @@ function AddPayment() {
             paidAmount={paidAmount}
             toPay={paymentStatus == "paid" ? false : true}
          />
+
 
          {paymentStatus != "paid" && (
         <div className="row">
