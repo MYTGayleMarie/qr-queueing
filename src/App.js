@@ -133,8 +133,12 @@ function App() {
         <Route path="/imaging" element={token ? <Imaging /> : <Navigate to="/" />} />
         <Route path="/imaging-test/:id" element={token ? <ImagingTests /> : <Navigate to="/" />} />
         <Route path="/release-item" element={token ? <ReleaseItems /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/release-item/:dateFrom/:dateTo" element={token ? <ReleaseItems /> : <Navigate to="/" />} />
         <Route path="/add-release" element={token ? <AddItems /> : <Navigate to="/" />} />
         <Route path="/review-release/:id" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
+         {/** With date filter */}
+        <Route path="/review-release/:id/:dateFrom/:dateTo" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
@@ -150,9 +154,13 @@ function App() {
         <Route path="/add-company" element={token ? <AddCompany /> : <Navigate to="/" />} />
         <Route path="/add-discount/:id" element={token ? <AddDiscount /> : <Navigate to="/" />} />
         <Route path="/company-invoices" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/company-invoices/:dateFrom/:dateTo" element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />} />
         <Route path="/review-invoice/:id/:discountId" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
         <Route path="/add-invoice-payment/:id/:companyId" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
+         {/** With date filter */}
+        <Route path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
         <Route path="/discounts" element={token ? <Discount /> : <Navigate to="/" />} />
         <Route path="/add-discount" element={token ? <AddDiscountNoCompany /> : <Navigate to="/" />} />
         <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />

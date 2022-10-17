@@ -19,9 +19,10 @@ function ReviewReleasingItems() {
     document.body.style = 'background: white;';
 
     //Release details
-    const {id} = useParams();
+    const {id, dateFrom, dateTo} = useParams();
 
     //States
+    const [redirectBack, setRedirectBack] = useState(false);
     const [releaseId, setReleaseID] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [requisitioner, setRequisitioner] = useState("");
@@ -133,6 +134,20 @@ function ReviewReleasingItems() {
     if (redirect == true) {
         return <Navigate to="/release-item" />;
     }
+
+    if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/release-item/" + dateFrom + "/" + dateTo;
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/release-item";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
+    }
     
 
   return (<div>
@@ -210,6 +225,10 @@ function ReviewReleasingItems() {
                         <div className="col-sm-4">
                             <div className='detail'><b>{grandTotal}</b></div>
                         </div>
+                    </div>
+
+                    <div className='d-flex justify-content-end back-btn-container'>
+                        <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
                     </div>
                 </div>
             </div>

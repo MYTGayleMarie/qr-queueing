@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,18 +22,16 @@ var id;
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const filterData = {
-    from_date: formattedPresentData,
-  
-    to_date: formattedPresentData,
-    done: false,
-  };
-
 function ReleaseItems() {
   
     document.body.style = 'background: white;';
+    const {dateFrom, dateTo} = useParams();
     const [releaseData, setReleaseData] = useState([]);
-    const [filteredData, setFilter] = useForm(filterData);
+    const [filteredData, setFilter] = useForm({
+      from_date: dateFrom ? dateFrom : formattedPresentData,
+      to_date: dateTo ? dateTo : formattedPresentData,
+      done: false,
+    });
     const [redirect, setRedirect] = useState(false);
     const [render, setRender] = useState([]);
 
@@ -98,7 +96,7 @@ function ReleaseItems() {
       }, [render]);
 
       if (redirect == true) {
-        var link = '/review-release/' + id;
+        var link = '/review-release/' + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
         return <Navigate to={link} />;
       }
 

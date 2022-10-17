@@ -59,8 +59,9 @@ function AddInvoicePayment() {
   document.body.style = 'background: white;';
 
   //Invoice details
-  const {id, companyId} = useParams();
+  const {id, companyId, dateFrom, dateTo} = useParams();
   const [redirect, setRedirect] = useState(false);
+  const [redirectBack, setRedirectBack] = useState(false);
   const [info, setInfo] = useState([]);
   const [infoId, setInfoId] = useState("");
   const [checked, setChecked] = useForm(checkedData);
@@ -1030,6 +1031,20 @@ function othersForm() {
     )
   }
 
+  if(redirectBack === true) {
+    if(dateFrom !== undefined && dateTo !== undefined) {
+      var link =  "/company-invoices/" + dateFrom + "/" + dateTo;
+      return (
+        <Navigate to ={link}/>
+      )
+    } else {
+      var link =  "/company-invoices";
+      return (
+        <Navigate to ={link}/>
+      )
+    }
+  }
+
   return (
     <div>
       <Navbar/>
@@ -1141,6 +1156,10 @@ function othersForm() {
                         {hasPay == false && (emailButton())}
                         {(printChargeSlip())}
                     </div>
+                </div>
+
+                <div className='d-flex justify-content-end back-btn-container'>
+                    <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
                 </div>
                 
             </div>
