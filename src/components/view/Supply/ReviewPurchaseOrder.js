@@ -28,7 +28,8 @@ function ReviewPurchaseOrder() {
     document.body.style = 'background: white;';
 
       //PO details
-      const {id} = useParams();
+      const {id, dateFrom, dateTo, statusFilter} = useParams();
+      const [redirectBack, setRedirectBack] = useState(false);
       var poId;
       const [supplier, setSupplier] = useState("");
       const [purchaseDate, setPurchaseDate] = useState("");
@@ -469,6 +470,20 @@ function ReviewPurchaseOrder() {
         )
     }
 
+    if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/purchase-order/" + dateFrom + "/" + dateTo + "/" + (statusFilter === undefined ? "all" : statusFilter);
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/purchase-order";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
+    }
+
     return (
         <div>
         <Navbar/>
@@ -649,7 +664,10 @@ function ReviewPurchaseOrder() {
                 approvedBy={approvedBy}
             />
 
+            </div>
 
+            <div className='d-flex justify-content-end back-btn-container'>
+                <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
             </div>
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">

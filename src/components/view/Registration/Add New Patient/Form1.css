@@ -93,6 +93,17 @@ label {
   margin-top: 10%;
 }
 
+.back-btn-2 {
+  background-color: #0e6c83;
+  color: white;
+  border: none;
+  width: 15% !important;
+  border-radius: 1em;
+  padding:  0.5%;
+  margin-top: 10%;
+  margin-right: 3%;
+}
+
 .skip-btn {
   background-color: #094b5b;
   color: white;

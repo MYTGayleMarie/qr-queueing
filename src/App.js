@@ -159,12 +159,15 @@ function App() {
         <Route path="/review-invoice/:id/:discountId" element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />} />
         <Route path="/add-invoice/:id/:discount" element={token ? <AddInvoice /> : <Navigate to="/" />} />
         <Route path="/add-invoice-payment/:id/:companyId" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
-         {/** With date filter */}
+        {/** With date filter */}
         <Route path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo" element={token ? <AddInvoicePayment /> : <Navigate to="/" />} />
         <Route path="/discounts" element={token ? <Discount /> : <Navigate to="/" />} />
         <Route path="/add-discount" element={token ? <AddDiscountNoCompany /> : <Navigate to="/" />} />
         <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/purchase-order/:dateFrom/:dateTo/:statusFilter" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
+        <Route path="/purchase-order/:dateFrom/:dateTo/" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/receives/:dateFrom/:dateTo" element={token ? <Receives/> : <Navigate to="/" />} />
@@ -174,6 +177,9 @@ function App() {
         <Route path="/receives-print/:id/:poId/:dateFrom/:dateTo" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/review-purchase-order/:id/:dateFrom/:dateTo/:statusFilter" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
+        <Route path="/review-purchase-order/:id/:dateFrom/:dateTo/" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/update-purchase-order/:id" element={token ? <UpdatePurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/pay-purchase-order/:id/:poId" element={token ? <PayPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receive-purchase-order/:id" element={token ? <ReceivePurchaseOrder/> : <Navigate to="/" />} />

@@ -571,6 +571,7 @@ function PayPurchaseOrder() {
 
                 <div className="row d-flex more-gap justify-content-end">
                 {/* {print == true && printButton()} */}
+                <button className='back-btn-2' onClick={() => setRedirect(true)}>Back</button>
                 <button className="save-btn" onClick={(e) => submit(e)}>SAVE RECEIVES</button>
                 </div>
 

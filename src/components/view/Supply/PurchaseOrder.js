@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import { useForm } from "react-hooks-helper";
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
 
 //css
@@ -21,17 +21,17 @@ const buttons = ['add-purchase'];
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const filterData = {
-  from_date: formattedPresentData,
-  to_date: formattedPresentData,
-  status: 'for approval',
-};
-
 function PurchaseOrder() {
 
     document.body.style = 'background: white;';
-    const [filteredData, setFilter] = useForm(filterData);
+    const {dateFrom, dateTo, statusFilter} = useParams();
+    const [filteredData, setFilter] = useForm({
+        from_date: dateFrom ? dateFrom : formattedPresentData,
+        to_date: dateTo ? dateTo : formattedPresentData,
+        status: statusFilter ? statusFilter === "all" ? "" : statusFilter : 'for approval',
+    });
     const [poData, setPoData] = useState([]);
+    const [render,setRender] = useState([])
 
     //redirect
     const [redirect, setRedirect] = useState(false);
@@ -51,11 +51,12 @@ function PurchaseOrder() {
           },
         }).then(function (response) {
             var pos =  response.data.pos;
+            console.log(pos)
             if(filteredData.status != "") {
                 pos =  response.data.pos.filter((info) => info.status == filteredData.status);
             }
             pos.map((data,index) => {
-
+                console.log(data)
                 axios({
                     method: 'post',
                     url: window.$link + 'suppliers/show/' + data.supplier_id,
@@ -66,7 +67,7 @@ function PurchaseOrder() {
                         requester: userId,
                     }
                 }).then(function (response) {
-                  console.log(response.data);
+                  console.log(response);
                   var date = new Date(data.purchase_date);
                   var posData = {};
                   posData.id = data.id;
@@ -86,7 +87,7 @@ function PurchaseOrder() {
         }).catch(function (error) {
             console.log(error);
         });
-    },[filteredData]);
+    },[render]);
 
     function approve(poId) {
         id = poId;
@@ -94,7 +95,7 @@ function PurchaseOrder() {
     }
 
     if(redirect == true) {
-        var link =  "/review-purchase-order/" + id;
+        var link =  "/review-purchase-order/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date + "/" + filteredData.status;
         return (
             <Navigate to ={link}/>
         )
@@ -121,6 +122,8 @@ function PurchaseOrder() {
                 filteredData={filteredData}
                 setFilter={setFilter}
                 link={approve}
+                setRender={setRender}
+                render={render}
             />
             </Fragment>
         </div>

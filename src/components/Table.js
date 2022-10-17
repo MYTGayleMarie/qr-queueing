@@ -570,7 +570,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if(type === 'purchase-order') {
-        const {from_date, to_date, done} = filteredData;
+         const {from_date, to_date, status} = filteredData;
     
         return(
             <div className="table-container">
@@ -579,7 +579,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <div className="col-sm-12 d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
-                    <select name="status" onChange={setFilter}>
+                    <select name="status" value={status} onChange={setFilter}>
                         <option value="for approval" selected>FOR APPROVAL</option>
                         <option value="approved">APPROVED</option>
                         <option value="completed">COMPLETED</option>
@@ -602,6 +602,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         {data}
                     </tbody>
                 </table>
+                
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
              </div>
         );
