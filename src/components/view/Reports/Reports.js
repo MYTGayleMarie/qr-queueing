@@ -517,6 +517,16 @@ function Reports() {
                 </div>
             </div>
             <div className="row">
+              <div className="col-sm-4">
+                  {role != 3 && <Card 
+                        totalData={"INVENTORY"}
+                        todayData={""}
+                        link={"/reports-inventory"}
+                        title=''
+                        color='maroon'
+                        disable={"today"}
+                    /> }
+              </div>
             </div>
             </Fragment>
         </div>

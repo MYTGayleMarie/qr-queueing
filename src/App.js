@@ -85,6 +85,8 @@ import ReportIncompletePO from './components/View/Reports/ReportIncompletePO';
 import ReportIncompletePOReview from './components/View/Reports/ReportIncompletePOReview';
 import ViewHistory from './components/View/Registration/Add Old Patient/ViewHistory';
 import ViewBooking from './components/View/Results Releasing/ViewBooking';
+import ReportServicesPackagesDetails from './components/View/Reports/ReportServicesPackagesDetails';
+import ReportInventory from './components/View/Reports/ReportInventory';
 
 
 function App() {
@@ -197,8 +199,10 @@ function App() {
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
         <Route path="/reports-transaction" element={token ? <ReportTransaction /> : <Navigate to="/" />} />
         <Route path="/reports-services-packages" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
+        <Route path="/reports-services-packages/details/:id/:dateFrom/:dateTo" element={token ? <ReportServicesPackagesDetails /> : <Navigate to="/" />} />
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
+        <Route path="/reports-inventory" element={token ? <ReportInventory/> : <Navigate to="/" />} />
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/reports-pending-po/:dateFrom/:dateTo" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />

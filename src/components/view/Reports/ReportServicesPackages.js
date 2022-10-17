@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { getTime } from '../../../utilities/Common';
+import { Navigate, useParams } from 'react-router-dom';
 
 //components
 import Header from '../../Header.js';
@@ -19,20 +20,21 @@ const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
+var id = "";
 var formattedPresentData = presentDate.toISOString().split('T')[0];
-
-const filterData = {
-  from_date: formattedPresentData,
-  to_date: formattedPresentData,
-  status: 'all',
-};
 
 
 function ReportServicesPackages() {
 
   document.body.style = 'background: white;';
-  const [filteredData, setFilter] = useForm(filterData);
+  const {dateFrom, dateTo} = useParams();
+  const [filteredData, setFilter] = useForm({
+    from_date: dateFrom ? dateFrom : formattedPresentData,
+    to_date: dateTo ? dateTo : formattedPresentData,
+    status: 'all',
+  });
   const [render, setRender] = useState(false);
+  const [redirectView, setRedirectView] = useState(false);
   const [servicesPackages, setServicesPackages] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
@@ -59,6 +61,7 @@ function ReportServicesPackages() {
               servicesData.map((data,index) => {
                 var info = {};
                 if(data.lab_test !== null || data.package !==null){
+                  info.id = data.id;
                   info.service = data.lab_test ? data.lab_test : data.package;
                   info.total_count = data.total_count;
                 }
@@ -72,8 +75,19 @@ function ReportServicesPackages() {
           });
     },[render]);
     
+  function viewDetails(labTestId) {
+    id = labTestId
+    setRedirectView(true);
+  }
 
   function filter() {}
+
+  if(redirectView == true) {
+    var link =  "/reports-services-packages/details/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
 
 
   return (
@@ -92,16 +106,17 @@ function ReportServicesPackages() {
             status={printReadyFinal}
              />
           <Table
-            clickable={false}
+            clickable={true}
             type={'services-packages-2'}
             tableData={servicesPackages}
             rowsPerPage={5}
-            headingColumns={['SERVICE NAME', 'QUANTITY']}
+            headingColumns={['SERVICE NAME', 'QUANTITY', "ACTION"]}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
             setRender={setRender}
             render={render}
+            link={viewDetails}
             totalCount={totalCount}
             givenClass={"register-mobile"}
           />
