@@ -4,7 +4,7 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { getTime } from '../../../utilities/Common';
@@ -39,8 +39,12 @@ const labDetails = {
 function MdReports() {
 
   document.body.style = 'background: white;';
-   
-  const [filteredData, setFilter] = useForm(filterData);
+  const {dateFrom, dateTo} = useParams();
+  const [filteredData, setFilter] = useForm({
+    from_date: dateFrom ? dateFrom : formattedPresentData,
+    to_date: dateTo ? dateTo : formattedPresentData,
+    done: false
+  });
   const [link_md_details, setLink] = useState("");
   const [lab_details, setLabDetails] = useState("");
   const [md_name, setMDName] = useState("");
@@ -93,7 +97,7 @@ function MdReports() {
 
 
   function handleOnChange(e, md_name){
-    setLink("/reports-md-details/" + md_name + "/" + e.target.value)
+    setLink("/reports-md-details/" + md_name + "/" + e.target.value + "/"  + filteredData.from_date + "/" + filteredData.to_date)
     setRedirect(true)
   }
 

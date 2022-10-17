@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
@@ -31,7 +31,12 @@ const filterData = {
 function ReportCredits() {
   
   document.body.style = 'background: white;';
-  const [filteredData, setFilter] = useForm(filterData);
+  const {dateFrom, dateTo} = useParams();
+  const [filteredData, setFilter] = useForm({
+    from_date: dateFrom ? dateFrom : "2022-01-06",
+    to_date: dateTo ? dateTo : formattedPresentData,
+    done: false,
+  });
   const [render, setRender] = useState([]);
   const [credits, setCredits] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
@@ -76,7 +81,7 @@ function ReportCredits() {
     }
 
     if(redirect == true) {
-        var link =  "/reports-credit-details/" + id;
+        var link =  "/reports-credit-details/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
         return (
             <Navigate to ={link}/>
         )

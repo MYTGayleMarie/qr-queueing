@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const userToken = getToken();
 const userId = getUser();
@@ -29,7 +29,8 @@ function ReportMDDetails() {
   
   document.body.style = 'background: white;';
   const [total,setTotal] = useState(0);
-  const {name, lab} = useParams();
+  const {name, lab, dateFrom, dateTo} = useParams();
+  const [redirectBack, setRedirectBack] = useState(false);
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [particulars, setParticulars] = useState([]);
@@ -82,6 +83,20 @@ function ReportMDDetails() {
   },[]);
   
   function filter() {}
+
+  if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/reports-md/" + dateFrom + "/" + dateTo;
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/reports-md";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
+  }
 
   return (
     <div>
@@ -156,6 +171,9 @@ function ReportMDDetails() {
 
           <ToastContainer hideProgressBar={true} />
         </Fragment>
+        <div className='d-flex justify-content-end back-btn-container'>
+            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
+        </div>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ function ReceivesPrint() {
     document.body.style = 'background: white;';
 
       //PO details
-      const {id, poId, dateFrom, dateTo} = useParams();
+      const {id, poId, dateFrom, dateTo, statusFilter} = useParams();
       const [redirectBack, setRedirectBack] = useState(false);
       const [supplier, setSupplier] = useState("");
       const [purchaseDate, setPurchaseDate] = useState("");
@@ -418,7 +418,7 @@ function ReceivesPrint() {
 
     if(redirectBack === true) {
       if(dateFrom !== undefined && dateTo !== undefined) {
-          var link =  "/receives/" + dateFrom + "/" + dateTo;
+          var link =  "/receives/" + dateFrom + "/" + dateTo + "/" + statusFilter;
           return (
               <Navigate to ={link}/>
           )

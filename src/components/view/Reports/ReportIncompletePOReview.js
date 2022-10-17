@@ -17,7 +17,7 @@ const userToken = getToken();
 const userId = getUser();
 
 export default function ReportIncompletePOReview(){
-  const {id} = useParams();
+  const {id, dateFrom, dateTo} = useParams();
 
   // Incomplete PO details
   const [supplier, setSupplier] = useState("");
@@ -180,7 +180,7 @@ export default function ReportIncompletePOReview(){
   }
 
  if (redirect == true) {
-    var link = '/reports-incomplete-po';
+    var link = '/reports-incomplete-po/' + dateFrom + "/" + dateTo ;
     // console.log(link);
     return <Navigate to={link} />;
   }

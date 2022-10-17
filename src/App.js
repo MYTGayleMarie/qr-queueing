@@ -171,10 +171,12 @@ function App() {
         <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/receives/:dateFrom/:dateTo" element={token ? <Receives/> : <Navigate to="/" />} />
+        <Route path="/receives/:dateFrom/:dateTo/:statusFilter" element={token ? <Receives/> : <Navigate to="/" />} />
         <Route path="/receive-items-manager" element={token ? <ReceiveItems/> : <Navigate to="/" />} />
         <Route path="/receives-print/:id/:poId" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/receives-print/:id/:poId/:dateFrom/:dateTo" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
+         <Route path="/receives-print/:id/:poId/:dateFrom/:dateTo/:statusFilter" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         {/** With date filter */}
@@ -198,14 +200,28 @@ function App() {
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/reports-pending-po/:dateFrom/:dateTo" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         <Route path="/reports-sales" element={token ? <ReportSales/> : <Navigate to="/" />} />
         <Route path="/reports-md" element={token ? <MdReports/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/reports-md/:dateFrom/:dateTo" element={token ? <MdReports/> : <Navigate to="/" />} />
         <Route path="/reports-md-details/:name/:lab" element={token ? <MDReportDetail/> : <Navigate to="/" />} />
+        {/** With date filter */}
+         <Route path="/reports-md-details/:name/:lab/:dateFrom/:dateTo" element={token ? <MDReportDetail/> : <Navigate to="/" />} />
         <Route path="/reports-referrals" element={token ? <MdReferral/> : <Navigate to="/" />} />
         <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/reports-credit/:dateFrom/:dateTo" element={token ? <ReportCredits/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/reports-incomplete-po/:dateFrom/:dateTo" element={token ? <ReportIncompletePO/> : <Navigate to="/" />} />
         <Route path="/reports-incomplete-po/review/:id" element={token ? <ReportIncompletePOReview/> : <Navigate to="/" />} />
+        {/** With date filter */}
+         <Route path="/reports-incomplete-po/review/:id/:dateFrom/:dateTo" element={token ? <ReportIncompletePOReview/> : <Navigate to="/" />} />
         <Route path="/reports-credit-details/:discount_code" element={token ? <ReportCreditDetails/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/reports-credit-details/:discount_code/:dateFrom/:dateTo" element={token ? <ReportCreditDetails/> : <Navigate to="/" />} />
         <Route path="/reports-results-releasing" element={token ? <ResultsReleasing/> : <Navigate to="/" />} />
         <Route path="/unpaid-invoices" element={token ? <ReportUnpaidInvoices/> : <Navigate to="/" />} />
         <Route path="/print-payment/:id" element={token ? <PaymentToPrint /> : <Navigate to="/" />} />

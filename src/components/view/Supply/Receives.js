@@ -25,11 +25,11 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 function Receives() {
 
     document.body.style = 'background: white;';
-    const {dateFrom, dateTo} = useParams();
+    const {dateFrom, dateTo, statusFilter} = useParams();
     const [filteredData, setFilter] = useForm({
         from_date: dateFrom ? dateFrom : "2022-01-06",
         to_date: dateTo ? dateTo : formattedPresentData,
-        status: 'UNPAID',
+        status: statusFilter ? statusFilter : 'UNPAID',
     });
     const [poData, setPoData] = useState([]);
     const [render,setRender] = useState([])
@@ -118,7 +118,7 @@ function Receives() {
     }
 
     if(redirect == true) {
-        var link =  "/receives-print/" + id + "/" + po_id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+        var link =  "/receives-print/" + id + "/" + po_id + "/" + filteredData.from_date + "/" + filteredData.to_date + "/" + filteredData.status;
         return (
             <Navigate to ={link}/>
         )

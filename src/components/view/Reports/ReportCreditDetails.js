@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const userToken = getToken();
 const userId = getUser();
@@ -24,7 +24,8 @@ const filterData = {
 function ReportCreditDetails() {
   
   document.body.style = 'background: white;';
-  const {discount_code} = useParams();
+  const {discount_code, dateFrom, dateTo} = useParams();
+  const [redirectBack, setRedirectBack] = useState(false);
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [particulars, setParticulars] = useState([]);
@@ -74,6 +75,20 @@ function ReportCreditDetails() {
   
 
   function filter() {}
+
+  if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/reports-credit/" + dateFrom + "/" + dateTo;
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/reports-credit";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
+  }
 
   return (
     <div>
@@ -135,6 +150,9 @@ function ReportCreditDetails() {
 
           <ToastContainer hideProgressBar={true} />
         </Fragment>
+        <div className='d-flex justify-content-end back-btn-container'>
+            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
+        </div>
       </div>
     </div>
   );
