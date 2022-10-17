@@ -101,6 +101,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
               <td><button class="button-10" role="button" onClick={() => link(row.id)}>VIEW BOOKING</button></td>
             </tr>
         }
+        else if (type === 'report-inventory') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+              <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+              <td><button class="button-10" role="button" onClick={() => link(row.id)}>VIEW</button></td>
+            </tr>
+        }
         else if (type === "services" ){
             return <tr key={row.id}>
                 {rowData.map((data, index) => 
@@ -503,6 +510,26 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    else if(type === 'reports-services-packages') {
+    
+        return(
+            <div className="table-container">
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
     else if (type === 'receives') {
 
         const {from_date, to_date, status} = filteredData;
@@ -576,7 +603,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </div>
         );
     }
-    else if(type === 'purchase-order') {
+    else if(type === 'purchase-order' || type === "report-inventory") {
          const {from_date, to_date, status} = filteredData;
     
         return(

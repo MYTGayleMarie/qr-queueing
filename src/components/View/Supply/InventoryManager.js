@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import { useForm } from "react-hooks-helper";
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
 
 //css
@@ -22,17 +22,16 @@ const buttons = ['add-inventory'];
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const filterData = {
-  from_date: formattedPresentData,
-  to_date: formattedPresentData,
-  status: 'for approval',
-};
-
 
 function InventoryManager() {
 
     document.body.style = 'background: white;';
-    const [filteredData, setFilter] = useForm(filterData);
+    const {dateFrom, dateTo, status} = useParams();
+    const [filteredData, setFilter] = useForm({
+        from_date: dateFrom ? dateFrom : formattedPresentData,
+        to_date: dateTo ? dateTo : formattedPresentData,
+        status: status ? status : 'for approval',
+    });
     const [inventoryData, setInventoryData] = useState([]);
     const [redirectAdd, setRedirectAdd] = useState(false);
 
@@ -89,7 +88,7 @@ function InventoryManager() {
     }
 
     if(redirect == true) {
-        var link =  "/review-inventory/" + id;
+        var link =  "/review-inventory/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date + "/" + filteredData.status;
         return (
             <Navigate to ={link}/>
         )

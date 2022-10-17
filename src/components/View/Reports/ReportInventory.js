@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useRef } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { formatDate, getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 const filterData = {
     from_date: "2022-01-06",
     to_date: formattedPresentData,
-    done: false,
+    status: "for approval",
   };
 
 function ReportInventory() {
@@ -36,6 +36,7 @@ function ReportInventory() {
   const [clinicServices, setClinicServices] = useState([]);
   const [pendingPOs, setPendingPOs] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [inventories, setInventories] = useState([]);
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -45,7 +46,7 @@ function ReportInventory() {
           pendingPOs.length = 0;
         axios({
             method: 'post',
-            url: window.$link + 'pos/getAll',
+            url: window.$link + 'inventory_counts/getAll',
             withCredentials: false,
             params: {
               api_key: window.$api_key,
@@ -55,48 +56,69 @@ function ReportInventory() {
               requester: userId,
             },
           }).then(function (response) {
-              var pending = response.data.pos.filter((info) => info.status == "pending");
-              pending.map((data,index) => {
-                var info = {};
-                axios({
-                    method: 'post',
-                    url: window.$link + 'suppliers/show/' + data.supplier_id,
-                    withCredentials: false,
-                    params: {
-                      api_key: window.$api_key,
-                      token: userToken.replace(/['"]+/g, ''),
-                      date_from: filteredData.from_date,
-                      date_to: filteredData.to_date,
-                      requester: userId,
-                    },
-                  }).then(function (supplier) {
-                    var date =  new Date(data.added_on);
-                    var formattedDate = date.toDateString().split(" ");
-                    info.id = data.id;
-                    info.po_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-                    info.supplier = supplier.data.name;
-                    info.total_amount = data.grand_total;
-                    setPendingPOs(oldArray => [...oldArray, info]);
-                  }).then(function (error) {
+            console.log(response)
 
-                  });
+            if(filteredData.status === "for approval") {
+                response.data.inventory_counts.filter((data) => data.status === "pending").map((data, index1) => { 
+                    axios({
+                        method: 'post',
+                        url: window.$link + 'users/show/' + data.added_by,
+                        withCredentials: false,
+                        params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                        },
+                    }).then(function (user) {
+                        var info = {};
+                        info.date = formatDate(data.count_date);
+                        info.id = data.id;
+                        info.requester = user.data.name;
+                        console.log(info)
+                        setInventories(oldArray=>[...oldArray, info]);
 
-                  if(pending.length - 1 == index) {
-                    setPrintReadyFinal(true);
-                  }
-              });
-          }).then(function (error) {
-            console.log(error);
-          });
+                        if(response.data.inventory_counts.length - 2 == index1) {
+                            setPrintReadyFinal(true);
+                        }
+                    })
+                })
+
+            } else {
+               response.data.inventory_counts.filter((data) => data.status === filteredData.status).map((data, index1) => { 
+                    axios({
+                        method: 'post',
+                        url: window.$link + 'users/show/' + data.added_by,
+                        withCredentials: false,
+                        params: {
+                        api_key: window.$api_key,
+                        token: userToken.replace(/['"]+/g, ''),
+                        requester: userId,
+                        },
+                    }).then(function (user) {
+                        var info = {};
+                        info.date = formatDate(data.count_date);
+                        info.id = data.id;
+                        info.requester = user.data.name;
+                        console.log(info)
+                        setInventories(oldArray=>[...oldArray, info]);
+
+                        if(response.data.inventory_counts.length - 2 == index1) {
+                            setPrintReadyFinal(true);
+                        }
+                    })
+                })
+            }
+          })
+          //sentprintreadyfinal
     },[render]);
 
-    function approve(poId) {
-        id = poId;
+    function view(inventoryId) {
+        id = inventoryId;
         setRedirect(true);
     }
 
     if(redirect == true) {
-        var link =  "/review-purchase-order/" + id;
+        var link =  "/review-inventory/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date + "/" + filteredData.status;
         return (
             <Navigate to ={link}/>
         )
@@ -118,23 +140,23 @@ function ReportInventory() {
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'Inventories Report'}
-            tableData={pendingPOs}
-            tableHeaders={['PO NUMBER', 'PO DATE', 'SUPPLIER', 'TOTAL AMOUNT']}
+            tableData={inventories}
+            tableHeaders={['DATE', 'INVENTORY REQUEST ID', 'REQUESTER']}
             status={printReadyFinal}
              />
           <Table
             clickable={true}
-            type={'purchase-order'}
-            tableData={pendingPOs}
+            type={'report-inventory'}
+            tableData={inventories}
             rowsPerPage={100}
-            headingColumns={['PO NUMBER', 'PO DATE', 'TESTS', 'TOTAL AMOUNT', 'ACTION']}
+            headingColumns={['DATE', 'INVENTORY REQUEST ID', 'REQUESTER', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            link={approve}
+            link={view}
           />
 
           <ToastContainer hideProgressBar={true} />

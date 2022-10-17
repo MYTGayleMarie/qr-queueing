@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useRef } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { formatDate, getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -40,6 +40,12 @@ function ReportServicesPackagesDetails() {
       }
     }).then(function (response) {
       console.log(response)
+      let result = response.data.data.data.map((data) => { return {
+        booking_date: formatDate(data.booking_date),
+        customer: data.customer,
+        lab_test: data.lab_test,
+      }})
+      setPatients(result)
     }).then(function(error) {
       console.log(error);
     });
@@ -51,12 +57,12 @@ function ReportServicesPackagesDetails() {
 
   if(redirectBack === true) {
       if(dateFrom !== undefined && dateTo !== undefined) {
-          var link =  "/reports-credit/" + dateFrom + "/" + dateTo;
+          var link =  "/reports-services-packages/" + dateFrom + "/" + dateTo;
           return (
               <Navigate to ={link}/>
           )
       } else {
-        var link =  "/reports-credit";
+        var link =  "/reports-services-packages";
           return (
               <Navigate to ={link}/>
           )
@@ -75,18 +81,22 @@ function ReportServicesPackagesDetails() {
              />
 
           <div className='particulars-cont'>
-            {/* <Table
+            <Table
                 clickable={false}
                 type={'reports-services-packages'}
                 tableData={patients}
                 rowsPerPage={100}
-                headingColumns={['PATIENT', 'BOOKING DATE', 'TOTAL']}
+                headingColumns={['BOOKING DATE', 'CUSTOMER', 'LAB TEST']}
+                setRender={setRender}
                 render={render}
                 givenClass={"register-mobile"}
-            /> */}
+            />
           </div>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
+        <div className='d-flex justify-content-end back-btn-container'>
+            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
+        </div>
       </div>
     </div>
   );

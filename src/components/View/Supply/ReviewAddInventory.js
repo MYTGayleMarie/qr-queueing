@@ -24,7 +24,7 @@ function ReviewAddInventory() {
     document.body.style = 'background: white;';
 
       //Item details
-      const {id} = useParams();
+      const {id, dateFrom, dateTo, statusFilter} = useParams();
       const [items, setItems] = useState([]);
       const [inventoryDetails, setInventoryDetails] = useState({requester: "", count_date: ""});
 
@@ -204,7 +204,7 @@ function ReviewAddInventory() {
     }
 
     if(closeRedirect) {
-        return <Navigate to="/inventory"/>
+        return <Navigate to={"/inventory" + "/" + dateFrom + "/" + dateTo + "/" + statusFilter} />
     }
 
     return (

@@ -192,13 +192,20 @@ function App() {
         <Route path="/update-supply-item/:id/:unit" element={token ? <UpdateSupplyItems /> : <Navigate to="/" />} />
         <Route path="/suppliers" element={token ? <Suppliers /> : <Navigate to="/" />} />
         <Route path="/inventory" element={token ? <Inventory/> : <Navigate to="/"/>} />
+        {/** With date filter */}
+        <Route path="/inventory/:dateFrom/:dateTo/:statusFilter" element={token ? <Inventory/> : <Navigate to="/"/>} />
+        <Route path="/inventory/:dateFrom/:dateTo/" element={token ? <Inventory/> : <Navigate to="/"/>} />
         <Route path="/add-inventory" element={token ? <AddInventory/> : <Navigate to="/"/>} />
         <Route path="/review-inventory/:id" element={token ? <ReviewAddInventory/> : <Navigate to="/"/>} />
+         {/** With date filter */}
+        <Route path="/review-inventory/:id/:dateFrom/:dateTo/:statusFilter" element={token ? <ReviewAddInventory/> : <Navigate to="/"/>} />
+        <Route path="/review-inventory/:id/:dateFrom/:dateTo/" element={token ? <ReviewAddInventory/> : <Navigate to="/"/>} />
         <Route path="/add-supplier" element={token ? <AddSupplier /> : <Navigate to="/" />} />
         <Route path="/View-supplier/:id" element={token ? <ViewSupplier /> : <Navigate to="/" />} />
         <Route path="/reports" element={token ? <Reports /> : <Navigate to="/" />} />
         <Route path="/reports-transaction" element={token ? <ReportTransaction /> : <Navigate to="/" />} />
         <Route path="/reports-services-packages" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
+        <Route path="/reports-services-packages/:dateFrom/:dateTo" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
         <Route path="/reports-services-packages/details/:id/:dateFrom/:dateTo" element={token ? <ReportServicesPackagesDetails /> : <Navigate to="/" />} />
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
