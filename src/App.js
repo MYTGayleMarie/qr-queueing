@@ -166,8 +166,12 @@ function App() {
         <Route path="/discount-detail/:id" element={token ? <DiscountDetail/> : <Navigate to="/" />} />
         <Route path="/purchase-order" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/receives/:dateFrom/:dateTo" element={token ? <Receives/> : <Navigate to="/" />} />
         <Route path="/receive-items-manager" element={token ? <ReceiveItems/> : <Navigate to="/" />} />
         <Route path="/receives-print/:id/:poId" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/receives-print/:id/:poId/:dateFrom/:dateTo" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />
         <Route path="/add-purchase" element={token ? <AddPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/review-purchase-order/:id" element={token ? <ReviewPurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/update-purchase-order/:id" element={token ? <UpdatePurchaseOrder /> : <Navigate to="/" />} />

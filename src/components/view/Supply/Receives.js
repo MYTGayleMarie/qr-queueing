@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import { useForm } from "react-hooks-helper";
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
 
 //css
@@ -22,16 +22,15 @@ const buttons = ['add-purchase'];
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const filterData = {
-  from_date: "2022-01-06",
-  to_date: formattedPresentData,
-  status: 'UNPAID',
-};
-
 function Receives() {
 
     document.body.style = 'background: white;';
-    const [filteredData, setFilter] = useForm(filterData);
+    const {dateFrom, dateTo} = useParams();
+    const [filteredData, setFilter] = useForm({
+        from_date: dateFrom ? dateFrom : "2022-01-06",
+        to_date: dateTo ? dateTo : formattedPresentData,
+        status: 'UNPAID',
+    });
     const [poData, setPoData] = useState([]);
     const [render,setRender] = useState([])
 
@@ -119,7 +118,7 @@ function Receives() {
     }
 
     if(redirect == true) {
-        var link =  "/receives-print/" + id + "/" + po_id;
+        var link =  "/receives-print/" + id + "/" + po_id + "/" + filteredData.from_date + "/" + filteredData.to_date;
         return (
             <Navigate to ={link}/>
         )

@@ -29,7 +29,8 @@ function ReceivesPrint() {
     document.body.style = 'background: white;';
 
       //PO details
-      const {id, poId} = useParams();
+      const {id, poId, dateFrom, dateTo} = useParams();
+      const [redirectBack, setRedirectBack] = useState(false);
       const [supplier, setSupplier] = useState("");
       const [purchaseDate, setPurchaseDate] = useState("");
       const [deliveryDate, setDeliveryDate] = useState("");
@@ -415,6 +416,21 @@ function ReceivesPrint() {
         )
     }
 
+    if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/receives/" + dateFrom + "/" + dateTo;
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/receives";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
+    }
+    
+
     return (
         <div>
         <Navbar/>
@@ -552,6 +568,10 @@ function ReceivesPrint() {
                 receivePo={receivePo}
             />
             {/* <PrintReceipt ref={componentRefReceipt}></PrintReceipt> */}
+            </div>
+
+            <div className='d-flex justify-content-end back-btn-container'>
+                <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
             </div>
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">
