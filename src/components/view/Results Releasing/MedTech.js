@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 
 
@@ -22,16 +22,16 @@ var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const filterData = {
-  from_date: formattedPresentData,
-  to_date: formattedPresentData,
-  done: false,
-};
 
 export default function MedTech() {
 
   document.body.style = 'background: white;';
-  const [filteredData, setFilter] = useForm(filterData);
+  const {dateFrom, dateTo} = useParams();
+  const [filteredData, setFilter] = useForm({
+    from_date: dateFrom ? dateFrom : formattedPresentData,
+    to_date: dateTo? dateTo : formattedPresentData,
+    done: false,
+  });
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const [redirectBooking, setRedirectBooking] = useState(false);
@@ -97,7 +97,7 @@ export default function MedTech() {
 
 
   if(redirectBooking == true) {
-    var link =  "/View-booking/" + id;
+    var link =  "/View-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
     return (
         <Navigate to ={link}/>
     )

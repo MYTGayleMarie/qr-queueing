@@ -59,7 +59,7 @@ export default function ViewBooking() {
 
   document.body.style = 'background: white;';
 
-  const {id} = useParams();
+  const {id, dateFrom, dateTo} = useParams();
 
   // search bar
   const [bookingId, setBookingId] = useState(id);
@@ -81,6 +81,9 @@ export default function ViewBooking() {
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //Redirect
+  const [redirectBack, setRedirectBack] = useState(false);
 
   // Get booking details by searched booking id
   React.useEffect(()=>{
@@ -336,6 +339,20 @@ export default function ViewBooking() {
         const newItemList = [...items];
         newItemList.splice(rowId, 1);
         setItems(newItemList);
+    }
+
+    if(redirectBack === true) {
+      if(dateFrom !== undefined && dateTo !== undefined) {
+          var link =  "/medtech/" + dateFrom + "/" + dateTo;
+          return (
+              <Navigate to ={link}/>
+          )
+      } else {
+        var link =  "/medtech";
+          return (
+              <Navigate to ={link}/>
+          )
+      }
     }
   
 
@@ -663,11 +680,12 @@ export default function ViewBooking() {
         <br />
         <br />
         <br />
-        
+        <div className='d-flex justify-content-end back-btn-container'>
+            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
+        </div>
       </Fragment>
   
       </div>
-    
     </div>
   )
  } 

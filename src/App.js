@@ -136,8 +136,12 @@ function App() {
         <Route path="/add-release" element={token ? <AddItems /> : <Navigate to="/" />} />
         <Route path="/review-release/:id" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/View-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
         <Route path="/View-booking/:id" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        {/** With date filter */}
+        <Route path="/View-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
         <Route path="/medtech-start/:bookId/:serviceId/:type" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
