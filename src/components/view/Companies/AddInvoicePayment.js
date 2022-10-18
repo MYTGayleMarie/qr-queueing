@@ -18,6 +18,7 @@ import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 import { ChargeSlip } from "./ChargeSlip";
 import ModalPopUp from "../../../components/Modal/UploadModal";
+import { ConsoleView } from "react-device-detect";
 
 //variables
 const userToken = getToken();
@@ -280,7 +281,6 @@ const [ifYes, setIfYes] = useState(false);
             requester: userId,
         }
       }).then(function (response) {
-        // console.log(response)
             if(response.data.status == 404) {
                 setHasLogs(false);
             } else {
@@ -310,8 +310,8 @@ const [ifYes, setIfYes] = useState(false);
           requester: userId,
       }
     }).then(function (response) {
-      console.log(response)
       var invoice = response.data.data.company_invoices;
+      console.log(response)
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
       setDiscountId(invoice[0].discount_id)
@@ -335,7 +335,6 @@ const [ifYes, setIfYes] = useState(false);
           setPayments(payments);
           setInfoId(invoice[0].id);
           setHasPay(paymentTotal>0.00 || paymentTotal>=invoice.total ? true : false);
-          // setInfo(oldArray => [...oldArray, info]);
       }); 
 
         promisePrint.then((value) => {
@@ -354,19 +353,19 @@ const [ifYes, setIfYes] = useState(false);
 
   React.useEffect(()=>{
     info.length=0;
+    console.log(invoiceData)
     const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
     delete tempData["undefined"]
-    console.log(tempData)
     var keys = Object.keys(tempData)
 
     keys.map((data, index)=>{
-      console.log(tempData)
       var info={};
+      console.log(tempData)
       var date = new Date(tempData[data][0].added_on);
       var formattedDate = date.toDateString().split(" ");
       info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
       info.code = tempData[data][0].discount_code
-      info.price = parseFloat(data)
+      info.price = parseFloat(data) 
       info.qty = tempData[data].length
       info.total = parseFloat(data)*tempData[data].length
       setInfo(oldArray=>[...oldArray, info])
@@ -405,7 +404,6 @@ const [ifYes, setIfYes] = useState(false);
     }).then((response)=>{
       var dataLength = response.data.data.particulars.length;
         response.data.data.particulars.map((data, index)=>{
-          console.log(data)
           // Get Booking Details
           axios({
             method: 'post',

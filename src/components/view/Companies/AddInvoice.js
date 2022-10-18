@@ -159,7 +159,7 @@ function AddInvoice() {
         var formattedDate = date.toDateString().split(" ")
         const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
         info.date=temp_date
-        info.price = temp_amt
+        info.price = arr.grand_total
         setInfo(oldArray=>[...oldArray, info])
       })
     })
@@ -335,11 +335,14 @@ function AddInvoice() {
                           <div className="col-sm-2">
                               <div className='particulars'>{formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]}</div>
                           </div>
-                          <div className="col-sm-8">
+                          <div className="col-md-8">
                               <div className='detail'>
                               {data.customer.map((customer, index) => {
                                 if(data.customer.length - 1 != index) {
-                                  return customer + ", "
+                                  return <>
+                                   {customer}
+                                   <br/>
+                                  </>
                                 } else {
                                   return customer 
                                 }
