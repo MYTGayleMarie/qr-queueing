@@ -52,7 +52,7 @@ function ReportServicesPackages() {
               requester: userId,
               date_from: filteredData.from_date,
               date_to: filteredData.to_date,
-              type: "service", //filteredData.status
+              type: filteredData.status, //filteredData.status
             },
           }).then(function (response) {
               var servicesData = response.data.data.data;
@@ -61,7 +61,7 @@ function ReportServicesPackages() {
               servicesData.map((data,index) => {
                 var info = {};
                 if(data.lab_test !== null || data.package !==null){
-                  info.id = data.lab_test_id;//to change
+                  info.id = data.lab_test_id ? data.lab_test_id : data.package_id;//to change
                   info.service = data.lab_test ? data.lab_test : data.package;
                   info.total_count = data.total_count;
                 }

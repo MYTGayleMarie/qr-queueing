@@ -34,7 +34,6 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
 
    
     const data = slice.map((row, index) => {
-        console.log(row)
         let rowData = [];
         let i = 0;
         
