@@ -87,6 +87,8 @@ import ViewHistory from './components/View/Registration/Add Old Patient/ViewHist
 import ViewBooking from './components/View/Results Releasing/ViewBooking';
 import ReportServicesPackagesDetails from './components/View/Reports/ReportServicesPackagesDetails';
 import ReportInventory from './components/View/Reports/ReportInventory';
+import ReportItemHistory from './components/View/Reports/ReportItemHistory';
+import ReportItemHistoryDetails from './components/View/Reports/ReportItemHistoryDetails';
 
 
 function App() {
@@ -221,6 +223,8 @@ function App() {
         {/** With date filter */}
          <Route path="/reports-md-details/:name/:lab/:dateFrom/:dateTo" element={token ? <MDReportDetail/> : <Navigate to="/" />} />
         <Route path="/reports-referrals" element={token ? <MdReferral/> : <Navigate to="/" />} />
+        <Route path="/reports-item-history" element={token ? <ReportItemHistory/> : <Navigate to="/" />} />
+        <Route path="/reports-item-history/details/:id/:unit" element={token ? <ReportItemHistoryDetails/> : <Navigate to="/" />} />
         <Route path="/reports-credit" element={token ? <ReportCredits/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/reports-credit/:dateFrom/:dateTo" element={token ? <ReportCredits/> : <Navigate to="/" />} />

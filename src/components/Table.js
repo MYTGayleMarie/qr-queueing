@@ -196,6 +196,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td><button class="action-btn" role="button" onClick={() => link(row.id,row.unit)}>UPDATE</button></td>
             </tr>
         }
+        else if (type === 'items-history' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.splice(2).map((data, index) => 
+            <td key={index} data-heading={data.key} className={"text-left"}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.id,row.unit)}>VIEW</button></td>
+            </tr>
+        }
         else if (type === 'suppliers' && clickable == true) {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
@@ -983,7 +990,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if( type === 'items') {
+    else if( type === 'items' || type === "items-history") {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
