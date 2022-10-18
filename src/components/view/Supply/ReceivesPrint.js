@@ -443,6 +443,8 @@ function ReceivesPrint() {
                     payReceive={payReceive}
                     completedOn={completedOn}
                     statusPaymentPO={isPaid}
+                    withBack={true}
+                    setBack={setRedirectBack}
                 />
                 <ToastContainer/>
 
@@ -568,10 +570,6 @@ function ReceivesPrint() {
                 receivePo={receivePo}
             />
             {/* <PrintReceipt ref={componentRefReceipt}></PrintReceipt> */}
-            </div>
-
-            <div className='d-flex justify-content-end back-btn-container'>
-                <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
             </div>
 
             <Modal show={isprinted} onHide={handlePrintClose} size="md">

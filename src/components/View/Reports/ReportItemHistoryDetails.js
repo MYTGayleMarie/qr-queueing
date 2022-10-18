@@ -40,7 +40,7 @@ function ReportItemHistoryDetails() {
   const {id, unit} = useParams();
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState(false);
-  const [mds, setMds] = useState([]);
+  const [history, setHistory] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [byDate, setByDate] = useState([]);
@@ -51,20 +51,23 @@ function ReportItemHistoryDetails() {
   
 
      React.useEffect(() => {
-       mds.length = 0;
+       history.length = 0;
        axios({
-        method: 'post',
-        url: window.$link + 'reports/referrals',
+        method: 'get',
+        url: window.$link + 'items/history',
         withCredentials: false,
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
           date_from: filteredData.from_date,
           date_to: filteredData.to_date,
+          item_id: id,
+          unit: unit,
           requester: userId,
         },
       }).then(function (response) {
         setIsReady(true)
+        console.log(response)
           var data = response.data.data.data;
           data.map((value, index) => {
             var info = {};
@@ -76,7 +79,7 @@ function ReportItemHistoryDetails() {
             info.md = value.doctors_referal;
             info.qty = value.referrals_count;
             info.amount = value.total_amount;
-            setMds(oldArray => [...oldArray, info]);
+            setHistory(oldArray => [...oldArray, info]);
 
             if(data.length - 1 == index) {
               setPrintReadyFinal(true);
@@ -108,14 +111,17 @@ function ReportItemHistoryDetails() {
             title="QR DIAGNOSTICS REPORT" 
             buttons={buttons} 
             tableName={'ITEM HISTORY DETAILS REPORT'}
-            tableData={mds}
+            tableData={history}
             tableHeaders={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'CURRENT']}
             status={printReadyFinal}
+            withBack={true}
+            setBack={setRedirectBack}
              />
+          
           <Table
             clickable={false}
             type={'no-action'}
-            tableData={mds}
+            tableData={history}
             rowsPerPage={100}
             headingColumns={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'CURRENT']}
             filteredData={filteredData}
@@ -128,12 +134,9 @@ function ReportItemHistoryDetails() {
             isReady={isReady}
           />
 
-          <ToastContainer hideProgressBar={true} />
+        <ToastContainer hideProgressBar={true} />
         </Fragment>
 
-        <div className='d-flex justify-content-end back-btn-container'>
-            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
-        </div>
       </div>
     </div>
   );

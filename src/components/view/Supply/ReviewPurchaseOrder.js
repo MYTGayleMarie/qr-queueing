@@ -499,6 +499,8 @@ function ReviewPurchaseOrder() {
                     completedOn={completedOn}
                     statusPaymentPO={paymentStatus}
                     statusPO={status}
+                    withBack={true}
+                    setBack={setRedirectBack}
                 />
                 <ToastContainer/>
 
@@ -665,11 +667,7 @@ function ReviewPurchaseOrder() {
             />
 
             </div>
-
-            <div className='d-flex justify-content-end back-btn-container'>
-                <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
-            </div>
-
+            
             <Modal show={isprinted} onHide={handlePrintClose} size="md">
             <Modal.Header closeButton className='text-center'>
                <Modal.Title className='w-100 cash-count-header'>PRINT SUCCESSFUL?</Modal.Title>

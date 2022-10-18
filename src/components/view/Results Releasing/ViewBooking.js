@@ -366,8 +366,9 @@ export default function ViewBooking() {
         <Header 
             type="thin"
             title="RESULTS RELEASING MANAGER"
-            />
-     
+            withBack={true}
+            setBack={setRedirectBack}
+        />
      <div >
      <div className='spinner d-flex justify-content-center'>
         
@@ -680,9 +681,6 @@ export default function ViewBooking() {
         <br />
         <br />
         <br />
-        <div className='d-flex justify-content-end back-btn-container'>
-            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
-        </div>
       </Fragment>
   
       </div>

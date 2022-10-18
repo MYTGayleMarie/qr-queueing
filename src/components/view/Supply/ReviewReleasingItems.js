@@ -158,6 +158,8 @@ function ReviewReleasingItems() {
                     title='RELEASE ITEM' 
                     buttons= {['delete-release']}
                     deleteRelease={deleteRelease}
+                    withBack={true}
+                    setBack={setRedirectBack}
                 />
                 <ToastContainer/>
                 <h4 className="form-categories-header italic">RELEASE ITEM DETAILS</h4>
@@ -225,10 +227,6 @@ function ReviewReleasingItems() {
                         <div className="col-sm-4">
                             <div className='detail'><b>{grandTotal}</b></div>
                         </div>
-                    </div>
-
-                    <div className='d-flex justify-content-end back-btn-container'>
-                        <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
                     </div>
                 </div>
             </div>

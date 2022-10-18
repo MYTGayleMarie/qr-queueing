@@ -78,6 +78,8 @@ function ReportServicesPackagesDetails() {
             type="thick" 
             title="SERVICES AND PACKAGES REPORT DETAILS" 
             tableName={'Pending Purchase Order Report'}
+            withBack={true}
+            setBack={setRedirectBack}
              />
 
           <div className='particulars-cont'>
@@ -94,9 +96,6 @@ function ReportServicesPackagesDetails() {
           </div>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
-        <div className='d-flex justify-content-end back-btn-container'>
-            <button className='back-btn' onClick={() => setRedirectBack(true)}>Back</button>
-        </div>
       </div>
     </div>
   );
