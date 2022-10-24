@@ -23,6 +23,8 @@ var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 
+
+
 export default function MedTech() {
 
   document.body.style = 'background: white;';
@@ -37,6 +39,7 @@ export default function MedTech() {
   const [redirectBooking, setRedirectBooking] = useState(false);
   const [role, setRole] = useState('');
   const [bookingId, setBookingId] = useState("");
+  const [isReady, setIsReady] = useState(false)
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -57,21 +60,42 @@ export default function MedTech() {
       },
     })
       .then( function (response) {
-        response.data.bookings.map((booking, index) => {
-              var bookingTime = new Date(booking.added_on);
-              var formatBookingTime = bookingTime.toDateString().split(" ");
-              var bookingDetails = {};
+        response.data.bookings.map( async (booking, index) => {
+          await axios({
+            method: 'get',
+            url: window.$link + 'bookings/medtech',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+              date_from: filteredData.from_date,
+              date_to: filteredData.to_date,
+            },
+          }).then(function (customer) {
+            var bookingTime = new Date(booking.added_on);
+            var formatBookingTime = bookingTime.toDateString().split(" ");
+            var bookingDetails = {};
 
-              bookingDetails.withDiscount = booking.discount_detail;
-              bookingDetails.id = booking.id;
-              bookingDetails.name = booking.customer;
-              bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.paymentStatus = booking.payment_status;
-              bookingDetails.uploadStatus = booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
-              setPatientData(oldArray => [...oldArray, bookingDetails]);
-            })
-        });
-  }, [render]);
+            bookingDetails.withDiscount = booking.discount_detail;
+            bookingDetails.id = booking.id;
+            bookingDetails.name = booking.customer;
+            bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
+            bookingDetails.paymentStatus = booking.payment_status;
+            bookingDetails.uploadStatus = booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
+            setPatientData(oldArray => [...oldArray, bookingDetails]);
+          })
+          .then (function (error) {
+            console.log(error);
+            setIsReady(true)
+          });
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+      setIsReady(false)
+    });
+}, [render]);
 
 
   
@@ -110,7 +134,7 @@ export default function MedTech() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
-          <Header type="thick" title="RESULTS RELEASING MANAGER"/>
+          <Header type="thick" title="RESULTS RELEASING MANAGER" buttons={buttons} tableData={patientData}/>
 
           {/* SEARCH BAR */}
           <div className="row">
@@ -140,6 +164,8 @@ export default function MedTech() {
             link={viewBooking}
             role={role}
             userId={userId}
+            useLoader={true}
+            isReady={isReady}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>
