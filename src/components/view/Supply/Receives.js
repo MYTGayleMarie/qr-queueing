@@ -36,6 +36,7 @@ function Receives() {
 
     //redirect
     const [redirect, setRedirect] = useState(false); 
+    const [isReady, setIsReady] = useState(false)
 
     React.useEffect(() => {
         poData.length = 0;
@@ -106,8 +107,12 @@ function Receives() {
                   })
             })
             
-        }).catch(function (error) {
+        }).then (function (error) {
             console.log(error);
+            setIsReady(true)
+          }).catch(function (error) {
+            console.log(error);
+            setIsReady(false)
         });
     },[render]);
 
@@ -147,6 +152,8 @@ function Receives() {
                 link={View}
                 setRender={setRender}
                 render={render}
+                useLoader={true}
+                isReady={isReady}
             />
             </Fragment>
         </div>

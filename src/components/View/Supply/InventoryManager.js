@@ -34,6 +34,7 @@ function InventoryManager() {
     });
     const [inventoryData, setInventoryData] = useState([]);
     const [redirectAdd, setRedirectAdd] = useState(false);
+    const [isReady, setIsReady] = useState(false)
 
     function AddInventory() {
     setRedirectAdd(true);
@@ -77,8 +78,12 @@ function InventoryManager() {
                     setInventoryData(oldArray => [...oldArray, inventory_data])
                })
             })            
-        }).catch(function (error) {
+        }).then (function (error) {
             console.log(error);
+            setIsReady(true)
+          }).catch(function (error) {
+            console.log(error);
+            setIsReady(false)
         });
     },[filteredData]);
 
@@ -122,6 +127,8 @@ function InventoryManager() {
                 filteredData={filteredData}
                 setFilter={setFilter}
                 link={approve}
+                useLoader={true}
+                isReady={isReady}
             />
             </Fragment>
         </div>

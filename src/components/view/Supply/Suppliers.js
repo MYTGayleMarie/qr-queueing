@@ -24,6 +24,7 @@ function Suppliers() {
     const [render, setRender] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [supplierData, setSupplierData] = useState([]);
+    const [isReady, setIsReady] = useState(false)
 
 
     function SupplierDetails(supplierId) {
@@ -59,8 +60,12 @@ function Suppliers() {
             });
          
             
-        }).catch(function(error) {
+        })          .then (function (error) {
             console.log(error);
+            setIsReady(true)
+          }).catch(function(error) {
+            console.log(error);
+            setIsReady(false)
         });
     }, []);
 
@@ -90,6 +95,8 @@ function Suppliers() {
                 tableData={supplierData}
                 headingColumns={['SUPPLIER ID', 'COMPANY NAME', 'ADDRESS', 'PHONE', 'EMAIL', 'TIN', 'REMARKS', 'ACTION']}
                 link={SupplierDetails}
+                useLoader={true}
+                isReady={isReady}
             />
             </Fragment>
         </div>

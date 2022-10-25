@@ -1,13 +1,13 @@
 .spinner {
     position:fixed;
-    left:370%;
+    left:350%;
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners {
     position:fixed;
-    left:287%;
+    left:950%;
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
@@ -22,6 +22,34 @@
 .spins {
     position:fixed;
     left:1460%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinning {
+    position:fixed;
+    left:560%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinned {
+    position:fixed;
+    left:400%;
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spiin {
+    position:fixed;
+    left:300%
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spiins {
+    position:fixed;
+    left:450%
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */

@@ -26,7 +26,7 @@ export default function Services(){
 
   const [category, setCategory] = useState('lab') // state for the category filter
   const [render, setRender] = useState([]) //changes state when filter button is clicked
-
+  const [isReady, setIsReady] = useState(false)
 
 	/******** START Fetching Data from API ***********/
 
@@ -72,12 +72,19 @@ export default function Services(){
             setAllServices(oldArray=>[...oldArray, labDetails]) //append each lab test detail to all services
           }
 
-          )
-          .catch((error)=>{console.log(error)})
+          ).then (function (error) {
+            console.log(error);
+            setIsReady(true)
+          })
+          .catch((error)=>{
+            console.log(error)
+            setIsReady(false)
+          })
           
         })
       }).catch((error)=>{
         console.log(error)
+        setIsReady(false)
       })
     } 
     
@@ -124,6 +131,7 @@ export default function Services(){
       })
       .catch((error)=>{
         console.log(error)
+        setIsReady(false)
       })
     }
   },[render])
@@ -166,6 +174,8 @@ export default function Services(){
             setCategory = {setCategory}
             setRender = {setRender}
             render = {render}
+            useLoader={true}
+            isReady={isReady}
 					/>
     </Fragment>
 

@@ -4,6 +4,8 @@ import { getToken, getUser } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { Navigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import useTable from '../../../utilities/Pagination';
+import TableFooter from '../../TableFooter';
 import 'react-toastify/dist/ReactToastify.css';
 
 //css
@@ -34,6 +36,7 @@ function ReleaseItems() {
     });
     const [redirect, setRedirect] = useState(false);
     const [render, setRender] = useState([]);
+    const [isReady, setIsReady] = useState(false)
 
     function review(releaseId) {
         id = releaseId;
@@ -85,13 +88,16 @@ function ReleaseItems() {
                         info.remarks = data.remarks;
                         console.log(data);
                         setReleaseData(oldArray => [...oldArray, info]);
-                  }).then(function (error) {
+                  })
+                  .then(function (error) {
                       console.log(error);
+                      setIsReady(true)
                   })
             });
           })
           .catch(function (error) {
             console.log(error);
+            setIsReady(false)
           });
       }, [render]);
 
@@ -122,6 +128,8 @@ function ReleaseItems() {
                 render={render}
                 setFilter={setFilter}
                 link={review}
+                useLoader={true}
+                isReady={isReady}
             />
             </Fragment>
         </div>

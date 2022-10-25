@@ -8,7 +8,10 @@ import TableLoader from "./TableLoader";
 import TableLoader1 from "./TableLoader1";
 import TableLoader2 from "./TableLoader2";
 import TableLoader3 from "./TableLoader3";
-
+import TableLoader4 from "./TableLoader4";
+import TableLoader5 from "./TableLoader5";
+import TableLoader6 from "./TableLoader6";
+import TableLoader7 from "./TableLoader7";
 
 //css 
 import './Table.scss';
@@ -467,7 +470,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader4 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -570,7 +574,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader5 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -639,7 +644,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader5 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 
@@ -874,7 +880,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader7 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -984,7 +991,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1006,7 +1014,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ?
+                    <TableLoader6 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1033,7 +1042,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader1 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1056,7 +1066,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader3 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1107,7 +1118,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader3 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1130,7 +1142,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader1 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
