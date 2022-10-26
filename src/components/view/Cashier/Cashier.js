@@ -20,6 +20,8 @@ const userToken = getToken();
 const userId = getUser();
 const presentDate = new Date();
 
+
+
 const filterData = {
   from_date: presentDate,
   to_date: presentDate,
@@ -42,7 +44,11 @@ const cashCountData = {
   onethousandPesos: 0,
 };
 
+
+
 var id = '';
+
+
 
 function Cashier() {
   //Cash Count
@@ -59,10 +65,16 @@ function Cashier() {
   const [bookingDetails, setBookingDetails] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [finalPatientData, setFinalPatientData] = useState([]);
+  
+  //const [render, setRender] = useState([]);
+ const [isReady, setIsReady] = useState(false);
+
 
   function addPayment(customerId) {
     id = customerId;
     setRedirect(true);
+
+  
   }
 
   React.useEffect(() => {
@@ -100,6 +112,7 @@ function Cashier() {
       })
       .catch(function (error) {
         console.log(error);
+        setIsReady(false)
       });
   }, []);
 
@@ -144,6 +157,7 @@ function Cashier() {
         })
         .catch(function (error) {
           console.log(error);
+          setIsReady(false)
         });
     });
   },[bookingDetails]);
@@ -208,6 +222,7 @@ function Cashier() {
             return false;
     }).then(function (error) {
         console.log(error);
+        setIsReady(true)
     });
   }
 
@@ -245,6 +260,7 @@ function Cashier() {
         })
         .catch(function (error) {
           toast.error('Oops! Something wrong with the server');
+
         });
     } else {
       toast.warning('Cash count does not match with cash sales');
@@ -294,7 +310,10 @@ function Cashier() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
+            //setRender={setRender}
             link={addPayment}
+            useLoader={true}
+            isReady={isReady}
           />
           <ToastContainer hideProgressBar={true} />
         </Fragment>

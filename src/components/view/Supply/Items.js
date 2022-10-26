@@ -59,6 +59,7 @@ function Items() {
 
     //redirect
     const [redirect, setRedirect] = useState(false);
+    const [isReady, setIsReady] = useState(false)
 
  
     // I use useeffect para no need to call api request everytime naa isearch na items
@@ -119,8 +120,13 @@ function Items() {
 
             setItems(oldArray => [...oldArray, item]);
         })
-      })
-      .catch((err)=>{console.log(err)})
+      }).then (function (error) {
+        console.log(error);
+        setIsReady(true)
+      }).catch(function(error) {
+        console.log(error);
+        setIsReady(false)
+    });
     },[])
 
 
@@ -172,6 +178,8 @@ function Items() {
               tableData={displayItems}
               headingColumns={['ITEM NAME','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
               link={update}
+              useLoader={true}
+              isReady={isReady}
             />
             
             <br />

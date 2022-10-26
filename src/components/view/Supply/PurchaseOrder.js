@@ -32,6 +32,7 @@ function PurchaseOrder() {
     });
     const [poData, setPoData] = useState([]);
     const [render,setRender] = useState([])
+    const [isReady, setIsReady] = useState(false)
 
     //redirect
     const [redirect, setRedirect] = useState(false);
@@ -81,11 +82,16 @@ function PurchaseOrder() {
                   setPoData(oldArray => [...oldArray, posData]);
                 }).then(function (error) {
                     console.log(error);
+                    setIsReady(true)
                 });
             });
             
-        }).catch(function (error) {
+        }).then (function (error) {
             console.log(error);
+            setIsReady(true)
+          }).catch(function (error) {
+            console.log(error);
+            setIsReady(false)
         });
     },[render]);
 
@@ -124,6 +130,8 @@ function PurchaseOrder() {
                 link={approve}
                 setRender={setRender}
                 render={render}
+                useLoader={true}
+                isReady={isReady}
             />
             </Fragment>
         </div>

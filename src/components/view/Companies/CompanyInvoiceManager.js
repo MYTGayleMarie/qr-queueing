@@ -41,6 +41,7 @@ function CompanyInvoiceManager() {
   const [toAddPayment, setToAddPayment] = useState(false);
   const [status, setStatus] = useState('UNPAID');
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false)
 
   React.useEffect(() => {
     finalCompanyData.length = 0;
@@ -130,14 +131,20 @@ function CompanyInvoiceManager() {
                 if(finalCompanyData){
                     setPrintReadyFinal(true)
                 }
+
                   
-                }).catch((error)=>{console.log(error)})
+                })                .then (function (error) {
+                    console.log(error);
+                    setIsReady(true)
+                  }).catch((error)=>{console.log(error)})
             }).catch(function (error) {
                 console.log(error);
+                setIsReady(false)
             });
         });
     }).catch(function (error) {
         console.log(error);
+        setIsReady(false)
     });
   }, [render]);
 
@@ -176,6 +183,8 @@ function CompanyInvoiceManager() {
                     givenClass={'company-mobile'}
                     link={addPayment}
                     setStatus={setStatus}
+                    useLoader={true}
+                    isReady={isReady}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

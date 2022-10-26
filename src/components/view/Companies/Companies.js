@@ -40,6 +40,7 @@ function Companies() {
 
   //Redirect
   const [redirect, setRedirect] = useState(false);
+  const [isReady, setIsReady] = useState(false)
   
   React.useEffect(() => {
     finalCompanyData.length = 0;
@@ -73,6 +74,7 @@ function Companies() {
         });
     }).then(function (error) {
         console.log(error);
+        setIsReady(true)
     })
   }, []);
 
@@ -108,6 +110,8 @@ function Companies() {
                     render={setRender}
                     link={addDiscount}
                     givenClass={'company-mobile'}
+                    useLoader={true}
+                    isReady={isReady}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

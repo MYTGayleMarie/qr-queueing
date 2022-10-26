@@ -36,6 +36,7 @@ function Discount() {
   const [render, setRender] = useState([]);
   const [discount, setDiscount] = useState([]);
   const [redirect, setRedirect] = useState("");
+  const [isReady, setIsReady] = useState(false)
   
   React.useEffect(() => {
     discount.length = 0;
@@ -66,6 +67,7 @@ function Discount() {
           });
       }).then(function (error) {
           console.log(error);
+          setIsReady(true)
       })
     } else {
         axios({
@@ -93,6 +95,7 @@ function Discount() {
           });
       }).then(function (error) {
           console.log(error);
+          setIsReady(true)
       })
     }
   }, [render]);
@@ -148,6 +151,8 @@ function Discount() {
                     link={createInvoice}
                     endPromo={endPromo}
                     setStatus={setStatus}
+                    useLoader={true}
+                    isReady={isReady}
                     
                 />
                 <ToastContainer hideProgressBar={true} />

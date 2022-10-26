@@ -35,6 +35,7 @@ function CompanyDiscounts() {
   const [render, setRender] = useState([]);
   const [discount, setDiscount] = useState([]);
   const [redirect, setRedirect] = useState("");
+  const [isReady, setIsReady] = useState(false)
   
   React.useEffect(() => {
     discount.length = 0;
@@ -77,6 +78,7 @@ function CompanyDiscounts() {
         });
     }).then(function (error) {
         console.log(error);
+        setIsReady(true)
     })
   }, []);
 
@@ -112,6 +114,8 @@ function CompanyDiscounts() {
                     render={setRender}
                     givenClass={'company-mobile'}
                     link={createInvoice}
+                    useLoader={true}
+                    isReady={isReady}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>
