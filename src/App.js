@@ -208,7 +208,7 @@ function App() {
         <Route path="/reports-transaction" element={token ? <ReportTransaction /> : <Navigate to="/" />} />
         <Route path="/reports-services-packages" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
         <Route path="/reports-services-packages/:dateFrom/:dateTo" element={token ? <ReportServicesPackages /> : <Navigate to="/" />} />
-        <Route path="/reports-services-packages/details/:id/:dateFrom/:dateTo" element={token ? <ReportServicesPackagesDetails /> : <Navigate to="/" />} />
+        <Route path="/reports-services-packages/details/:id/:dateFrom/:dateTo/:type" element={token ? <ReportServicesPackagesDetails /> : <Navigate to="/" />} />
         <Route path="/reports-home-services" element={token ? <ReportHomeServices /> : <Navigate to="/" />} />
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
         <Route path="/reports-inventory" element={token ? <ReportInventory/> : <Navigate to="/" />} />

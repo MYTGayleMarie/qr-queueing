@@ -20,7 +20,7 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 function ReportServicesPackagesDetails() {
   
   document.body.style = 'background: white;';
-  const {id, dateFrom, dateTo} = useParams();
+  const {id, dateFrom, dateTo, type} = useParams();
   const [redirectBack, setRedirectBack] = useState(false);
   const [render, setRender] = useState([]);
   const [patients, setPatients] = useState([]);
@@ -37,6 +37,7 @@ function ReportServicesPackagesDetails() {
           date_from: dateFrom,
           date_to: dateTo,
           requester: userId,
+          type: type,
       }
     }).then(function (response) {
       console.log(response)

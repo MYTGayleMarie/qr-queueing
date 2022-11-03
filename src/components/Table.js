@@ -148,7 +148,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.slice(1).map((data, index) => 
             <td key={index} data-heading={data.key} className={index == 5 ? "text-right" : data.val}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.id)}>VIEW DETAILS</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.id, row.type)}>VIEW DETAILS</button></td>
             </tr>
         }
         else if (type === 'companies-discount' && clickable == true) {

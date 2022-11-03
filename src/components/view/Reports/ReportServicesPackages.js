@@ -21,6 +21,7 @@ const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
 var id = "";
+var type = "";
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 
@@ -61,7 +62,8 @@ function ReportServicesPackages() {
               servicesData.map((data,index) => {
                 var info = {};
                 if(data.lab_test !== null || data.package !==null){
-                  info.id = data.lab_test_id ? data.lab_test_id : data.package_id;//to change
+                  info.id = data.lab_test_id ? data.lab_test_id : data.package_id;
+                  info.type = data.lab_test_id ? "lab_test": "package";
                   info.service = data.lab_test ? data.lab_test : data.package;
                   info.total_count = data.total_count;
                 }
@@ -75,15 +77,16 @@ function ReportServicesPackages() {
           });
     },[render]);
     
-  function viewDetails(labTestId) {
+  function viewDetails(labTestId, dataType) {
     id = labTestId
+    type = dataType
     setRedirectView(true);
   }
 
   function filter() {}
 
   if(redirectView == true) {
-    var link =  "/reports-services-packages/details/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+    var link =  "/reports-services-packages/details/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date + "/" + type;
     return (
         <Navigate to ={link}/>
     )
