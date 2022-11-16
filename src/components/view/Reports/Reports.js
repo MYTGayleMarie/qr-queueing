@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import { getToken, getUser, getRoleId } from '../../../utilities/Common';
+import * as XLSX from "xlsx";
 
 //css
 import './Reports.css';
@@ -369,6 +370,75 @@ function Reports() {
     .catch((error)=>{console.log(error)})
   },[])
 
+  function generateInventory(){
+    axios({
+      method: 'post',
+      url: window.$link + 'reports/inventory',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+      },
+    })
+    .then((res)=>{
+      var monthly_inventory = res.data.data.inventory_per_month
+      console.log(res.data.data.inventory_per_month)
+      var monthly_inventory_price = res.data.data.inventory_price_per_month
+
+      monthly_inventory.map(data=>{
+        data.price = parseFloat(data.price).toFixed(2)
+        data.Jan = parseInt(data.Jan)
+        data.Feb = parseInt(data.Feb)
+        data.Mar = parseInt(data.Mar)
+        data.Apr = parseInt(data.Apr)
+        data.May = parseInt(data.May)
+        data.Jun = parseInt(data.Jun)
+        data.Jul = parseInt(data.Jul)
+        data.Aug = parseInt(data.Aug)
+        data.Sept = parseInt(data.Sept)
+        data.Oct = parseInt(data.Oct)
+        data.Nov = parseInt(data.Nov)
+        data.Dec = parseInt(data.Dec)
+      })
+      monthly_inventory_price.map(data=>{
+        data.price = parseFloat(data.price).toFixed(2)
+        data.Jan = parseFloat(data.Jan).toFixed(2)
+        data.Feb = parseFloat(data.Feb).toFixed(2)
+        data.Mar = parseFloat(data.Mar).toFixed(2)
+        data.Apr = parseFloat(data.Apr).toFixed(2)
+        data.May = parseFloat(data.May).toFixed(2)
+        data.Jun = parseFloat(data.Jun).toFixed(2)
+        data.Jul = parseFloat(data.Jul).toFixed(2)
+        data.Aug = parseFloat(data.Aug).toFixed(2)
+        data.Sept = parseFloat(data.Sept).toFixed(2)
+        data.Oct = parseFloat(data.Oct).toFixed(2)
+        data.Nov = parseFloat(data.Nov).toFixed(2)
+        data.Dec = parseFloat(data.Dec).toFixed(2)
+      })
+      
+      const worksheet = XLSX.utils.json_to_sheet(monthly_inventory)
+      const worksheet2 = XLSX.utils.json_to_sheet(monthly_inventory_price)
+      
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["Name", "Unit", "Price", 
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A1" });
+      XLSX.utils.sheet_add_aoa(worksheet2, 
+        [["Name", "Unit", "Price", 
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A1" });
+      
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Item Inventory");
+      XLSX.utils.book_append_sheet(workbook, worksheet2, "Item Cost Inventory");
+      XLSX.writeFile(workbook, "QRDiagnosticsMonthlyItemInventoryReport-"+new Date().toLocaleDateString()+".xlsx");
+
+      // 
+    })
+    .catch((err)=>{console.log(err)})
+  }
+
     return (
         <div>
         <div>
@@ -532,6 +602,18 @@ function Reports() {
                         totalData={"ITEM"}
                         todayData={""}
                         link={"/reports-item-history"}
+                        title=''
+                        color='maroon'
+                        disable={"today"}
+                    /> }
+              </div>
+               <div className="col-sm-4">
+               {role != 3 && <Card 
+                        totalData={"ITEM INVENTORY"}
+                        todayData={""}
+                        excelReport={true}
+                        handler={generateInventory}
+                        link={""}
                         title=''
                         color='maroon'
                         disable={"today"}
