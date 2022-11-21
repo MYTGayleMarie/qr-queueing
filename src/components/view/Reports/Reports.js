@@ -416,20 +416,79 @@ function Reports() {
         data.Nov = parseFloat(data.Nov).toFixed(2)
         data.Dec = parseFloat(data.Dec).toFixed(2)
       })
+       const XLSX = require('sheetjs-style');
+      const worksheet = XLSX.utils.json_to_sheet([{},...monthly_inventory])
+      const worksheet2 = XLSX.utils.json_to_sheet([{},...monthly_inventory_price])
       
-      const worksheet = XLSX.utils.json_to_sheet(monthly_inventory)
-      const worksheet2 = XLSX.utils.json_to_sheet(monthly_inventory_price)
-      
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["QR DIAGNOSTICS","", "", 
+        "", "", "", "", "", "",
+        "", "", "", "", "", ""]], { origin: "A1" });
       XLSX.utils.sheet_add_aoa(worksheet, 
         [["Name", "Unit", "Price", 
         "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A1" });
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A2" });
+      
+      XLSX.utils.sheet_add_aoa(worksheet2, 
+        [["QR DIAGNOSTICS","", "", 
+        "", "", "", "", "", "",
+        "", "", "", "", "", ""]], { origin: "A1" });
       XLSX.utils.sheet_add_aoa(worksheet2, 
         [["Name", "Unit", "Price", 
         "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A1" });
-      
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A2" });
+
+      const cells = ['A1','A2','B2','C2','D2','E2','F2','G2','H2','I2','J2','K2','L2','M2','N2','O2']
+     
       const workbook = XLSX.utils.book_new();
+      for(var i = 0; i<cells.length;i++){
+       if(cells[i] === 'A1'){
+        worksheet[cells[i]].s = {
+          font: {
+            sz:24,
+            shadow:true,
+            bold: true,
+            color: {
+              rgb: "BFBC4B"
+            }
+          },
+        };
+        worksheet2[cells[i]].s = {
+          font: {
+            sz:24,
+            shadow:true,
+            bold: true,
+            color: {
+              rgb: "BFBC4B"
+            }
+          },
+        };
+       }
+       else{
+        worksheet[cells[i]].s = {
+          font: {
+            bold: true,
+            color: {
+              rgb: "419EA3"
+            }
+          },
+        };
+        worksheet2[cells[i]].s = {
+          font: {
+            bold: true,
+            color: {
+              rgb: "419EA3"
+            }
+          },
+        };
+       }
+      }
+
+      var wscols = [
+        { width: 50 },  // first column
+      ];
+      worksheet["!cols"] = wscols;
+      worksheet2["!cols"] = wscols;
       XLSX.utils.book_append_sheet(workbook, worksheet, "Item Inventory");
       XLSX.utils.book_append_sheet(workbook, worksheet2, "Item Cost Inventory");
       XLSX.writeFile(workbook, "QRDiagnosticsMonthlyItemInventoryReport-"+new Date().toLocaleDateString()+".xlsx");
