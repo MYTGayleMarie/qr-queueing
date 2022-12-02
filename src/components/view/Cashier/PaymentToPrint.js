@@ -608,8 +608,12 @@ export class PaymentToPrint extends React.PureComponent {
                     </tr>             
                     <tr>
                       <td></td>
-                      <td className="slip-label bold-slip-span">Total:</td>
-                      <td className="slip-label bold-slip-span">{this.props.grandTotal}</td>
+                      {this.props.grandTotal > 0 && (
+                        <>
+                        <td className="slip-label bold-slip-span">Total:</td>
+                        <td className="slip-label bold-slip-span">{this.props.grandTotal}</td>
+                        </>
+                      )}
                     </tr>
                   </tbody>
                 </table> 
