@@ -41,14 +41,16 @@
     "react-spinners": "^0.13.3",
     "react-to-print": "^2.14.3",
     "react-toastify": "^8.1.0",
+    "sheetjs-style": "^0.15.8",
     "stream-browserify": "^3.0.0",
     "styled": "^1.0.0",
     "styled-components": "^5.3.5",
     "util": "^0.12.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.0/xlsx-0.19.0.tgz"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
