@@ -678,6 +678,18 @@ function Reports() {
                         disable={"today"}
                     /> }
               </div>
+               <div className="row">
+              <div className="col-sm-4">
+                  {role != 3 && <Card 
+                        totalData={"EXPENSE"}
+                        todayData={""}
+                        link={"/reports-expense"}
+                        title=''
+                        color='maroon'
+                        disable={"today"}
+                    /> }
+              </div>
+              </div>
             </div>
             </Fragment>
         </div>
