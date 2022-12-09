@@ -66,7 +66,7 @@ function ReportExpense() {
                         info.unit = data.unit;
                         setReport(oldArray=>[...oldArray, info]);
 
-                        if(response.data.inventory_counts.length - 2 == index1) {
+                        if(response?.data?.data?.records.length - 2 == index1) {
                             setPrintReadyFinal(true);
                         }
                 })
