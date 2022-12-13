@@ -57,8 +57,9 @@ function ReportExpense() {
               requester: userId,
             },
           }).then(function (response) {
-            console.log(response)
-                response?.data?.data?.records.map((data, index1) => { 
+                
+              if(response?.data?.data?.records) {
+                  response?.data?.data?.records?.map((data, index1) => { 
                         var info = {};
                         info.total_qty = data.total_qty
                         info.item_id = data.item_id;
@@ -70,7 +71,13 @@ function ReportExpense() {
                             setPrintReadyFinal(true);
                         }
                 })
+              } else {
+                setReport([])
+              }
+                  
 
+          }).catch(function (err) {
+            setReport([])
           })
           //sentprintreadyfinal
     },[render]);
@@ -120,6 +127,7 @@ function ReportExpense() {
             render={render}
             givenClass={"register-mobile"}
             link={view}
+            useLoader={true}
           />
 
           <ToastContainer hideProgressBar={true} />

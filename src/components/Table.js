@@ -681,7 +681,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
+                    {tableData.length == 0 ? 
                     <TableLoader5 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
