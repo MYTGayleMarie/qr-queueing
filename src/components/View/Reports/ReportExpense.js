@@ -16,7 +16,7 @@ import Searchbar from '../../Searchbar';
 import Table from '../../Table.js';
 import { ifError } from 'assert';
 
-const buttons = ['export-excel', 'export-pdf'];
+const buttons = ['export-excel', 'export-pdf', 'export-breakdown'];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
@@ -38,6 +38,7 @@ function ReportExpense() {
   const [pendingPOs, setPendingPOs] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [report, setReport] = useState([]);
+  const [breakdown, setBreakdown] = useState([])
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -79,7 +80,29 @@ function ReportExpense() {
           }).catch(function (err) {
             setReport([])
           })
-          //sentprintreadyfinal
+          
+           axios({
+            method: 'get',
+            url: window.$link + 'reports/monthlyExpense',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+            },
+          }).then(function (response) {
+            console.log(response)
+            if(response?.data?.data?.records) {
+                let result = response?.data?.data?.records;
+                result.forEach(object => {
+                  delete object['item_id'];
+                  delete object['name'];
+                })
+                setBreakdown(result)
+            }
+          }).catch(function (err) {
+            setBreakdown([])
+          })
     },[render]);
 
     function view(inventoryId) {
@@ -111,6 +134,7 @@ function ReportExpense() {
             buttons={buttons} 
             tableName={'Expense Report'}
             tableData={report}
+            tableDataBreakdown={breakdown}
             tableHeaders={['TOTAL QTY', 'ITEM ID', 'ITEM', 'UNIT']}
             status={printReadyFinal}
              />
