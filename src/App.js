@@ -90,6 +90,7 @@ import ReportInventory from './components/View/Reports/ReportInventory';
 import ReportItemHistory from './components/View/Reports/ReportItemHistory';
 import ReportItemHistoryDetails from './components/View/Reports/ReportItemHistoryDetails';
 import ReportExpense from './components/View/Reports/ReportExpense';
+import ReportAnnual from './components/View/Reports/ReportAnnual';
 
 
 function App() {
@@ -214,6 +215,7 @@ function App() {
         <Route path="/reports-clinical-services" element={token ? <ReportClinicalServices/> : <Navigate to="/" />} />
         <Route path="/reports-inventory" element={token ? <ReportInventory/> : <Navigate to="/" />} />
         <Route path="/reports-expense" element={token ? <ReportExpense/> : <Navigate to="/" />} />
+        <Route path="/reports-annual" element={token ? <ReportAnnual/> : <Navigate to="/" />} />
         <Route path="/reports-pending-po" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/reports-pending-po/:dateFrom/:dateTo" element={token ? <ReportPendingPO/> : <Navigate to="/" />} />

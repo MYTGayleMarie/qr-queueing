@@ -116,6 +116,12 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
               <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             </tr>
         }
+        else if (type === 'report-annual') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+              <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            </tr>
+        }
         else if (type === "services" ){
             return <tr key={row.id}>
                 {rowData.map((data, index) => 
@@ -669,6 +675,42 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <div className="col-sm-12 d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {tableData.length == 0 ? 
+                    <TableLoader5 tableHeaders={headingColumns}/> : data}
+                    </tbody>
+                </table>
+                
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === "report-annual") {
+         const {year} = filteredData;
+         var min = 2022
+         var max = new Date().getFullYear();
+         const yearRange = [...Array(max - min + 1).keys()].map(x => x + min);
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                <div className="col-sm-12 d-flex justify-content-end">
+                    <select value={year} onChange={setFilter}>
+                        {yearRange.map((data) => {
+                            return <option value={data}>{data}</option>
+                        })}
+                    </select>
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
                 </div>
