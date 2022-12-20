@@ -60,7 +60,6 @@ function ReportAnnual() {
                 let total_no_of_patients = {
                   strategy: "",
                   overall_census: "Total No. of Patients",
-                  target_benchmark: "Info",
                   jan: data?.total_no_of_patients?.Jan,
                   feb: data?.total_no_of_patients?.Feb,
                   mar: data?.total_no_of_patients?.Mar,
@@ -73,12 +72,19 @@ function ReportAnnual() {
                   oct: data?.total_no_of_patients?.Oct,
                   nov: data?.total_no_of_patients?.Nov,
                   dec: data?.total_no_of_patients?.Dec,
+                  q1: (parseFloat(data?.total_no_of_patients?.Jan ?? 0) + parseFloat(data?.total_no_of_patients?.Feb ?? 0) + parseFloat(data?.total_no_of_patients?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.total_no_of_patients?.Apr ?? 0) + parseFloat(data?.total_no_of_patients?.May ?? 0) + parseFloat(data?.total_no_of_patients?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.total_no_of_patients?.Jul ?? 0) + parseFloat(data?.total_no_of_patients?.Aug ?? 0) + parseFloat(data?.total_no_of_patients?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.total_no_of_patients?.Oct ?? 0) + parseFloat(data?.total_no_of_patients?.Nov ?? 0) + parseFloat(data?.total_no_of_patients?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.total_no_of_patients?.Jan ?? 0) + parseFloat(data?.total_no_of_patients?.Feb ?? 0) + parseFloat(data?.total_no_of_patients?.Mar ?? 0) +
+                         parseFloat(data?.total_no_of_patients?.Apr ?? 0) + parseFloat(data?.total_no_of_patients?.May ?? 0) + parseFloat(data?.total_no_of_patients?.Jun ?? 0) + 
+                         parseFloat(data?.total_no_of_patients?.Jul ?? 0) + parseFloat(data?.total_no_of_patients?.Aug ?? 0) + parseFloat(data?.total_no_of_patients?.Sep ?? 0) + 
+                         parseFloat(data?.total_no_of_patients?.Oct ?? 0) + parseFloat(data?.total_no_of_patients?.Nov ?? 0) + parseFloat(data?.total_no_of_patients?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(total_no_of_patients)
                 let total_no_of_rendered_services = {
                   strategy: "",
                   overall_census: "Total No. of Services Rendered",
-                  target_benchmark: "Info",
                   jan: data?.total_no_of_rendered_services?.Jan,
                   feb: data?.total_no_of_rendered_services?.Feb,
                   mar: data?.total_no_of_rendered_services?.Mar,
@@ -91,12 +97,19 @@ function ReportAnnual() {
                   oct: data?.total_no_of_rendered_services?.Oct,
                   nov: data?.total_no_of_rendered_services?.Nov,
                   dec: data?.total_no_of_rendered_services?.Dec,
+                  q1: (parseFloat(data?.total_no_of_rendered_services?.Jan ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Feb ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.total_no_of_rendered_services?.Apr ?? 0) + parseFloat(data?.total_no_of_rendered_services?.May ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.total_no_of_rendered_services?.Jul ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Aug ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.total_no_of_rendered_services?.Oct ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Nov ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.total_no_of_rendered_services?.Jan ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Feb ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Mar ?? 0) +
+                         parseFloat(data?.total_no_of_rendered_services?.Apr ?? 0) + parseFloat(data?.total_no_of_rendered_services?.May ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Jun ?? 0) + 
+                         parseFloat(data?.total_no_of_rendered_services?.Jul ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Aug ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Sep ?? 0) + 
+                         parseFloat(data?.total_no_of_rendered_services?.Oct ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Nov ?? 0) + parseFloat(data?.total_no_of_rendered_services?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(total_no_of_rendered_services)
                 let echo = {
                   strategy: "Department of Statistics",
                   overall_census: "2D - Echo",
-                  target_benchmark: "Info",
                   jan: data?.echo?.Jan,
                   feb: data?.echo?.Feb,
                   mar: data?.echo?.Mar,
@@ -109,12 +122,19 @@ function ReportAnnual() {
                   oct: data?.echo?.Oct,
                   nov: data?.echo?.Nov,
                   dec: data?.echo?.Dec,
+                  q1: (parseFloat(data?.echo?.Jan ?? 0 ) + parseFloat(data?.echo?.Feb ?? 0) + parseFloat(data?.echo?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.echo?.Apr ?? 0) + parseFloat(data?.echo?.May ?? 0) + parseFloat(data?.echo?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.echo?.Jul ?? 0) + parseFloat(data?.echo?.Aug ?? 0) + parseFloat(data?.echo?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.echo?.Oct ?? 0) + parseFloat(data?.echo?.Nov ?? 0) + parseFloat(data?.echo?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.echo?.Jan ?? 0) + parseFloat(data?.echo?.Feb ?? 0) + parseFloat(data?.echo?.Mar ?? 0) +
+                         parseFloat(data?.echo?.Apr ?? 0) + parseFloat(data?.echo?.May ?? 0) + parseFloat(data?.echo?.Jun ?? 0) + 
+                         parseFloat(data?.echo?.Jul ?? 0) + parseFloat(data?.echo?.Aug ?? 0) + parseFloat(data?.echo?.Sep ?? 0) + 
+                         parseFloat(data?.echo?.Oct ?? 0) + parseFloat(data?.echo?.Nov ?? 0) + parseFloat(data?.echo?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(echo)
                 let covid = {
                   strategy: "Department of Statistics",
                   overall_census: "Covid Swab",
-                  target_benchmark: "Info",
                   jan: data?.covid?.Jan,
                   feb: data?.covid?.Feb,
                   mar: data?.covid?.Mar,
@@ -127,12 +147,19 @@ function ReportAnnual() {
                   oct: data?.covid?.Oct,
                   nov: data?.covid?.Nov,
                   dec: data?.covid?.Dec,
+                  q1: (parseFloat(data?.covid?.Jan ?? 0) + parseFloat(data?.covid?.Feb ?? 0) + parseFloat(data?.covid?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.covid?.Apr ?? 0) + parseFloat(data?.covid?.May ?? 0) + parseFloat(data?.covid?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.covid?.Jul) ?? 0 + parseFloat(data?.covid?.Aug ?? 0) + parseFloat(data?.covid?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.covid?.Oct ?? 0) + parseFloat(data?.covid?.Nov ?? 0) + parseFloat(data?.covid?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.covid?.Jan ?? 0) + parseFloat(data?.covid?.Feb ?? 0) + parseFloat(data?.covid?.Mar ?? 0) +
+                         parseFloat(data?.covid?.Apr ?? 0) + parseFloat(data?.covid?.May ?? 0) + parseFloat(data?.covid?.Jun ?? 0) + 
+                         parseFloat(data?.covid?.Jul ?? 0) + parseFloat(data?.covid?.Aug ?? 0) + parseFloat(data?.covid?.Sep ?? 0) + 
+                         parseFloat(data?.covid?.Oct ?? 0) + parseFloat(data?.covid?.Nov ?? 0) + parseFloat(data?.covid?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(covid)
                 let drug_test = {
                   strategy: "Department of Statistics",
                   overall_census: "Drug Test",
-                  target_benchmark: "Info",
                   jan: data?.drug_test?.Jan,
                   feb: data?.drug_test?.Feb,
                   mar: data?.drug_test?.Mar,
@@ -145,12 +172,19 @@ function ReportAnnual() {
                   oct: data?.drug_test?.Oct,
                   nov: data?.drug_test?.Nov,
                   dec: data?.drug_test?.Dec,
+                  q1: (parseFloat(data?.drug_test?.Jan ?? 0) + parseFloat(data?.drug_test?.Feb ?? 0) + parseFloat(data?.drug_test?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.drug_test?.Apr ?? 0) + parseFloat(data?.drug_test?.May ?? 0) + parseFloat(data?.drug_test?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.drug_test?.Jul ?? 0) + parseFloat(data?.drug_test?.Aug ?? 0) + parseFloat(data?.drug_test?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.drug_test?.Oct ?? 0) + parseFloat(data?.drug_test?.Nov?? 0) + parseFloat(data?.drug_test?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.drug_test?.Jan ?? 0) + parseFloat(data?.drug_test?.Feb ?? 0) + parseFloat(data?.drug_test?.Mar ?? 0) +
+                         parseFloat(data?.drug_test?.Apr ?? 0) + parseFloat(data?.drug_test?.May ?? 0) + parseFloat(data?.drug_test?.Jun ?? 0) + 
+                         parseFloat(data?.drug_test?.Jul ?? 0) + parseFloat(data?.drug_test?.Aug ?? 0) + parseFloat(data?.drug_test?.Sep ?? 0) + 
+                         parseFloat(data?.drug_test?.Oct ?? 0) + parseFloat(data?.drug_test?.Nov ?? 0) + parseFloat(data?.drug_test?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(drug_test)
                 let ecg = {
                   strategy: "Department of Statistics",
                   overall_census: "ECG",
-                  target_benchmark: "Info",
                   jan: data?.ecg?.Jan,
                   feb: data?.ecg?.Feb,
                   mar: data?.ecg?.Mar,
@@ -163,12 +197,19 @@ function ReportAnnual() {
                   oct: data?.ecg?.Oct,
                   nov: data?.ecg?.Nov,
                   dec: data?.ecg?.Dec,
+                  q1: (parseFloat(data?.ecg?.Jan ?? 0) + parseFloat(data?.ecg?.Feb ?? 0) + parseFloat(data?.ecg?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.ecg?.Apr ?? 0) + parseFloat(data?.ecg?.May ?? 0) + parseFloat(data?.ecg?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.ecg?.Jul ?? 0) + parseFloat(data?.ecg?.Aug ?? 0) + parseFloat(data?.ecg?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.ecg?.Oct ?? 0) + parseFloat(data?.ecg?.Nov ?? 0) + parseFloat(data?.ecg?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.ecg?.Jan ?? 0) + parseFloat(data?.ecg?.Feb ?? 0) + parseFloat(data?.ecg?.Mar ?? 0) +
+                         parseFloat(data?.ecg?.Apr ?? 0) + parseFloat(data?.ecg?.May ?? 0) + parseFloat(data?.ecg?.Jun ?? 0) + 
+                         parseFloat(data?.ecg?.Jul ?? 0) + parseFloat(data?.ecg?.Aug ?? 0) + parseFloat(data?.ecg?.Sep ?? 0) + 
+                         parseFloat(data?.ecg?.Oct ?? 0) + parseFloat(data?.ecg?.Nov ?? 0) + parseFloat(data?.ecg?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(ecg)
                 let lab = {
                   strategy: "Department of Statistics",
                   overall_census: "Laboratory",
-                  target_benchmark: "Info",
                   jan: data?.lab?.Jan,
                   feb: data?.lab?.Feb,
                   mar: data?.lab?.Mar,
@@ -181,12 +222,20 @@ function ReportAnnual() {
                   oct: data?.lab?.Oct,
                   nov: data?.lab?.Nov,
                   dec: data?.lab?.Dec,
+                  q1: (parseFloat(data?.lab?.Jan ?? 0) + parseFloat(data?.lab?.Feb ?? 0) + parseFloat(data?.lab?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.lab?.Apr ?? 0) + parseFloat(data?.lab?.May ?? 0) + parseFloat(data?.lab?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.lab?.Jul ?? 0) + parseFloat(data?.lab?.Aug ?? 0) + parseFloat(data?.lab?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.lab?.Oct ?? 0) + parseFloat(data?.lab?.Nov ?? 0) + parseFloat(data?.lab?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.lab?.Jan ?? 0) + parseFloat(data?.lab?.Feb ?? 0) + parseFloat(data?.lab?.Mar ?? 0) +
+                         parseFloat(data?.lab?.Apr ?? 0) + parseFloat(data?.lab?.May ?? 0) + parseFloat(data?.lab?.Jun ?? 0) + 
+                         parseFloat(data?.lab?.Jul ?? 0) + parseFloat(data?.lab?.Aug ?? 0) + parseFloat(data?.lab?.Sep) ?? 0 + 
+                         parseFloat(data?.lab?.Oct ?? 0) + parseFloat(data?.lab?.Nov ?? 0) + parseFloat(data?.lab?.Dec ?? 0)).toFixed(2),
+                  
                 }
                 result.push(lab)
                 let md_related = {
                   strategy: "Department of Statistics",
                   overall_census: "MD Related Services (PE, Med Cert)",
-                  target_benchmark: "Info",
                   jan: data?.md_related?.Jan,
                   feb: data?.md_related?.Feb,
                   mar: data?.md_related?.Mar,
@@ -199,12 +248,19 @@ function ReportAnnual() {
                   oct: data?.md_related?.Oct,
                   nov: data?.md_related?.Nov,
                   dec: data?.md_related?.Dec,
+                  q1: (parseFloat(data?.md_related?.Jan ?? 0) + parseFloat(data?.md_related?.Feb ?? 0) + parseFloat(data?.md_related?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.md_related?.Apr ?? 0) + parseFloat(data?.md_related?.May ?? 0) + parseFloat(data?.md_related?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.md_related?.Jul ?? 0) + parseFloat(data?.md_related?.Aug ?? 0) + parseFloat(data?.md_related?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.md_related?.Oct ?? 0) + parseFloat(data?.md_related?.Nov ?? 0) + parseFloat(data?.md_related?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.md_related?.Jan ?? 0) + parseFloat(data?.md_related?.Feb ?? 0) + parseFloat(data?.md_related?.Mar ?? 0) +
+                         parseFloat(data?.md_related?.Apr ?? 0) + parseFloat(data?.md_related?.May ?? 0) + parseFloat(data?.md_related?.Jun ?? 0) + 
+                         parseFloat(data?.md_related?.Jul ?? 0) + parseFloat(data?.md_related?.Aug ?? 0) + parseFloat(data?.md_related?.Sep ?? 0) + 
+                         parseFloat(data?.md_related?.Oct ?? 0) + parseFloat(data?.md_related?.Nov ?? 0) + parseFloat(data?.md_related?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(md_related)
                 let ultrasound = {
                   strategy: "Department of Statistics",
                   overall_census: "Ultrasound",
-                  target_benchmark: "Info",
                   jan: data?.ultrasound?.Jan,
                   feb: data?.ultrasound?.Feb,
                   mar: data?.ultrasound?.Mar,
@@ -217,12 +273,19 @@ function ReportAnnual() {
                   oct: data?.ultrasound?.Oct,
                   nov: data?.ultrasound?.Nov,
                   dec: data?.ultrasound?.Dec,
+                  q1: (parseFloat(data?.ultrasound?.Jan ?? 0) + parseFloat(data?.ultrasound?.Feb ?? 0) + parseFloat(data?.ultrasound?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.ultrasound?.Apr ?? 0) + parseFloat(data?.ultrasound?.May ?? 0) + parseFloat(data?.ultrasound?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.ultrasound?.Jul ?? 0) + parseFloat(data?.ultrasound?.Aug ?? 0) + parseFloat(data?.ultrasound?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.ultrasound?.Oct ?? 0) + parseFloat(data?.ultrasound?.Nov ?? 0) + parseFloat(data?.ultrasound?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.ultrasound?.Jan ?? 0) + parseFloat(data?.ultrasound?.Feb ?? 0) + parseFloat(data?.ultrasound?.Mar ?? 0) +
+                         parseFloat(data?.ultrasound?.Apr ?? 0) + parseFloat(data?.ultrasound?.May ?? 0) + parseFloat(data?.ultrasound?.Jun ?? 0) + 
+                         parseFloat(data?.ultrasound?.Jul ?? 0) + parseFloat(data?.ultrasound?.Aug ?? 0) + parseFloat(data?.ultrasound?.Sep ?? 0) + 
+                         parseFloat(data?.ultrasound?.Oct ?? 0) + parseFloat(data?.ultrasound?.Nov ?? 0) + parseFloat(data?.ultrasound?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(ultrasound)
                 let xray = {
                   strategy: "Department of Statistics",
                   overall_census: "X-ray",
-                  target_benchmark: "Info",
                   jan: data?.xray?.Jan,
                   feb: data?.xray?.Feb,
                   mar: data?.xray?.Mar,
@@ -235,12 +298,19 @@ function ReportAnnual() {
                   oct: data?.xray?.Oct,
                   nov: data?.xray?.Nov,
                   dec: data?.xray?.Dec,
+                  q1: (parseFloat(data?.xray?.Jan ?? 0) + parseFloat(data?.xray?.Feb ?? 0) + parseFloat(data?.xray?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.xray?.Apr ?? 0) + parseFloat(data?.xray?.May ?? 0) + parseFloat(data?.xray?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.xray?.Jul ?? 0) + parseFloat(data?.xray?.Aug ?? 0) + parseFloat(data?.xray?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.xray?.Oct ?? 0) + parseFloat(data?.xray?.Nov ?? 0) + parseFloat(data?.xray?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.xray?.Jan ?? 0) + parseFloat(data?.xray?.Feb ?? 0) + parseFloat(data?.xray?.Mar ?? 0) +
+                         parseFloat(data?.xray?.Apr ?? 0) + parseFloat(data?.xray?.May ?? 0) + parseFloat(data?.xray?.Jun ?? 0) + 
+                         parseFloat(data?.xray?.Jul ?? 0) + parseFloat(data?.xray?.Aug ?? 0) + parseFloat(data?.xray?.Sep ?? 0) + 
+                         parseFloat(data?.xray?.Oct ?? 0) + parseFloat(data?.xray?.Nov ?? 0) + parseFloat(data?.xray?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(xray)
                 let cash = {
                   strategy: "Mode of Payment",
                   overall_census: "Cash",
-                  target_benchmark: "Info",
                   jan: data?.cash?.Jan,
                   feb: data?.cash?.Feb,
                   mar: data?.cash?.Mar,
@@ -253,12 +323,20 @@ function ReportAnnual() {
                   oct: data?.cash?.Oct,
                   nov: data?.cash?.Nov,
                   dec: data?.cash?.Dec,
+                  q1: (parseFloat(data?.cash?.Jan ?? 0) + parseFloat(data?.cash?.Feb ?? 0) + parseFloat(data?.cash?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.cash?.Apr ?? 0) + parseFloat(data?.cash?.May ?? 0) + parseFloat(data?.cash?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.cash?.Jul ?? 0) + parseFloat(data?.cash?.Aug ?? 0) + parseFloat(data?.cash?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.cash?.Oct ?? 0) + parseFloat(data?.cash?.Nov ?? 0) + parseFloat(data?.cash?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.cash?.Jan ?? 0) + parseFloat(data?.cash?.Feb ?? 0) + parseFloat(data?.cash?.Mar ?? 0) +
+                         parseFloat(data?.cash?.Apr ?? 0) + parseFloat(data?.cash?.May ?? 0) + parseFloat(data?.cash?.Jun ?? 0) + 
+                         parseFloat(data?.cash?.Jul ?? 0) + parseFloat(data?.cash?.Aug ?? 0) + parseFloat(data?.cash?.Sep ?? 0) + 
+                         parseFloat(data?.cash?.Oct ?? 0) + parseFloat(data?.cash?.Nov ?? 0) + parseFloat(data?.cash?.Dec ?? 0)).toFixed(2),
+                  
                 }
                 result.push(cash)
                 let credit = {
                   strategy: "Mode of Payment",
                   overall_census: "Credit",
-                  target_benchmark: "Info",
                   jan: data?.credit?.Jan,
                   feb: data?.credit?.Feb,
                   mar: data?.credit?.Mar,
@@ -271,12 +349,19 @@ function ReportAnnual() {
                   oct: data?.credit?.Oct,
                   nov: data?.credit?.Nov,
                   dec: data?.credit?.Dec,
+                  q1: (parseFloat(data?.credit?.Jan ?? 0) + parseFloat(data?.credit?.Feb ?? 0) + parseFloat(data?.credit?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.credit?.Apr ?? 0) + parseFloat(data?.credit?.May ?? 0) + parseFloat(data?.credit?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.credit?.Jul ?? 0) + parseFloat(data?.credit?.Aug ?? 0) + parseFloat(data?.credit?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.credit?.Oct ?? 0) + parseFloat(data?.credit?.Nov ?? 0) + parseFloat(data?.credit?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.credit?.Jan ?? 0) + parseFloat(data?.credit?.Feb ?? 0) + parseFloat(data?.credit?.Mar ?? 0) +
+                         parseFloat(data?.credit?.Apr ?? 0) + parseFloat(data?.credit?.May ?? 0) + parseFloat(data?.credit?.Jun ?? 0) + 
+                         parseFloat(data?.credit?.Jul ?? 0) + parseFloat(data?.credit?.Aug ?? 0) + parseFloat(data?.credit?.Sep ?? 0) + 
+                         parseFloat(data?.credit?.Oct ?? 0) + parseFloat(data?.credit?.Nov ?? 0) + parseFloat(data?.credit?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(credit)
                 let company = {
                   strategy: "Strategy",
                   overall_census: "Company",
-                  target_benchmark: "Info",
                   jan: data?.company?.Jan,
                   feb: data?.company?.Feb,
                   mar: data?.company?.Mar,
@@ -289,12 +374,20 @@ function ReportAnnual() {
                   oct: data?.company?.Oct,
                   nov: data?.company?.Nov,
                   dec: data?.company?.Dec,
+                  q1: (parseFloat(data?.company?.Jan ?? 0) + parseFloat(data?.company?.Feb ?? 0) + parseFloat(data?.company?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.company?.Apr ?? 0) + parseFloat(data?.company?.May ?? 0) + parseFloat(data?.company?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.company?.Jul ?? 0) + parseFloat(data?.company?.Aug ?? 0) + parseFloat(data?.company?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.company?.Oct ?? 0) + parseFloat(data?.company?.Nov ?? 0) + parseFloat(data?.company?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.company?.Jan ?? 0) + parseFloat(data?.company?.Feb ?? 0) + parseFloat(data?.company?.Mar ?? 0) +
+                         parseFloat(data?.company?.Apr ?? 0) + parseFloat(data?.company?.May ?? 0) + parseFloat(data?.company?.Jun ?? 0) + 
+                         parseFloat(data?.company?.Jul ?? 0) + parseFloat(data?.company?.Aug ?? 0) + parseFloat(data?.company?.Sep ?? 0) + 
+                         parseFloat(data?.company?.Oct ?? 0) + parseFloat(data?.company?.Nov ?? 0) + parseFloat(data?.company?.Dec ?? 0)).toFixed(2),
+                  
                 }
                 result.push(company)
                 let md_referral = {
                   strategy: "Strategy",
                   overall_census: "MD Referral",
-                  target_benchmark: "Info",
                   jan: data?.md_referral?.Jan,
                   feb: data?.md_referral?.Feb,
                   mar: data?.md_referral?.Mar,
@@ -307,12 +400,19 @@ function ReportAnnual() {
                   oct: data?.md_referral?.Oct,
                   nov: data?.md_referral?.Nov,
                   dec: data?.md_referral?.Dec,
+                  q1: (parseFloat(data?.md_referral?.Jan ?? 0) + parseFloat(data?.md_referral?.Feb ?? 0) + parseFloat(data?.md_referral?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.md_referral?.Apr ?? 0) + parseFloat(data?.md_referral?.May ?? 0) + parseFloat(data?.md_referral?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.md_referral?.Jul ?? 0) + parseFloat(data?.md_referral?.Aug ?? 0) + parseFloat(data?.md_referral?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.md_referral?.Oct ?? 0) + parseFloat(data?.md_referral?.Nov ?? 0) + parseFloat(data?.md_referral?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.md_referral?.Jan ?? 0) + parseFloat(data?.md_referral?.Feb ?? 0) + parseFloat(data?.md_referral?.Mar ?? 0) +
+                         parseFloat(data?.md_referral?.Apr ?? 0) + parseFloat(data?.md_referral?.May ?? 0) + parseFloat(data?.md_referral?.Jun ?? 0) + 
+                         parseFloat(data?.md_referral?.Jul ?? 0) + parseFloat(data?.md_referral?.Aug ?? 0) + parseFloat(data?.md_referral?.Sep ?? 0) + 
+                         parseFloat(data?.md_referral?.Oct ?? 0) + parseFloat(data?.md_referral?.Nov ?? 0) + parseFloat(data?.md_referral?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(md_referral)
                 let walkin_in = {
                   strategy: "Strategy",
                   overall_census: "Walk-In",
-                  target_benchmark: "Info",
                   jan: data?.walkin_in?.Jan,
                   feb: data?.walkin_in?.Feb,
                   mar: data?.walkin_in?.Mar,
@@ -325,12 +425,19 @@ function ReportAnnual() {
                   oct: data?.walkin_in?.Oct,
                   nov: data?.walkin_in?.Nov,
                   dec: data?.walkin_in?.Dec,
+                  q1: (parseFloat(data?.walkin_in?.Jan ?? 0) + parseFloat(data?.walkin_in?.Feb ?? 0) + parseFloat(data?.walkin_in?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.walkin_in?.Apr ?? 0) + parseFloat(data?.walkin_in?.May ?? 0) + parseFloat(data?.walkin_in?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.walkin_in?.Jul ?? 0) + parseFloat(data?.walkin_in?.Aug ?? 0) + parseFloat(data?.walkin_in?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.walkin_in?.Oct ?? 0) + parseFloat(data?.walkin_in?.Nov ?? 0) + parseFloat(data?.walkin_in?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.walkin_in?.Jan ?? 0) + parseFloat(data?.walkin_in?.Feb ?? 0) + parseFloat(data?.walkin_in?.Mar ?? 0) +
+                         parseFloat(data?.walkin_in?.Apr ?? 0) + parseFloat(data?.walkin_in?.May ?? 0) + parseFloat(data?.walkin_in?.Jun ?? 0) + 
+                         parseFloat(data?.walkin_in?.Jul ?? 0) + parseFloat(data?.walkin_in?.Aug ?? 0) + parseFloat(data?.walkin_in?.Sep ?? 0) + 
+                         parseFloat(data?.walkin_in?.Oct ?? 0) + parseFloat(data?.walkin_in?.Nov ?? 0) + parseFloat(data?.walkin_in?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(walkin_in)
                 let clinical_micro = {
                   strategy: "Laboratory Statistics",
                   overall_census: "Clinical Microscopy",
-                  target_benchmark: "Info",
                   jan: data?.clinical_micro?.Jan,
                   feb: data?.clinical_micro?.Feb,
                   mar: data?.clinical_micro?.Mar,
@@ -343,12 +450,19 @@ function ReportAnnual() {
                   oct: data?.clinical_micro?.Oct,
                   nov: data?.clinical_micro?.Nov,
                   dec: data?.clinical_micro?.Dec,
+                  q1: (parseFloat(data?.clinical_micro?.Jan ?? 0) + parseFloat(data?.clinical_micro?.Feb ?? 0) + parseFloat(data?.clinical_micro?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.clinical_micro?.Apr ?? 0) + parseFloat(data?.clinical_micro?.May ?? 0) + parseFloat(data?.clinical_micro?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.clinical_micro?.Jul ?? 0) + parseFloat(data?.clinical_micro?.Aug ?? 0) + parseFloat(data?.clinical_micro?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.clinical_micro?.Oct ?? 0) + parseFloat(data?.clinical_micro?.Nov ?? 0) + parseFloat(data?.clinical_micro?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.clinical_micro?.Jan ?? 0) + parseFloat(data?.clinical_micro?.Feb ?? 0) + parseFloat(data?.clinical_micro?.Mar ?? 0) +
+                         parseFloat(data?.clinical_micro?.Apr ?? 0) + parseFloat(data?.clinical_micro?.May ?? 0) + parseFloat(data?.clinical_micro?.Jun ?? 0) + 
+                         parseFloat(data?.clinical_micro?.Jul ?? 0) + parseFloat(data?.clinical_micro?.Aug ?? 0) + parseFloat(data?.clinical_micro?.Sep ?? 0) + 
+                         parseFloat(data?.clinical_micro?.Oct ?? 0) + parseFloat(data?.clinical_micro?.Nov ?? 0) + parseFloat(data?.clinical_micro?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(clinical_micro)
                 let hematology = {
                   strategy: "Laboratory Statistics",
                   overall_census: "Hematology",
-                  target_benchmark: "Info",
                   jan: data?.hematology?.Jan,
                   feb: data?.hematology?.Feb,
                   mar: data?.hematology?.Mar,
@@ -361,12 +475,19 @@ function ReportAnnual() {
                   oct: data?.hematology?.Oct,
                   nov: data?.hematology?.Nov,
                   dec: data?.hematology?.Dec,
+                  q1: (parseFloat(data?.hematology?.Jan ?? 0) + parseFloat(data?.hematology?.Feb ?? 0) + parseFloat(data?.hematology?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.hematology?.Apr ?? 0) + parseFloat(data?.hematology?.May ?? 0) + parseFloat(data?.hematology?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.hematology?.Jul ?? 0) + parseFloat(data?.hematology?.Aug ?? 0) + parseFloat(data?.hematology?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.hematology?.Oct ?? 0) + parseFloat(data?.hematology?.Nov ?? 0) + parseFloat(data?.hematology?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.hematology?.Jan ?? 0) + parseFloat(data?.hematology?.Feb ?? 0) + parseFloat(data?.hematology?.Mar ?? 0) +
+                         parseFloat(data?.hematology?.Apr ?? 0) + parseFloat(data?.hematology?.May ?? 0) + parseFloat(data?.hematology?.Jun ?? 0) + 
+                         parseFloat(data?.hematology?.Jul ?? 0) + parseFloat(data?.hematology?.Aug ?? 0) + parseFloat(data?.hematology?.Sep ?? 0) + 
+                         parseFloat(data?.hematology?.Oct ?? 0) + parseFloat(data?.hematology?.Nov ?? 0) + parseFloat(data?.hematology?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(hematology)
                 let chemistry = {
                   strategy: "Laboratory Statistics",
                   overall_census: "chemistry",
-                  target_benchmark: "Info",
                   jan: data?.chemistry?.Jan,
                   feb: data?.chemistry?.Feb,
                   mar: data?.chemistry?.Mar,
@@ -379,12 +500,19 @@ function ReportAnnual() {
                   oct: data?.chemistry?.Oct,
                   nov: data?.chemistry?.Nov,
                   dec: data?.chemistry?.Dec,
+                  q1: (parseFloat(data?.chemistry?.Jan ?? 0) + parseFloat(data?.chemistry?.Feb ?? 0) + parseFloat(data?.chemistry?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.chemistry?.Apr ?? 0) + parseFloat(data?.chemistry?.May ?? 0) + parseFloat(data?.chemistry?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.chemistry?.Jul ?? 0) + parseFloat(data?.chemistry?.Aug ?? 0) + parseFloat(data?.chemistry?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.chemistry?.Oct ?? 0) + parseFloat(data?.chemistry?.Nov ?? 0) + parseFloat(data?.chemistry?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.chemistry?.Jan ?? 0) + parseFloat(data?.chemistry?.Feb ?? 0) + parseFloat(data?.chemistry?.Mar ?? 0) +
+                         parseFloat(data?.chemistry?.Apr ?? 0) + parseFloat(data?.chemistry?.May ?? 0) + parseFloat(data?.chemistry?.Jun ?? 0) + 
+                         parseFloat(data?.chemistry?.Jul ?? 0) + parseFloat(data?.chemistry?.Aug ?? 0) + parseFloat(data?.chemistry?.Sep ?? 0) + 
+                         parseFloat(data?.chemistry?.Oct ?? 0) + parseFloat(data?.chemistry?.Nov ?? 0) + parseFloat(data?.chemistry?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(chemistry)
                 let serology = {
                   strategy: "Laboratory Statistics",
                   overall_census: "serology",
-                  target_benchmark: "Info",
                   jan: data?.serology?.Jan,
                   feb: data?.serology?.Feb,
                   mar: data?.serology?.Mar,
@@ -397,12 +525,19 @@ function ReportAnnual() {
                   oct: data?.serology?.Oct,
                   nov: data?.serology?.Nov,
                   dec: data?.serology?.Dec,
+                  q1: (parseFloat(data?.serology?.Jan ?? 0) + parseFloat(data?.serology?.Feb ?? 0) + parseFloat(data?.serology?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.serology?.Apr ?? 0) + parseFloat(data?.serology?.May ?? 0) + parseFloat(data?.serology?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.serology?.Jul ?? 0) + parseFloat(data?.serology?.Aug ?? 0) + parseFloat(data?.serology?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.serology?.Oct ?? 0) + parseFloat(data?.serology?.Nov ?? 0) + parseFloat(data?.serology?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.serology?.Jan ?? 0) + parseFloat(data?.serology?.Feb ?? 0) + parseFloat(data?.serology?.Mar ?? 0) +
+                         parseFloat(data?.serology?.Apr ?? 0) + parseFloat(data?.serology?.May ?? 0) + parseFloat(data?.serology?.Jun ?? 0) + 
+                         parseFloat(data?.serology?.Jul ?? 0) + parseFloat(data?.serology?.Aug ?? 0) + parseFloat(data?.serology?.Sep ?? 0) + 
+                         parseFloat(data?.serology?.Oct ?? 0) + parseFloat(data?.serology?.Nov ?? 0) + parseFloat(data?.serology?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(serology)
                 let microbiology = {
                   strategy: "Laboratory Statistics",
                   overall_census: "Microbiology",
-                  target_benchmark: "Info",
                   jan: data?.microbiology?.Jan,
                   feb: data?.microbiology?.Feb,
                   mar: data?.microbiology?.Mar,
@@ -415,12 +550,19 @@ function ReportAnnual() {
                   oct: data?.microbiology?.Oct,
                   nov: data?.microbiology?.Nov,
                   dec: data?.microbiology?.Dec,
+                  q1: (parseFloat(data?.microbiology?.Jan ?? 0) + parseFloat(data?.microbiology?.Feb ?? 0) + parseFloat(data?.microbiology?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.microbiology?.Apr ?? 0) + parseFloat(data?.microbiology?.May ?? 0) + parseFloat(data?.microbiology?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.microbiology?.Jul ?? 0) + parseFloat(data?.microbiology?.Aug ?? 0) + parseFloat(data?.microbiology?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.microbiology?.Oct ?? 0) + parseFloat(data?.microbiology?.Nov ?? 0) + parseFloat(data?.microbiology?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.microbiology?.Jan ?? 0) + parseFloat(data?.microbiology?.Feb ?? 0) + parseFloat(data?.microbiology?.Mar ?? 0) +
+                         parseFloat(data?.microbiology?.Apr ?? 0) + parseFloat(data?.microbiology?.May ?? 0) + parseFloat(data?.microbiology?.Jun ?? 0) + 
+                         parseFloat(data?.microbiology?.Jul ?? 0) + parseFloat(data?.microbiology?.Aug ?? 0) + parseFloat(data?.microbiology?.Sep ?? 0) + 
+                         parseFloat(data?.microbiology?.Oct ?? 0) + parseFloat(data?.microbiology?.Nov ?? 0) + parseFloat(data?.microbiology?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(microbiology)
                 let histopathology = {
                   strategy: "Laboratory Statistics",
                   overall_census: "Histopathology",
-                  target_benchmark: "Info",
                   jan: data?.histopathology?.Jan,
                   feb: data?.histopathology?.Feb,
                   mar: data?.histopathology?.Mar,
@@ -433,6 +575,14 @@ function ReportAnnual() {
                   oct: data?.histopathology?.Oct,
                   nov: data?.histopathology?.Nov,
                   dec: data?.histopathology?.Dec,
+                  q1: (parseFloat(data?.histopathology?.Jan ?? 0) + parseFloat(data?.histopathology?.Feb ?? 0) + parseFloat(data?.histopathology?.Mar ?? 0)).toFixed(2),//Jan Feb March
+                  q2: (parseFloat(data?.histopathology?.Apr ?? 0) + parseFloat(data?.histopathology?.May ?? 0) + parseFloat(data?.histopathology?.Jun ?? 0)).toFixed(2),//Apr May Jun
+                  q3: (parseFloat(data?.histopathology?.Jul ?? 0) + parseFloat(data?.histopathology?.Aug ?? 0) + parseFloat(data?.histopathology?.Sep ?? 0)).toFixed(2),//Jul Aug Sep
+                  q4: (parseFloat(data?.histopathology?.Oct ?? 0) + parseFloat(data?.histopathology?.Nov ?? 0) + parseFloat(data?.histopathology?.Dec ?? 0)).toFixed(2),//Oct Nov Dec
+                  total: (parseFloat(data?.histopathology?.Jan ?? 0) + parseFloat(data?.histopathology?.Feb ?? 0) + parseFloat(data?.histopathology?.Mar ?? 0) +
+                         parseFloat(data?.histopathology?.Apr ?? 0) + parseFloat(data?.histopathology?.May ?? 0) + parseFloat(data?.histopathology?.Jun ?? 0) + 
+                         parseFloat(data?.histopathology?.Jul ?? 0) + parseFloat(data?.histopathology?.Aug ?? 0) + parseFloat(data?.histopathology?.Sep ?? 0) + 
+                         parseFloat(data?.histopathology?.Oct ?? 0) + parseFloat(data?.histopathology?.Nov ?? 0) + parseFloat(data?.histopathology?.Dec ?? 0)).toFixed(2),
                 }
                 result.push(histopathology)
 
@@ -440,7 +590,6 @@ function ReportAnnual() {
                   return {
                     strategy: data.strategy,
                     overall_census: data.overall_census,
-                    target_benchmark: data.target_benchmark,
                     jan: data.jan == null ? 0 : data.jan,
                     feb: data.feb == null ? 0 : data.feb,
                     mar: data.mar == null ? 0 : data.mar, 
@@ -453,7 +602,11 @@ function ReportAnnual() {
                     oct: data.oct == null ? 0 : data.oct,
                     nov: data.nov == null ? 0 : data.nov,
                     dec: data.dec == null ? 0 : data.dec,
-
+                    q1: data.q1 == NaN ? 0 : data.q1,
+                    q2: data.q1 == NaN ? 0 : data.q2,
+                    q3: data.q3 == NaN ? 0 : data.q3,
+                    q4: data.q4 == NaN ? 0 : data.q4,
+                    total: data.total
                   }
                 })
 )
@@ -485,10 +638,30 @@ function ReportAnnual() {
             buttons={buttons} 
             tableName={'Annual Report'}
             tableData={report}
+            tableHeadersKey = {[
+              {label: 'STRATEGY', key: "strategy"},
+              {label: 'OVERALL CENSUS', key: "overall_census"},
+              {label: 'JAN', key: "jan"},
+              {label: 'FEB', key: "feb"},
+              {label: 'MAR', key: "mar"},
+              {label: 'APR', key: "apr"},
+              {label: 'MAY', key: "may"},
+              {label: 'JUN', key: "jun"},
+              {label: 'JUL', key: "jul"},
+              {label: 'AUG', key: "aug"},
+              {label: 'SEP', key: "sep"},
+              {label: 'OCT', key: "oct"},
+              {label: 'NOV', key: "nov"},
+              {label: 'DEC', key: "dec"},
+              {label: 'Q1', key: "q1"},
+              {label: 'Q2', key: "q2"},
+              {label: 'Q3', key: "q3"},
+              {label: 'Q4', key: "q4"},
+              {label: 'TOTAL', key: "total"},
+            ]}
             tableHeaders={[
               'STRATEGY',
-              'OVERALL CONSENSUS',
-              'TARGET BENCHMARK',
+              'OVERALL CENSUS',
               'JAN',
               'FEB',
               'MAR',
@@ -500,7 +673,12 @@ function ReportAnnual() {
               'SEP',
               'OCT',
               'NOV',
-              'DEC'
+              'DEC',
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "TOTAL"
             ]}
             status={printReadyFinal}
              />
@@ -511,8 +689,7 @@ function ReportAnnual() {
             rowsPerPage={100}
             headingColumns={[
               'STRATEGY',
-              'OVERALL CONSENSUS',
-              'TARGET BENCHMARK',
+              'OVERALL CENSUS',
               'JAN',
               'FEB',
               'MAR',
@@ -524,7 +701,12 @@ function ReportAnnual() {
               'SEP',
               'OCT',
               'NOV',
-              'DEC'
+              'DEC',
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "TOTAL"
             ]}
             filteredData={filteredData}
             setFilter={setFilter}

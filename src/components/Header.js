@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, tableDataBreakdown}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, tableDataBreakdown, tableHeadersKey}) {
 
     var btn = [];
     
@@ -122,7 +122,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                   // console.log(salesData)
                   return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL SALES</CSVLink></button>
                 } else if(status == true) {
-                    return <button className="download"><CSVLink data={tableData} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
+                    return <button className="download"><CSVLink data={tableData} headers={tableHeadersKey} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
                 } else {
                     return (
                         <button className="download">Loading Data...</button>
