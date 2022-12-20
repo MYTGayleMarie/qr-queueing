@@ -134,7 +134,24 @@ function ReportExpense() {
             buttons={buttons} 
             tableName={'Expense Report'}
             tableData={report}
-            tableDataBreakdown={breakdown}
+            tableDataBreakdown={breakdown.sort((a, b) => a.item.localeCompare(b.item))}
+            tableHeadersKey = {[
+              {label: "NAME", key: "item"},
+              {label: "UNIT", key: "unit"},
+              {label: "PRICE", key: "price"},
+              {label: "JAN", key: "Jan"},
+              {label: "FEB", key: "Feb"},
+              {label: "MAR", key: "Mar"},
+              {label: "APR", key: "Apr"},
+              {label: "MAY", key: "May"},
+              {label: "JUN", key: "Jun"},
+              {label: "JUL", key: "Jul"},
+              {label: "AUG", key: "Aug"},
+              {label: "SEP", key: "Sep"},
+              {label: "OCT", key: "Oct"},
+              {label: "NOV", key: "Nov"},
+              {label: "DEC", key: "Dec"},
+            ]}
             tableHeaders={['TOTAL QTY', 'ITEM ID', 'ITEM', 'UNIT']}
             status={printReadyFinal}
              />
@@ -143,7 +160,7 @@ function ReportExpense() {
             type={'report-expense'}
             tableData={report}
             rowsPerPage={100}
-            headingColumns={['TOTAL QTY', 'ITEM ID', 'ITEM', 'UNIT']}
+            headingColumns={['TOTAL QTY', 'ITEM ID', 'NAME', 'UNIT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

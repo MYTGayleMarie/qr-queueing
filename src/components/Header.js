@@ -131,7 +131,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
             }
             if(button === 'export-breakdown') {
                 if(status == true) {
-                    return <button className="download"><CSVLink data={tableDataBreakdown} filename={title + " BREAKDOWN"} className="download-btn">EXPORT BREAKDOWN</CSVLink></button>
+                    return <button className="download"><CSVLink data={tableDataBreakdown} headers={tableHeadersKey} filename={title + " BREAKDOWN"} className="download-btn">EXPORT BREAKDOWN</CSVLink></button>
                 } else {
                     return (
                         <button className="download">Loading Data...</button>
