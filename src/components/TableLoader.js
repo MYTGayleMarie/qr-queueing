@@ -7,7 +7,7 @@ import "../components/View/Imaging/Imaging.css"
 
 function TableLoader({tableHeaders, data, className}) {
     const [showLoading, setShowLoading] = useState(true);
-
+    alert(data)
     React.useEffect(() => {
       let loadingTime = setTimeout(() => {
         setShowLoading(false);

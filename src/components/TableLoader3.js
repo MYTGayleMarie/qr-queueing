@@ -7,7 +7,6 @@ import "../components/View/Imaging/Imaging.css"
 
 function TableLoader({tableHeaders, data}) {
     const [showLoading, setShowLoading] = useState(true);
-
     React.useEffect(() => {
       let loadingTime = setTimeout(() => {
         setShowLoading(false);
@@ -86,7 +85,7 @@ function TableLoader({tableHeaders, data}) {
       );
     }
  
-    if(data && data.length != 0) {
+    if(data && data.length !== 0) {
      return (
         loadingDisplay()
      );
@@ -94,9 +93,9 @@ function TableLoader({tableHeaders, data}) {
 
      return (
        <>
-         {showLoading && loadingDisplay()}
+         {/* {showLoading && loadingDisplay()} */}
 
-         {!showLoading && noDataDisplay()}
+         {noDataDisplay()}
        </>
      );
     }
