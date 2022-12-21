@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, tableDataBreakdown, tableHeadersKey}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, breakdown, tableHeadersKey}) {
 
     var btn = [];
     
@@ -131,7 +131,7 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
             }
             if(button === 'export-breakdown') {
                 if(status == true) {
-                    return <button className="download"><CSVLink data={tableDataBreakdown} headers={tableHeadersKey} filename={title + " BREAKDOWN"} className="download-btn">EXPORT BREAKDOWN</CSVLink></button>
+                    return <button className="download" onClick={breakdown}>EXPORT BREAKDOWN</button>
                 } else {
                     return (
                         <button className="download">Loading Data...</button>

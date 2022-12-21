@@ -59,7 +59,7 @@ function ReportExpense() {
               requester: userId,
             },
           }).then(function (response) {
-                
+                console.log(response)
               if(response?.data?.data?.records) {
                   response?.data?.data?.records?.map((data, index1) => { 
                         var info = {};
@@ -82,30 +82,142 @@ function ReportExpense() {
             setReport([])
           })
           
-           axios({
-            method: 'get',
-            url: window.$link + 'reports/monthlyExpense',
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          }).then(function (response) {
-            console.log(response)
-            if(response?.data?.data?.records) {
-                let result = response?.data?.data?.records;
-                result.forEach(object => {
-                  delete object['item_id'];
-                  delete object['name'];
-                })
-                setBreakdown(result)
-                setIsReady(true)
-            }
-          }).catch(function (err) {
-            setBreakdown([])
-          })
     },[render]);
+
+    function generateInventory(){
+    axios({
+      method: 'post',
+      url: window.$link + 'reports/monthlyExpense',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+        year:new Date().getFullYear()
+      },
+    })
+    .then((res)=>{
+      console.log(res)
+      var monthly_inventory = res.data.data.inventory_expense_per_month.sort((a, b) => a.item.localeCompare(b.item))
+      console.log(res.data.data.inventory_per_month)
+      var monthly_inventory_price = res.data.data.inventory_expense_price_per_month.sort((a, b) => a.item.localeCompare(b.item))
+
+      var monthly_inventory_adj = monthly_inventory.map((data)=>{ return {
+        name: data.name, 
+        unit: data.unit,
+        price: parseFloat(data.price).toFixed(2),
+        Jan: parseInt(data.Jan),
+        Feb: parseInt(data.Feb),
+        Mar: parseInt(data.Mar),
+        Apr: parseInt(data.Apr),
+        May: parseInt(data.May),
+        Jun: parseInt(data.Jun),
+        Jul: parseInt(data.Jul),
+        Aug: parseInt(data.Aug),
+        Sept: parseInt(data.Sept),
+        Oct: parseInt(data.Oct),
+        Nov: parseInt(data.Nov),
+        Dec: parseInt(data.Dec)
+      }})
+      var monthly_inventory_price_adj = monthly_inventory_price.map((data)=>{ return {
+        name: data.name, 
+        unit: data.unit,
+        price: parseFloat(data.price).toFixed(2),
+        Jan: parseInt(data.Jan),
+        Feb: parseInt(data.Feb),
+        Mar: parseInt(data.Mar),
+        Apr: parseInt(data.Apr),
+        May: parseInt(data.May),
+        Jun: parseInt(data.Jun),
+        Jul: parseInt(data.Jul),
+        Aug: parseInt(data.Aug),
+        Sept: parseInt(data.Sept),
+        Oct: parseInt(data.Oct),
+        Nov: parseInt(data.Nov),
+        Dec: parseInt(data.Dec)
+      }})
+
+      const XLSX = require('sheetjs-style');
+      const worksheet = XLSX.utils.json_to_sheet([{},...monthly_inventory_adj])
+      const worksheet2 = XLSX.utils.json_to_sheet([{},...monthly_inventory_price_adj])
+      
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["QR DIAGNOSTICS","", "", 
+        "", "", "", "", "", "",
+        "", "", "", "", "", ""]], { origin: "A1" });
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["Name", "Unit", "Price", 
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A2" });
+      
+      XLSX.utils.sheet_add_aoa(worksheet2, 
+        [["QR DIAGNOSTICS","", "", 
+        "", "", "", "", "", "",
+        "", "", "", "", "", ""]], { origin: "A1" });
+      XLSX.utils.sheet_add_aoa(worksheet2, 
+        [["Name", "Unit", "Price", 
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]], { origin: "A2" });
+
+      const cells = ['A1','A2','B2','C2','D2','E2','F2','G2','H2','I2','J2','K2','L2','M2','N2','O2']
+     
+      const workbook = XLSX.utils.book_new();
+      for(var i = 0; i<cells.length;i++){
+       if(cells[i] === 'A1'){
+        worksheet[cells[i]].s = {
+          font: {
+            sz:24,
+            shadow:true,
+            bold: true,
+            color: {
+              rgb: "BFBC4B"
+            }
+          },
+        };
+        worksheet2[cells[i]].s = {
+          font: {
+            sz:24,
+            shadow:true,
+            bold: true,
+            color: {
+              rgb: "BFBC4B"
+            }
+          },
+        };
+       }
+       else{
+        worksheet[cells[i]].s = {
+          font: {
+            bold: true,
+            color: {
+              rgb: "419EA3"
+            }
+          },
+        };
+        worksheet2[cells[i]].s = {
+          font: {
+            bold: true,
+            color: {
+              rgb: "419EA3"
+            }
+          },
+        };
+       }
+      }
+
+      var wscols = [
+        { width: 50 },  // first column
+      ];
+      worksheet["!cols"] = wscols;
+      worksheet2["!cols"] = wscols;
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Expense Item Inventory");
+      XLSX.utils.book_append_sheet(workbook, worksheet2, "Expense Item Cost Inventory");
+      XLSX.writeFile(workbook, "QRDiagnosticsMonthlyExpenseItemInventoryReport-"+new Date().toLocaleDateString()+".xlsx");
+
+      // 
+    })
+    .catch((err)=>{console.log(err)})
+  }
 
     function view(inventoryId) {
         id = inventoryId;
@@ -136,7 +248,7 @@ function ReportExpense() {
             buttons={buttons} 
             tableName={'Expense Report'}
             tableData={report}
-            tableDataBreakdown={breakdown.sort((a, b) => a.item.localeCompare(b.item))}
+            breakdown={generateInventory}
             tableHeadersKey = {[
               {label: "NAME", key: "item"},
               {label: "UNIT", key: "unit"},

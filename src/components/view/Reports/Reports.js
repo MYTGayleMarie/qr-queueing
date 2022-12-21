@@ -383,6 +383,7 @@ function Reports() {
       },
     })
     .then((res)=>{
+      console.log(res)
       var monthly_inventory = res.data.data.inventory_per_month
       console.log(res.data.data.inventory_per_month)
       var monthly_inventory_price = res.data.data.inventory_price_per_month
