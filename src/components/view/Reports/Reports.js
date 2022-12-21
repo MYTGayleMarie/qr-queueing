@@ -379,6 +379,7 @@ function Reports() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
+        year:new Date().getFullYear()
       },
     })
     .then((res)=>{

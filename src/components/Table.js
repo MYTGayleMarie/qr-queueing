@@ -439,7 +439,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                         {!isReady && useLoader ? 
+                         {useLoader && !isReady? 
                         <TableLoader tableHeaders={headingColumns} className={'spinners-3'}/> : data}
                     </tbody>
                 </table>

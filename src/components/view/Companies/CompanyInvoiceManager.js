@@ -57,6 +57,7 @@ function CompanyInvoiceManager() {
             date_to: filteredData.to_date,
         }
     }).then(function (response) {
+        setIsReady(true)
         response.data.company_invoices.map((row, index) => {
             var companyDetails = {};
             axios({
@@ -135,11 +136,11 @@ function CompanyInvoiceManager() {
                   
                 })                .then (function (error) {
                     console.log(error);
-                    setIsReady(true)
+                    // setIsReady(true)
                   }).catch((error)=>{console.log(error)})
             }).catch(function (error) {
                 console.log(error);
-                setIsReady(false)
+                // setIsReady(false)
             });
         });
     }).catch(function (error) {
