@@ -35,6 +35,7 @@ function ReportHomeServices() {
   const [render, setRender] = useState([]);
   const [homeServices, setHomeServices] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   console.log(filteredData)
   
@@ -113,7 +114,9 @@ function ReportHomeServices() {
             }).then(function (error) {
               console.log(error);
             })
+             setIsReady(true);
           });
+         
       }).then(function (error) {
         console.log(error);
       });
@@ -152,6 +155,8 @@ function ReportHomeServices() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            useLoader={true}
+            isReady={isReady}
           />
 
 

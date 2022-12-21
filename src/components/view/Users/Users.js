@@ -24,6 +24,7 @@ function Users() {
     const [render, setRender] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [finalUserData, setFinalUserData] = useState([]);
+    const [isReady, setIsReady] = useState(false)
 
     function UserDetails(userId) {
         id = userId;
@@ -66,6 +67,7 @@ function Users() {
 
 
             });
+            setIsReady(true)
 
 
         }).catch(function(error) {
@@ -93,6 +95,8 @@ function Users() {
                     headingColumns={['ID', 'NAME', 'EMAIL', 'ROLE']}
                     link={UserDetails}
                     givenClass={'user-mobile'}
+                    useLoader={true}
+                    isReady={isReady}
                 />
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>

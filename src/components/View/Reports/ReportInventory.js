@@ -37,6 +37,7 @@ function ReportInventory() {
   const [pendingPOs, setPendingPOs] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [inventories, setInventories] = useState([]);
+  const [isReady, setIsReady] = useState(false)
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -104,6 +105,7 @@ function ReportInventory() {
 
                         if(response.data.inventory_counts.length - 2 == index1) {
                             setPrintReadyFinal(true);
+                            setIsReady(true)
                         }
                     })
                 })
@@ -157,6 +159,8 @@ function ReportInventory() {
             render={render}
             givenClass={"register-mobile"}
             link={view}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

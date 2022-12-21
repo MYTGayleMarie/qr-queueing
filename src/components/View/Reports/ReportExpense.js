@@ -39,6 +39,7 @@ function ReportExpense() {
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [report, setReport] = useState([]);
   const [breakdown, setBreakdown] = useState([])
+  const [isReady, setIsReady] = useState(false)
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -99,6 +100,7 @@ function ReportExpense() {
                   delete object['name'];
                 })
                 setBreakdown(result)
+                setIsReady(true)
             }
           }).catch(function (err) {
             setBreakdown([])
@@ -169,6 +171,7 @@ function ReportExpense() {
             givenClass={"register-mobile"}
             link={view}
             useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

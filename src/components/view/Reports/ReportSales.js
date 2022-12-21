@@ -138,6 +138,7 @@ function ReportSales() {
             setTotal(temp_total)
             // setIsReady(true)
           })
+          setIsReady(true)
       })
       .catch((error)=>{console.log(error)})
       setIsReady(false)

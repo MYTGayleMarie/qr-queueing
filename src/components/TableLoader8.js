@@ -5,7 +5,7 @@ import { RingLoader } from "react-spinners";
 import "./TableFooter.css"
 import "../components/View/Imaging/Imaging.css"
 
-function TableLoader({tableHeaders, data, className}) {
+function TableLoader8({tableHeaders, data}) {
     const [showLoading, setShowLoading] = useState(true);
 
     React.useEffect(() => {
@@ -37,35 +37,14 @@ function TableLoader({tableHeaders, data, className}) {
       return (
         <>
           <tr>
-            {/* {tableHeaders.map((data, index) => { */}
-              {/* return ( */}
-                {/* <td 
-                class=""
-                > */}
-                  
-                  <span >       
-                        
-                  
-                    <RingLoader className={className ? className : 'spinner'} color={'#3a023a'} showLoading={showLoading} size={70} />
-                    
-                  </span>
-                 
-                {/* </td> */}
-              {/* );
-            })} */}
+            <span >       
+              <RingLoader className="spinners-2" color={'#3a023a'} showLoading={showLoading} size={70} />
+            </span>
           </tr>
           <tr>
-          <span >              
-                    <RingLoader className={className ? className : 'spinner'} color={'#3a023a'} showLoading={showLoading} size={70} />
-                  </span>
-            {/* {tableHeaders.map((data, index) => {
-              return (
-                <td class="td-3">
-                  <span></span>
-                </td>
-              );
-            })} */}
-            
+            <span >              
+              <RingLoader className='spinners-2'color={'#3a023a'} showLoading={showLoading} size={70} />
+            </span>
           </tr>
           <tr>
             {tableHeaders.map((data, index) => {
@@ -103,10 +82,11 @@ function TableLoader({tableHeaders, data, className}) {
               );
             })}
           </tr>
+          
         </>
       );
     }
-  
+ 
     if(data && data.length != 0) {
      return (
         loadingDisplay()
@@ -123,5 +103,5 @@ function TableLoader({tableHeaders, data, className}) {
     }
 }
 
-export default TableLoader
+export default TableLoader8
 

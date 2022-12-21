@@ -106,10 +106,10 @@ function Receives() {
                       
                   })
             })
+            setIsReady(true)
             
         }).then (function (error) {
             console.log(error);
-            setIsReady(true)
           }).catch(function (error) {
             console.log(error);
             setIsReady(false)

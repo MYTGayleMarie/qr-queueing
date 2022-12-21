@@ -35,6 +35,7 @@ export default function ReportIncompletePO(){
   const [render, setRender] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [posTempData, setPoTempData] = useState([]);
+  const [isReady, setIsReady] = useState(false);
 
 
   // table data
@@ -87,6 +88,7 @@ export default function ReportIncompletePO(){
             // Set status for printing
             if(incomplete.length - 1 == index) {
               setPrintReadyFinal(true);
+              setIsReady(true)
             }
       })
     })
@@ -134,7 +136,8 @@ export default function ReportIncompletePO(){
           setRender={setRender}
           givenClass={"register-mobile"}
           link={review}
-
+          useLoader={true}
+          isReady={isReady}
         />
         </Fragment>
       </div>

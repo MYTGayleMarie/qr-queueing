@@ -37,6 +37,7 @@ export default function ResultsReleasing() {
   const [role, setRole] = useState('');
   const [bookingId, setBookingId] = useState("");
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
@@ -73,6 +74,7 @@ export default function ResultsReleasing() {
 
               if((response.data.bookings.length) - 1 === index) {
                 setPrintReadyFinal(true);
+                setIsReady(true);
               }
             })
         });
@@ -108,6 +110,8 @@ export default function ResultsReleasing() {
             givenClass={"register-mobile"}
             setRender={setRender}
             render={render}
+            useLoader={true}
+            isReady={isReady}
           />
         </Fragment>
       </div>

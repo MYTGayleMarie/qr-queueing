@@ -33,6 +33,7 @@ function ReportUnpaidInvoices() {
   const [render, setRender] = useState(false);
   const [unpaidInvoices, setUnpaidInvoices] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   
      //SALES REPORT
      React.useEffect(() => {
@@ -74,6 +75,7 @@ function ReportUnpaidInvoices() {
                   if(pending.length - 1 == index) {
                       setPrintReadyFinal(true);
                   }
+                  setIsReady(true)
               });
           });
 
@@ -115,6 +117,8 @@ function ReportUnpaidInvoices() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

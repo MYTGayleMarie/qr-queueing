@@ -39,6 +39,7 @@ function ReportServicesPackages() {
   const [servicesPackages, setServicesPackages] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   //ALL PACKAGES AND SERVICES
     React.useEffect(() => {
@@ -72,6 +73,7 @@ function ReportServicesPackages() {
 
                 if(response.data.data.data.length - 1 == index) {
                   setPrintReadyFinal(true);
+                  setIsReady(true)
                 }
               })
           });
@@ -122,6 +124,8 @@ function ReportServicesPackages() {
             link={viewDetails}
             totalCount={totalCount}
             givenClass={"register-mobile"}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

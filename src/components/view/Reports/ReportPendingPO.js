@@ -36,6 +36,7 @@ function ReportPendingPO() {
   const [clinicServices, setClinicServices] = useState([]);
   const [pendingPOs, setPendingPOs] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -83,6 +84,7 @@ function ReportPendingPO() {
 
                   if(pending.length - 1 == index) {
                     setPrintReadyFinal(true);
+                    setIsReady(true)
                   }
               });
           }).then(function (error) {
@@ -135,6 +137,8 @@ function ReportPendingPO() {
             render={render}
             givenClass={"register-mobile"}
             link={approve}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

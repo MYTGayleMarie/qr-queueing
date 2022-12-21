@@ -16,6 +16,7 @@ import TableLoader7 from "./TableLoader7";
 //css 
 import './Table.scss';
 import { useNavigate } from "react-router-dom";
+import TableLoader8 from "./TableLoader8";
 
 
 function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setName, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, handleOnChange, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
@@ -438,7 +439,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                            {data}
+                         {!isReady && useLoader ? 
+                        <TableLoader tableHeaders={headingColumns} className={'spinners-3'}/> : data}
                     </tbody>
                 </table>
               {/* </> }  */}
@@ -447,7 +449,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     
-    if( type === 'release'|| type === 'credits'||type === 'transaction'||type === 'mds') {
+    if( type === 'release') {
     
         const {from_date, to_date, done} = filteredData;
     
@@ -490,6 +492,135 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
+    else if(type === 'mds') {
+    
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                
+       
+                <div className="search-table-container row">
+               
+       
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-8'}/> : data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'credits') {
+    
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                
+       
+                <div className="search-table-container row">
+               
+       
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-7'}/> : data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+        if(type === 'transaction') {
+    
+        const {from_date, to_date, done} = filteredData;
+    
+        return(
+            <div className="table-container">
+                
+       
+                <div className="search-table-container row">
+               
+       
+                <div className="col-sm-2">
+                    {totalCount != null && (
+                        <div className="total-count-container">
+                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="col-sm-10 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-4'}/> : data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
     else if(type === 'services-packages-2') {
 
         const {from_date, to_date, status} = filteredData;
@@ -516,7 +647,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>
                 </div>
-                <table className={tableClass}>
+                 <table className={tableClass}>
                     <thead>
                         <tr>
                             {headingColumns.map((col,index) => (
@@ -525,7 +656,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                    {!isReady && useLoader ? 
+                    <TableLoader8 tableHeaders={headingColumns}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -626,7 +758,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </div>
         );
     }
-    else if(type === 'purchase-order' || type === "report-inventory") {
+    else if(type === "report-inventory") {
          const {from_date, to_date, status} = filteredData;
     
         return(
@@ -657,7 +789,46 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader5 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-6'}/> : data}
+                    </tbody>
+                </table>
+                
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'purchase-order') {
+         const {from_date, to_date, status} = filteredData;
+    
+        return(
+            <div className="table-container">
+                <div className="search-table-container row">
+
+                <div className="col-sm-12 d-flex justify-content-end">
+                    <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                    <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
+                    <select name="status" value={status} onChange={setFilter}>
+                        <option value="for approval" selected>FOR APPROVAL</option>
+                        <option value="approved">APPROVED</option>
+                        <option value="completed">COMPLETED</option>
+                        <option value="disapproved">DISAPPROVED</option>
+                        <option value="printed">PRINTED</option>
+                        <option value="">ALL</option>
+                    </select>
+                    <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+                </div>
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-9'}/> : data}
                     </tbody>
                 </table>
                 
@@ -688,7 +859,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {tableData.length == 0 ? 
-                    <TableLoader5 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-10'}/> : data}
                     </tbody>
                 </table>
                 
@@ -760,7 +931,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                        {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-5'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -789,7 +961,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                     {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-5'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1006,7 +1179,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                        {data}
+                        {!isReady && useLoader ? 
+                        <TableLoader tableHeaders={headingColumns} className={'spinners-6'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1054,7 +1228,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies-review' || type === 'users' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'cashier' || type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         // console.log(data)
         return(
             <div className="table-container">
@@ -1072,6 +1246,30 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <tbody>
                     {!isReady && useLoader ? 
                     <TableLoader tableHeaders={headingColumns}/> : data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'users') {
+        // console.log(data)
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-3'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>

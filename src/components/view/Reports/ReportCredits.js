@@ -40,6 +40,7 @@ function ReportCredits() {
   const [render, setRender] = useState([]);
   const [credits, setCredits] = useState([]);
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -69,6 +70,7 @@ function ReportCredits() {
                   setPrintReadyFinal(true);
                 }
               })
+              setIsReady(true)
 
           }).then(function (error) {
             console.log(error);
@@ -120,6 +122,8 @@ function ReportCredits() {
             render={render}
             givenClass={"register-mobile"}
             link={approve}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <ToastContainer hideProgressBar={true} />

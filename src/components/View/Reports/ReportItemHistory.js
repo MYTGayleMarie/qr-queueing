@@ -49,6 +49,7 @@ function ReportItemHistory() {
   const [searchItem, setSearchItem] = useState(true);
   const [inventoryItem, setInventoryItem] = useState("");
   const [inventoryQty, setInventoryQty] = useState("");
+  const [isReady, setIsReady] = useState(false);
 
   //redirect
   const [redirect, setRedirect] = useState(false);
@@ -113,6 +114,7 @@ function ReportItemHistory() {
 
             if(dataList.length - 1 === index) {
                 setPrintReadyFinal(true)
+                setIsReady(true)
             }
         })
       })
@@ -172,6 +174,8 @@ function ReportItemHistory() {
               tableData={displayItems}
               headingColumns={['ITEM NAME','UNIT', 'BEGINNING BALANCE', 'CURRENT BALANCE', 'REMARKS', 'ACTION']}
               link={view}
+              useLoader={true}
+              isReady={isReady}
             />
             
             <br />
