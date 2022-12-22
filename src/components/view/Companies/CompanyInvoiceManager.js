@@ -60,91 +60,139 @@ function CompanyInvoiceManager() {
         setIsReady(true)
         response.data.company_invoices.map((row, index) => {
             var companyDetails = {};
-            axios({
-                method: 'post',
-                url: window.$link + 'companies/show/' + row.company_id,
-                withCredentials: false, 
-                params: {
-                    api_key: window.$api_key,
-                    token: userToken.replace(/['"]+/g, ''),
-                    requester: userId,
-                }
-            }).then(function (company) {
-                // var totalInvoice = 0.00;
-                axios({
-                  method: 'post',
-                  url: window.$link + 'Company_invoices/show/' + row.id,
-                  withCredentials: false, 
-                  params: {
-                      api_key: window.$api_key,
-                      token: userToken.replace(/['"]+/g, ''),
-                      requester: userId,
-                  }
-                }).then((response)=>{
-                  var totalInvoice = parseFloat(response.data.data.company_invoices.total).toFixed(2)
-                  // companyDetails.total = totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            if(status == 'UNPAID' && row.is_paid === "0") {
+                companyDetails.company_id = row.company_id;
+                companyDetails.id = row.id;
+                companyDetails.date = new Date(row.added_on).toDateString();
+                companyDetails.description = row.company_name;
+                companyDetails.discountCode = row.discount_code;
+                companyDetails.remarks = row.remarks;
+                // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+
+                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+
+            }
+            else if(status == "PAID" && row.is_paid === "0") {
+                companyDetails.company_id = row.company_id;
+                companyDetails.id = row.id;
+                companyDetails.date = new Date(row.added_on).toDateString();
+                companyDetails.description = row.company_name;
+                companyDetails.discountCode = row.discount_code;
+                companyDetails.remarks = row.remarks;
+                // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.total = "P "+ row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+
+                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            }
+            else if(status == "ALL"){
+                companyDetails.company_id = row.company_id;
+                companyDetails.id = row.id;
+                companyDetails.date = new Date(row.added_on).toDateString();
+                // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+                companyDetails.description = row.company_name;
+                companyDetails.discountCode = row.discount_code;
+                companyDetails.remarks = row.remarks;
+                // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.total = "P "+ row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+
+                setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            }
+            
+            if(finalCompanyData){
+                setPrintReadyFinal(true)
+            }
+
+            console.log(finalCompanyData)
+            // axios({
+            //     method: 'post',
+            //     url: window.$link + 'companies/show/' + row.company_id,
+            //     withCredentials: false, 
+            //     params: {
+            //         api_key: window.$api_key,
+            //         token: userToken.replace(/['"]+/g, ''),
+            //         requester: userId,
+            //     }
+            // }).then(function (company) {
+            //     // var totalInvoice = 0.00;
+            //     axios({
+            //       method: 'post',
+            //       url: window.$link + 'Company_invoices/show/' + row.id,
+            //       withCredentials: false, 
+            //       params: {
+            //           api_key: window.$api_key,
+            //           token: userToken.replace(/['"]+/g, ''),
+            //           requester: userId,
+            //       }
+            //     }).then((response)=>{
+            //       var totalInvoice = parseFloat(response.data.data.company_invoices.total).toFixed(2)
+            //       // companyDetails.total = totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 
-                // console.log(company);
-                var date = new Date(row.added_on);
-                var formattedDate = date.toDateString().split(" ");
-                if(status == 'UNPAID' && row.is_paid == 0) {
-                    companyDetails.company_id = company.data.id;
-                    companyDetails.id = row.id;
-                    companyDetails.date = date.toDateString();
-                    companyDetails.description = company.data.name;
-                    companyDetails.discountCode = row.discount_code;
-                    companyDetails.remarks = company.data.remarks;
-                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+            //     // console.log(company);
+            //     var date = new Date(row.added_on);
+            //     var formattedDate = date.toDateString().split(" ");
+            //     // if(status == 'UNPAID' && row.is_paid == 0) {
+            //     //     companyDetails.company_id = company.data.id;
+            //     //     companyDetails.id = row.id;
+            //     //     companyDetails.date = date.toDateString();
+            //     //     companyDetails.description = company.data.name;
+            //     //     companyDetails.discountCode = row.discount_code;
+            //     //     companyDetails.remarks = company.data.remarks;
+            //     //     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
-                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            //     //     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
     
-                }
-                else if(status == "PAID" && row.is_paid == 1) {
-                    companyDetails.company_id = company.data.id;
-                    companyDetails.id = row.id;
-                    companyDetails.date = date.toDateString();
-                    companyDetails.description = company.data.name;
-                    companyDetails.discountCode = row.discount_code;
-                    companyDetails.remarks = company.data.remarks;
-                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+            //     // }
+            //     // else if(status == "PAID" && row.is_paid == 1) {
+            //     //     companyDetails.company_id = company.data.id;
+            //     //     companyDetails.id = row.id;
+            //     //     companyDetails.date = date.toDateString();
+            //     //     companyDetails.description = company.data.name;
+            //     //     companyDetails.discountCode = row.discount_code;
+            //     //     companyDetails.remarks = company.data.remarks;
+            //     //     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
-                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
-                }
-                else if(status == "ALL"){
-                    companyDetails.company_id = company.data.id;
-                    companyDetails.id = row.id;
-                    companyDetails.date = date.toDateString();
-                    // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-                    companyDetails.description = company.data.name;
-                    companyDetails.discountCode = row.discount_code;
-                    companyDetails.remarks = company.data.remarks;
-                    // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
+            //     //     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            //     // }
+            //     // else if(status == "ALL"){
+            //     //     companyDetails.company_id = company.data.id;
+            //     //     companyDetails.id = row.id;
+            //     //     companyDetails.date = date.toDateString();
+            //     //     // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+            //     //     companyDetails.description = company.data.name;
+            //     //     companyDetails.discountCode = row.discount_code;
+            //     //     companyDetails.remarks = company.data.remarks;
+            //     //     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.total = "P "+ totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     //     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
     
-                    setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
-                }
+            //     //     setFinalCompanyData(oldArray => [...oldArray, companyDetails]);
+            //     // }
                 
-                if(finalCompanyData){
-                    setPrintReadyFinal(true)
-                }
+            //     // if(finalCompanyData){
+            //     //     setPrintReadyFinal(true)
+            //     // }
 
                   
-                })                .then (function (error) {
-                    console.log(error);
-                    // setIsReady(true)
-                  }).catch((error)=>{console.log(error)})
-            }).catch(function (error) {
-                console.log(error);
-                // setIsReady(false)
-            });
+            //     })                .then (function (error) {
+            //         console.log(error);
+            //         // setIsReady(true)
+            //       }).catch((error)=>{console.log(error)})
+            // }).catch(function (error) {
+            //     console.log(error);
+            //     // setIsReady(false)
+            // });
         });
     }).catch(function (error) {
         console.log(error);
+        // setFinalCompanyData([])
         setIsReady(false)
     });
   }, [render]);
@@ -173,7 +221,7 @@ function CompanyInvoiceManager() {
                 <Table
                     clickable={true}
                     type={'company-invoices'}
-                    tableData={finalCompanyData.sort((a,b) => (new Date(a.date) > new Date(b.date) ? 1 : ((new Date(b.date) > new Date(a.date)) ? -1 : 0)))}
+                    tableData={finalCompanyData?.sort((a,b) => (new Date(a.date) > new Date(b.date) ? 1 : ((new Date(b.date) > new Date(a.date)) ? -1 : 0)))}
                     rowsPerPage={4}
                     headingColumns={['COMPANY ID','ID', 'INVOICE DATE', 'COMPANY NAME', 'DISCOUNT CODE', 'REMARKS', 'TOTAL', 'PAYMENT STATUS', 'ACTION']}
                     filteredData={filteredData}

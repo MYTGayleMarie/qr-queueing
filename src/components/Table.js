@@ -74,7 +74,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
         
         else if (type === 'registration') {
-            console.log(rowData)
+            
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
@@ -365,7 +365,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
 
         else if (type === 'md-referrals') {
-            console.log("hello")
+            
             var data = row.length > 0 ? <>
                 <td data-heading='MD NAME'> {data.map((data,index)=><div className='account-details'>{data.md}</div>)}</td>
                 <td data-heading='REFERRALS QTY'> {data.map((data,index)=><div className='account-details'>{data.qty}</div>)}</td>
@@ -1188,7 +1188,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     if(type === 'md-referrals') {
-        console.log("hello here")
+        
         const {from_date, to_date, done} = filteredData;
         return(
             <div className="table-container">
@@ -1396,7 +1396,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader3 tableHeaders={headingColumns}/> : data}
+                    <TableLoader3 tableHeaders={headingColumns} data={data}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
