@@ -123,18 +123,18 @@ function ReportExpense() {
         name: data.name, 
         unit: data.unit,
         price: parseFloat(data.price).toFixed(2),
-        Jan: parseInt(data.Jan),
-        Feb: parseInt(data.Feb),
-        Mar: parseInt(data.Mar),
-        Apr: parseInt(data.Apr),
-        May: parseInt(data.May),
-        Jun: parseInt(data.Jun),
-        Jul: parseInt(data.Jul),
-        Aug: parseInt(data.Aug),
-        Sept: parseInt(data.Sept),
-        Oct: parseInt(data.Oct),
-        Nov: parseInt(data.Nov),
-        Dec: parseInt(data.Dec)
+        Jan: parseFloat(data.Jan).toFixed(2),
+        Feb: parseFloat(data.Feb).toFixed(2),
+        Mar: parseFloat(data.Mar).toFixed(2),
+        Apr: parseFloat(data.Apr).toFixed(2),
+        May: parseFloat(data.May).toFixed(2),
+        Jun: parseFloat(data.Jun).toFixed(2),
+        Jul: parseFloat(data.Jul).toFixed(2),
+        Aug: parseFloat(data.Aug).toFixed(2),
+        Sept: parseFloat(data.Sept).toFixed(2),
+        Oct: parseFloat(data.Oct).toFixed(2),
+        Nov: parseFloat(data.Nov).toFixed(2),
+        Dec: parseFloat(data.Dec).toFixed(2)
       }})
 
       const XLSX = require('sheetjs-style');
