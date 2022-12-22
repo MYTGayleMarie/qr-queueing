@@ -590,18 +590,18 @@ function ReportAnnual() {
                   return {
                     strategy: data.strategy,
                     overall_census: data.overall_census,
-                    jan: data.jan == null ? 0 : data.jan,
-                    feb: data.feb == null ? 0 : data.feb,
-                    mar: data.mar == null ? 0 : data.mar, 
-                    apr: data.apr == null ? 0 : data.apr,
-                    may: data.may == null ? 0 : data.may,
-                    jun: data.jun == null ? 0 : data.jun,
-                    jul: data.jul == null ? 0 : data.jul,
-                    aug: data.aug == null ? 0 : data.aug,
-                    sep: data.sep == null ? 0 : data.sep,
-                    oct: data.oct == null ? 0 : data.oct,
-                    nov: data.nov == null ? 0 : data.nov,
-                    dec: data.dec == null ? 0 : data.dec,
+                    jan: data.jan == null ? 0 : parseInt(data.jan),
+                    feb: data.feb == null ? 0 : parseInt(data.feb),
+                    mar: data.mar == null ? 0 : parseInt(data.mar), 
+                    apr: data.apr == null ? 0 : parseInt(data.apr),
+                    may: data.may == null ? 0 : parseInt(data.may),
+                    jun: data.jun == null ? 0 : parseInt(data.jun),
+                    jul: data.jul == null ? 0 : parseInt(data.jul),
+                    aug: data.aug == null ? 0 : parseInt(data.aug),
+                    sep: data.sep == null ? 0 : parseInt(data.sep),
+                    oct: data.oct == null ? 0 : parseInt(data.oct),
+                    nov: data.nov == null ? 0 : parseInt(data.nov),
+                    dec: data.dec == null ? 0 : parseInt(data.dec),
                     q1: data.q1 == NaN ? 0 : data.q1,
                     q2: data.q1 == NaN ? 0 : data.q2,
                     q3: data.q3 == NaN ? 0 : data.q3,
@@ -621,6 +621,66 @@ function ReportAnnual() {
           
     },[render]);
 
+    function generateReport(){
+      var annual = report
+      const XLSX = require('sheetjs-style');
+      const worksheet = XLSX.utils.json_to_sheet([{},...annual])
+      
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["QR DIAGNOSTICS","", "", 
+        "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", ""]], { origin: "A1" });
+      XLSX.utils.sheet_add_aoa(worksheet, 
+        [["STRATEGY", "OVERALLCENSUS",  
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC", "Q1","Q2","Q3","Q4","TOTAL"]], { origin: "A2" });
+
+      const cells = ['A1','A2','B2','C2','D2','E2','F2','G2','H2','I2','J2','K2','L2','M2','N2','O2', "P2", "Q2", "R2", "S2"]
+     
+      const workbook = XLSX.utils.book_new();
+      for(var i = 0; i<cells.length;i++){
+       if(cells[i] === 'A1'){
+        worksheet[cells[i]].s = {
+          font: {
+            sz:30,
+            shadow:true,
+            bold: true,
+            color: {
+              rgb: "BFBC4B"
+            }
+          },
+        };
+       }
+       else{
+        worksheet[cells[i]].s = {
+          font: {
+            sz:12,
+            bold: true,
+            color: {
+              rgb: "419EA3"
+            },
+          },
+        };
+      }
+    }
+
+      var wscols = [
+        { width: 40 },  // first column
+        { width: 35}
+      ];
+
+      const merge = [
+        { s: { r: 2, c: 0 }, e: { r: 3, c: 0 } },
+        { s: { r: 4, c: 0 }, e: { r: 11, c: 0 } },
+        { s: { r: 12, c: 0 }, e: { r: 13, c: 0 } },
+        { s: { r: 14, c: 0 }, e: { r: 22, c: 0 } },
+      ];
+      worksheet["!merges"] = merge;
+      worksheet["!cols"] = wscols;
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Annual Report" + new Date().getFullYear());
+      XLSX.writeFile(workbook, "QRDiagnosticsAnnualReport"+new Date().toLocaleDateString()+".xlsx");
+  }
+
   
 
   function filter() {}
@@ -638,6 +698,8 @@ function ReportAnnual() {
             buttons={buttons} 
             tableName={'Annual Report'}
             tableData={report}
+            isAnnual={true}
+            handler={generateReport}
             tableHeadersKey = {[
               {label: 'STRATEGY', key: "strategy"},
               {label: 'OVERALL CENSUS', key: "overall_census"},

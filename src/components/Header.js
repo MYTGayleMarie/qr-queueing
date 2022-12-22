@@ -7,7 +7,7 @@ import './Header.css';
 import {CSVLink} from 'react-csv';
 
 
-function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, breakdown, tableHeadersKey}) {
+function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive, statusPaymentPO, statusPO, editPassword, editSupplier, deleteSupplier, deleteRelease, addInventory, addInvoice, downloadPDF, tableName, tableData, tableHeaders, status, completedOn, receiveItem, editLabTest, deleteLabTest, editPackage, deletePackage, typeData, total, totalExcel, withBack, setBack, breakdown, tableHeadersKey, isAnnual, handler}) {
 
     var btn = [];
     
@@ -121,9 +121,13 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                   salesData.push({date:"GRAND TOTAL", total:totalExcel})
                   // console.log(salesData)
                   return <button className="download"><CSVLink data={salesData} filename={title} className="download-btn">EXPORT EXCEL SALES</CSVLink></button>
-                } else if(status == true) {
+                } else if(status == true && !isAnnual) {
                     return <button className="download"><CSVLink data={tableData} headers={tableHeadersKey} filename={title} className="download-btn">EXPORT EXCEL</CSVLink></button>
-                } else {
+                } 
+                else if(status == true && isAnnual) {
+                    return <button className="download" onClick={handler}>EXPORT EXCEL</button>
+                } 
+                else {
                     return (
                         <button className="download">Loading Data...</button>
                     )
