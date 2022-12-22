@@ -94,11 +94,11 @@ function Registration() {
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
-              // setIsReady(true)
+              setIsReady(true)
             })
             .then (function (error) {
               console.log(error);
-              setIsReady(true)
+              // setIsReady(true)
             });
         });
       })
