@@ -485,7 +485,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader4 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-13'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -657,7 +657,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader8 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-12'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -828,7 +828,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns} className={'spinners-9'}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-14'}/> : data}
                     </tbody>
                 </table>
                 
@@ -895,7 +895,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {tableData.length == 0 ? 
-                    <TableLoader5 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-11'}/> : data}
                     </tbody>
                 </table>
                 
@@ -1229,7 +1229,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'cashier' || type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
         // console.log(data)
         return(
             <div className="table-container">
@@ -1246,7 +1246,31 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data}
+                    </tbody>
+                </table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
+             </div>
+        );
+    }
+    else if(type === 'cashier') {
+        // console.log(data)
+        return(
+            <div className="table-container">
+                <div className="search-table-container d-flex justify-content-end">
+
+                </div>
+                <table className={tableClass}>
+                    <thead>
+                        <tr>
+                            {headingColumns.map((col,index) => (
+                                <th key={index}>{col}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-17'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1321,7 +1345,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     </thead>
                     <tbody>
                     {!isReady && useLoader ? 
-                    <TableLoader1 tableHeaders={headingColumns}/> : data}
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-16'}/> : data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>

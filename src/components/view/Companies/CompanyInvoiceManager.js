@@ -57,7 +57,6 @@ function CompanyInvoiceManager() {
             date_to: filteredData.to_date,
         }
     }).then(function (response) {
-        setIsReady(true)
         response.data.company_invoices.map((row, index) => {
             var companyDetails = {};
             if(status == 'UNPAID' && row.is_paid === "0") {
@@ -105,6 +104,7 @@ function CompanyInvoiceManager() {
             if(finalCompanyData){
                 setPrintReadyFinal(true)
             }
+            setIsReady(true)
 
             console.log(finalCompanyData)
             // axios({

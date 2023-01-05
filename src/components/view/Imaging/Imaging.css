@@ -1,6 +1,7 @@
 .spinner {
     position:fixed;
     left:350%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
@@ -8,6 +9,7 @@
 .spinners {
     position:fixed;
     left:950%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
@@ -15,41 +17,47 @@
 .spinners-2 {
     position:fixed;
     left:115%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners-3 {
     position:fixed;
-    left:285%;
+    left:270%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners-4 {
     position:fixed;
-    left:385%;
+    left:375%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners-5 {
     position:fixed;
-    left:235%;
+    left:224%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners-6 {
     position:fixed;
-    left:315%;
+    left:303%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
 }
 .spinners-7 {
     position:fixed;
-    left:90%;
+    left:87%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
@@ -57,6 +65,7 @@
 .spinners-8 {
     position:fixed;
     left:270%;
+    transform: translate(-50%,-50%);
     /* top:50%;    height: 100%;
     width: 100%;
     transform: translate(-50%,-50%); */
@@ -64,10 +73,62 @@
 .spinners-9 {
     position:fixed;
     left:200%;
+    transform: translate(-50%,-50%);
 }
 .spinners-10 {
     position:fixed;
-    left:150%;
+    left:140%;
+    transform: translate(-50%,-50%);
+}
+.spinners-11 {
+    position:fixed;
+    left:430%;
+    transform: translate(-50%,-50%);
+}
+.spinners-12 {
+    position:fixed;
+    left:111%;
+    transform: translate(-50%,-50%);
+}
+.spinners-13 {
+    position:fixed;
+    left:585%;
+    transform: translate(-50%,-50%);
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinners-14 {
+    position:fixed;
+    left:390%;
+    transform: translate(-50%,-50%);
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinners-15 {
+    position:fixed;
+    left:300%;
+    transform: translate(-50%,-50%);
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinners-16 {
+    position:fixed;
+    left:1000%;
+    transform: translate(-50%,-50%);
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
+}
+.spinners-17 {
+    position:fixed;
+    left:350%;
+    transform: translate(-50%,-50%);
+    /* top:50%;    height: 100%;
+    width: 100%;
+    transform: translate(-50%,-50%); */
 }
 .spin {
     position:fixed;
