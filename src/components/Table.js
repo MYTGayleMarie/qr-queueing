@@ -1113,6 +1113,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if (type === "services"){
+        console.log(data)
         return (
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  

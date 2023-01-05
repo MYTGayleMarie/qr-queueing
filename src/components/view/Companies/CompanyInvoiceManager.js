@@ -31,7 +31,7 @@ function CompanyInvoiceManager() {
 
   const {dateFrom, dateTo} = useParams();
   const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : formattedPresentData,
+    from_date: dateFrom ? dateFrom : "2022-01-06",
     to_date: dateTo ? dateTo : formattedPresentData,
     done: false,
   });

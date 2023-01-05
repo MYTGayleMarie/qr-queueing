@@ -117,6 +117,7 @@ function AddInvoice() {
           token: userToken.replace(/['"]+/g, ''),
           discount_code: discountInfo.discount_code,
           requester: userId,
+          status: "unbilled"
 
       }
     }).then(function (response){

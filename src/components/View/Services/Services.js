@@ -45,42 +45,26 @@ export default function Services(){
             requester: userId,
         }
       }).then((response)=>{
-        const resLabTests = response.data.lab_tests.sort((x, y)=>x.id-y.id).filter(test=>test.is_deleted != 1); // array of all lab tests details
-        console.log(resLabTests)
+        const resLabTests = response.data.lab_tests; // array of all lab tests details
 
         //mapping lab tests response to create object for services
         resLabTests.map(async (data, index)=>{
-          await axios({
-            method: 'post',
-            url: window.$link + 'categories/show/' + data.category_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          })
-          .then( (category) => {
-            console.log(category)
             var labDetails = {}; //object for each lab tests
             labDetails.id = data.id;
             labDetails.name = data.name;
             labDetails.type = 'lab';
-            labDetails.categoryId = category.data.name;
+            labDetails.categoryId = data.category;
             labDetails.price = data.price;
-            console.log(labDetails)
             setAllServices(oldArray=>[...oldArray, labDetails]) //append each lab test detail to all services
-          }
-
-          ).then (function (error) {
-            console.log(error);
             setIsReady(true)
-          })
-          .catch((error)=>{
-            console.log(error)
-            setIsReady(false)
-          })
-          
+          // }).then (function (error) {
+          //   console.log(error);
+          //   setIsReady(true)
+          // })
+          // .catch((error)=>{
+          //   console.log(error)
+          //   setIsReady(false)
+          // })
         })
       }).catch((error)=>{
         console.log(error)
@@ -101,8 +85,8 @@ export default function Services(){
         }
       })
       .then((response)=>{
-        const resPackages = response.data.packages.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id); // array of all packages details
-        
+        const resPackages = response.data.packages;
+
         //mapping packages response to create object for services
         resPackages.map((res, index)=>{
           var packageDetails = {};
@@ -124,7 +108,6 @@ export default function Services(){
           }    
 
           packageDetails.price = res.price;
-          console.log(packageDetails)
           setAllServices(oldArray=>[...oldArray, packageDetails]) //append each package detail to all services
         })
 

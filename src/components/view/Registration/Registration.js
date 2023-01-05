@@ -63,16 +63,17 @@ function Registration() {
       .then( function (response) {
         // setIsReady(false)
         response.data.bookings.map( async (booking, index) => {
-          await axios({
-            method: 'post',
-            url: window.$link + 'customers/show/' + booking.customer_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          }).then(function (customer) {
+          // console.log(booking)
+          // await axios({
+          //   method: 'post',
+          //   url: window.$link + 'customers/show/' + booking.customer_id,
+          //   withCredentials: false,
+          //   params: {
+          //     api_key: window.$api_key,
+          //     token: userToken.replace(/['"]+/g, ''),
+          //     requester: userId,
+          //   },
+          // }).then(function (customer) {
             // setIsReady(false)
               var bookingTime = new Date(booking.booking_time);
               var formatBookingTime = bookingTime.toDateString().split(" ");
@@ -86,20 +87,19 @@ function Registration() {
 
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
-              bookingDetails.name =
-                customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+              bookingDetails.name = booking.first_name + ' ' + booking.middle_name + ' ' + booking.last_name;
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
               bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               setPatientData(oldArray => [...oldArray, bookingDetails]);
-              // setIsReady(true)
-            })
-            .then (function (error) {
-              console.log(error);
               setIsReady(true)
-            });
+            // })
+            // .then (function (error) {
+            //   console.log(error);
+            //   setIsReady(true)
+            // });
         });
       })
       .catch(function (error) {
