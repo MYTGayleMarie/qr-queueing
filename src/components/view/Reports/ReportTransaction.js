@@ -91,6 +91,13 @@ function ReportTransaction() {
                             tests += test.lab_test;
                         }
                     }
+                    if(test.package != null){
+                      if(finalArray.length - 1 != index){
+                        tests += test.package + ", ";
+                    }else {
+                        tests += test.package;
+                    }
+                    }
                   })
 
 
@@ -114,8 +121,6 @@ function ReportTransaction() {
         setIsReady(false)
       });
   }, [render]);
-
-console.log(patientData)
 
   function filter() {}
 
