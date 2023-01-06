@@ -64,7 +64,9 @@ function Cashier() {
   const [filteredData, setFilter] = useForm(filterData);
   const [bookingDetails, setBookingDetails] = useState([]);
   const [redirect, setRedirect] = useState(false);
+  const [patientData, setPatientData] = useState([]);
   const [finalPatientData, setFinalPatientData] = useState([]);
+  const [render, setRender] = useState([]);
   
   //const [render, setRender] = useState([]);
  const [isReady, setIsReady] = useState(false);
@@ -95,7 +97,8 @@ function Cashier() {
   }, []);
 
   React.useEffect(() => {
-    axios({
+    patientData.length = 0;
+     axios({
       method: 'post',
       url: window.$link + 'bookings/getAll',
       withCredentials: false,
@@ -103,68 +106,113 @@ function Cashier() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: filterData.from_date,
+        date_from: filteredData.from_date,
         date_to: filteredData.to_date,
       },
     })
-      .then(function (response) {
-        setBookingDetails(response.data.bookings);
+      .then( function (response) {
+        // setIsReady(false)
+        response.data.bookings.map( async (booking, index) => {
+          // console.log(booking)
+          // await axios({
+          //   method: 'post',
+          //   url: window.$link + 'customers/show/' + booking.customer_id,
+          //   withCredentials: false,
+          //   params: {
+          //     api_key: window.$api_key,
+          //     token: userToken.replace(/['"]+/g, ''),
+          //     requester: userId,
+          //   },
+          // }).then(function (customer) {
+            // setIsReady(false)
+              var bookingTime = new Date(booking.booking_time);
+              var formatBookingTime = bookingTime.toDateString().split(" ");
+              var addedOn = new Date(booking.added_on);
+              var formatAddedOn = addedOn.toDateString().split(" ");
+              var bookingDetails = {};
+
+              var booking_service = booking.type.toUpperCase();
+
+              // console.log(booking);
+
+              // bookingDetails.withDiscount = booking.discount_detail;
+              bookingDetails.id = booking.id;
+              bookingDetails.name = booking.first_name + ' ' + booking.middle_name + ' ' + booking.last_name;
+              bookingDetails.bookingTime =  formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
+              bookingDetails.serviceType = booking_service.toUpperCase();
+              bookingDetails.amount = booking.grand_total;
+              
+              if (booking.paid_amount == booking.grand_total) {
+                bookingDetails.payment = 'PAID';
+              } else if (booking.paid_amount < booking.grand_total) {
+                bookingDetails.payment = 'PENDING';
+              }
+              bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
+              setPatientData(oldArray => [...oldArray, bookingDetails]);
+              setIsReady(true)
+            // })
+            // .then (function (error) {
+            //   console.log(error);
+            //   setIsReady(true)
+            // });
+        });
       })
       .catch(function (error) {
         console.log(error);
         setIsReady(false)
       });
-  }, []);
-
-  React.useEffect(() => {
-    bookingDetails.map((booking, index) => {
-      axios({
-        method: 'post',
-        url: window.$link + 'customers/show/' + booking.customer_id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-        },
-      })
-        .then(function (customer) {
-
-          var bookingTime = new Date(booking.booking_time);
-          var formatBookingTime = bookingTime.toDateString().split(" ");
-          var addedOn = new Date(booking.added_on);
-          var formatAddedOn = addedOn.toDateString().split(" ");
-          var bookingDetails = {};
-          var booking_service = booking.type;
-          
-          bookingDetails.id = booking.id;
-          bookingDetails.name = customer.data.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
-          bookingDetails.bookingTime =  formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-          bookingDetails.serviceType = booking_service.toUpperCase();
-          bookingDetails.amount = booking.grand_total;
-
-          //fully paid or not
-          if (booking.paid_amount == booking.grand_total) {
-            bookingDetails.payment = 'PAID';
-          } else if (booking.paid_amount < booking.grand_total) {
-            bookingDetails.payment = 'PENDING';
-          }
-
-          bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
-          if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code) != true) {
-            setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          setIsReady(false)
-        });
-    });
-  },[bookingDetails]);
+  }, [render]);
+  
 
   // React.useEffect(() => {
-  //   finalPatientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
-  // },[finalPatientData]);
+  //   bookingDetails.map((booking, index) => {
+  //     axios({
+  //       method: 'post',
+  //       url: window.$link + 'customers/show/' + booking.customer_id,
+  //       withCredentials: false,
+  //       params: {
+  //         api_key: window.$api_key,
+  //         token: userToken.replace(/['"]+/g, ''),
+  //         requester: userId,
+  //       },
+  //     })
+  //       .then(function (customer) {
+
+  //         var bookingTime = new Date(booking.booking_time);
+  //         var formatBookingTime = bookingTime.toDateString().split(" ");
+  //         var addedOn = new Date(booking.added_on);
+  //         var formatAddedOn = addedOn.toDateString().split(" ");
+  //         var bookingDetails = {};
+  //         var booking_service = booking.type;
+          
+  //         bookingDetails.id = booking.id;
+  //         bookingDetails.name = .dacustomerta.first_name + ' ' + customer.data.middle_name + ' ' + customer.data.last_name;
+  //         bookingDetails.bookingTime =  formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
+  //         bookingDetails.serviceType = booking_service.toUpperCase();
+  //         bookingDetails.amount = booking.grand_total;
+
+  //         //fully paid or not
+  //         if (booking.paid_amount == booking.grand_total) {
+  //           bookingDetails.payment = 'PAID';
+  //         } else if (booking.paid_amount < booking.grand_total) {
+  //           bookingDetails.payment = 'PENDING';
+  //         }
+
+  //         bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
+  //         if (bookingDetails.payment == 'PENDING' && isCompany(booking.discount_code) != true) {
+  //           setFinalPatientData(oldArray => [...oldArray, bookingDetails]);
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //         setIsReady(false)
+  //       });
+  //   });
+  // },[bookingDetails]);
+
+  // React.useEffect(() => {
+  //   patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)));
+  // },[[patientData]);
 
   function calculate() {
     var fiveCentavoTotal = parseFloat(0.05 * cashCount.fiveCentavos);
@@ -200,8 +248,6 @@ function Cashier() {
   }
 
   function isCompany(discountCode) {
-
-
     axios({
       method: 'post',
       url: window.$link + 'discounts/getAll',
@@ -296,7 +342,7 @@ function Cashier() {
           <Header type="thick" title="BOOKING MANAGER"/>
           <Table
             type={'cashier'}
-            tableData={finalPatientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={4}
             headingColumns={[
               'BOOKING ID',
@@ -310,7 +356,7 @@ function Cashier() {
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
-            //setRender={setRender}
+            setRender={setRender}
             link={addPayment}
             useLoader={true}
             isReady={isReady}

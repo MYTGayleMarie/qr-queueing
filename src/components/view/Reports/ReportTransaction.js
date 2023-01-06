@@ -46,7 +46,7 @@ function ReportTransaction() {
     patientData.length = 0;
     axios({
       method: 'post',
-      url: window.$link + 'bookings/getAll',
+      url: window.$link + 'reports/transaction',
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -57,48 +57,31 @@ function ReportTransaction() {
       },
     })
       .then(function (response) {
+        console.log(response.data.data.bookings)
         setIsReady(false)
-        response.data.bookings.map((booking, index) => {
-          axios({
-            method: 'post',
-            url: window.$link + 'bookings/getDetails/' + booking.id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-            },
-          })
-            .then(function (details) {
-              setIsReady(false)
+        var bookingDetailsResponse = response.data.data.booking_details
+        console.log(bookingDetailsResponse)
+        response.data.data.bookings.map((booking, index) => {
+          
+          
+              
               var bookingTime = new Date(booking.booking_time);
               var formattedBookingTime = bookingTime.toDateString().split(" ");
 
-              axios({
-                method: 'post',
-                url: window.$link + 'customers/show/' + booking.customer_id,
-                withCredentials: false,
-                params: {
-                  api_key: window.$api_key,
-                  token: userToken.replace(/['"]+/g, ''),
-                  requester: userId,
-                },
-              }).then(function (customer) {
+             
                   var bookingDetails = {};
                   bookingDetails.id = booking.id;
-                  bookingDetails.name = customer.data.first_name + " " + customer.data.middle_name + " " + customer.data.last_name;
+                  bookingDetails.name = booking.customer
                   bookingDetails.booking_time = formattedBookingTime[1] + " " + formattedBookingTime[2] + " " + formattedBookingTime[3]; 
                   bookingDetails.type = booking.type.toUpperCase();
-                  console.log(bookingDetails)
+                  
                   //tests
-                  var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
-                  var finalArray = details.data.data.booking_details;
+                  // var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
+                
                   var tests = "";
-                  const packageFinalArray = mergedArray[0];
-    
-                  if(packageFinalArray != null) {
-                      finalArray = finalArray.concat(packageFinalArray);
-                  }
+                  var finalArray = bookingDetailsResponse[booking.id]
+                  console.log(finalArray)
+
     
                   finalArray.map((test,index) => {
                     if(test.lab_test != null) {
@@ -110,35 +93,21 @@ function ReportTransaction() {
                     }
                   })
 
+
     
                   bookingDetails.tests = tests;
                   bookingDetails.payment_type = booking.payment_type === null ? "NONE": booking.payment_type.toUpperCase();
                   bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
-                  if(booking.result=="print with pickup"){
-                    bookingDetails.results = booking.result;
-                  } else {
-                    bookingDetails.results = booking.result + "\n" + customer.data.email;
-                  }
+                  bookingDetails.results = (booking.result).toUpperCase();
                   
                   // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
                   setIsReady(true)
 
-              });
-            })
-            .catch(function (error) {
-              setIsReady(false)
-              console.log(error);
-            });
-
-            if(response.data.bookings.length - 1 == index) {
-              setPrintReadyFinal(true);
-              setIsReady(true)
-            }
-            else{
-              setIsReady(false)
-            }
         });
+        setPrintReadyFinal(true);
+        setIsReady(true)
+       
       })
       .catch(function (error) {
         console.log(error);
