@@ -58,15 +58,14 @@ function ReportServicesPackages() {
             },
           }).then(function (response) {
               var servicesData = response.data.data.data;
-              console.log(servicesData);
               var count = 0;
               servicesData.map((data,index) => {
                 var info = {};
                 if(data.lab_test !== null || data.package !==null){
-                  info.id = data.lab_test_id ? data.lab_test_id : data.package_id;
-                  info.type = data.lab_test_id ? "lab_test": "package";
                   info.service = data.lab_test ? data.lab_test : data.package;
                   info.total_count = data.total_count;
+                  info.id = data.lab_test_id ? data.lab_test_id : data.package_id;
+                  info.type = data.lab_test_id ? "lab_test": "package";
                 }
                 setServicesPackages(oldArray => [...oldArray, info]);
                 setTotalCount(count += parseFloat(info.total_count));
