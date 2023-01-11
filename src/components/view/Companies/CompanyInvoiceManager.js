@@ -106,7 +106,7 @@ function CompanyInvoiceManager() {
             }
             setIsReady(true)
 
-            console.log(finalCompanyData)
+        
             // axios({
             //     method: 'post',
             //     url: window.$link + 'companies/show/' + row.company_id,
@@ -131,7 +131,7 @@ function CompanyInvoiceManager() {
             //       var totalInvoice = parseFloat(response.data.data.company_invoices.total).toFixed(2)
             //       // companyDetails.total = totalInvoice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 
-            //     // console.log(company);
+            // 
             //     var date = new Date(row.added_on);
             //     var formattedDate = date.toDateString().split(" ");
             //     // if(status == 'UNPAID' && row.is_paid == 0) {
@@ -197,7 +197,7 @@ function CompanyInvoiceManager() {
     });
   }, [render]);
 
-  function addPayment(invoiceId, companyId) {
+  function addPayment(invoiceId, companyId, discountCode) {
     id = invoiceId;
     company_id = companyId
     setToAddPayment(true);
@@ -235,6 +235,7 @@ function CompanyInvoiceManager() {
                     useLoader={true}
                     isReady={isReady}
                 />
+               
                 <ToastContainer hideProgressBar={true} />
                 </Fragment>
             </div>
