@@ -267,7 +267,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={index == 3 ? "company_name" : data.val}>{index == 0 || index == 1 ? "" : data.val}</td>)}
-             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.company_id)}>{row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}</button></td>
+             <td><button class="action-btn" role="button" onClick={() => link(row.id, row.company_id, row.discountCode)}>{row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}</button></td>
             </tr>
         }
         else if(type === 'discount'){
@@ -1113,7 +1113,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if (type === "services"){
-        console.log(data)
+       
         return (
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  
@@ -1230,7 +1230,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
-        // console.log(data)
+        
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -1254,7 +1254,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if(type === 'cashier') {
-        // console.log(data)
+      
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
@@ -1278,7 +1278,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     else if(type === 'users') {
-        // console.log(data)
+  
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">

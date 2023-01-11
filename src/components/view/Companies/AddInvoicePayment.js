@@ -256,7 +256,7 @@ const [ifYes, setIfYes] = useState(false);
   React.useEffect(() => {
     axios({
       method: 'post',
-      url: window.$link + 'discounts/company/' + id,
+      url: window.$link + 'discounts/company/' + companyId,
       withCredentials: false, 
       params: {
           api_key: window.$api_key,
@@ -264,7 +264,9 @@ const [ifYes, setIfYes] = useState(false);
           requester: userId,
       }
     }).then(function (response) {
+   
       setDiscountCodes(response.data);
+      setDiscountCode(response.data[0].discount_code)
     }).then(function(error) {
       console.log(error);
     });
@@ -290,7 +292,7 @@ const [ifYes, setIfYes] = useState(false);
                     setHasLogs(false);
                 }
 
-                // console.log(array);
+                
             }
 
       }).then(function(error) {
@@ -311,7 +313,7 @@ const [ifYes, setIfYes] = useState(false);
       }
     }).then(function (response) {
       var invoice = response.data.data.company_invoices;
-      console.log(response)
+ 
       setInvoiceData(invoice)
       setInvoiceStatus(old=>!old)
       setDiscountId(invoice[0].discount_id)
@@ -338,7 +340,7 @@ const [ifYes, setIfYes] = useState(false);
       }); 
 
         promisePrint.then((value) => {
-            // console.log(value);
+           
             setPrintData(true);
         })
 
@@ -353,14 +355,14 @@ const [ifYes, setIfYes] = useState(false);
 
   React.useEffect(()=>{
     info.length=0;
-    console.log(invoiceData)
+ 
     const tempData = (groupArrayOfObjects(Object.values(invoiceData), "price"))
     delete tempData["undefined"]
     var keys = Object.keys(tempData)
 
     keys.map((data, index)=>{
       var info={};
-      console.log(tempData)
+     
       var date = new Date(tempData[data][0].added_on);
       var formattedDate = date.toDateString().split(" ");
       info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
@@ -370,6 +372,7 @@ const [ifYes, setIfYes] = useState(false);
       info.total = parseFloat(data)*tempData[data].length
       setInfo(oldArray=>[...oldArray, info])
     })
+    
   }, [invoiceStatus])
   
   React.useEffect(() => {
@@ -440,7 +443,7 @@ const [ifYes, setIfYes] = useState(false);
             })
             info.packages = [];
             const packages = groupArrayOfObjects(bookingDetails, "package")
-            // console.log(packages)
+            
             delete packages["null"]
             Object.keys(packages).map((data, index)=>{
               var test = {};
@@ -584,7 +587,7 @@ const [ifYes, setIfYes] = useState(false);
                 added_by: userId,
             }
         }).then(function (response) {
-            // console.log(response)            
+                  
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -617,7 +620,7 @@ const [ifYes, setIfYes] = useState(false);
                 added_by: userId,
             }
         }).then(function (response) {
-            // console.log(response);
+            
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -652,7 +655,7 @@ const [ifYes, setIfYes] = useState(false);
                 added_by: userId,
             }
         }).then(function (response) {
-            // console.log(response);
+          
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -682,7 +685,7 @@ const [ifYes, setIfYes] = useState(false);
                 added_by: userId,
             }
         }).then(function (response) {
-            // console.log(response);
+            
             toast.success("Payment Successful!");
             setTimeout(function() {
                 setRedirect(true);
@@ -706,7 +709,7 @@ const [ifYes, setIfYes] = useState(false);
             requester: userId,
         }
       }).then(function (response) {
-        // console.log(response);
+        
       });
   }
 
@@ -721,7 +724,7 @@ const [ifYes, setIfYes] = useState(false);
             requester: userId,
         }
       }).then(function (response) {
-        // console.log(response);
+        
       });
   }
 
@@ -737,7 +740,7 @@ const [ifYes, setIfYes] = useState(false);
             emailed_to: email,
         }
       }).then(function (response) {
-        // console.log(response);
+        
       });
   }
 
