@@ -12,6 +12,11 @@ import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table';
 import Card from '../../Card';
+import { Button, Col, Row } from 'react-bootstrap';
+import ButtonReport from '../../CustomComponents/ButtonComponent';
+import OutlineButtonReport from '../../CustomComponents/OutlinedButtonReport';
+import FilledButtonReport from '../../CustomComponents/FilledButtonReport';
+import SmallOutlineButtonReport from '../../CustomComponents/SmallOutlinedButtonReport';
 
 //variables
 var amount = 100; 
@@ -507,12 +512,67 @@ function Reports() {
         <Navbar/>
         <div className="active-cont">
             <Fragment>
-            <Searchbar title='REPORTS'/>
+            {/* <Searchbar title='QR DIAGNOSTICS REPORTS'/> */}
             <Header 
                 type='thick'
                 title='QR DIAGNOSTICS REPORTS' 
             />
-
+            <Row style={{height:"30vh"}}>
+              <Col>
+               <FilledButtonReport
+               link={["/reports-transaction","/reports-sales"]}
+               totalData={[todayBookings.length, bookings.length, totalSales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]}
+               title={["Transactions", "Total Sales"]}/>
+              </Col>
+              <Col>
+              <FilledButtonReport
+              link={["/reports-services-packages","/reports-home-services"]}
+              totalData={[packages.length, services.length, todayHomeServices.length, homeServices.length]}
+              title={["Services Today", "Home Services"]}
+              />
+              {/* {alert("total sales", totalSales)} */}
+              </Col>
+              <Col style={{justifyContent:"center"}}>
+                <ButtonReport title={"ANNUAL REPORT"} link={"/reports-annual"} className="mt-2"/>
+                <ButtonReport title={"EXPENSE REPORT"} link={"/reports-expense"} />
+                <ButtonReport title={"INVENTORY REPORT"} link={"/reports-inventory"} />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={credit} title={"Credit Report"} link={"/reports-credit"} />
+              </Col>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={unpaidInvoices.length} title={"Receivables"} link={"/unpaid-invoices"} />
+              </Col>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={poCount} title={"Payables"} link={"/receives"} />
+              </Col>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={pendingPOs.length} title={"POs Pending for Approval"} link={"/reports-pending-po"} />
+              </Col>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={incompletePo.length} title={"Incomplete PO"} link={"/reports-incomplete-po"} />
+              </Col>
+              <Col lg={4} md={4}>
+                <OutlineButtonReport todayData={counts_results_releasing} title={"Results Releasing"} link={"/reports-results-releasing"} />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={3} md={3}>
+                <SmallOutlineButtonReport title={"INVENTORY REQUEST"} link={"/reports-inventory"} />
+              </Col>
+              <Col lg={3} md={3}>
+                <SmallOutlineButtonReport title={"ITEM HISTORY"} link={"/reports-item-history"} />
+              </Col>
+              <Col lg={3} md={3}>
+                <SmallOutlineButtonReport title={"REFERRALS"} link={"/reports-referrals"} />
+              </Col>
+              <Col lg={3} md={3}>
+                <SmallOutlineButtonReport title={"MD REPORTS"} link={"/reports-md"} />
+              </Col>
+            </Row>
+{/* 
             <div className="row">
                 <div className="col-sm-4">
                     <Card 
@@ -554,14 +614,14 @@ function Reports() {
                         disable={"today"}
                     />}
                 </div>
-                {/* <div className="col-sm-4">
+                <div className="col-sm-4">
                     <Card 
                         totalData={clinicServices.length}
                         link={"/reports-clinical-services"}
                         title='Clinical Tests'
                         color='blue'
                     />
-                </div> */}
+                </div>
                 <div className="col-sm-4">
                   {role != 3 && <Card 
                         totalData={credit}
@@ -582,8 +642,8 @@ function Reports() {
                         disable={"today"}
                     />}
                 </div>
-            </div>
-            <div className="row">    
+            </div> */}
+            {/* <div className="row">    
                 <div className="col-sm-4">
                     {role != 3 && <Card 
                         totalData={"MD REPORTS"}
@@ -702,7 +762,7 @@ function Reports() {
                     /> }
               </div>
               </div>
-            </div>
+            </div> */}
             </Fragment>
         </div>
         </div>
