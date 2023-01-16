@@ -6,6 +6,7 @@
     width: 80% !important;
     font-weight: bolder !important;
     box-shadow: 1px 3px 8px #888888 !important;
+    margin-bottom: 3rem;
 }
 
 .outlined-button-report{
@@ -78,3 +79,108 @@
 .color-white{
     color:white !important
 }
+
+.img-placement{
+    display:flex;
+    justify-content: end;
+    padding-top: 7px;
+}
+
+.small-title{
+    margin-bottom: 0rem;
+    padding-top: 17px;
+}
+
+.small-title-1{
+    margin-bottom: 0rem;
+    padding-top: 9px;
+}
+
+@media screen and (max-width: 768px) {
+    .filled-button-report{
+        height: 31vh !important;
+    }
+
+    .above-div{
+        margin-left: 40px !important;
+    }
+
+    .below-div{
+        margin-left: 40px !important;
+    }
+
+    .button-report{
+        margin-top: 2%;
+        margin-bottom: 1rem;
+        width: 90% !important;
+    }
+
+    .img-placement{
+        justify-content: start;
+        padding-top: inherit;
+    }
+
+    .small-title{
+        padding-top: 9px;
+    }
+  }
+@media screen and (max-width: 650px) {
+
+    .above-div{
+        margin-left: 30px !important;
+    }
+
+    .below-div{
+        margin-left: 30px !important;
+    }
+
+    .img-placement{
+        justify-content: start;
+        padding-top: inherit;
+    }
+
+  }
+
+@media screen and (max-width: 470px) {
+
+    .above-div{
+        margin-left: 25px !important;
+    }
+
+    .below-div{
+        margin-left: 25px !important;
+    }
+
+    .img-placement{
+        justify-content: end;
+        padding-top: 5px;
+    }
+
+    .small-title-1{
+        padding-top: 15px;
+    }
+
+    .small-title{
+        padding-top: 15px;
+    }
+
+  }
+
+@media screen and (max-width: 380px) {
+
+    .above-div{
+        margin-left: 20px !important;
+    }
+
+    .below-div{
+        margin-left: 20px !important;
+    }
+
+  }
+@media screen and (max-width: 350px) {
+
+    
+    .small-title-1{
+        padding-top: 10px;
+    }
+  }

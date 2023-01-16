@@ -11,7 +11,7 @@ import { Button } from 'react-bootstrap';
 function ButtonReport({totalData, todayData, services, packages, link, title, color, disable, excelReport=false, handler}) {
     return (
         <NavLink to={link} class="report-link" style={{display:"flex", justifyContent:"center"}}>
-           <Button className='button-report mb-5'>{title}</Button>
+           <Button className='button-report'>{title}</Button>
         </NavLink>
     )
 }

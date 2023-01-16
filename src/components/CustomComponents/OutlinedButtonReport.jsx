@@ -14,12 +14,12 @@ function OutlineButtonReport({totalData, todayData, services, packages, link, ti
         <NavLink to={link} class="report-link" style={{display:"flex", justifyContent:"center"}}>
            <div className='outlined-button-report mb-3'>
             <Row>
-                <Col lg={7} style={{paddingLeft:"7px"}}>
+                <Col lg={7} md={7} sm={7} xs={7} style={{paddingLeft:"7px"}}>
                     <h5 style={{marginBottom:"0rem", paddingLeft:"9px", paddingTop:"7px"}}>{todayData}</h5>
                     <div className="outlined-subtitle">{title}</div>
                </Col>
-                <Col style={{display:"flex", justifyContent:"end", paddingTop:"7px", paddingRight:"21px"}}>
-                    <img src={vector} width={80} height={40}/>
+                <Col lg={5} md={5} sm={5} xs={5} style={{display:"flex", justifyContent:"end", paddingTop:"7px", paddingRight:"21px"}}>
+                    <img src={vector} width={80} height={40} className="img-fluid"/>
                 </Col>
             </Row>
            </div>

@@ -517,14 +517,14 @@ function Reports() {
                 type='thick'
                 title='QR DIAGNOSTICS REPORTS' 
             />
-            <Row style={{height:"30vh"}}>
-              <Col>
+            <Row style={{height:"auto", overflow:"hidden"}}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                <FilledButtonReport
                link={["/reports-transaction","/reports-sales"]}
                totalData={[todayBookings.length, bookings.length, totalSales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]}
                title={["Transactions", "Total Sales"]}/>
               </Col>
-              <Col>
+              <Col lg={4} md={4} sm={12} xs={12}>
               <FilledButtonReport
               link={["/reports-services-packages","/reports-home-services"]}
               totalData={[packages.length, services.length, todayHomeServices.length, homeServices.length]}
@@ -532,29 +532,29 @@ function Reports() {
               />
               {/* {alert("total sales", totalSales)} */}
               </Col>
-              <Col style={{justifyContent:"center"}}>
+              <Col style={{justifyContent:"center"}} lg={4} md={4} sm={12} xs={12}>
                 <ButtonReport title={"ANNUAL REPORT"} link={"/reports-annual"} className="mt-2"/>
                 <ButtonReport title={"EXPENSE REPORT"} link={"/reports-expense"} />
                 <ButtonReport title={"INVENTORY REPORT"} link={"/reports-inventory"} />
               </Col>
             </Row>
             <Row>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={credit} title={"Credit Report"} link={"/reports-credit"} />
               </Col>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={unpaidInvoices.length} title={"Receivables"} link={"/unpaid-invoices"} />
               </Col>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={poCount} title={"Payables"} link={"/receives"} />
               </Col>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={pendingPOs.length} title={"POs Pending for Approval"} link={"/reports-pending-po"} />
               </Col>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={incompletePo.length} title={"Incomplete PO"} link={"/reports-incomplete-po"} />
               </Col>
-              <Col lg={4} md={4}>
+              <Col lg={4} md={4} sm={12} xs={12}>
                 <OutlineButtonReport todayData={counts_results_releasing} title={"Results Releasing"} link={"/reports-results-releasing"} />
               </Col>
             </Row>

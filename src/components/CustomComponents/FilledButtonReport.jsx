@@ -25,14 +25,14 @@ function FilledButtonReport({totalData, todayData=[], services, packages, link=[
                     
                 </Col>
                 <Col lg={12} style={{display:"flex", justifyContent:"start"}}>
-                    <Col lg={6} className='filled-data'>{totalData[0]}</Col>
-                    <Col lg={6} className='filled-data'>{totalData[1]}</Col>
+                    <Col lg={6} xs={6} sm={6} md={6} className='filled-data'>{totalData[0]}</Col>
+                    <Col lg={6} xs={6} sm={6} md={6} className='filled-data'>{totalData[1]}</Col>
                 </Col>
                 <Col lg={12} style={{display:"flex", justifyContent:"start"}}>
                     {title[0] !== "Total Sales" &&
                     <>
-                        <Col lg={6} className='filled-subtitle'>Today</Col>
-                        <Col lg={6} className='filled-subtitle'>Total</Col>
+                        <Col lg={6} xs={6} sm={6} md={6} className='filled-subtitle'>Today</Col>
+                        <Col lg={6} xs={6} sm={6} md={6} className='filled-subtitle'>Total</Col>
                     </>
                     }
                 </Col>
@@ -42,7 +42,7 @@ function FilledButtonReport({totalData, todayData=[], services, packages, link=[
             <NavLink to={link[1]} className="color-white">
             <Row className="below-div">
                 <Col lg={12} style={{display:"flex", justifyContent:"end"}}>
-                    <img src={vectordot} width={30} height={15} />
+                    <img src={vectordot} width={30} height={15} className="img-fluid"/>
                 </Col>
                 <Col lg={12} style={{display:"flex", justifyContent:"start"}}>
                     <div className='filled-title'>{title[1]}</div><br/>

@@ -14,14 +14,14 @@ function SmallOutlineButtonReport({totalData, todayData, services, packages, lin
         <NavLink to={link} class="report-link" style={{display:"flex", justifyContent:"center"}}>
            <div className='outlined-button-report mb-3'>
             <Row>
-            <Col style={{display:"flex", justifyContent:"end", paddingTop:"7px"}}>
-                    <img src={vector} width={50} height={50}/>
+            <Col lg={4} md={4} sm={2} xs={4} className="img-placement">
+                    <img src={vector} width={50} height={50} className="img-fluid"/>
                 </Col>
-                <Col lg={8}>
+                <Col lg={8} md={8} sm={10} xs={8}>
                     {title === "INVENTORY REQUEST" ? 
-                    <h5 style={{marginBottom:"0rem", paddingTop:"9px"}}>{title}</h5>
+                    <h5 className="small-title-1">{title}</h5>
                     :
-                    <h5 style={{marginBottom:"0rem", paddingTop:"17px"}}>{title}</h5>
+                    <h5 className="small-title">{title}</h5>
                     }
                     
                     {/* <div className="outlined-subtitle">{title}</div> */}
