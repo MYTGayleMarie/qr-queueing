@@ -159,7 +159,7 @@ function Registration() {
           <Header type="thick" title="BOOKING MANAGER" buttons={buttons} tableData={patientData} />
           <Table
             type={'registration'}
-            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            tableData={patientData}
             rowsPerPage={20}
             headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}

@@ -105,6 +105,7 @@ function ReportTransaction() {
                   bookingDetails.tests = tests;
                   bookingDetails.payment_type = booking.payment_type === null ? "NONE": booking.payment_type.toUpperCase();
                   bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
+                  bookingDetails.paid_amount = booking.paid_amount === null || booking.paid_amount === 0 ? 0 : booking.paid_amount;
                   bookingDetails.results = (booking.result).toUpperCase();
                   
                   // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -136,7 +137,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', ' DISCOUNT', 'MODE OF PICKUP']}
+            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP']}
             status={printReadyFinal}
              />
              <div className='spinner d-flex justify-content-center'>
@@ -144,9 +145,9 @@ function ReportTransaction() {
           <Table
             clickable={false}
             type={'transaction'}
-            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            tableData={patientData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS','PAYMENT TYPE','DISCOUNT','MODE OF PICKUP']}
+            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
