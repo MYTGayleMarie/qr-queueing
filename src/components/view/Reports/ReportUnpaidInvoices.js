@@ -52,19 +52,9 @@ function ReportUnpaidInvoices() {
       }).then(function (response) {
           var pending = response.data.company_invoices.filter((info) => info.is_paid == "0");
           pending.map((data,index) => {
-            axios({
-                method: 'post',
-                url: window.$link + 'companies/show/' + data.company_id,
-                withCredentials: false,
-                params: {
-                  api_key: window.$api_key,
-                  token: userToken.replace(/['"]+/g, ''),
-                  requester: userId,
-                },
-              }).then(function (company) {
                   var info = {};
                   info.id = data.id;
-                  info.company = company.data.name;
+                  info.company = data.company_name;
                   info.discount_code = data.discount_code;
                   // info.price = "P " + data.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   info.total_amount = "P " + data.total.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -76,7 +66,6 @@ function ReportUnpaidInvoices() {
                       setPrintReadyFinal(true);
                   }
                   setIsReady(true)
-              });
           });
 
 

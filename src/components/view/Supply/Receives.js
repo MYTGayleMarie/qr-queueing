@@ -52,7 +52,6 @@ function Receives() {
             date_to: filteredData.to_date,
           },
         }).then(function (receives) {
-            console.log(receives);
             var receivesData = receives.data.receives;
             if(filteredData.status === "UNPAID") {
                 var receivesData =  receives.data.receives.filter((data) => data.paid_amount<data.grand_total);
@@ -61,33 +60,9 @@ function Receives() {
                 var receivesData =   receives.data.receives.filter((data) => data.paid_amount>=data.grand_total);
             }
             receivesData.map((data) => {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'pos/show/' + data.po_id,
-                    withCredentials: false,
-                    params: {
-                      api_key: window.$api_key,
-                      token: userToken.replace(/['"]+/g, ''),
-                      requester: userId,
-                      date_from: filteredData.from_date,
-                      date_to: filteredData.to_date,
-                    },
-                  }).then(function (po) {
-                      console.log(po.data.payment_date);
-                      axios({
-                        method: 'post',
-                        url: window.$link + 'suppliers/show/' + po.data.supplier_id,
-                        withCredentials: false, 
-                        params: {
-                            api_key: window.$api_key,
-                            token: userToken.replace(/['"]+/g, ''),
-                            requester: userId,
-                        }
-                      }).then(function (user) {
-                        console.log(data)
                           var date = new Date(data.receive_date);
                           var formattedDate = date.toDateString().split(" ");
-                          var payment_date = po.data.payment_date === null ? "NONE" : new Date(po.data.payment_date);
+                          var payment_date = data.payment_date === null ? "NONE" : new Date(data.payment_date);
                           var formattedPaymentDate = payment_date === "NONE" ? "NONE" : payment_date.toDateString().split(" ");
 
                           var info = {};
@@ -95,16 +70,12 @@ function Receives() {
                           info.po_no = data.po_id;
                           info.date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
                           info.paid_amount = formattedPaymentDate === "NONE" ? formattedPaymentDate : formattedPaymentDate[1] + " " + formattedPaymentDate[2] + " " + formattedPaymentDate[3];
-                          info.supplier= user.data.name;
+                          info.supplier= data.supplier;
                           info.amount = data.grand_total;
                           info.payment_status = data.paid_amount>=data.grand_total?"PAID":"UNPAID"
-                          info.status = po.data.status;
+                          info.status =data.po_status.toUpperCase();
 
                           setPoData(oldArray => [...oldArray, info]);
-
-                      })
-                      
-                  })
             })
             setIsReady(true)
             
