@@ -176,7 +176,7 @@ function App() {
         <Route path="/purchase-order/:dateFrom/:dateTo/" element={token ? <PurchaseOrder /> : <Navigate to="/" />} />
         <Route path="/receives" element={token ? <Receives/> : <Navigate to="/" />} />
         {/** With date filter */}
-        <Route path="/receives/:dateFrom/:dateTo" element={token ? <Receives/> : <Navigate to="/" />} />
+        <Route path="/:dateFrom/:dateTo" element={token ? <Receives/> : <Navigate to="/" />} />
         <Route path="/receives/:dateFrom/:dateTo/:statusFilter" element={token ? <Receives/> : <Navigate to="/" />} />
         <Route path="/receive-items-manager" element={token ? <ReceiveItems/> : <Navigate to="/" />} />
         <Route path="/receives-print/:id/:poId" element={token ? <ReceivesPrint/> : <Navigate to="/" />} />

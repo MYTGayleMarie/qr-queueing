@@ -231,7 +231,7 @@ if(redirect == true) {
                     <form>
                     
                     {/* <div className="row">
-                        <label for="discount_code" className="form-label">APPLY TO ALL:  </label>
+                        <label for="discount_code" className="form-label">:  </label>
                         <div className="col-sm-1">
                             <input type="radio" value="yes" name="applyToAll" onChange={(e) => setApplyToAll(e.target.value)}/><label className="radio-label">Yes</label>
                         </div>

@@ -60,19 +60,12 @@ export default function MedTech() {
       },
     })
       .then( function (response) {
-        response.data.bookings.map( async (booking, index) => {
-          await axios({
-            method: 'get',
-            url: window.$link + 'bookings/medtech',
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
-              date_from: filteredData.from_date,
-              date_to: filteredData.to_date,
-            },
-          }).then(function (customer) {
+        // response.data.bookings.map(data=>{
+        //   console.log(data)
+        // })
+        var bookingArray = response.data.bookings
+        bookingArray.map((booking, index) => {
+          
             var bookingTime = new Date(booking.added_on);
             var formatBookingTime = bookingTime.toDateString().split(" ");
             var bookingDetails = {};
@@ -84,12 +77,9 @@ export default function MedTech() {
             bookingDetails.paymentStatus = booking.payment_status;
             bookingDetails.uploadStatus = booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
             setPatientData(oldArray => [...oldArray, bookingDetails]);
+            // patientData.push(bookingDetails)
           })
-          .then (function (error) {
-            console.log(error);
-            setIsReady(true)
-          });
-      });
+          setIsReady(true)
     })
     .catch(function (error) {
       console.log(error);

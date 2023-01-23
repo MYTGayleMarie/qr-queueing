@@ -73,7 +73,7 @@ function Receives() {
                           info.supplier= data.supplier;
                           info.amount = data.grand_total;
                           info.payment_status = data.paid_amount>=data.grand_total?"PAID":"UNPAID"
-                          info.status =data.po_status.toUpperCase();
+                          info.status =(data.po_status).toUpperCase();
 
                           setPoData(oldArray => [...oldArray, info]);
             })
