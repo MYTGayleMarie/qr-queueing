@@ -50,32 +50,18 @@ function CompanyDiscounts() {
         }
     }).then(function (response) {
         response.data.discounts.map((data,index) => {
-            if(data.company_id != null) {
-                axios({
-                    method: 'post',
-                    url: window.$link + 'companies/show/' + data.company_id,
-                    withCredentials: false, 
-                    params: {
-                        api_key: window.$api_key,
-                        token: userToken.replace(/['"]+/g, ''),
-                        requester: userId,
-                    }
-                }).then(function (company) {
                     // console.log(company.data);
-                    var info = {};
-                    info.company_id = company.data.id;
-                    info.id = data.id;
-                    info.company_name = company.data.name;
-                    info.code = data.discount_code;
-                    info.discount = data.percentage;
-                    info.description = data.description;
-
-                    setDiscount(oldArray => [...oldArray, info]);
-                }).then (function (error) {
-    
-                });
-            }
-        });
+                    if(data.company_id !== null || data.company !== null){
+                        var info = {};
+                        info.company_id = data.company_id;
+                        info.id = data.id;
+                        info.company_name = data.company;
+                        info.code = data.discount_code;
+                        info.discount = data.percentage;
+                        info.description = data.description;
+                        setDiscount(oldArray => [...oldArray, info]);
+                    }
+                })
     }).then(function (error) {
         console.log(error);
         setIsReady(true)

@@ -49,7 +49,14 @@ function FilledButtonReport({totalData, todayData=[], services, packages, link=[
                     
                 </Col>
                 <Col lg={12} style={{display:"flex", justifyContent:"start"}} className="mb-0">
-                    <Col lg={6} className='filled-data'>{totalData[2]}</Col>
+                    {title[1] === "Total Sales" ? 
+                    <>
+                     <Col lg={6} className='filled-data'>P {totalData[2]}</Col>
+                    </> :
+                     <>
+                     <Col lg={6} className='filled-data'>{totalData[2]}</Col>
+                    </> 
+                    }
                     <Col lg={6} className='filled-data'>{totalData[3]}</Col>
                 </Col>
                 <Col lg={12} style={{display:"flex", justifyContent:"start"}}>

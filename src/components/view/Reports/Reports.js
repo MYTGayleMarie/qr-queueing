@@ -521,7 +521,7 @@ function Reports() {
               <Col lg={4} md={4} sm={12} xs={12}>
                <FilledButtonReport
                link={["/reports-transaction","/reports-sales"]}
-               totalData={[todayBookings.length, bookings.length, totalSales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]}
+               totalData={[todayBookings.length, bookings.length, parseFloat(totalSales).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]}
                title={["Transactions", "Total Sales"]}/>
               </Col>
               <Col lg={4} md={4} sm={12} xs={12}>
