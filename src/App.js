@@ -32,6 +32,7 @@ import ReceivePurchaseOrder from './components/View/Supply/ReceivePurchaseOrder'
 import Receives from './components/View/Supply/Receives';
 import ReceivesPrint from './components/View/Supply/ReceivesPrint';
 import Items from './components/View/Supply/Items';
+import LabOfficer from './components/View/Results Releasing/LabOfficer';
 import MedTech from './components/View/Results Releasing/MedTech';
 import MedTechStart from './components/View/Results Releasing/MedTechStart';
 import ViewPdf from './components/View/Results Releasing/ViewPdf'
@@ -149,9 +150,9 @@ function App() {
         {/** With date filter */}
         <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/View-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
-        <Route path="/View-booking/:id" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        <Route path="/LabOfficer/:id" element={token ? <LabOfficer /> : <Navigate to="/" />} />
         {/** With date filter */}
-        <Route path="/View-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        <Route path="/View-booking/:id/:dateFrom/:dateTo" element={token ? <LabOfficer /> : <Navigate to="/" />} />
         <Route path="/medtech-start/:bookId/:serviceId/:type" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
