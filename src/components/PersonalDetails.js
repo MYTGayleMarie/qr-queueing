@@ -11,7 +11,7 @@ function PersonalDetails({ data }) {
       <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
       <div className="personal-data-cont">
-        <div className="row">
+      <div className="row">
           <div className="col-sm-4">
             <span className="first-name label">FIRST NAME</span>
             <span className="first-name detail">{patient.firstName.toUpperCase()}</span>
