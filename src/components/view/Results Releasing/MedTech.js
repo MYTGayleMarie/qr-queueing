@@ -8,8 +8,6 @@ import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 
-
-
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';

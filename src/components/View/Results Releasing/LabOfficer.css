@@ -1,0 +1,177 @@
+.category {
+    height:fit-content !important;
+  }
+  .pdf-upload-icon {
+    margin:auto;
+    opacity: 0.8;
+  }
+  
+  .pdfObject{
+    width:100vw;
+    height:100vh;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+  
+  .upload-res-btn{
+    background: #55073A;
+    padding: 2px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    color:#ffffff;
+  }
+  .result-cont{
+    height:fit-content;
+    /* margin-bottom: 3rem !important; */
+  }
+  .labtest-line{
+    width: 70vw;
+    color: #B1ADAC;
+  }
+  .submit-btn{
+    background: #55073A;
+    padding: 2px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #ffffff;
+    margin:0 0 0 2rem;
+  }
+  .pdf-icon{
+    width:1.1rem;
+    margin-right: 2rem;
+  }
+  /* pdf upload area */
+  .upload-cont{
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  .file-upload-area {
+    padding:12px;
+    width: 60%;
+    height: 60%;
+    background: #FCFCFC;
+    border: 3px dashed rgba(85, 7, 58, 0.76);
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .input-file-upload {
+    display: none;
+  }
+  .upload-file-icon {
+    opacity: 0.8;
+    width: 50px;
+    margin-bottom: 10px;
+  }
+  .upload-file-btn {
+    color: rgba(85, 7, 58, 1);
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1rem;
+    border: none;
+    background-color: transparent;
+    font-family: 'Montserrat-Bold';
+  }
+  .upload-file-btn:hover {
+    text-decoration-line: underline;
+  }
+  .file-name{
+    font-family: 'Montserrat-Bold';
+    font-size: 1rem;
+    color: rgba(85, 7, 58, 1);
+    margin:0 2rem 0 0;
+  }
+  .file-upload-remove{
+    display:flex;
+    flex-direction: row;
+  }
+  
+  .email-btn {
+    background: #55073A;
+    position: absolute;
+    padding: 2px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    color:#ffffff;
+    right: 30%;
+    background-size: 20%;
+  }
+  .pass-btn {
+    background: #55073A;
+    position: absolute;
+    padding: 2px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    color:#ffffff;
+    right: 30%;
+    /* bottom: 15%; */
+  }
+  
+  .back-btn-container {
+    margin-right: 5%;
+    margin-bottom: 5%;
+  }
+
+  .input-category {
+    margin-left: 0rem !important;
+    padding: 0.3rem;
+  }
+  
+  /* 
+  
+  .file-upload{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .file-upload-btn-wrapper input[type=file] {
+    font-size: 50px;
+    position: relative;
+    z-index:-10000;
+    opacity: 10;
+  }
+  .form-file-upload {
+    height: 12rem;
+    width: 28rem;
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+  }
+  
+  .label-file-upload{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+  }
+  .upload-file-btn{
+    color:rgba(85, 7, 58, 1);
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1rem;
+    border: none;
+    background-color: transparent;
+  }
+  .upload-file-btn:hover{
+    text-decoration-line: underline;
+  }
+  .upload-file-txt{
+    font-family: 'Montserrat-Regular';
+    font-size:0.9rem;
+    font-weight: normal;
+    color:dimgray;
+  
+  } */
