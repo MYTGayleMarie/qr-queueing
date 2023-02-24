@@ -326,6 +326,9 @@ export default function LabOfficer() {
     }
   }
 
+  function handleLab(e){
+    setLabTests(e.target.value)
+  }  
   
    return (
     <div>
@@ -389,12 +392,16 @@ export default function LabOfficer() {
             <div className="personal-data-cont">
               {/* <PersonalDetails data={patientDataa}/> */}
               <div className="col-sm-6"><h3 className='laboratory label'> LABORATORY</h3></div>
-              <select name="lab-select" className="dropdown">
-                <option>X-RAY</option> 
+              <select name="lab-select" onChange={handleLab} className="dropdown">
+              <option> Select laboratory </option>
+              {labTests.map((data, key)=>
+                            <option value={data.id}>{data.category}</option>
+                        )}
+                {/* <option>X-RAY</option> 
                 <option>ECG</option> 
                 <option>HEMATOLOGY</option> 
                 <option>CBC</option> 
-                <option>CLOTTING</option> 
+                <option>CLOTTING</option>  */}
               </select>
             </div>
           <Table
@@ -403,7 +410,7 @@ export default function LabOfficer() {
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
-            dropdownData={labTests}
+            //dropdownData={labTests}
             //setFilter={setFilter}
             //filter={filter}
             setRender={setRender}
