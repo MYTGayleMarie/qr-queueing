@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
-import { getToken, getUser } from '../../../utilities/Common';
+import { getToken, getUser, getRoleId} from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,18 +23,14 @@ var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-// const patientDataa = 
-//     {
-//         firstName: 'Juan',
-//         lastName: 'Dela Cruz',
-//         middleName: 'Dela Flores',
-//         dateOfBirth: 'March 23, 2020',
-//         sex: "female",
-//         age: '20',
-//         contactNumber: "0992910291",
-//         email: "jjdelacruz@gmail.com",
-//         address: "Mandaue City, Cebu Philippines"
-//     };
+const patientDataa = [
+  {
+    "lab": "ECG",
+    "Results": "Php 500",
+    "Value": "PHP 500",
+    "Action": "Edit"
+  }
+]
 
 export default function LabOfficer() {
 
@@ -61,6 +57,8 @@ export default function LabOfficer() {
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [role, setRole] = useState('');
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -308,6 +306,12 @@ export default function LabOfficer() {
     }
   }
 
+  React.useEffect(() => {
+    setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
+  }, []);
+
+  function filter() {}
+
   if(redirectBack === true) {
     if(dateFrom !== undefined && dateTo !== undefined) {
         var link =  "/medtech/" + dateFrom + "/" + dateTo;
@@ -323,7 +327,6 @@ export default function LabOfficer() {
   }
 
   
-
    return (
     <div>
       <Navbar />
@@ -331,7 +334,8 @@ export default function LabOfficer() {
         <Fragment>
           <Header type="thick" title="LABORATORY OFFICER MANAGER"
             withBack={true}
-            setBack={setRedirectBack}/>
+            setBack={setRedirectBack}
+            tableData={patientDataa}/>
           <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
         
             <div className="personal-data-cont">
@@ -393,25 +397,24 @@ export default function LabOfficer() {
                 <option>CLOTTING</option> 
               </select>
             </div>
-          
-
-          {/* <Table
-            type={'medtech'}
-            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+          <Table
+            type={'med-tech'}
+            tableData={patientDataa.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE','PAYMENT STATUS', 'UPLOAD STATUS', 'ACTION']}
+            headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
-            setFilter={setFilter}
-            filter={filter}
+            dropdownData={labTests}
+            //setFilter={setFilter}
+            //filter={filter}
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            link={viewBooking}
+            //link={viewBooking}
             role={role}
             userId={userId}
-            useLoader={true}
-            isReady={isReady}
-          /> */}
+            //useLoader={true}
+            //isReady={isReady}
+          />
           <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>

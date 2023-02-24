@@ -54,6 +54,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>{data.val}</td>)}
             </tr>
         }
+        else if(type === 'lab-tests') {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} style={{fontSize:'0.8rem'}}>{data.val}</td>)}
+            {/* <button class="button-10" role="button" onClick={() => link(row.id)}>EDIT</button> */}
+            </tr>
+        }
         else if(type === 'transaction') {
             return <tr key={row.id}>
             {rowData.map((data, index) => 
