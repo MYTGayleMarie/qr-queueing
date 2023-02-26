@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
+import { MultiSelect } from 'react-multi-select-component';
 
 //import './LabOfficer.css'
 
@@ -29,6 +30,22 @@ const patientDataa = [
     "Results": "Php 500",
     "Value": "PHP 500",
     "Action": "Edit"
+  }
+]
+
+const labTests = [
+  {
+    "lab": "ECG",
+    "Results": "Php 500",
+    "Value": "PHP 500",
+    "Action": "Edit"
+  }
+]
+
+const selectedLab = [
+  {
+    label: "HBA1C",
+    value: "value"
   }
 ]
 
@@ -225,7 +242,7 @@ export default function LabOfficer() {
     
   },[services])
 
-  console.log(labTests)
+  // console.log(labTests)
 
 
   // Categorize lab test
@@ -388,15 +405,28 @@ export default function LabOfficer() {
             <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
             <div className="personal-data-cont">
               {/* <PersonalDetails data={patientDataa}/> */}
-              <div className="col-sm-6"><h3 className='laboratory label'> LABORATORY</h3></div>
+              <div className="row">
+                        <div className="col-sm-11">
+                        <label for="discount_code" className="form-label">LABORATORY</label><br />
+                        <MultiSelect
+                            options={selectedLab}
+                            // optionsStyle='text'
+                            // selectionType='text'
+                            // value={selectedLab}
+                            // onChange={setSelectedLab}
+                            // labelledBy="Select"
+                        />
+                        </div>
+                    </div>
+              {/* <div className="col-sm-6"><h3 className='laboratory label'> LABORATORY</h3></div>
               <select name="lab-select" className="dropdown">
                 <option>X-RAY</option> 
                 <option>ECG</option> 
                 <option>HEMATOLOGY</option> 
                 <option>CBC</option> 
                 <option>CLOTTING</option> 
-              </select>
-            </div>
+              </select>*/}
+            </div> 
           <Table
             type={'med-tech'}
             tableData={patientDataa.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
