@@ -343,6 +343,9 @@ export default function LabOfficer() {
     }
   }
 
+  function handleLab(e){
+    setLabTests(e.target.value)
+  }  
   
    return (
     <div>
@@ -433,7 +436,7 @@ export default function LabOfficer() {
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
-            dropdownData={labTests}
+            //dropdownData={labTests}
             //setFilter={setFilter}
             //filter={filter}
             setRender={setRender}
