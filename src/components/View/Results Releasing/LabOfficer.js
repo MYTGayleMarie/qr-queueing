@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
+import Select from 'react-select'
 import { MultiSelect } from 'react-multi-select-component';
 
 //import './LabOfficer.css'
@@ -24,16 +25,7 @@ var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const patientDataa = [
-  {
-    "lab": "ECG",
-    "Results": "Php 500",
-    "Value": "PHP 500",
-    "Action": "Edit"
-  }
-]
-
-const labTests = [
+const labTestMockData = [
   {
     "lab": "ECG",
     "Results": "Php 500",
@@ -73,6 +65,8 @@ export default function LabOfficer() {
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
+  const [selectedLab, setSelectedLab] = useState([]);
+  const [labOptions, setLabOptions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [role, setRole] = useState('');
@@ -83,6 +77,36 @@ export default function LabOfficer() {
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
+
+  if(selectedLab === 'Urinalysis'){
+    //insert code here
+  };
+
+  React.useEffect(() => {
+    labOptions.length = 0;
+
+    axios({
+        method: 'post',
+        url: window.$link + '/lab_tests/getAll',
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+    }).then(function (response) {
+        response.data.lab_tests.map((data) => {
+            var info = {};
+
+            info.label = data.name;
+            info.value = data.id + "_service";
+
+            setLabOptions(oldArray => [...oldArray, info]);
+        });
+    }).then(function (error) {
+        console.log(error);
+    });
+    },[]);
   
   React.useEffect(()=>{
     axios({
@@ -354,8 +378,7 @@ export default function LabOfficer() {
         <Fragment>
           <Header type="thick" title="LABORATORY OFFICER MANAGER"
             withBack={true}
-            setBack={setRedirectBack}
-            tableData={patientDataa}/>
+            setBack={setRedirectBack}/>
           <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
         
             <div className="personal-data-cont">
@@ -411,13 +434,12 @@ export default function LabOfficer() {
               <div className="row">
                         <div className="col-sm-11">
                         <label for="discount_code" className="form-label">LABORATORY</label><br />
-                        <MultiSelect
-                            options={selectedLab}
-                            // optionsStyle='text'
-                            // selectionType='text'
-                            // value={selectedLab}
-                            // onChange={setSelectedLab}
-                            // labelledBy="Select"
+                        <Select
+                            isSearchable
+                            options={labOptions}
+                            defaultValue={selectedLab}
+                            onChange={setSelectedLab}
+                            labelledBy="Select"
                         />
                         </div>
                     </div>
@@ -432,7 +454,7 @@ export default function LabOfficer() {
             </div> 
           <Table
             type={'med-tech'}
-            tableData={patientDataa.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            tableData={labTestMockData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
