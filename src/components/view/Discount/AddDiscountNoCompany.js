@@ -236,3 +236,8 @@ if(redirect == true) {
 }
 
 export default AddDiscountNoCompany
+
+
+// if(testSelected === "Urinalysis"){
+//     tests = ["Color", "Transparency", "PH"]
+// }

@@ -347,12 +347,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
           <li href="/lab" class="nav-link imaging-nav">
             <img src={labIcon} alt={'lab'} class="lab icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
