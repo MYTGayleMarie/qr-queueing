@@ -174,6 +174,7 @@ export default function LabOfficer() {
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
+  const [labTestData, setLabTestData] = useState([]);
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -186,10 +187,6 @@ export default function LabOfficer() {
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
-
-  if(selectedLab === 'Urinalysis'){
-    //insert code here
-  };
 
   React.useEffect(() => {
     labOptions.length = 0;
@@ -462,6 +459,17 @@ export default function LabOfficer() {
 
   function filter() {}
 
+  useEffect(() => {
+    console.log(selectedLab.label);
+    if(selectedLab.label === 'Urinalysis'){
+      setLabTestData(labTestUrinalysis);
+    } else if (selectedLab.label === "Fecalysis") {
+      setLabTestData(labTestFecalysis);
+    } else {
+      setLabTestData(labTestMockData);
+    }
+  }, [selectedLab]);
+
   if(redirectBack === true) {
     if(dateFrom !== undefined && dateTo !== undefined) {
         var link =  "/medtech/" + dateFrom + "/" + dateTo;
@@ -477,14 +485,14 @@ export default function LabOfficer() {
   }
 
   function handleLab(e){
-    setLabTests(e.target.value)
+    //setLabTests(e.target.value)
 
     if(e.target.value === "Urinalysis") {
-      setLabTests(labTestUrinalysis);
+      setLabTestData(labTestUrinalysis);
     } else if (e.target.value === "Fecalysis") {
-      setLabTests(labTestFecalysis);
+      setLabTestData(labTestFecalysis);
     } else {
-      setLabTests(labTestMockData);
+      setLabTestData(labTestMockData);
     }
 
   }  
@@ -571,9 +579,10 @@ export default function LabOfficer() {
                 <option>CLOTTING</option> 
               </select>*/}
             </div> 
+            
           <Table
             type={'med-tech'}
-            tableData={labTestMockData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
