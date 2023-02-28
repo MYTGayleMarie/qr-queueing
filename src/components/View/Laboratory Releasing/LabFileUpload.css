@@ -1,0 +1,33 @@
+.whole-cont{
+  margin-right: 0.5rem !important;
+  z-index: 1;
+
+}
+.md-row{
+  display: flex;
+
+}
+.md-label{
+  font-size: 1.2rem;
+  margin:  0 0.5rem 0 0;
+  padding:0.2rem 0 0 0  !important;
+}
+.md-input, .md-button{
+  height:2rem;
+  margin:0 !important;
+}
+.md-input{
+  margin-right: 0.5rem !important;
+}
+
+/* .results-cont{
+  height:fit-content;
+  /* margin-bottom: 3rem !important; */
+  .multiple-cont{
+    margin:auto;
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    /* align-items: center; */
+    
+  }
