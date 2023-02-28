@@ -34,6 +34,7 @@ import ReceivesPrint from './components/View/Supply/ReceivesPrint';
 import Items from './components/View/Supply/Items';
 import MedTech from './components/View/Results Releasing/MedTech';
 import MedTechStart from './components/View/Results Releasing/MedTechStart';
+import Lab from './components/View/Laboratory Releasing/Lab';
 import ViewPdf from './components/View/Results Releasing/ViewPdf'
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
@@ -146,8 +147,10 @@ function App() {
          {/** With date filter */}
         <Route path="/review-release/:id/:dateFrom/:dateTo" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
+        <Route path="/lab" element={token ? <Lab /> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
+        <Route path="/lab/:dateFrom/:dateTo" element={token ? <Lab /> : <Navigate to="/" />} />
         <Route path="/View-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
         <Route path="/View-booking/:id" element={token ? <ViewBooking /> : <Navigate to="/" />} />
         {/** With date filter */}
