@@ -68,7 +68,7 @@
                     companyDetails.date = new Date(row.added_on).toDateString();
                     companyDetails.description = row.company_name;
                     companyDetails.discountCode = row.discount_code;
-                    companyDetailss.remarks = row.remarks;
+                    companyDetails.remarks = row.remarks;
                     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
