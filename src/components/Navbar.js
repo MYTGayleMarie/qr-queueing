@@ -15,6 +15,7 @@ import extractionIcon from '../images/icons/extraction-icon.png';
 import imagingIcon from '../images/icons/imaging-icon.png';
 import medTechIcon from '../images/icons/med-tech-icon.png';
 import usersIcon from '../images/icons/users-icon.png';
+import labIcon from '../images/icons/lab-icon.png';
 import companiesIcon from '../images/icons/companies-icon.png';
 import discountIcon from '../images/icons/discount-icon.png';
 import supplyIcon from '../images/icons/supply-icon.png';
@@ -117,6 +118,29 @@ function resultsReleasingNavbar(showNavbar,setShowNavbar) {
   );
 }
 
+function labReleasingNavbar(showNavbar,setShowNavbar) {
+  return (
+    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav" id="sidebar">
+      <ul class="nav flex-column text-white w-100">
+        <div class="d-flex justify-content-center">
+          <img src={logo} alt={'logo'} class="navbar-logo"></img>
+        </div>
+          <NavLink to="/lab" activeClassName="active" class="link">
+            <li href="/lab" class="nav-link imaging-nav">
+              <img src={labIcon} alt={'lab'} class="lab icon"></img>
+              <span class="mx-2">Results Releasing</span>
+            </li>
+          </NavLink>
+          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+            <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
+            <span class="mx-2">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+
 function purchasingNavbar(showNavbar,setShowNavbar) {
   return (
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav" id="sidebar">
@@ -194,6 +218,14 @@ function cashierNavbar(showNavbar,setshowNavbar) {
               <span class="mx-2">Results Releasing</span>
             </li>
         </NavLink>
+
+        <NavLink to="/lab" activeClassName="active" class="link">
+            <li href="/lab" class="nav-link imaging-nav">
+              <img src={labIcon} alt={'lab'} class="lab icon"></img>
+              <span class="mx-2">Results Releasing</span>
+            </li>
+        </NavLink>
+
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
             <span class="mx-2">Companies</span>
@@ -243,6 +275,14 @@ function registrationNavbar(showNavbar,setshowNavbar) {
               <span class="mx-2">Results Releasing</span>
             </li>
         </NavLink>
+
+        <NavLink to="/lab" activeClassName="active" class="link">
+            <li href="/lab" class="nav-link imaging-nav">
+              <img src={labIcon} alt={'lab'} class="lab icon"></img>
+              <span class="mx-2">Results Releasing</span>
+            </li>
+        </NavLink>
+
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
             <span class="mx-2">Companies</span>
@@ -306,6 +346,14 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Results Releasing</span>
           </li>
         </NavLink>
+
+        <NavLink to="/lab" activeClassName="active" class="link">
+          <li href="/lab" class="nav-link imaging-nav">
+            <img src={labIcon} alt={'lab'} class="lab icon"></img>
+            <span class="mx-2">Laboratory Releasing</span>
+          </li>
+        </NavLink>
+
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
             <span class="mx-2">Companies</span>
@@ -562,6 +610,33 @@ function ResultsReleasingNavbarTop(showNavbar, showMobileNavBar, showSupply, set
   )
 }
 
+function LabReleasingNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
+
+  return (
+  <div class="navbar">
+  <div class="logo-mobile">
+      <img src={logo} alt={'logo'} class="navbar-logo"></img>
+  </div>
+  <div id="nav-icon">
+     <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+  </div>
+  <div id="side-nav">
+    <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+      <div class="side-nav-content">
+        <NavLink to="/lab" activeClassName="active" class="link">
+            <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
+            <span class="mx-2">Results Releasing</span>
+        </NavLink>
+          <a href="#" class="nav-link" onClick={removeUserSession}>
+            <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
+            <span class="mx-2 logout-text">Log Out</span>
+          </a>       
+      </div>
+  </div>
+</div>
+  )
+}
+
 function PurchasingNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
 
   return (
@@ -662,6 +737,14 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
             <span class="mx-2">Results Releasing</span>
           </li>
         </NavLink>
+
+        <NavLink to="/lab" activeClassName="active" class="link">
+          <li href="/lab" class="nav-link imaging-nav">
+            <img src={labIcon} alt={'lab'} class="lab icon"></img>
+            <span class="mx-2">Results Releasing</span>
+          </li>
+        </NavLink>
+
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
           <span class="mx-2 logout-text">Log Out</span>
@@ -708,6 +791,13 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             <img src={medTechIcon} alt={'medTech'} class="medTech icon mobile-size-icon"></img>
             <span class="mx-2">Results Releasing</span>
         </NavLink>
+
+        <NavLink to="/lab" activeClassName="active" class="link">
+            <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
+            <span class="mx-2">Results Releasing</span>
+        </NavLink>
+
+
         <div class="side-nav-content">
           <div className='reports-show-nav' onClick={(e) => setShowCompany(!showCompany)}>
             <img src={companiesIcon} alt={'supply'} class="supply icon mobile-size-icon"></img>
