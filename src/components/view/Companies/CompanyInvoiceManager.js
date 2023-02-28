@@ -61,13 +61,14 @@
         }).then(function (response) {
             response.data.company_invoices.map((row, index) => {
                 var companyDetails = {};
+                console.log(companyDetails)
                 if(filteredData.status_filter == "unpaid" && row.is_paid === "0") {
                     companyDetails.company_id = row.company_id;
                     companyDetails.id = row.id;
                     companyDetails.date = new Date(row.added_on).toDateString();
                     companyDetails.description = row.company_name;
                     companyDetails.discountCode = row.discount_code;
-                    companyDetails.remarks = row.remarks;
+                    companyDetailss.remarks = row.remarks;
                     // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.total = "P "+row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID";
