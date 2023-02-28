@@ -27,11 +27,120 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const labTestMockData = [
   {
-    "lab": "ECG",
-    "Results": "Php 500",
-    "Value": "PHP 500",
+    "lab": "",
+    "Results": "Php 0",
+    "Value": "",
     "Action": "Edit"
   }
+]
+
+const labTestUrinalysis = [
+  {
+    "lab": "Color",
+    "Results": " LIGHT YELLOW",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Transparency",
+    "Results": "CLEAR",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Ph",
+    "Results": "5.0",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Specific Gravity",
+    "Results": "1.005",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Protein",
+    "Results": "1+",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Sugar",
+    "Results": "1+",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Pus Cells",
+    "Results": "1",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "RBC",
+    "Results": "1",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Epithelial Cells",
+    "Results": "RARE",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Bacteria",
+    "Results": "RARE",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Amorphous Urates/Phosphate",
+    "Results": "RARE",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Mucus Threads",
+    "Results": "RARE",
+    "Value": "",
+    "Action": "Edit"
+  },
+]
+
+const labTestFecalysis = [
+  {
+    "lab": "Color",
+    "Results": "BROWN",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Consistency",
+    "Results": "Soft",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "RBC": "3",
+    "Results": "BROWN",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Pus Cells",
+    "Results": "1",
+    "Value": "",
+    "Action": "Edit"
+  },
+  {
+    "lab": "Fat Globules",
+    "Results": "FEW",
+    "Value": "",
+    "Action": "Edit"
+  },
+  
 ]
 
 const selectedLab = [
@@ -369,6 +478,15 @@ export default function LabOfficer() {
 
   function handleLab(e){
     setLabTests(e.target.value)
+
+    if(e.target.value === "Urinalysis") {
+      setLabTests(labTestUrinalysis);
+    } else if (e.target.value === "Fecalysis") {
+      setLabTests(labTestFecalysis);
+    } else {
+      setLabTests(labTestMockData);
+    }
+
   }  
   
    return (
@@ -438,7 +556,8 @@ export default function LabOfficer() {
                             isSearchable
                             options={labOptions}
                             defaultValue={selectedLab}
-                            onChange={setSelectedLab}
+                            onChange = {setSelectedLab}
+                            //onChange={e => { setSelectedLab; handleLab() }}
                             labelledBy="Select"
                         />
                         </div>
