@@ -13,7 +13,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 
-//import './LabOfficer.css'
+import './LabOfficer.css'
 
 //components
 import Header from '../../Header.js';
@@ -970,16 +970,36 @@ export default function LabOfficer() {
           />
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
+              <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+              <Modal.Body><div className="row">
+                <div className="col-sm-6">
+                  <div className="edit-sub-header">RESULT</div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <input type="text" name="onePesos" className="results-input" 
+                      // onChange={setCashCount} 
+                      />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="edit-sub-header">UNIT</div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <input type="number" name="twentyPesosBill" className="results-input" 
+                      //onChange={setCashCount} 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </Modal.Body>
             <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+          <button type="submit" className="save-btn">
+              SAVE
+            </button>
         </Modal.Footer>
       </Modal>
           <ToastContainer hideProgressBar={true} />
