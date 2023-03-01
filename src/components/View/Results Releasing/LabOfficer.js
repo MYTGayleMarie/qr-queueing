@@ -143,12 +143,12 @@ const labTestFecalysis = [
   
 ]
 
-const selectedLab = [
-  {
-    label: "HBA1C",
-    value: "value"
-  }
-]
+// const selectedLab = [
+//   {
+//     label: "HBA1C",
+//     value: "value"
+//   }
+// ]
 
 export default function LabOfficer() {
 
