@@ -30,8 +30,8 @@ export default function Lab() {
   document.body.style = 'background: white;';
   const {dateFrom, dateTo} = useParams();
   const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : formattedPresentData,
-    to_date: dateTo? dateTo : formattedPresentData,
+    from_date: dateFrom ? dateFrom : formattedPresentData,//datas in table
+    to_date: dateTo? dateTo : formattedPresentData,//datas in table
     done: false,
   });
   const [render, setRender] = useState([]);
@@ -162,7 +162,7 @@ export default function Lab() {
       </div>
     </div>
   );
-}
+} 
 
 
 
