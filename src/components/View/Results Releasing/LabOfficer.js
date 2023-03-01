@@ -9,6 +9,7 @@ import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
 import { MultiSelect } from 'react-multi-select-component';
+import { Button, Modal } from 'react-bootstrap';
 
 
 
@@ -447,6 +448,11 @@ export default function LabOfficer() {
   const [redirect, setRedirect] = useState(false);
 
   const [role, setRole] = useState('');
+
+  //Edit Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -944,7 +950,7 @@ export default function LabOfficer() {
           <Table
             type={'med-tech'}
             clickable={true}
-            link={edit}
+            link={handleShow}
             tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
@@ -962,6 +968,20 @@ export default function LabOfficer() {
             //isReady={isReady}
             
           />
+          <Modal show={show} onHide={handleClose} animation={false} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>
