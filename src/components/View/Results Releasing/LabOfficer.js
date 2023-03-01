@@ -9,8 +9,11 @@ import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
 import { MultiSelect } from 'react-multi-select-component';
+import { Button, Modal } from 'react-bootstrap';
 
-//import './LabOfficer.css'
+
+
+import './LabOfficer.css'
 
 //components
 import Header from '../../Header.js';
@@ -25,12 +28,14 @@ var id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
+
+
 const labTestMockData = [
   {
     "lab": "",
     "Results": "Php 0",
     "Value": "",
-    "Action": "Edit"
+     
   }
 ]
 
@@ -39,73 +44,73 @@ const labTestUrinalysis = [
     "lab": "Color",
     "Results": " LIGHT YELLOW",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Transparency",
     "Results": "CLEAR",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Ph",
     "Results": "5.0",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Specific Gravity",
     "Results": "1.005",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Protein",
     "Results": "1+",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Sugar",
     "Results": "1+",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "RBC",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Epithelial Cells",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Bacteria",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Amorphous Urates/Phosphate",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Mucus Threads",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -114,41 +119,303 @@ const labTestFecalysis = [
     "lab": "Color",
     "Results": "BROWN",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Consistency",
     "Results": "Soft",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "RBC": "3",
     "Results": "BROWN",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Fat Globules",
     "Results": "FEW",
     "Value": "",
-    "Action": "Edit"
+     
   },
   
 ]
 
-// const selectedLab = [
-//   {
-//     label: "HBA1C",
-//     value: "value"
-//   }
-// ]
+const labTestFecalOccultBlood = [
+  {
+    "lab": "Fecal Occult Blood",
+    "Results": "Negative",
+    "Value": "",
+     
+  },
+]
+
+const labTestPregnancyTest = [
+  {
+    "lab": "Pregnancy Test",
+    "Results": "Negative",
+    "Value": "",
+     
+  },
+]
+
+const labTestSerumPregnancyTest = [
+  {
+    "lab": "Serum Pregnancy Test",
+    "Results": "Negative",
+    "Value": "",
+     
+  },
+]
+
+const labTestSpermAnalysis = [
+  {
+    "lab": "PH Reaction",
+    "Results": "9",
+    "Value": "",
+     
+  },
+  {
+    "lab": "Volume",
+    "Results": "2",
+    "Value": "",
+     
+  },{
+    "lab": "Liquefaction Time",
+    "Results": "30",
+    "Value": "",
+     
+  },{
+    "lab": "Viscosity",
+    "Results": "0",
+    "Value": "",
+     
+  },{
+    "lab": "Total Sperm Count",
+    "Results": "75",
+    "Value": "",
+     
+  },{
+    "lab": "Progresive (PR)",
+    "Results": "85",
+    "Value": "",
+     
+  },{
+    "lab": "Non Progressive",
+    "Results": "10",
+    "Value": "",
+     
+  },{
+    "lab": "Immotile",
+    "Results": "5",
+    "Value": "",
+     
+  },{
+    "lab": "Total Motility (PR+NP)",
+    "Results": "95",
+    "Value": "",
+     
+  },{
+    "lab": "Total Normal Forms",
+    "Results": "70",
+    "Value": "",
+     
+  },{
+    "lab": "Pin Head",
+    "Results": "20",
+    "Value": "",
+     
+  },{
+    "lab": "Double Head",
+    "Results": "5",
+    "Value": "",
+     
+  },{
+    "lab": "Gaint Head",
+    "Results": "5",
+    "Value": "",
+     
+  },{
+    "lab": "WBC",
+    "Results": "10",
+    "Value": "",
+     
+  },{
+    "lab": "RBC",
+    "Results": "1",
+    "Value": "",
+     
+  },
+]
+
+const labTestGramStain = [
+  {
+    "lab": "Gram Staining",
+    "Results": "FREE TEXt",
+    "Value": "",
+     
+  },{
+    "lab": "",
+    "Results": "Epithelial Cells = FEW",
+    "Value": "",
+     
+  },{
+    "lab": "Specimen: Conjunctival and Corneal Scraping",
+    "Results": "FEW",
+    "Value": "",
+     
+  },
+]
+
+const labTestKOH = [
+  {
+    "lab": "KOH, Nail Scrapping, Conjunctival Scrapping",
+    "Results": "FREE TEXT",
+    "Value": "",
+     
+  },
+]
+
+const labTestDengue = [
+  {
+    "lab": "Dengue Rapid Test",
+    "Results": "NS1 AG: NEGATIVE",
+    "Value": "",
+     
+  },{
+    "lab": "",
+    "Results": "IgG: NEGATIVE",
+    "Value": "",
+     
+  },{
+    "lab": "",
+    "Results": "IgM: NEGATIVE",
+    "Value": "",
+     
+  },
+]
+
+const labTestSyphilis = [
+  {
+    "lab": "Syphilis/RPR/VDRL",
+    "Results": "POSITIVE",
+    "Value": "",
+     
+  },
+]
+
+const labTestHIVScreening = [
+  {
+    "lab": "Anti-HIV",
+    "Results": "REACTIVE",
+    "Value": "",
+     
+  },
+]
+
+const labTestHPylori = [
+  {
+    "lab": "H. Pylori",
+    "Results": "NEGATIVE",
+    "Value": "",
+     
+  },
+]
+
+const labTestHepatitisB = [
+  {
+    "lab": "Hepatitis B Surface Antigen Test (HBSag)",
+    "Results": "REACTIVE",
+    "Value": "",
+     
+  },
+]
+
+  const labTestHepatitisA = [
+    {
+    "lab": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
+    "Results": "POSITIVE",
+    "Value": "",
+     
+  },
+]
+
+const labTestTSH = [
+  {
+    "lab": "TSH",
+    "Results": "1.8 H",
+    "Value": "mIU / L",
+     
+  },
+]
+
+const labTestFT4 = [
+  {
+    "lab": "FT4",
+    "Results": "17.3",
+    "Value": "pmol / L",
+     
+  },
+]
+
+const labTestFT3 = [
+  {
+    "lab": "FT3",
+    "Results": "6.69",
+    "Value": "pmol / L",
+     
+  },
+]
+
+const labTestT3 = [
+{
+    "lab": "T2, T3",
+    "Results": "4.59",
+    "Value": "nmol / L",
+     
+  },
+]
+
+const labTestPSA = [
+  {
+    "lab": "PSA",
+    "Results": "<2.0",
+    "Value": "ng/mL",
+     
+  },
+]
+
+const labTestCEA = [
+  {
+    "lab": "CEA",
+    "Results": "4.9",
+    "Value": "ng/mL",
+     
+  },
+]
+
+const labTestVitaminD = [
+  {
+    "lab": "Vitamin D",
+    "Results": "37.16",
+    "Value": "ng/mL",
+     
+  },
+]
+
+const selectedLab = [
+  {
+    label: "HBA1C",
+    value: "value"
+  }
+]
 
 export default function LabOfficer() {
 
@@ -178,8 +445,14 @@ export default function LabOfficer() {
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   const [role, setRole] = useState('');
+
+  //Edit Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -208,6 +481,7 @@ export default function LabOfficer() {
             info.value = data.id + "_service";
 
             setLabOptions(oldArray => [...oldArray, info]);
+            
         });
     }).then(function (error) {
         console.log(error);
@@ -465,7 +739,45 @@ export default function LabOfficer() {
       setLabTestData(labTestUrinalysis);
     } else if (selectedLab.label === "Fecalysis") {
       setLabTestData(labTestFecalysis);
-    } else {
+    } else if (selectedLab.label === "Fecal Occult Blood") {
+      setLabTestData(labTestFecalOccultBlood);
+    } else if (selectedLab.label === "Pregnancy Test (RPK Lateral Flow)") {
+      setLabTestData(labTestPregnancyTest);
+    } else if (selectedLab.label === "Serum Pregnancy Test") {
+      setLabTestData(labTestSerumPregnancyTest);
+    } else if (selectedLab.label === "Sperm Analysis") {
+      setLabTestData(labTestSpermAnalysis);
+    } else if (selectedLab.label === "Gram Stain") {
+      setLabTestData(labTestGramStain);
+    } else if (selectedLab.label === "KOH") {
+      setLabTestData(labTestKOH);
+    } else if (selectedLab.label === "Dengue") {
+      setLabTestData(labTestDengue);
+    } else if (selectedLab.label === "Syphilis/RPR/VDRL") {
+      setLabTestData(labTestSyphilis);
+    } else if (selectedLab.label === "HIV SCreening (Anti HIV)") {
+      setLabTestData(labTestHIVScreening);
+    } else if (selectedLab.label === "H. Pylori") {
+      setLabTestData(labTestHPylori);
+    } else if (selectedLab.label === "HBSag (Hepatitis B Antigen)") {
+      setLabTestData(labTestHepatitisB);
+    } else if (selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)") {
+      setLabTestData(labTestHepatitisA);
+    } else if (selectedLab.label === "TSH") {
+      setLabTestData(labTestTSH);
+    } else if (selectedLab.label === "FT4") {
+      setLabTestData(labTestFT4);
+    } else if (selectedLab.label === "FT3") {
+      setLabTestData(labTestFT3);
+    } else if (selectedLab.label === "T3") {
+      setLabTestData(labTestT3);
+    } else if (selectedLab.label === "PSA") {
+      setLabTestData(labTestPSA);
+    } else if (selectedLab.label === "CEA") {
+      setLabTestData(labTestCEA);
+    } else if (selectedLab.label === "VITAMIN D") {
+      setLabTestData(labTestVitaminD);
+    }else {
       setLabTestData(labTestMockData);
     }
   }, [selectedLab]);
@@ -491,11 +803,64 @@ export default function LabOfficer() {
       setLabTestData(labTestUrinalysis);
     } else if (e.target.value === "Fecalysis") {
       setLabTestData(labTestFecalysis);
+    } else if (e.target.value === "Fecal Occult Blood") {
+      setLabTestData(labTestFecalOccultBlood);
+    } else if (e.target.value === "Pregnancy Test (RPK Lateral Flow)") {
+      setLabTestData(labTestPregnancyTest);
+    } else if (e.target.value === "Serum Pregnancy Test") {
+      setLabTestData(labTestPregnancyTest);
+    } else if (e.target.value === "Sperm Analysis") {
+      setLabTestData(labTestSpermAnalysis);
+    } else if (e.target.value === "Gram Stain") {
+      setLabTestData(labTestGramStain);
+    } else if (e.target.value === "KOH") {
+      setLabTestData(labTestKOH);
+    } else if (e.target.value === "Dengue") {
+      setLabTestData(labTestDengue);
+    } else if (e.target.value === "Syphilis/RPR/VDRL") {
+      setLabTestData(labTestSyphilis);
+    } else if (e.target.value === "HIV SCreening (Anti HIV)") {
+      setLabTestData(labTestHIVScreening);
+    } else if (e.target.value === "H. Pylori") {
+      setLabTestData(labTestHPylori);
+    } else if (e.target.value === "HBSag (Hepatitis B Antigen)") {
+      setLabTestData(labTestHepatitisB);
+    } else if (e.target.value === "Anti HBs/HBSab (Hepatitis B Antibody)") {
+      setLabTestData(labTestHepatitisA); 
+    } else if (e.target.value === "TSH") {
+      setLabTestData(labTestTSH); 
+    } else if (e.target.value === "FT4") {
+      setLabTestData(labTestFT4); 
+    } else if (e.target.value === "FT3") {
+      setLabTestData(labTestFT3); 
+    } else if (e.target.value === "T3") {
+      setLabTestData(labTestT3); 
+    } else if (e.target.value === "PSA") {
+      setLabTestData(labTestPSA); 
+    } else if (e.target.value === "CEA") {
+      setLabTestData(labTestCEA); 
+    } else if (e.target.value === "VITAMIN D") {
+      setLabTestData(labTestVitaminD); 
     } else {
       setLabTestData(labTestMockData);
     }
 
   }  
+
+  function edit(itemId,itemUnit) {
+    
+    // id = itemId;
+    // unit = itemUnit;
+    setRedirect(true);
+  }
+
+  if(redirect == true) {
+    var link =  "/medtech";
+    //console.log(link);
+    return (
+        <Navigate to ={link}/>
+    )
+  }
   
    return (
     <div>
@@ -554,6 +919,7 @@ export default function LabOfficer() {
             </div>
             </div>
             <br/>
+
             <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
             <div className="personal-data-cont">
               {/* <PersonalDetails data={patientDataa}/> */}
@@ -580,31 +946,65 @@ export default function LabOfficer() {
               </select>*/}
             </div> 
             
+
           <Table
             type={'med-tech'}
+            clickable={true}
+            link={handleShow}
             tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
             //dropdownData={labTests}
-            //setFilter={setFilter}
-            //filter={filter}
+            setFilter={setFilter}
+            filter={filter}
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            //link={viewBooking}
+            // link={viewBooking}
             role={role}
             userId={userId}
             //useLoader={true}
             //isReady={isReady}
+            
           />
+          <Modal show={show} onHide={handleClose} animation={false} centered>
+            <Modal.Header closeButton>
+              <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
+            </Modal.Header>
+              <Modal.Body>
+              <div className="row">
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">RESULT</div>
+                    <input type="text" className="results-input" 
+                    // onChange={setCashCount} 
+                    />
+                  </div>
+                </div>
+
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">UNIT</div>
+                    <input type="number" className="results-input" 
+                    //onChange={setCashCount} 
+                    />
+                  </div>
+                </div>
+            </div>
+              </Modal.Body>
+            <Modal.Footer>
+          <button type="submit" className="save-btn">
+              SAVE
+            </button>
+        </Modal.Footer>
+      </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>
     </div>
   );
 }
-
 
 
 

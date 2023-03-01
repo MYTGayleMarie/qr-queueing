@@ -156,7 +156,7 @@ function Registration() {
       <Navbar />
       <div className="active-cont">
         <Fragment>
-          <Header type="thick" title="BOOKING MANAGER" buttons={buttons} tableData={patientData} />
+          <Header type="thick" title="BOOKING MANAGERrr" buttons={buttons} tableData={patientData} />
           <Table
             type={'registration'}
             tableData={patientData}
