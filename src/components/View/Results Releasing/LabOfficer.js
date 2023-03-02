@@ -1013,6 +1013,7 @@ export default function LabOfficer() {
                     //onChange={setCashCount} 
                     />
                   </div>
+                </div>
 
                 <div className="col-sm-6">
                   <div className="result-input-wrapper">
@@ -1024,7 +1025,6 @@ export default function LabOfficer() {
                     />
                   </div>
                 </div>
-              </div>
               </div>
               </Modal.Body>
             <Modal.Footer>
