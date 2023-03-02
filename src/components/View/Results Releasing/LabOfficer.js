@@ -451,8 +451,32 @@ export default function LabOfficer() {
 
   //Edit Modal
   const [show, setShow] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [resultValue, setResultValue] = useState('');
+  const [unitValue, setUnitValue] = useState('');
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const handleShow = (rowIndex) => {
+    setSelectedRow(rowIndex);
+    setShow(true);
+  };
+
+  // creates an updated labTestData array with the new result and unit values
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  
+    // Update the corresponding row in the labTestData array with the new result and unit values
+    const updatedLabTestData = [...labTestData];
+    updatedLabTestData[selectedRow].result = resultValue;
+    updatedLabTestData[selectedRow].unit = unitValue;
+    setLabTestData(updatedLabTestData);
+  
+    // Reset the state variables
+    setSelectedRow(null);
+    setResultValue('');
+    setUnitValue('');
+    setShow(false);
+  };
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -733,6 +757,7 @@ export default function LabOfficer() {
 
   function filter() {}
 
+  // use to output the lab test data in the table
   useEffect(() => {
     console.log(selectedLab.label);
     if(selectedLab.label === 'Urinalysis'){
@@ -846,10 +871,8 @@ export default function LabOfficer() {
     }
   }  
 
-// <<<<<<< HEAD
   const {from_date, to_date, done} = filteredData;
 
-// =======
   function edit(itemId,itemUnit) {
     
     // id = itemId;
@@ -865,7 +888,7 @@ export default function LabOfficer() {
     )
   }
   
-// >>>>>>> f5fddb6bddb528aca9a0164122827837a54eee9d
+
    return (
     <div>
       <Navbar />
@@ -970,37 +993,35 @@ export default function LabOfficer() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            // link={viewBooking}
             role={role}
             userId={userId}
             //useLoader={true}
-            //isReady={isReady}
-            
+            //isReady={isReady} 
           />
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
             </Modal.Header>
               <Modal.Body>
-              <div className="row">
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">RESULT</div>
-                    <input type="text" className="results-input" 
-                    // onChange={setCashCount} 
-                    />
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-sub-header">RESULT</div>
+                      <input type="text" className="results-input" 
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">UNIT</div>
-                    <input type="number" className="results-input" 
-                    //onChange={setCashCount} 
-                    />
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-sub-header">UNIT</div>
+                      <input type="number" className="results-input" 
+                      />
+                    </div>
                   </div>
                 </div>
-            </div>
+              </form>
               </Modal.Body>
             <Modal.Footer>
           <button type="submit" className="save-btn">
