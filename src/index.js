@@ -15,6 +15,7 @@ window.$link= "https://blue-dev.qrdiagnosticsph.com/";
 window.$api_key = "Y5QubbhTOb";
 window.$userId = getUser();
 window.$roleId = getRoleId();
+window.$userToken = getToken();
 window.$token_expiry = getTokenExpiry();
 
 ReactDOM.render(
