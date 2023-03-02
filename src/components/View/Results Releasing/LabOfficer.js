@@ -837,9 +837,10 @@ export default function LabOfficer() {
     } else {
       setLabTestData(labTestMockData);
     }
-
   }  
-  
+
+  const {from_date, to_date, done} = filteredData;
+
    return (
     <div>
       <Navbar />
@@ -924,6 +925,11 @@ export default function LabOfficer() {
               </select>*/}
             </div> 
             
+            <div className="col-sm-11 d-flex justify-content-end">
+                <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
+                <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter}/>
+                <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
+            </div>
 
           <Table
             type={'med-tech'}

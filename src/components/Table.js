@@ -433,7 +433,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
-            </div>
+                </div>
                 </div>
                 <table className={tableClass}>
                     <thead>
@@ -456,6 +456,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     
+
+
     if( type === 'release') {
     
         const {from_date, to_date, done} = filteredData;

@@ -9,7 +9,7 @@ import {getRoleId, getToken, getTokenExpiry, getUser} from './utilities/Common.j
 
 
 //GLOBAL VARIABLES
-window.$link= "https://blue.qrdiagnosticsph.com/";
+window.$link= "https://blue-dev.qrdiagnosticsph.com/";
 // blue-dev.qrdiagnosticsph.com/
 // https://blue.qrdiagnosticsph.com/"
 window.$api_key = "Y5QubbhTOb";
