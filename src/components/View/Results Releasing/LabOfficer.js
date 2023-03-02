@@ -846,10 +846,10 @@ export default function LabOfficer() {
     }
   }  
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
   const {from_date, to_date, done} = filteredData;
 
-=======
+// =======
   function edit(itemId,itemUnit) {
     
     // id = itemId;
@@ -865,7 +865,7 @@ export default function LabOfficer() {
     )
   }
   
->>>>>>> f5fddb6bddb528aca9a0164122827837a54eee9d
+// >>>>>>> f5fddb6bddb528aca9a0164122827837a54eee9d
    return (
     <div>
       <Navbar />
