@@ -453,41 +453,11 @@ export default function LabOfficer() {
 
   //Edit Modal
   const [show, setShow] = useState(false);
-<<<<<<< Updated upstream
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [resultValue, setResultValue] = useState('');
-  const [unitValue, setUnitValue] = useState('');
-  const handleClose = () => setShow(false);
-
-  const handleShow = (rowIndex) => {
-    setSelectedRow(rowIndex);
-    setShow(true);
-  };
-
-  // creates an updated labTestData array with the new result and unit values
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  
-    // Update the corresponding row in the labTestData array with the new result and unit values
-    const updatedLabTestData = [...labTestData];
-    updatedLabTestData[selectedRow].result = resultValue;
-    updatedLabTestData[selectedRow].unit = unitValue;
-    setLabTestData(updatedLabTestData);
-  
-    // Reset the state variables
-    setSelectedRow(null);
-    setResultValue('');
-    setUnitValue('');
-    setShow(false);
-  };
-
-=======
   const [labName, setLabName] = useState("");
   const [result, setResult] = useState("");
   const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
   
->>>>>>> Stashed changes
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
   
@@ -1033,16 +1003,6 @@ export default function LabOfficer() {
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
             </Modal.Header>
               <Modal.Body>
-<<<<<<< Updated upstream
-              <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-sub-header">RESULT</div>
-                      <input type="text" className="results-input" 
-                      />
-                    </div>
-=======
               <div className="row">
                 <div className="col-sm-6">
                   <div className="result-input-wrapper">
@@ -1052,17 +1012,8 @@ export default function LabOfficer() {
                     onChange={(e) => setResult(e.target.value)}
                     //onChange={setCashCount} 
                     />
->>>>>>> Stashed changes
                   </div>
 
-<<<<<<< Updated upstream
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-sub-header">UNIT</div>
-                      <input type="number" className="results-input" 
-                      />
-                    </div>
-=======
                 <div className="col-sm-6">
                   <div className="result-input-wrapper">
                     <div className="edit-sub-header">UNIT</div>
@@ -1071,10 +1022,10 @@ export default function LabOfficer() {
                     onChange={(e) => setUnit(e.target.value)}
                     //onChange={setCashCount} 
                     />
->>>>>>> Stashed changes
                   </div>
                 </div>
-              </form>
+              </div>
+              </div>
               </Modal.Body>
             <Modal.Footer>
           <button type="submit" className="save-btn" 
