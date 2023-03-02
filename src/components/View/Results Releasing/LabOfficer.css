@@ -1,3 +1,29 @@
+.edit-header {
+  font-family: 'Montserrat-Italic';
+  font-size: 36px;
+  color: #BFBC4B;
+}
+
+.edit-sub-header {
+  font-family: 'Montserrat-Bold';
+  font-size: 20px;
+  line-height: 29px;
+  letter-spacing: 0.135em;
+  text-decoration-line: underline;
+
+  color: #419EA3;
+
+}
+
+.results-input {
+  display: block;
+  margin: 0 auto;
+}
+
+.result-input-wrapper {
+  display: inline-block;
+}
+
 .category {
     height:fit-content !important;
   }

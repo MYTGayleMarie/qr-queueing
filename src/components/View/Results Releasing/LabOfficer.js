@@ -9,10 +9,11 @@ import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
 import { MultiSelect } from 'react-multi-select-component';
+import { Button, Modal } from 'react-bootstrap';
 
 
 
-//import './LabOfficer.css'
+import './LabOfficer.css'
 
 //components
 import Header from '../../Header.js';
@@ -34,7 +35,7 @@ const labTestMockData = [
     "lab": "",
     "Results": "Php 0",
     "Value": "",
-    "Action": "Edit"
+     
   }
 ]
 
@@ -43,73 +44,73 @@ const labTestUrinalysis = [
     "lab": "Color",
     "Results": " LIGHT YELLOW",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Transparency",
     "Results": "CLEAR",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Ph",
     "Results": "5.0",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Specific Gravity",
     "Results": "1.005",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Protein",
     "Results": "1+",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Sugar",
     "Results": "1+",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "RBC",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Epithelial Cells",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Bacteria",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Amorphous Urates/Phosphate",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Mucus Threads",
     "Results": "RARE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -118,31 +119,31 @@ const labTestFecalysis = [
     "lab": "Color",
     "Results": "BROWN",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Consistency",
     "Results": "Soft",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "RBC": "3",
     "Results": "BROWN",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Fat Globules",
     "Results": "FEW",
     "Value": "",
-    "Action": "Edit"
+     
   },
   
 ]
@@ -152,7 +153,7 @@ const labTestFecalOccultBlood = [
     "lab": "Fecal Occult Blood",
     "Results": "Negative",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -161,7 +162,7 @@ const labTestPregnancyTest = [
     "lab": "Pregnancy Test",
     "Results": "Negative",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -170,7 +171,7 @@ const labTestSerumPregnancyTest = [
     "lab": "Serum Pregnancy Test",
     "Results": "Negative",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -179,78 +180,78 @@ const labTestSpermAnalysis = [
     "lab": "PH Reaction",
     "Results": "9",
     "Value": "",
-    "Action": "Edit"
+     
   },
   {
     "lab": "Volume",
     "Results": "2",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Liquefaction Time",
     "Results": "30",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Viscosity",
     "Results": "0",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Total Sperm Count",
     "Results": "75",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Progresive (PR)",
     "Results": "85",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Non Progressive",
     "Results": "10",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Immotile",
     "Results": "5",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Total Motility (PR+NP)",
     "Results": "95",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Total Normal Forms",
     "Results": "70",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Pin Head",
     "Results": "20",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Double Head",
     "Results": "5",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Gaint Head",
     "Results": "5",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "WBC",
     "Results": "10",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "RBC",
     "Results": "1",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -259,17 +260,17 @@ const labTestGramStain = [
     "lab": "Gram Staining",
     "Results": "FREE TEXt",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "",
     "Results": "Epithelial Cells = FEW",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "Specimen: Conjunctival and Corneal Scraping",
     "Results": "FEW",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -278,7 +279,7 @@ const labTestKOH = [
     "lab": "KOH, Nail Scrapping, Conjunctival Scrapping",
     "Results": "FREE TEXT",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -287,17 +288,17 @@ const labTestDengue = [
     "lab": "Dengue Rapid Test",
     "Results": "NS1 AG: NEGATIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "",
     "Results": "IgG: NEGATIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },{
     "lab": "",
     "Results": "IgM: NEGATIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -306,7 +307,7 @@ const labTestSyphilis = [
     "lab": "Syphilis/RPR/VDRL",
     "Results": "POSITIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -315,7 +316,7 @@ const labTestHIVScreening = [
     "lab": "Anti-HIV",
     "Results": "REACTIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -324,7 +325,7 @@ const labTestHPylori = [
     "lab": "H. Pylori",
     "Results": "NEGATIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -333,7 +334,7 @@ const labTestHepatitisB = [
     "lab": "Hepatitis B Surface Antigen Test (HBSag)",
     "Results": "REACTIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -342,7 +343,7 @@ const labTestHepatitisB = [
     "lab": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
     "Results": "POSITIVE",
     "Value": "",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -351,7 +352,7 @@ const labTestTSH = [
     "lab": "TSH",
     "Results": "1.8 H",
     "Value": "mIU / L",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -360,7 +361,7 @@ const labTestFT4 = [
     "lab": "FT4",
     "Results": "17.3",
     "Value": "pmol / L",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -369,7 +370,7 @@ const labTestFT3 = [
     "lab": "FT3",
     "Results": "6.69",
     "Value": "pmol / L",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -378,7 +379,7 @@ const labTestT3 = [
     "lab": "T2, T3",
     "Results": "4.59",
     "Value": "nmol / L",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -387,7 +388,7 @@ const labTestPSA = [
     "lab": "PSA",
     "Results": "<2.0",
     "Value": "ng/mL",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -396,7 +397,7 @@ const labTestCEA = [
     "lab": "CEA",
     "Results": "4.9",
     "Value": "ng/mL",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -405,7 +406,7 @@ const labTestVitaminD = [
     "lab": "Vitamin D",
     "Results": "37.16",
     "Value": "ng/mL",
-    "Action": "Edit"
+     
   },
 ]
 
@@ -444,8 +445,14 @@ export default function LabOfficer() {
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   const [role, setRole] = useState('');
+
+  //Edit Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -839,8 +846,26 @@ export default function LabOfficer() {
     }
   }  
 
+<<<<<<< HEAD
   const {from_date, to_date, done} = filteredData;
 
+=======
+  function edit(itemId,itemUnit) {
+    
+    // id = itemId;
+    // unit = itemUnit;
+    setRedirect(true);
+  }
+
+  if(redirect == true) {
+    var link =  "/medtech";
+    //console.log(link);
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+  
+>>>>>>> f5fddb6bddb528aca9a0164122827837a54eee9d
    return (
     <div>
       <Navbar />
@@ -933,6 +958,8 @@ export default function LabOfficer() {
 
           <Table
             type={'med-tech'}
+            clickable={true}
+            link={handleShow}
             tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
@@ -950,6 +977,37 @@ export default function LabOfficer() {
             //isReady={isReady}
             
           />
+          <Modal show={show} onHide={handleClose} animation={false} centered>
+            <Modal.Header closeButton>
+              <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
+            </Modal.Header>
+              <Modal.Body>
+              <div className="row">
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">RESULT</div>
+                    <input type="text" className="results-input" 
+                    // onChange={setCashCount} 
+                    />
+                  </div>
+                </div>
+
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">UNIT</div>
+                    <input type="number" className="results-input" 
+                    //onChange={setCashCount} 
+                    />
+                  </div>
+                </div>
+            </div>
+              </Modal.Body>
+            <Modal.Footer>
+          <button type="submit" className="save-btn">
+              SAVE
+            </button>
+        </Modal.Footer>
+      </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
       </div>
