@@ -24,7 +24,9 @@ import PersonalDetails from '../../PersonalDetails.js';
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
-var id = "";
+// var id = "";
+// var result = "";
+// var unit = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -39,7 +41,7 @@ const labTestMockData = [
   }
 ]
 
-const labTestUrinalysis = [
+let labTestUrinalysis = [
   {
     "lab": "Color",
     "Results": " LIGHT YELLOW",
@@ -50,61 +52,61 @@ const labTestUrinalysis = [
     "lab": "Transparency",
     "Results": "CLEAR",
     "Value": "",
-     
+    
   },
   {
     "lab": "Ph",
     "Results": "5.0",
     "Value": "",
-     
+    
   },
   {
     "lab": "Specific Gravity",
     "Results": "1.005",
     "Value": "",
-     
+    
   },
   {
     "lab": "Protein",
     "Results": "1+",
     "Value": "",
-     
+    
   },
   {
     "lab": "Sugar",
     "Results": "1+",
     "Value": "",
-     
+    
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-     
+    
   },
   {
     "lab": "RBC",
     "Results": "1",
     "Value": "",
-     
+    
   },
   {
     "lab": "Epithelial Cells",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Bacteria",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Amorphous Urates/Phosphate",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Mucus Threads",
@@ -451,6 +453,7 @@ export default function LabOfficer() {
 
   //Edit Modal
   const [show, setShow] = useState(false);
+<<<<<<< Updated upstream
   const [selectedRow, setSelectedRow] = useState(null);
   const [resultValue, setResultValue] = useState('');
   const [unitValue, setUnitValue] = useState('');
@@ -478,12 +481,39 @@ export default function LabOfficer() {
     setShow(false);
   };
 
+=======
+  const [labName, setLabName] = useState("");
+  const [result, setResult] = useState("");
+  const [unit, setUnit] = useState("");
+  const handleClose = () => setShow(false);
+  
+>>>>>>> Stashed changes
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
-
+  
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
+  
+  function update(labName, labResult, labUnit) {
+    setLabName(labName);
+    setResult(labResult);
+    setUnit(labUnit);
+    setShow(true);
+    // handleShow();
+  }
+  
+  const submit = (e) => {
+    e.preventDefault();
+    const updatedData = labTestData.map(row => {
+      if (row.lab === labName) {
+        return { ...row, Results: result, Value: unit };
+      }
+      return row;
+    });
+    setLabTestData(updatedData);
+    handleClose();
+  };
 
   React.useEffect(() => {
     labOptions.length = 0;
@@ -982,7 +1012,7 @@ export default function LabOfficer() {
           <Table
             type={'med-tech'}
             clickable={true}
-            link={handleShow}
+            link={update}
             tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
@@ -1003,6 +1033,7 @@ export default function LabOfficer() {
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
             </Modal.Header>
               <Modal.Body>
+<<<<<<< Updated upstream
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-sm-6">
@@ -1011,20 +1042,44 @@ export default function LabOfficer() {
                       <input type="text" className="results-input" 
                       />
                     </div>
+=======
+              <div className="row">
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">RESULT</div>
+                    <input type="text" className="results-input"
+                    value={result} 
+                    onChange={(e) => setResult(e.target.value)}
+                    //onChange={setCashCount} 
+                    />
+>>>>>>> Stashed changes
                   </div>
 
+<<<<<<< Updated upstream
                   <div className="col-sm-6">
                     <div className="result-input-wrapper">
                       <div className="edit-sub-header">UNIT</div>
                       <input type="number" className="results-input" 
                       />
                     </div>
+=======
+                <div className="col-sm-6">
+                  <div className="result-input-wrapper">
+                    <div className="edit-sub-header">UNIT</div>
+                    <input type="number" className="results-input" 
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
+                    //onChange={setCashCount} 
+                    />
+>>>>>>> Stashed changes
                   </div>
                 </div>
               </form>
               </Modal.Body>
             <Modal.Footer>
-          <button type="submit" className="save-btn">
+          <button type="submit" className="save-btn" 
+          onClick={(e) => submit(e)}
+          >
               SAVE
             </button>
         </Modal.Footer>
