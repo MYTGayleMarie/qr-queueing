@@ -645,7 +645,7 @@ export default function LabOfficer() {
               serviceDetails.test_id = packageCat.test_id;
               serviceDetails.packageId = info.id
               // serviceDetails.md = 
-              // setLabTests(oldArray=>[...oldArray, serviceDetails]);
+              setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
           })
         })
@@ -939,19 +939,12 @@ export default function LabOfficer() {
                             options={labOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
+                            getOptionValue={(option) => option.id}
                             //onChange={e => { setSelectedLab; handleLab() }}
                             labelledBy="Select"
                         />
                         </div>
                     </div>
-              {/* <div className="col-sm-6"><h3 className='laboratory label'> LABORATORY</h3></div>
-              <select name="lab-select" className="dropdown">
-                <option>X-RAY</option> 
-                <option>ECG</option> 
-                <option>HEMATOLOGY</option> 
-                <option>CBC</option> 
-                <option>CLOTTING</option> 
-              </select>*/}
             </div> 
             
             <div className="col-sm-11 d-flex justify-content-end">
