@@ -84,7 +84,7 @@ function ReportServicesPackagesDetails() {
             type="thick" 
             buttons={buttons}
             title="SERVICES AND PACKAGES REPORT DETAILS" 
-            tableName={'Pending Purchase Order Report'}
+            tableName={'SERVICES AND PACKAGES REPORT DETAILS'}
             tableData={patients}
             tableHeaders={['BOOKING DATE', 'CUSTOMER', 'LAB TEST']}
             withBack={true}
