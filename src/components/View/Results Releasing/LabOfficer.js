@@ -416,6 +416,10 @@ const selectedLab = [
   }
 ]
 
+export const refreshPage = () => {
+  window.location.reload();
+}
+
 export default function LabOfficer() {
 
   document.body.style = 'background: white;';
@@ -462,51 +466,106 @@ export default function LabOfficer() {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
   
-  function update(labName, labResult, labUnit) {
-    setLabName(labName);
-    setResult(labResult);
-    setUnit(labUnit);
+  function update(lab_test) {
+    setLabName(lab_test);
+
+    console.log('labName:', labName);
     setShow(true);
     // handleShow();
   }
   
   const submit = (e) => {
     e.preventDefault();
+
+    console.log('labTestData:', labTestData);
+
     const updatedData = labTestData.map(row => {
-      if (row.lab === labName) {
-        return { ...row, Results: result, Value: unit };
+      if (row.lab_test === labName) {
+        console.log('success');
+        row.result = result;
+        row.unit = unit;
+
+        return row;
       }
       return row;
     });
+
     setLabTestData(updatedData);
-    handleClose();
+
+    console.log('labtestData:', labTestData);
+    setShow(false);
   };
 
   React.useEffect(() => {
-    labOptions.length = 0;
+    // Store in different arrays the units, results, and lab names
+    const resultsArray = labTestData.map(row => row.result);
+    const unitArray = labTestData.map(row => row.unit);
+    const namesArray = labTestData.map(row => row.lab_test);
+
+    // axios parameter for editResults
+    const params = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ''),
+      booking: id,
+      requester: userId,
+    };
+
+    // params for unit
+    namesArray.forEach((lab, index) => {
+      const unitParam = `unit_${lab}`;
+      params[unitParam] = unitArray[index];
+    });
+    
+    // params for labtests
+    namesArray.forEach((lab, index) => {
+      const labParam = `lab_tests[${index}]`;
+      params[labParam] = namesArray[index];
+    });
+
+    // params for results
+    namesArray.forEach((lab, index) => {
+      const resultParam = `result_${lab}`;
+      params[resultParam] = resultsArray[index];
+    });
 
     axios({
-        method: 'post',
-        url: window.$link + '/lab_tests/getAll',
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        response.data.lab_tests.map((data) => {
-            var info = {};
+      method: 'post',
+      url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
+      withCredentials: false, 
+      params
 
-            info.label = data.name;
-            info.value = data.id + "_service";
+      }).then(function (response) { 
+          console.log(response)          
+      }).catch(function (error) {
+          console.log(error);
+      });
+      },[labTestData]);
 
-            //setLabOptions(oldArray => [...oldArray, info]);
-            
-        });
-    }).then(function (error) {
-        console.log(error);
-    });
+      React.useEffect(() => {
+        labOptions.length = 0;
+
+        axios({
+            method: 'post',
+            url: window.$link + '/lab_tests/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            response.data.lab_tests.map((data) => {
+                var info = {};
+
+                info.label = data.name;
+                info.value = data.id + "_service";
+
+                //setLabOptions(oldArray => [...oldArray, info]);
+                
+            });
+        }).then(function (error) {
+            console.log(error);
+      });
     },[]);
   
   React.useEffect(()=>{
@@ -956,7 +1015,7 @@ export default function LabOfficer() {
           <Table
             type={'med-tech'}
             clickable={true}
-            link={update}
+            link={(update)}
             tableData={labTestDataWithResults.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}

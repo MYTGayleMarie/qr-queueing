@@ -202,7 +202,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.lab, row.Results, row.Value)}>EDIT</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.lab_test, row.Results, row.Value)}>EDIT</button></td>
             </tr>
         }
         else if (type === 'items' && clickable == true) {
