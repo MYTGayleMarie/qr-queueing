@@ -11,6 +11,8 @@ import Navbar from '../../Navbar';
 import { Navigate, useParams } from 'react-router-dom';
 import Table from '../../Table';
 
+import './ReportServicesPackagesDetails.css';
+
 const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
@@ -90,7 +92,7 @@ function ReportServicesPackagesDetails() {
             withBack={true}
             setBack={setRedirectBack}
             status={printReadyFinal}
-            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+            style={{ fontSize: '1rem' }}
              />
 
           <div className='particulars-cont'>
