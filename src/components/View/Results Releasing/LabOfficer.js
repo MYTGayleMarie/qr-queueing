@@ -412,7 +412,7 @@ const labTestVitaminD = [
 const selectedLab = [
   {
     label: "HBA1C",
-    value: "value"
+    id: "value"
   }
 ]
 
@@ -443,6 +443,8 @@ export default function LabOfficer() {
   const [labTestData, setLabTestData] = useState([]);
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
+  const [labOptionsPackage, setLabOptionsPackage] = useState([]);
+  const allOptions = labOptions.concat(labOptionsPackage);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
@@ -483,7 +485,7 @@ export default function LabOfficer() {
   };
 
   React.useEffect(() => {
-    labOptions.length = 0;
+    //labOptions.length = 0;
 
     axios({
         method: 'post',
@@ -560,6 +562,7 @@ export default function LabOfficer() {
     .catch((error)=>{
     })
 
+    // Lab Options
     axios({
       method: 'post',
       url: window.$link + 'bookings/getBookingDetails/' + id,
@@ -575,30 +578,32 @@ export default function LabOfficer() {
     
       const labOptions = booking.data.map((data) => ({
         label: data.lab_test,
-        id: data.id,
+        id: data.id
       }));
-    
       setLabOptions(labOptions);
     })
 
     // Display Lab results
-    axios({
-      method: 'get',
-      url: window.$link + 'Bookingdetails/getDetailsResult/' + selectedLab.id,
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }
-    })
-    .then((response) => {
-      setLabTestData(response.data.data.booking_detail_results);
-    })
+    if (selectedLab.id != null) {
+      axios({
+        method: 'get',
+        url: window.$link + 'Bookingdetails/getDetailsResult/' + selectedLab.id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      })
+      .then((response) => {
+        setLabTestData(response.data.data.booking_detail_results);
+      })
+  
+      .catch((error) => {
+        console.log(error)
+      })
+    }
 
-    .catch((error) => {
-      console.log(error)
-    })
   },[selectedLab.id])
 
   // Lab tests
@@ -618,6 +623,12 @@ export default function LabOfficer() {
           }
         })
         .then((response)=>{
+          const labPackageOptions = response.data.map((data) => ({
+            label: '[P] ' + data.lab_test,
+            id: data.id,
+          }));
+          setLabOptionsPackage(labPackageOptions);
+
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -637,7 +648,6 @@ export default function LabOfficer() {
                 else {
                   serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
                 }
-                
               serviceDetails.category = category.data.name;
               serviceDetails.name = packageCat.lab_test;
               serviceDetails.type = "package";
@@ -645,7 +655,7 @@ export default function LabOfficer() {
               serviceDetails.test_id = packageCat.test_id;
               serviceDetails.packageId = info.id
               // serviceDetails.md = 
-              setLabTests(oldArray=>[...oldArray, serviceDetails]);
+              //setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
           })
         })
@@ -661,9 +671,9 @@ export default function LabOfficer() {
           url: window.$link + 'categories/show/' + info.category_id,
           withCredentials: false, 
           params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
           }
         })
         .then((category)=>{
@@ -936,7 +946,7 @@ export default function LabOfficer() {
                         <label for="discount_code" className="form-label">LABORATORY</label><br />
                         <Select
                             isSearchable
-                            options={labOptions}
+                            options={allOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
                             getOptionValue={(option) => option.id}
