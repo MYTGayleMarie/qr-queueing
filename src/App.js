@@ -155,7 +155,7 @@ function App() {
         <Route path="/View-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
         <Route path="/LabOfficer/:id" element={token ? <LabOfficer /> : <Navigate to="/" />} />
         {/** With date filter */}
-        <Route path="/View-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        <Route path="/results-view-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
         <Route path="/medtech-start/:bookId/:serviceId/:type" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />
