@@ -180,6 +180,9 @@ function Header({type, title, buttons, editProfile, editPO, deletePO, payReceive
                 else if (button === 'add-old-patient') {
                     return <Link to={linkTo}><button className="header-btn add-patient"> OLD PATIENT</button></Link>
                 }
+                // else if (button === 'add-old-patientcm') {
+                //     return <Link to={linkTo}><button className="header-btn add-patient"> OLD PATIENT</button></Link>
+                // }
                 else if (button === 'add-company') {
                     return <Link to={linkTo}><button className="header-btn add-company"> ADD COMPANY</button></Link>
                 }
