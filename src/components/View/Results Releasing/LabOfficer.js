@@ -870,12 +870,12 @@ export default function LabOfficer() {
 
   if(redirectBack === true) {
     if(dateFrom !== undefined && dateTo !== undefined) {
-        var link =  "/medtech/" + dateFrom + "/" + dateTo;
+        var link =  "/lab/" + dateFrom + "/" + dateTo;
         return (
             <Navigate to ={link}/>
         )
     } else {
-      var link =  "/medtech";
+      var link =  "/lab";
         return (
             <Navigate to ={link}/>
         )
