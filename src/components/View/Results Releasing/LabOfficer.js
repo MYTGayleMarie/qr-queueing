@@ -476,15 +476,12 @@ export default function LabOfficer() {
   function update(lab_test) {
     setLabName(lab_test);
 
-    console.log('labName:', labName);
     setShow(true);
     // handleShow();
   }
   
   const submit = (e) => {
     e.preventDefault();
-
-    console.log('labTestData:', labTestData);
 
     const updatedData = labTestData.map(row => {
       if (row.lab_test === labName) {
@@ -499,7 +496,6 @@ export default function LabOfficer() {
 
     setLabTestData(updatedData);
 
-    console.log('labtestData:', labTestData);
     setShow(false);
   };
 
@@ -639,15 +635,19 @@ export default function LabOfficer() {
     })
     .then((booking)=>{
       setServices(booking.data);
-    
-      const labOptions = booking.data.map((data) => ({
-        label: data.lab_test,
-        id: data.id
-      }));
+      const labOptions = booking.data.map((data) => {
+        if (data.lab_test != null) {
+          return {
+            label: data.lab_test,
+            id: data.id,
+            type: data.type
+          }
+        }
+        return null;
+      }).filter((option) => option !== null);
       setLabOptions(labOptions);
     })
 
-    // Display Lab results
     if (selectedLab.id != null) {
       axios({
         method: 'get',
@@ -660,11 +660,19 @@ export default function LabOfficer() {
         }
       })
       .then((response) => {
-        setLabTestData(response.data.data.booking_detail_results);
-        // if(response.status == 400){
-        //   handleLab(response.data.data.booking_detail_results);
-        // }
+        const data = response.data.data;
+        const packageDetailId = selectedLab.booking_id;
+        if (data.booking_detail_results) {
+          if(selectedLab.type == "lab"){
+            setLabTestData(data.booking_detail_results);
+          } else { 
+            setLabTestData(data.booking_package_details_results[packageDetailId]);
+          }
+        }
       })
+
+
+
   
       .catch((error) => {
         handleLab(selectedLab);
@@ -693,7 +701,9 @@ export default function LabOfficer() {
         .then((response)=>{
           const labPackageOptions = response.data.map((data) => ({
             label: '[P] ' + data.lab_test,
-            id: data.id,
+            id: data.booking_detail_id,
+            booking_id: data.id,
+            type: data.type
           }));
           setLabOptionsPackage(labPackageOptions);
 
@@ -1017,7 +1027,7 @@ export default function LabOfficer() {
                             options={allOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
-                            getOptionValue={(option) => option.id}
+                            getOptionValue={(option) => option.label}
                             //onChange={e => { setSelectedLab; handleLab() }}
                             labelledBy="Select"
                         />
