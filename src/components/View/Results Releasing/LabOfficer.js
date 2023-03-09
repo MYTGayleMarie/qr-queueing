@@ -18,6 +18,7 @@ import './LabOfficer.css'
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+import { SkewLoader } from 'react-spinners';
 
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
@@ -31,84 +32,88 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const labTestMockData = [
   {
-    "lab": "",
-    "Results": "Php 0",
-    "Value": "",
-     
+    "lab_test": "Lab Test Mock Data",
+    "result": "Mock Result",
+    "unit": "123 unit",
+  },
+  {
+    "lab_test": "Lab Test Mock Data2",
+    "result": "Mock Result2",
+    "unit": "123 unit2",
   }
 ]
 
 let labTestUrinalysis = [
   {
-    "lab": "Color",
-    "Results": " LIGHT YELLOW",
-    "Value": "",
+    "lab_test": "Color",
+    "result": " LIGHT YELLOW",
+    "unit": "",
      
   },
   {
     "lab": "Transparency",
-    "Results": "CLEAR",
-    "Value": "",
+    "result": "CLEAR",
+    "unit": "",
     
   },
   {
     "lab": "Ph",
-    "Results": "5.0",
-    "Value": "",
+    "result": "5.0",
+    "unit": "",
     
   },
   {
     "lab": "Specific Gravity",
-    "Results": "1.005",
-    "Value": "",
+    "result": "1.005",
+    "unit": "",
     
   },
   {
     "lab": "Protein",
-    "Results": "1+",
-    "Value": "",
+    "result": "1+",
+    "unit": "",
     
   },
   {
     "lab": "Sugar",
-    "Results": "1+",
-    "Value": "",
+    "result": "1+",
+    "unit": "",
     
   },
   {
     "lab": "Pus Cells",
-    "Results": "1",
-    "Value": "",
+    "result": "1",
+    "unit": "",
     
   },
   {
     "lab": "RBC",
-    "Results": "1",
-    "Value": "",
+    "result": "1",
+    "unit": "",
     
   },
   {
     "lab": "Epithelial Cells",
-    "Results": "RARE",
-    "Value": "",
+    "result": "RARE",
+    "unit": "",
     
   },
   {
     "lab": "Bacteria",
-    "Results": "RARE",
-    "Value": "",
+    "result": "RARE",
+    "unit": "",
     
   },
   {
     "lab": "Amorphous Urates/Phosphate",
-    "Results": "RARE",
-    "Value": "",
+    "result": "RARE",
+    "unit": "",
     
   },
   {
     "lab": "Mucus Threads",
-    "Results": "RARE",
-    "Value": "",
+    "result": "RARE",
+    "unit": "",
      
   },
 ]
@@ -116,32 +121,32 @@ let labTestUrinalysis = [
 const labTestFecalysis = [
   {
     "lab": "Color",
-    "Results": "BROWN",
-    "Value": "",
+    "result": "BROWN",
+    "unit": "",
      
   },
   {
     "lab": "Consistency",
-    "Results": "Soft",
-    "Value": "",
+    "result": "Soft",
+    "unit": "",
      
   },
   {
     "RBC": "3",
-    "Results": "BROWN",
-    "Value": "",
+    "result": "BROWN",
+    "unit": "",
      
   },
   {
     "lab": "Pus Cells",
-    "Results": "1",
-    "Value": "",
+    "result": "1",
+    "unit": "",
      
   },
   {
     "lab": "Fat Globules",
-    "Results": "FEW",
-    "Value": "",
+    "result": "FEW",
+    "unit": "",
      
   },
   
@@ -150,8 +155,8 @@ const labTestFecalysis = [
 const labTestFecalOccultBlood = [
   {
     "lab": "Fecal Occult Blood",
-    "Results": "Negative",
-    "Value": "",
+    "result": "Negative",
+    "unit": "",
      
   },
 ]
@@ -159,8 +164,8 @@ const labTestFecalOccultBlood = [
 const labTestPregnancyTest = [
   {
     "lab": "Pregnancy Test",
-    "Results": "Negative",
-    "Value": "",
+    "result": "Negative",
+    "unit": "",
      
   },
 ]
@@ -168,8 +173,8 @@ const labTestPregnancyTest = [
 const labTestSerumPregnancyTest = [
   {
     "lab": "Serum Pregnancy Test",
-    "Results": "Negative",
-    "Value": "",
+    "result": "Negative",
+    "unit": "",
      
   },
 ]
@@ -177,79 +182,79 @@ const labTestSerumPregnancyTest = [
 const labTestSpermAnalysis = [
   {
     "lab": "PH Reaction",
-    "Results": "9",
-    "Value": "",
+    "result": "9",
+    "unit": "",
      
   },
   {
     "lab": "Volume",
-    "Results": "2",
-    "Value": "",
+    "result": "2",
+    "unit": "",
      
   },{
     "lab": "Liquefaction Time",
-    "Results": "30",
-    "Value": "",
+    "result": "30",
+    "unit": "",
      
   },{
     "lab": "Viscosity",
-    "Results": "0",
-    "Value": "",
+    "result": "0",
+    "unit": "",
      
   },{
     "lab": "Total Sperm Count",
-    "Results": "75",
-    "Value": "",
+    "result": "75",
+    "unit": "",
      
   },{
     "lab": "Progresive (PR)",
-    "Results": "85",
-    "Value": "",
+    "result": "85",
+    "unit": "",
      
   },{
     "lab": "Non Progressive",
-    "Results": "10",
-    "Value": "",
+    "result": "10",
+    "unit": "",
      
   },{
     "lab": "Immotile",
-    "Results": "5",
-    "Value": "",
+    "result": "5",
+    "unit": "",
      
   },{
     "lab": "Total Motility (PR+NP)",
-    "Results": "95",
-    "Value": "",
+    "result": "95",
+    "unit": "",
      
   },{
     "lab": "Total Normal Forms",
-    "Results": "70",
-    "Value": "",
+    "result": "70",
+    "unit": "",
      
   },{
     "lab": "Pin Head",
-    "Results": "20",
-    "Value": "",
+    "result": "20",
+    "unit": "",
      
   },{
     "lab": "Double Head",
-    "Results": "5",
-    "Value": "",
+    "result": "5",
+    "unit": "",
      
   },{
     "lab": "Gaint Head",
-    "Results": "5",
-    "Value": "",
+    "result": "5",
+    "unit": "",
      
   },{
     "lab": "WBC",
-    "Results": "10",
-    "Value": "",
+    "result": "10",
+    "unit": "",
      
   },{
     "lab": "RBC",
-    "Results": "1",
-    "Value": "",
+    "result": "1",
+    "unit": "",
      
   },
 ]
@@ -257,18 +262,18 @@ const labTestSpermAnalysis = [
 const labTestGramStain = [
   {
     "lab": "Gram Staining",
-    "Results": "FREE TEXt",
-    "Value": "",
+    "result": "FREE TEXt",
+    "unit": "",
      
   },{
     "lab": "",
-    "Results": "Epithelial Cells = FEW",
-    "Value": "",
+    "result": "Epithelial Cells = FEW",
+    "unit": "",
      
   },{
     "lab": "Specimen: Conjunctival and Corneal Scraping",
-    "Results": "FEW",
-    "Value": "",
+    "result": "FEW",
+    "unit": "",
      
   },
 ]
@@ -276,8 +281,8 @@ const labTestGramStain = [
 const labTestKOH = [
   {
     "lab": "KOH, Nail Scrapping, Conjunctival Scrapping",
-    "Results": "FREE TEXT",
-    "Value": "",
+    "result": "FREE TEXT",
+    "unit": "",
      
   },
 ]
@@ -285,18 +290,18 @@ const labTestKOH = [
 const labTestDengue = [
   {
     "lab": "Dengue Rapid Test",
-    "Results": "NS1 AG: NEGATIVE",
-    "Value": "",
+    "result": "NS1 AG: NEGATIVE",
+    "unit": "",
      
   },{
     "lab": "",
-    "Results": "IgG: NEGATIVE",
-    "Value": "",
+    "result": "IgG: NEGATIVE",
+    "unit": "",
      
   },{
     "lab": "",
-    "Results": "IgM: NEGATIVE",
-    "Value": "",
+    "result": "IgM: NEGATIVE",
+    "unit": "",
      
   },
 ]
@@ -304,8 +309,8 @@ const labTestDengue = [
 const labTestSyphilis = [
   {
     "lab": "Syphilis/RPR/VDRL",
-    "Results": "POSITIVE",
-    "Value": "",
+    "result": "POSITIVE",
+    "unit": "",
      
   },
 ]
@@ -313,8 +318,8 @@ const labTestSyphilis = [
 const labTestHIVScreening = [
   {
     "lab": "Anti-HIV",
-    "Results": "REACTIVE",
-    "Value": "",
+    "result": "REACTIVE",
+    "unit": "",
      
   },
 ]
@@ -322,8 +327,8 @@ const labTestHIVScreening = [
 const labTestHPylori = [
   {
     "lab": "H. Pylori",
-    "Results": "NEGATIVE",
-    "Value": "",
+    "result": "NEGATIVE",
+    "unit": "",
      
   },
 ]
@@ -331,8 +336,8 @@ const labTestHPylori = [
 const labTestHepatitisB = [
   {
     "lab": "Hepatitis B Surface Antigen Test (HBSag)",
-    "Results": "REACTIVE",
-    "Value": "",
+    "result": "REACTIVE",
+    "unit": "",
      
   },
 ]
@@ -340,8 +345,8 @@ const labTestHepatitisB = [
   const labTestHepatitisA = [
     {
     "lab": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
-    "Results": "POSITIVE",
-    "Value": "",
+    "result": "POSITIVE",
+    "unit": "",
      
   },
 ]
@@ -349,8 +354,8 @@ const labTestHepatitisB = [
 const labTestTSH = [
   {
     "lab": "TSH",
-    "Results": "1.8 H",
-    "Value": "mIU / L",
+    "result": "1.8 H",
+    "unit": "mIU / L",
      
   },
 ]
@@ -358,8 +363,8 @@ const labTestTSH = [
 const labTestFT4 = [
   {
     "lab": "FT4",
-    "Results": "17.3",
-    "Value": "pmol / L",
+    "result": "17.3",
+    "unit": "pmol / L",
      
   },
 ]
@@ -367,8 +372,8 @@ const labTestFT4 = [
 const labTestFT3 = [
   {
     "lab": "FT3",
-    "Results": "6.69",
-    "Value": "pmol / L",
+    "result": "6.69",
+    "unit": "pmol / L",
      
   },
 ]
@@ -376,8 +381,8 @@ const labTestFT3 = [
 const labTestT3 = [
 {
     "lab": "T2, T3",
-    "Results": "4.59",
-    "Value": "nmol / L",
+    "result": "4.59",
+    "unit": "nmol / L",
      
   },
 ]
@@ -385,8 +390,8 @@ const labTestT3 = [
 const labTestPSA = [
   {
     "lab": "PSA",
-    "Results": "<2.0",
-    "Value": "ng/mL",
+    "result": "<2.0",
+    "unit": "ng/mL",
      
   },
 ]
@@ -394,8 +399,8 @@ const labTestPSA = [
 const labTestCEA = [
   {
     "lab": "CEA",
-    "Results": "4.9",
-    "Value": "ng/mL",
+    "result": "4.9",
+    "unit": "ng/mL",
      
   },
 ]
@@ -403,8 +408,8 @@ const labTestCEA = [
 const labTestVitaminD = [
   {
     "lab": "Vitamin D",
-    "Results": "37.16",
-    "Value": "ng/mL",
+    "result": "37.16",
+    "unit": "ng/mL",
      
   },
 ]
@@ -656,12 +661,16 @@ export default function LabOfficer() {
       })
       .then((response) => {
         setLabTestData(response.data.data.booking_detail_results);
+        // if(response.status == 400){
+        //   handleLab(response.data.data.booking_detail_results);
+        // }
       })
   
       .catch((error) => {
-        console.log(error)
+        handleLab(selectedLab);
+        //console.log(error);
       })
-    }
+    } 
 
   },[selectedLab.id])
 
@@ -866,47 +875,47 @@ export default function LabOfficer() {
   function handleLab(e){
     //setLabTests(e.target.value)
 
-    if(e.target.value === "Urinalysis") {
+    if(e.label === "Urinalysis") {
       setLabTestData(labTestUrinalysis);
-    } else if (e.target.value === "Fecalysis") {
+    } else if (e.label === "Fecalysis") {
       setLabTestData(labTestFecalysis);
-    } else if (e.target.value === "Fecal Occult Blood") {
+    } else if (e.label === "Fecal Occult Blood") {
       setLabTestData(labTestFecalOccultBlood);
-    } else if (e.target.value === "Pregnancy Test (RPK Lateral Flow)") {
+    } else if (e.label === "Pregnancy Test (RPK Lateral Flow)") {
       setLabTestData(labTestPregnancyTest);
-    } else if (e.target.value === "Serum Pregnancy Test") {
+    } else if (e.label === "Serum Pregnancy Test") {
       setLabTestData(labTestPregnancyTest);
-    } else if (e.target.value === "Sperm Analysis") {
+    } else if (e.label === "Sperm Analysis") {
       setLabTestData(labTestSpermAnalysis);
-    } else if (e.target.value === "Gram Stain") {
+    } else if (e.label === "Gram Stain") {
       setLabTestData(labTestGramStain);
-    } else if (e.target.value === "KOH") {
+    } else if (e.label === "KOH") {
       setLabTestData(labTestKOH);
-    } else if (e.target.value === "Dengue") {
+    } else if (e.label === "Dengue") {
       setLabTestData(labTestDengue);
-    } else if (e.target.value === "Syphilis/RPR/VDRL") {
+    } else if (e.label === "Syphilis/RPR/VDRL") {
       setLabTestData(labTestSyphilis);
-    } else if (e.target.value === "HIV SCreening (Anti HIV)") {
+    } else if (e.label === "HIV SCreening (Anti HIV)") {
       setLabTestData(labTestHIVScreening);
-    } else if (e.target.value === "H. Pylori") {
+    } else if (e.label === "H. Pylori") {
       setLabTestData(labTestHPylori);
-    } else if (e.target.value === "HBSag (Hepatitis B Antigen)") {
+    } else if (e.label === "HBSag (Hepatitis B Antigen)") {
       setLabTestData(labTestHepatitisB);
-    } else if (e.target.value === "Anti HBs/HBSab (Hepatitis B Antibody)") {
+    } else if (e.label === "Anti HBs/HBSab (Hepatitis B Antibody)") {
       setLabTestData(labTestHepatitisA); 
-    } else if (e.target.value === "TSH") {
+    } else if (e.label === "TSH") {
       setLabTestData(labTestTSH); 
-    } else if (e.target.value === "FT4") {
+    } else if (e.label === "FT4") {
       setLabTestData(labTestFT4); 
-    } else if (e.target.value === "FT3") {
+    } else if (e.label === "FT3") {
       setLabTestData(labTestFT3); 
-    } else if (e.target.value === "T3") {
+    } else if (e.label === "T3") {
       setLabTestData(labTestT3); 
-    } else if (e.target.value === "PSA") {
+    } else if (e.label === "PSA") {
       setLabTestData(labTestPSA); 
-    } else if (e.target.value === "CEA") {
+    } else if (e.label === "CEA") {
       setLabTestData(labTestCEA); 
-    } else if (e.target.value === "VITAMIN D") {
+    } else if (e.label === "VITAMIN D") {
       setLabTestData(labTestVitaminD); 
     } else {
       setLabTestData(labTestMockData);
