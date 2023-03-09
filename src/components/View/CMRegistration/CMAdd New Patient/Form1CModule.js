@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 
 //css
-import './Form1.css';
+import './Form1CModule.css';
 
 //components
 import Header from '../../../Header.js';
@@ -16,9 +16,12 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 
-function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
+function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, 
+  location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) 
+{
   document.body.style = 'background: white;';
 
+  
   const {
     fname,
     lname,
@@ -29,10 +32,10 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
     contactNum,
     address,
     referral,
-    discountId,
-    discountDetail,
+    // discountId,
+    // discountDetail,
     serviceLocation,
-    homeServiceFee,
+    // homeServiceFee,
     result,
     lastmeal,
   } = customer;
@@ -48,7 +51,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
     setActive(true);
   }
 
-  function proceed() {
+  function submit() {
     if (
       fname != '' &&
       lname != '' &&
@@ -65,8 +68,8 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
     ) {
       return (
         <div className="d-flex justify-content-end">
-          <button className="proceed-btn" onClick={() => navigation.next()}>
-            PROCEED
+          <button className="submit-btn" onClick={() => navigation.next()}>
+            SUBMIT
           </button>
         </div>
       );
@@ -137,48 +140,48 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
   }
 
 
-  React.useEffect(() => {
-    axios({
-        method: 'post',
-        url: window.$link + 'discounts/getAll',
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        setDiscountList(response.data.discounts);
-    }).catch(function (error) {
-        // console.log(error);
-    });
-},[]);
+//   React.useEffect(() => {
+//     axios({
+//         method: 'post',
+//         url: window.$link + 'discounts/getAll',
+//         withCredentials: false, 
+//         params: {
+//             api_key: window.$api_key,
+//             token: userToken.replace(/['"]+/g, ''),
+//             requester: userId,
+//         }
+//     }).then(function (response) {
+//         setDiscountList(response.data.discounts);
+//     }).catch(function (error) {
+//         // console.log(error);
+//     });
+// },[]);
 
-React.useEffect(() => {
-  axios({
-      method: 'post',
-      url: window.$link + 'discounts/show/' + discountId,
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }
-  }).then(function (response) {
-      // console.log(response);
-      setCompanyId(response.data.data.discount.company_id);
-      setDiscount(response.data.data.discount.percentage);
-      setDiscountDetails(response.data.data.discount_details);
-      if(response.data.is_package == "1") {
-          setIsPackage("1");
-      }
-      if(response.data.is_service == "1") {
-          setIsService("1");
-      }
-  }).catch(function (error) {
-      console.log(error);
-  });
-},[discountId]);
+// React.useEffect(() => {
+//   axios({
+//       method: 'post',
+//       url: window.$link + 'discounts/show/' + discountId,
+//       withCredentials: false, 
+//       params: {
+//           api_key: window.$api_key,
+//           token: userToken.replace(/['"]+/g, ''),
+//           requester: userId,
+//       }
+//   }).then(function (response) {
+//       // console.log(response);
+//       setCompanyId(response.data.data.discount.company_id);
+//       setDiscount(response.data.data.discount.percentage);
+//       setDiscountDetails(response.data.data.discount_details);
+//       if(response.data.is_package == "1") {
+//           setIsPackage("1");
+//       }
+//       if(response.data.is_service == "1") {
+//           setIsService("1");
+//       }
+//   }).catch(function (error) {
+//       console.log(error);
+//   });
+// },[discountId]);
 
 React.useEffect(() => {
     setCompanyRemarks("");
@@ -307,8 +310,7 @@ console.log(location)
 
   return (
     <div>
-      <Navbar />
-      <div className="active-cont">
+      <div className="active-cont center"style={{marginRight:"15%",}}>
         <Header type="thin" title="ADD PATIENT" />
 
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
@@ -471,7 +473,7 @@ console.log(location)
                 <><button key = {index} className="suggestions-item" name="referral" value={data} onClick={(e)=>{setPersonal(e);setRenderMDSuggest(false)}}>{data}</button><br/></>
               )}
             </div>}
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-6">
                 <label for="address" className="form-label">
                   DISCOUNT CODEeee
@@ -506,7 +508,7 @@ console.log(location)
                     />
                     <br />
               </div>
-            </div>
+            </div> */}
             <div className="row small-gap">
               <div className="col-sm-6">
                 <div className="row">
@@ -525,7 +527,7 @@ console.log(location)
                       CLINIC
                     </label>
                   </div>
-                  <div className="col">
+                  {/* <div className="col">
                     <input
                       type="radio"
                       id="serviceLocation"
@@ -537,7 +539,7 @@ console.log(location)
                     <label for="home-service" className="radio-label">
                       HOME SERVICE
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-sm-6">
@@ -632,7 +634,10 @@ console.log(location)
               </div>
             </div>
 
-            <div>{proceed()}</div>
+            <div>{submit()}</div>
+
+            
+
           </form>
           <ToastContainer />
         </div>
@@ -641,4 +646,4 @@ console.log(location)
   );
 }
 
-export default AddPatient;
+export default Form1CModule;
