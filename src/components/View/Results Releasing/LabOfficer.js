@@ -8,8 +8,7 @@ import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
-import { MultiSelect } from 'react-multi-select-component';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 
 
@@ -19,16 +18,16 @@ import './LabOfficer.css'
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
-import PersonalDetails from '../../PersonalDetails.js';
 
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
-var id = "";
+var bookingId = "";
+// var id = "";
+// var result = "";
+// var unit = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
-
-
 
 const labTestMockData = [
   {
@@ -39,7 +38,7 @@ const labTestMockData = [
   }
 ]
 
-const labTestUrinalysis = [
+let labTestUrinalysis = [
   {
     "lab": "Color",
     "Results": " LIGHT YELLOW",
@@ -50,61 +49,61 @@ const labTestUrinalysis = [
     "lab": "Transparency",
     "Results": "CLEAR",
     "Value": "",
-     
+    
   },
   {
     "lab": "Ph",
     "Results": "5.0",
     "Value": "",
-     
+    
   },
   {
     "lab": "Specific Gravity",
     "Results": "1.005",
     "Value": "",
-     
+    
   },
   {
     "lab": "Protein",
     "Results": "1+",
     "Value": "",
-     
+    
   },
   {
     "lab": "Sugar",
     "Results": "1+",
     "Value": "",
-     
+    
   },
   {
     "lab": "Pus Cells",
     "Results": "1",
     "Value": "",
-     
+    
   },
   {
     "lab": "RBC",
     "Results": "1",
     "Value": "",
-     
+    
   },
   {
     "lab": "Epithelial Cells",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Bacteria",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Amorphous Urates/Phosphate",
     "Results": "RARE",
     "Value": "",
-     
+    
   },
   {
     "lab": "Mucus Threads",
@@ -413,9 +412,13 @@ const labTestVitaminD = [
 const selectedLab = [
   {
     label: "HBA1C",
-    value: "value"
+    id: "value"
   }
 ]
+
+export const refreshPage = () => {
+  window.location.reload();
+}
 
 export default function LabOfficer() {
 
@@ -444,6 +447,8 @@ export default function LabOfficer() {
   const [labTestData, setLabTestData] = useState([]);
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
+  const [labOptionsPackage, setLabOptionsPackage] = useState([]);
+  const allOptions = labOptions.concat(labOptionsPackage);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
@@ -451,41 +456,118 @@ export default function LabOfficer() {
 
   //Edit Modal
   const [show, setShow] = useState(false);
+  const [labName, setLabName] = useState("");
+  const [result, setResult] = useState("");
+  const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
-
+  
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
+  
+  function update(lab_test) {
+    setLabName(lab_test);
+
+    console.log('labName:', labName);
+    setShow(true);
+    // handleShow();
+  }
+  
+  const submit = (e) => {
+    e.preventDefault();
+
+    console.log('labTestData:', labTestData);
+
+    const updatedData = labTestData.map(row => {
+      if (row.lab_test === labName) {
+        console.log('success');
+        row.result = result;
+        row.unit = unit;
+
+        return row;
+      }
+      return row;
+    });
+
+    setLabTestData(updatedData);
+
+    console.log('labtestData:', labTestData);
+    setShow(false);
+  };
 
   React.useEffect(() => {
-    labOptions.length = 0;
+    // Store in different arrays the units, results, and lab names
+    const resultsArray = labTestData.map(row => row.result);
+    const unitArray = labTestData.map(row => row.unit);
+    const namesArray = labTestData.map(row => row.lab_test);
+
+    // axios parameter for editResults
+    const params = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ''),
+      booking: id,
+      requester: userId,
+    };
+
+    // params for unit
+    namesArray.forEach((lab, index) => {
+      const unitParam = `unit_${lab}`;
+      params[unitParam] = unitArray[index];
+    });
+    
+    // params for labtests
+    namesArray.forEach((lab, index) => {
+      const labParam = `lab_tests[${index}]`;
+      params[labParam] = namesArray[index];
+    });
+
+    // params for results
+    namesArray.forEach((lab, index) => {
+      const resultParam = `result_${lab}`;
+      params[resultParam] = resultsArray[index];
+    });
 
     axios({
-        method: 'post',
-        url: window.$link + '/lab_tests/getAll',
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        response.data.lab_tests.map((data) => {
-            var info = {};
+      method: 'post',
+      url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
+      withCredentials: false, 
+      params
 
-            info.label = data.name;
-            info.value = data.id + "_service";
+      }).then(function (response) { 
+          console.log(response)          
+      }).catch(function (error) {
+          console.log(error);
+      });
+      },[labTestData]);
 
-            setLabOptions(oldArray => [...oldArray, info]);
-            
-        });
-    }).then(function (error) {
-        console.log(error);
-    });
+      React.useEffect(() => {
+        labOptions.length = 0;
+
+        axios({
+            method: 'post',
+            url: window.$link + '/lab_tests/getAll',
+            withCredentials: false, 
+            params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                requester: userId,
+            }
+        }).then(function (response) {
+            response.data.lab_tests.map((data) => {
+                var info = {};
+
+                info.label = data.name;
+                info.value = data.id + "_service";
+
+                //setLabOptions(oldArray => [...oldArray, info]);
+                
+            });
+        }).then(function (error) {
+            console.log(error);
+      });
     },[]);
   
   React.useEffect(()=>{
@@ -531,6 +613,7 @@ export default function LabOfficer() {
         setContactNo(response.data.contact_no);
         setEmail(response.data.email);
         setAddress(response.data.address);
+
       })
       .catch((error)=>{
       })
@@ -538,6 +621,7 @@ export default function LabOfficer() {
     .catch((error)=>{
     })
 
+    // Lab Options
     axios({
       method: 'post',
       url: window.$link + 'bookings/getBookingDetails/' + id,
@@ -549,11 +633,37 @@ export default function LabOfficer() {
       }
     })
     .then((booking)=>{
-      setServices(booking.data)
+      setServices(booking.data);
+    
+      const labOptions = booking.data.map((data) => ({
+        label: data.lab_test,
+        id: data.id
+      }));
+      setLabOptions(labOptions);
     })
-    .catch((error)=>{
-    })
-  },[])
+
+    // Display Lab results
+    if (selectedLab.id != null) {
+      axios({
+        method: 'get',
+        url: window.$link + 'Bookingdetails/getDetailsResult/' + selectedLab.id,
+        withCredentials: false, 
+        params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
+        }
+      })
+      .then((response) => {
+        setLabTestData(response.data.data.booking_detail_results);
+      })
+  
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+
+  },[selectedLab.id])
 
   // Lab tests
   React.useEffect(()=>{
@@ -572,6 +682,12 @@ export default function LabOfficer() {
           }
         })
         .then((response)=>{
+          const labPackageOptions = response.data.map((data) => ({
+            label: '[P] ' + data.lab_test,
+            id: data.id,
+          }));
+          setLabOptionsPackage(labPackageOptions);
+
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -591,7 +707,6 @@ export default function LabOfficer() {
                 else {
                   serviceDetails.key = category.data.name.replace(/\s+/g, "_").toLowerCase();
                 }
-                
               serviceDetails.category = category.data.name;
               serviceDetails.name = packageCat.lab_test;
               serviceDetails.type = "package";
@@ -599,7 +714,7 @@ export default function LabOfficer() {
               serviceDetails.test_id = packageCat.test_id;
               serviceDetails.packageId = info.id
               // serviceDetails.md = 
-              setLabTests(oldArray=>[...oldArray, serviceDetails]);
+              //setLabTests(oldArray=>[...oldArray, serviceDetails]);
             })
           })
         })
@@ -615,9 +730,9 @@ export default function LabOfficer() {
           url: window.$link + 'categories/show/' + info.category_id,
           withCredentials: false, 
           params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              requester: userId,
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ''),
+            requester: userId,
           }
         })
         .then((category)=>{
@@ -636,7 +751,7 @@ export default function LabOfficer() {
           serviceDetails.id = info.id;
           serviceDetails.test_id = info.test_id;
           serviceDetails.md = info.md;
-          setLabTests(oldArray=>[...oldArray, serviceDetails]);
+          //setLabTests(oldArray=>[...oldArray, serviceDetails]);
         })
         .catch((error)=>{
           // console.log(error)
@@ -708,6 +823,7 @@ export default function LabOfficer() {
 
 // Get Multiple Uploads
     async function getUploads(){
+              console.log('ID: ', id);
       if(id != null)  {    
         axios({
         method: 'get',
@@ -732,55 +848,6 @@ export default function LabOfficer() {
   }, []);
 
   function filter() {}
-
-  useEffect(() => {
-    console.log(selectedLab.label);
-    if(selectedLab.label === 'Urinalysis'){
-      setLabTestData(labTestUrinalysis);
-    } else if (selectedLab.label === "Fecalysis") {
-      setLabTestData(labTestFecalysis);
-    } else if (selectedLab.label === "Fecal Occult Blood") {
-      setLabTestData(labTestFecalOccultBlood);
-    } else if (selectedLab.label === "Pregnancy Test (RPK Lateral Flow)") {
-      setLabTestData(labTestPregnancyTest);
-    } else if (selectedLab.label === "Serum Pregnancy Test") {
-      setLabTestData(labTestSerumPregnancyTest);
-    } else if (selectedLab.label === "Sperm Analysis") {
-      setLabTestData(labTestSpermAnalysis);
-    } else if (selectedLab.label === "Gram Stain") {
-      setLabTestData(labTestGramStain);
-    } else if (selectedLab.label === "KOH") {
-      setLabTestData(labTestKOH);
-    } else if (selectedLab.label === "Dengue") {
-      setLabTestData(labTestDengue);
-    } else if (selectedLab.label === "Syphilis/RPR/VDRL") {
-      setLabTestData(labTestSyphilis);
-    } else if (selectedLab.label === "HIV SCreening (Anti HIV)") {
-      setLabTestData(labTestHIVScreening);
-    } else if (selectedLab.label === "H. Pylori") {
-      setLabTestData(labTestHPylori);
-    } else if (selectedLab.label === "HBSag (Hepatitis B Antigen)") {
-      setLabTestData(labTestHepatitisB);
-    } else if (selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)") {
-      setLabTestData(labTestHepatitisA);
-    } else if (selectedLab.label === "TSH") {
-      setLabTestData(labTestTSH);
-    } else if (selectedLab.label === "FT4") {
-      setLabTestData(labTestFT4);
-    } else if (selectedLab.label === "FT3") {
-      setLabTestData(labTestFT3);
-    } else if (selectedLab.label === "T3") {
-      setLabTestData(labTestT3);
-    } else if (selectedLab.label === "PSA") {
-      setLabTestData(labTestPSA);
-    } else if (selectedLab.label === "CEA") {
-      setLabTestData(labTestCEA);
-    } else if (selectedLab.label === "VITAMIN D") {
-      setLabTestData(labTestVitaminD);
-    }else {
-      setLabTestData(labTestMockData);
-    }
-  }, [selectedLab]);
 
   if(redirectBack === true) {
     if(dateFrom !== undefined && dateTo !== undefined) {
@@ -845,27 +912,33 @@ export default function LabOfficer() {
       setLabTestData(labTestMockData);
     }
   }  
-
-// <<<<<<< HEAD
+  
   const {from_date, to_date, done} = filteredData;
-
-// =======
+  
   function edit(itemId,itemUnit) {
     
     // id = itemId;
     // unit = itemUnit;
     setRedirect(true);
   }
-
+  
   if(redirect == true) {
     var link =  "/medtech";
     //console.log(link);
     return (
-        <Navigate to ={link}/>
-    )
-  }
+      <Navigate to ={link}/>
+      )
+    }
+    
+    const labTestDataWithResults = labTestData.map(result => {
+      return {
+        lab_test: result.lab_test,
+        result: result.result,
+        unit: result.unit
+      }
+    })
   
-// >>>>>>> f5fddb6bddb528aca9a0164122827837a54eee9d
+
    return (
     <div>
       <Navbar />
@@ -932,22 +1005,15 @@ export default function LabOfficer() {
                         <label for="discount_code" className="form-label">LABORATORY</label><br />
                         <Select
                             isSearchable
-                            options={labOptions}
+                            options={allOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
+                            getOptionValue={(option) => option.id}
                             //onChange={e => { setSelectedLab; handleLab() }}
                             labelledBy="Select"
                         />
                         </div>
                     </div>
-              {/* <div className="col-sm-6"><h3 className='laboratory label'> LABORATORY</h3></div>
-              <select name="lab-select" className="dropdown">
-                <option>X-RAY</option> 
-                <option>ECG</option> 
-                <option>HEMATOLOGY</option> 
-                <option>CBC</option> 
-                <option>CLOTTING</option> 
-              </select>*/}
             </div> 
             
             <div className="col-sm-11 d-flex justify-content-end">
@@ -959,8 +1025,8 @@ export default function LabOfficer() {
           <Table
             type={'med-tech'}
             clickable={true}
-            link={handleShow}
-            tableData={labTestData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            link={(update)}
+            tableData={labTestDataWithResults.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
             headingColumns={['LAB NAME', 'RESULTS', 'UNIT', 'ACTION']}
             filteredData={filteredData}
@@ -970,12 +1036,10 @@ export default function LabOfficer() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            // link={viewBooking}
             role={role}
             userId={userId}
             //useLoader={true}
-            //isReady={isReady}
-            
+            //isReady={isReady} 
           />
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
@@ -986,8 +1050,10 @@ export default function LabOfficer() {
                 <div className="col-sm-6">
                   <div className="result-input-wrapper">
                     <div className="edit-sub-header">RESULT</div>
-                    <input type="text" className="results-input" 
-                    // onChange={setCashCount} 
+                    <input type="text" className="results-input"
+                    value={result} 
+                    onChange={(e) => setResult(e.target.value)}
+                    //onChange={setCashCount} 
                     />
                   </div>
                 </div>
@@ -996,14 +1062,18 @@ export default function LabOfficer() {
                   <div className="result-input-wrapper">
                     <div className="edit-sub-header">UNIT</div>
                     <input type="number" className="results-input" 
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
                     //onChange={setCashCount} 
                     />
                   </div>
                 </div>
-            </div>
+              </div>
               </Modal.Body>
             <Modal.Footer>
-          <button type="submit" className="save-btn">
+          <button type="submit" className="save-btn" 
+          onClick={(e) => submit(e)}
+          >
               SAVE
             </button>
         </Modal.Footer>

@@ -109,7 +109,7 @@ export default function MedTech() {
 
 
   if(redirectBooking == true) {
-    var link =  "/View-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+    var link =  "/results-view-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
     return (
         <Navigate to ={link}/>
     )

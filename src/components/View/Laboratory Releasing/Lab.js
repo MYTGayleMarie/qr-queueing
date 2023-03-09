@@ -111,7 +111,7 @@ export default function Lab() {
 
 
   if(redirectBooking == true) {
-    var link =  "/View-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+    var link =  "/LabOfficer/" + id;
     return (
         <Navigate to ={link}/>
     )
