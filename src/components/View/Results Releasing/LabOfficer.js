@@ -460,7 +460,12 @@ export default function LabOfficer() {
   const [result, setResult] = useState("");
   const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
-  
+
+  // Remarks textbox
+  const [editable, setEditable] = useState(false);
+  const [remarks, setRemarks] = useState("");
+  const [saveRemarks, setSaveRemarks] = useState("");
+
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
   
@@ -498,6 +503,26 @@ export default function LabOfficer() {
     setShow(false);
   };
 
+  React.useEffect(() => {
+    axios({
+      method: 'get',
+      url: window.$link + '/Bookingdetails/getDetails/' + id,
+      withCredentials: false, 
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+      }
+
+      }).then(function (response) { 
+          console.log(response.data.data.booking_detail[0].remarks);
+          setRemarks(response.data.data.booking_detail[0].remarks);
+      }).catch(function (error) {
+          console.log(error);
+      });
+      },[]);
+
+  // Modal Result and Unit edit
   React.useEffect(() => {
     // Store in different arrays the units, results, and lab names
     const resultsArray = labTestData.map(row => row.result);
@@ -566,7 +591,7 @@ export default function LabOfficer() {
                 
             });
         }).then(function (error) {
-            console.log(error);
+            console.log( error);
       });
     },[]);
   
@@ -847,6 +872,26 @@ export default function LabOfficer() {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
   }, []);
 
+  // Save Remarks to database
+  React.useEffect(() => {
+    axios({
+      method: 'get',
+      url: window.$link + '/Bookingdetails/editRemarks/' + id,
+      withCredentials: false, 
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+        remarks: saveRemarks,
+      }
+
+      }).then(function (response) { 
+          console.log(response)          
+      }).catch(function (error) {
+          console.log(error);
+      });
+      },[saveRemarks]);
+
   function filter() {}
 
   if(redirectBack === true) {
@@ -938,6 +983,20 @@ export default function LabOfficer() {
       }
     })
   
+    // Remarks handle textbox
+    const handleEdit = () => {
+      setEditable(true);
+    }
+  
+    const handleSave = () => {
+      setEditable(false);
+      setSaveRemarks(remarks);
+      console.log(remarks);
+    }
+  
+    const handleChange = (event) => {
+      setRemarks(event.target.value);
+    }
 
    return (
     <div>
@@ -1041,6 +1100,7 @@ export default function LabOfficer() {
             //useLoader={true}
             //isReady={isReady} 
           />
+
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
@@ -1080,6 +1140,19 @@ export default function LabOfficer() {
       </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
+
+        <div className="personal-data-cont">
+          <div className="row">
+              <div class="form-group">
+                <label for="doctorRemarks">Doctor's Remarks</label>
+                <textarea class="form-control" id="doctorRemarks" value={remarks} rows="3" onChange={handleChange} disabled={!editable}></textarea>
+              </div>
+          </div>
+          <div classname="row">
+              <button className="filter-btn" name="save" onClick={handleSave}>Save</button>
+              <button className="filter-btn" name="edit" onClick={handleEdit}>Edit</button>
+          </div>
+        </div>
       </div>
     </div>
   );
