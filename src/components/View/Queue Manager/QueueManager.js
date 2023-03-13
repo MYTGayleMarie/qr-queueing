@@ -35,7 +35,6 @@ function QueueManager() {
   const [filteredData, setFilter] = useForm(filterData);
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
-  const [finalData, setFinalData] = useState([]);
   const [redirectPay, setRedirectPay] = useState(false);
   const [redirectPrint, setRedirectPrint] = useState(false);
   const [redirectDelete, setRedirectDelete] = useState(false);
@@ -49,64 +48,40 @@ function QueueManager() {
   React.useEffect(() => {
     patientData.length = 0;
      axios({
-      method: 'post',
-      url: window.$link + 'bookings/getAll',
+      method: 'get',
+      url: window.$link + 'customers/queue',
       withCredentials: false,
       params: {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: filteredData.from_date,
-        date_to: filteredData.to_date,
       },
     })
       .then( function (response) {
         // setIsReady(false)
-        response.data.bookings.map( async (booking, index) => {
-          // console.log(booking)
-          // await axios({
-          //   method: 'post',
-          //   url: window.$link + 'customers/show/' + booking.customer_id,
-          //   withCredentials: false,
-          //   params: {
-          //     api_key: window.$api_key,
-          //     token: userToken.replace(/['"]+/g, ''),
-          //     requester: userId,
-          //   },
-          // }).then(function (customer) {
-            // setIsReady(false)
-              var bookingTime = new Date(booking.booking_time);
-              var formatBookingTime = bookingTime.toDateString().split(" ");
-              var addedOn = new Date(booking.added_on);
-              var formatAddedOn = addedOn.toDateString().split(" ");
-              var bookingDetails = {};
+        response.data.queues.map( async (queues, index) => {
+          var queueDetails = {};
 
-              var booking_service = booking.type.toUpperCase();
-
-              // console.log(booking);
-
-              bookingDetails.withDiscount = booking.discount_detail;
-              bookingDetails.id = booking.id;
-              bookingDetails.name = booking.first_name + ' ' + booking.middle_name + ' ' + booking.last_name;
-              bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
-              bookingDetails.serviceType = booking_service;
-              bookingDetails.paymentStatus = booking.payment_status;
-              bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
-              bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
-              setPatientData(oldArray => [...oldArray, bookingDetails]);
-              setIsReady(true)
-            // })
-            // .then (function (error) {
+          queueDetails.queueNumber = queues.queue_no;
+          queueDetails.name = queues.first_name + ' ' + queues.middle_name + ' ' + queues.last_name;
+          setPatientData(oldArray => [...oldArray, queueDetails]);
+          setIsReady(true)
+          // })
+          // .then (function (error) {
             //   console.log(error);
             //   setIsReady(true)
             // });
-        });
-      })
+          });
+        })
       .catch(function (error) {
         console.log(error);
         setIsReady(false)
       });
   }, [render]);
+
+  React.useEffect(() => {
+    console.log("UPDATED PATIENT DATA: ", patientData);
+  }, [patientData]);
   
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
@@ -158,10 +133,11 @@ function QueueManager() {
         <Fragment>
           <Header type="thick" title="CUSTOMER QUEUE MANAGER" buttons={buttons} tableData={patientData} />
           <Table
-            type={'registration'}
-            tableData={patientData}
+            type={'queue'}
+            tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
+            clickable={true}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'QUEUE', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
+            headingColumns={['QUEUE', 'NAME', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

@@ -77,7 +77,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
+            <td key={index} data-heading={data.key} 
+            className={data.val.replace(/\s/g, '')}
+            >
                 {totalCount == null && index == 0 ? "" : data.val}
             </td>)}
             {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
@@ -203,6 +205,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
             <td><button class="action-btn" role="button" onClick={() => link(row.lab_test, row.Results, row.Value)}>EDIT</button></td>
+            </tr>
+        }
+        else if (type === 'queue' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
+            <td><button class="action-btn" role="button" onClick={() => link(row.lab_test, row.Results, row.Value)}>ADD BOOKING</button></td>
             </tr>
         }
         else if (type === 'items' && clickable == true) {
@@ -1231,7 +1240,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice' || type === 'queue') {
         
         return(
             <div className="table-container">

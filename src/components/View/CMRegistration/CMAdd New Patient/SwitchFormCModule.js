@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm, useStep } from "react-hooks-helper";
 import Form1CModule from './Form1CModule'
-// import Form2CModule from "./Form2CModule";
-// import Form3CModule from './Form3CModule';
+import Form2CModule from "./Form2CModule";
+import Form3CModule from './Form3CModule';
 
 
 
@@ -31,8 +31,8 @@ const mdData = {}
 
 const steps = [
     {id: "customer"},
-    {id: "packages"},
-    {id: "services"},
+    // {id: "packages"},
+    // {id: "services"},
 ]
 
 function SwitchFormCModule() {
@@ -60,20 +60,18 @@ function SwitchFormCModule() {
       initialStep: 0,
     });
 
-
-    
-
     const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails };
     const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails };
     
-    console.log(serviceProps)
+    console.log(personalProps)
+    //console.log(serviceProps)
     switch (step.id) {
         case "customer":
             return <Form1CModule { ...personalProps }/>   
         // case "packages":
-        //     return <Form2CModule { ...serviceProps}/> 
+        //      return <Form2CModule { ...serviceProps}/> 
         // case "services":
-        //     return <Form3CModule { ...serviceProps }/>
+        //      return <Form3CModule { ...serviceProps }/>
         }
 
     return (

@@ -4,6 +4,7 @@ import DateTimePicker from 'react-datetime-picker';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
+import { Button, Modal } from 'react-bootstrap';
 
 //css
 import './Form1CModule.css';
@@ -12,15 +13,31 @@ import './Form1CModule.css';
 import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
+
 //VARIABLES
 const userToken = getToken();
 const userId = getUser();
 
 function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, 
   location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) 
-{
-  document.body.style = 'background: white;';
+  {
 
+  //Single Click
+  const [isClicked, setClicked] = useState(false);
+    
+  //Modal
+  const [show, setShow] = useState(false);
+  
+  const handleClose = () => setShow(false);
+  //const handleShow = () => setShow(true);
+  const handleShow = (event) => {
+    event.preventDefault(); // Prevent the form from submitting immediately
+  
+    // Display the confirmation modal
+    setShow(true);
+  };
+  
+  document.body.style = 'background: white;';
   
   const {
     fname,
@@ -43,15 +60,15 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   const [discountList, setDiscountList] = useState([]);
   const [companyId, setCompanyId] = useState('');
   const [companyRemarks, setCompanyRemarks] = useState('');
-
+  
   const [people, setPeople] = useState(0);
   const [km, setKm] = useState(0);
-
+  
   function turnActive() {
     setActive(true);
   }
-
-  function submit() {
+  
+  function showSubmitButton(){
     if (
       fname != '' &&
       lname != '' &&
@@ -68,7 +85,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     ) {
       return (
         <div className="d-flex justify-content-end">
-          <button className="submit-btn" onClick={() => navigation.next()}>
+          <button className="submit-btn" onClick={handleShow}>
             SUBMIT
           </button>
         </div>
@@ -76,6 +93,52 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     } else {
       // console.log('Incomplete');
     }
+  }
+  
+  function submit(e, customer, dateOfTesting, lastMeal) {
+    if (isClicked ==  false) {
+      setClicked(true);
+      axios({
+        method: 'post',
+        url: window.$link + 'customers/create',
+        withCredentials: false,
+        params: {
+          token: userToken,
+          api_key: window.$api_key,
+          first_name: customer.fname,
+          last_name: customer.lname,
+          middle_name: customer.mname,
+          suffix: '',
+          birthdate: customer.birthDate,
+          contact_no: customer.contactNum,
+          email: customer.email,
+          gender: customer.sex,
+          address: customer.address,
+          emergency_contact: '',
+          emergency_contact_no: '',
+          relation_w_contact: '',
+          last_meal: lastMeal,
+          remarks: '',
+          added_by: userId,
+        },
+        }).then(function (response) {
+          toast.success(response.data.message.success);
+          //Generate Queue Number
+            axios({
+              method: 'post',
+              url: window.$link + 'customers/generateQueue',
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                customer_id: response.data.data.customer_id,
+              },
+            }).then(function (queue) {
+              toast.success("Queue " + queue.data.message);
+              //var queueNumber = queue.data.data.queue_no;
+              });
+          handleClose();
+        })
+    }  
   }
 
   function homeServiceFeeDisplay() {
@@ -224,7 +287,6 @@ React.useEffect(() => {
           console.log(error);
       });
   },[]);
-
 
   React.useEffect(()=>{
     if(address!==""&&allAddress.length>0){
@@ -633,8 +695,25 @@ console.log(location)
                 <span className="since-lastmeal">{sinceLastMeal()}</span>
               </div>
             </div>
-
-            <div>{submit()}</div>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>SUBMIT</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Are you sure you want to submit the form?</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  onClick={(e) => submit(e, customer, dateOfTesting, lastMeal)}
+                >
+                  Submit
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <div>{showSubmitButton()}</div>
 
             
 

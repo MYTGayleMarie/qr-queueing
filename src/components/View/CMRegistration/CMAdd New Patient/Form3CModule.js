@@ -321,6 +321,7 @@ function Form3CModule({ service, customer, location, packagePrice, labPrice,  se
         var resultDates = [];
         var fileResults = [];
         var finalMdCharge = [];
+        var queueNumber = "";
         
         if(mdCharge.physical_exam == true){
             finalMdCharge.push("physical exam");
@@ -341,51 +342,62 @@ function Form3CModule({ service, customer, location, packagePrice, labPrice,  se
 
         axios({
           method: 'post',
-          url: window.$link + 'bookings/create',
+          url: window.$link + 'customers/generateQueue',
           withCredentials: false,
           params: {
-            token: userToken,
             api_key: window.$api_key,
-            customer: response.data.data.customer_id,
-            discount_id: customer.discountId,
-            booking_time: dateOfTesting,
-            company_contract_id: '',
-            doctors_referal: customer.referral,
-            type: customer.serviceLocation,
-            result: customer.result,
-            total_amount: totalPrice,
-            discount_reference_no: customer.discountDetail,
-            home_service_fee: serviceFee,
-            service_location:location_value, 
-            md_charge: finalMdCharge,
-            grand_total: totalPrice,
-            status: 'pending',
-            reference_code: '',
-            payment_type: 'PENDING',
-            lab_tests: testId,
-            package_tests: packageId,
-            lab_prices: labPrices,
-            package_prices: packagePrices,
-            status: 'pending',
-            lab_extracted_dates: extractedDates,
-            lab_test_starts: testStarts,
-            lab_test_finishes: testFinishes,
-            lab_result_dates: resultDates,
-            lab_file_result: fileResults,
-            package_extracted_dates: extractedDates,
-            package_test_starts: testStarts,
-            package_test_finishes: testFinishes,
-            package_result_dates: resultDates,
-            package_file_result: fileResults,
-            remarks: '',
-            added_by: userId,
+            customer_id: response.data.data.customer_id,
           },
+        }).then(function (queue) {
+          queueNumber = queue.data.data.queue_no;
+
+          return axios({
+                    method: 'post',
+                    url: window.$link + 'bookings/create',
+                    withCredentials: false,
+                    params: {
+                      token: userToken,
+                    api_key: window.$api_key,
+                    customer: response.data.data.customer_id,
+                    discount_id: customer.discountId,
+                    booking_time: dateOfTesting,
+                    company_contract_id: '',
+                    doctors_referal: customer.referral,
+                    type: customer.serviceLocation,
+                    result: customer.result,
+                    total_amount: totalPrice,
+                    discount_reference_no: customer.discountDetail,
+                    home_service_fee: serviceFee,
+                    service_location:location_value, 
+                    md_charge: finalMdCharge,
+                    grand_total: totalPrice,
+                    status: 'pending',
+                    reference_code: '',
+                    payment_type: 'PENDING',
+                    lab_tests: testId,
+                    package_tests: packageId,
+                    lab_prices: labPrices,
+                    package_prices: packagePrices,
+                    status: 'pending',
+                    lab_extracted_dates: extractedDates,
+                    lab_test_starts: testStarts,
+                    lab_test_finishes: testFinishes,
+                    lab_result_dates: resultDates,
+                    lab_file_result: fileResults,
+                    package_extracted_dates: extractedDates,
+                    package_test_starts: testStarts,
+                    package_test_finishes: testFinishes,
+                    package_result_dates: resultDates,
+                    package_file_result: fileResults,
+                    remarks: '',
+                    added_by: userId,
+                    queue_no: queueNumber,
+                    },
+                  });
         }).then(function (response) {
-          // console.log(response);
           setBookingId(response.data.data.booking_id);
           toast.success(response.data.message.success);
           
-
           if(isCompany === false) {
             setTimeout(function () {
               setRedirect(true);
@@ -393,10 +405,13 @@ function Form3CModule({ service, customer, location, packagePrice, labPrice,  se
           }else {
             setPrint(true);
           }
-        });
+        }).catch(function (error) {
+          //error
+        });   
+        
         handleClose();
-      });
-    }
+        });
+      }
   }
 
   //Modal
