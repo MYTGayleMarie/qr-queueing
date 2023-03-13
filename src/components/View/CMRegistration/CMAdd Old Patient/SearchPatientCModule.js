@@ -2,6 +2,7 @@ import React, {Fragment, useState} from 'react';
 import { getToken, getUser, refreshPage  } from '../../../../utilities/Common';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 //css
 import './SearchPatientCModule.css';
@@ -54,9 +55,20 @@ function SearchPatientCModule() {
         });
     }
 
-    function addBooking(customerId) {
+    function addToQueue(customerId) {
         id = customerId;
-        setRedirectBooking(true);
+        axios({
+            method: 'post',
+            url: window.$link + 'customers/generateQueue',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              customer_id: customerId,
+            },
+          }).then(function (queue) {
+            toast.success("Queue " + queue.data.message);
+            //var queueNumber = queue.data.data.queue_no;
+            });
     }
 
     if(redirectBooking == true) {
@@ -101,11 +113,11 @@ function SearchPatientCModule() {
             <Fragment>
                 <Table
                     clickable={true}
-                    type={'search-patient'}
+                    type={'search-patient-queue'}
                     tableData={patients}
                     rowsPerPage={4}
                     headingColumns={['ID', 'PATIENT NAME', 'GENDER', 'ADDRESS', 'EMAIL', 'CONTACT NUMBER', 'ACTION']}
-                    link={addBooking}
+                    link={addToQueue}
                     givenClass={'search-mobile'}
                     View={viewHistory}
                 />            

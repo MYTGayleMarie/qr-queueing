@@ -251,6 +251,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button><button class="button-10" role="button" onClick={() => View(row.id)}>VIEW HISTORY</button></td>
             </tr>
         }
+        else if (type === 'search-patient-queue' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD TO QUEUE</button><button class="button-10" role="button" onClick={() => View(row.id)}>VIEW HISTORY</button></td>
+            </tr>
+        }
         else if(type === "payment-invoices") {
             return <tr key={row.id} style={{color:"black"}}>
             {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
@@ -980,7 +987,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if (type === "search-patient" || type == 'purchase-order-invoice') {
+    else if (type === "search-patient" || type == 'purchase-order-invoice' || type == 'search-patient-queue') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  </div>
@@ -1513,7 +1520,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
          </div>
         );
     }
-    else if (type === "search-patient") {
+    else if (type === "search-patient" || type === 'search-patient-queue') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  </div>
