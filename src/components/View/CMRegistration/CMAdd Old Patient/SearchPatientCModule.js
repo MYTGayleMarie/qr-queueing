@@ -24,6 +24,7 @@ function SearchPatientCModule() {
     const [patientName, setPatientName] = useState("");
     const [patients, setPatients] = useState([]);
     const [redirectBooking, setRedirectBooking] = useState(false);
+    const [redirectQueue, setRedirectQueue] = useState(false);
     const [redirectViewHistory, setRedirectViewHistory] = useState(false);
 
     function search() {
@@ -67,6 +68,7 @@ function SearchPatientCModule() {
             },
           }).then(function (queue) {
             toast.success("Queue " + queue.data.message);
+            setRedirectQueue(true);
             //var queueNumber = queue.data.data.queue_no;
             });
     }
@@ -79,8 +81,11 @@ function SearchPatientCModule() {
         )
     }
     function viewHistory(customerId){
-      id=customerId;
-      setRedirectViewHistory(true);
+        id=customerId;
+        setRedirectViewHistory(true);
+    }
+    if(redirectQueue){
+        return <Navigate to={"/queuemanager/"} />;
     }
     if(redirectViewHistory==true){
       var link ="/View-history/"+id;
