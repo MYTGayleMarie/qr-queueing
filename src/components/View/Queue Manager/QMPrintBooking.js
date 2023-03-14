@@ -29,7 +29,7 @@ function groupArrayOfObjects(list, key) {
     }, {});
   };
 
-function PrintBooking() {
+function QMPrintBooking() {
     document.body.style = 'background: white;';
 
        //booking details
@@ -483,4 +483,4 @@ function PrintBooking() {
   );
 }
 
-export default PrintBooking;
+export default QMPrintBooking;

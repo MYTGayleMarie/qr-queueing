@@ -13,7 +13,7 @@ import { isWindows } from "react-device-detect";
 const userToken = getToken();
 const userId = getUser();
 
-export default function ViewHistory(){
+export default function QMViewHistory(){
 
   const {id} = useParams();
   // Patient details

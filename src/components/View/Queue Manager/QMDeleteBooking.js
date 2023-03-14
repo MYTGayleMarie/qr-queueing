@@ -23,7 +23,7 @@ const presentDate = new Date();
 const userToken = getToken();
 const userId = getUser();
 
-function DeleteBooking() {
+function QMDeleteBooking() {
     document.body.style = 'background: white;';
 
        //booking details
@@ -276,4 +276,4 @@ function DeleteBooking() {
   );
 }
 
-export default DeleteBooking;
+export default QMDeleteBooking;

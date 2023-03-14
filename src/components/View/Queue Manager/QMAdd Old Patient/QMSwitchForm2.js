@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useForm, useStep } from "react-hooks-helper";
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
-import OldPatientForm1 from "./OldPatientForm1";
-import OldPatientForm2 from "./OldPatientForm2";
-import OldPatientForm3 from "./OldPatientForm3";
+import QMOldPatientForm1 from "./QMOldPatientForm1";
+import QMOldPatientForm2 from "./QMOldPatientForm2";
+import QMOldPatientForm3 from "./QMOldPatientForm3";
 
 const userToken = getToken();
 const userId = getUser();
@@ -37,7 +37,7 @@ const steps = [
     {id: "services"},
 ]
 
-function SwitchForm2() {
+function QMSwitchForm2() {
 
     const [customer, setPersonal] = useForm(personalData);
     const [lastMeal, setLastMeal] = useState(new Date());
@@ -67,11 +67,11 @@ function SwitchForm2() {
 
     switch (step.id) {
         case "customer":
-            return <OldPatientForm1 { ...personalProps }/>   
+            return <QMOldPatientForm1 { ...personalProps }/>   
         case "packages":
-            return <OldPatientForm2 { ...serviceProps}/> 
+            return <QMOldPatientForm2 { ...serviceProps}/> 
         case "services":
-            return <OldPatientForm3 { ...serviceProps }/>
+            return <QMOldPatientForm3 { ...serviceProps }/>
     }
 
     return (
@@ -80,4 +80,4 @@ function SwitchForm2() {
     )
 }
 
-export default SwitchForm2
+export default QMSwitchForm2

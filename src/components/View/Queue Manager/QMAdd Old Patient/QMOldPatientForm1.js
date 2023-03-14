@@ -9,12 +9,13 @@ import Header from '../../../Header.js';
 import Navbar from '../../../Navbar';
 
 //css
-import './OldPatientForm1.css';
+import './QMOldPatientForm1.css';
 
 const userToken = getToken();
 const userId = getUser();
 
-function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
+function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
+    console.log("THIS IS A TEST ", customer)
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -36,6 +37,7 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     const [km, setKm] = useState(0);
 
     axios({
+    
         method: 'post',
         url: window.$link + 'customers/show/' + id,
         withCredentials: false, 
@@ -410,4 +412,4 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     )
 }
 
-export default OldPatientForm1
+export default QMOldPatientForm1

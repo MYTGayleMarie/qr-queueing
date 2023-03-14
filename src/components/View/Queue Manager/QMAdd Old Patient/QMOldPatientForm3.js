@@ -81,7 +81,7 @@ const userId = getUser();
 // const promo = getPromo();
 // const otherTests = getOtherTests();
 //
-function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
+function QMOldPatientForm3({ service, customer,packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
       //get all lab tests
     const [allLabServices, setAllLabServices] = useState([])
     React.useEffect(()=>{
@@ -1031,4 +1031,4 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
     )
 }
 
-export default OldPatientForm3
+export default QMOldPatientForm3

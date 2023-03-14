@@ -76,7 +76,7 @@ const userId = getUser();
 // const ultrasound = getUltrasound();
 
 //
-function OldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge, discountDetails }) {
+function QMOldPatientForm2({service, customer, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, serviceFee, mdCharge, discountDetails }) {
     document.body.style = 'background: white;';
     window.scrollTo(0, 0);
 
@@ -706,4 +706,4 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
     )
 }
 
-export default OldPatientForm2
+export default QMOldPatientForm2

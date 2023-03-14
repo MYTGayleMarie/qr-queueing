@@ -17,7 +17,7 @@ const userToken = getToken();
 const userId = getUser();
 var id = "";
 
-function SearchPatient() {
+function QMSearchPatient() {
 
     document.body.style = 'background: white;';
     const [patientName, setPatientName] = useState("");
@@ -115,4 +115,4 @@ function SearchPatient() {
     )
 }
 
-export default SearchPatient
+export default QMSearchPatient
