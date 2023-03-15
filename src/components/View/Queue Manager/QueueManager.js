@@ -61,8 +61,6 @@ function QueueManager() {
         // setIsReady(false)
         response.data.queues.map( async (queues, index) => {
           var queueDetails = {};
-
-          console.log(queues)
           queueDetails.customerId = queues.customer_id;
           queueDetails.queueNumber = queues.queue_no;
           queueDetails.name = queues.first_name + ' ' + queues.middle_name + ' ' + queues.last_name;
@@ -76,14 +74,9 @@ function QueueManager() {
           });
         })
       .catch(function (error) {
-        console.log(error);
         setIsReady(false)
       });
   }, [render]);
-
-  React.useEffect(() => {
-    console.log("UPDATED PATIENT DATA: ", patientData);
-  }, [patientData]);
   
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
@@ -127,8 +120,6 @@ function QueueManager() {
         <Navigate to ={link}/>
     )
   }
-
-  console.log(patientData)
 
    return (
     <div>
