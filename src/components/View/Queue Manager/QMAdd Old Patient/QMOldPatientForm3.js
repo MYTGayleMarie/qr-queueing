@@ -378,8 +378,8 @@ function QMOldPatientForm3({ service, customer,packagePrice, labPrice,  setPacka
             },
             }).then(function (queue) {
                 queue.data.queues.map((data) => {
-                    queueNumber = data.queue_no;
                     if(customerId == data.customer_id){
+                        queueNumber = data.queue_no;
                     }
                 })
                 
