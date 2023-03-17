@@ -176,7 +176,7 @@ function RegistrationCModule() {
             style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
                   fontFamily: "Montserrat-Bold", fontSize:"25px",}}>
             New Patient</button></a>
-            </div>
+            </div>  
 
 
       </div>

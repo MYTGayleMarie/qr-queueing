@@ -81,7 +81,7 @@ const userId = getUser();
 // const promo = getPromo();
 // const otherTests = getOtherTests();
 //
-function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
+function QMOldPatientForm3({ service, customer,packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails }) {
       //get all lab tests
     const [allLabServices, setAllLabServices] = useState([])
     React.useEffect(()=>{
@@ -162,7 +162,6 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
     })
     .then((response)=>{
         const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        console.log(packagesArray)
         packagesArray.map((item,index)=>{  
             // console.log(item) 
             var packageDetails = {};
@@ -233,6 +232,7 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
     const [isClicked, setClicked] = useState(false);
 
     var totalMDCharge = 0;
+    var customerId = '';
 
     if(mdCharge.physical_exam == true) {
     totalMDCharge += 50.00;
@@ -252,6 +252,7 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
             requester: userId,
         }
     }).then(function (customer) {
+        customerId = customer.data.id;
         var presentDate = new Date();
         var birthDate = new Date(customer.data.birthdate);
         var age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -268,6 +269,7 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
+        
 
     }).catch(function (error) {
         console.log(error);
@@ -276,7 +278,6 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
      //functions
      function getDetails(categoryItems, checkedItem) {
         categoryItems.map((data, index) => {
-            console.log(data)
              if(data.key == checkedItem) {
      
                  itemDetails = {
@@ -326,6 +327,7 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
             var packagePrices = [];
             var testId = [];
             var labPrices = [];
+            var queueNumber = "";
 
             services.map((data, index) => {
 
@@ -364,65 +366,83 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
                 location_value = "Mobile Charge"
               }
 
-           console.log(location)
-
-            axios({
-                method: 'post',
-                url: window.$link + 'bookings/create',
-                withCredentials: false, 
-                params: {
-                    token: userToken,
-                    api_key: window.$api_key, 
-                    customer: id,
-                    discount_id: customer.discountId,
-                    booking_time: dateOfTesting,
-                    service_location: location_value,
-                    company_contract_id: '',
-                    doctors_referal: customer.referral, 
-                    type: customer.serviceLocation,
-
-                    result: customer.result,
-                    total_amount: totalPrice,
-                    grand_total: "",
-                    discount_reference_no: customer.discountDetail, 
-                    home_service_fee: serviceFee,
-                    md_charge: finalMdCharge,
-                    status: 'pending',
-                    reference_code: '',
-                    payment_type: 'PENDING',
-                    lab_tests: testId,
-                    package_tests: packageId,
-                    lab_prices: labPrices,
-                    package_prices: packagePrices,
-                    status: 'pending',
-                    lab_extracted_dates: extractedDates,
-                    lab_test_starts: testStarts,
-                    lab_test_finishes: testFinishes,
-                    lab_result_dates: resultDates,
-                    lab_file_result: fileResults,
-                    package_extracted_dates: extractedDates,
-                    package_test_starts: testStarts,
-                    package_test_finishes: testFinishes,
-                    package_result_dates: resultDates,
-                    package_file_result: fileResults,
-                    remarks: '',
-                    added_by: userId, 
-                }
+           axios({
+            method: 'get',
+            url: window.$link + 'customers/queue',
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+              //customer_id: response.data.data.customer_id,
+            },
+            }).then(function (queue) {
+                queue.data.queues.map((data) => {
+                    if(customerId == data.customer_id){
+                        queueNumber = data.queue_no;
+                    }
+                })
+                
+                return axios({
+                        method: 'post',
+                        url: window.$link + 'bookings/create',
+                        withCredentials: false,
+                        params: {
+                            token: userToken,
+                        api_key: window.$api_key,
+                        customer: customerId,
+                        discount_id: customer.discountId,
+                        booking_time: dateOfTesting,
+                        company_contract_id: '',
+                        doctors_referal: customer.referral,
+                        type: customer.serviceLocation,
+                        result: customer.result,
+                        total_amount: totalPrice,
+                        discount_reference_no: customer.discountDetail,
+                        home_service_fee: serviceFee,
+                        service_location:location_value, 
+                        md_charge: finalMdCharge,
+                        grand_total: totalPrice,
+                        status: 'pending',
+                        reference_code: '',
+                        payment_type: 'PENDING',
+                        lab_tests: testId,
+                        package_tests: packageId,
+                        lab_prices: labPrices,
+                        package_prices: packagePrices,
+                        status: 'pending',
+                        lab_extracted_dates: extractedDates,
+                        lab_test_starts: testStarts,
+                        lab_test_finishes: testFinishes,
+                        lab_result_dates: resultDates,
+                        lab_file_result: fileResults,
+                        package_extracted_dates: extractedDates,
+                        package_test_starts: testStarts,
+                        package_test_finishes: testFinishes,
+                        package_result_dates: resultDates,
+                        package_file_result: fileResults,
+                        remarks: '',
+                        added_by: userId,
+                        queue_no: queueNumber,
+                        },
+                        });
             }).then(function (response) {
-                // console.log(response.data.data);
                 setBookingId(response.data.data.booking_id);
                 toast.success(response.data.message.success);
-
-                if(isCompany == false) {
-                    setTimeout(function() {
-                        setRedirect(true);
-                    }, 2000);
+                
+                if(isCompany === false) {
+                setTimeout(function () {
+                    setRedirect(true);
+                }, 2000);
                 }else {
-                    setPrint(true);
+                setPrint(true);
                 }
             }).catch(function (error) {
                 console.log(error);
-            });
+                //error
+        }).catch(function (error){
+            console.log(error);
+        });
             handleClose();
             })
 
@@ -444,7 +464,6 @@ function OldPatientForm3({ service, customer,packagePrice, labPrice,  setPackage
 // console.log(checkedServices)
 
     checkedServices.map((data, index) => {
-    console.log(data)
         var categoryDetails = data[0].split("_");
         var categoryId = parseInt(categoryDetails[1]);
 
@@ -1031,4 +1050,4 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
     )
 }
 
-export default OldPatientForm3
+export default QMOldPatientForm3

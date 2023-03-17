@@ -99,6 +99,8 @@ import ReportItemHistoryDetails from './components/View/Reports/ReportItemHistor
 import ReportExpense from './components/View/Reports/ReportExpense';
 import ReportAnnual from './components/View/Reports/ReportAnnual';
 import QueueManager from './components/View/Queue Manager/QueueManager';
+import QMOldPatientForm1 from './components/View/Queue Manager/QMAdd Old Patient/QMOldPatientForm1';
+import QMSwitchForm2 from './components/View/Queue Manager/QMAdd Old Patient/QMSwitchForm2';
 
 
 function App() {
@@ -162,6 +164,7 @@ function App() {
         <Route path="/lab" element={token ? <Lab /> : <Navigate to="/" />} />
         <Route path="/registrationcmodule" element={token ? <RegistrationCModule /> : <Navigate to="/" />} />
         <Route path="/queuemanager" element={token ? <QueueManager /> : <Navigate to="/" />} />
+        <Route path="/queuemanager/add-booking/:id" element={token ? <QMSwitchForm2 /> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/lab/:dateFrom/:dateTo" element={token ? <Lab /> : <Navigate to="/" />} />

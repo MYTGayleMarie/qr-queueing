@@ -23,6 +23,7 @@ import supplyIcon from '../images/icons/supply-icon.png';
 import reportIcon from '../images/icons/report-icon.png';
 import logoutIcon from '../images/icons/logout.png';
 import servicesIcon from '../images/icons/services-icon.png';
+import queueIcon from '../images/icons/queue.png';
 
 //logo image
 import logo from '../images/logo.png';
@@ -247,7 +248,7 @@ function cashierNavbar(showNavbar,setshowNavbar) {
         </NavLink>
         <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
-            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
         </NavLink>
@@ -335,7 +336,7 @@ function registrationNavbar(showNavbar,setshowNavbar) {
         </NavLink>
         <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
-            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
         </NavLink>
@@ -418,7 +419,7 @@ function adminNavbar(showNavbar,setshowNavbar) {
         </NavLink>
         <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
-            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
         </NavLink>
@@ -908,7 +909,7 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
             <span class="mx-2">Patient</span>
         </NavLink>
         <NavLink to="/queuemanager" activeClassName="active" class="link">
-            <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
+            <img src={queueIcon} alt={'queue'} class="queue icon mobile-size-icon"></img>
             <span class="mx-2">Queue Manager</span>
         </NavLink>
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
@@ -978,7 +979,7 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             <span class="mx-2">Patient</span>
         </NavLink>
         <NavLink to="/queuemanager" activeClassName="active" class="link">
-            <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
+            <img src={queueIcon} alt={'queue'} class="queue icon mobile-size-icon"></img>
             <span class="mx-2">Queue Manager</span>
         </NavLink>
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">

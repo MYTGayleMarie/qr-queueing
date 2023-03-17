@@ -15,6 +15,7 @@ const userToken = getToken();
 const userId = getUser();
 
 function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
+    console.log("THIS IS A TEST ", customer)
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");

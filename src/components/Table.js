@@ -208,11 +208,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             </tr>
         }
         else if (type === 'queue' && clickable == true) {
-            return <tr key={row.id}>
-            {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.lab_test, row.Results, row.Value)}>ADD BOOKING</button></td>
+            console.log(row)
+            return (<tr key={row.id}>
+            <td key={row.id} data-heading={row.id} className={ row.val}>{row.queueNumber}</td>
+            <td key={row.id} data-heading={row.id} className={ row.val}>{row.name}</td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.customerId)}>ADD BOOKING</button></td>
             </tr>
+            )
         }
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>

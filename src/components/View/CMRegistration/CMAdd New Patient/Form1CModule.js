@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { Button, Modal } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 
 //css
 import './Form1CModule.css';
@@ -21,6 +22,9 @@ const userId = getUser();
 function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, 
   location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) 
   {
+
+  //Redirection
+  const [redirect, setRedirect] = useState(false);
 
   //Single Click
   const [isClicked, setClicked] = useState(false);
@@ -134,6 +138,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
               },
             }).then(function (queue) {
               toast.success("Queue " + queue.data.message);
+              setRedirect(true);
               //var queueNumber = queue.data.data.queue_no;
               });
           handleClose();
@@ -368,6 +373,10 @@ console.log(location)
 
     difference += minutes === 0 || hours === 1 ? `${minutes} minutes ago` : `${minutes} minutes ago`;
     return difference;
+  }
+
+  if(redirect){
+    return <Navigate to={"/queuemanager/"} />;
   }
 
   return (

@@ -61,7 +61,7 @@ function QueueManager() {
         // setIsReady(false)
         response.data.queues.map( async (queues, index) => {
           var queueDetails = {};
-
+          queueDetails.customerId = queues.customer_id;
           queueDetails.queueNumber = queues.queue_no;
           queueDetails.name = queues.first_name + ' ' + queues.middle_name + ' ' + queues.last_name;
           setPatientData(oldArray => [...oldArray, queueDetails]);
@@ -74,14 +74,9 @@ function QueueManager() {
           });
         })
       .catch(function (error) {
-        console.log(error);
         setIsReady(false)
       });
   }, [render]);
-
-  React.useEffect(() => {
-    console.log("UPDATED PATIENT DATA: ", patientData);
-  }, [patientData]);
   
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
@@ -91,12 +86,12 @@ function QueueManager() {
 
   function filter() {}
 
-  function addPayment(bookingId) {
-    id = bookingId;
+  function addBooking(customerId) {
+    id = customerId;
     setRedirectPay(true);
   }
 
-  function printPayment(bookingId) {
+  function printBooking(bookingId) {
     id = bookingId;
     setRedirectPrint(true);
   }
@@ -113,7 +108,7 @@ function QueueManager() {
   }
 
   if(redirectPay == true) {
-    var link =  "/add-payment/" + id;
+    var link =  "/queuemanager/add-booking/" + id;
     return (
         <Navigate to ={link}/>
     )
@@ -144,8 +139,8 @@ function QueueManager() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            link={addPayment}
-            print={printPayment}
+            link={addBooking}
+            print={printBooking}
             role={role}
             userId={userId}
             deleteBooking={deleteBooking}
