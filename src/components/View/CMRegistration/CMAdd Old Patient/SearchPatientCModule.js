@@ -17,9 +17,10 @@ const patientData = [];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
+var queueNumber = "";
 
 function SearchPatientCModule() {
-
+    
     document.body.style = 'background: white;';
     const [patientName, setPatientName] = useState("");
     const [patients, setPatients] = useState([]);
@@ -67,6 +68,7 @@ function SearchPatientCModule() {
               customer_id: customerId,
             },
           }).then(function (queue) {
+            queueNumber =  queue.data.data.queue_no;
             toast.success("Queue " + queue.data.message);
             setRedirectQueue(true);
             //var queueNumber = queue.data.data.queue_no;
@@ -85,7 +87,46 @@ function SearchPatientCModule() {
         setRedirectViewHistory(true);
     }
     if(redirectQueue){
-        return <Navigate to={"/queuemanager/"} />;
+        return (
+        <div>
+            <div className="row" style={{marginTop:"6%", fontFamily:"Montserrat-Bold", display:"flex", flexDirection:"column", alignItems:"center", textAlign: "center"}}>
+                <img src="/logo.png" style={{width:"160px", height:"80px", marginBottom:"3%"}}></img>
+                <h1>Customer Module</h1>
+                <div className="row" style={{marginTop:"3%"}}>
+                <div className="col-sm-4"></div>
+                <div className="col-sm-4 d-flex justify-content-center">
+                    <div style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                    fontFamily: "Montserrat-Bold", fontSize:"25px"}}>
+                    Queue Created! <br />
+                    Your Queue Number is {queueNumber}.
+                    </div>
+                </div>
+                    <div type="button" disabled 
+                    style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                    fontFamily: "Montserrat-Bold", fontSize:"25px"}}>
+                    Please wait for your name to be called.
+                    </div>
+                <div className="col-sm-4"></div>
+                </div>
+            </div>
+            <div className="row"></div>
+            <div className="row"></div>
+            <div className="row">
+                <div className="col-sm-3"></div>
+                <div className="col-sm-3"></div>
+                <div className="col-sm-3"></div>
+                <div className="col-sm-3">
+                <a href='/RegistrationCModule'>
+                    <button variant="default" 
+                    style={{padding:"7px", margin:"5px", width:"25%", height:"75%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                    fontFamily: "Montserrat-Bold", fontSize:"15px"}}>
+                    Done
+                    </button>
+                </a>
+                </div>
+            </div>
+        </div>
+        );
     }
     if(redirectViewHistory==true){
       var link ="/View-history/"+id;

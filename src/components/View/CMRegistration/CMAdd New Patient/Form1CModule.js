@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
 import { Button, Modal } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom';
 
 //css
 import './Form1CModule.css';
@@ -18,13 +17,14 @@ import Navbar from '../../../Navbar';
 //VARIABLES
 const userToken = getToken();
 const userId = getUser();
+var queueNumber = "";
 
 function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, 
   location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) 
   {
 
   //Redirection
-  //const [redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   //Single Click
   const [isClicked, setClicked] = useState(false);
@@ -54,7 +54,6 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     address,
   } = customer;
   const [activation, setActive] = useState(false);
-  const [discountList, setDiscountList] = useState([]);
   const [companyId, setCompanyId] = useState('');
   const [companyRemarks, setCompanyRemarks] = useState('');
   
@@ -125,60 +124,14 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
                 customer_id: response.data.data.customer_id,
               },
             }).then(function (queue) {
+              queueNumber =  queue.data.data.queue_no;
               toast.success("Queue " + queue.data.message);
-              //setRedirect(true);
-              //var queueNumber = queue.data.data.queue_no;
+              setRedirect(true);
               });
           handleClose();
         })
     }  
   }
-
-  
-
-
-//   React.useEffect(() => {
-//     axios({
-//         method: 'post',
-//         url: window.$link + 'discounts/getAll',
-//         withCredentials: false, 
-//         params: {
-//             api_key: window.$api_key,
-//             token: userToken.replace(/['"]+/g, ''),
-//             requester: userId,
-//         }
-//     }).then(function (response) {
-//         setDiscountList(response.data.discounts);
-//     }).catch(function (error) {
-//         // console.log(error);
-//     });
-// },[]);
-
-// React.useEffect(() => {
-//   axios({
-//       method: 'post',
-//       url: window.$link + 'discounts/show/' + discountId,
-//       withCredentials: false, 
-//       params: {
-//           api_key: window.$api_key,
-//           token: userToken.replace(/['"]+/g, ''),
-//           requester: userId,
-//       }
-//   }).then(function (response) {
-//       // console.log(response);
-//       setCompanyId(response.data.data.discount.company_id);
-//       setDiscount(response.data.data.discount.percentage);
-//       setDiscountDetails(response.data.data.discount_details);
-//       if(response.data.is_package == "1") {
-//           setIsPackage("1");
-//       }
-//       if(response.data.is_service == "1") {
-//           setIsService("1");
-//       }
-//   }).catch(function (error) {
-//       console.log(error);
-//   });
-// },[discountId]);
 
 React.useEffect(() => {
     setCompanyRemarks("");
@@ -254,47 +207,48 @@ console.log(location)
       });
   },[]);
 
-  const listOfDiscount = discountList.map((row, index) => {
+  if(redirect){
     return (
-      <option key={index} value={row.id}>
-        {row.description + ' (' + row.discount_code + ')'}
-      </option>
+      <div>
+          <div className="row" style={{marginTop:"6%", fontFamily:"Montserrat-Bold", display:"flex", flexDirection:"column", alignItems:"center", textAlign: "center"}}>
+              <img src="/logo.png" style={{width:"160px", height:"80px", marginBottom:"3%"}}></img>
+              <h1>Customer Module</h1>
+              <div className="row" style={{marginTop:"3%"}}>
+              <div className="col-sm-4"></div>
+              <div className="col-sm-4 d-flex justify-content-center">
+                  <div style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                  fontFamily: "Montserrat-Bold", fontSize:"25px"}}>
+                  Customer Created! <br />
+                  Your Queue Number is {queueNumber}.
+                  </div>
+              </div>
+                  <div type="button" disabled 
+                  style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                  fontFamily: "Montserrat-Bold", fontSize:"25px"}}>
+                  Please wait for your name to be called.
+                  </div>
+              <div className="col-sm-4"></div>
+              </div>
+          </div>
+          <div className="row"></div>
+          <div className="row"></div>
+          <div className="row">
+              <div className="col-sm-3"></div>
+              <div className="col-sm-3"></div>
+              <div className="col-sm-3"></div>
+              <div className="col-sm-3">
+              <a href='/RegistrationCModule'>
+                  <button variant="default" 
+                  style={{padding:"7px", margin:"5px", width:"25%", height:"75%", borderRadius:"8px", border:"1px", color:"#419ea3", 
+                  fontFamily: "Montserrat-Bold", fontSize:"15px"}}>
+                  Done
+                  </button>
+              </a>
+              </div>
+          </div>
+      </div>
     );
-  });
-
-  function sinceLastMeal() {
-    var presentDate = new Date();
-    let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
-
-    //calculate days
-    const days = Math.floor(diffInMilliSeconds / 86400);
-    diffInMilliSeconds -= days * 86400;
-    // console.log('calculated days', days);
-
-    // calculate hours
-    const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-    diffInMilliSeconds -= hours * 3600;
-    // console.log('calculated hours', hours);
-
-    // calculate minutes
-    const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-    diffInMilliSeconds -= minutes * 60;
-    // console.log('minutes', minutes);
-
-    let difference = '';
-    if (days > 0) {
-      difference += days === 1 ? `${days} day, ` : `${days} days, `;
-    }
-
-    difference += hours === 0 || hours === 1 ? `${hours} hour, ` : `${hours} hours, `;
-
-    difference += minutes === 0 || hours === 1 ? `${minutes} minutes ago` : `${minutes} minutes ago`;
-    return difference;
   }
-
-  // if(redirect){
-  //   return <Navigate to={"/queuemanager/"} />;
-  // }
 
   return (
     <div>

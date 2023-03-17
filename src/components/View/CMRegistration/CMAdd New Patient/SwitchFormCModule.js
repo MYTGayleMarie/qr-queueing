@@ -63,8 +63,6 @@ function SwitchFormCModule() {
     const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails };
     const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails };
     
-    console.log(personalProps)
-    //console.log(serviceProps)
     switch (step.id) {
         case "customer":
             return <Form1CModule { ...personalProps }/>   
@@ -72,50 +70,9 @@ function SwitchFormCModule() {
         //      return <Form2CModule { ...serviceProps}/> 
         // case "services":
         //      return <Form3CModule { ...serviceProps }/>
-        }
-
-    return (
-        <div>
-            <div className="row" style={{marginTop:"6%", fontFamily:"Montserrat-Bold"}} >
-          <center>
-          <img src="/logo.png" style={{width:"160px", height:"80px", marginBottom:"3%",}}></img>
-          <h1>Customer Module</h1>
-          </center>
-            <div className="row" style={{marginTop:"3%"}}>
-                <div className="col-sm-4"></div>
-                <div className="col-sm-4 d-flex justify-content-center">
-                    <center>
-             <button type="button" disabled 
-              style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
-                    fontFamily: "Montserrat-Bold", fontSize:"25px",}}>
-                        Customer Created</button>
-                        </center>
-                <div className="col-sm-4"></div>
-              </div>
-            </div>
-            </div>
-            <div className="row"></div>
-            <div className="row"></div>
-            <div className="row">
-                <div className="col-sm-3"></div>
-                <div className="col-sm-3"></div>
-                <div className="col-sm-3"></div>
-                <div className="col-sm-3">
-                <a href='/RegistrationCModule'>
-            <button variant="default" 
-            style={{padding:"7px", margin:"5px", width:"25%", height:"75%", borderRadius:"8px", border:"1px", color:"#419ea3", 
-                  fontFamily: "Montserrat-Bold", fontSize:"15px",}}>
-            Done</button></a>
-                </div>
-            </div>
-
-        </div>
-    )
+        default:
+    }
     
     }
-
-
-
-
 
 export default SwitchFormCModule
