@@ -24,7 +24,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   {
 
   //Redirection
-  const [redirect, setRedirect] = useState(false);
+  //const [redirect, setRedirect] = useState(false);
 
   //Single Click
   const [isClicked, setClicked] = useState(false);
@@ -52,13 +52,6 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     email,
     contactNum,
     address,
-    referral,
-    // discountId,
-    // discountDetail,
-    serviceLocation,
-    // homeServiceFee,
-    result,
-    lastmeal,
   } = customer;
   const [activation, setActive] = useState(false);
   const [discountList, setDiscountList] = useState([]);
@@ -80,12 +73,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
       sex != '' &&
       birthDate != '' &&
       contactNum != '' &&
-      address != '' &&
-      serviceLocation != '' &&
-      result != '' &&
-      dateOfTesting != '' &&
-      lastMeal != '' &&
-      referral != ""
+      address != ''
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -138,7 +126,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
               },
             }).then(function (queue) {
               toast.success("Queue " + queue.data.message);
-              setRedirect(true);
+              //setRedirect(true);
               //var queueNumber = queue.data.data.queue_no;
               });
           handleClose();
@@ -146,66 +134,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     }  
   }
 
-  function homeServiceFeeDisplay() {
-    if (
-      serviceLocation === "home service"
-    ) {
-      return (
-        <div className="row date-of-testing-container small-gap">
-        <div className="col">
-          <label for="result" className="radio-header">
-          SERVICE LOCATION
-          </label>
-          <br />
-          <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
-            <option value="" selected disabled>Select</option>
-            <option value={0}>Within 2km or less</option>
-            <option value={1}>More than 2km</option>
-            <option value={2}>Outside Tacloban or Palo</option>
-            <option value={3}>Company</option>
-            <option value={4}>Mobile Charge</option>
-          </select>
-        </div>
-        <div className="col">
-        {location != "" && (
-                <label for="result" className="radio-header">
-                    SERVICE FEE
-                </label>
-                )}
-                {location == 0 && location != "" && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={250}>(1 - 2 PAX) - P 250</option>
-                      <option value={150}>(3 or more) - P 150</option>
-                    </select>
-                )}
-                 {location == 1 && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={300}>(1 - 2 PAX) - P 300</option>
-                      <option value={180}>(3 or more) - P 180</option>
-                    </select>
-                )}
-                {location == 3 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
-                )}
-                {location == 4 && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={65}>Male - P 65</option>
-                      <option value={25}>Female - P 25</option>
-                    </select>
-                )}
-                {location == 2 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
-                )}
-        </div>
-      </div>
-      );
-    } else {
-      // console.log('Error. No home service fee');
-    }
-  }
+  
 
 
 //   React.useEffect(() => {
@@ -325,18 +254,6 @@ console.log(location)
       });
   },[]);
 
-
-  React.useEffect(()=>{
-    if(referral!==""&&setAllMD.length>0){
-      let searchWord = new RegExp(referral.toLowerCase()) // create regex for input address
-      let filteredMD = allMD.filter(info=>searchWord.test(info.toLowerCase())) // test if there is a match
-      setMDSuggestions(filteredMD) // set all matches to suggestions
-    }
-  },[referral])
- 
-
-
-
   const listOfDiscount = discountList.map((row, index) => {
     return (
       <option key={index} value={row.id}>
@@ -375,9 +292,9 @@ console.log(location)
     return difference;
   }
 
-  if(redirect){
-    return <Navigate to={"/queuemanager/"} />;
-  }
+  // if(redirect){
+  //   return <Navigate to={"/queuemanager/"} />;
+  // }
 
   return (
     <div>
@@ -521,189 +438,6 @@ console.log(location)
                 <><button key = {index} className="suggestions-item" name="address" value={data} onClick={(e)=>{setPersonal(e);setRenderSuggest(false)}}>{data}</button><br/></>
               )}
             </div>}
-            <div className="row">
-              <label for="address" className="form-label">
-                REFERRAL <i>(required)</i>
-              </label>
-              <br />
-              <input
-                type="text"
-                className="form-control full"
-                id="referral"
-                name="referral"
-                value={referral}
-                onChange={setPersonal}
-                onFocus={()=>{setRenderMDSuggest(true)}}
-                onBlur={()=>{setTimeout(()=>{setRenderMDSuggest(false)},200)}} 
-
-              />
-              <br />
-            </div>
-            {MDSuggestions.length!==0 && renderMDSuggest && <div className="suggestions-list">
-              {MDSuggestions.map((data, index)=>
-                <><button key = {index} className="suggestions-item" name="referral" value={data} onClick={(e)=>{setPersonal(e);setRenderMDSuggest(false)}}>{data}</button><br/></>
-              )}
-            </div>}
-            {/* <div className="row">
-              <div className="col-sm-6">
-                <label for="address" className="form-label">
-                  DISCOUNT CODEeee
-                </label>
-                <br />
-                <select
-                  className="select-input full"
-                  id="discount_code"
-                  name="discountId"
-                  value={discountId}
-                  onChange={setPersonal}
-                >
-                  <option value="" selected>
-                    None
-                  </option>
-                  {listOfDiscount}
-                </select>
-                <br />
-              </div>
-              <div className="col-sm-6">
-                  <label for="address" className="form-label">
-                      DISCOUNT DETAIL
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      className="form-control full"
-                      id="discount_detail"
-                      name="discountDetail"
-                      value={discountDetail}
-                      onChange={setPersonal}
-                    />
-                    <br />
-              </div>
-            </div> */}
-            <div className="row small-gap">
-              <div className="col-sm-6">
-                <div className="row">
-                  <span className="radio-header">LOCATION OF SERVICE</span>
-                  <br />
-                  <div className="col">
-                    <input
-                      type="radio"
-                      id="serviceLocation"
-                      name="serviceLocation"
-                      value="clinic"
-                      checked={serviceLocation === 'clinic'}
-                      onChange={setPersonal}
-                    />
-                    <label for="clinic" className="radio-label">
-                      CLINIC
-                    </label>
-                  </div>
-                  {/* <div className="col">
-                    <input
-                      type="radio"
-                      id="serviceLocation"
-                      name="serviceLocation"
-                      value="home service"
-                      checked={serviceLocation === 'home service'}
-                      onChange={setPersonal}
-                    />
-                    <label for="home-service" className="radio-label">
-                      HOME SERVICE
-                    </label>
-                  </div> */}
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="row">
-                  <label for="result" className="radio-header">
-                    RESULTS
-                  </label>
-                  <br />
-                  <div className="col">
-                    <input
-                      type="radio"
-                      id="result"
-                      name="result"
-                      value="email"
-                      checked={result === 'email'}
-                      onChange={setPersonal}
-                    />
-                    <label for="email" className="radio-label">
-                      EMAIL
-                    </label>
-                  </div>
-                  <div className="col">
-                    <input
-                      type="radio"
-                      id="result"
-                      name="result"
-                      value="print with pickup"
-                      checked={result === 'print with pickup'}
-                      onChange={setPersonal}
-                    />
-                    <label for="print-with-pickup" className="radio-label">
-                      PICKUP
-                    </label>
-                  </div>
-                  <div className="col">
-                    <input
-                      type="radio"
-                      id="result"
-                      name="result"
-                      value="both"
-                      checked={result === 'both'}
-                      onChange={setPersonal}
-                    />
-                    <label for="print-with-pickup" className="radio-label">
-                      BOTH
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row small-gap">
-                        <div className="col-sm-6">
-                            <div className="row">
-                                <span className="radio-header">MD CHARGE</span><br />
-                                <div className="col">
-                                    <input type="checkbox" name="physical_exam" value="physical exam" checked={mdCharge.physical_exam == true} onChange={setMdCharge}/><label for="mdCharge" className="booking-label">Physical Exam</label>
-                                </div>
-                                <div className="col">
-                                    <input type="checkbox" name="medical_certificate" value="medical certificate" checked={mdCharge.medical_certificate == true} onChange={setMdCharge}/><label for="mdCharge" className="booking-label">Medical Certificate</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-6">
-                            {homeServiceFeeDisplay()}
-                        </div>
-                </div>
-            <div className="row date-of-testing-container large-gap">
-              <div className="col-sm-4">
-                <label for="date" className="form-label">
-                  DATE OF TESTING<i>(required)</i>
-                </label>
-                <br />
-                <DateTimePicker
-                    onChange={setDOT}
-                    value={dateOfTesting}
-                />
-              </div>
-              <div className="col-sm-4">
-                <label for="last_meal" className="form-label">
-                  LAST MEAL<i>(required)</i>
-                </label>
-                <br />
-                <DateTimePicker onChange={setLastMeal} value={lastMeal} />
-              </div>
-              <div className="col-sm-4">
-                <label for="date" className="form-label">
-                  SINCE LAST MEAL
-                </label>
-                <br />
-                <span className="since-lastmeal">{sinceLastMeal()}</span>
-              </div>
-            </div>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>SUBMIT</Modal.Title>
@@ -723,9 +457,6 @@ console.log(location)
               </Modal.Footer>
             </Modal>
             <div>{showSubmitButton()}</div>
-
-            
-
           </form>
           <ToastContainer />
         </div>
