@@ -51,6 +51,9 @@ export default function GenerateResults({servicesData, title, bookingId}){
   const [data, setData] = useState([])
   var presentDate = new Date();
 
+  var monthNames = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"];
+
   // get Patient Details
   React.useEffect(()=>{
     axios({
@@ -244,7 +247,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
               </td>
               <td>
                 <span><b>Registration Date: </b></span>
-                <span>Insert Date here</span>
+                <span>{monthNames[presentDate.getMonth()]} {presentDate.getDate()}, {presentDate.getFullYear()}</span>
               </td>
             </tr>
             <tr>
