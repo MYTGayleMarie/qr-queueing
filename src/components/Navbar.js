@@ -1113,7 +1113,7 @@ function Navbar() {
 
       {showNavbar == false && role == 3  && CashierNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 2  && RegisterNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
-      {showNavbar == false && (role == 4 || role == 1) && AdminNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
+      {showNavbar == false && (role == 4 || role == 1 || role == 10) && AdminNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
       
       {showNavbar == false && role == 6  && PurchasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 5  && ResultsReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
@@ -1122,7 +1122,7 @@ function Navbar() {
 
       {showNavbar == true && role == 3 && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 2 && registrationNavbar(showNavbar,setshowNavbar)}
-      {showNavbar == true && (role == 4 || role == 1) && adminNavbar(showNavbar,setshowNavbar)}
+      {showNavbar == true && (role == 4 || role == 1 || role == 10) && adminNavbar(showNavbar,setshowNavbar)}
 
       {showNavbar == true && role == 6 && purchasingNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 5 && resultsReleasingNavbar(showNavbar,setshowNavbar)}
