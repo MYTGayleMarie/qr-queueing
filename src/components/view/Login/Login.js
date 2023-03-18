@@ -85,6 +85,9 @@ function Login() {
     else if (roleId === "8") {
       NavigationRedirection = <Navigate to="/companies" />;
     }
+    else if (roleId === "9"){
+      NavigationRedirection = <Navigate to="/registrationcmodule" />;
+    }
     else {
       NavigationRedirection = <Navigate to="/registration" />;
     }
