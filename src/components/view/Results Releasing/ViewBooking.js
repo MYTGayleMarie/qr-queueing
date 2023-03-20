@@ -85,6 +85,9 @@ export default function ViewBooking() {
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
 
+  //Ready for email/pickup
+  const [ready, setReady] = useState(false);
+
   // Get booking details by searched booking id
   React.useEffect(()=>{
     axios({
@@ -432,6 +435,34 @@ export default function ViewBooking() {
 
         {/* LABORATORY TEST UPLOADER */ }
         <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
+
+          <div className="personal-data-cont">
+            <input type="checkbox" name="physical_exam" value="Ready for email/pickup" checked={ready == true} 
+            onChange={(e) => {
+              if (e.target.checked) {
+                setReady(true);
+                // axios({
+                //   method: 'post',
+                //   url: window.$link + 'bookings/markReady/' + bookingId,
+                //   withCredentials: false,
+                //   params: {
+                //     api_key: window.$api_key,
+                //     token: userToken.replace(/['"]+/g, ''),
+                //     updated_by: userId,
+                //     is_ready: "yes",
+                //   },
+                // }).then(function (response) {
+                //   console.log(response);
+                // }).catch((error)=>{
+                //   console.log(error);
+                // });
+              } else {
+                setReady(false);
+              }
+          }}/>
+            
+            <label for="mdCharge" className="booking-label">READY FOR EMAIL/PICKUP</label>
+          </div>
         <div className="personal-data-cont">
 
         
