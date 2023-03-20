@@ -1,0 +1,56 @@
+.resultTitle {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1.8rem;
+    display: block;
+    text-align: center;
+}
+
+.addressTitle {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.img-small {
+    width: 25%;
+    height:25%;
+  }
+
+.laboratory-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+.table-title {
+    text-align: center;
+    font-family: "Arial", sans-serif;
+    font-size: 1.5em; /* adjust font size as needed */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  h3 {
+    text-align: center;
+    font-family: 'Arial', sans-serif; /* Replace with the desired font family */
+  }
+
+  .wrapper {
+    display: flex; /* Use flexbox layout */
+    justify-content: space-between; /* Spacing between boxes */
+    text-align: center;
+  }
+  
+  .box{
+    width: 50%; /* Set equal width for both boxes */
+    background-color: lightblue;
+    padding: -5px;
+  }
+
+  .tspan {
+    margin-top: -10px;
+  }

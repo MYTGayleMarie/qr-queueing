@@ -18,6 +18,7 @@
     "buffer": "^6.0.3",
     "caniuse-lite": "^1.0.30001458",
     "date-fns": "^2.29.1",
+    "file-type": "^18.2.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
     "number-to-words": "^1.2.4",
@@ -52,7 +53,7 @@
   },
   "scripts": {
     "build": "react-scripts build --openssl-legacy-provider ",
-    "start":"react-scripts start --openssl-legacy-provider ",
+    "start": "react-scripts start --openssl-legacy-provider ",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "proxy": "http://localhost:3000"

@@ -11,6 +11,7 @@ import uploadIcon from '../../../images/icons/upload-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfIcon from '../../../images/icons/pdf-icon.png'
 import FileUpload from './FileUpload';
+import GenerateResults from './GenerateResults';
 import MultipleUpload from './MultipleUpload';
 // import Browser from 'browser';
 
@@ -281,6 +282,7 @@ export default function ViewBooking() {
   /****************/
 
   const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  &&info.test_id!=="7" && info.test_id!=="130")
+  console.log(clinicalUrinalyis);
 
   const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
   
@@ -377,7 +379,7 @@ export default function ViewBooking() {
         
           {loading &&
             <RingLoader color={'#3a023a'} loading={loading} size={200} />
-          }
+          }  
          </div>
         {/* PATIENT INFO  */}
            {!loading && <>
@@ -472,22 +474,22 @@ export default function ViewBooking() {
         <div>
           <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
 {/*           
-          {urinalysis.length!=0 &&<FileUpload 
+          {urinalysis.length!=0 &&<GenerateResults 
             servicesData={urinalysis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
           />} */}
-          {serumPT.length!=0 &&<FileUpload 
+          {serumPT.length!=0 &&<GenerateResults 
             servicesData={serumPT}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
           />}
-          {spermAnalysis.length!=0 &&<FileUpload 
+          {spermAnalysis.length!=0 &&<GenerateResults 
             servicesData={spermAnalysis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
           />}
-          {clinicalUrinalyis.length!=0 &&<FileUpload 
+          {clinicalUrinalyis.length!=0 &&<GenerateResults 
             servicesData={clinicalUrinalyis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
@@ -502,14 +504,14 @@ export default function ViewBooking() {
         <div>
           <div className="category label">CLINICAL MICROSCOPY FECALYSIS</div>
           {/* {fecalysis.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={fecalysis}
               title={"CLINICAL MICROSCOPY FECALYSIS"}
               bookingId = {bookingId}
             />
           } */}
           {clinicalFecalysis.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={clinicalFecalysis}
               title={"CLINICAL MICROSCOPY FECALYSIS"}
               bookingId = {bookingId}
@@ -524,28 +526,28 @@ export default function ViewBooking() {
         <div>
           <div className="category label">HEMATOLOGY</div>
           {cbc.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={cbc}
               title={"HEMATOLOGY"}
               bookingId = {bookingId}
             />
           }
           {esr.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={esr}
               title={"HEMATOLOGY"}
               bookingId = {bookingId}
             />
           }
           {clotting.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={clotting}
               title={"HEMATOLOGY"}
               bookingId = {bookingId}
             />
           }
           {hematology.length!=0 &&
-            <FileUpload 
+            <GenerateResults 
               servicesData={hematology}
               title={"HEMATOLOGY"}
               bookingId = {bookingId}
@@ -559,7 +561,7 @@ export default function ViewBooking() {
         {chemistry.length!=0 && 
         <div>
           <div className="category label">CHEMISTRY</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={chemistry}
             title={"CHEMISTRY"}
             bookingId = {bookingId}
@@ -571,7 +573,7 @@ export default function ViewBooking() {
         {serology.length!=0 && 
         <div>
           <div className="category label">SEROLOGY</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={serology}
             title={"SEROLOGY"}
             bookingId = {bookingId}
@@ -583,7 +585,7 @@ export default function ViewBooking() {
         {thyroid_profile.length!=0 && 
         <div>
           <div className="category label">THYROID PROFILE</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={thyroid_profile}
             title={"THYROID PROFILE"}
             bookingId = {bookingId}
@@ -595,7 +597,7 @@ export default function ViewBooking() {
         {tumor_markers.length!=0 && 
         <div>
           <div className="category label">TUMOR MARKERS</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={tumor_markers}
             title={"TUMOR MARKERS"}
             bookingId = {bookingId}
@@ -607,7 +609,7 @@ export default function ViewBooking() {
         {histopathology.length!=0 && 
         <div>
           <div className="category label">HISTOPATHOLOGY</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={histopathology}
             title={"HISTOPATHOLOGY"}
             bookingId = {bookingId}
@@ -619,7 +621,7 @@ export default function ViewBooking() {
         {microbiology.length!=0 && 
         <div>
           <div className="category label">MICROBIOLOGY</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={microbiology}
             title={"MICROBIOLOGY"}
             bookingId = {bookingId}
@@ -631,7 +633,7 @@ export default function ViewBooking() {
         {xray.length!=0 && 
         <div>
           <div className="category label">XRAY</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={xray}
             title={"XRAY"}
             bookingId = {bookingId}
@@ -643,7 +645,7 @@ export default function ViewBooking() {
         {ecg.length!=0 && 
         <div>
           <div className="category label">ECG</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={ecg}
             title={"ECG"}
             bookingId = {bookingId}
@@ -655,7 +657,7 @@ export default function ViewBooking() {
         {ultrasound.length!=0 && 
         <div>
           <div className="category label">ULTRASOUND</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={ultrasound}
             title={"ULTRASOUND"}
             bookingId = {bookingId}
@@ -667,7 +669,7 @@ export default function ViewBooking() {
         {others.length!=0 && 
         <div>
           <div className="category label">OTHER TESTS</div>
-          <FileUpload 
+          <GenerateResults 
             servicesData={others}
             title={"OTHER TESTS"}
             bookingId = {bookingId}
@@ -678,7 +680,7 @@ export default function ViewBooking() {
         </div>
        
         {/* SEND OUT RESULTS */ }
-        <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
+        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
           <div className="personal-data-cont">
             <MultipleUpload bookingId={bookingId}/>
           </div >
@@ -694,8 +696,8 @@ export default function ViewBooking() {
                 'ACTION',
                 ]}
                 />)
-          }
-          {data != null && (<Table
+          } */}
+          {/* {data != null && (<Table
                 type={'send-out-results'}
                 withSubData={false}
                 tableData={data}
@@ -706,12 +708,9 @@ export default function ViewBooking() {
                 ]}
                 />)}
             
-              </div>
+              </div> */}
               </>}
         </div>
-        <br />
-        <br />
-        <br />
       </Fragment>
   
       </div>

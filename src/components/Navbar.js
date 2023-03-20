@@ -142,6 +142,28 @@ function labReleasingNavbar(showNavbar,setShowNavbar) {
   );
 }
 
+function laboratoryReleasingNavbar(showNavbar,setShowNavbar) {
+  return (
+    <div class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav" id="sidebar">
+      <ul class="nav flex-column text-white w-100">
+        <div class="d-flex justify-content-center">
+          <img src={logo} alt={'logo'} class="navbar-logo"></img>
+        </div>
+          <NavLink to="/lab" activeClassName="active" class="link">
+              <li href="/lab" class="nav-link imaging-nav">
+                <img src={labIcon} alt={'lab'} class="lab icon"></img>
+                <span class="mx-2">Laboratory Releasing</span>
+              </li>
+          </NavLink>
+          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+            <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
+            <span class="mx-2">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
 function queueManagerNavbar(showNavbar,setShowNavbar) {
   return (
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav" id="sidebar">
@@ -957,6 +979,30 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
   )
 }
 
+function LaboratoryReleasingNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply, showCompany, setShowCompany) {
+
+  return (
+  <div class="navbar">
+  <div class="logo-mobile">
+      <img src={logo} alt={'logo'} class="navbar-logo"></img>
+  </div>
+  <div id="nav-icon">
+     <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
+  </div>
+  <div id="side-nav">
+      <NavLink to="/lab" activeClassName="active" class="link">
+            <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
+            <span class="mx-2">Laboratory Releasing</span>
+      </NavLink>
+      <a href="#" class="nav-link" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
+          <span class="mx-2 logout-text">Log Out</span>
+      </a>
+  </div>
+</div>
+  )
+}
+
 
 function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply, showCompany, setShowCompany) {
 
@@ -1119,6 +1165,7 @@ function Navbar() {
       {showNavbar == false && role == 5  && ResultsReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 7  && SupplyNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 8 && AccountingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
+      {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
 
       {showNavbar == true && role == 3 && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 2 && registrationNavbar(showNavbar,setshowNavbar)}
@@ -1128,6 +1175,7 @@ function Navbar() {
       {showNavbar == true && role == 5 && resultsReleasingNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 7 && supplyNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 8 && accountingNavbar(showNavbar,setshowNavbar)}
+      {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)}
     </div>
   );
 }
