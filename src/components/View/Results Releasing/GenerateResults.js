@@ -8,11 +8,16 @@ import { useReactToPrint } from "react-to-print";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import XLSX from 'xlsx';
 
 import "./FileUpload.css";
 import "./GenerateResults.css";
 import './MedTech.css';
 import Logo from '../../../images/logo.png';
+
+// Import Signature Images
+import Image1 from '../../../images/med_tech/ABIERAS_JENNIFER.png';
+import Image2 from '../../../images/med_tech/AJEDO_GENIEVIEV.png';
 
 const userToken = getToken();
 const userId = getUser();
@@ -48,11 +53,21 @@ export default function GenerateResults({servicesData, title, bookingId}){
   const [labTestData, setLabTestData] = useState([]);
   const [labTestResults, setLabTestResults] = useState([]);
 
+  // Doctor Remarks
+  const [medTech, setMedTech] = useState("");
+  const [medTechPRC, setMedTechPRC] = useState("");
+  const [clinicPatho, setClinicPatho] = useState("");
+  const [clinicPathoPRC, setClinicPathoPRC] = useState("");
+
   const [data, setData] = useState([])
   var presentDate = new Date();
 
   var monthNames = ["January", "February", "March", "April", "May", "June",
                   "July", "August", "September", "October", "November", "December"];
+
+  if (window.$userToken != null) {
+    var roleId = window.$roleId.replace(/^"(.*)"$/, '$1');
+  }
 
   // get Patient Details
   React.useEffect(()=>{
@@ -148,7 +163,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
     })
   },[])
   
-
+  // Generate PDF file for printing
   const handlePrint = useReactToPrint({
     onAfterPrint: handleRedirect,
           content: () => componentRef.current,
@@ -219,10 +234,68 @@ export default function GenerateResults({servicesData, title, bookingId}){
 
   const headers = servicesData.length > 0 ? Object.keys(servicesData[0]) : [];
   const resultHeaders = ['lab_test', 'result', 'unit'];
+
+  function chooseMedTech() {
+    if (roleId === "10") {
+      setMedTech("GENIEVIEV H. AJEDO");
+      setMedTechPRC("PRC LIC. NO.: 0052932");
+    }
+
+    setClinicPatho("JENNIFER D. ABIERAS");
+    setClinicPathoPRC("PRC LIC. NO.: 0085469");
+  }
+
+  function chooseImage() {
+    if (roleId === "10") {
+      console.log(userId);
+      return Image2;
+    }
+  }
+
+  const Signature = () => {
+    return (
+      <div>
+        <div className="wrapper">
+          <div className="box">
+            {chooseMedTech()}
+            <img src={chooseImage()} alt="MedTech"/>
+          </div>
+          <div className="box">
+            <img src={Image1} alt="MedTech"/>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box">
+            <span className="tspan">{medTech}</span>
+          </div>
+          <div className="box"> 
+            <span className="tspan">{clinicPatho}</span>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box"> 
+            <span className="tspan">{medTechPRC}</span>
+          </div>
+          <div className="box">
+            <span className="tspan">{clinicPathoPRC}</span>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box"> 
+            <span className="tspan">Medical Technologist</span>
+          </div>
+          <div className="box">
+            <span className="tspan">Clinical Pathologist</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
   
 
   const DynamicTable = () => {
     return (
+      // <div>
       <div style={{display: 'none'}}>
       <><div>
         <div ref={componentRef}>
@@ -241,7 +314,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
               <span>{servicesData[0].category.toUpperCase()}</span>
             </tr>
             <tr>
-              <td>
+              <td style={{paddingRight: '100px'}}>
                 <span><b>Patient Name: </b></span>
                 <span>{lastName.toUpperCase()}, {firstName.toUpperCase()} {middleName.toUpperCase}</span>
               </td>
@@ -284,13 +357,13 @@ export default function GenerateResults({servicesData, title, bookingId}){
         {/* Mapping of Detail Results */}
         {servicesData.map((service, serviceIndex) => (
           <div key={serviceIndex}>
+            {getResults(service.id)}
             <br/>
             <h3 class="table-title">{service.name}</h3>
             <br/>
             <table class="table">
               <thead>
                 <tr>
-                  {getResults(service.id)}
                   {resultHeaders.map((resultHeader, index) => (
                     <th key={index}>{resultHeader.toUpperCase()}</th>
                   ))}
@@ -310,10 +383,14 @@ export default function GenerateResults({servicesData, title, bookingId}){
               <span><b>Remarks: </b></span>
               {console.log("Service")}
               {getDetails(service.id)}
+              <br/>
               <span>{remark}</span>
             </div>
           </div>
         ))}
+        <br/>
+        <br/>
+        <Signature />
         </div>
       </div></>
       </div>
@@ -325,29 +402,26 @@ export default function GenerateResults({servicesData, title, bookingId}){
     <div>
       <div className="whole-cont">
       <ToastContainer />
-      <div className="result-cont row p-1 mb-5">
-          <div className="col-sm-4">
-            {servicesData.map((info,index)=>
-              <div className={"details"+info.id}>{info.name}</div>
-            )}
-          </div>
-          <div className="upload-cont col-sm-8">
-            <div>
-            {/* Generate Result Button */}
-            {(<button className="upload-res-btn" onClick={handlePrint}>
-                GENERATE RESULTS</button>)}
-
+        <div className="result-cont row p-1 mb-5">
+            <div className="col-sm-4">
+              {servicesData.map((info,index)=>
+                <div className={"details"+info.id}>{info.name}</div>
+              )}
             </div>
-            
-          </div>          
-      </div>
+            <div className="upload-cont col-sm-8">
+              <div>
+              {/* Generate Result Button */}
+              {(<button className="upload-res-btn" onClick={handlePrint}>
+                  GENERATE RESULTS</button>)}
+
+              </div>
+              
+            </div>          
+        </div>
       
       <DynamicTable />
       
-      
-    </div>
-              
-
+      </div>
     </div>
   )
 }
