@@ -300,7 +300,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
       <><div>
         <div ref={componentRef}>
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center'}}>
             <img src={Logo} alt="QR DIAGNOSTICS" className="img-small"/>
             <div style={{ display: 'block'}}>
               <span className="resultTitle">Department of Clinical Laboratory</span>
