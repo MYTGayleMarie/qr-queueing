@@ -67,6 +67,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
 
   if (window.$userToken != null) {
     var roleId = window.$roleId.replace(/^"(.*)"$/, '$1');
+    //var roleId = "10";
   }
 
   // get Patient Details
@@ -301,7 +302,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
         <div ref={componentRef}>
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center'}}>
-            <img src={Logo} alt="QR DIAGNOSTICS" className="img-small"/>
+            <img src={Logo} alt="QR DIAGNOSTICS" className="img-small" style={{paddingRight: '50px'}}/>
             <div style={{ display: 'block'}}>
               <span className="resultTitle">Department of Clinical Laboratory</span>
               <span className="addressTitle">Unit A, m Block, Marasbaras, Tacloban City</span>
