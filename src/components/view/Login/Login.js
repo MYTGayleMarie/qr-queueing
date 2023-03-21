@@ -89,7 +89,7 @@ function Login() {
       NavigationRedirection = <Navigate to="/registrationcmodule" />;
     }
     else if (roleId === "10"){
-      NavigationRedirection = <Navigate to="/medtech" />;
+      NavigationRedirection = <Navigate to="/lab" />;
     }
     else {
       NavigationRedirection = <Navigate to="/registration" />;
@@ -157,7 +157,7 @@ function Login() {
                         alt={'eye'}
                         aria-hidden="true"
                         onClick={togglePassword}
-                      />
+                        />
                     </div>
                   </div>
                 </div>
