@@ -429,8 +429,6 @@ export default function GenerateResults({servicesData, title, bookingId}){
             </table>
             <div>
               <span><b>Remarks: </b></span>
-              {console.log("Service")}
-              {getDetails(service.id)}
               <br/>
               <span>{remark}</span>
             </div>

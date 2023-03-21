@@ -329,7 +329,6 @@ export default function ViewBooking() {
         }
     }).then(function (response) {
       setData(response.data.message.booking_attachments)
-      console.log(response)
     }).catch(function (error) {
       setData(error)
     });
@@ -443,23 +442,36 @@ export default function ViewBooking() {
             onChange={(e) => {
               if (e.target.checked) {
                 setReady(true);
-                // axios({
-                //   method: 'post',
-                //   url: window.$link + 'bookings/markReady/' + bookingId,
-                //   withCredentials: false,
-                //   params: {
-                //     api_key: window.$api_key,
-                //     token: userToken.replace(/['"]+/g, ''),
-                //     updated_by: userId,
-                //     is_ready: "yes",
-                //   },
-                // }).then(function (response) {
-                //   console.log(response);
-                // }).catch((error)=>{
-                //   console.log(error);
-                // });
+                axios({
+                  method: 'post',
+                  url: window.$link + 'bookings/markReady/' + bookingId,
+                  withCredentials: false,
+                  params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    updated_by: userId,
+                    is_ready: "yes",
+                  },
+                }).then(function (response) {
+                  console.log(response);
+                }).catch((error)=>{
+                  console.log(error);
+                });
               } else {
                 setReady(false);
+                axios({
+                  method: 'post',
+                  url: window.$link + 'bookings/markReady/' + bookingId,
+                  withCredentials: false,
+                  params: {
+                    api_key: window.$api_key,
+                    token: userToken.replace(/['"]+/g, ''),
+                    updated_by: userId,
+                    is_ready: "no",
+                  },
+                }).then(function (response) {
+                  console.log(response);
+                })
               }
           }}/>
             
