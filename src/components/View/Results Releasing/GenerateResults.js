@@ -18,6 +18,12 @@ import Logo from '../../../images/logo.png';
 // Import Signature Images
 import Image1 from '../../../images/med_tech/ABIERAS_JENNIFER.png';
 import Image2 from '../../../images/med_tech/AJEDO_GENIEVIEV.png';
+import Image3 from '../../../images/med_tech/DEVIO_ANECA.png';
+import Image4 from '../../../images/med_tech/VIVERO_CHARLENE.png';
+import Image5 from '../../../images/med_tech/CORTEZ_SAMANTHA.png';
+import Image6 from '../../../images/med_tech/MATAGANAS_ARIZA.png';
+import Image7 from '../../../images/med_tech/BONJOC_JEREMY.png';
+import Image8 from '../../../images/med_tech/MAJESELA_ABALORIO.png';
 
 const userToken = getToken();
 const userId = getUser();
@@ -237,19 +243,60 @@ export default function GenerateResults({servicesData, title, bookingId}){
   const resultHeaders = ['lab_test', 'result', 'unit'];
 
   function chooseMedTech() {
-    if (roleId === "10") {
-      setMedTech("GENIEVIEV H. AJEDO");
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    }
-
     setClinicPatho("JENNIFER D. ABIERAS");
     setClinicPathoPRC("PRC LIC. NO.: 0085469");
+
+    axios({
+      method: 'get',
+      url: window.$link + 'users/show/' + userId,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }
+    }).then ((response) => {
+      console.log(response.data.name);
+      setMedTech(response.data.name);
+      console.log("Name " + medTech);
+    }).catch ((error) => {
+      console.log(error);
+    })
+
+    if (userId === "24") {
+      setMedTechPRC("PRC LIC. NO.: 0052932");
+    } else if (userId === "25") {
+      setMedTechPRC("PRC LIC. NO.: 0094539");
+    } else if (userId === "26") {
+      setMedTechPRC("PRC LIC. NO.: 0093629");
+    } else if (userId === "23") {
+      setMedTechPRC("PRC LIC. NO.: 0092410");
+    } else if (userId === "27") {
+      setMedTechPRC("PRC LIC. NO.: 0085690");
+    } else if (userId === "28") {
+      setMedTechPRC("PRC LIC. NO.: 0052556");
+    } else if (userId === "29") {
+      setMedTechPRC("PRC LIC. NO.: 0072875");
+    } else {
+      setMedTechPRC("No PRC License Number");
+    }
   }
 
   function chooseImage() {
-    if (roleId === "10") {
-      console.log(userId);
+    if (userId === "24") {
       return Image2;
+    } else if (userId === "25") {
+      return Image3;
+    } else if (userId === "26") {
+      return Image4;
+    } else if (userId === "23") {
+      return Image5;
+    } else if (userId === "27") {
+      return Image6;
+    } else if (userId === "28") {
+      return Image7;
+    } else if (userId === "29") {
+      return Image8;
     }
   }
 
