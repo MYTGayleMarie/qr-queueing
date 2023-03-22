@@ -1179,11 +1179,11 @@ export default function LabOfficer() {
         <div className="personal-data-cont">
           <div className="row">
               <div class="form-group">
-                <label for="doctorRemarks">Doctor's Remarks</label>
-                <textarea class="form-control" id="doctorRemarks" value={remarks} rows="3" onChange={handleChange} disabled={!editable}></textarea>
+                <label for="doctorRemarks" className="form-label">Doctor's Remarks</label>
+                <textarea class="form-control" id="doctorRemarks" value={remarks} rows="3" style={{ width: "100%" }} onChange={handleChange} disabled={!editable}></textarea>
               </div>
           </div>
-          <div classname="row">
+          <div className="d-flex justify-content-end mr-3">
               <button className="filter-btn" name="save" onClick={handleSave}>Save</button>
               <button className="filter-btn" name="edit" onClick={handleEdit}>Edit</button>
           </div>
