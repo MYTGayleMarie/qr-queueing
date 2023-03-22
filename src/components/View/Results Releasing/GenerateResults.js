@@ -218,10 +218,10 @@ export default function GenerateResults({servicesData, title, bookingId}){
       }
     })
     .then((booking)=>{
-      console.log(booking.data.data.booking_detail[0].booking_id);
       setRemark(booking.data.data.booking_detail[0].remarks);
     })
     .catch((error)=>{
+      console.log(error);
     })
   }
 
@@ -256,8 +256,9 @@ export default function GenerateResults({servicesData, title, bookingId}){
           requester: userId,
       }
     }).then ((response) => {
-      console.log(response.data.name);
-      setMedTech(response.data.name);
+      if (medTech == "") {
+        setMedTech(response.data.name);
+      }
       console.log("Name " + medTech);
     }).catch ((error) => {
       console.log(error);
@@ -430,6 +431,9 @@ export default function GenerateResults({servicesData, title, bookingId}){
             <div>
               <span><b>Remarks: </b></span>
               <br/>
+              {/* {console.log(service)} */}
+              {console.log(service.id)}
+              {getDetails(service.id)}
               <span>{remark}</span>
             </div>
           </div>

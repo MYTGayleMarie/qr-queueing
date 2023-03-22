@@ -1162,20 +1162,20 @@ function Navbar() {
       {showNavbar == false && (role == 4 || role == 1) && AdminNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
       
       {showNavbar == false && role == 6  && PurchasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
-      {showNavbar == false && role == 5  && ResultsReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
+      {showNavbar == false && (role == 5 || role == 10)  && ResultsReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 7  && SupplyNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
       {showNavbar == false && role == 8 && AccountingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply,showCompany, setShowCompany)}
-      {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)}
+      {/* {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)} */}
 
       {showNavbar == true && role == 3 && cashierNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 2 && registrationNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && (role == 4 || role == 1) && adminNavbar(showNavbar,setshowNavbar)}
 
       {showNavbar == true && role == 6 && purchasingNavbar(showNavbar,setshowNavbar)}
-      {showNavbar == true && role == 5 && resultsReleasingNavbar(showNavbar,setshowNavbar)}
+      {showNavbar == true && (role == 5 || role == 10) && resultsReleasingNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 7 && supplyNavbar(showNavbar,setshowNavbar)}
       {showNavbar == true && role == 8 && accountingNavbar(showNavbar,setshowNavbar)}
-      {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)}
+      {/* {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)} */}
     </div>
   );
 }

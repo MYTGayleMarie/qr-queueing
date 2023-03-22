@@ -30,123 +30,135 @@ var bookingId = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
-const labTestMockData = [
-  {
-    "lab_test": "Lab Test Mock Data",
-    "result": "Mock Result",
-    "unit": "123 unit",
-  },
-  {
-    "lab_test": "Lab Test Mock Data2",
-    "result": "Mock Result2",
-    "unit": "123 unit2",
-  }
-]
+// const labTestMockData = [
+//   {
+//     "lab_test": "Lab Test Mock Data",
+//     "result": "Mock Result",
+//     "unit": "123 unit",
+//   },
+//   {
+//     "lab_test": "Lab Test Mock Data2",
+//     "result": "Mock Result2",
+//     "unit": "123 unit2",
+//   }
+// ]
 
 let labTestUrinalysis = [
   {
     "lab_test": "Color",
-    "result": " LIGHT YELLOW",
-    "unit": "",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "lab": "Transparency",
-    "result": "CLEAR",
-    "unit": "",
+    "lab_test": "Transparency",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Ph",
-    "result": "5.0",
-    "unit": "",
+    "lab_test": "Ph",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Specific Gravity",
-    "result": "1.005",
-    "unit": "",
+    "lab_test": "Specific Gravity",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Protein",
-    "result": "1+",
-    "unit": "",
+    "lab_test": "Protein",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Sugar",
-    "result": "1+",
-    "unit": "",
+    "lab_test": "Sugar",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Pus Cells",
-    "result": "1",
-    "unit": "",
+    "lab_test": "Pus Cells",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "RBC",
-    "result": "1",
-    "unit": "",
+    "lab_test": "RBC",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Epithelial Cells",
-    "result": "RARE",
-    "unit": "",
+    "lab_test": "Epithelial Cells",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Bacteria",
-    "result": "RARE",
-    "unit": "",
+    "lab_test": "Bacteria",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Amorphous Urates/Phosphate",
-    "result": "RARE",
-    "unit": "",
+    "lab_test": "Amorphous Urates/Phosphate",
+    "result": "-",
+    "unit": "0",
     
   },
   {
-    "lab": "Mucus Threads",
-    "result": "RARE",
-    "unit": "",
+    "lab_test": "Mucus Threads",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestFecalysis = [
   {
-    "lab": "Color",
-    "result": "BROWN",
-    "unit": "",
+    "lab_test": "Color",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "lab": "Consistency",
-    "result": "Soft",
-    "unit": "",
+    "lab_test": "Consistency",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "RBC": "3",
-    "result": "BROWN",
-    "unit": "",
+    "lab_test": "RBC",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "lab": "Pus Cells",
-    "result": "1",
-    "unit": "",
+    "lab_test": "Pus Cells",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "lab": "Fat Globules",
-    "result": "FEW",
-    "unit": "",
+    "lab_test": "Fat Globules",
+    "result": "-",
+    "unit": "0",
+     
+  },
+  {
+    "lab_test": "Ova/Parasite",
+    "result": "-",
+    "unit": "0",
+     
+  },
+  {
+    "lab_test": "Cyst/Trophozoite",
+    "result": "-",
+    "unit": "0",
      
   },
   
@@ -154,271 +166,264 @@ const labTestFecalysis = [
 
 const labTestFecalOccultBlood = [
   {
-    "lab": "Fecal Occult Blood",
-    "result": "Negative",
-    "unit": "",
+    "lab_test": "Fecal Occult Blood",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestPregnancyTest = [
   {
-    "lab": "Pregnancy Test",
-    "result": "Negative",
-    "unit": "",
+    "lab_test": "Pregnancy Test",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestSerumPregnancyTest = [
   {
-    "lab": "Serum Pregnancy Test",
-    "result": "Negative",
-    "unit": "",
+    "lab_test": "Serum Pregnancy Test",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestSpermAnalysis = [
   {
-    "lab": "PH Reaction",
-    "result": "9",
-    "unit": "",
+    "lab_test": "PH Reaction",
+    "result": "-",
+    "unit": "0",
      
   },
   {
-    "lab": "Volume",
-    "result": "2",
-    "unit": "",
+    "lab_test": "Volume",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Liquefaction Time",
-    "result": "30",
-    "unit": "",
+    "lab_test": "Liquefaction Time",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Viscosity",
-    "result": "0",
-    "unit": "",
+    "lab_test": "Viscosity",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Total Sperm Count",
-    "result": "75",
-    "unit": "",
+    "lab_test": "Total Sperm Count",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Progresive (PR)",
-    "result": "85",
-    "unit": "",
+    "lab_test": "Progresive (PR)",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Non Progressive",
-    "result": "10",
-    "unit": "",
+    "lab_test": "Non Progressive",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Immotile",
-    "result": "5",
-    "unit": "",
+    "lab_test": "Immotile",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Total Motility (PR+NP)",
-    "result": "95",
-    "unit": "",
+    "lab_test": "Total Motility (PR+NP)",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Total Normal Forms",
-    "result": "70",
-    "unit": "",
+    "lab_test": "Total Normal Forms",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Pin Head",
-    "result": "20",
-    "unit": "",
+    "lab_test": "Pin Head",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Double Head",
-    "result": "5",
-    "unit": "",
+    "lab_test": "Double Head",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Gaint Head",
-    "result": "5",
-    "unit": "",
+    "lab_test": "Gaint Head",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "WBC",
-    "result": "10",
-    "unit": "",
+    "lab_test": "WBC",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "RBC",
-    "result": "1",
-    "unit": "",
+    "lab_test": "RBC",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestGramStain = [
   {
-    "lab": "Gram Staining",
-    "result": "FREE TEXt",
-    "unit": "",
+    "lab_test": "Gram Staining",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "",
-    "result": "Epithelial Cells = FEW",
-    "unit": "",
+    "lab_test": "Epithelial Cells",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "Specimen: Conjunctival and Corneal Scraping",
-    "result": "FEW",
-    "unit": "",
+    "lab_test": "Specimen: Conjunctival and Corneal Scraping",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestKOH = [
   {
-    "lab": "KOH, Nail Scrapping, Conjunctival Scrapping",
-    "result": "FREE TEXT",
-    "unit": "",
+    "lab_test": "KOH, Nail Scrapping, Conjunctival Scrapping",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestDengue = [
   {
-    "lab": "Dengue Rapid Test",
-    "result": "NS1 AG: NEGATIVE",
-    "unit": "",
+    "lab_test": "Dengue Rapid Test",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "",
-    "result": "IgG: NEGATIVE",
-    "unit": "",
+    "lab_test": "IgG",
+    "result": "-",
+    "unit": "0",
      
   },{
-    "lab": "",
-    "result": "IgM: NEGATIVE",
-    "unit": "",
+    "lab_test": "IgM",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestSyphilis = [
   {
-    "lab": "Syphilis/RPR/VDRL",
-    "result": "POSITIVE",
-    "unit": "",
+    "lab_test": "Syphilis/RPR/VDRL",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestHIVScreening = [
   {
-    "lab": "Anti-HIV",
-    "result": "REACTIVE",
-    "unit": "",
+    "lab_test": "Anti-HIV",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestHPylori = [
   {
-    "lab": "H. Pylori",
-    "result": "NEGATIVE",
-    "unit": "",
+    "lab_test": "H. Pylori",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestHepatitisB = [
   {
-    "lab": "Hepatitis B Surface Antigen Test (HBSag)",
-    "result": "REACTIVE",
-    "unit": "",
+    "lab_test": "Hepatitis B Surface Antigen Test (HBSag)",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
   const labTestHepatitisA = [
     {
-    "lab": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
-    "result": "POSITIVE",
-    "unit": "",
+    "lab_test": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestTSH = [
   {
-    "lab": "TSH",
-    "result": "1.8 H",
-    "unit": "mIU / L",
+    "lab_test": "TSH",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestFT4 = [
   {
-    "lab": "FT4",
-    "result": "17.3",
-    "unit": "pmol / L",
+    "lab_test": "FT4",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestFT3 = [
   {
-    "lab": "FT3",
-    "result": "6.69",
-    "unit": "pmol / L",
+    "lab_test": "FT3",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestT3 = [
 {
-    "lab": "T2, T3",
-    "result": "4.59",
-    "unit": "nmol / L",
+    "lab_test": "T2, T3",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestPSA = [
   {
-    "lab": "PSA",
-    "result": "<2.0",
-    "unit": "ng/mL",
+    "lab_test": "PSA",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestCEA = [
   {
-    "lab": "CEA",
-    "result": "4.9",
-    "unit": "ng/mL",
+    "lab_test": "CEA",
+    "result": "-",
+    "unit": "0",
      
   },
 ]
 
 const labTestVitaminD = [
   {
-    "lab": "Vitamin D",
-    "result": "37.16",
-    "unit": "ng/mL",
+    "lab_test": "Vitamin D",
+    "result": "-",
+    "unit": "0",
      
   },
-]
-
-const selectedLab = [
-  {
-    label: "HBA1C",
-    id: "value"
-  }
 ]
 
 export const refreshPage = () => {
@@ -973,7 +978,7 @@ export default function LabOfficer() {
     } else if (e.label === "VITAMIN D") {
       setLabTestData(labTestVitaminD); 
     } else {
-      setLabTestData(labTestMockData);
+      setLabTestData([]);
     }
   }  
   
