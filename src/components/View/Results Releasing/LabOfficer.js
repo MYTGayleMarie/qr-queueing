@@ -484,10 +484,19 @@ export default function LabOfficer() {
   }
   
   function update(lab_test) {
+
+    // For placeholder in Edit modal
+    labTestData.map(row => {
+      if (lab_test == row.lab_test) {
+        setResult(row.result);
+        setUnit(row.unit);
+        return row;
+      }
+      return row;
+    });
     setLabName(lab_test);
 
     setShow(true);
-    // handleShow();
   }
   
   const submit = (e) => {
@@ -1015,7 +1024,6 @@ export default function LabOfficer() {
     const handleSave = () => {
       setEditable(false);
       setSaveRemarks(remarks);
-      console.log(remarks);
     }
   
     const handleChange = (event) => {
@@ -1099,11 +1107,12 @@ export default function LabOfficer() {
                     </div>
             </div> 
             
-            <div className="col-sm-11 d-flex justify-content-end">
+            {/* Filter */}
+            {/* <div className="col-sm-11 d-flex justify-content-end">
                 <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                 <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter}/>
                 <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
-            </div>
+            </div> */}
 
           <Table
             type={'med-tech'}
@@ -1130,29 +1139,31 @@ export default function LabOfficer() {
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
             </Modal.Header>
               <Modal.Body>
-              <div className="row">
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">RESULT</div>
-                    <input type="text" className="results-input"
-                    value={result} 
-                    onChange={(e) => setResult(e.target.value)}
-                    //onChange={setCashCount} 
-                    />
+                <div className="row">
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-sub-header">RESULT</div>
+                      <input
+                        type="text"
+                        className="results-input"
+                        defaultValue={result}
+                        onChange={(e) => setResult(e.target.value)}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">UNIT</div>
-                    <input type="number" className="results-input" 
-                    value={unit}
-                    onChange={(e) => setUnit(e.target.value)}
-                    //onChange={setCashCount} 
-                    />
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-sub-header">UNIT</div>
+                      <input
+                        type="text"
+                        className="results-input"
+                        defaultValue={unit}
+                        onChange={(e) => setUnit(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
               </Modal.Body>
             <Modal.Footer>
           <button type="submit" className="save-btn" 
