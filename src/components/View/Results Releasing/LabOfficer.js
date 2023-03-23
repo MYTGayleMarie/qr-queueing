@@ -496,7 +496,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/getDetails/" + id,
+      url: window.$link + "/bookings/getDetails/" + id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -505,8 +505,7 @@ export default function LabOfficer() {
       },
     })
       .then(function (response) {
-        console.log(response.data.data.booking_detail[0].remarks);
-        setRemarks(response.data.data.booking_detail[0].remarks);
+        setRemarks(response.data.data.booking.remarks);
       })
       .catch(function (error) {
         console.log(error);
@@ -947,7 +946,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/editRemarks/" + id,
+      url: window.$link + "/bookings/editRemarks/" + id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
