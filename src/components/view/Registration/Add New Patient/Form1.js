@@ -474,7 +474,7 @@ console.log(location)
             <div className="row">
               <div className="col-sm-6">
                 <label for="address" className="form-label">
-                  DISCOUNT CODEeee
+                  DISCOUNT CODE
                 </label>
                 <br />
                 <select

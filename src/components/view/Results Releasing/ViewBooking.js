@@ -692,7 +692,7 @@ export default function ViewBooking() {
         </div>
        
         {/* SEND OUT RESULTS */ }
-        {/* <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
+       <h3 className="form-categories-header italic">SEND OUT RESULTS</h3> 
           <div className="personal-data-cont">
             <MultipleUpload bookingId={bookingId}/>
           </div >
@@ -707,9 +707,9 @@ export default function ViewBooking() {
                 'FILE NAME',
                 'ACTION',
                 ]}
-                />)
-          } */}
-          {/* {data != null && (<Table
+                />)}
+         
+          {data != null && (<Table
                 type={'send-out-results'}
                 withSubData={false}
                 tableData={data}
@@ -720,11 +720,10 @@ export default function ViewBooking() {
                 ]}
                 />)}
             
-              </div> */}
+              </div>
               </>}
         </div>
       </Fragment>
-  
       </div>
     </div>
   )
