@@ -47,6 +47,8 @@ export default function FileUpload({servicesData, title, bookingId}){
     setServicesPackage(servicesData.filter((info)=>info.type=='package'))
   },[servicesData])
 
+  console.log(servicesData)
+
   // Making array od all lab ids
   React.useEffect(()=>{
     labIds.length=0;

@@ -144,7 +144,7 @@ export default function Lab() {
             type={'medtech'}
             tableData={patientData.sort((a,b) => (a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0)))}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE','PAYMENT STATUS']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE','ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

@@ -281,12 +281,13 @@ export default function ViewBooking() {
 
   /****************/
 
-  const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  && info.test_id!=="7" && info.test_id!=="130")
+  const clinicalUrinalysis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  && info.test_id!=="7" && info.test_id!=="130")
 
 
   const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
   
   const serumPT = labTests.filter((info)=>info.test_id==="130")
+
 
 
   /****************/
@@ -480,55 +481,51 @@ export default function ViewBooking() {
           </div>
         <div className="personal-data-cont">
 
-        
+        {console.log(serumPT)}
         {/* CLINICAL MICROSCOPY URINALYSIS */}
-        {(clinicalUrinalyis.length!=0||spermAnalysis.length!=0||serumPT.length!=0) &&  
+        {(clinicalUrinalysis.length!==0||spermAnalysis.length!==0||serumPT.length!==0) &&  
         <div>
           <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
-            {serumPT.length !== 0 &&
-              (services?.data[0]?.with_results === 1) ?
+          {/* {serumPT.length > 0 &&
+              (services[0].with_results === 1) ?
               <GenerateResults 
                 servicesData={serumPT}
                 title={"CLINICAL MICROSCOPY URINALYSIS"}
                 bookingId={bookingId}
               />
               :
-                // <FileUpload 
-                //   servicesData={serumPT}
-                //   title={"CLINICAL MICROSCOPY URINALYSIS"}
-                //   bookingId={bookingId}
-                // />
-                console.log("Hello")
+                <FileUpload 
+                  servicesData={serumPT}
+                  title={"CLINICAL MICROSCOPY URINALYSIS"}
+                  bookingId={bookingId}
+                />
           }
 
-          {spermAnalysis.length!=0 &&
-            (services?.data[0]?.with_results === 1) ?
+          {spermAnalysis.length >  0 &&
+            (services?.with_results === 1) ?
             <GenerateResults 
               servicesData={spermAnalysis}
               title={"CLINICAL MICROSCOPY URINALYSIS"}
               bookingId = {bookingId}
             /> :
-            // <FileUpload 
-            //   servicesData={spermAnalysis}
-            //   title={"CLINICAL MICROSCOPY URINALYSIS"}
-            //   bookingId = {bookingId}
-            // />
-            console.log("Hello")
-          }
+            <FileUpload 
+              servicesData={spermAnalysis}
+              title={"CLINICAL MICROSCOPY URINALYSIS"}
+              bookingId = {bookingId}
+            /> */}
 
-          {clinicalUrinalyis.length!=0 &&
-            (services?.data[0]?.with_results === 1) ?
+          {clinicalUrinalysis.length > 0 &&
+            (services?.with_results === "1") ?
             <GenerateResults 
-            servicesData={clinicalUrinalyis}
+            servicesData={clinicalUrinalysis}
             title={"CLINICAL MICROSCOPY URINALYSIS"}
             bookingId = {bookingId}
             /> :
-            // <FileUpload 
-            // servicesData={clinicalUrinalyis}
-            // title={"CLINICAL MICROSCOPY URINALYSIS"}
-            // bookingId = {bookingId}
-            // />
-            console.log("Hello")
+            <FileUpload 
+            servicesData={clinicalUrinalysis}
+            title={"CLINICAL MICROSCOPY URINALYSIS"}
+            bookingId = {bookingId}
+            />
           }
 
           <hr className="labtest-line mb-5" />
