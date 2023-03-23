@@ -175,7 +175,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
     onAfterPrint: handleRedirect,
           content: () => componentRef.current,
           pageStyle: () => `
-          @page { size: letter;}
+          @page { size: letter; margin: 0.5in;}
           @media print {
             .print-break {
               margin-top: 1rem;
@@ -358,12 +358,12 @@ export default function GenerateResults({servicesData, title, bookingId}){
             </div>
           </div>
           <br/>
+          <div className="laboratory-title">
+                {servicesData[0].category.toUpperCase()}
+          </div>
           <table>
-            <tr className="laboratory-title">
-              <span>{servicesData[0].category.toUpperCase()}</span>
-            </tr>
             <tr>
-              <td style={{paddingRight: '100px'}}>
+              <td style={{paddingRight: '200px'}}>
                 <span><b>Patient Name: </b></span>
                 <span>{lastName.toUpperCase()}, {firstName.toUpperCase()} {middleName.toUpperCase}</span>
               </td>
@@ -410,7 +410,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
             <br/>
             <h3 class="table-title">{service.name}</h3>
             <br/>
-            <table class="table">
+            <table class="table resText">
               <thead>
                 <tr>
                   {resultHeaders.map((resultHeader, index) => (
