@@ -426,7 +426,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
                 {labTestResults.map((result, resultIndex) => (
                   <tr key={resultIndex}>
                     {resultHeaders.map((header, index) => (
-                      <td key={index}>{result[header]} colspan="1"</td>
+                      <td colspan="1" key={index}>{result[header]} </td>
                     ))}
                   </tr>
                 ))}
