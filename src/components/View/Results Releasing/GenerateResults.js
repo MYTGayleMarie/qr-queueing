@@ -24,6 +24,7 @@ import Image5 from '../../../images/med_tech/CORTEZ_SAMANTHA.png';
 import Image6 from '../../../images/med_tech/MATAGANAS_ARIZA.png';
 import Image7 from '../../../images/med_tech/BONJOC_JEREMY.png';
 import Image8 from '../../../images/med_tech/MAJESELA_ABALORIO.png';
+import DummyImg from '../../../images/med_tech/dummy.png';
 
 const userToken = getToken();
 const userId = getUser();
@@ -298,6 +299,8 @@ export default function GenerateResults({servicesData, title, bookingId}){
       return Image7;
     } else if (userId === "29") {
       return Image8;
+    } else {
+      return DummyImg;
     }
   }
 
@@ -358,9 +361,10 @@ export default function GenerateResults({servicesData, title, bookingId}){
             </div>
           </div>
           <br/>
-          <div className="laboratory-title">
-                {servicesData[0].category.toUpperCase()}
+          <br/>
+          <div className="laboratory-title">{servicesData[0].category.toUpperCase()}
           </div>
+          <br/>
           <table>
             <tr>
               <td style={{paddingRight: '200px'}}>
@@ -408,7 +412,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
           <div key={serviceIndex}>
             {getResults(service.id)}
             <br/>
-            <h3 class="table-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{service.name}</h3>
+            <h3 class="table-title">{service.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
             <br/>
             <table class="table resText">
               <thead>
@@ -422,7 +426,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
                 {labTestResults.map((result, resultIndex) => (
                   <tr key={resultIndex}>
                     {resultHeaders.map((header, index) => (
-                      <td key={index}>{result[header]}</td>
+                      <td key={index}>{result[header]} colspan="1"</td>
                     ))}
                   </tr>
                 ))}
