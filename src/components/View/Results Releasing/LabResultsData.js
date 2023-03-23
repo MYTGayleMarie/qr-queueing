@@ -1,4 +1,28 @@
  const labResultsData = {
+    testsToCheck: [
+        "Urinalysis",
+        "Fecalysis",
+        "Fecal Occult Blood",
+        "Pregnancy Test (RPK Lateral Flow)",
+        "Serum Pregnancy Test",
+        "Sperm Analysis",
+        "Gram Stain",
+        "KOH",
+        "Dengue",
+        "Syphilis/RPR/VDRL",
+        "HIV SCreening (Anti HIV)",
+        "H. Pylori",
+        "HBSag (Hepatitis B Antigen)",
+        "Anti HBs/HBSab (Hepatitis B Antibody)",
+        "TSH",
+        "FT4",
+        "FT3",
+        "T3",
+        "PSA",
+        "CEA",
+        "VITAMIN D",
+    ],
+    
     urinalysisColorOptions: [
        {
        value: 'LIGHT YELLOW',
