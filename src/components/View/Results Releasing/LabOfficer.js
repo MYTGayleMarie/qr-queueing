@@ -65,57 +65,67 @@ let labTestUrinalysis = [
   {
     "lab_test": "Specific Gravity",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
     
   },
   {
     "lab_test": "Protein",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
     
   },
   {
     "lab_test": "Sugar",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
     
   },
   {
     "lab_test": "Pus Cells",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
     
   },
   {
     "lab_test": "RBC",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
     
   },
   {
     "lab_test": "Epithelial Cells",
     "result": "-",
-    "unit": "0",
+    "unit": "/LPF",
     
   },
   {
     "lab_test": "Bacteria",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
     
   },
   {
     "lab_test": "Amorphous Urates/Phosphate",
     "result": "-",
-    "unit": "0",
+    "unit": "/LPF",
     
   },
   {
     "lab_test": "Mucus Threads",
     "result": "-",
-    "unit": "0",
+    "unit": "/LPF",
      
   },
+  {
+    "lab_test": "OTHERS",
+    "result": "-",
+    "unit": "-",
+  },
+  {
+    "lab_test": "Pregnancy Test",
+    "result": "POSITIVE",
+    "unit": "-",
+  }
 ]
 
 const labTestFecalysis = [
@@ -134,31 +144,31 @@ const labTestFecalysis = [
   {
     "lab_test": "RBC",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
      
   },
   {
     "lab_test": "Pus Cells",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
      
   },
   {
     "lab_test": "Fat Globules",
     "result": "-",
-    "unit": "0",
+    "unit": "/LPF",
      
   },
   {
     "lab_test": "Ova/Parasite",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
   {
     "lab_test": "Cyst/Trophozoite",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
   
@@ -195,78 +205,78 @@ const labTestSpermAnalysis = [
   {
     "lab_test": "PH Reaction",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
   {
     "lab_test": "Volume",
     "result": "-",
-    "unit": "0",
+    "unit": "ml",
      
   },{
     "lab_test": "Liquefaction Time",
     "result": "-",
-    "unit": "0",
+    "unit": "minutes",
      
   },{
     "lab_test": "Viscosity",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },{
     "lab_test": "Total Sperm Count",
     "result": "-",
-    "unit": "0",
+    "unit": "x106/ ejaculate",
      
   },{
     "lab_test": "Progresive (PR)",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Non Progressive",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Immotile",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Total Motility (PR+NP)",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Total Normal Forms",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Pin Head",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Double Head",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "Gaint Head",
     "result": "-",
-    "unit": "0",
+    "unit": "%",
      
   },{
     "lab_test": "WBC",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
      
   },{
     "lab_test": "RBC",
     "result": "-",
-    "unit": "0",
+    "unit": "/HPF",
      
   },
 ]
@@ -275,17 +285,17 @@ const labTestGramStain = [
   {
     "lab_test": "Gram Staining",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },{
     "lab_test": "Epithelial Cells",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },{
     "lab_test": "Specimen: Conjunctival and Corneal Scraping",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -294,26 +304,26 @@ const labTestKOH = [
   {
     "lab_test": "KOH, Nail Scrapping, Conjunctival Scrapping",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
 
 const labTestDengue = [
   {
-    "lab_test": "Dengue Rapid Test",
+    "lab_test": "NS1 AG",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },{
     "lab_test": "IgG",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },{
     "lab_test": "IgM",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -322,7 +332,7 @@ const labTestSyphilis = [
   {
     "lab_test": "Syphilis/RPR/VDRL",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -331,7 +341,7 @@ const labTestHIVScreening = [
   {
     "lab_test": "Anti-HIV",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -340,7 +350,7 @@ const labTestHPylori = [
   {
     "lab_test": "H. Pylori",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -349,7 +359,13 @@ const labTestHepatitisB = [
   {
     "lab_test": "Hepatitis B Surface Antigen Test (HBSag)",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
+     
+  },
+  {
+    "lab_test": "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV",
+    "result": "-",
+    "unit": "-",
      
   },
 ]
@@ -358,7 +374,7 @@ const labTestHepatitisB = [
     {
     "lab_test": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
     "result": "-",
-    "unit": "0",
+    "unit": "-",
      
   },
 ]
@@ -367,7 +383,7 @@ const labTestTSH = [
   {
     "lab_test": "TSH",
     "result": "-",
-    "unit": "0",
+    "unit": "mIU / L",
      
   },
 ]
@@ -376,7 +392,7 @@ const labTestFT4 = [
   {
     "lab_test": "FT4",
     "result": "-",
-    "unit": "0",
+    "unit": "pmol / L",
      
   },
 ]
@@ -385,7 +401,7 @@ const labTestFT3 = [
   {
     "lab_test": "FT3",
     "result": "-",
-    "unit": "0",
+    "unit": "pmol / L",
      
   },
 ]
@@ -394,7 +410,7 @@ const labTestT3 = [
 {
     "lab_test": "T2, T3",
     "result": "-",
-    "unit": "0",
+    "unit": "nmol / L",
      
   },
 ]
@@ -403,7 +419,7 @@ const labTestPSA = [
   {
     "lab_test": "PSA",
     "result": "-",
-    "unit": "0",
+    "unit": "ng / mL",
      
   },
 ]
@@ -412,7 +428,7 @@ const labTestCEA = [
   {
     "lab_test": "CEA",
     "result": "-",
-    "unit": "0",
+    "unit": "ng / mL",
      
   },
 ]
@@ -421,7 +437,7 @@ const labTestVitaminD = [
   {
     "lab_test": "Vitamin D",
     "result": "-",
-    "unit": "0",
+    "unit": "ng / mL",
      
   },
 ]
@@ -570,18 +586,20 @@ export default function LabOfficer() {
       params[resultParam] = resultsArray[index];
     });
 
-    axios({
-      method: 'post',
-      url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
-      withCredentials: false, 
-      params
-
-      }).then(function (response) { 
-          console.log(response)          
-      }).catch(function (error) {
-          console.log(error);
-      });
-      },[labTestData]);
+    if (selectedLab.id != null) {
+      axios({
+        method: 'post',
+        url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
+        withCredentials: false, 
+        params
+  
+        }).then(function (response) { 
+            console.log(response)          
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+    },[labTestData]);
 
       React.useEffect(() => {
         labOptions.length = 0;
@@ -675,7 +693,28 @@ export default function LabOfficer() {
     .then((booking)=>{
       setServices(booking.data);
       const labOptions = booking.data.map((data) => {
-        if (data.lab_test != null) {
+        if ( data.lab_test == "Urinalysis"
+          || data.lab_test == "Fecalysis"
+          || data.lab_test == "Fecal Occult Blood"
+          || data.lab_test == "Pregnancy Test (RPK Lateral Flow)"
+          || data.lab_test == "Serum Pregnancy Test"
+          || data.lab_test == "Sperm Analysis"
+          || data.lab_test == "Gram Stain"
+          || data.lab_test == "KOH"
+          || data.lab_test == "Dengue"
+          || data.lab_test == "Syphilis/RPR/VDRL"
+          || data.lab_test == "HIV SCreening (Anti HIV)"
+          || data.lab_test == "H. Pylori"
+          || data.lab_test == "HBSag (Hepatitis B Antigen)"
+          || data.lab_test == "Anti HBs/HBSab (Hepatitis B Antibody)"
+          || data.lab_test == "TSH"
+          || data.lab_test == "FT4"
+          || data.lab_test == "FT3"
+          || data.lab_test == "T3"
+          || data.lab_test == "PSA"
+          || data.lab_test == "CEA"
+          || data.lab_test == "VITAMIN D"
+          ) {
           return {
             label: data.lab_test,
             id: data.id,
