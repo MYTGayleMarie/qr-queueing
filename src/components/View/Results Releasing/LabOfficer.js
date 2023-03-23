@@ -18,6 +18,7 @@ import './LabOfficer.css'
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
+import labResultsData from './LabResultsData.js';
 import { SkewLoader } from 'react-spinners';
 
 const buttons = ['add-new-patient', 'add-old-patient'];
@@ -42,405 +43,6 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 //     "unit": "123 unit2",
 //   }
 // ]
-
-let labTestUrinalysis = [
-  {
-    "lab_test": "Color",
-    "result": "-",
-    "unit": "0",
-     
-  },
-  {
-    "lab_test": "Transparency",
-    "result": "-",
-    "unit": "0",
-    
-  },
-  {
-    "lab_test": "Ph",
-    "result": "-",
-    "unit": "0",
-    
-  },
-  {
-    "lab_test": "Specific Gravity",
-    "result": "-",
-    "unit": "-",
-    
-  },
-  {
-    "lab_test": "Protein",
-    "result": "-",
-    "unit": "-",
-    
-  },
-  {
-    "lab_test": "Sugar",
-    "result": "-",
-    "unit": "-",
-    
-  },
-  {
-    "lab_test": "Pus Cells",
-    "result": "-",
-    "unit": "/HPF",
-    
-  },
-  {
-    "lab_test": "RBC",
-    "result": "-",
-    "unit": "/HPF",
-    
-  },
-  {
-    "lab_test": "Epithelial Cells",
-    "result": "-",
-    "unit": "/LPF",
-    
-  },
-  {
-    "lab_test": "Bacteria",
-    "result": "-",
-    "unit": "/HPF",
-    
-  },
-  {
-    "lab_test": "Amorphous Urates/Phosphate",
-    "result": "-",
-    "unit": "/LPF",
-    
-  },
-  {
-    "lab_test": "Mucus Threads",
-    "result": "-",
-    "unit": "/LPF",
-     
-  },
-  {
-    "lab_test": "OTHERS",
-    "result": "-",
-    "unit": "-",
-  },
-  {
-    "lab_test": "Pregnancy Test",
-    "result": "POSITIVE",
-    "unit": "-",
-  }
-]
-
-const labTestFecalysis = [
-  {
-    "lab_test": "Color",
-    "result": "-",
-    "unit": "0",
-     
-  },
-  {
-    "lab_test": "Consistency",
-    "result": "-",
-    "unit": "0",
-     
-  },
-  {
-    "lab_test": "RBC",
-    "result": "-",
-    "unit": "/HPF",
-     
-  },
-  {
-    "lab_test": "Pus Cells",
-    "result": "-",
-    "unit": "/HPF",
-     
-  },
-  {
-    "lab_test": "Fat Globules",
-    "result": "-",
-    "unit": "/LPF",
-     
-  },
-  {
-    "lab_test": "Ova/Parasite",
-    "result": "-",
-    "unit": "-",
-     
-  },
-  {
-    "lab_test": "Cyst/Trophozoite",
-    "result": "-",
-    "unit": "-",
-     
-  },
-  
-]
-
-const labTestFecalOccultBlood = [
-  {
-    "lab_test": "Fecal Occult Blood",
-    "result": "-",
-    "unit": "0",
-     
-  },
-]
-
-const labTestPregnancyTest = [
-  {
-    "lab_test": "Pregnancy Test",
-    "result": "-",
-    "unit": "0",
-     
-  },
-]
-
-const labTestSerumPregnancyTest = [
-  {
-    "lab_test": "Serum Pregnancy Test",
-    "result": "-",
-    "unit": "0",
-     
-  },
-]
-
-const labTestSpermAnalysis = [
-  {
-    "lab_test": "PH Reaction",
-    "result": "-",
-    "unit": "-",
-     
-  },
-  {
-    "lab_test": "Volume",
-    "result": "-",
-    "unit": "ml",
-     
-  },{
-    "lab_test": "Liquefaction Time",
-    "result": "-",
-    "unit": "minutes",
-     
-  },{
-    "lab_test": "Viscosity",
-    "result": "-",
-    "unit": "-",
-     
-  },{
-    "lab_test": "Total Sperm Count",
-    "result": "-",
-    "unit": "x106/ ejaculate",
-     
-  },{
-    "lab_test": "Progresive (PR)",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Non Progressive",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Immotile",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Total Motility (PR+NP)",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Total Normal Forms",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Pin Head",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Double Head",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "Gaint Head",
-    "result": "-",
-    "unit": "%",
-     
-  },{
-    "lab_test": "WBC",
-    "result": "-",
-    "unit": "/HPF",
-     
-  },{
-    "lab_test": "RBC",
-    "result": "-",
-    "unit": "/HPF",
-     
-  },
-]
-
-const labTestGramStain = [
-  {
-    "lab_test": "Gram Staining",
-    "result": "-",
-    "unit": "-",
-     
-  },{
-    "lab_test": "Epithelial Cells",
-    "result": "-",
-    "unit": "-",
-     
-  },{
-    "lab_test": "Specimen: Conjunctival and Corneal Scraping",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestKOH = [
-  {
-    "lab_test": "KOH, Nail Scrapping, Conjunctival Scrapping",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestDengue = [
-  {
-    "lab_test": "NS1 AG",
-    "result": "-",
-    "unit": "-",
-     
-  },{
-    "lab_test": "IgG",
-    "result": "-",
-    "unit": "-",
-     
-  },{
-    "lab_test": "IgM",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestSyphilis = [
-  {
-    "lab_test": "Syphilis/RPR/VDRL",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestHIVScreening = [
-  {
-    "lab_test": "Anti-HIV",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestHPylori = [
-  {
-    "lab_test": "H. Pylori",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestHepatitisB = [
-  {
-    "lab_test": "Hepatitis B Surface Antigen Test (HBSag)",
-    "result": "-",
-    "unit": "-",
-     
-  },
-  {
-    "lab_test": "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-  const labTestHepatitisA = [
-    {
-    "lab_test": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
-    "result": "-",
-    "unit": "-",
-     
-  },
-]
-
-const labTestTSH = [
-  {
-    "lab_test": "TSH",
-    "result": "-",
-    "unit": "mIU / L",
-     
-  },
-]
-
-const labTestFT4 = [
-  {
-    "lab_test": "FT4",
-    "result": "-",
-    "unit": "pmol / L",
-     
-  },
-]
-
-const labTestFT3 = [
-  {
-    "lab_test": "FT3",
-    "result": "-",
-    "unit": "pmol / L",
-     
-  },
-]
-
-const labTestT3 = [
-{
-    "lab_test": "T2-T3",
-    "result": "-",
-    "unit": "nmol / L",
-     
-  },
-]
-
-const labTestPSA = [
-  {
-    "lab_test": "PSA",
-    "result": "-",
-    "unit": "ng / mL",
-     
-  },
-]
-
-const labTestCEA = [
-  {
-    "lab_test": "CEA",
-    "result": "-",
-    "unit": "ng / mL",
-     
-  },
-]
-
-const labTestVitaminD = [
-  {
-    "lab_test": "Vitamin D",
-    "result": "-",
-    "unit": "ng / mL",
-     
-  },
-]
 
 export const refreshPage = () => {
   window.location.reload();
@@ -478,6 +80,10 @@ export default function LabOfficer() {
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
+  // Lab Test options
+  const [labTestOptions, setLabTestOptions] = useState([]);
+  const [isDropdown, setIsDropdown] = useState(false);
+
   const [role, setRole] = useState('');
 
   //Edit Modal
@@ -500,8 +106,74 @@ export default function LabOfficer() {
   }
   
   function update(lab_test) {
+    setIsDropdown(false);
+    console.log("LAB TEST OPTIONS BEFORE INSIDE: ", labTestOptions);
 
-    // For placeholder in Edit modal
+    // For dropdowns in Edit modal
+    if(selectedLab.label == "Urinalysis"){
+      if(lab_test == "Color"){
+        setLabTestOptions(labResultsData.urinalysisColorOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Transparency"){
+        setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Epithelial Cells"
+      || lab_test == "Bacteria"
+      || lab_test == "Amorphous Urates/Phosphates"
+      || lab_test == "Mucus Threads"){
+        setLabTestOptions(labResultsData.MicroscopicExamOptions);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
+    } else if (selectedLab.label == "Fecalysis"){
+      if(lab_test == "Color"){
+        setLabTestOptions(labResultsData.fecalysisColorOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Consistency"){
+        setLabTestOptions(labResultsData.fecalysisConsistencyOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Fat Globules"){
+        setLabTestOptions(labResultsData.MicroscopicExamOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Ova/Parasite"){
+        setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
+        setIsDropdown(true);
+      } else if (labTestData.lab_test == "Cyst/Trophozoite"){
+        setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
+    } else if (lab_test == "Fecal Occult Blood"
+      || lab_test == "Pregnancy Test"
+      || lab_test == "Serum Pregnancy Test"){
+        setLabTestOptions(labResultsData.posNegOptions);
+        setIsDropdown(true);
+    } else if (selectedLab.label == "Gram Staining"){
+        if(lab_test == "Epitheleal Cells"){
+          setLabTestOptions(labResultsData.MicroscopicExamOptions);
+          setIsDropdown(true);
+        } else {
+          setIsDropdown(false);
+        }
+    } else if (lab_test == "NS1 AG"
+    || lab_test == "IgG"
+    || lab_test == "IgM"
+    || lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"){
+      setLabTestOptions(labResultsData.posNegOptions2);
+      setIsDropdown(true);
+    } else if (lab_test == "Syphilis/RPR/VDRL" || lab_test == "H. Pylori"){
+      setLabTestOptions(labResultsData.posNegOptions);
+      setIsDropdown(true);
+    } else if (lab_test == "Anti-HIV" || lab_test == "Hepatitis B Surface Antigen Test (HBSag)"){
+      setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
+      setIsDropdown(true);
+    } else {
+      setIsDropdown(false);
+    }
+
+    // For default value in Edit modal
     labTestData.map(row => {
       if (lab_test == row.lab_test) {
         setResult(row.result);
@@ -523,7 +195,6 @@ export default function LabOfficer() {
         console.log('success');
         row.result = result;
         row.unit = unit;
-
         return row;
       }
       return row;
@@ -726,6 +397,7 @@ export default function LabOfficer() {
       setLabOptions(labOptions);
     })
 
+
     if (selectedLab.id != null) {
       axios({
         method: 'get',
@@ -747,11 +419,8 @@ export default function LabOfficer() {
             setLabTestData(data.booking_package_details_results[packageDetailId]);
           }
         }
+
       })
-
-
-
-  
       .catch((error) => {
         handleLab(selectedLab);
         //console.log(error);
@@ -762,6 +431,60 @@ export default function LabOfficer() {
 
   // Lab tests
   React.useEffect(()=>{
+            console.log("LAB_TEST DATA: ", labTestData);
+            labTestData.map ((labTestData) => {
+              console.log("SELECTED LAB: ", selectedLab.label);
+              // if(selectedLab.label == "Urinalysis"){
+              //   if(labTestData.lab_test == "Color"){
+              //     console.log("SULOD SA COLOR: ", labResultsData.urinalysisColorOptions)
+              //     setLabTestOptions(labResultsData.urinalysisColorOptions);
+              //   } else if (labTestData.lab_test == "Transparency"){
+              //     setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
+              //   } else if (labTestData.lab_test == "Epithelial Cells"
+              //   || labTestData.lab_test == "Bacteria"
+              //   || labTestData.lab_test == "Amorphous Urates/Phosphates"
+              //   || labTestData.lab_test == "Mucus Threads"){
+              //     setLabTestOptions(labResultsData.MicroscopicExamOptions);
+              //   }
+              // } else if (selectedLab.label == "Fecalysis"){
+              //   if(labTestData.lab_test == "Color"){
+              //     setLabTestOptions(labResultsData.fecalysisColorOptions);
+              //   } else if (labTestData.lab_test == "Consistency"){
+              //     setLabTestOptions(labResultsData.fecalysisConsistencyOptions);
+              //   } else if (labTestData.lab_test == "Fat Globules"){
+              //     setLabTestOptions(labResultsData.MicroscopicExamOptions);
+              //   } else if (labTestData.lab_test == "Ova/Parasite"){
+              //     setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
+              //   } else if (labTestData.lab_test == "Cyst/Trophozoite"){
+              //     setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions);
+              //   }
+              // } else if (selectedLab.label == "Fecal Occult Blood"
+              //   || selectedLab.label == "Pregnancy Test"
+              //   || selectedLab.label == "Serum Pregnancy Test"){
+              //     setLabTestOptions(labResultsData.posNegOptions);
+              // } else if (selectedLab.label == "Gram Staining"){
+              //   setLabTestOptions(labResultsData.MicroscopicExamOptions);
+              // } else if (selectedLab.label == "NS1 AG"
+              // || selectedLab.label == "IgG"
+              // || selectedLab.label == "IgM"
+              // || selectedLab.label == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"){
+              //   setLabTestOptions(labResultsData.posNegOptions2);
+              // } else if (selectedLab.label == "Syphilis/RPR/VDRL" || selectedLab.label == "H. Pylori"){
+              //   setLabTestOptions(labResultsData.posNegOptions);
+              // } else if (selectedLab.label == "Anti-HIV" || "Hepatitis B Surface Antigen Test (HBSag)"){
+              //   setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
+              // }
+          })
+        // if(data.booking_detail_results.lab_test == "Urinalysis"){
+        //   console.log("labTestData: ", labTestData)
+        //   console.log("labTestData.lab_test: ", labTestData.lab_test)
+        //   if(labTestData.lab_test == "Color"){
+        //     console.log("LAB TEST DATA.options: ", labTestData.options);
+        //     setLabTestOptions(labTestData.options)
+        //   }
+        // }
+
+
     labTests.length=0;
     services.map((info, index1)=>{
       // if service is package
@@ -984,47 +707,47 @@ export default function LabOfficer() {
     //setLabTests(e.target.value)
 
     if(e.label === "Urinalysis") {
-      setLabTestData(labTestUrinalysis);
+      setLabTestData(labResultsData.labTestUrinalysis);
     } else if (e.label === "Fecalysis") {
-      setLabTestData(labTestFecalysis);
+      setLabTestData(labResultsData.labTestFecalysis);
     } else if (e.label === "Fecal Occult Blood") {
-      setLabTestData(labTestFecalOccultBlood);
+      setLabTestData(labResultsData.labTestFecalOccultBlood);
     } else if (e.label === "Pregnancy Test (RPK Lateral Flow)") {
-      setLabTestData(labTestPregnancyTest);
+      setLabTestData(labResultsData.labTestPregnancyTest);
     } else if (e.label === "Serum Pregnancy Test") {
-      setLabTestData(labTestPregnancyTest);
+      setLabTestData(labResultsData.labTestPregnancyTest);
     } else if (e.label === "Sperm Analysis") {
-      setLabTestData(labTestSpermAnalysis);
+      setLabTestData(labResultsData.labTestSpermAnalysis);
     } else if (e.label === "Gram Stain") {
-      setLabTestData(labTestGramStain);
+      setLabTestData(labResultsData.labTestGramStain);
     } else if (e.label === "KOH") {
-      setLabTestData(labTestKOH);
+      setLabTestData(labResultsData.labTestKOH);
     } else if (e.label === "Dengue") {
-      setLabTestData(labTestDengue);
+      setLabTestData(labResultsData.labTestDengue);
     } else if (e.label === "Syphilis/RPR/VDRL") {
-      setLabTestData(labTestSyphilis);
+      setLabTestData(labResultsData.labTestSyphilis);
     } else if (e.label === "HIV SCreening (Anti HIV)") {
-      setLabTestData(labTestHIVScreening);
+      setLabTestData(labResultsData.labTestHIVScreening);
     } else if (e.label === "H. Pylori") {
-      setLabTestData(labTestHPylori);
+      setLabTestData(labResultsData.labTestHPylori);
     } else if (e.label === "HBSag (Hepatitis B Antigen)") {
-      setLabTestData(labTestHepatitisB);
+      setLabTestData(labResultsData.labTestHepatitisB);
     } else if (e.label === "Anti HBs/HBSab (Hepatitis B Antibody)") {
-      setLabTestData(labTestHepatitisA); 
+      setLabTestData(labResultsData.labTestHepatitisA); 
     } else if (e.label === "TSH") {
-      setLabTestData(labTestTSH); 
+      setLabTestData(labResultsData.labTestTSH); 
     } else if (e.label === "FT4") {
-      setLabTestData(labTestFT4); 
+      setLabTestData(labResultsData.labTestFT4); 
     } else if (e.label === "FT3") {
-      setLabTestData(labTestFT3); 
+      setLabTestData(labResultsData.labTestFT3); 
     } else if (e.label === "T3") {
-      setLabTestData(labTestT3); 
+      setLabTestData(labResultsData.labTestT3); 
     } else if (e.label === "PSA") {
-      setLabTestData(labTestPSA); 
+      setLabTestData(labResultsData.labTestPSA); 
     } else if (e.label === "CEA") {
-      setLabTestData(labTestCEA); 
+      setLabTestData(labResultsData.labTestCEA); 
     } else if (e.label === "VITAMIN D") {
-      setLabTestData(labTestVitaminD); 
+      setLabTestData(labResultsData.labTestVitaminD); 
     } else {
       setLabTestData([]);
     }
@@ -1135,12 +858,12 @@ export default function LabOfficer() {
                         <label for="discount_code" className="form-label">LABORATORY</label><br />
                         <Select
                             isSearchable
-                            options={allOptions}
+                            options={labOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
                             getOptionValue={(option) => option.label}
                             //onChange={e => { setSelectedLab; handleLab() }}
-                            labelledBy="Select"
+                            labelledBy="Select Laboratory"
                         />
                         </div>
                     </div>
@@ -1182,12 +905,25 @@ export default function LabOfficer() {
                   <div className="col-sm-6">
                     <div className="result-input-wrapper">
                       <div className="edit-sub-header">RESULT</div>
+                      {isDropdown ? (
+                      <Select
+                        isSearchable
+                        options={labTestOptions}
+                        value={labTestOptions.find(option => option.value === result)}
+                        defaultValue={result}
+                        onChange={(selectedOption) => {
+                          setResult(selectedOption.value);
+                        }}
+                        // label={result}
+                      />
+                    ) : (
                       <input
                         type="text"
                         className="results-input"
                         defaultValue={result}
                         onChange={(e) => setResult(e.target.value)}
                       />
+                    )}
                     </div>
                   </div>
 
