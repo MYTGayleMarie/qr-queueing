@@ -364,11 +364,11 @@ export default function GenerateResults({servicesData, title, bookingId}){
           <table>
             <tr>
               <td style={{paddingRight: '200px'}}>
-                <span><b>Patient Name: </b></span>
+                <span><b>PATIENT NAME: </b></span>
                 <span>{lastName.toUpperCase()}, {firstName.toUpperCase()} {middleName.toUpperCase}</span>
               </td>
               <td>
-                <span><b>Registration Date: </b></span>
+                <span><b>REGISTRATION DATE: </b></span>
                 <span>{monthNames[presentDate.getMonth()]} {presentDate.getDate()}, {presentDate.getFullYear()}</span>
               </td>
             </tr>
@@ -408,7 +408,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
           <div key={serviceIndex}>
             {getResults(service.id)}
             <br/>
-            <h3 class="table-title">{service.name}</h3>
+            <h3 class="table-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{service.name}</h3>
             <br/>
             <table class="table resText">
               <thead>
