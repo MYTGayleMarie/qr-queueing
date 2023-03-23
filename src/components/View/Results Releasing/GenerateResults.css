@@ -32,25 +32,29 @@
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-  }
+}
 
-  h3 {
-    text-align: center;
-    font-family: 'Arial', sans-serif; /* Replace with the desired font family */
-  }
+h3 {
+  text-align: center;
+  font-family: 'Arial', sans-serif; /* Replace with the desired font family */
+}
 
-  .wrapper {
-    display: flex; /* Use flexbox layout */
-    justify-content: space-between; /* Spacing between boxes */
-    text-align: center;
-  }
-  
-  .box{
-    width: 50%; /* Set equal width for both boxes */
-    background-color: lightblue;
-    padding: -5px;
-  }
+.wrapper {
+  display: flex; /* Use flexbox layout */
+  justify-content: space-between; /* Spacing between boxes */
+  text-align: center;
+}
 
-  .tspan {
-    margin-top: -10px;
-  }
+.box{
+  width: 50%; /* Set equal width for both boxes */
+  background-color: lightblue;
+  padding: -5px;
+}
+
+.tspan {
+  margin-top: -10px;
+}
+
+.resText{
+  text-align: center;
+}
