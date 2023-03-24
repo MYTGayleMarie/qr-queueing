@@ -69,8 +69,8 @@ export default function GenerateResults({servicesData, title, bookingId}){
   const [data, setData] = useState([])
   var presentDate = new Date();
 
-  var monthNames = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"];
+  var monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                  "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
 
   if (window.$userToken != null) {
     var roleId = window.$roleId.replace(/^"(.*)"$/, '$1');
@@ -367,42 +367,42 @@ export default function GenerateResults({servicesData, title, bookingId}){
           <br/>
           <table>
             <tr>
-              <td style={{paddingRight: '200px'}}>
-                <span><b>PATIENT NAME: </b></span>
+              <td style={{paddingRight: '170px'}}>
+                <span><b>PATIENT NAME: &nbsp;&nbsp;&nbsp;</b></span>
                 <span>{lastName.toUpperCase()}, {firstName.toUpperCase()} {middleName.toUpperCase}</span>
               </td>
               <td>
-                <span><b>REGISTRATION DATE: </b></span>
+                <span><b>REGISTRATION DATE: &nbsp;&nbsp;&nbsp;</b></span>
                 <span>{monthNames[presentDate.getMonth()]} {presentDate.getDate()}, {presentDate.getFullYear()}</span>
               </td>
             </tr>
             <tr>
               <td>
-                <span><b>GENDER: </b></span>
-                <span>{gender}</span>
+                <span><b>GENDER: &nbsp;&nbsp;&nbsp;</b></span>
+                <span>{gender.toUpperCase()}</span>
               </td>
               <td>
-                <span><b>BIRTHDATE: </b></span>
-                <span>{birthDate}</span>
+                <span><b>BIRTHDATE: &nbsp;&nbsp;&nbsp;</b></span>
+                <span>{birthDate.toUpperCase()}</span>
               </td>
             </tr>
             <tr>
               <td>
-                <span><b>AGE: </b></span>
+                <span><b>AGE: &nbsp;&nbsp;&nbsp;</b></span>
                 <span>{age}</span>
               </td>
               <td>
-                <span><b>CONTACT NO: </b></span>
+                <span><b>CONTACT NO: &nbsp;&nbsp;&nbsp;</b></span>
                 <span>{contactNo}</span>
               </td>
             </tr>
             <tr>
               <td>
-                <span><b>PATIENT ID: </b></span>
+                <span><b>PATIENT ID: &nbsp;&nbsp;&nbsp;</b></span>
                 <span>{id}</span>
               </td>
               <td>
-                <span><b>REQUESTING PHYSICIAN: </b></span>
+                <span><b>REQUESTING PHYSICIAN: &nbsp;&nbsp;&nbsp;</b></span>
               </td>
             </tr>
           </table>

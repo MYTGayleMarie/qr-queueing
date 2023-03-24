@@ -42,7 +42,8 @@ h3 {
 .wrapper {
   display: flex; /* Use flexbox layout */
   justify-content: space-between; /* Spacing between boxes */
-  text-align: center;
+  width: 100%; /* Set width of the container */
+  text-align: center  ;
 }
 
 .box{
