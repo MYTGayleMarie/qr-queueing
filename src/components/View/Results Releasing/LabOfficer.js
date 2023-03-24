@@ -76,7 +76,7 @@ export default function LabOfficer() {
   const [selectedLab, setSelectedLab] = useState([]);
   const [labOptions, setLabOptions] = useState([]);
   const [labOptionsPackage, setLabOptionsPackage] = useState([]);
-  const allOptions = labOptions.concat(labOptionsPackage);
+  const allOptions = (labOptions || []).concat(labOptionsPackage || []);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
@@ -107,8 +107,6 @@ export default function LabOfficer() {
   
   function update(lab_test) {
     setIsDropdown(false);
-    console.log("LAB TEST OPTIONS BEFORE INSIDE: ", labTestOptions);
-
     // For dropdowns in Edit modal
     if(selectedLab.label == "Urinalysis"){
       if(lab_test == "Color"){
@@ -364,33 +362,14 @@ export default function LabOfficer() {
     .then((booking)=>{
       setServices(booking.data);
       const labOptions = booking.data.map((data) => {
-        if ( data.lab_test == "Urinalysis"
-          || data.lab_test == "Fecalysis"
-          || data.lab_test == "Fecal Occult Blood"
-          || data.lab_test == "Pregnancy Test (RPK Lateral Flow)"
-          || data.lab_test == "Serum Pregnancy Test"
-          || data.lab_test == "Sperm Analysis"
-          || data.lab_test == "Gram Stain"
-          || data.lab_test == "KOH"
-          || data.lab_test == "Dengue"
-          || data.lab_test == "Syphilis/RPR/VDRL"
-          || data.lab_test == "HIV SCreening (Anti HIV)"
-          || data.lab_test == "H. Pylori"
-          || data.lab_test == "HBSag (Hepatitis B Antigen)"
-          || data.lab_test == "Anti HBs/HBSab (Hepatitis B Antibody)"
-          || data.lab_test == "TSH"
-          || data.lab_test == "FT4"
-          || data.lab_test == "FT3"
-          || data.lab_test == "T3"
-          || data.lab_test == "PSA"
-          || data.lab_test == "CEA"
-          || data.lab_test == "VITAMIN D"
-          ) {
-          return {
-            label: data.lab_test,
-            id: data.id,
-            type: data.type
-          }
+
+        // Include only data in sheets
+        if (labResultsData.testsToCheck.includes(data.lab_test)) {
+              return {
+                label: data.lab_test,
+                id: data.id,
+                type: data.type
+              }
         }
         return null;
       }).filter((option) => option !== null);
@@ -431,60 +410,6 @@ export default function LabOfficer() {
 
   // Lab tests
   React.useEffect(()=>{
-            console.log("LAB_TEST DATA: ", labTestData);
-            labTestData.map ((labTestData) => {
-              console.log("SELECTED LAB: ", selectedLab.label);
-              // if(selectedLab.label == "Urinalysis"){
-              //   if(labTestData.lab_test == "Color"){
-              //     console.log("SULOD SA COLOR: ", labResultsData.urinalysisColorOptions)
-              //     setLabTestOptions(labResultsData.urinalysisColorOptions);
-              //   } else if (labTestData.lab_test == "Transparency"){
-              //     setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
-              //   } else if (labTestData.lab_test == "Epithelial Cells"
-              //   || labTestData.lab_test == "Bacteria"
-              //   || labTestData.lab_test == "Amorphous Urates/Phosphates"
-              //   || labTestData.lab_test == "Mucus Threads"){
-              //     setLabTestOptions(labResultsData.MicroscopicExamOptions);
-              //   }
-              // } else if (selectedLab.label == "Fecalysis"){
-              //   if(labTestData.lab_test == "Color"){
-              //     setLabTestOptions(labResultsData.fecalysisColorOptions);
-              //   } else if (labTestData.lab_test == "Consistency"){
-              //     setLabTestOptions(labResultsData.fecalysisConsistencyOptions);
-              //   } else if (labTestData.lab_test == "Fat Globules"){
-              //     setLabTestOptions(labResultsData.MicroscopicExamOptions);
-              //   } else if (labTestData.lab_test == "Ova/Parasite"){
-              //     setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
-              //   } else if (labTestData.lab_test == "Cyst/Trophozoite"){
-              //     setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions);
-              //   }
-              // } else if (selectedLab.label == "Fecal Occult Blood"
-              //   || selectedLab.label == "Pregnancy Test"
-              //   || selectedLab.label == "Serum Pregnancy Test"){
-              //     setLabTestOptions(labResultsData.posNegOptions);
-              // } else if (selectedLab.label == "Gram Staining"){
-              //   setLabTestOptions(labResultsData.MicroscopicExamOptions);
-              // } else if (selectedLab.label == "NS1 AG"
-              // || selectedLab.label == "IgG"
-              // || selectedLab.label == "IgM"
-              // || selectedLab.label == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"){
-              //   setLabTestOptions(labResultsData.posNegOptions2);
-              // } else if (selectedLab.label == "Syphilis/RPR/VDRL" || selectedLab.label == "H. Pylori"){
-              //   setLabTestOptions(labResultsData.posNegOptions);
-              // } else if (selectedLab.label == "Anti-HIV" || "Hepatitis B Surface Antigen Test (HBSag)"){
-              //   setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
-              // }
-          })
-        // if(data.booking_detail_results.lab_test == "Urinalysis"){
-        //   console.log("labTestData: ", labTestData)
-        //   console.log("labTestData.lab_test: ", labTestData.lab_test)
-        //   if(labTestData.lab_test == "Color"){
-        //     console.log("LAB TEST DATA.options: ", labTestData.options);
-        //     setLabTestOptions(labTestData.options)
-        //   }
-        // }
-
-
     labTests.length=0;
     services.map((info, index1)=>{
       // if service is package
@@ -500,13 +425,17 @@ export default function LabOfficer() {
           }
         })
         .then((response)=>{
-          const labPackageOptions = response.data.map((data) => ({
-            label: '[P] ' + data.lab_test,
-            id: data.booking_detail_id,
-            booking_id: data.id,
-            type: data.type
-          }));
-          setLabOptionsPackage(labPackageOptions);
+          const labPackageOptions = response.data.map((data) => (
+            labResultsData.testsToCheck.includes(data.lab_test)
+            ? {
+              label: '[P] ' + data.lab_test,
+              id: data.booking_detail_id,
+              booking_id: data.id,
+              type: data.type
+            }
+            : null
+            ));
+          setLabOptionsPackage(labPackageOptions.filter(option => option !== null));
 
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
@@ -858,7 +787,7 @@ export default function LabOfficer() {
                         <label for="discount_code" className="form-label">LABORATORY</label><br />
                         <Select
                             isSearchable
-                            options={labOptions}
+                            options={allOptions}
                             defaultValue={selectedLab}
                             onChange = {setSelectedLab}
                             getOptionValue={(option) => option.label}
