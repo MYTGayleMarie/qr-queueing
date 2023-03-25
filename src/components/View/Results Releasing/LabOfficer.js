@@ -9,18 +9,18 @@ import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 import Select from 'react-select'
 import { Modal } from 'react-bootstrap';
-
-
-
+ 
+ 
+ 
 import './LabOfficer.css'
-
+ 
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
 import Table from '../../Table.js';
 import labResultsData from './LabResultsData.js';
 import { SkewLoader } from 'react-spinners';
-
+ 
 const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
@@ -30,7 +30,7 @@ var bookingId = "";
 // var unit = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
-
+ 
 // const labTestMockData = [
 //   {
 //     "lab_test": "Lab Test Mock Data",
@@ -43,13 +43,13 @@ var formattedPresentData = presentDate.toISOString().split('T')[0];
 //     "unit": "123 unit2",
 //   }
 // ]
-
+ 
 export const refreshPage = () => {
   window.location.reload();
 }
-
+ 
 export default function LabOfficer() {
-
+ 
   document.body.style = 'background: white;';
   const {id, dateFrom, dateTo} = useParams();
   const [filteredData, setFilter] = useForm({
@@ -57,7 +57,7 @@ export default function LabOfficer() {
     to_date: dateTo? dateTo : formattedPresentData,
     done: false,
   });
-
+ 
   // Patient details
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -68,7 +68,7 @@ export default function LabOfficer() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-
+ 
   // Lab Tests
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
@@ -79,36 +79,39 @@ export default function LabOfficer() {
   const allOptions = (labOptions || []).concat(labOptionsPackage || []);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
-
+ 
   // Lab Test options
   const [labTestOptions, setLabTestOptions] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
-
+ 
   const [role, setRole] = useState('');
-
+ 
   //Edit Modal
   const [show, setShow] = useState(false);
   const [labName, setLabName] = useState("");
   const [result, setResult] = useState("");
   const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
-
+ 
   // Remarks textbox
   const [editable, setEditable] = useState(false);
   const [remarks, setRemarks] = useState("");
   const [saveRemarks, setSaveRemarks] = useState("");
-
+  
+  // For Package details result
+  const [packageDetailId, setPackageDetailId] = useState([]);
+ 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
-  
+ 
   function getTime(date) {
     return  date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   }
-  
+ 
   function update(lab_test) {
     setIsDropdown(false);
     // For dropdowns in Edit modal
-    if(selectedLab.label == "Urinalysis"){
+    if(selectedLab.label == "Urinalysis" || selectedLab.label == "[P] Urinalysis"){
       if(lab_test == "Color"){
         setLabTestOptions(labResultsData.urinalysisColorOptions);
         setIsDropdown(true);
@@ -124,7 +127,7 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false);
       }
-    } else if (selectedLab.label == "Fecalysis"){
+    } else if (selectedLab.label == "Fecalysis" || selectedLab.label == "[P] Fecalysis"){
       if(lab_test == "Color"){
         setLabTestOptions(labResultsData.fecalysisColorOptions);
         setIsDropdown(true);
@@ -137,7 +140,7 @@ export default function LabOfficer() {
       } else if (lab_test == "Ova/Parasite"){
         setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
         setIsDropdown(true);
-      } else if (labTestData.lab_test == "Cyst/Trophozoite"){
+      } else if (lab_test == "Cyst/Trophozoite"){
         setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions);
         setIsDropdown(true);
       } else {
@@ -148,7 +151,7 @@ export default function LabOfficer() {
       || lab_test == "Serum Pregnancy Test"){
         setLabTestOptions(labResultsData.posNegOptions);
         setIsDropdown(true);
-    } else if (selectedLab.label == "Gram Staining"){
+    } else if (selectedLab.label == "Gram Staining" || selectedLab.label == "[P] Gram Staining"){
         if(lab_test == "Epitheleal Cells"){
           setLabTestOptions(labResultsData.MicroscopicExamOptions);
           setIsDropdown(true);
@@ -170,7 +173,7 @@ export default function LabOfficer() {
     } else {
       setIsDropdown(false);
     }
-
+ 
     // For default value in Edit modal
     labTestData.map(row => {
       if (lab_test == row.lab_test) {
@@ -181,13 +184,13 @@ export default function LabOfficer() {
       return row;
     });
     setLabName(lab_test);
-
+ 
     setShow(true);
   }
-  
+ 
   const submit = (e) => {
     e.preventDefault();
-
+ 
     const updatedData = labTestData.map(row => {
       if (row.lab_test === labName) {
         console.log('success');
@@ -197,12 +200,12 @@ export default function LabOfficer() {
       }
       return row;
     });
-
+ 
     setLabTestData(updatedData);
-
+ 
     setShow(false);
   };
-
+ 
   React.useEffect(() => {
     axios({
       method: 'get',
@@ -213,7 +216,7 @@ export default function LabOfficer() {
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
       }
-
+ 
       }).then(function (response) { 
           console.log(response.data.data.booking_detail[0].remarks);
           setRemarks(response.data.data.booking_detail[0].remarks);
@@ -221,14 +224,15 @@ export default function LabOfficer() {
           console.log(error);
       });
       },[]);
-
+ 
   // Modal Result and Unit edit
   React.useEffect(() => {
+    const packageDetailId = selectedLab.booking_id;
     // Store in different arrays the units, results, and lab names
     const resultsArray = labTestData.map(row => row.result);
     const unitArray = labTestData.map(row => row.unit);
     const namesArray = labTestData.map(row => row.lab_test);
-
+ 
     // axios parameter for editResults
     const params = {
       api_key: window.$api_key,
@@ -237,18 +241,22 @@ export default function LabOfficer() {
       requester: userId,
     };
 
+    if(selectedLab.type != "lab"){
+      params.booking = packageDetailId;
+    }
+ 
     // params for unit
     namesArray.forEach((lab, index) => {
       const unitParam = `unit_${lab}`;
       params[unitParam] = unitArray[index];
     });
-    
+ 
     // params for labtests
     namesArray.forEach((lab, index) => {
       const labParam = `lab_tests[${index}]`;
       params[labParam] = namesArray[index].replace(" ", "_");
     });
-
+ 
     // params for results
     namesArray.forEach((lab, index) => {
       const resultParam = `result_${lab.replace(" ", "_")}`;
@@ -256,22 +264,37 @@ export default function LabOfficer() {
     });
 
     if (selectedLab.id != null) {
-      axios({
-        method: 'post',
-        url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
-        withCredentials: false, 
-        params
-        }).then(function (response) { 
-            console.log(response)          
-        }).catch(function (error) {
-            console.log(error);
-        });
+      if (selectedLab.type == "lab") {
+        axios({
+          method: 'post',
+          url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
+          withCredentials: false, 
+          params
+   
+          }).then(function (response) { 
+              console.log(response)          
+          }).catch(function (error) {
+              console.log(error);
+          });
+      } else {
+        axios({
+          method: 'post',
+          url: window.$link + '/Bookingpackage_details/editResult/' + packageDetailId,
+          withCredentials: false, 
+          params
+     
+            }).then(function (response) { 
+                console.log(response)          
+            }).catch(function (error) {
+                console.log(error);
+            });
+      }
     }
     },[labTestData]);
-
+ 
       React.useEffect(() => {
         labOptions.length = 0;
-
+ 
         axios({
             method: 'post',
             url: window.$link + '/lab_tests/getAll',
@@ -284,18 +307,18 @@ export default function LabOfficer() {
         }).then(function (response) {
             response.data.lab_tests.map((data) => {
                 var info = {};
-
+ 
                 info.label = data.name;
                 info.value = data.id + "_service";
-
+ 
                 //setLabOptions(oldArray => [...oldArray, info]);
-                
+ 
             });
         }).then(function (error) {
             console.log( error);
       });
     },[]);
-  
+ 
   React.useEffect(()=>{
     axios({
       method: 'post',
@@ -323,30 +346,30 @@ export default function LabOfficer() {
         setFirstName(response.data.first_name);
         setMiddleName(response.data.middle_name);
         setLastName(response.data.last_name);
-
+ 
         var birthDate = new Date(response.data.birthdate);
         setBirthDate(birthDate.toDateString());
-
+ 
         setGender(response.data.gender);
-
+ 
         var presentDate = new Date();
         var age = presentDate.getFullYear() - birthDate.getFullYear();
         var m = presentDate.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
           {age--;}
         setAge(age);
-
+ 
         setContactNo(response.data.contact_no);
         setEmail(response.data.email);
         setAddress(response.data.address);
-
+ 
       })
       .catch((error)=>{
       })
       })
     .catch((error)=>{
     })
-
+ 
     // Lab Options
     axios({
       method: 'post',
@@ -361,7 +384,7 @@ export default function LabOfficer() {
     .then((booking)=>{
       setServices(booking.data);
       const labOptions = booking.data.map((data) => {
-
+ 
         // Include only data in sheets
         if (labResultsData.testsToCheck.includes(data.lab_test)) {
               return {
@@ -374,8 +397,7 @@ export default function LabOfficer() {
       }).filter((option) => option !== null);
       setLabOptions(labOptions);
     })
-
-
+ 
     if (selectedLab.id != null) {
       axios({
         method: 'get',
@@ -393,20 +415,26 @@ export default function LabOfficer() {
         if (data.booking_detail_results) {
           if(selectedLab.type == "lab"){
             setLabTestData(data.booking_detail_results);
-          } else { 
+          } else if (data.booking_package_details_results[packageDetailId]){ 
             setLabTestData(data.booking_package_details_results[packageDetailId]);
+          } else {
+            handleLab(selectedLab);
           }
+        } else if (data.booking_package_details_results[packageDetailId] == null) {
+          handleLab(selectedLab);
+        } else{
+          handleLab(selectedLab);
         }
-
+ 
       })
       .catch((error) => {
         handleLab(selectedLab);
         //console.log(error);
       })
     } 
-
-  },[selectedLab.id])
-
+ 
+  },[selectedLab])
+ 
   // Lab tests
   React.useEffect(()=>{
     labTests.length=0;
@@ -434,8 +462,9 @@ export default function LabOfficer() {
             }
             : null
             ));
+          console.log("LAB PACKAGE OPTIONS", labPackageOptions.filter(option => option !== null))
           setLabOptionsPackage(labPackageOptions.filter(option => option !== null));
-
+ 
           response.data.map((packageCat, index2)=>{
             var serviceDetails = {};
             axios({
@@ -471,7 +500,7 @@ export default function LabOfficer() {
         })
       }
       // if service is lab test
-     
+ 
       else {
         axios({
           method: 'post',
@@ -506,69 +535,69 @@ export default function LabOfficer() {
         })
       }
     })
-    
+ 
   },[services])
-
+ 
   // console.log(labTests)
-
-
+ 
+ 
   // Categorize lab test
   const xray = labTests.filter((info)=>info.key==="xray" ||info.key==="radiology")
   const ecg = labTests.filter((info)=>info.key==="cardiology")
-
+ 
   /****************/
   const hematology = labTests.filter((info)=>info.key==="hematology" && info.test_id!=="8" && info.test_id!=="13" && info.test_id!=="15")
-  
+ 
   const cbc = labTests.filter((info)=>info.test_id==="8")
-
+ 
   const esr = labTests.filter((info)=>info.test_id==="13")
-
+ 
   const clotting = labTests.filter((info)=>info.test_id==="15")
-
+ 
   /****************/
-
+ 
   // previously serology
   const chemistry = labTests.filter((info)=>info.key==="chemistry"||info.key==="Electrolytes"||info.key==="lipid_profile"||info.key==="glucose_tests"||info.key==="liver_function_tests"||info.key==="kidney_function_tests"||info.key==="pancreatic_test")
   const thyroid_profile = labTests.filter((info)=>info.key==="thyroid_profile")
   const tumor_markers = labTests.filter((info)=>info.key==="tumor_markers")
-
+ 
   const serology = labTests.filter((info)=>info.key==="serology"||info.key==="immunology"||info.key==="hepatitis_profile_screening")
-
+ 
   /****************/
-
+ 
   const clinicalUrinalyis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  &&info.test_id!=="7" && info.test_id!=="130")
-
+ 
   const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
-  
+ 
   const serumPT = labTests.filter((info)=>info.test_id==="130")
-
+ 
   /****************/
-
+ 
   const clinicalFecalysis = labTests.filter((info)=>info.key==="clinical_microscopy_fecalysis")
-  
+ 
   // const fecalysis = labTests.filter((info)=>info.test_id==="4")
-
+ 
   /****************/
-
+ 
   const ultrasound = labTests.filter((info) => info.key === "ultrasound")
-
+ 
   /****************/
-
+ 
   // Previously others
   const histopathology = labTests.filter((info) => info.key === "histopathology")
   const microbiology = labTests.filter((info) => info.key === "microbiology")
   // const {id} = useParams();   
    const [data, setData] = useState([]);
    const [render, setRender] = useState("");
-
+ 
   const others = labTests.filter((info)=>info.key==="other_tests" ||info.key==="covid_rapid_tests")
   const [uploadsData, setUploadsData] = useState([]);
   const [download, setDOwnload] = useState("")
   const [rows, setRows] = useState([])
   const [showConfirm, setShowConfirm] = React.useState(false);
-
+ 
 //  console.log(labTests)
-
+ 
 // Get Multiple Uploads
     async function getUploads(){
               console.log('ID: ', id);
@@ -590,11 +619,11 @@ export default function LabOfficer() {
     });
     }
   }
-
+ 
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, '$1'));
   }, []);
-
+ 
   // Save Remarks to database
   React.useEffect(() => {
     axios({
@@ -607,16 +636,16 @@ export default function LabOfficer() {
         requester: userId,
         remarks: saveRemarks,
       }
-
+ 
       }).then(function (response) { 
           console.log(response)          
       }).catch(function (error) {
           console.log(error);
       });
       },[saveRemarks]);
-
+ 
   function filter() {}
-
+ 
   if(redirectBack === true) {
     if(dateFrom !== undefined && dateTo !== undefined) {
         var link =  "/lab/" + dateFrom + "/" + dateTo;
@@ -630,66 +659,68 @@ export default function LabOfficer() {
         )
     }
   }
-
+ 
   function handleLab(e){
     //setLabTests(e.target.value)
-
-    if(e.label === "Urinalysis") {
+ 
+    if(e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
       setLabTestData(labResultsData.labTestUrinalysis);
-    } else if (e.label === "Fecalysis") {
+    } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
       setLabTestData(labResultsData.labTestFecalysis);
-    } else if (e.label === "Fecal Occult Blood") {
+    } else if (e.label === "Fecal Occult Blood" || e.label === "[P] Fecal Occult Blood") {
       setLabTestData(labResultsData.labTestFecalOccultBlood);
-    } else if (e.label === "Pregnancy Test (RPK Lateral Flow)") {
+    } else if (e.label === "Pregnancy Test (RPK Lateral Flow)" 
+    || e.label === "[P] Pregnancy Test (RPK Lateral Flow)") {
       setLabTestData(labResultsData.labTestPregnancyTest);
-    } else if (e.label === "Serum Pregnancy Test") {
+    } else if (e.label === "Serum Pregnancy Test" || e.label === "[P] Serum Pregnancy Test") {
       setLabTestData(labResultsData.labTestPregnancyTest);
-    } else if (e.label === "Sperm Analysis") {
+    } else if (e.label === "Sperm Analysis" || e.label === "[P] Sperm Analysis") {
       setLabTestData(labResultsData.labTestSpermAnalysis);
-    } else if (e.label === "Gram Stain") {
+    } else if (e.label === "Gram Stain" || e.label === "[P] Gram Stain") {
       setLabTestData(labResultsData.labTestGramStain);
-    } else if (e.label === "KOH") {
+    } else if (e.label === "KOH" || e.label === "[P] KOH") {
       setLabTestData(labResultsData.labTestKOH);
-    } else if (e.label === "Dengue") {
+    } else if (e.label === "Dengue" || e.label === "[P] Dengue") {
       setLabTestData(labResultsData.labTestDengue);
-    } else if (e.label === "Syphilis/RPR/VDRL") {
+    } else if (e.label === "Syphilis/RPR/VDRL" || e.label === "[P] Syphilis/RPR/VDRL") {
       setLabTestData(labResultsData.labTestSyphilis);
-    } else if (e.label === "HIV SCreening (Anti HIV)") {
+    } else if (e.label === "HIV SCreening (Anti HIV)" || e.label === "[P] HIV SCreening (Anti HIV)") {
       setLabTestData(labResultsData.labTestHIVScreening);
-    } else if (e.label === "H. Pylori") {
+    } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
       setLabTestData(labResultsData.labTestHPylori);
-    } else if (e.label === "HBSag (Hepatitis B Antigen)") {
+    } else if (e.label === "HBSag (Hepatitis B Antigen)" || e.label === "[P] HBSag (Hepatitis B Antigen)"){
       setLabTestData(labResultsData.labTestHepatitisB);
-    } else if (e.label === "Anti HBs/HBSab (Hepatitis B Antibody)") {
+    } else if (e.label === "Anti HBs/HBSab (Hepatitis B Antibody)" 
+    || e.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)") {
       setLabTestData(labResultsData.labTestHepatitisA); 
-    } else if (e.label === "TSH") {
+    } else if (e.label === "TSH" || e.label === "[P] TSH") {
       setLabTestData(labResultsData.labTestTSH); 
-    } else if (e.label === "FT4") {
+    } else if (e.label === "FT4" || e.label === "[P] FT4") {
       setLabTestData(labResultsData.labTestFT4); 
-    } else if (e.label === "FT3") {
+    } else if (e.label === "FT3" || e.label === "[P] FT3") {
       setLabTestData(labResultsData.labTestFT3); 
-    } else if (e.label === "T3") {
+    } else if (e.label === "T3" || e.label === "[P] T3") {
       setLabTestData(labResultsData.labTestT3); 
-    } else if (e.label === "PSA") {
+    } else if (e.label === "PSA" || e.label === "[P] PSA") {
       setLabTestData(labResultsData.labTestPSA); 
-    } else if (e.label === "CEA") {
+    } else if (e.label === "CEA" || e.label === "[P] CEA") {
       setLabTestData(labResultsData.labTestCEA); 
-    } else if (e.label === "VITAMIN D") {
+    } else if (e.label === "VITAMIN D" || e.label === "[P] VITAMIN D") {
       setLabTestData(labResultsData.labTestVitaminD); 
     } else {
       setLabTestData([]);
     }
   }  
-  
+ 
   const {from_date, to_date, done} = filteredData;
-  
+ 
   function edit(itemId,itemUnit) {
-    
+ 
     // id = itemId;
     // unit = itemUnit;
     setRedirect(true);
   }
-  
+ 
   if(redirect == true) {
     var link =  "/medtech";
     //console.log(link);
@@ -697,29 +728,29 @@ export default function LabOfficer() {
       <Navigate to ={link}/>
       )
     }
-    
-    const labTestDataWithResults = labTestData.map(result => {
+
+    let labTestDataWithResults = labTestData.map(result => {
       return {
         lab_test: result.lab_test,
         result: result.result,
         unit: result.unit
       }
     })
-  
+
     // Remarks handle textbox
     const handleEdit = () => {
       setEditable(true);
     }
-  
+ 
     const handleSave = () => {
       setEditable(false);
       setSaveRemarks(remarks);
     }
-  
+ 
     const handleChange = (event) => {
       setRemarks(event.target.value);
     }
-
+ 
    return (
     <div>
       <Navbar />
@@ -729,7 +760,7 @@ export default function LabOfficer() {
             withBack={true}
             setBack={setRedirectBack}/>
           <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
-        
+ 
             <div className="personal-data-cont">
             <div className="row">
                 <div className="col-sm-4">
@@ -777,7 +808,7 @@ export default function LabOfficer() {
             </div>
             </div>
             <br/>
-
+ 
             <h3 className="form-categories-header italic">LABORATORY TESTS</h3>
             <div className="personal-data-cont">
               {/* <PersonalDetails data={patientDataa}/> */}
@@ -796,14 +827,14 @@ export default function LabOfficer() {
                         </div>
                     </div>
             </div> 
-            
+ 
             {/* Filter */}
             {/* <div className="col-sm-11 d-flex justify-content-end">
                 <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                 <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter}/>
                 <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
             </div> */}
-
+ 
           <Table
             type={'med-tech'}
             clickable={true}
@@ -823,7 +854,7 @@ export default function LabOfficer() {
             //useLoader={true}
             //isReady={isReady} 
           />
-
+ 
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title className="w-100 edit-header">Edit Results</Modal.Title>
@@ -854,7 +885,7 @@ export default function LabOfficer() {
                     )}
                     </div>
                   </div>
-
+ 
                   <div className="col-sm-6">
                     <div className="result-input-wrapper">
                       <div className="edit-sub-header">UNIT</div>
@@ -878,7 +909,7 @@ export default function LabOfficer() {
       </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
-
+ 
         <div className="personal-data-cont">
           <div className="row">
               <div class="form-group">
@@ -895,8 +926,3 @@ export default function LabOfficer() {
     </div>
   );
 }
-
-
-
-
-
