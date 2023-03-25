@@ -97,6 +97,9 @@ export default function LabOfficer() {
   const [editable, setEditable] = useState(false);
   const [remarks, setRemarks] = useState("");
   const [saveRemarks, setSaveRemarks] = useState("");
+  
+  // For Package details result
+  const [packageDetailId, setPackageDetailId] = useState([]);
  
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -224,6 +227,7 @@ export default function LabOfficer() {
  
   // Modal Result and Unit edit
   React.useEffect(() => {
+    const packageDetailId = selectedLab.booking_id;
     // Store in different arrays the units, results, and lab names
     const resultsArray = labTestData.map(row => row.result);
     const unitArray = labTestData.map(row => row.unit);
@@ -236,6 +240,10 @@ export default function LabOfficer() {
       booking: id,
       requester: userId,
     };
+
+    if(selectedLab.type != "lab"){
+      params.booking = packageDetailId;
+    }
  
     // params for unit
     namesArray.forEach((lab, index) => {
@@ -254,19 +262,33 @@ export default function LabOfficer() {
       const resultParam = `result_${lab}`;
       params[resultParam] = resultsArray[index];
     });
- 
+
     if (selectedLab.id != null) {
-      axios({
-        method: 'post',
-        url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
-        withCredentials: false, 
-        params
- 
-        }).then(function (response) { 
-            console.log(response)          
-        }).catch(function (error) {
-            console.log(error);
-        });
+      if (selectedLab.type == "lab") {
+        axios({
+          method: 'post',
+          url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
+          withCredentials: false, 
+          params
+   
+          }).then(function (response) { 
+              console.log(response)          
+          }).catch(function (error) {
+              console.log(error);
+          });
+      } else {
+        axios({
+          method: 'post',
+          url: window.$link + '/Bookingpackage_details/editResult/' + packageDetailId,
+          withCredentials: false, 
+          params
+     
+            }).then(function (response) { 
+                console.log(response)          
+            }).catch(function (error) {
+                console.log(error);
+            });
+      }
     }
     },[labTestData]);
  
@@ -375,8 +397,6 @@ export default function LabOfficer() {
       }).filter((option) => option !== null);
       setLabOptions(labOptions);
     })
-
-    console.log("SELECTED LAB .ID: ", selectedLab.id);
  
     if (selectedLab.id != null) {
       axios({
@@ -645,7 +665,6 @@ export default function LabOfficer() {
  
     if(e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
       setLabTestData(labResultsData.labTestUrinalysis);
-      console.log("LAB TEST DATA HERE: ", labResultsData.labTestUrinalysis);
     } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
       setLabTestData(labResultsData.labTestFecalysis);
     } else if (e.label === "Fecal Occult Blood" || e.label === "[P] Fecal Occult Blood") {
@@ -670,7 +689,6 @@ export default function LabOfficer() {
     } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
       setLabTestData(labResultsData.labTestHPylori);
     } else if (e.label === "HBSag (Hepatitis B Antigen)" || e.label === "[P] HBSag (Hepatitis B Antigen)"){
-      console.log("LAB TEST DATA HERE: ", labResultsData.labTestHepatitisB);
       setLabTestData(labResultsData.labTestHepatitisB);
     } else if (e.label === "Anti HBs/HBSab (Hepatitis B Antibody)" 
     || e.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)") {
@@ -711,8 +729,6 @@ export default function LabOfficer() {
       )
     }
 
-    console.log("LAB TEST DATA: ", labTestData);
- 
     let labTestDataWithResults = labTestData.map(result => {
       return {
         lab_test: result.lab_test,
@@ -721,8 +737,6 @@ export default function LabOfficer() {
       }
     })
 
-    console.log("LAB TEST DATA WITH RESULTS: ", labTestDataWithResults);
- 
     // Remarks handle textbox
     const handleEdit = () => {
       setEditable(true);
