@@ -30,6 +30,7 @@ const userToken = getToken();
 const userId = getUser();
 
 export default function GenerateResults({servicesData, title, bookingId}){
+  console.log(servicesData)
   const {id, dateFrom, dateTo} = useParams();
   const [labIds, setLabIds] = useState([]);
   const [packageIds, setPackageIds] = useState([]);

@@ -280,7 +280,9 @@ export default function ViewBooking() {
 
   /****************/
 
-  const clinicalUrinalysis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  && info.test_id!=="7" && info.test_id!=="130")
+  const clinicalUrinalysis = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  && info.test_id!=="7" && info.test_id!=="130" && info.test_id!=="2" && info.test_id!=="3")
+  const clinicalUrineLab = labTests.filter((info)=>info.key==="clinical_microscopy_urinalysis"  && info.test_id!=="7" && info.test_id!=="130" && info.test_id!=="1") 
+
   const detailUrinalysis = services.filter((info)=>info.lab_test==="Urinalysis")
 
   const spermAnalysis = labTests.filter((info)=>info.test_id==="7")
@@ -484,7 +486,7 @@ export default function ViewBooking() {
 
         {console.log(spermAnalysis?.length !==0 &&  detailSperm?.with_results === "1")}
         {/* CLINICAL MICROSCOPY URINALYSIS */}
-        {(clinicalUrinalysis.length!==0||spermAnalysis.length!==0||serumPT.length!==0) &&  
+        {(clinicalUrinalysis.length!==0||spermAnalysis.length!==0||serumPT.length!==0 && clinicalUrineLab.length!==0) &&  
         <div>
           <div className="category label">CLINICAL MICROSCOPY URINALYSIS</div>
             <>
@@ -529,6 +531,13 @@ export default function ViewBooking() {
                 title={"CLINICAL MICROSCOPY URINALYSIS"}
                 bookingId = {bookingId}
                 />)
+              }
+              {(clinicalUrineLab.length !== 0) &&
+                <FileUpload 
+                servicesData={clinicalUrineLab}
+                title={"CLINICAL MICROSCOPY URINALYSIS"}
+                bookingId = {bookingId}
+                />
               }
 {/* 
               {(clinicalUrinalysis.length !== 0) &&

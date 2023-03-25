@@ -14,7 +14,6 @@ const userToken = getToken();
 const userId = getUser();
 
 export default function FileUpload({servicesData, title, bookingId}){
-  console.log(servicesData.name)
   const inputRef = React.useRef(null);
   const [labIds, setLabIds] = useState([]);
   const [packageIds, setPackageIds] = useState([]);
