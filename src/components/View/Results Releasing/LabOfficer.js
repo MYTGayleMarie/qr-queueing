@@ -246,12 +246,12 @@ export default function LabOfficer() {
     // params for labtests
     namesArray.forEach((lab, index) => {
       const labParam = `lab_tests[${index}]`;
-      params[labParam] = namesArray[index];
+      params[labParam] = namesArray[index].replace(" ", "_");
     });
 
     // params for results
     namesArray.forEach((lab, index) => {
-      const resultParam = `result_${lab}`;
+      const resultParam = `result_${lab.replace(" ", "_")}`;
       params[resultParam] = resultsArray[index];
     });
 
@@ -261,7 +261,6 @@ export default function LabOfficer() {
         url: window.$link + '/Bookingdetails/editResult/' + selectedLab.id,
         withCredentials: false, 
         params
-  
         }).then(function (response) { 
             console.log(response)          
         }).catch(function (error) {
