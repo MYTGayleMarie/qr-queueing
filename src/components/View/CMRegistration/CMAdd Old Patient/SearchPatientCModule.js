@@ -50,20 +50,18 @@ function SearchPatientCModule() {
                 birthdate: variable
             }
         }).then(function (response) {
-            console.log(response.data);
-            response.data.map((detail, index) => {
+            var detail = response.data;
                 var patientinfo = {};
                 var name = detail.first_name + " " + detail.middle_name + " " + detail.last_name;
                 patientinfo.id = detail.id;
-                patientinfo.name = name.toUpperCase();
-                patientinfo.gender = detail.gender.toUpperCase();
+                patientinfo.name = name ? name.toUpperCase() : '';
+                patientinfo.gender = detail.gender ? detail.gender.toUpperCase() : '';
                 patientinfo.address = detail.address;
                 patientinfo.email = detail.email;
                 patientinfo.contactNumber = detail.contact_no;
                 setPatients( arr => [...arr, patientinfo])
                 console.log(patientinfo);
-            });
-        })
+        });
     }
 
     function addToQueue(customerId) {
