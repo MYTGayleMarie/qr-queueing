@@ -52,6 +52,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     email,
     contactNum,
     address,
+    result,
   } = customer;
   const [activation, setActive] = useState(false);
   const [companyId, setCompanyId] = useState('');
@@ -72,7 +73,8 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
       sex != '' &&
       birthDate != '' &&
       contactNum != '' &&
-      address != ''
+      address != '' &&
+      result != ''
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -110,6 +112,8 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
           relation_w_contact: '',
           last_meal: lastMeal,
           remarks: '',
+          type: "clinic",
+          result: customer.result,
           added_by: userId,
         },
         }).then(function (response) {
@@ -387,11 +391,59 @@ console.log(location)
               />
               <br />
             </div>
+
             {suggestions.length!==0 && renderSuggest && <div className="suggestions-list">
               {suggestions.map((data, index)=>
                 <><button key = {index} className="suggestions-item" name="address" value={data} onClick={(e)=>{setPersonal(e);setRenderSuggest(false)}}>{data}</button><br/></>
               )}
             </div>}
+            
+            <div className="row">
+                  <label for="result" className="radio-header">
+                    RESULTS
+                  </label>
+                  <br />
+                  <div className="col">
+                    <input
+                      type="radio"
+                      id="result"
+                      name="result"
+                      value="email"
+                      checked={result === 'email'}
+                      onChange={setPersonal}
+                    />
+                    <label for="email" className="radio-label">
+                      EMAIL
+                    </label>
+                  </div>
+                  <div className="col">
+                    <input
+                      type="radio"
+                      id="result"
+                      name="result"
+                      value="print with pickup"
+                      checked={result === 'print with pickup'}
+                      onChange={setPersonal}
+                    />
+                    <label for="print-with-pickup" className="radio-label">
+                      PICKUP
+                    </label>
+                  </div>
+                  <div className="col">
+                    <input
+                      type="radio"
+                      id="result"
+                      name="result"
+                      value="both"
+                      checked={result === 'both'}
+                      onChange={setPersonal}
+                    />
+                    <label for="print-with-pickup" className="radio-label">
+                      BOTH
+                    </label>
+                  </div>
+                </div>
+            
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>SUBMIT</Modal.Title>
