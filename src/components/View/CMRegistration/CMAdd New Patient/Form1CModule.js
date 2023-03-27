@@ -18,6 +18,7 @@ import Navbar from '../../../Navbar';
 const userToken = getToken();
 const userId = getUser();
 var queueNumber = "";
+var presentDate = new Date();
 
 function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, 
   location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) 
@@ -57,6 +58,8 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   const [activation, setActive] = useState(false);
   const [companyId, setCompanyId] = useState('');
   const [companyRemarks, setCompanyRemarks] = useState('');
+  const [seniorPwdId, setID] = useState("");
+  const [isSenior, setIsSenior] = useState(false);
   
   const [people, setPeople] = useState(0);
   const [km, setKm] = useState(0);
@@ -211,6 +214,19 @@ console.log(location)
       });
   },[]);
 
+  console.log("PRESENT DATE: ", presentDate);
+  console.log("BDAT DATE: ", customer.birthDate);
+ // console.log("CUSOMER BDAY: ", Date(customer.birthDate).getFullYear());
+  
+  React.useEffect(()=>{ 
+    const birthDate = new Date(customer.birthDate);
+    if(customer.birthDate && (presentDate.getFullYear() - birthDate.getFullYear()) >= 60){
+      setIsSenior(true);
+    } else {
+      setIsSenior(false);
+    }
+  });
+
   if(redirect){
     return (
       <div>
@@ -338,6 +354,23 @@ console.log(location)
                   required
                 ></input>
               </div>
+              {isSenior && 
+              <div className="col-sm-6">
+                <label for="birthDate" className="form-label">
+                  SENIOR CITIZEN ID
+                </label>
+                <br />
+                <input
+                  type="text"
+                  id="seniorID"
+                  name="seniorCitizenID"
+                  className="schedule"
+                  value={seniorPwdId}
+                  onChange={setID}
+                  required
+                ></input>
+              </div>
+              }
             </div>
             <div className="row">
               <div className="col-sm-6">
