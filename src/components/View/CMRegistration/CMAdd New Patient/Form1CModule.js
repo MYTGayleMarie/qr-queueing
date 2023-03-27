@@ -60,6 +60,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   const [companyRemarks, setCompanyRemarks] = useState('');
   const [seniorPwdId, setID] = useState("");
   const [isSenior, setIsSenior] = useState(false);
+  const [isPWD, setIsPWD] = useState(false);
   
   const [people, setPeople] = useState(0);
   const [km, setKm] = useState(0);
@@ -354,9 +355,36 @@ console.log(location)
                   required
                 ></input>
               </div>
+              <div className='col'>
+                <input type="checkbox"
+                name="is_pwd"
+                value="isPWD"
+                checked={isPWD && !isSenior}
+                disabled={isSenior}
+                onChange={(e) => setIsPWD(e.target.checked)}
+                />
+              <label for="mdCharge" className="booking-label">Person With Disabilities</label>
+              </div>
+              {isPWD && !isSenior &&
+              <div className="col-sm-6">
+                <label for="pwd" className="form-label">
+                  PWD ID
+                </label>
+                <br />
+                <input
+                  type="text"
+                  id="pwd_ID"
+                  name="pwdID"
+                  className="schedule"
+                  value={seniorPwdId}
+                  onChange={setID}
+                  required
+                ></input>
+              </div>
+              }
               {isSenior && 
               <div className="col-sm-6">
-                <label for="birthDate" className="form-label">
+                <label for="senior" className="form-label">
                   SENIOR CITIZEN ID
                 </label>
                 <br />
