@@ -359,7 +359,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                                  <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={() => setResult("email")}/><label for="email" className="radio-label">EMAIL</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={() => setResult("print with pickup")}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
+                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={() => setResult("print with pickup")}/><label for="print-with-pickup" className="radio-label">PRINT</label>
                              </div>
                              <div className="col">
                                 <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={() => setResult("result")}/><label for="print-with-pickup" className="radio-label">BOTH</label>
