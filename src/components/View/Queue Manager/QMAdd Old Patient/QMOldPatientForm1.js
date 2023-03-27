@@ -27,6 +27,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
     const [contactNo, setContactNo] = useState("");
     const [emailadd, setEmail] = useState("");
     const [homeaddress, setAddress] = useState("");
+    const [result, setResult] = useState("");
     const {id} = useParams();
 
     const [discountList, setDiscountList] = useState([]);
@@ -59,12 +60,13 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
+        setResult(customer.data.result);
 
     }).catch(function (error) {
         console.log(error);
     });
 
-    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, result, lastmeal, homeServiceFee } = customer;
+    const { fname, lname, mname, sex, birthDate, email, contactNum, address, referral, discountId, discountDetail, serviceLocation, lastmeal, homeServiceFee } = customer;
     const [activation, setActive] = useState(false);
 
     function turnActive() {
@@ -342,10 +344,10 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={serviceLocation === 'clinic'} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
+                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
+                                 <input type="radio" id="serviceLocation" disabled name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
                              </div>
                          </div>
                      </div>
