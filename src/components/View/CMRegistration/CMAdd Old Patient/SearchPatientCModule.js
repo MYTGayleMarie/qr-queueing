@@ -22,7 +22,9 @@ var queueNumber = "";
 function SearchPatientCModule() {
     
     document.body.style = 'background: white;';
-    const [patientName, setPatientName] = useState("");
+    const [patientFirstName, setPatienFirstName] = useState("");
+    const [patientLastName, setPatientLastName] = useState("");
+    const [patientBirthDate, setPatientBirthDate] = useState("");
     const [patients, setPatients] = useState([]);
     const [redirectBooking, setRedirectBooking] = useState(false);
     const [redirectQueue, setRedirectQueue] = useState(false);
@@ -30,15 +32,22 @@ function SearchPatientCModule() {
 
     function search() {
         patients.length = 0;
+        var variable = new Date(patientBirthDate);
+        var variable = variable.toISOString().split('T')[0];
+        console.log(variable)
+        console.log(patientBirthDate)
+
         axios({
             method: 'post',
-            url: window.$link + 'customers/search',
-            withCredentials: false, 
+            url: window.$link + 'customers/searchByNameAndBirthdate',
+            withCredentials: false,
             params: {
                 api_key: window.$api_key,
                 token: userToken.replace(/['"]+/g, ''),
                 requester: userId,
-                name: patientName
+                first_name: patientFirstName,
+                last_name: patientLastName,
+                birthdate: variable
             }
         }).then(function (response) {
             console.log(response.data);
@@ -54,7 +63,7 @@ function SearchPatientCModule() {
                 setPatients( arr => [...arr, patientinfo])
                 console.log(patientinfo);
             });
-        });
+        })
     }
 
     function addToQueue(customerId) {
@@ -144,11 +153,13 @@ function SearchPatientCModule() {
             title="SEARCH PATIENT"
             />
 
-            <div className="row">
+<div className="row">
                 <div className="col">
                 <div class="wrap d-flex justify-content-center">
                     <div class="search-bar">
-                        <input type="text" class="searchTerm" name="patientName" placeholder="Search Patient" onChange={(e) => setPatientName(e.target.value)}/>
+                        <input type="text" class="searchTerm" name="patientFirstName" placeholder="Patient First Name" onChange={(e) => setPatienFirstName(e.target.value)}/>
+                        <input type="text" class="searchTerm" name="patientLastName" placeholder="Patient Last Name" onChange={(e) => setPatientLastName(e.target.value)}/>
+                        <input type="date" class="searchTerm" name="birthDate" placeholder="Patient Birth Date" onChange={(e) => setPatientBirthDate(e.target.value)}/>
                         <button type="submit" class="searchButton" onClick={search}>
                             <i class="fa fa-search"></i>
                         </button>
