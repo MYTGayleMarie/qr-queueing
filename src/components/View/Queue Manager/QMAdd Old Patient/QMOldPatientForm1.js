@@ -48,6 +48,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
             requester: userId,
         }
     }).then(function (customer) {
+        // console.log("CUSTOMER: ", customer);
         var presentDate = new Date();
         var birthDate = new Date(customer.data.birthdate);
         const age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -60,7 +61,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
-        setResult(customer.data.result);
+        //setResult(customer.data.result);
 
     }).catch(function (error) {
         console.log(error);
@@ -355,13 +356,13 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                          <div className="row">
                          <label for="result" className="radio-header">RESULTS</label><br />
                              <div className="col">
-                                 <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={setPersonal}/><label for="email" className="radio-label">EMAIL</label>
+                                 <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={() => setResult("email")}/><label for="email" className="radio-label">EMAIL</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
+                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={() => setResult("print with pickup")}/><label for="print-with-pickup" className="radio-label">PRINT WITH PICKUP</label>
                              </div>
                              <div className="col">
-                                <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={setPersonal}/><label for="print-with-pickup" className="radio-label">BOTH</label>
+                                <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={() => setResult("result")}/><label for="print-with-pickup" className="radio-label">BOTH</label>
                             </div>
                          </div>
                      </div>
