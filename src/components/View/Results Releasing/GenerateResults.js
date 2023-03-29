@@ -68,6 +68,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
   const [clinicPathoPRC, setClinicPathoPRC] = useState("");
 
   const [data, setData] = useState([])
+  const [showPDF, setShowPDF] = useState(false);
   var presentDate = new Date();
 
   var monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
@@ -173,7 +174,8 @@ export default function GenerateResults({servicesData, title, bookingId}){
   },[])
   
   // Generate PDF file for printing
-  const handlePrint = useReactToPrint({
+
+  const printHandle = useReactToPrint({
     onAfterPrint: handleRedirect,
           content: () => componentRef.current,
           pageStyle: () => `
@@ -187,6 +189,11 @@ export default function GenerateResults({servicesData, title, bookingId}){
           }
           `,
   });
+
+  const handlePrint = () => {
+    setShowPDF(true);
+    printHandle();
+  }
 
   // Function to get Booking Detail Results
   function getResults(resultId) {
@@ -242,7 +249,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
   }, [servicesPackage])
 
   const headers = servicesData.length > 0 ? Object.keys(servicesData[0]) : [];
-  const resultHeaders = ['lab_test', 'result', 'unit'];
+  const resultHeaders = ['lab_test', 'result'];
 
   function chooseMedTech() {
     setClinicPatho("JENNIFER D. ABIERAS");
@@ -348,12 +355,11 @@ export default function GenerateResults({servicesData, title, bookingId}){
 
   const DynamicTable = () => {
     return (
-      // <div>
-      <div style={{display: 'none'}}>
-      <><div>
+      <div style={{display: 'none'}} class="bg">
+      <div>
         <div ref={componentRef}>
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center'}}>
+          <div class="bg" style={{ display: 'flex', alignItems: 'center'}}>
             <img src={Logo} alt="QR DIAGNOSTICS" className="img-small" style={{paddingRight: '50px'}}/>
             <div style={{ display: 'block'}}>
               <span className="resultTitle">Department of Clinical Laboratory</span>
@@ -366,73 +372,75 @@ export default function GenerateResults({servicesData, title, bookingId}){
           <div className="laboratory-title">{servicesData[0].category.toUpperCase()}
           </div>
           <br/>
-          <table>
-            <tr>
-              <td style={{paddingRight: '170px'}}>
-                <span><b>PATIENT NAME: &nbsp;&nbsp;&nbsp;</b></span>
+          <div class="tb">
+            <div class="row">
+              <div class="col">
+                <span><b>Patient name &nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
                 <span>{lastName.toUpperCase()}, {firstName.toUpperCase()} {middleName.toUpperCase}</span>
-              </td>
-              <td>
-                <span><b>REGISTRATION DATE: &nbsp;&nbsp;&nbsp;</b></span>
+              </div>
+              <div class="col">
+                <span><b>Registration Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
                 <span>{monthNames[presentDate.getMonth()]} {presentDate.getDate()}, {presentDate.getFullYear()}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span><b>GENDER: &nbsp;&nbsp;&nbsp;</b></span>
-                <span>{gender.toUpperCase()}</span>
-              </td>
-              <td>
-                <span><b>BIRTHDATE: &nbsp;&nbsp;&nbsp;</b></span>
-                <span>{birthDate.toUpperCase()}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span><b>AGE: &nbsp;&nbsp;&nbsp;</b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <span><b>Age &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
                 <span>{age}</span>
-              </td>
-              <td>
-                <span><b>CONTACT NO: &nbsp;&nbsp;&nbsp;</b></span>
+              </div>
+              <div class="col">
+                <span><b>Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
                 <span>{contactNo}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span><b>PATIENT ID: &nbsp;&nbsp;&nbsp;</b></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <span><b>Sex &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
+                <span>{gender.toUpperCase()}</span>
+              </div>
+              <div class="col">
+                <span><b>Date of Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp; </b></span>
+                <span>{birthDate.toUpperCase()}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <span><b>Patient ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></span>
                 <span>{id}</span>
-              </td>
-              <td>
-                <span><b>REQUESTING PHYSICIAN: &nbsp;&nbsp;&nbsp;</b></span>
-              </td>
-            </tr>
-          </table>
+              </div>
+              <div class="col">
+                <span><b>Requesting Physician &nbsp;: </b></span>
+              </div>
+            </div>
+          </div>
         
         {/* Mapping of Detail Results */}
         {servicesData.map((service, serviceIndex) => (
           <div key={serviceIndex}>
             {getResults(service.id)}
             <br/>
-            <h3 class="table-title">{service.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-            <br/>
-            <table class="table resText">
-              <thead>
-                <tr>
-                  {resultHeaders.map((resultHeader, index) => (
-                    <th key={index}>{resultHeader.toUpperCase()}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {labTestResults.map((result, resultIndex) => (
-                  <tr key={resultIndex}>
-                    {resultHeaders.map((header, index) => (
-                      <td colspan="1" key={index}>{result[header]} </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="tb mid">
+              <div className="row bd">
+                <div className="col">
+                  <span><b>TEST</b></span>
+                </div>
+                <div className="col">
+                  <span><b>RESULT</b></span>
+                </div>
+              </div>
+              {labTestResults.map((result, resultIndex) => (
+                <div className="row" key={resultIndex}>
+                  <div className="col">
+                    <span>{result["lab_test"]}</span>
+                  </div>
+                  <div className="col">
+                    <span>{result["unit"] + " " + result["result"]}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <hr style={{border: "2px solid black", width: "100%", marginBottom: "0px"}} />
+
             <div>
               <span><b>Remarks: </b></span>
               <br/>
@@ -447,7 +455,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
         <br/>
         <Signature />
         </div>
-      </div></>
+      </div>
       </div>
     );
   };
@@ -473,9 +481,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
               
             </div>          
         </div>
-      
-      <DynamicTable />
-      
+        <DynamicTable />
       </div>
     </div>
   )

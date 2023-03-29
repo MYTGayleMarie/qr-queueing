@@ -14,8 +14,9 @@
 }
 
 .img-small {
-    width: 30%;
-    height:30%;
+    width: 300px;
+    height: 150px;
+    margin-right: 1px;
   }
 
 .laboratory-title {
@@ -58,4 +59,32 @@ h3 {
 
 .resText{
   text-align: center;
+}
+
+.tb {
+  width: 100%;
+  margin-left: 5%;
+}
+
+.mid {
+  text-align: center;
+}
+
+.row {
+  margin-bottom: 2px;
+}
+
+.bg {
+  background-image: url('../../../images/Watermark.png');
+  background-size: cover; /* or "contain" based on your requirement */
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.bd {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 0px;
+  border-right: 0px;
+
 }
