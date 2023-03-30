@@ -63,7 +63,7 @@ function ReportTransaction() {
         console.log(bookingDetailsResponse)
         response.data.data.bookings.map((booking, index) => {
           
-          
+            
               
               var bookingTime = new Date(booking.booking_time);
               var formattedBookingTime = bookingTime.toDateString().split(" ");
@@ -79,10 +79,12 @@ function ReportTransaction() {
                   // var mergedArray = [].concat.apply([], Object.entries(details.data.data.booking_package_details)).filter((value) => value != null && isNaN(value) == true);
                 
                   var tests = "";
-                  var finalArray = bookingDetailsResponse[booking.id]
+                  if(bookingDetailsResponse[booking.id] != null){
+                    var finalArray = bookingDetailsResponse[booking.id];
+                  }
                   console.log(finalArray)
 
-    
+
                   finalArray.map((test,index) => {
                     if(test.lab_test != null) {
                         if(finalArray.length - 1 != index){

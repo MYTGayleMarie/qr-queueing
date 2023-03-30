@@ -11,6 +11,9 @@ import Navbar from '../../Navbar';
 import { Navigate, useParams } from 'react-router-dom';
 import Table from '../../Table';
 
+import './ReportServicesPackagesDetails.css';
+
+const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
@@ -24,6 +27,7 @@ function ReportServicesPackagesDetails() {
   const [redirectBack, setRedirectBack] = useState(false);
   const [render, setRender] = useState([]);
   const [patients, setPatients] = useState([]);
+  const [printReadyFinal, setPrintReadyFinal] = useState(false);
 
   React.useEffect(() => {
     axios({
@@ -41,12 +45,15 @@ function ReportServicesPackagesDetails() {
       }
     }).then(function (response) {
       console.log(response)
-      let result = response.data.data.data.map((data) => { return {
+      let result = response.data.data.data.map((data, index) => { return {
         booking_date: formatDate(data.booking_date),
         customer: data.customer,
         lab_test: data.lab_test,
       }})
-      setPatients(result)
+      if(response.data.data.data.length - 1 == result.length - 1) {
+        setPrintReadyFinal(true);
+      }
+      setPatients(result);
     }).then(function(error) {
       console.log(error);
     });
@@ -77,10 +84,15 @@ function ReportServicesPackagesDetails() {
         <Fragment>
           <Header 
             type="thick" 
+            buttons={buttons}
             title="SERVICES AND PACKAGES REPORT DETAILS" 
-            tableName={'Pending Purchase Order Report'}
+            tableName={'SERVICES AND PACKAGES REPORT DETAILS'}
+            tableData={patients}
+            tableHeaders={['BOOKING DATE', 'CUSTOMER', 'LAB TEST']}
             withBack={true}
             setBack={setRedirectBack}
+            status={printReadyFinal}
+            style={{ fontSize: '1rem' }}
              />
 
           <div className='particulars-cont'>
