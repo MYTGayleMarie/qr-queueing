@@ -24,6 +24,8 @@ const personalData = {
     result: "", 
     dateOfTesting: "",
     lastmeal: "",
+    seniorId: "",
+    pwdId: "",
 }
 
 const serviceData = {}

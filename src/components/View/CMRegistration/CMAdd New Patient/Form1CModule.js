@@ -54,11 +54,12 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
     contactNum,
     address,
     result,
+    seniorId,
+    pwdId,
   } = customer;
   const [activation, setActive] = useState(false);
   const [companyId, setCompanyId] = useState('');
   const [companyRemarks, setCompanyRemarks] = useState('');
-  const [seniorPwdId, setID] = useState("");
   const [isSenior, setIsSenior] = useState(false);
   const [isPWD, setIsPWD] = useState(false);
   
@@ -117,6 +118,8 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
           last_meal: lastMeal,
           remarks: '',
           type: "clinic",
+          pwd_id: customer.pwdId,
+          senior_id: customer.seniorId,
           result: customer.result,
           added_by: userId,
         },
@@ -373,11 +376,11 @@ console.log(location)
                 <br />
                 <input
                   type="text"
-                  id="pwd_ID"
-                  name="pwdID"
+                  id="pwd_id"
+                  name="pwdId"
                   className="schedule"
-                  value={seniorPwdId}
-                  onChange={setID}
+                  value={pwdId}
+                  onChange={setPersonal}
                   required
                 ></input>
               </div>
@@ -390,11 +393,11 @@ console.log(location)
                 <br />
                 <input
                   type="text"
-                  id="seniorID"
-                  name="seniorCitizenID"
+                  id="senior_id"
+                  name="seniorId"
                   className="schedule"
-                  value={seniorPwdId}
-                  onChange={setID}
+                  value={seniorId}
+                  onChange={setPersonal}
                   required
                 ></input>
               </div>
