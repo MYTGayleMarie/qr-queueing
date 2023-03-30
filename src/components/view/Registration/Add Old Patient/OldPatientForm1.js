@@ -27,6 +27,8 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
     const [contactNo, setContactNo] = useState("");
     const [emailadd, setEmail] = useState("");
     const [homeaddress, setAddress] = useState("");
+    const [pwdId, setPwdId] = useState("");
+    const [seniorId, setSeniorId] = useState("");
     const {id} = useParams();
 
     const [discountList, setDiscountList] = useState([]);
@@ -58,7 +60,8 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
-
+        setPwdId(customer.data.pwd_id);
+        setSeniorId(customer.data.senior_id);
     }).catch(function (error) {
         console.log(error);
     });
@@ -301,6 +304,22 @@ function OldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, di
             <span className="address label">ADDRESS</span>
             <span className="address detail">{homeaddress.toUpperCase()}</span>
             </div>
+        </div>
+        <div className="row">
+        {pwdId?.length > 0 ? (
+            <div className="col-sm-6">
+            <span className="pwd-id label">PWD ID</span>
+            <span className="pwd-id detail">{pwdId.toUpperCase()}</span>
+            </div>
+        ) : null}
+        </div>
+        <div className="row">
+        {seniorId?.length > 0 ? (
+            <div className="col-sm-6">
+            <span className="pwd-id label">SENIOR ID</span>
+            <span className="pwd-id detail">{seniorId}</span>
+            </div>
+        ) : null}
         </div>
         </div>
 
