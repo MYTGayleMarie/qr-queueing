@@ -25,6 +25,7 @@ import Image6 from '../../../images/med_tech/MATAGANAS_ARIZA.png';
 import Image7 from '../../../images/med_tech/BONJOC_JEREMY.png';
 import Image8 from '../../../images/med_tech/MAJESELA_ABALORIO.png';
 import DummyImg from '../../../images/med_tech/dummy.png';
+import Watermark from '../../../images/Watermark.png';
 
 const userToken = getToken();
 const userId = getUser();
@@ -359,7 +360,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
       <div>
         <div ref={componentRef}>
           {/* Header */}
-          <div class="bg" style={{ display: 'flex', alignItems: 'center'}}>
+          <div class="bg" style={{ display: 'flex', alignItems: 'center', backgroundColor: 'transparent'}}>
             <img src={Logo} alt="QR DIAGNOSTICS" className="img-small" style={{paddingRight: '50px'}}/>
             <div style={{ display: 'block'}}>
               <span className="resultTitle">Department of Clinical Laboratory</span>
@@ -367,8 +368,10 @@ export default function GenerateResults({servicesData, title, bookingId}){
               <span className="addressTitle">0999 8888 6694</span>
             </div>
           </div>
+          <hr style={{border: "2px solid black", width: "100%", marginBottom: "0px"}} />
           <br/>
           <br/>
+          <div>
           <div className="laboratory-title">{servicesData[0].category.toUpperCase()}
           </div>
           <br/>
@@ -413,7 +416,8 @@ export default function GenerateResults({servicesData, title, bookingId}){
               </div>
             </div>
           </div>
-        
+          <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark"/>
+
         {/* Mapping of Detail Results */}
         {servicesData.map((service, serviceIndex) => (
           <div key={serviceIndex}>
@@ -451,6 +455,7 @@ export default function GenerateResults({servicesData, title, bookingId}){
             </div>
           </div>
         ))}
+        </div>
         <br/>
         <br/>
         <Signature />
