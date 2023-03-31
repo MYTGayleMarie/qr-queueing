@@ -470,7 +470,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     );
   };
 
-  const DynamicTable = () => {
+  const LaboratoryResultsTable = () => {
     return (
       <div style={{ display: "none" }} class="bg">
         <div>
@@ -508,7 +508,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               }}
             />
             <br />
-            <br />
             <div>
               <div className="laboratory-title">
                 {servicesData[0].category.toUpperCase()}
@@ -518,7 +517,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <div class="row">
                   <div class="col">
                     <span>
-                      <b>Patient name &nbsp;:&nbsp;&nbsp;&nbsp;</b>
+                      <b>Patient name &nbsp; :&nbsp;&nbsp;&nbsp;</b>
                     </span>
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
@@ -557,7 +556,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     <span>
                       <b>
                         Contact
-                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;
                       </b>
                     </span>
                     <span>{contactNo}</span>
@@ -577,7 +576,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     <span>
                       <b>
                         Date of
-                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{" "}
+                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;{" "}
                       </b>
                     </span>
                     <span>{birthDate.toUpperCase()}</span>
@@ -595,7 +594,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   </div>
                   <div class="col">
                     <span>
-                      <b>Requesting Physician &nbsp;: </b>
+                      <b>Requesting Physician &nbsp; : </b>
                     </span>
                   </div>
                 </div>
@@ -652,7 +651,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 </div>
               ))}
               <br />
-              <br />
               <Signature />
             </div>
           </div>
@@ -683,7 +681,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             </div>
           </div>
         </div>
-        <DynamicTable />
+        <LaboratoryResultsTable />
       </div>
     </div>
   );

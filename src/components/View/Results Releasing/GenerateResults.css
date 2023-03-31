@@ -46,11 +46,12 @@ h3 {
   justify-content: space-between; /* Spacing between boxes */
   width: 100%; /* Set width of the container */
   text-align: center  ;
+  background-color: transparent;
 }
 
 .box{
   width: 50%; /* Set equal width for both boxes */
-  background-color: lightblue;
+  background-color: transparent;
   padding: -5px;
 }
 
@@ -93,9 +94,9 @@ h3 {
 .watermark {
   position: absolute;
   display: flex;
-  top: 10;
-  left: 0;
-  width: 75%;
+  left: 5%;
+  top: 11%;
+  width: 85%;
   height: 75%;
   z-index: -1;
 }
