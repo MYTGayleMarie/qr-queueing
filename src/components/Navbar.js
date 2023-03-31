@@ -208,7 +208,6 @@ function queueManagerNavbar(showNavbar,setShowNavbar) {
 //   );
 // }
 
-
 function purchasingNavbar(showNavbar,setShowNavbar) {
   return (
     <div class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav" id="sidebar">
@@ -833,7 +832,6 @@ function QueueManagerNavbarTop(showNavbar, showMobileNavBar, showSupply, setShow
 // </div>
 //   )
 // }
-
 function PurchasingNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
 
   return (

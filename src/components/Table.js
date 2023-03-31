@@ -1419,16 +1419,16 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                             }
 
     else if(type === 'company-invoices') {
-        const {from_date, to_date, done} = filteredData;
+        const {from_date, to_date, status_filter, done} = filteredData;
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
-                    <select onChange={(e) => setStatus(e.target.value)}>
-                        <option value="UNPAID">UNPAID</option>
-                        <option value="PAID">PAID</option>
-                        <option value="ALL">ALL</option>
+                    <select name="status_filter" onChange={setFilter}>
+                        <option value="unpaid">UNPAID</option>
+                        <option value="paid">PAID</option>
+                        <option value="all">ALL</option>
                     </select>
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
                 </div>

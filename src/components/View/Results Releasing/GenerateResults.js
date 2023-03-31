@@ -25,6 +25,7 @@ import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
+import Watermark from "../../../images/Watermark.png";
 
 const userToken = getToken();
 const userId = getUser();
@@ -475,7 +476,14 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         <div>
           <div ref={componentRef}>
             {/* Header */}
-            <div class="bg" style={{ display: "flex", alignItems: "center" }}>
+            <div
+              class="bg"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "transparent",
+              }}
+            >
               <img
                 src={Logo}
                 alt="QR DIAGNOSTICS"
@@ -492,149 +500,165 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <span className="addressTitle">0999 8888 6694</span>
               </div>
             </div>
+            <hr
+              style={{
+                border: "2px solid black",
+                width: "100%",
+                marginBottom: "0px",
+              }}
+            />
             <br />
             <br />
-            <div className="laboratory-title">
-              {servicesData[0].category.toUpperCase()}
-            </div>
-            <br />
-            <div class="tb">
-              <div class="row">
-                <div class="col">
-                  <span>
-                    <b>Patient name &nbsp;:&nbsp;&nbsp;&nbsp;</b>
-                  </span>
-                  <span>
-                    {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
-                    {middleName.toUpperCase}
-                  </span>
-                </div>
-                <div class="col">
-                  <span>
-                    <b>
-                      Registration
-                      Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
-                    </b>
-                  </span>
-                  <span>
-                    {monthNames[presentDate.getMonth()]} {presentDate.getDate()}
-                    , {presentDate.getFullYear()}
-                  </span>
-                </div>
+            <div>
+              <div className="laboratory-title">
+                {servicesData[0].category.toUpperCase()}
               </div>
-              <div class="row">
-                <div class="col">
-                  <span>
-                    <b>
-                      Age
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
-                    </b>
-                  </span>
-                  <span>{age}</span>
-                </div>
-                <div class="col">
-                  <span>
-                    <b>
-                      Contact
-                      Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
-                    </b>
-                  </span>
-                  <span>{contactNo}</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <span>
-                    <b>
-                      Sex
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
-                    </b>
-                  </span>
-                  <span>{gender.toUpperCase()}</span>
-                </div>
-                <div class="col">
-                  <span>
-                    <b>
-                      Date of
-                      Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{" "}
-                    </b>
-                  </span>
-                  <span>{birthDate.toUpperCase()}</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <span>
-                    <b>
-                      Patient ID
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
-                    </b>
-                  </span>
-                  <span>{id}</span>
-                </div>
-                <div class="col">
-                  <span>
-                    <b>Requesting Physician &nbsp;: </b>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Mapping of Detail Results */}
-            {servicesData.map((service, serviceIndex) => (
-              <div key={serviceIndex}>
-                {/* {getResults(service.id)} */}
-                <br />
-                <div className="tb mid">
-                  <div className="row bd">
-                    <div className="col">
-                      <span>
-                        <b>TEST</b>
-                      </span>
-                    </div>
-                    <div className="col">
-                      <span>
-                        <b>RESULT</b>
-                      </span>
-                    </div>
+              <br />
+              <div class="tb">
+                <div class="row">
+                  <div class="col">
+                    <span>
+                      <b>Patient name &nbsp;:&nbsp;&nbsp;&nbsp;</b>
+                    </span>
+                    <span>
+                      {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
+                      {middleName.toUpperCase}
+                    </span>
                   </div>
-                  {labTestResults.map((result, resultIndex) => (
-                    <div className="row" key={resultIndex}>
-                      <div className="col">
-                        <span>{result["lab_test"]}</span>
-                      </div>
-                      <div className="col">
-                        <span>{result["unit"] + " " + result["result"]}</span>
-                      </div>
-                    </div>
-                  ))}
+                  <div class="col">
+                    <span>
+                      <b>
+                        Registration
+                        Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </span>
+                    <span>
+                      {monthNames[presentDate.getMonth()]}{" "}
+                      {presentDate.getDate()}, {presentDate.getFullYear()}
+                    </span>
+                  </div>
                 </div>
-                <hr
-                  style={{
-                    border: "2px solid black",
-                    width: "100%",
-                    marginBottom: "0px",
-                  }}
-                />
-
-                <div>
-                  <span>
-                    <b>Remarks: </b>
-                  </span>
-                  <br />
-                  {/* {console.log(service)} */}
-                  {/* {console.log(service.id)}
-                  {getDetails(service.id)} */}
-                  <span>{remark}</span>
+                {/* <br />
+                <br /> */}
+                {/* <div className="laboratory-title">
+                  {servicesData[0].category.toUpperCase()}
+                </div> */}
+                <div class="row">
+                  <div class="col">
+                    <span>
+                      <b>
+                        Age
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </span>
+                    <span>{age}</span>
+                  </div>
+                  <div class="col">
+                    <span>
+                      <b>
+                        Contact
+                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </span>
+                    <span>{contactNo}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span>
+                      <b>
+                        Sex
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </span>
+                    <span>{gender.toUpperCase()}</span>
+                  </div>
+                  <div class="col">
+                    <span>
+                      <b>
+                        Date of
+                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;{" "}
+                      </b>
+                    </span>
+                    <span>{birthDate.toUpperCase()}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span>
+                      <b>
+                        Patient ID
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </span>
+                    <span>{id}</span>
+                  </div>
+                  <div class="col">
+                    <span>
+                      <b>Requesting Physician &nbsp;: </b>
+                    </span>
+                  </div>
                 </div>
               </div>
-            ))}
-            <br />
-            <br />
-            <Signature />
+              <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
+
+              {/* Mapping of Detail Results */}
+              {servicesData.map((service, serviceIndex) => (
+                <div key={serviceIndex}>
+                  {/* {getResults(service.id)} */}
+                  <br />
+                  <div className="tb mid">
+                    <div className="row bd">
+                      <div className="col">
+                        <span>
+                          <b>TEST</b>
+                        </span>
+                      </div>
+                      <div className="col">
+                        <span>
+                          <b>RESULT</b>
+                        </span>
+                      </div>
+                    </div>
+                    {labTestResults.map((result, resultIndex) => (
+                      <div className="row" key={resultIndex}>
+                        <div className="col">
+                          <span>{result["lab_test"]}</span>
+                        </div>
+                        <div className="col">
+                          <span>{result["unit"] + " " + result["result"]}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <hr
+                    style={{
+                      border: "2px solid black",
+                      width: "100%",
+                      marginBottom: "0px",
+                    }}
+                  />
+
+                  <div>
+                    <span>
+                      <b>Remarks: </b>
+                    </span>
+                    <br />
+                    {/* {console.log(service)} */}
+                    {/* {console.log(service.id)}
+                  {getDetails(service.id)} */}
+                    <span>{remark}</span>
+                  </div>
+                </div>
+              ))}
+              <br />
+              <br />
+              <Signature />
+            </div>
           </div>
         </div>
       </div>
+      // </div>
     );
   };
 

@@ -4,6 +4,7 @@
     font-size: 1.8rem;
     display: block;
     text-align: center;
+    margin-left: 2px;
 }
 
 .addressTitle {
@@ -87,4 +88,14 @@ h3 {
   border-left: 0px;
   border-right: 0px;
 
+}
+
+.watermark {
+  position: absolute;
+  display: flex;
+  top: 10;
+  left: 0;
+  width: 75%;
+  height: 75%;
+  z-index: -1;
 }
