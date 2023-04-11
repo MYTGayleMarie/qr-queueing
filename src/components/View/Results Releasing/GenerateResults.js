@@ -214,49 +214,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     printHandle();
   };
 
-  // // Function to get Booking Detail Results
-  // function getResults(result) {
-  //   setResultID(result);
-  //   // axios({
-  //   //   method: "get",
-  //   //   url: window.$link + "Bookingdetails/getDetailsResult/" + resultId,
-  //   //   withCredentials: false,
-  //   //   params: {
-  //   //     api_key: window.$api_key,
-  //   //     token: userToken.replace(/['"]+/g, ""),
-  //   //     requester: userId,
-  //   //   },
-  //   // })
-  //   //   .then((response) => {
-  //   //     setLabTestResults(response.data.data.booking_detail_results);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.log(error);
-  //   //   });
-  // }
-
-  // // Function to get Booking Details get Details
-  // function getDetails(serviceID) {
-  //   setDetailID(serviceID);
-  //   // Get booking details by booking id
-  //   // axios({
-  //   //   method: "get",
-  //   //   url: window.$link + "Bookingdetails/getDetails/" + resultId,
-  //   //   withCredentials: false,
-  //   //   params: {
-  //   //     api_key: window.$api_key,
-  //   //     token: userToken.replace(/['"]+/g, ""),
-  //   //     requester: userId,
-  //   //   },
-  //   // })
-  //   //   .then((booking) => {
-  //   //     setRemark(booking.data.data.booking_detail[0].remarks);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.log(error);
-  //   //   });
-  // }
-
   // Function to get Booking Detail Results
   React.useEffect(() => {
     if (servicesData[0].id !== "") {
@@ -367,48 +324,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
   const headers = servicesData.length > 0 ? Object.keys(servicesData[0]) : [];
   const resultHeaders = ["lab_test", "result"];
-
-  // function chooseMedTech() {
-  //   setClinicPatho("JENNIFER D. ABIERAS");
-  //   setClinicPathoPRC("PRC LIC. NO.: 0085469");
-
-  //   // if (medTech === "") {
-  //   //   axios({
-  //   //     method: "get",
-  //   //     url: window.$link + "users/show/" + userId,
-  //   //     withCredentials: false,
-  //   //     params: {
-  //   //       api_key: window.$api_key,
-  //   //       token: userToken.replace(/['"]+/g, ""),
-  //   //       requester: userId,
-  //   //     },
-  //   //   })
-  //   //     .then((response) => {
-  //   //       setMedTech(response.data.name);
-  //   //     })
-  //   //     .catch((error) => {
-  //   //       console.log(error);
-  //   //     });
-  //   // }
-
-  //   if (userId === "24") {
-  //     setMedTechPRC("PRC LIC. NO.: 0052932");
-  //   } else if (userId === "25") {
-  //     setMedTechPRC("PRC LIC. NO.: 0094539");
-  //   } else if (userId === "26") {
-  //     setMedTechPRC("PRC LIC. NO.: 0093629");
-  //   } else if (userId === "23") {
-  //     setMedTechPRC("PRC LIC. NO.: 0092410");
-  //   } else if (userId === "27") {
-  //     setMedTechPRC("PRC LIC. NO.: 0085690");
-  //   } else if (userId === "28") {
-  //     setMedTechPRC("PRC LIC. NO.: 0052556");
-  //   } else if (userId === "29") {
-  //     setMedTechPRC("PRC LIC. NO.: 0072875");
-  //   } else {
-  //     setMedTechPRC("No PRC License Number");
-  //   }
-  // }
 
   function chooseImage() {
     if (userId === "24") {
@@ -625,7 +540,24 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                           <span>{result["lab_test"]}</span>
                         </div>
                         <div className="col">
-                          <span>{result["unit"] + " " + result["result"]}</span>
+                          {console.log(result["preferred_to"] + "test")}
+                          {(result["preferred"]) != " " ?
+                             (result["preferred"] == result["result"]) ?
+                              (<span>{result["result"] + " " + result["unit"]}</span>)
+                              :
+                              (<span class="red">{result["unit"] + " " + result["result"]}</span>)
+                            :
+                            (result["preferred_from"] != 0.00 && result["preferred_to"] != 0.00) ?
+                              (parseFloat(result["preferred_from"]) > parseFloat(result["result"])) ?
+                                (<span class="red">{result["result"] + " " + result["unit"] + " (L)"}</span>)
+                                :
+                                (parseFloat(result["result"]) > parseFloat(result["preferred_to"])) ?
+                                  (<span class="red">{result["result"] + " " + result["unit"] + " (H)"}</span>)
+                                  :
+                                  (<span>{result["result"] + " " + result["unit"]}</span>)
+                              :
+                              (<span>{result["result"] + " " + result["unit"]}</span>)
+                          }
                         </div>
                       </div>
                     ))}
@@ -643,9 +575,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       <b>Remarks: </b>
                     </span>
                     <br />
-                    {/* {console.log(service)} */}
-                    {/* {console.log(service.id)}
-                  {getDetails(service.id)} */}
                     <span>{remark}</span>
                   </div>
                 </div>

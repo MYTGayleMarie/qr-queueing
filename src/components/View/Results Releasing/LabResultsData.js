@@ -198,6 +198,9 @@
          "lab_test": "Color",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
@@ -205,42 +208,63 @@
          "result": "",
          "resultType": "dropdown",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Ph",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Specific Gravity",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Protein",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Sugar",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Pus Cells",
          "result": "",
          "unit": "/HPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "RBC",
          "result": "",
          "unit": "/HPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
@@ -248,6 +272,9 @@
          "result": "",
          "resultType": "dropdown",
          "unit": "/LPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
@@ -255,12 +282,18 @@
          "result": "",
          "resultType": "dropdown",
          "unit": "/HPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
          "lab_test": "Amorphous Urates/Phosphate",
          "result": "",
          "unit": "/LPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
          
        },
        {
@@ -268,17 +301,26 @@
          "result": "",
          "unit": "/LPF",
          "resultType": "dropdown",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "OTHERS",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
        {
          "lab_test": "Pregnancy Test",
          "result": "POSITIVE",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        }
      ],
      
@@ -287,42 +329,63 @@
          "lab_test": "Color",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+
        },
        {
          "lab_test": "Consistency",
          "result": "",
          "unit": " ",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "RBC",
          "result": "",
          "unit": "/HPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "Pus Cells",
          "result": "",
          "unit": "/HPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "Fat Globules",
          "result": "",
          "unit": "/LPF",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "Ova/Parasite",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        {
          "lab_test": "Cyst/Trophozoite",
          "result": "",
          "unit": "",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },
        
@@ -333,7 +396,9 @@
          "lab_test": "Fecal Occult Blood",
          "result": "",
          "unit": " ",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -342,7 +407,9 @@
          "lab_test": "Pregnancy Test",
          "result": "",
          "unit": " ",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -351,7 +418,9 @@
          "lab_test": "Serum Pregnancy Test",
          "result": "",
          "unit": " ",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -360,78 +429,121 @@
          "lab_test": "PH Reaction",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
        {
          "lab_test": "Volume",
          "result": "",
          "unit": "ml",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Liquefaction Time",
          "result": "",
          "unit": "minutes",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Viscosity",
          "result": "",
          "unit": "",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Total Sperm Count",
          "result": "",
          "unit": "x106/ ejaculate",
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
           
        },{
          "lab_test": "Progresive (PR)",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Non Progressive",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Immotile",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Total Motility (PR+NP)",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Total Normal Forms",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Pin Head",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Double Head",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Gaint Head",
          "result": "",
          "unit": "%",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "WBC",
          "result": "",
          "unit": "/HPF",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "RBC",
          "result": "",
          "unit": "/HPF",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -440,17 +552,25 @@
          "lab_test": "Gram Staining",
          "result": "",
          "unit": "",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Epithelial Cells",
          "result": "",
          "unit": "",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "Specimen: Conjunctival and Corneal Scraping",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -459,7 +579,9 @@
          "lab_test": "KOH, Nail Scrapping, Conjunctival Scrapping",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -468,17 +590,25 @@
          "lab_test": "NS1 AG",
          "result": "",
          "unit": "",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "IgG",
          "result": "",
          "unit": "",
-          
-       },{
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
+       },
+       {
          "lab_test": "IgM",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -487,7 +617,9 @@
          "lab_test": "Syphilis/RPR/VDRL",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -496,7 +628,9 @@
          "lab_test": "Anti-HIV",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -505,7 +639,9 @@
          "lab_test": "H. Pylori",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -514,13 +650,17 @@
          "lab_test": "Hepatitis B Surface Antigen Test (HBSag)",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
        {
          "lab_test": "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -529,7 +669,9 @@
          "lab_test": "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
          "result": "",
          "unit": "",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -538,7 +680,9 @@
          "lab_test": "TSH",
          "result": "",
          "unit": "mIU / L",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -547,7 +691,9 @@
          "lab_test": "FT4",
          "result": "",
          "unit": "pmol / L",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -556,7 +702,9 @@
          "lab_test": "FT3",
          "result": "",
          "unit": "pmol / L",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -565,7 +713,9 @@
          "lab_test": "T2-T3",
          "result": "",
          "unit": "nmol / L",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -574,7 +724,9 @@
          "lab_test": "PSA",
          "result": "",
          "unit": "ng / mL",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -583,7 +735,9 @@
          "lab_test": "CEA",
          "result": "",
          "unit": "ng / mL",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
      
@@ -592,7 +746,9 @@
          "lab_test": "Vitamin D",
          "result": "",
          "unit": "ng / mL",
-          
+         "preferred": " ",
+         "preferred_from": 0.00,
+         "preferred_to": 0.00,
        },
      ],
  };

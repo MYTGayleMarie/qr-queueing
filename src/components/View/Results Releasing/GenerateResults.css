@@ -100,3 +100,7 @@ h3 {
   height: 75%;
   z-index: -1;
 }
+
+.red {
+  color: red;
+}

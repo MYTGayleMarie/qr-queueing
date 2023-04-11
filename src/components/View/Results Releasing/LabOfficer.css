@@ -27,6 +27,17 @@
 
 }
 
+.edit-preferred{
+  font-family: 'Montserrat-Bold';
+  font-size: 17px;
+  line-height: 29px;
+  letter-spacing: 0.135em;
+  text-decoration-line: underline;
+
+  color: #419EA3;
+
+}
+
 .results-input {
   display: block;
   margin: 0 auto;

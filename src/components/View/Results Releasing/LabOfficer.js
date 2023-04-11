@@ -29,19 +29,6 @@ var bookingId = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split("T")[0];
 
-// const labTestMockData = [
-//   {
-//     "lab_test": "Lab Test Mock Data",
-//     "result": "Mock Result",
-//     "unit": "123 unit",
-//   },
-//   {
-//     "lab_test": "Lab Test Mock Data2",
-//     "result": "Mock Result2",
-//     "unit": "123 unit2",
-//   }
-// ]
-
 export const refreshPage = () => {
   window.location.reload();
 };
@@ -87,6 +74,9 @@ export default function LabOfficer() {
   const [show, setShow] = useState(false);
   const [labName, setLabName] = useState("");
   const [result, setResult] = useState("");
+  const [preferred, setPreferred] = useState("");
+  const [preferredTo, setPreferredTo] = useState("");
+  const [preferredFrom, setPreferredFrom] = useState("");
   const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
 
@@ -215,6 +205,13 @@ export default function LabOfficer() {
         console.log("success");
         row.result = result;
         row.unit = unit;
+        if (isDropdown == true) {
+          console.log(preferred);
+          row.preferred = preferred
+        } else {
+          row.preferred_from = preferredFrom;
+          row.preferred_to = preferredTo;
+        }
         return row;
       }
       return row;
@@ -304,10 +301,12 @@ export default function LabOfficer() {
       })
         .then((response) => {
           const data = response.data.data;
+          console.log(data);
           const packageDetailId = selectedLab.booking_id;
           if (data.booking_detail_results) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
+              console.log(labTestData);
             } else if (data.booking_package_details_results[packageDetailId]) {
               setLabTestData(
                 data.booking_package_details_results[packageDetailId]
@@ -357,6 +356,9 @@ export default function LabOfficer() {
     const resultsArray = labTestData.map((row) => row.result);
     const unitArray = labTestData.map((row) => row.unit);
     const namesArray = labTestData.map((row) => row.lab_test);
+    const preferredArray = labTestData.map((row) => row.preferred);
+    const preferredFromArray = labTestData.map((row) => row.preferred_from);
+    const preferredToArray = labTestData.map((row) => row.preferred_to);
 
     // axios parameter for editResults
     const params = {
@@ -386,6 +388,24 @@ export default function LabOfficer() {
     namesArray.forEach((lab, index) => {
       const resultParam = `result_${lab.replace(" ", "_")}`;
       params[resultParam] = resultsArray[index];
+    });
+
+    // params for preferred
+    namesArray.forEach((lab, index) => {
+      const preferredParam = `preferred_${lab}`;
+      params[preferredParam] = preferredArray[index];
+    });
+
+    // params for preferred_from
+    namesArray.forEach((lab, index) => {
+      const preferredFromParam = `preferred_from_${lab}`;
+      params[preferredFromParam] = preferredFromArray[index];
+    });
+
+    // params for preferred_to
+    namesArray.forEach((lab, index) => {
+      const preferredToParam = `preferred_to_${lab}`;
+      params[preferredToParam] = preferredToArray[index];
     });
 
     if (selectedLab.id != null) {
@@ -421,34 +441,6 @@ export default function LabOfficer() {
       }
     }
   }, [labTestData]);
-
-  // React.useEffect(() => {
-  //   labOptions.length = 0;
-
-  //   axios({
-  //     method: "post",
-  //     url: window.$link + "/lab_tests/getAll",
-  //     withCredentials: false,
-  //     params: {
-  //       api_key: window.$api_key,
-  //       token: userToken.replace(/['"]+/g, ""),
-  //       requester: userId,
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       response.data.lab_tests.map((data) => {
-  //         var info = {};
-
-  //         info.label = data.name;
-  //         info.value = data.id + "_service";
-
-  //         //setLabOptions(oldArray => [...oldArray, info]);
-  //       });
-  //     })
-  //     .then(function (error) {
-  //       console.log(error);
-  //     });
-  // }, []);
 
   // Lab tests
   React.useEffect(() => {
@@ -797,11 +789,23 @@ export default function LabOfficer() {
     return <Navigate to={link} />;
   }
 
+  console.log(labTestData);
+
   let labTestDataWithResults = labTestData.map((result) => {
+    let reference_range = "";
+    if (result.preferred_from != 0.00 && result.preferred_to != 0.00) {
+      reference_range = result.preferred_from + " - " + result.preferred_to;
+    } else if (result.preferred != " ") {
+      reference_range = result.preferred;
+    } else {
+      reference_range = "-";
+    }
+
     return {
       lab_test: result.lab_test,
       result: result.result,
       unit: result.unit,
+      reference_range: reference_range
     };
   });
 
@@ -908,13 +912,6 @@ export default function LabOfficer() {
             </div>
           </div>
 
-          {/* Filter */}
-          {/* <div className="col-sm-11 d-flex justify-content-end">
-                <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
-                <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter}/>
-                <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
-            </div> */}
-
           <Table
             type={"med-tech"}
             clickable={true}
@@ -923,7 +920,7 @@ export default function LabOfficer() {
               a.id > b.id ? 1 : b.id > a.id ? -1 : 0
             )}
             rowsPerPage={20}
-            headingColumns={["LAB NAME", "RESULTS", "UNIT", "ACTION"]}
+            headingColumns={["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]}
             filteredData={filteredData}
             //dropdownData={labTests}
             setFilter={setFilter}
@@ -945,6 +942,7 @@ export default function LabOfficer() {
             </Modal.Header>
             <Modal.Body>
               <div className="row">
+                {/* 1st Row */}
                 <div className="col-sm-6">
                   <div className="result-input-wrapper">
                     <div className="edit-sub-header">RESULT</div>
@@ -984,6 +982,57 @@ export default function LabOfficer() {
                   </div>
                 </div>
               </div>
+
+                {/* 2nd Row */}
+                {isDropdown ? (
+                  <div className="row">
+                    <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-preferred">PREFERRED</div>
+                      <Select
+                          isSearchable
+                          options={labTestOptions}
+                          value={labTestOptions.find(
+                            (option) => option.preferred === result
+                          )}
+                          defaultValue={result}
+                          onChange={(selectedOption) => {
+                            setPreferred(selectedOption.value);
+                            console.log(preferred);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  ) :
+                  (
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="result-input-wrapper">
+                          <div className="edit-preferred">PREFERRED FROM</div>
+                          <input
+                            type="text"
+                            className="results-input"
+                            defaultValue={result}
+                            onChange={(e) => setPreferredFrom(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="result-input-wrapper">
+                          <div className="edit-preferred">PREFERRED TO</div>
+                            <input
+                              type="text"
+                              className="results-input"
+                              defaultValue={result}
+                              onChange={(e) => setPreferredTo(e.target.value)}
+                            />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                
             </Modal.Body>
             <Modal.Footer>
               <button
