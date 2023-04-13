@@ -1266,8 +1266,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data}
+                        {data}
+                    {/* {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data} */}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>

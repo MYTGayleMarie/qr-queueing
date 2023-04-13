@@ -281,64 +281,64 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
 
              <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
-             <div className="personal-data-cont">
-        <div className="row">
-            <div className="col-sm-4">
-            <span className="first-name label">FIRST NAME</span>
-            <span className="first-name detail">{firstName.toUpperCase()}</span>
+        <div className="personal-data-cont">
+            <div className="row">
+                <div className="col-sm-4">
+                <span className="first-name label">FIRST NAME</span>
+                <span className="first-name detail">{firstName.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="last-name label">LAST NAME</span>
+                <span className="last-name detail">{lastName.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="middle-name label">MIDDLE NAME</span>
+                <span className="middle-name detail">{middleName.toUpperCase()}</span>
+                </div>
             </div>
-            <div className="col-sm-4">
-            <span className="last-name label">LAST NAME</span>
-            <span className="last-name detail">{lastName.toUpperCase()}</span>
-            </div>
-            <div className="col-sm-4">
-            <span className="middle-name label">MIDDLE NAME</span>
-            <span className="middle-name detail">{middleName.toUpperCase()}</span>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-sm-4">
-            <span className="date-of-birth label">DATE OF BIRTH</span>
-            <span className="date-of-birth detail">{birthday}</span>
-            </div>
-            <div className="col-sm-4">
-            <span className="sex label">SEX</span>
-            <span className="sex detail">{gender.toUpperCase()}</span>
-            </div>
+            <div className="row">
+                <div className="col-sm-4">
+                <span className="date-of-birth label">DATE OF BIRTH</span>
+                <span className="date-of-birth detail">{birthday}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="sex label">SEX</span>
+                <span className="sex detail">{gender.toUpperCase()}</span>
+                </div>
 
-        </div>
-        <div className="row">
-            <div className="col-sm-4">
-            <span className="contact-number label">CONTACT NUMBER</span>
-            <span className="contact-number detail">{contactNo}</span>
             </div>
-            <div className="col-sm-4">
-            <span className="email label">EMAIL</span>
-            <span className="email detail">{emailadd}</span>
+            <div className="row">
+                <div className="col-sm-4">
+                <span className="contact-number label">CONTACT NUMBER</span>
+                <span className="contact-number detail">{contactNo}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="email label">EMAIL</span>
+                <span className="email detail">{emailadd}</span>
+                </div>
             </div>
-        </div>
-        <div className="row">
-            <div className="col-sm-6">
-            <span className="address label">ADDRESS</span>
-            <span className="address detail">{homeaddress.toUpperCase()}</span>
+            <div className="row">
+                <div className="col-sm-6">
+                <span className="address label">ADDRESS</span>
+                <span className="address detail">{homeaddress.toUpperCase()}</span>
+                </div>
             </div>
-        </div>
-        <div className="row">
-        {pwdId?.length > 0 ? (
-            <div className="col-sm-6">
-            <span className="pwd-id label">PWD ID</span>
-            <span className="pwd-id detail">{pwdId.toUpperCase()}</span>
+            <div className="row">
+            {pwdId?.length > 0 ? (
+                <div className="col-sm-6">
+                <span className="pwd-id label">PWD ID</span>
+                <span className="pwd-id detail">{pwdId.toUpperCase()}</span>
+                </div>
+            ) : null}
             </div>
-        ) : null}
-        </div>
-        <div className="row">
-        {seniorId?.length > 0 ? (
-            <div className="col-sm-6">
-            <span className="pwd-id label">SENIOR ID</span>
-            <span className="pwd-id detail">{seniorId}</span>
+            <div className="row">
+            {seniorId?.length > 0 ? (
+                <div className="col-sm-6">
+                <span className="pwd-id label">SENIOR ID</span>
+                <span className="pwd-id detail">{seniorId}</span>
+                </div>
+            ) : null}
             </div>
-        ) : null}
-        </div>
         </div>
 
              <div className="booking-form">
@@ -378,10 +378,10 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
+                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={serviceLocation === 'clinic'} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" disabled name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
+                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
                              </div>
                          </div>
                      </div>
