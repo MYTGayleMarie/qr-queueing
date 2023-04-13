@@ -275,7 +275,6 @@ console.log(location)
   }
 
   return (
-    <div>
       <div className="active-cont center"style={{marginRight:"15%",}}>
         <Header type="thin" title="ADD PATIENT" />
 
@@ -283,8 +282,9 @@ console.log(location)
 
         <div className="booking-form">
           <form className="needs-validation">
+            <div className="forms">
             <div className="row">
-              <div className="col-sm-6">
+              <div className="col-sm">
                 <label for="fname" className="form-label">
                   FIRST NAME <i>(required)</i>
                 </label>
@@ -300,7 +300,22 @@ console.log(location)
                 />
                 <br />
               </div>
-              <div className="col-sm-4">
+              <div className="col-sm">
+                <label for="fname" className="form-label">
+                  MIDDLE NAME
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="mname"
+                  name="mname"
+                  value={mname}
+                  onChange={setPersonal}
+                />
+                <br />
+              </div>
+              <div className="col-sm">
                 <label for="lname" className="form-label">
                   LAST NAME <i>(required)</i>
                 </label>
@@ -318,22 +333,7 @@ console.log(location)
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-4">
-                <label for="fname" className="form-label">
-                  MIDDLE NAME
-                </label>
-                <br />
-                <input
-                  type="text"
-                  className="form-control"
-                  id="mname"
-                  name="mname"
-                  value={mname}
-                  onChange={setPersonal}
-                />
-                <br />
-              </div>
-              <div className="col-sm-2">
+              <div className="col-sm">
                 <label for="sex" className="form-label">
                   SEX<i>(required)</i>
                 </label>
@@ -343,7 +343,7 @@ console.log(location)
                   <option>Male</option>
                 </select>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm">
                 <label for="birthDate" className="form-label">
                   DATE OF BIRTH<i>(required)</i>
                 </label>
@@ -358,7 +358,7 @@ console.log(location)
                   required
                 ></input>
               </div>
-              <div className='col'>
+              <div className='col-sm'>
                 <input type="checkbox"
                 name="is_pwd"
                 value="isPWD"
@@ -507,7 +507,7 @@ console.log(location)
                     </label>
                   </div>
                 </div>
-            
+                </div>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>SUBMIT</Modal.Title>
@@ -531,7 +531,6 @@ console.log(location)
           <ToastContainer />
         </div>
       </div>
-    </div>
   );
 }
 

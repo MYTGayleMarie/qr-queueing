@@ -10,8 +10,9 @@
   margin: 5%;
 }
 
+
 .booking-form {
-    margin: 5%;
+    margin: 10%;
     width: 85%;
 }
 
@@ -37,6 +38,10 @@ label {
     font-size: 25px;
 }
 
+.forms .row + .row{
+  margin-top: 30px;
+}
+
 .form-control {
     width: 70% !important;
 }
@@ -47,8 +52,8 @@ label {
 
 .gender-select {
   margin-right: 10% !important;
-  width: 80% !important; 
-  height: 35% !important;
+  width: 35% !important; 
+  height: 45% !important;
   font-size: 20px;
 }
 
