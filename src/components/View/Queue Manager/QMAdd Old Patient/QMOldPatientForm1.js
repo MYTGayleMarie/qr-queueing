@@ -49,6 +49,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
             requester: userId,
         }
     }).then(function (response) {
+        console.log("Data" + response.data.result);
         setResult(response.data.result);
     })
 
@@ -63,7 +64,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
             requester: userId,
         }
     }).then(function (customer) {
-        // console.log("CUSTOMER: ", customer);
+        console.log("CUSTOMER: ", customer.data);
         var presentDate = new Date();
         var birthDate = new Date(customer.data.birthdate);
         const age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -106,66 +107,66 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
         } 
     }
 
-    function homeServiceFeeDisplay() {
-        if (
-          serviceLocation === "home service"
-        ) {
-          return (
-            <div className="row date-of-testing-container small-gap">
-            <div className="col">
-              <label for="result" className="radio-header">
-              SERVICE LOCATION
-              </label>
-              <br />
-              <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
-            <option value="" selected disabled>Select</option>
-            <option value={0}>Within 2km or less</option>
-            <option value={1}>More than 2km</option>
-            <option value={2}>Outside Tacloban or Palo</option>
-            <option value={3}>Company</option>
-            <option value={4}>Mobile Charge</option>
-          </select>
-        </div>
-        <div className="col">
-        {location != "" && (
-                <label for="result" className="radio-header">
-                    SERVICE FEE
-                </label>
-                )}
-                {location == 0 && location != "" && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={250}>(1 - 2 PAX) - P 250</option>
-                      <option value={150}>(3 or more) - P 150</option>
-                    </select>
-                )}
-                 {location == 1 && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={300}>(1 - 2 PAX) - P 300</option>
-                      <option value={180}>(3 or more) - P 180</option>
-                    </select>
-                )}
-                {location == 3 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
-                )}
-                {location == 4 && (
-                    <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
-                      <option value="" selected>Select</option>
-                      <option value={65}>Male - P 65</option>
-                      <option value={25} >Female - P 25 </option>
-                    </select>
-                )}
-                {location == 2 && (
-                    <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
-                )}
-         </div>
-          </div>
-          );
-        } else {
-          console.log('Error. No home service fee');
-        }
-      }
+    // function homeServiceFeeDisplay() {
+    //     if (
+    //       serviceLocation === "home service"
+    //     ) {
+    //       return (
+    //         <div className="row date-of-testing-container small-gap">
+    //         <div className="col">
+    //           <label for="result" className="radio-header">
+    //           SERVICE LOCATION
+    //           </label>
+    //           <br />
+    //           <select name="homeServiceFee" className="home-service-fee-select" value={location} onChange={(e) => setLocation(e.target.value)} required>
+    //         <option value="" selected disabled>Select</option>
+    //         <option value={0}>Within 2km or less</option>
+    //         <option value={1}>More than 2km</option>
+    //         <option value={2}>Outside Tacloban or Palo</option>
+    //         <option value={3}>Company</option>
+    //         <option value={4}>Mobile Charge</option>
+    //       </select>
+    //     </div>
+    //     <div className="col">
+    //     {location != "" && (
+    //             <label for="result" className="radio-header">
+    //                 SERVICE FEE
+    //             </label>
+    //             )}
+    //             {location == 0 && location != "" && (
+    //                 <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+    //                   <option value="" selected>Select</option>
+    //                   <option value={250}>(1 - 2 PAX) - P 250</option>
+    //                   <option value={150}>(3 or more) - P 150</option>
+    //                 </select>
+    //             )}
+    //              {location == 1 && (
+    //                 <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+    //                   <option value="" selected>Select</option>
+    //                   <option value={300}>(1 - 2 PAX) - P 300</option>
+    //                   <option value={180}>(3 or more) - P 180</option>
+    //                 </select>
+    //             )}
+    //             {location == 3 && (
+    //                 <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
+    //             )}
+    //             {location == 4 && (
+    //                 <select name="serviceFee" className="home-service-fee-select" value={serviceFee} onChange={(e) => setServiceFee(e.target.value)} required>
+    //                   <option value="" selected>Select</option>
+    //                   <option value={65}>Male - P 65</option>
+    //                   <option value={25} >Female - P 25 </option>
+    //                 </select>
+    //             )}
+    //             {location == 2 && (
+    //                 <input type="number" name="serviceFee"  className="home-service-fee-select" value={serviceFee} min="1" onChange={(e) => setServiceFee(e.target.value) }/>
+    //             )}
+    //      </div>
+    //       </div>
+    //       );
+    //     } else {
+    //       console.log('Error. No home service fee');
+    //     }
+    //   }
 
     React.useEffect(() => {
         axios({
@@ -378,11 +379,11 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={serviceLocation === 'clinic'} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
+                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={true} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
                              </div>
-                             <div className="col">
+                             {/* <div className="col">
                                  <input type="radio" id="serviceLocation" name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
-                             </div>
+                             </div> */}
                          </div>
                      </div>
                      <div className="col-sm-6">
@@ -392,10 +393,10 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                                  <input type="radio" id="result" name="result" value="email" checked={result === 'email'} onChange={() => setResult("email")}/><label for="email" className="radio-label">EMAIL</label>
                              </div>
                              <div className="col">
-                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print with pickup'} onChange={() => setResult("print with pickup")}/><label for="print-with-pickup" className="radio-label">PRINT</label>
+                                 <input type="radio" id="result" name="result" value="print with pickup" checked={result === 'print'} onChange={() => setResult("print")}/><label for="print" className="radio-label">PRINT</label>
                              </div>
                              <div className="col">
-                                <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={() => setResult("result")}/><label for="print-with-pickup" className="radio-label">BOTH</label>
+                                <input type="radio" id="result" name="result" value="both" checked={result === 'both'} onChange={() => setResult("both")}/><label for="both" className="radio-label">BOTH</label>
                             </div>
                          </div>
                      </div>
@@ -412,9 +413,9 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                             {homeServiceFeeDisplay()}
-                        </div>
+                        </div> */}
                 </div>
 
                  <div className="row date-of-testing-container large-gap">

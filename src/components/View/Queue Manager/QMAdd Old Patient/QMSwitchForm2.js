@@ -54,6 +54,7 @@ function QMSwitchForm2() {
     const [mdCharge, setMdCharge] = useForm(mdData);
     const [serviceFee, setServiceFee] = useState(0);
     const [location, setLocation] = useState("");
+    const [result, setResult] = useState("");
     const [discountDetails, setDiscountDetails] = useState();
     
     const [service, setServices] = useForm(serviceData);
@@ -62,7 +63,7 @@ function QMSwitchForm2() {
       initialStep: 0,
     });
 
-    const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails };
+    const personalProps = { customer, setPersonal, discount, setIsService, setIsPackage, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails, setResult };
     const serviceProps = { service, packagePrice, labPrice, setPackagePrice, setLabPrice, isService, isPackage, customer, isCompany, discount, setDiscount, setServices, lastMeal, navigation, mdCharge, serviceFee, location, dateOfTesting, discountDetails };
 
     switch (step.id) {

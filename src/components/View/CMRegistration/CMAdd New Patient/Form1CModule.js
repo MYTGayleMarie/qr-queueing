@@ -94,6 +94,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   }
   
   function submit(e, customer, dateOfTesting, lastMeal) {
+    console.log(customer)
     if (isClicked ==  false) {
       setClicked(true);
       axios({
@@ -124,6 +125,7 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
           added_by: userId,
         },
         }).then(function (response) {
+          console.log(response.data);
           toast.success(response.data.message.success);
           //Generate Queue Number
             axios({
@@ -358,6 +360,8 @@ console.log(location)
                   required
                 ></input>
               </div>
+            </div>
+            <div className="row">
               <div className='col-sm'>
                 <input type="checkbox"
                 name="is_pwd"
@@ -485,12 +489,12 @@ console.log(location)
                       type="radio"
                       id="result"
                       name="result"
-                      value="print with pickup"
-                      checked={result === 'print with pickup'}
+                      value="print"
+                      checked={result === 'print'}
                       onChange={setPersonal}
                     />
-                    <label for="print-with-pickup" className="radio-label">
-                      PICKUP
+                    <label for="print" className="radio-label">
+                      PRINT
                     </label>
                   </div>
                   <div className="col">
@@ -502,7 +506,7 @@ console.log(location)
                       checked={result === 'both'}
                       onChange={setPersonal}
                     />
-                    <label for="print-with-pickup" className="radio-label">
+                    <label for="both" className="radio-label">
                       BOTH
                     </label>
                   </div>
