@@ -29,7 +29,6 @@ import Watermark from "../../../images/Watermark.png";
 
 const userToken = getToken();
 const userId = getUser();
-// console.log(getUser());
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
   const { id, dateFrom, dateTo } = useParams();
@@ -72,6 +71,10 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [showPDF, setShowPDF] = useState(false);
   const [detailID, setDetailID] = useState(false);
   const [resultID, setResultID] = useState(false);
+
+  const [readyCustomer, setReadyCustomer] = useState(false);
+  const [readyBooking, setReadyBooking] = useState(false);
+  const [readyResults, setReadyResults] = useState(false);
   var presentDate = new Date();
 
   var monthNames = [
@@ -142,6 +145,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             setContactNo(response.data.contact_no);
             setEmail(response.data.email);
             setAddress(response.data.address);
+
+            setReadyCustomer(true);
           })
           .catch((error) => {});
       })
@@ -160,6 +165,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((booking) => {
         setServices(booking.data);
+        setReadyBooking(true);
       })
       .catch((error) => {});
 
@@ -185,6 +191,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               data.booking_package_details_results[packageDetailId]
             );
           }
+          setReadyResults(true);
         }
       })
       .catch((error) => {
@@ -391,6 +398,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         <div>
           <div ref={componentRef}>
             {/* Header */}
+
             <div
               class="bg"
               style={{
@@ -471,7 +479,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     <span>
                       <b>
                         Contact
-                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;
+                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        :&nbsp;&nbsp;&nbsp;
                       </b>
                     </span>
                     <span>{contactNo}</span>
@@ -491,7 +500,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     <span>
                       <b>
                         Date of
-                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;{" "}
+                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        :&nbsp;&nbsp;&nbsp;{" "}
                       </b>
                     </span>
                     <span>{birthDate.toUpperCase()}</span>
@@ -536,29 +546,48 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     </div>
                     {labTestResults.map((result, resultIndex) => (
                       <div className="row" key={resultIndex}>
-                        {console.log(result)}
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
                         <div className="col">
-                          {console.log(result["preferred_to"] + "test")}
-                          {(result["preferred"]) != " " ?
-                             (result["preferred"] == result["result"]) ?
-                              (<span>{result["result"] + " " + result["unit"]}</span>)
-                              :
-                              (<span class="red">{result["result"] + " " + result["unit"]}</span>)
-                            :
-                            (result["preferred_from"] != 0.00 && result["preferred_to"] != 0.00) ?
-                              (parseFloat(result["preferred_from"]) > parseFloat(result["result"])) ?
-                                (<span class="red">{result["result"] + " " + result["unit"] + " (L)"}</span>)
-                                :
-                                (parseFloat(result["result"]) > parseFloat(result["preferred_to"])) ?
-                                  (<span class="red">{result["result"] + " " + result["unit"] + " (H)"}</span>)
-                                  :
-                                  (<span>{result["result"] + " " + result["unit"]}</span>)
-                              :
-                              (<span>{result["result"] + " " + result["unit"]}</span>)
-                          }
+                          {result["preferred"] != " " ? (
+                            result["preferred"] == result["result"] ? (
+                              <span>
+                                {result["result"] + " " + result["unit"]}
+                              </span>
+                            ) : (
+                              <span class="red">
+                                {result["result"] + " " + result["unit"]}
+                              </span>
+                            )
+                          ) : result["preferred_from"] != 0.0 &&
+                            result["preferred_to"] != 0.0 ? (
+                            parseFloat(result["preferred_from"]) >
+                            parseFloat(result["result"]) ? (
+                              <span class="red">
+                                {result["result"] +
+                                  " " +
+                                  result["unit"] +
+                                  " (L)"}
+                              </span>
+                            ) : parseFloat(result["result"]) >
+                              parseFloat(result["preferred_to"]) ? (
+                              <span class="red">
+                                {result["result"] +
+                                  " " +
+                                  result["unit"] +
+                                  " (H)"}
+                              </span>
+                            ) : (
+                              <span>
+                                {result["result"] + " " + result["unit"]}
+                              </span>
+                            )
+                          ) : (
+                            <span>
+                              {result["result"] + " " + result["unit"]}
+                            </span>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -604,7 +633,17 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             <div>
               {/* Generate Result Button */}
               {
-                <button className="upload-res-btn" onClick={handlePrint}>
+                <button
+                  className="upload-res-btn"
+                  onClick={handlePrint}
+                  style={{
+                    background:
+                      !readyCustomer && !readyBooking && !readyResults
+                        ? "gray"
+                        : "#55073A",
+                  }}
+                  disabled={!readyCustomer && !readyBooking && !readyResults}
+                >
                   GENERATE RESULTS
                 </button>
               }

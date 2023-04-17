@@ -234,7 +234,7 @@ export default function ViewBooking() {
                 .replace(/\s+/g, "_")
                 .toLowerCase();
             }
-            // console.log(info)
+
             serviceDetails.category = category.data.name;
             serviceDetails.name = info.lab_test;
             serviceDetails.type = "lab";
@@ -363,8 +363,6 @@ export default function ViewBooking() {
   const [download, setDOwnload] = useState("");
   const [rows, setRows] = useState([]);
   const [showConfirm, setShowConfirm] = React.useState(false);
-
-  //  console.log(labTests)
 
   // Get Multiple Uploads
   async function getUploads() {
@@ -553,7 +551,7 @@ export default function ViewBooking() {
                         CLINICAL MICROSCOPY URINALYSIS
                       </div>
                       <>
-                        {serumPT.length !== 0 &&
+                        {serumPT.length > 0 &&
                           (detailSerumPT[0]?.with_result === "1" ? (
                             <GenerateResults
                               servicesData={serumPT}
@@ -568,7 +566,7 @@ export default function ViewBooking() {
                             />
                           ))}
 
-                        {spermAnalysis.length !== 0 &&
+                        {spermAnalysis.length > 0 &&
                           (detailSperm[0]?.with_result === "1" ? (
                             <GenerateResults
                               servicesData={spermAnalysis}
@@ -583,7 +581,7 @@ export default function ViewBooking() {
                             />
                           ))}
 
-                        {clinicalUrinalysis.length !== 0 &&
+                        {clinicalUrinalysis.length > 0 &&
                           (detailUrinalysis[0]?.with_result === "1" ? (
                             <GenerateResults
                               servicesData={clinicalUrinalysis}
@@ -597,7 +595,7 @@ export default function ViewBooking() {
                               bookingId={bookingId}
                             />
                           ))}
-                        {clinicalUrineLab.length !== 0 && (
+                        {clinicalUrineLab.length > 0 && (
                           <FileUpload
                             servicesData={clinicalUrineLab}
                             title={"CLINICAL MICROSCOPY URINALYSIS"}
