@@ -43,7 +43,7 @@ function Login() {
         },
       })
         .then(function (response) {
-          // console.log(response);
+     
           localStorage.setItem('token', JSON.stringify(response.data.token));
           localStorage.setItem('user', JSON.stringify(response.data.id));
           localStorage.setItem('role_id', JSON.stringify(response.data.role_id));
@@ -51,11 +51,11 @@ function Login() {
           refreshPage();
         })
         .catch(function (error) {
-          console.log(error)
+          // console.log(error)
           toast.error('Invalid Login');
-          // setTimeout(() => {
-          //   refreshPage();
-          // },2000);
+          setTimeout(() => {
+            refreshPage();
+          },2000);
         });
     }
 
@@ -84,6 +84,12 @@ function Login() {
     }
     else if (roleId === "8") {
       NavigationRedirection = <Navigate to="/companies" />;
+    }
+    else if (roleId === "9"){
+      NavigationRedirection = <Navigate to="/registrationcmodule" />;
+    }
+    else if (roleId === "10"){
+      NavigationRedirection = <Navigate to="/medtech" />;
     }
     else {
       NavigationRedirection = <Navigate to="/registration" />;
@@ -151,7 +157,7 @@ function Login() {
                         alt={'eye'}
                         aria-hidden="true"
                         onClick={togglePassword}
-                      />
+                        />
                     </div>
                   </div>
                 </div>

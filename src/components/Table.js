@@ -77,7 +77,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             
             return <tr key={row.id}>
             {rowData.map((data, index) => 
-            <td key={index} data-heading={data.key} className={data.val.replace(/\s/g, '')}>
+            <td key={index} data-heading={data.key} 
+            className={data.val.replace(/\s/g, '')}
+            >
                 {totalCount == null && index == 0 ? "" : data.val}
             </td>)}
             {(rowData[5].val == "unpaid" && rowData[0].val == "no_company_discount") && (
@@ -202,8 +204,17 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             return <tr key={row.id}>
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={ data.val != null ? data.val.replace(/\s/g, '') : ""}>{data.val}</td>)}
-            <td><button class="action-btn" role="button" onClick={() => link(row.booking_id, row.id, row.type)}>REVIEW</button></td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.lab_test, row.Results, row.Value)}>EDIT</button></td>
             </tr>
+        }
+        else if (type === 'queue' && clickable == true) {
+            console.log(row)
+            return (<tr key={row.id}>
+            <td key={row.id} data-heading={row.id} className={ row.val}>{row.queueNumber}</td>
+            <td key={row.id} data-heading={row.id} className={ row.val}>{row.name}</td>
+            <td><button class="action-btn" role="button" onClick={() => link(row.customerId)}>ADD BOOKING</button></td>
+            </tr>
+            )
         }
         else if (type === 'items' && clickable == true) {
             return <tr key={row.id}>
@@ -240,6 +251,13 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
             {rowData.map((data, index) => 
             <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
             <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD BOOKING</button><button class="button-10" role="button" onClick={() => View(row.id)}>VIEW HISTORY</button></td>
+            </tr>
+        }
+        else if (type === 'search-patient-queue' && clickable == true) {
+            return <tr key={row.id}>
+            {rowData.map((data, index) => 
+            <td key={index} data-heading={data.key} className={data.val}>{data.val}</td>)}
+            <td><button class="button-10" role="button" onClick={() => link(row.id)}>ADD TO QUEUE</button><button class="button-10" role="button" onClick={() => View(row.id)}>VIEW HISTORY</button></td>
             </tr>
         }
         else if(type === "payment-invoices") {
@@ -426,7 +444,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                     <input type="date" className="from-date search" name="from_date" value={from_date} onChange={setFilter} />
                     <input type="date" className="to-date search" name="to_date"  value={to_date} onChange={setFilter} />
                     <button className="filter-btn" name="done" onClick={setRender != null ? (e) => setRender(!render) : ""}>FILTER</button>
-            </div>
+                </div>
                 </div>
                 <table className={tableClass}>
                     <thead>
@@ -449,6 +467,8 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         );
     }
     
+
+
     if( type === 'release') {
     
         const {from_date, to_date, done} = filteredData;
@@ -969,7 +989,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if (type === "search-patient" || type == 'purchase-order-invoice') {
+    else if (type === "search-patient" || type == 'purchase-order-invoice' || type == 'search-patient-queue') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  </div>
@@ -1104,8 +1124,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader2 tableHeaders={headingColumns}/> : data}
+                    {/* {!isReady && useLoader ? 
+                    <TableLoader1 tableHeaders={headingColumns}/> : data} */}
+                    {data}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1229,7 +1250,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
              </div>
         );
     }
-    else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice') {
+    else if(type === 'companies-review' || type === 'suppliers' || type === 'med-tech' || type === 'services-packages' || type === 'add-invoice' || type === 'queue') {
         
         return(
             <div className="table-container">
@@ -1245,8 +1266,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                         </tr>
                     </thead>
                     <tbody>
-                    {!isReady && useLoader ? 
-                    <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data}
+                        {data}
+                    {/* {!isReady && useLoader ? 
+                    <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data} */}
                     </tbody>
                 </table>
                 <TableFooter range={range} slice={slice} setPage={setPage} page={page} footerClass={givenClass} setRowsPerPage={setRowsPerPage} rowsPerPage={rowsPerPage}/>
@@ -1502,7 +1524,7 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
          </div>
         );
     }
-    else if (type === "search-patient") {
+    else if (type === "search-patient" || type === 'search-patient-queue') {
         return(
             <div className="table-container">
                 <div className="search-table-container d-flex justify-content-end">  </div>

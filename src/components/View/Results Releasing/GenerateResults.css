@@ -1,0 +1,106 @@
+.resultTitle {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1.8rem;
+    display: block;
+    text-align: center;
+    margin-left: 2px;
+}
+
+.addressTitle {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.img-small {
+    width: 300px;
+    height: 150px;
+    margin-right: 1px;
+  }
+
+.laboratory-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+.table-title {
+    text-align: center;
+    font-family: "Arial", sans-serif;
+    font-size: 1.5em; /* adjust font size as needed */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h3 {
+  text-align: center;
+  font-family: 'Arial', sans-serif; /* Replace with the desired font family */
+}
+
+.wrapper {
+  display: flex; /* Use flexbox layout */
+  justify-content: space-between; /* Spacing between boxes */
+  width: 100%; /* Set width of the container */
+  text-align: center  ;
+  background-color: transparent;
+}
+
+.box{
+  width: 50%; /* Set equal width for both boxes */
+  background-color: transparent;
+  padding: -5px;
+}
+
+.tspan {
+  margin-top: -10px;
+}
+
+.resText{
+  text-align: center;
+}
+
+.tb {
+  width: 100%;
+  margin-left: 5%;
+}
+
+.mid {
+  text-align: center;
+}
+
+.row {
+  margin-bottom: 2px;
+}
+
+.bg {
+  background-image: url('../../../images/Watermark.png');
+  background-size: cover; /* or "contain" based on your requirement */
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.bd {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 0px;
+  border-right: 0px;
+
+}
+
+.watermark {
+  position: absolute;
+  display: flex;
+  left: 5%;
+  top: 11%;
+  width: 85%;
+  height: 75%;
+  z-index: -1;
+}
+
+.red {
+  color: red;
+}

@@ -8,9 +8,12 @@ import Login from './components/View/Login/Login';
 import Registration from './components/View/Registration/Registration';
 import PrintBooking from './components/View/Registration/PrintBooking';
 import DeleteBooking from './components/View/Registration/DeleteBooking';
+import SwitchFormCModule from './components/View/CMRegistration/CMAdd New Patient/SwitchFormCModule';
 import SwitchForm from './components/View/Registration/Add New Patient/SwitchForm';
 import SearchPatient from './components/View/Registration/Add Old Patient/SearchPatient';
+import SearchPatientCModule from './components/View/CMRegistration/CMAdd Old Patient/SearchPatientCModule';
 import SwitchForm2 from './components/View/Registration/Add Old Patient/SwitchForm2';
+// import SwitchForm2CModule from './components/View/CMRegistration/CMAdd Old Patient/SwitchForm2CModule.js';
 import Cashier from './components/View/Cashier/Cashier';
 import AddPayment from './components/View/Cashier/AddPayment';
 import Extraction from './components/View/Extraction/Extraction';
@@ -32,9 +35,11 @@ import ReceivePurchaseOrder from './components/View/Supply/ReceivePurchaseOrder'
 import Receives from './components/View/Supply/Receives';
 import ReceivesPrint from './components/View/Supply/ReceivesPrint';
 import Items from './components/View/Supply/Items';
+import LabOfficer from './components/View/Results Releasing/LabOfficer';
 import MedTech from './components/View/Results Releasing/MedTech';
 import MedTechStart from './components/View/Results Releasing/MedTechStart';
 import Lab from './components/View/Laboratory Releasing/Lab';
+import RegistrationCModule from './components/View/CMRegistration/RegistrationCModule';
 import ViewPdf from './components/View/Results Releasing/ViewPdf'
 import AddSupplyItems from './components/View/Supply/AddSupplyItems';
 import UpdateSupplyItems from './components/View/Supply/UpdateSuppyItems';
@@ -85,6 +90,7 @@ import ViewPackage from './components/View/Services/ViewPackage';
 import ReportIncompletePO from './components/View/Reports/ReportIncompletePO';
 import ReportIncompletePOReview from './components/View/Reports/ReportIncompletePOReview';
 import ViewHistory from './components/View/Registration/Add Old Patient/ViewHistory';
+// import CMViewHistory from './components/View/Customer Module/Add Old PatientCM/CMViewHistory';
 import ViewBooking from './components/View/Results Releasing/ViewBooking';
 import ReportServicesPackagesDetails from './components/View/Reports/ReportServicesPackagesDetails';
 import ReportInventory from './components/View/Reports/ReportInventory';
@@ -92,6 +98,9 @@ import ReportItemHistory from './components/View/Reports/ReportItemHistory';
 import ReportItemHistoryDetails from './components/View/Reports/ReportItemHistoryDetails';
 import ReportExpense from './components/View/Reports/ReportExpense';
 import ReportAnnual from './components/View/Reports/ReportAnnual';
+import QueueManager from './components/View/Queue Manager/QueueManager';
+import QMOldPatientForm1 from './components/View/Queue Manager/QMAdd Old Patient/QMOldPatientForm1';
+import QMSwitchForm2 from './components/View/Queue Manager/QMAdd Old Patient/QMSwitchForm2';
 
 
 function App() {
@@ -124,13 +133,18 @@ function App() {
     <div>
     <Router>
       <Routes>
+
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={token ? <Registration /> : <Navigate to="/" />} />
         <Route path="/print-booking/:id" element={token ? <PrintBooking /> : <Navigate to="/" />} />
         <Route path="/add-new-patient" element={token ? <SwitchForm /> : <Navigate to="/" />} />
+        <Route path="/cmadd-new-patient" element={token ? <SwitchFormCModule /> : <Navigate to="/" />} />
         <Route path="/add-old-patient" element={token ? <SearchPatient /> : <Navigate to="/" />} />
+        <Route path="/cmadd-old-patient" element={token ? <SearchPatientCModule /> : <Navigate to="/" />} />
+
         <Route path="/add-booking/:id" element={token ? <SwitchForm2 /> : <Navigate to="/" />} />
+        
         <Route path="/delete-booking/:id" element={token ? <DeleteBooking /> : <Navigate to="/" />} />
         <Route path="/View-history/:id" element={token ? <ViewHistory /> : <Navigate to="/" />} />
         <Route path="/cashier" element={token ? <Cashier /> : <Navigate to="/" />} />
@@ -148,13 +162,19 @@ function App() {
         <Route path="/review-release/:id/:dateFrom/:dateTo" element={token ? <ReviewReleasingItems /> : <Navigate to="/" />} />
         <Route path="/medtech" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/lab" element={token ? <Lab /> : <Navigate to="/" />} />
+        <Route path="/registrationcmodule" element={token ? <RegistrationCModule /> : <Navigate to="/" />} />
+        <Route path="/queuemanager" element={token ? <QueueManager /> : <Navigate to="/" />} />
+        <Route path="/queuemanager/add-booking/:id" element={token ? <QMSwitchForm2 /> : <Navigate to="/" />} />
         {/** With date filter */}
         <Route path="/medtech/:dateFrom/:dateTo" element={token ? <MedTech /> : <Navigate to="/" />} />
         <Route path="/lab/:dateFrom/:dateTo" element={token ? <Lab /> : <Navigate to="/" />} />
+     
+        <Route path="/registrationcmodule/:dateFrom/:dateTo" element={token ? <RegistrationCModule /> : <Navigate to="/" />} />
+        <Route path="/queuemanager/:dateFrom/:dateTo" element={token ? <QueueManager /> : <Navigate to="/" />} />
         <Route path="/View-results/:type/:bookingId/:packageId/:serviceId" element={token ? <ViewPdf /> : <Navigate to="/" />} />
-        <Route path="/View-booking/:id" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        <Route path="/LabOfficer/:id" element={token ? <LabOfficer /> : <Navigate to="/" />} />
         {/** With date filter */}
-        <Route path="/View-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
+        <Route path="/results-view-booking/:id/:dateFrom/:dateTo" element={token ? <ViewBooking /> : <Navigate to="/" />} />
         <Route path="/medtech-start/:bookId/:serviceId/:type" element={token ? <MedTechStart /> : <Navigate to="/" />} />
         <Route path="/Users" element={token ? <Users /> : <Navigate to="/" />} />
         <Route path="/User/:id" element={token ? <UserDetail /> : <Navigate to="/" />} />

@@ -8,8 +8,6 @@ import useTable from '../../../utilities/Pagination';
 import TableFooter from '../../TableFooter';
 import { Navigate, useParams } from 'react-router-dom';
 
-
-
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
@@ -111,7 +109,7 @@ export default function MedTech() {
 
 
   if(redirectBooking == true) {
-    var link =  "/View-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
+    var link =  "/results-view-booking/" + id + "/" + filteredData.from_date + "/" + filteredData.to_date;
     return (
         <Navigate to ={link}/>
     )
