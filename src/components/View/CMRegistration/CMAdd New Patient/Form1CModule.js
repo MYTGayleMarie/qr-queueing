@@ -43,6 +43,8 @@ function Form1CModule({ customer, setPersonal, setIsService, setIsPackage, disco
   };
   
   document.body.style = 'background: white;';
+
+  console.log(customer);
   
   const {
     fname,

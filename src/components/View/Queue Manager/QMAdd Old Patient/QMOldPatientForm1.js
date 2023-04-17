@@ -16,6 +16,7 @@ const userId = getUser();
 
 function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, discount, setDiscount, setIsCompany, lastMeal, setLastMeal, navigation, mdCharge, setMdCharge, serviceFee, setServiceFee, location, setLocation, dateOfTesting, setDOT, discountDetails, setDiscountDetails  }) {
     console.log("THIS IS A TEST ", customer)
+    setLocation('clinic');
     document.body.style = 'background: white;';
     //customer details
     const [firstName, setFirstName] = useState("");
@@ -39,19 +40,19 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
     const [people, setPeople] = useState(0);
     const [km, setKm] = useState(0);
 
-    axios({
-        method: 'post',
-        url: window.$link + 'bookings/show/' + id,
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
-    }).then(function (response) {
-        console.log("Data" + response.data.result);
-        setResult(response.data.result);
-    })
+    // axios({
+    //     method: 'post',
+    //     url: window.$link + 'bookings/show/' + id,
+    //     withCredentials: false, 
+    //     params: {
+    //         api_key: window.$api_key,
+    //         token: userToken.replace(/['"]+/g, ''),
+    //         requester: userId,
+    //     }
+    // }).then(function (response) {
+    //     console.log("Data" + response.data.result);
+    //     setResult(response.data.result);
+    // })
 
     axios({
     
@@ -93,6 +94,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
     }
 
     function proceed() {
+        console.log(serviceLocation + result + dateOfTesting + lastMeal + referral);
         if(serviceLocation != "" && result != "" && dateOfTesting != "" && lastMeal != "" && referral != "") {
             return (
                 <div className="d-flex justify-content-end">
@@ -379,7 +381,7 @@ function QMOldPatientForm1({ customer, setPersonal, setIsService, setIsPackage, 
                          <div className="row">
                          <span className="radio-header">LOCATION OF SERVICE</span><br />
                              <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={true} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
+                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="clinic" checked={serviceLocation === 'clinic'} onChange={setPersonal}/><label for="clinic" className="radio-label" >CLINIC</label>
                              </div>
                              {/* <div className="col">
                                  <input type="radio" id="serviceLocation" name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
