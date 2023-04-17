@@ -48,6 +48,8 @@ function QMSwitchForm2() {
   const [mdCharge, setMdCharge] = useForm(mdData);
   const [serviceFee, setServiceFee] = useState(0);
   const [location, setLocation] = useState("");
+  const [serviceLocation, setServiceLocation] = useState("");
+  const [result, setResult] = useState("");
 
   const [discountDetails, setDiscountDetails] = useState();
 
@@ -78,6 +80,8 @@ function QMSwitchForm2() {
     setDOT,
     discountDetails,
     setDiscountDetails,
+    result,
+    setResult,
   };
   const serviceProps = {
     service,
@@ -99,6 +103,8 @@ function QMSwitchForm2() {
     location,
     dateOfTesting,
     discountDetails,
+    result,
+    setResult,
   };
   console.log(customer);
   switch (step.id) {

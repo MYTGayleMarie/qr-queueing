@@ -35,6 +35,8 @@ function QMOldPatientForm1({
   setDOT,
   discountDetails,
   setDiscountDetails,
+  result,
+  setResult,
 }) {
   setLocation("clinic");
   document.body.style = "background: white;";
@@ -48,10 +50,10 @@ function QMOldPatientForm1({
   const [contactNo, setContactNo] = useState("");
   const [emailadd, setEmail] = useState("");
   const [homeaddress, setAddress] = useState("");
-  const [result, setResult] = useState("");
+
   const [pwdId, setPwdId] = useState("");
   const [seniorId, setSeniorId] = useState("");
-  const [serviceLocation, setServiceLocation] = useState("");
+
   const { id } = useParams();
 
   const [discountList, setDiscountList] = useState([]);
@@ -101,8 +103,9 @@ function QMOldPatientForm1({
         setAddress(customer.data.address);
         setPwdId(customer.data.pwd_id);
         setSeniorId(customer.data.senior_id);
-        setServiceLocation(customer.data.service_location);
+        setLocation(customer.data.service_location);
         setResult(customer.data.result);
+        console.log(customer.data);
 
         //setResult(customer.data.result);
       })
@@ -135,7 +138,7 @@ function QMOldPatientForm1({
 
   function proceed() {
     if (
-      serviceLocation != "" &&
+      location != "" &&
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
@@ -474,20 +477,30 @@ function QMOldPatientForm1({
                   <div className="col">
                     <input
                       type="radio"
-                      id="serviceLocation"
-                      name="serviceLocation"
+                      id="clinic"
+                      name="location"
                       value="clinic"
-                      defaultChecked={serviceLocation === "clinic"}
-                      checked={serviceLocation === "clinic"}
-                      onChange={setPersonal}
+                      defaultChecked={location === "clinic"}
+                      checked={location === "clinic"}
+                      onChange={() => setLocation("clinic")}
                     />
                     <label for="clinic" className="radio-label">
                       CLINIC
                     </label>
                   </div>
                   {/* <div className="col">
-                                 <input type="radio" id="serviceLocation" name="serviceLocation" value="home service" checked={serviceLocation === 'home service'} onChange={setPersonal}/><label for="home-service" className="radio-label">HOME SERVICE</label>
-                             </div> */}
+                    <input
+                      type="radio"
+                      id="home-service"
+                      name="serviceLocation"
+                      value="home service"
+                      checked={serviceLocation === "home service"}
+                      onChange={() => setServiceLocation("home service")}
+                    />
+                    <label for="home-service" className="radio-label">
+                      HOME SERVICE
+                    </label>
+                  </div> */}
                 </div>
               </div>
               <div className="col-sm-6">
@@ -499,7 +512,7 @@ function QMOldPatientForm1({
                   <div className="col">
                     <input
                       type="radio"
-                      id="result"
+                      id="email"
                       name="result"
                       value="email"
                       checked={result === "email"}
@@ -513,7 +526,7 @@ function QMOldPatientForm1({
                   <div className="col">
                     <input
                       type="radio"
-                      id="result"
+                      id="print"
                       name="result"
                       value="print with pickup"
                       checked={result === "print"}
@@ -527,7 +540,7 @@ function QMOldPatientForm1({
                   <div className="col">
                     <input
                       type="radio"
-                      id="result"
+                      id="both"
                       name="result"
                       value="both"
                       checked={result === "both"}
