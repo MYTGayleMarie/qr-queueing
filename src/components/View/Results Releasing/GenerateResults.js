@@ -536,6 +536,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     </div>
                     {labTestResults.map((result, resultIndex) => (
                       <div className="row" key={resultIndex}>
+                        {console.log(result)}
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
@@ -545,7 +546,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                              (result["preferred"] == result["result"]) ?
                               (<span>{result["result"] + " " + result["unit"]}</span>)
                               :
-                              (<span class="red">{result["unit"] + " " + result["result"]}</span>)
+                              (<span class="red">{result["result"] + " " + result["unit"]}</span>)
                             :
                             (result["preferred_from"] != 0.00 && result["preferred_to"] != 0.00) ?
                               (parseFloat(result["preferred_from"]) > parseFloat(result["result"])) ?

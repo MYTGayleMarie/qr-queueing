@@ -995,7 +995,6 @@ export default function LabOfficer() {
                           value={labTestOptions.find(
                             (option) => option.preferred === result
                           )}
-                          defaultValue={result}
                           onChange={(selectedOption) => {
                             setPreferred(selectedOption.value);
                             console.log(preferred);
@@ -1013,7 +1012,6 @@ export default function LabOfficer() {
                           <input
                             type="text"
                             className="results-input"
-                            defaultValue={result}
                             onChange={(e) => setPreferredFrom(e.target.value)}
                           />
                         </div>
@@ -1024,7 +1022,6 @@ export default function LabOfficer() {
                             <input
                               type="text"
                               className="results-input"
-                              defaultValue={result}
                               onChange={(e) => setPreferredTo(e.target.value)}
                             />
                         </div>
