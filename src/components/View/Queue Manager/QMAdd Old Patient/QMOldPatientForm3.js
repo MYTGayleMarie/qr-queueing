@@ -293,7 +293,6 @@ function QMOldPatientForm3({ service, customer,packagePrice, labPrice,  setPacka
      }
     
     function submit(e, customer, location, services, totalPrice) {
-
         e.preventDefault();
         
         if(isClicked == false) {
@@ -396,7 +395,7 @@ function QMOldPatientForm3({ service, customer,packagePrice, labPrice,  setPacka
                         company_contract_id: '',
                         doctors_referal: customer.referral,
                         type: customer.serviceLocation,
-                        result: customer.result,
+                        result: 'clinic',
                         total_amount: totalPrice,
                         discount_reference_no: customer.discountDetail,
                         home_service_fee: serviceFee,
