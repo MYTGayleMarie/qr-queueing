@@ -329,9 +329,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     }
   }, []);
 
-  const headers = servicesData.length > 0 ? Object.keys(servicesData[0]) : [];
-  const resultHeaders = ["lab_test", "result"];
-
   function chooseImage() {
     if (userId === "24") {
       return Image2;
@@ -543,6 +540,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                           <b>RESULT</b>
                         </span>
                       </div>
+                      <div className="col">
+                        <span>
+                          <b>REFERENCE RANGE</b>
+                        </span>
+                      </div>
                     </div>
                     {labTestResults.map((result, resultIndex) => (
                       <div className="row" key={resultIndex}>
@@ -589,6 +591,14 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                             </span>
                           )}
                         </div>
+                        <div className="col">
+                          <span>
+                            {result["preferred"] != " " ?
+                            result["preferred"] :
+                            result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
+                            result["preferred_from"] + "-" + result["preferred_to"] :
+                            "-"}</span>
+                        </div>n  
                       </div>
                     ))}
                   </div>
