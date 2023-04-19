@@ -50,6 +50,7 @@ function QMSwitchForm2() {
   const [location, setLocation] = useState("");
   const [serviceLocation, setServiceLocation] = useState("");
   const [result, setResult] = useState("");
+  const [customerID, setCustomerID] = useState("");
 
   const [discountDetails, setDiscountDetails] = useState();
 
@@ -82,6 +83,8 @@ function QMSwitchForm2() {
     setDiscountDetails,
     result,
     setResult,
+    customerID,
+    setCustomerID,
   };
   const serviceProps = {
     service,
@@ -105,8 +108,10 @@ function QMSwitchForm2() {
     discountDetails,
     result,
     setResult,
+    customerID,
+    setCustomerID,
   };
-  console.log(customer);
+
   switch (step.id) {
     case "customer":
       return <QMOldPatientForm1 {...personalProps} />;
