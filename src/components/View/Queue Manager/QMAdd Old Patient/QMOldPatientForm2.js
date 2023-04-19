@@ -97,6 +97,7 @@ function QMOldPatientForm2({
   discountDetails,
   result,
   setResult,
+  customerID,
 }) {
   document.body.style = "background: white;";
   window.scrollTo(0, 0);
@@ -203,9 +204,8 @@ function QMOldPatientForm2({
         const packagesArray = response.data.packages.sort(
           (x, y) => x.id - y.id
         );
-        console.log(packagesArray);
+
         packagesArray.map((item, index) => {
-          // console.log(item)
           var packageDetails = {};
           var packageCode = "";
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {

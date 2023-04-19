@@ -37,6 +37,8 @@ function QMOldPatientForm1({
   setDiscountDetails,
   result,
   setResult,
+  customerID,
+  setCustomerID,
 }) {
   setLocation("clinic");
   document.body.style = "background: white;";
@@ -105,7 +107,7 @@ function QMOldPatientForm1({
         setSeniorId(customer.data.senior_id);
         setLocation(customer.data.service_location);
         setResult(customer.data.result);
-        console.log(customer.data);
+        setCustomerID(customer.data.id);
 
         //setResult(customer.data.result);
       })

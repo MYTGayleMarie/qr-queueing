@@ -104,6 +104,7 @@ function QMOldPatientForm3({
   discountDetails,
   result,
   setResult,
+  customerID,
 }) {
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([]);
@@ -305,7 +306,7 @@ function QMOldPatientForm3({
   const [isClicked, setClicked] = useState(false);
 
   var totalMDCharge = 0;
-  var customerId = "";
+  // var customerId = "";
 
   if (mdCharge.physical_exam == true) {
     totalMDCharge += 50.0;
@@ -327,7 +328,7 @@ function QMOldPatientForm3({
       },
     })
       .then(function (customer) {
-        customerId = customer.data.id;
+        // customerId = customer.data.id;
         var presentDate = new Date();
         var birthDate = new Date(customer.data.birthdate);
         var age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -449,7 +450,7 @@ function QMOldPatientForm3({
         })
           .then(function (queue) {
             queue.data.queues.map((data) => {
-              if (customerId == data.customer_id) {
+              if (customerID == data.customer_id) {
                 queueNumber = data.queue_no;
               }
             });
@@ -461,7 +462,7 @@ function QMOldPatientForm3({
               params: {
                 token: userToken,
                 api_key: window.$api_key,
-                customer: customerId,
+                // customer: customerId,
                 discount_id: customer.discountId,
                 booking_time: dateOfTesting,
                 company_contract_id: "",
@@ -495,6 +496,7 @@ function QMOldPatientForm3({
                 remarks: "",
                 added_by: userId,
                 queue_no: queueNumber,
+                customer: customerID,
               },
             });
           })
