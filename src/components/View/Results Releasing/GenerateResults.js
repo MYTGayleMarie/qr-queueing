@@ -26,6 +26,7 @@ import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
+import Teal from "../../../images/backgrounds/TealHeader.png";
 
 const userToken = getToken();
 const userId = getUser();
@@ -395,27 +396,27 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         <div>
           <div ref={componentRef}>
             {/* Header */}
-
+            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header" />
             <div
-              class="bg"
               style={{
                 display: "flex",
                 alignItems: "center",
                 backgroundColor: "transparent",
               }}
             >
+              
               <img
                 src={Logo}
                 alt="QR DIAGNOSTICS"
                 className="img-small"
                 style={{ paddingRight: "50px" }}
               />
-              <div style={{ display: "block" }}>
+              <div style={{ display: "block"}}>
                 <span className="resultTitle">
                   Department of Clinical Laboratory
                 </span>
                 <span className="addressTitle">
-                  Unit A, m Block, Marasbaras, Tacloban City
+                  Unit A, M Block, Marasbaras, Tacloban City
                 </span>
                 <span className="addressTitle">0999 8888 6694</span>
               </div>
@@ -435,88 +436,96 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               <br />
               <div class="tb">
                 <div class="row">
-                  <div class="col">
+                  <div class="col details_title">
                     <span>
-                      <b>Patient name &nbsp; :&nbsp;&nbsp;&nbsp;</b>
+                      <b>Patient name :</b>
                     </span>
+                  </div>
+                  <div class="col">
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
                       {middleName.toUpperCase}
                     </span>
                   </div>
-                  <div class="col">
+                  <div class="col details_title">
                     <span>
                       <b>
                         Registration
-                        Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        Date :
                       </b>
                     </span>
+                  </div>
+                  <div class="col">
                     <span>
                       {monthNames[presentDate.getMonth()]}{" "}
                       {presentDate.getDate()}, {presentDate.getFullYear()}
                     </span>
                   </div>
                 </div>
-                {/* <br />
-                <br /> */}
-                {/* <div className="laboratory-title">
-                  {servicesData[0].category.toUpperCase()}
-                </div> */}
                 <div class="row">
-                  <div class="col">
+                  <div class="col details_title">
                     <span>
                       <b>
-                        Age
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        Age :
                       </b>
                     </span>
-                    <span>{age}</span>
                   </div>
                   <div class="col">
+                    <span>{age}</span>
+                  </div>
+                  <div class="col details_title">
                     <span>
                       <b>
                         Contact
-                        Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        :&nbsp;&nbsp;&nbsp;
+                        Number :
                       </b>
                     </span>
+                  </div>
+                  <div class="col">
                     <span>{contactNo}</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
+                  <div class="col details_title">
                     <span>
                       <b>
-                        Sex
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        Sex :
                       </b>
                     </span>
-                    <span>{gender.toUpperCase()}</span>
                   </div>
                   <div class="col">
+                    <span>{gender.toUpperCase()}</span>
+                  </div>
+                  <div class="col details_title">
                     <span>
                       <b>
                         Date of
-                        Birth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        :&nbsp;&nbsp;&nbsp;{" "}
+                        Birth :
                       </b>
                     </span>
+                  </div>
+                  <div class="col">
                     <span>{birthDate.toUpperCase()}</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
+                  <div class="col details_title">
                     <span>
                       <b>
-                        Patient ID
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;
+                        Patient ID :
                       </b>
                     </span>
+                  </div>
+                  <div class="col">
                     <span>{id}</span>
+                  </div>
+                  <div class="col details_title">
+                    <span>
+                      <b>Requesting Physician : </b>
+                    </span>
                   </div>
                   <div class="col">
                     <span>
-                      <b>Requesting Physician &nbsp; : </b>
                     </span>
                   </div>
                 </div>
@@ -567,7 +576,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                             parseFloat(result["preferred_from"]) >
                             parseFloat(result["result"]) ? (
                               <span class="red">
-                                {result["result"] +
+                                {parseFloat(result["result"]).toFixed(2) +
                                   " " +
                                   result["unit"] +
                                   " (L)"}
@@ -575,14 +584,14 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                             ) : parseFloat(result["result"]) >
                               parseFloat(result["preferred_to"]) ? (
                               <span class="red">
-                                {result["result"] +
+                                {parseFloat(result["result"]).toFixed(2) +
                                   " " +
                                   result["unit"] +
                                   " (H)"}
                               </span>
                             ) : (
                               <span>
-                                {result["result"] + " " + result["unit"]}
+                                {parseFloat(result["result"]).toFixed(2) + " " + result["unit"]}
                               </span>
                             )
                           ) : (
