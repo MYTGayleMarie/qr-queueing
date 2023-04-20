@@ -301,6 +301,7 @@ export default function LabOfficer() {
       })
         .then((response) => {
           const data = response.data.data;
+          console.log(response.data)
           console.log(data);
           const packageDetailId = selectedLab.booking_id;
           if (data.booking_detail_results) {
@@ -321,6 +322,7 @@ export default function LabOfficer() {
           } else {
             handleLab(selectedLab);
           }
+
         })
         .catch((error) => {
           handleLab(selectedLab);
@@ -329,11 +331,10 @@ export default function LabOfficer() {
     }
   }, [selectedLab]);
 
-  //for remarks
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/getDetails/" + id,
+      url: window.$link + "/Bookingdetails/getDetails/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -342,12 +343,13 @@ export default function LabOfficer() {
       },
     })
       .then(function (response) {
+        console.log(response.data.data.booking_detail[0].remarks);
         setRemarks(response.data.data.booking_detail[0].remarks);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [selectedLab]);
 
   // Modal Result and Unit edit
   React.useEffect(() => {
@@ -672,7 +674,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/editRemarks/" + id,
+      url: window.$link + "/Bookingdetails/editRemarks/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -683,6 +685,8 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         console.log(response);
+        setSelectedLab.remarks(remarks);
+        console.log(selectedLab.remarks)
       })
       .catch(function (error) {
         console.log(error);
@@ -816,11 +820,9 @@ export default function LabOfficer() {
 
   const handleSave = () => {
     setEditable(false);
+    console.log(remarks);
     setSaveRemarks(remarks);
-  };
-
-  const handleChange = (event) => {
-    setRemarks(event.target.value);
+    console.log(saveRemarks);
   };
 
   return (
@@ -1056,7 +1058,7 @@ export default function LabOfficer() {
                 value={remarks}
                 rows="3"
                 style={{ width: "100%" }}
-                onChange={handleChange}
+                onChange={(e) => setRemarks(e.target.value)}
                 disabled={!editable}
               ></textarea>
             </div>
