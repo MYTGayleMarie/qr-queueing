@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Inter',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,4 +42,14 @@ code {
 @font-face {
   font-family: 'Lato-Bold';
   src: url('./fonts/Lato/Lato-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter/static/Inter-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('./fonts/Inter/static/Inter-Bold.ttf');
 }
