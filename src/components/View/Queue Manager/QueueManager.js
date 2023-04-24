@@ -100,15 +100,15 @@ function QueueManager() {
     setRedirectDelete(true);
   }
 
-  function deleteCustomer(customerId) {
+  function deleteCustomer(queueNumber) {
     axios({
       method: 'post',
-      url: window.$link + 'customers/delete' + customerId,
+      url: window.$link + 'customers/cancelQueue/' + queueNumber,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
-        requester: userId,
+        updated_by: userId,
       },
     })
       .then(function (response) {

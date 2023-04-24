@@ -214,9 +214,9 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
                 <td key={row.id} data-heading={row.id} className={ row.val}>{row.queueNumber}</td>
                 <td key={row.id} data-heading={row.id} className={ row.val}>{row.name}</td>
                 <td>
-                    <div style={{ display: "flex", flexDirection: "column", width: "100px", alignContent: "center"}}>
-                    <button class="action-btn" role="button" onClick={() => link(row.customerId)} style={{width: "auto"}}>ADD BOOKING</button>
-                    <button class="action-btn" role="button" onClick={() => deleteCustomer(row.customerId)} style={{width: "auto"}}> DELETE BOOKING</button>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                    <button class="action-btn" role="button" onClick={() => link(row.customerId)} style={{width: "100px"}}>ADD BOOKING</button>
+                    <button class="action-btn" role="button" onClick={() => deleteCustomer(row.queueNumber)} style={{width: "100px"}}> DELETE BOOKING</button>
                     </div>
                 </td>
             </tr>
