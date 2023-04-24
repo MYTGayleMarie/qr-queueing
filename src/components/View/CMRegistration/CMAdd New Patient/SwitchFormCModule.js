@@ -16,7 +16,7 @@ const personalData = {
   referral: "",
   discountId: "",
   discountDetail: "",
-  serviceLocation: "",
+  serviceLocation: "clinic",
   mdCharge: "",
   homeServiceFee: "",
   result: "",

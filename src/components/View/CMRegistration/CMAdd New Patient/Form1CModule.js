@@ -289,7 +289,7 @@ function Form1CModule({
             style={{ width: "160px", height: "80px", marginBottom: "3%" }}
           ></img>
           <h1 style={{fontFamily: "Inter-Bold"}}>Customer Module</h1>
-          <div className="row" style={{ marginTop: "3%", alignItems: "center", justifyContent: "center", border: "1px solid black"}}>
+          <div className="row" style={{ marginTop: "3%", alignItems: "center", justifyContent: "center"}}>
             <div className="col-sm d-flex justify-content-center">
               <div
                 style={{
@@ -300,7 +300,6 @@ function Form1CModule({
                   color: "#419ea3",
                   fontFamily: "Inter-Bold",
                   fontSize: "25px",
-                  border: "1px solid black"
                 }}
               >
                 <p style={{fontSize: "35px"}}>Customer Created!</p> <br /> <br />
@@ -594,7 +593,7 @@ function Form1CModule({
                   id="clinicbtn"
                   name="service_location"
                   value="clinic"
-                  checked={service_location === "clinic"}
+                  checked={true}
                   onChange={setPersonal}
                 />
                 <label for="clinicbtn" className="radio-label">
