@@ -9,6 +9,8 @@ import TableFooter from "../../TableFooter";
 import { Navigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { Modal } from "react-bootstrap";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import "./LabOfficer.css";
 
@@ -1052,7 +1054,13 @@ export default function LabOfficer() {
               <label for="doctorRemarks" className="form-label">
                 Remarks
               </label>
-              <textarea
+              <ReactQuill
+                value={remarks}
+                onChange={(value) => setRemarks(value)}
+                readOnly={!editable}
+                style={{ width: '90%', height: '150px' }}
+              />
+              {/* <textarea
                 class="form-control"
                 id="doctorRemarks"
                 value={remarks}
@@ -1060,9 +1068,10 @@ export default function LabOfficer() {
                 style={{ width: "100%" }}
                 onChange={(e) => setRemarks(e.target.value)}
                 disabled={!editable}
-              ></textarea>
+              ></textarea> */}
             </div>
           </div>
+          <br /> <br />
           <div className="d-flex justify-content-end mr-3">
             <button className="filter-btn" name="save" onClick={handleSave}>
               Save
