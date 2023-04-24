@@ -1050,7 +1050,7 @@ export default function LabOfficer() {
           <div className="row">
             <div class="form-group">
               <label for="doctorRemarks" className="form-label">
-                Doctor's Remarks
+                Remarks
               </label>
               <textarea
                 class="form-control"

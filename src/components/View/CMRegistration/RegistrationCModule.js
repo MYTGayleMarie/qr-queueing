@@ -174,7 +174,7 @@ function RegistrationCModule() {
               <a href='/cmadd-new-patient'>
             <button variant="default" 
             style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
-                  fontFamily: "I nter-Bold, sans-serif", fontSize:"25px",}}>
+                  fontFamily: "Inter-Bold, sans-serif", fontSize:"25px",}}>
             New Patient</button></a>
             </div>  
 

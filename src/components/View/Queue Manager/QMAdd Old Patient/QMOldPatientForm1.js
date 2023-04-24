@@ -409,7 +409,7 @@ function QMOldPatientForm1({
           <form className="needs-validation">
             <div className="row">
               <label for="address" className="form-label">
-                REFERRAL <i>(required)</i>
+                REFERRAL
               </label>
               <br />
               <input

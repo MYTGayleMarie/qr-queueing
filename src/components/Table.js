@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
 
 
-function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setName, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, handleOnChange, deleteBooking, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
+function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', filteredData, setFilter, filter, link, givenClass, setName, setChecked, render, setRender, registerPay, registerPrint, totalCount, setStatus, endPromo, print, dropdownData, selectSupplier, handleOnChange, deleteBooking, deleteCustomer, userId, editAction, deleteAction, setCategory, receiveData, View, tableTotal, deleteFile,handleRemoveClick,handleRemoveItem, download, useLoader = false, isReady}) {
     //PAGINATION 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
@@ -209,10 +209,16 @@ function Table({clickable, type, tableData, headingColumns, breakOn = 'medium', 
         }
         else if (type === 'queue' && clickable == true) {
             console.log(row)
-            return (<tr key={row.id}>
-            <td key={row.id} data-heading={row.id} className={ row.val}>{row.queueNumber}</td>
-            <td key={row.id} data-heading={row.id} className={ row.val}>{row.name}</td>
-            <td><button class="action-btn" role="button" onClick={() => link(row.customerId)}>ADD BOOKING</button></td>
+            return (
+            <tr key={row.id}>
+                <td key={row.id} data-heading={row.id} className={ row.val}>{row.queueNumber}</td>
+                <td key={row.id} data-heading={row.id} className={ row.val}>{row.name}</td>
+                <td>
+                    <div style={{ display: "flex", flexDirection: "column", width: "100px", alignContent: "center"}}>
+                    <button class="action-btn" role="button" onClick={() => link(row.customerId)} style={{width: "auto"}}>ADD BOOKING</button>
+                    <button class="action-btn" role="button" onClick={() => deleteCustomer(row.customerId)} style={{width: "auto"}}> DELETE BOOKING</button>
+                    </div>
+                </td>
             </tr>
             )
         }
