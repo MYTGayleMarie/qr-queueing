@@ -515,7 +515,7 @@ function Table({
                 style={{ width: "100px" }}
               >
                 {" "}
-                DELETE BOOKING
+                CANCEL BOOKING
               </button>
             </div>
           </td>

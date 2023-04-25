@@ -620,7 +620,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
                   <div>
                     <span>
-                      <b>Remarks: </b>
+                      <b>REMARKS: </b>
                     </span>
                     <br />
                     <span><i>{remark}</i></span>

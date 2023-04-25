@@ -52,7 +52,6 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
     if (
       fname != '' &&
       lname != '' &&
-      mname != '' &&
       sex != '' &&
       birthDate != '' &&
       contactNum != '' &&
@@ -60,8 +59,7 @@ function AddPatient({ customer, setPersonal, setIsService, setIsPackage, discoun
       serviceLocation != '' &&
       result != '' &&
       dateOfTesting != '' &&
-      lastMeal != '' &&
-      referral != ""
+      lastMeal != ''
     ) {
       return (
         <div className="d-flex justify-content-end">
