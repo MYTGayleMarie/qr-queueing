@@ -76,10 +76,6 @@ export default function LabOfficer() {
   const [show, setShow] = useState(false);
   const [labName, setLabName] = useState("");
   const [result, setResult] = useState("");
-  const [preferred, setPreferred] = useState("");
-  const [preferredTo, setPreferredTo] = useState("");
-  const [preferredFrom, setPreferredFrom] = useState("");
-  const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
 
   // Remarks textbox
@@ -189,7 +185,6 @@ export default function LabOfficer() {
     labTestData.map((row) => {
       if (lab_test == row.lab_test) {
         setResult(row.result);
-        setUnit(row.unit);
         return row;
       }
       return row;
@@ -205,13 +200,6 @@ export default function LabOfficer() {
     const updatedData = labTestData.map((row) => {
       if (row.lab_test === labName) {
         row.result = result;
-        row.unit = unit;
-        if (isDropdown == true) {
-          row.preferred = preferred;
-        } else {
-          row.preferred_from = preferredFrom;
-          row.preferred_to = preferredTo;
-        }
         return row;
       }
       return row;
@@ -786,7 +774,11 @@ export default function LabOfficer() {
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
     if (result.preferred_from != 0.0 && result.preferred_to != 0.0) {
-      reference_range = result.preferred_from + " - " + result.preferred_to;
+      if (result.preferred_to == 999.99) {
+        reference_range = ">=" + result.preferred_from;
+      } else {
+        reference_range = result.preferred_from + " - " + result.preferred_to;
+      }
     } else if (result.preferred != " ") {
       reference_range = result.preferred;
     } else {

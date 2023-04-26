@@ -602,9 +602,12 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                         <div className="col">
                           <span>
                             {result["preferred"] != " " ?
-                            result["preferred"] :
-                            result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
-                            result["preferred_from"] + "-" + result["preferred_to"] :
+                              result["preferred"]
+                              :
+                                result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
+                                  result["preferred_to"] == 999.99 ?
+                                    ">=" + result["preferred_from"] :
+                                   result["preferred_from"] + "-" + result["preferred_to"] :
                             "-"}</span>
                         </div>n  
                       </div>
