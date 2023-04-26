@@ -773,13 +773,13 @@ export default function LabOfficer() {
 
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
-    if (result.preferred_from != 0.0 && result.preferred_to != 0.0) {
-      if (result.preferred_to == 999.99) {
+    if (result.preferred_from !== 0.0 && result.preferred_to != 0.0) {
+      if (result.preferred_to === 999.99) {
         reference_range = ">=" + result.preferred_from;
       } else {
         reference_range = result.preferred_from + " - " + result.preferred_to;
       }
-    } else if (result.preferred != " ") {
+    } else if (result.preferred !== " ") {
       reference_range = result.preferred;
     } else {
       reference_range = "-";
