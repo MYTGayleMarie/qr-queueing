@@ -143,8 +143,7 @@ function QMOldPatientForm1({
       location != "" &&
       result != "" &&
       dateOfTesting != "" &&
-      lastMeal != "" &&
-      referral != ""
+      lastMeal != ""
     ) {
       return (
         <div className="d-flex justify-content-end">
