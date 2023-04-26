@@ -938,7 +938,6 @@ export default function LabOfficer() {
             <Modal.Body>
               <div className="row">
                 {/* 1st Row */}
-                <div className="col-sm-6">
                   <div className="result-input-wrapper">
                     <div className="edit-sub-header">RESULT</div>
                     {isDropdown ? (
@@ -963,64 +962,7 @@ export default function LabOfficer() {
                       />
                     )}
                   </div>
-                </div>
-
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">UNIT</div>
-                    <input
-                      type="text"
-                      className="results-input"
-                      defaultValue={unit}
-                      onChange={(e) => setUnit(e.target.value)}
-                    />
-                  </div>
-                </div>
               </div>
-
-              {/* 2nd Row */}
-              {isDropdown ? (
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED</div>
-                      <Select
-                        isSearchable
-                        options={labTestOptions}
-                        value={labTestOptions.find(
-                          (option) => option.preferred === result
-                        )}
-                        onChange={(selectedOption) => {
-                          setPreferred(selectedOption.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED FROM</div>
-                      <input
-                        type="text"
-                        className="results-input"
-                        onChange={(e) => setPreferredFrom(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED TO</div>
-                      <input
-                        type="text"
-                        className="results-input"
-                        onChange={(e) => setPreferredTo(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </Modal.Body>
             <Modal.Footer>
               <button

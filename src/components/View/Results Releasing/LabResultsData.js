@@ -218,8 +218,8 @@
          "result": "",
          "unit": "",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 5.00,
+         "preferred_to": 9.00,
          
        },
        {
@@ -227,8 +227,8 @@
          "result": "",
          "unit": "",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 1.005,
+         "preferred_to": 1.03,
          
        },
        {
@@ -255,7 +255,7 @@
          "unit": "/HPF",
          "preferred": " ",
          "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_to": 2.00,
          
        },
        {
@@ -264,7 +264,7 @@
          "unit": "/HPF",
          "preferred": " ",
          "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_to": 2.00,
          
        },
        {
@@ -348,8 +348,8 @@
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 3.00,
+         "preferred_to": 5.00,
           
        },
        {
@@ -358,7 +358,7 @@
          "unit": "/HPF",
          "preferred": " ",
          "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_to": 1.00,
           
        },
        {
@@ -430,32 +430,32 @@
          "result": "",
          "unit": "",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 1.50,
+         "preferred_to":999.99,
        },
        {
          "lab_test": "Volume",
          "result": "",
          "unit": "ml",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 7.20,
+         "preferred_to": 999.99,
        },
        {
          "lab_test": "Liquefaction Time",
          "result": "",
          "unit": "minutes",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 30.00,
+         "preferred_to": 60.00,
        },
        {
          "lab_test": "Viscosity",
          "result": "",
-         "unit": "",
+         "unit": "cm",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 2.00,
+         "preferred_to": 999.99,
        },
        {
          "lab_test": "Total Sperm Count",
@@ -470,16 +470,16 @@
          "result": "",
          "unit": "%",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 40.00,
+         "preferred_to": 999.99,
        },
        {
          "lab_test": "Non Progressive",
          "result": "",
          "unit": "%",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 32.00,
+         "preferred_to": 999.99,
        },
        {
          "lab_test": "Immotile",
@@ -494,8 +494,8 @@
          "result": "",
          "unit": "%",
          "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_from": 32.00,
+         "preferred_to": 999.99,
        },
        {
          "lab_test": "Total Normal Forms",
@@ -535,7 +535,7 @@
          "unit": "/HPF",
          "preferred": " ",
          "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_to": 5.00,
        },
        {
          "lab_test": "RBC",
@@ -543,7 +543,7 @@
          "unit": "/HPF",
          "preferred": " ",
          "preferred_from": 0.00,
-         "preferred_to": 0.00,
+         "preferred_to": 5.00,
        },
      ],
      
