@@ -18,6 +18,22 @@ const userToken = getToken();
 const userId = getUser();
 var queueNumber = "";
 var presentDate = new Date();
+const timeString = presentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+var monthNames = [
+  "JANUARY",
+  "FEBRUARY",
+  "MARCH",
+  "APRIL",
+  "MAY",
+  "JUNE",
+  "JULY",
+  "AUGUST",
+  "SEPTEMBER",
+  "OCTOBER",
+  "NOVEMBER",
+  "DECEMBER",
+];
 
 function Form1CModule({
   customer,
@@ -272,24 +288,24 @@ function Form1CModule({
             src="/logo.png"
             style={{ width: "160px", height: "80px", marginBottom: "3%" }}
           ></img>
-          <h1>Customer Module</h1>
-          <div className="row" style={{ marginTop: "3%" }}>
-            <div className="col-sm-4"></div>
-            <div className="col-sm-4 d-flex justify-content-center">
+          <h1 style={{fontFamily: "Inter-Bold"}}>Customer Module</h1>
+          <div className="row" style={{ marginTop: "3%", alignItems: "center", justifyContent: "center"}}>
+            <div className="col-sm d-flex justify-content-center">
               <div
                 style={{
                   padding: "10px",
                   margin: "5px",
-                  width: "150%",
+                  width: "900px",
                   height: "250%",
-                  borderRadius: "8px",
-                  border: "1px",
                   color: "#419ea3",
-                  fontFamily: "Montserrat-Bold",
+                  fontFamily: "Inter-Bold",
                   fontSize: "25px",
                 }}
               >
-                Customer Created! <br />
+                <p style={{fontSize: "35px"}}>Customer Created!</p> <br /> <br />
+                {`${customer.fname.toUpperCase()} ${customer.mname.toUpperCase()} ${customer.lname.toUpperCase()}`} <br />
+                {monthNames[presentDate.getMonth()] + " " + presentDate.getDate() + ", " + presentDate.getFullYear()} <br />
+                {timeString} <br /> <br />
                 Your Queue Number is {queueNumber}.
               </div>
             </div>
@@ -304,7 +320,7 @@ function Form1CModule({
                 borderRadius: "8px",
                 border: "1px",
                 color: "#419ea3",
-                fontFamily: "Montserrat-Bold",
+                fontFamily: "Inter-Bold",
                 fontSize: "25px",
               }}
             >
@@ -331,7 +347,7 @@ function Form1CModule({
                   borderRadius: "8px",
                   border: "1px",
                   color: "#419ea3",
-                  fontFamily: "Montserrat-Bold",
+                  fontFamily: "Inter-Bold",
                   fontSize: "15px",
                 }}
               >
@@ -577,7 +593,7 @@ function Form1CModule({
                   id="clinicbtn"
                   name="service_location"
                   value="clinic"
-                  checked={service_location === "clinic"}
+                  checked={true}
                   onChange={setPersonal}
                 />
                 <label for="clinicbtn" className="radio-label">

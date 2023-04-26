@@ -16,6 +16,7 @@
 .header-title {
     margin-left: 2rem;
     font-size: 1.7rem;
+    font-family: 'Inter-Bold', sans-serif;
     font-weight: bold;
     color: #419EA3;
 }
@@ -44,6 +45,7 @@
 @media only screen and (max-width: 1000px){
   .header-btn {
     font-size: 25%;
+    font-family: 'Inter', sans-serif;
   }
   
   .header-title {
@@ -51,6 +53,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: #419EA3;
+    font-family: 'Inter', sans-serif;
 }
 
 .total-count-container {

@@ -428,7 +428,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 marginBottom: "0px",
               }}
             />
-            <br />
             <div>
               <div className="laboratory-title">
                 {servicesData[0].category.toUpperCase()}
@@ -621,10 +620,10 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
                   <div>
                     <span>
-                      <b>Remarks: </b>
+                      <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span>{remark}</span>
+                    <span><i>{remark}</i></span>
                   </div>
                 </div>
               ))}

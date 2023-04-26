@@ -157,7 +157,7 @@ function RegistrationCModule() {
    return (
     <div>
 
-<div className="row" style={{marginTop:"6%", fontFamily:"Montserrat-Bold"}} >
+<div className="row" style={{marginTop:"6%", fontFamily:"Inter-Bold, sans-serif"}} >
           <center>
           <img src="/logo.png" style={{width:"160px", height:"80px", marginBottom:"3%",}}></img>
           <h1>Customer Module</h1>
@@ -166,7 +166,7 @@ function RegistrationCModule() {
              <a href='/cmadd-old-patient'>
              <button variant="default" 
               style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
-                    fontFamily: "Montserrat-Bold", fontSize:"25px",}}>
+                    fontFamily: "Inter-Bold, sans-serif", fontSize:"25px",}}>
               Old Patient</button></a>
             </div>
 
@@ -174,7 +174,7 @@ function RegistrationCModule() {
               <a href='/cmadd-new-patient'>
             <button variant="default" 
             style={{padding:"10px", margin:"5px", width:"150%", height:"250%", borderRadius:"8px", border:"1px", color:"#419ea3", 
-                  fontFamily: "Montserrat-Bold", fontSize:"25px",}}>
+                  fontFamily: "Inter-Bold, sans-serif", fontSize:"25px",}}>
             New Patient</button></a>
             </div>  
 

@@ -33,11 +33,12 @@
 }
 
 .italic {
-    font-family: 'Montserrat-Italic';
+    font-family: 'Inter-Bold', sans-serif;
+    font-style: italic;
 }
 
 label {
-    font-family: 'Montserrat-Bold';
+    font-family: 'Inter-Bold';
     color: #419EA3;
     font-size: 20px;
 }

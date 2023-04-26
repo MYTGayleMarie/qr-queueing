@@ -9,6 +9,8 @@ import TableFooter from "../../TableFooter";
 import { Navigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { Modal } from "react-bootstrap";
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 
 import "./LabOfficer.css";
 
@@ -202,12 +204,10 @@ export default function LabOfficer() {
 
     const updatedData = labTestData.map((row) => {
       if (row.lab_test === labName) {
-        console.log("success");
         row.result = result;
         row.unit = unit;
         if (isDropdown == true) {
-          console.log(preferred);
-          row.preferred = preferred
+          row.preferred = preferred;
         } else {
           row.preferred_from = preferredFrom;
           row.preferred_to = preferredTo;
@@ -301,12 +301,11 @@ export default function LabOfficer() {
       })
         .then((response) => {
           const data = response.data.data;
-          console.log(data);
+
           const packageDetailId = selectedLab.booking_id;
           if (data.booking_detail_results) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
-              console.log(labTestData);
             } else if (data.booking_package_details_results[packageDetailId]) {
               setLabTestData(
                 data.booking_package_details_results[packageDetailId]
@@ -329,11 +328,10 @@ export default function LabOfficer() {
     }
   }, [selectedLab]);
 
-  //for remarks
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/getDetails/" + id,
+      url: window.$link + "/Bookingdetails/getDetails/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -347,7 +345,7 @@ export default function LabOfficer() {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [selectedLab]);
 
   // Modal Result and Unit edit
   React.useEffect(() => {
@@ -529,7 +527,7 @@ export default function LabOfficer() {
                 .replace(/\s+/g, "_")
                 .toLowerCase();
             }
-            // console.log(info)
+
             serviceDetails.category = category.data.name;
             serviceDetails.name = info.lab_test;
             serviceDetails.type = "lab";
@@ -545,8 +543,6 @@ export default function LabOfficer() {
       }
     });
   }, [services]);
-
-  // console.log(labTests)
 
   // Categorize lab test
   const xray = labTests.filter(
@@ -638,11 +634,8 @@ export default function LabOfficer() {
   const [rows, setRows] = useState([]);
   const [showConfirm, setShowConfirm] = React.useState(false);
 
-  //  console.log(labTests)
-
   // Get Multiple Uploads
   async function getUploads() {
-    console.log("ID: ", id);
     if (id != null) {
       axios({
         method: "get",
@@ -672,7 +665,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/editRemarks/" + id,
+      url: window.$link + "/Bookingdetails/editRemarks/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -683,6 +676,7 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         console.log(response);
+        setSelectedLab.remarks(remarks);
       })
       .catch(function (error) {
         console.log(error);
@@ -789,11 +783,9 @@ export default function LabOfficer() {
     return <Navigate to={link} />;
   }
 
-  console.log(labTestData);
-
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
-    if (result.preferred_from != 0.00 && result.preferred_to != 0.00) {
+    if (result.preferred_from != 0.0 && result.preferred_to != 0.0) {
       reference_range = result.preferred_from + " - " + result.preferred_to;
     } else if (result.preferred != " ") {
       reference_range = result.preferred;
@@ -805,7 +797,7 @@ export default function LabOfficer() {
       lab_test: result.lab_test,
       result: result.result,
       unit: result.unit,
-      reference_range: reference_range
+      reference_range: reference_range,
     };
   });
 
@@ -816,11 +808,8 @@ export default function LabOfficer() {
 
   const handleSave = () => {
     setEditable(false);
-    setSaveRemarks(remarks);
-  };
 
-  const handleChange = (event) => {
-    setRemarks(event.target.value);
+    setSaveRemarks(remarks);
   };
 
   return (
@@ -920,7 +909,13 @@ export default function LabOfficer() {
               a.id > b.id ? 1 : b.id > a.id ? -1 : 0
             )}
             rowsPerPage={20}
-            headingColumns={["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]}
+            headingColumns={[
+              "LAB NAME",
+              "RESULTS",
+              "UNIT",
+              "REFERENCE RANGE",
+              "ACTION",
+            ]}
             filteredData={filteredData}
             //dropdownData={labTests}
             setFilter={setFilter}
@@ -983,53 +978,49 @@ export default function LabOfficer() {
                 </div>
               </div>
 
-                {/* 2nd Row */}
-                {isDropdown ? (
-                  <div className="row">
-                    <div className="col-sm-6">
+              {/* 2nd Row */}
+              {isDropdown ? (
+                <div className="row">
+                  <div className="col-sm-6">
                     <div className="result-input-wrapper">
                       <div className="edit-preferred">PREFERRED</div>
                       <Select
-                          isSearchable
-                          options={labTestOptions}
-                          value={labTestOptions.find(
-                            (option) => option.preferred === result
-                          )}
-                          onChange={(selectedOption) => {
-                            setPreferred(selectedOption.value);
-                            console.log(preferred);
-                          }}
-                        />
-                      </div>
+                        isSearchable
+                        options={labTestOptions}
+                        value={labTestOptions.find(
+                          (option) => option.preferred === result
+                        )}
+                        onChange={(selectedOption) => {
+                          setPreferred(selectedOption.value);
+                        }}
+                      />
                     </div>
                   </div>
-                  ) :
-                  (
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <div className="result-input-wrapper">
-                          <div className="edit-preferred">PREFERRED FROM</div>
-                          <input
-                            type="text"
-                            className="results-input"
-                            onChange={(e) => setPreferredFrom(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-sm-6">
-                        <div className="result-input-wrapper">
-                          <div className="edit-preferred">PREFERRED TO</div>
-                            <input
-                              type="text"
-                              className="results-input"
-                              onChange={(e) => setPreferredTo(e.target.value)}
-                            />
-                        </div>
-                      </div>
+                </div>
+              ) : (
+                <div className="row">
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-preferred">PREFERRED FROM</div>
+                      <input
+                        type="text"
+                        className="results-input"
+                        onChange={(e) => setPreferredFrom(e.target.value)}
+                      />
                     </div>
-                  )
-                }
-                
+                  </div>
+                  <div className="col-sm-6">
+                    <div className="result-input-wrapper">
+                      <div className="edit-preferred">PREFERRED TO</div>
+                      <input
+                        type="text"
+                        className="results-input"
+                        onChange={(e) => setPreferredTo(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </Modal.Body>
             <Modal.Footer>
               <button
@@ -1048,19 +1039,26 @@ export default function LabOfficer() {
           <div className="row">
             <div class="form-group">
               <label for="doctorRemarks" className="form-label">
-                Doctor's Remarks
+                Remarks
               </label>
-              <textarea
+              <ReactQuill
+                value={remarks}
+                onChange={(value) => setRemarks(value)}
+                readOnly={!editable}
+                style={{ width: "90%", height: "150px" }}
+              />
+              {/* <textarea
                 class="form-control"
                 id="doctorRemarks"
                 value={remarks}
                 rows="3"
                 style={{ width: "100%" }}
-                onChange={handleChange}
+                onChange={(e) => setRemarks(e.target.value)}
                 disabled={!editable}
-              ></textarea>
+              ></textarea> */}
             </div>
           </div>
+          <br /> <br />
           <div className="d-flex justify-content-end mr-3">
             <button className="filter-btn" name="save" onClick={handleSave}>
               Save

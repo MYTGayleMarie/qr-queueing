@@ -143,8 +143,7 @@ function QMOldPatientForm1({
       location != "" &&
       result != "" &&
       dateOfTesting != "" &&
-      lastMeal != "" &&
-      referral != ""
+      lastMeal != ""
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -409,7 +408,7 @@ function QMOldPatientForm1({
           <form className="needs-validation">
             <div className="row">
               <label for="address" className="form-label">
-                REFERRAL <i>(required)</i>
+                REFERRAL
               </label>
               <br />
               <input

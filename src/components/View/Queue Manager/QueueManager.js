@@ -100,6 +100,32 @@ function QueueManager() {
     setRedirectDelete(true);
   }
 
+  function deleteCustomer(queueNumber) {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      axios({
+        method: 'post',
+        url: window.$link + 'customers/cancelQueue/' + queueNumber,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          updated_by: userId,
+        },
+      })
+        .then(function (response) {
+          toast.success('Customer Deleted Successfully', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setRender(oldArray => [...oldArray, 1]);
+        })
+        .catch(function (error) {
+          toast.error('Error Deleting Customer', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
+    }
+  }  
+
   if(redirectDelete == true) {
     var link =  "/delete-booking/" + id;
     return (
@@ -144,6 +170,7 @@ function QueueManager() {
             role={role}
             userId={userId}
             deleteBooking={deleteBooking}
+            deleteCustomer={deleteCustomer}
             useLoader={true}
             isReady={isReady}
           />
