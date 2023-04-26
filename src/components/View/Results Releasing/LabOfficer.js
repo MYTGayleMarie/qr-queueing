@@ -773,7 +773,7 @@ export default function LabOfficer() {
 
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
-    if (result.preferred_from !== 0.0 && result.preferred_to != 0.0) {
+    if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
       if (result.preferred_to === 999.99) {
         reference_range = ">=" + result.preferred_from;
       } else {
@@ -930,30 +930,30 @@ export default function LabOfficer() {
             <Modal.Body>
               <div className="row">
                 {/* 1st Row */}
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">RESULT</div>
-                    {isDropdown ? (
-                      <Select
-                        isSearchable
-                        options={labTestOptions}
-                        value={labTestOptions.find(
-                          (option) => option.value === result
-                        )}
-                        defaultValue={result}
-                        onChange={(selectedOption) => {
-                          setResult(selectedOption.value);
-                        }}
-                        // label={result}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        className="results-input"
-                        defaultValue={result}
-                        onChange={(e) => setResult(e.target.value)}
-                      />
-                    )}
-                  </div>
+                <div className="result-input-wrapper">
+                  <div className="edit-sub-header">RESULT</div>
+                  {isDropdown ? (
+                    <Select
+                      isSearchable
+                      options={labTestOptions}
+                      value={labTestOptions.find(
+                        (option) => option.value === result
+                      )}
+                      defaultValue={result}
+                      onChange={(selectedOption) => {
+                        setResult(selectedOption.value);
+                      }}
+                      // label={result}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      className="results-input"
+                      defaultValue={result}
+                      onChange={(e) => setResult(e.target.value)}
+                    />
+                  )}
+                </div>
               </div>
             </Modal.Body>
             <Modal.Footer>
