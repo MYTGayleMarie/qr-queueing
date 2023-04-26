@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef, memo } from "react";
 import axios from "axios";
 import { getToken, getUser, getRoleId } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
@@ -11,7 +11,11 @@ import Select from "react-select";
 import { Modal } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import GenerateResults from "./GenerateResults";
 
+import "./FileUpload.css";
+import "./GenerateResults.css";
+import "./MedTech.css";
 import "./LabOfficer.css";
 
 //components
@@ -20,6 +24,21 @@ import Navbar from "../../Navbar";
 import Table from "../../Table.js";
 import labResultsData from "./LabResultsData.js";
 import { SkewLoader } from "react-spinners";
+
+import Logo from "../../../images/logo.png";
+
+// Import Signature Images
+import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png";
+import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png";
+import Image3 from "../../../images/med_tech/DEVIO_ANECA.png";
+import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
+import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png";
+import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
+import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
+import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
+import DummyImg from "../../../images/med_tech/dummy.png";
+import Watermark from "../../../images/Watermark.png";
+import Teal from "../../../images/backgrounds/TealHeader.png";
 
 const buttons = ["add-new-patient", "add-old-patient"];
 const userToken = getToken();
@@ -30,6 +49,21 @@ var bookingId = "";
 // var unit = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split("T")[0];
+
+var monthNames = [
+  "JANUARY",
+  "FEBRUARY",
+  "MARCH",
+  "APRIL",
+  "MAY",
+  "JUNE",
+  "JULY",
+  "AUGUST",
+  "SEPTEMBER",
+  "OCTOBER",
+  "NOVEMBER",
+  "DECEMBER",
+];
 
 export const refreshPage = () => {
   window.location.reload();
@@ -54,6 +88,7 @@ export default function LabOfficer() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const componentRef = useRef();
 
   // Lab Tests
   const [services, setServices] = useState([]);
@@ -85,6 +120,16 @@ export default function LabOfficer() {
 
   // For Package details result
   const [packageDetailId, setPackageDetailId] = useState([]);
+
+  // For Show PDF Modal
+  const [showPDF, setShowPDF] = useState(false);
+  const [remark, setRemark] = useState("");
+
+  // Doctor Remarks
+  const [medTech, setMedTech] = useState("");
+  const [medTechPRC, setMedTechPRC] = useState("");
+  const [clinicPatho, setClinicPatho] = useState("");
+  const [clinicPathoPRC, setClinicPathoPRC] = useState("");
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
@@ -210,6 +255,70 @@ export default function LabOfficer() {
     setShow(false);
   };
 
+  //fetch Medtech
+  //fetch Medtech
+  React.useEffect(() => {
+    setClinicPatho("JENNIFER D. ABIERAS");
+    setClinicPathoPRC("PRC LIC. NO.: 0085469");
+
+    if (medTech === "") {
+      axios({
+        method: "get",
+        url: window.$link + "users/show/" + userId,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+          requester: userId,
+        },
+      })
+        .then((response) => {
+          setMedTech(response.data.name);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (userId === "24") {
+      setMedTechPRC("PRC LIC. NO.: 0052932");
+    } else if (userId === "25") {
+      setMedTechPRC("PRC LIC. NO.: 0094539");
+    } else if (userId === "26") {
+      setMedTechPRC("PRC LIC. NO.: 0093629");
+    } else if (userId === "23") {
+      setMedTechPRC("PRC LIC. NO.: 0092410");
+    } else if (userId === "27") {
+      setMedTechPRC("PRC LIC. NO.: 0085690");
+    } else if (userId === "28") {
+      setMedTechPRC("PRC LIC. NO.: 0052556");
+    } else if (userId === "29") {
+      setMedTechPRC("PRC LIC. NO.: 0072875");
+    } else {
+      setMedTechPRC("No PRC License Number");
+    }
+  }, []);
+
+  function chooseImage() {
+    if (userId === "24") {
+      return Image2;
+    } else if (userId === "25") {
+      return Image3;
+    } else if (userId === "26") {
+      return Image4;
+    } else if (userId === "23") {
+      return Image5;
+    } else if (userId === "27") {
+      return Image6;
+    } else if (userId === "28") {
+      return Image7;
+    } else if (userId === "29") {
+      return Image8;
+    } else {
+      return DummyImg;
+    }
+  }
+
   React.useEffect(() => {
     //for customer id
     axios({
@@ -245,6 +354,28 @@ export default function LabOfficer() {
         setAddress(response.data.data.booking.customer_address);
       })
       .catch((error) => {});
+  }, []);
+  
+  // Function to get Booking Details get Details
+  React.useEffect(() => {
+    if (labTestData.id !== "") {
+      axios({
+        method: "get",
+        url: window.$link + "Bookingdetails/getDetails/" + labTestData.id,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+          requester: userId,
+        },
+      })
+        .then((booking) => {
+          setRemark(booking.data.data.booking_detail[0]?.remarks ?? "");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   React.useEffect(() => {
@@ -793,6 +924,295 @@ export default function LabOfficer() {
     };
   });
 
+  const Signature = () => {
+    return (
+      <div>
+        <div className="wrapper">
+          <div className="box">
+            <img src={chooseImage()} alt="MedTech" />
+          </div>
+          <div className="box">
+            <img src={Image1} alt="MedTech" />
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box">
+            <span className="tspan">{medTech}</span>
+          </div>
+          <div className="box">
+            <span className="tspan">{clinicPatho}</span>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box">
+            <span className="tspan">{medTechPRC}</span>
+          </div>
+          <div className="box">
+            <span className="tspan">{clinicPathoPRC}</span>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="box">
+            <span className="tspan">Medical Technologist</span>
+          </div>
+          <div className="box">
+            <span className="tspan">Clinical Pathologist</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const LaboratoryResultsTable = () => {
+    return (
+      <div class="bg" style={{width: "1000px"}}>
+        <div>
+          <div ref={componentRef}>
+            {/* Header */}
+            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header" />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "transparent",
+              }}
+            >
+              
+              <img
+                src={Logo}
+                alt="QR DIAGNOSTICS"
+                className="img-small"
+                style={{ paddingRight: "50px" }}
+              />
+              <div style={{ display: "block"}}>
+                <span className="resultTitle">
+                  Department of Clinical Laboratory
+                </span>
+                <span className="addressTitle">
+                  Unit A, M Block, Marasbaras, Tacloban City
+                </span>
+                <span className="addressTitle">0999 8888 6694</span>
+              </div>
+            </div>
+            <hr
+              style={{
+                border: "2px solid black",
+                width: "100%",
+                marginBottom: "0px",
+              }}
+            />
+            <div>
+              <div className="laboratory-title">
+                <span>MIcroscopy</span>
+              </div>
+              <br />
+              <div class="tb">
+                <div class="row">
+                  <div class="col details_title">
+                    <span>
+                      <b>Patient name :</b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>
+                      {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
+                      {middleName.toUpperCase}
+                    </span>
+                  </div>
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Registration
+                        Date :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>
+                      {monthNames[presentDate.getMonth()]}{" "}
+                      {presentDate.getDate()}, {presentDate.getFullYear()}
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Age :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>{age}</span>
+                  </div>
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Contact
+                        Number :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>{contactNo}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Sex :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>{gender.toUpperCase()}</span>
+                  </div>
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Date of
+                        Birth :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>{birthDate.toUpperCase()}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col details_title">
+                    <span>
+                      <b>
+                        Patient ID :
+                      </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>{id}</span>
+                  </div>
+                  <div class="col details_title">
+                    <span>
+                      <b>Requesting Physician : </b>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
+
+              {/* Mapping of Detail Results */}
+              {labTestData.map((service, serviceIndex) => (
+                <div key={serviceIndex}>
+                  {/* {getResults(service.id)} */}
+                  <br />
+                  <div className="tb mid">
+                    <div className="row bd">
+                      <div className="col">
+                        <span>
+                          <b>TEST</b>
+                        </span>
+                      </div>
+                      <div className="col">
+                        <span>
+                          <b>RESULT</b>
+                        </span>
+                      </div>
+                      <div className="col">
+                        <span>
+                          <b>REFERENCE RANGE</b>
+                        </span>
+                      </div>
+                    </div>
+                    {labTestDataWithResults.map((result, resultIndex) => (
+                      <div className="row" key={resultIndex}>
+                        <div className="col">
+                          <span>{result["lab_test"]}</span>
+                        </div>
+                        <div className="col">
+                          {result["preferred"] != " " ? (
+                            result["preferred"] == result["result"] ? (
+                              <span>
+                                {result["result"] + " " + result["unit"]}
+                              </span>
+                            ) : (
+                              <span class="red">
+                                {result["result"] + " " + result["unit"]}
+                              </span>
+                            )
+                          ) : result["preferred_from"] != 0.0 &&
+                            result["preferred_to"] != 0.0 ? (
+                            parseFloat(result["preferred_from"]) >
+                            parseFloat(result["result"]) ? (
+                              <span class="red">
+                                {parseFloat(result["result"]).toFixed(2) +
+                                  " " +
+                                  result["unit"] +
+                                  " (L)"}
+                              </span>
+                            ) : parseFloat(result["result"]) >
+                              parseFloat(result["preferred_to"]) ? (
+                              <span class="red">
+                                {parseFloat(result["result"]).toFixed(2) +
+                                  " " +
+                                  result["unit"] +
+                                  " (H)"}
+                              </span>
+                            ) : (
+                              <span>
+                                {parseFloat(result["result"]).toFixed(2) + " " + result["unit"]}
+                              </span>
+                            )
+                          ) : (
+                            <span>
+                              {result["result"] + " " + result["unit"]}
+                            </span>
+                          )}
+                        </div>
+                        <div className="col">
+                          <span>
+                            {result["preferred"] != " " ?
+                              result["preferred"]
+                              :
+                                result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
+                                  result["preferred_to"] == 999.99 ?
+                                    ">=" + result["preferred_from"] :
+                                   result["preferred_from"] + "-" + result["preferred_to"] :
+                            "-"}</span>
+                        </div>n  
+                      </div>
+                    ))}
+                  </div>
+                  <hr
+                    style={{
+                      border: "2px solid black",
+                      width: "100%",
+                      marginBottom: "0px",
+                    }}
+                  />
+
+                  <div>
+                    <span>
+                      <b>REMARKS: </b>
+                    </span>
+                    <br />
+                    <span><i>{remark}</i></span>
+                  </div>
+                </div>
+              ))}
+              <br />
+              <Signature />
+            </div>
+          </div>
+        </div>
+      </div>
+      // </div>
+    );
+  };
+
   // Remarks handle textbox
   const handleEdit = () => {
     setEditable(true);
@@ -803,6 +1223,7 @@ export default function LabOfficer() {
 
     setSaveRemarks(remarks);
   };
+
 
   return (
     <div>
@@ -968,6 +1389,18 @@ export default function LabOfficer() {
           </Modal>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
+
+        <div className="d-flex justify-content-end" style={{marginRight: "5%"}}>
+        <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
+              Show PDF
+          </button>
+        </div>
+
+        <Modal show={showPDF} onRequestClose={() => setShowPDF(false)} animation={false} style={{maxWidth: "1000px"}} contentClassName="custom-modal-content" centered >
+          <LaboratoryResultsTable/>
+          <button onClick={() => setShowPDF(false)}>DISAPPROVE</button>
+          <ToastContainer hideProgressBar={true} />
+        </Modal>
 
         <div className="personal-data-cont">
           <div className="row">

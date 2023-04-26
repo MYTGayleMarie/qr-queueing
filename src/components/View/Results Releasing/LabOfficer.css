@@ -173,6 +173,10 @@
     padding: 0.3rem;
   }
 
+  .custom-modal-content {
+    width: 10000px;
+  }
+
   .modal-body {
     position: relative;
     flex: 1 1 auto;
