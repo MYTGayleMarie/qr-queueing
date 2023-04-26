@@ -76,10 +76,6 @@ export default function LabOfficer() {
   const [show, setShow] = useState(false);
   const [labName, setLabName] = useState("");
   const [result, setResult] = useState("");
-  const [preferred, setPreferred] = useState("");
-  const [preferredTo, setPreferredTo] = useState("");
-  const [preferredFrom, setPreferredFrom] = useState("");
-  const [unit, setUnit] = useState("");
   const handleClose = () => setShow(false);
 
   // Remarks textbox
@@ -189,7 +185,6 @@ export default function LabOfficer() {
     labTestData.map((row) => {
       if (lab_test == row.lab_test) {
         setResult(row.result);
-        setUnit(row.unit);
         return row;
       }
       return row;
@@ -205,13 +200,6 @@ export default function LabOfficer() {
     const updatedData = labTestData.map((row) => {
       if (row.lab_test === labName) {
         row.result = result;
-        row.unit = unit;
-        if (isDropdown == true) {
-          row.preferred = preferred;
-        } else {
-          row.preferred_from = preferredFrom;
-          row.preferred_to = preferredTo;
-        }
         return row;
       }
       return row;
@@ -785,9 +773,13 @@ export default function LabOfficer() {
 
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
-    if (result.preferred_from != 0.0 && result.preferred_to != 0.0) {
-      reference_range = result.preferred_from + " - " + result.preferred_to;
-    } else if (result.preferred != " ") {
+    if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
+      if (result.preferred_to === 999.99) {
+        reference_range = ">=" + result.preferred_from;
+      } else {
+        reference_range = result.preferred_from + " - " + result.preferred_to;
+      }
+    } else if (result.preferred !== " ") {
       reference_range = result.preferred;
     } else {
       reference_range = "-";
@@ -938,89 +930,31 @@ export default function LabOfficer() {
             <Modal.Body>
               <div className="row">
                 {/* 1st Row */}
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">RESULT</div>
-                    {isDropdown ? (
-                      <Select
-                        isSearchable
-                        options={labTestOptions}
-                        value={labTestOptions.find(
-                          (option) => option.value === result
-                        )}
-                        defaultValue={result}
-                        onChange={(selectedOption) => {
-                          setResult(selectedOption.value);
-                        }}
-                        // label={result}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        className="results-input"
-                        defaultValue={result}
-                        onChange={(e) => setResult(e.target.value)}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-sm-6">
-                  <div className="result-input-wrapper">
-                    <div className="edit-sub-header">UNIT</div>
+                <div className="result-input-wrapper">
+                  <div className="edit-sub-header">RESULT</div>
+                  {isDropdown ? (
+                    <Select
+                      isSearchable
+                      options={labTestOptions}
+                      value={labTestOptions.find(
+                        (option) => option.value === result
+                      )}
+                      defaultValue={result}
+                      onChange={(selectedOption) => {
+                        setResult(selectedOption.value);
+                      }}
+                      // label={result}
+                    />
+                  ) : (
                     <input
                       type="text"
                       className="results-input"
-                      defaultValue={unit}
-                      onChange={(e) => setUnit(e.target.value)}
+                      defaultValue={result}
+                      onChange={(e) => setResult(e.target.value)}
                     />
-                  </div>
+                  )}
                 </div>
               </div>
-
-              {/* 2nd Row */}
-              {isDropdown ? (
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED</div>
-                      <Select
-                        isSearchable
-                        options={labTestOptions}
-                        value={labTestOptions.find(
-                          (option) => option.preferred === result
-                        )}
-                        onChange={(selectedOption) => {
-                          setPreferred(selectedOption.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED FROM</div>
-                      <input
-                        type="text"
-                        className="results-input"
-                        onChange={(e) => setPreferredFrom(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="result-input-wrapper">
-                      <div className="edit-preferred">PREFERRED TO</div>
-                      <input
-                        type="text"
-                        className="results-input"
-                        onChange={(e) => setPreferredTo(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </Modal.Body>
             <Modal.Footer>
               <button
