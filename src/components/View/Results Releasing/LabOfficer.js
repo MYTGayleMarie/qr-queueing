@@ -988,7 +988,7 @@ export default function LabOfficer() {
   const LaboratoryResultsTable = () => {
     console.log(labTestData);
     return (
-      <div class="bg" style={{width: "1200px", backgroundColor: "white"}}>
+      <div class="bg" style={{width: "1200px", backgroundColor: "transparent"}}>
         <div>
           <div ref={componentRef}>
             {/* Header */}
@@ -997,7 +997,7 @@ export default function LabOfficer() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "white",
+                backgroundColor: "transparent",
               }}
             >
               
@@ -1026,7 +1026,7 @@ export default function LabOfficer() {
             />
             <div>
               <div className="laboratory-title">
-                <span>Microscopy</span>
+                <span>{selectedLab.label}</span>
               </div>
               <br />
               <div class="tb">
