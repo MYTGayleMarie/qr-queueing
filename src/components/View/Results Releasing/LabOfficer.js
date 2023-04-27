@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState, useRef, memo } from "react";
 import axios from "axios";
 import { getToken, getUser, getRoleId } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
+import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTable from "../../../utilities/Pagination";
@@ -124,6 +125,7 @@ export default function LabOfficer() {
   // For Show PDF Modal
   const [showPDF, setShowPDF] = useState(false);
   const [remark, setRemark] = useState("");
+  const handleRedirect = () => setRedirect(true);
 
   // Doctor Remarks
   const [medTech, setMedTech] = useState("");
@@ -318,6 +320,21 @@ export default function LabOfficer() {
       return DummyImg;
     }
   }
+
+  const printHandle = useReactToPrint({
+    onAfterPrint: handleRedirect,
+    content: () => componentRef.current,
+    pageStyle: () => `
+          @page { size: letter; margin: 0.5in;}
+          @media print {
+            .print-break {
+              margin-top: 1rem;
+              display: block;
+              page-break-before: always;
+            }
+          }
+          `,
+  });
 
   React.useEffect(() => {
     //for customer id
@@ -963,9 +980,15 @@ export default function LabOfficer() {
     );
   };
 
+  const handlePrint = () => {
+    setShowPDF(true);
+    printHandle();
+  };
+
   const LaboratoryResultsTable = () => {
+    console.log(labTestData);
     return (
-      <div class="bg" style={{width: "1000px"}}>
+      <div class="bg" style={{width: "1200px", backgroundColor: "white"}}>
         <div>
           <div ref={componentRef}>
             {/* Header */}
@@ -974,7 +997,7 @@ export default function LabOfficer() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "transparent",
+                backgroundColor: "white",
               }}
             >
               
@@ -1003,11 +1026,11 @@ export default function LabOfficer() {
             />
             <div>
               <div className="laboratory-title">
-                <span>MIcroscopy</span>
+                <span>Microscopy</span>
               </div>
               <br />
               <div class="tb">
-                <div class="row">
+                <div class="row" style={{marginTop: "-10px"}}>
                   <div class="col details_title">
                     <span>
                       <b>Patient name :</b>
@@ -1034,7 +1057,7 @@ export default function LabOfficer() {
                     </span>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" style={{marginTop: "-10px"}}>
                   <div class="col details_title">
                     <span>
                       <b>
@@ -1057,7 +1080,7 @@ export default function LabOfficer() {
                     <span>{contactNo}</span>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" style={{marginTop: "-10px"}}>
                   <div class="col details_title">
                     <span>
                       <b>
@@ -1080,7 +1103,7 @@ export default function LabOfficer() {
                     <span>{birthDate.toUpperCase()}</span>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" style={{marginTop: "-10px"}}>
                   <div class="col details_title">
                     <span>
                       <b>
@@ -1104,10 +1127,7 @@ export default function LabOfficer() {
               </div>
               <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
 
-              {/* Mapping of Detail Results */}
-              {labTestData.map((service, serviceIndex) => (
-                <div key={serviceIndex}>
-                  {/* {getResults(service.id)} */}
+                <div>
                   <br />
                   <div className="tb mid">
                     <div className="row bd">
@@ -1128,7 +1148,7 @@ export default function LabOfficer() {
                       </div>
                     </div>
                     {labTestDataWithResults.map((result, resultIndex) => (
-                      <div className="row" key={resultIndex}>
+                      <div className="row" style={{marginTop: "-10px"}} key={resultIndex}>
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
@@ -1193,7 +1213,6 @@ export default function LabOfficer() {
                       marginBottom: "0px",
                     }}
                   />
-
                   <div>
                     <span>
                       <b>REMARKS: </b>
@@ -1202,7 +1221,6 @@ export default function LabOfficer() {
                     <span><i>{remark}</i></span>
                   </div>
                 </div>
-              ))}
               <br />
               <Signature />
             </div>
@@ -1396,10 +1414,13 @@ export default function LabOfficer() {
           </button>
         </div>
 
-        <Modal show={showPDF} onRequestClose={() => setShowPDF(false)} animation={false} style={{maxWidth: "1000px"}} contentClassName="custom-modal-content" centered >
-          <LaboratoryResultsTable/>
-          <button onClick={() => setShowPDF(false)}>DISAPPROVE</button>
-          <ToastContainer hideProgressBar={true} />
+        <Modal show={showPDF} onRequestClose={() => setShowPDF(false)} animation={false} contentClassName="custom-modal-content" centered >
+          <div className="custom-modal">
+            <LaboratoryResultsTable/>
+            <button onClick={() => setShowPDF(false)}>DISAPPROVE</button>
+            <button onClick={handlePrint}>APPROVE</button>
+            <ToastContainer hideProgressBar={true} />
+          </div>
         </Modal>
 
         <div className="personal-data-cont">

@@ -162,6 +162,15 @@
     right: 30%;
     /* bottom: 15%; */
   }
+
+  .bg {
+    background-image: url('../../../images/Watermark.png');
+    background-size: cover; /* or "contain" based on your requirement */
+    background-repeat: no-repeat;
+    background-position: center center;
+    align-items: center;
+    justify-content: center;
+  }
   
   .back-btn-container {
     margin-right: 5%;
@@ -174,8 +183,16 @@
   }
 
   .custom-modal-content {
-    width: 10000px;
+    width: 80%;
+    margin: auto;
   }
+
+  .custom-modal {
+    width: 80%;
+    margin: auto;
+    background-color: white;
+  }
+
 
   .modal-body {
     position: relative;
@@ -184,56 +201,10 @@
     text-align: center;
   }
   
-  /* 
-  
-  .file-upload{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .file-upload-btn-wrapper input[type=file] {
-    font-size: 50px;
-    position: relative;
-    z-index:-10000;
-    opacity: 10;
-  }
-  .form-file-upload {
-    height: 12rem;
-    width: 28rem;
-    max-width: 100%;
-    text-align: center;
-    position: relative;
-  }
-  
-  .label-file-upload{
-    height: 100%;
+  .teal_header {
+    position: absolute;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-radius: 1rem;
-    border-style: dashed;
-    border-color: #cbd5e1;
-    background-color: #f8fafc;
+    width: 100%;
+    height: 20%;
+    z-index: -1;
   }
-  .upload-file-btn{
-    color:rgba(85, 7, 58, 1);
-    cursor: pointer;
-    padding: 0.25rem;
-    font-size: 1rem;
-    border: none;
-    background-color: transparent;
-  }
-  .upload-file-btn:hover{
-    text-decoration-line: underline;
-  }
-  .upload-file-txt{
-    font-family: 'Montserrat-Regular';
-    font-size:0.9rem;
-    font-weight: normal;
-    color:dimgray;
-  
-  } */
-
-  
