@@ -913,12 +913,6 @@ export default function LabOfficer() {
     setRedirect(true);
   }
 
-  if (redirect == true) {
-    var link = "/medtech";
-    //console.log(link);
-    return <Navigate to={link} />;
-  }
-
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
     if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
@@ -980,19 +974,14 @@ export default function LabOfficer() {
     );
   };
 
-  const handlePrint = () => {
-    setShowPDF(true);
-    printHandle();
-  };
-
   const LaboratoryResultsTable = () => {
     console.log(labTestData);
     return (
-      <div class="bg" style={{width: "1200px", backgroundColor: "transparent"}}>
+      <div style={{backgroundColor: "white", width: "900px"}}>
+      <div class="bg">
         <div>
           <div ref={componentRef}>
             {/* Header */}
-            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header" />
             <div
               style={{
                 display: "flex",
@@ -1000,6 +989,7 @@ export default function LabOfficer() {
                 backgroundColor: "transparent",
               }}
             >
+              <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header"/>
               
               <img
                 src={Logo}
@@ -1148,7 +1138,7 @@ export default function LabOfficer() {
                       </div>
                     </div>
                     {labTestDataWithResults.map((result, resultIndex) => (
-                      <div className="row" style={{marginTop: "-10px"}} key={resultIndex}>
+                      <div className="row" style={{marginTop: "-10px", width: "100%"}} key={resultIndex}>
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
@@ -1202,7 +1192,7 @@ export default function LabOfficer() {
                                     ">=" + result["preferred_from"] :
                                    result["preferred_from"] + "-" + result["preferred_to"] :
                             "-"}</span>
-                        </div>n  
+                        </div>  
                       </div>
                     ))}
                   </div>
@@ -1227,8 +1217,16 @@ export default function LabOfficer() {
           </div>
         </div>
       </div>
-      // </div>
+      </div>
     );
+  };
+  
+  const handlePrint = () => {
+    if (componentRef.current) {
+      printHandle();
+    } else {
+      console.log("Component is not rendered yet!");
+    }
   };
 
   // Remarks handle textbox
@@ -1409,16 +1407,25 @@ export default function LabOfficer() {
         </Fragment>
 
         <div className="d-flex justify-content-end" style={{marginRight: "5%"}}>
-        <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
-              Show PDF
+          <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
+            Show PDF
+          </button>
+          <button className="filter-btn" name="show" onClick={handlePrint}>
+            Generate PDF
           </button>
         </div>
 
-        <Modal show={showPDF} onRequestClose={() => setShowPDF(false)} animation={false} contentClassName="custom-modal-content" centered >
+        <div style={{display: "none"}}>
+          <LaboratoryResultsTable/>
+        </div>
+
+        <Modal show={showPDF} onHide={() => setShowPDF(false)} animation={false} contentClassName="custom-modal-content" centered >
           <div className="custom-modal">
             <LaboratoryResultsTable/>
-            <button onClick={() => setShowPDF(false)}>DISAPPROVE</button>
-            <button onClick={handlePrint}>APPROVE</button>
+            <div style={{marginTop: "5%"}}>
+            <button className="filter-btn" onClick={() => setShowPDF(false)}>DISAPPROVE</button>
+            <button className="filter-btn">APPROVE</button>
+            </div>
             <ToastContainer hideProgressBar={true} />
           </div>
         </Modal>
