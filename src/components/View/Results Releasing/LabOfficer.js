@@ -101,6 +101,8 @@ export default function LabOfficer() {
   const allOptions = (labOptions || []).concat(labOptionsPackage || []);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [testIndex, setTestIndex] = useState();
+  const [isApproved, setIsApproved] = useState(false);
 
   // Lab Test options
   const [labTestOptions, setLabTestOptions] = useState([]);
@@ -408,6 +410,7 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
+
       const labOptions = booking.data
         .map((data) => {
           // Include only data in sheets
@@ -456,6 +459,16 @@ export default function LabOfficer() {
           } else {
             handleLab(selectedLab);
           }
+
+          console.log(services);
+          const index = services.findIndex((service) => service.lab_test === selectedLab.label);
+          console.log(index);
+          if (services[index].result_approval === "approved") {
+            setIsApproved(true);
+          } else {
+            setIsApproved(false);
+          }
+
         })
         .catch((error) => {
           handleLab(selectedLab);
@@ -831,6 +844,30 @@ export default function LabOfficer() {
     }
   }
 
+  const handleApproved = () => {
+    axios({
+      method: "post",
+      url: window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        updated_by: userId,
+        result_approval: "approved",
+      },
+    })
+      .then(function (response) {
+        toast.success("Results are Approved");
+        setShowPDF(false);
+        refreshPage();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("test");
+  }
+
   function handleLab(e) {
     //setLabTests(e.target.value)
 
@@ -915,6 +952,7 @@ export default function LabOfficer() {
 
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
+    console.log(result.preferred_from + "\n");
     if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
       if (result.preferred_to === 999.99) {
         reference_range = ">=" + result.preferred_from;
@@ -1137,14 +1175,14 @@ export default function LabOfficer() {
                         </span>
                       </div>
                     </div>
-                    {labTestDataWithResults.map((result, resultIndex) => (
+                    {labTestData.map((result, resultIndex) => (
                       <div className="row" style={{marginTop: "-10px", width: "100%"}} key={resultIndex}>
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
                         <div className="col">
-                          {result["preferred"] != " " ? (
-                            result["preferred"] == result["result"] ? (
+                          {result["preferred"] !== " " ? (
+                            result["preferred"] === result["result"] ? (
                               <span>
                                 {result["result"] + " " + result["unit"]}
                               </span>
@@ -1153,8 +1191,8 @@ export default function LabOfficer() {
                                 {result["result"] + " " + result["unit"]}
                               </span>
                             )
-                          ) : result["preferred_from"] != 0.0 &&
-                            result["preferred_to"] != 0.0 ? (
+                          ) : result["preferred_from"] !== 0.0 &&
+                            result["preferred_to"] !== 0.0 ? (
                             parseFloat(result["preferred_from"]) >
                             parseFloat(result["result"]) ? (
                               <span class="red">
@@ -1410,9 +1448,11 @@ export default function LabOfficer() {
           <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
             Show PDF
           </button>
-          <button className="filter-btn" name="show" onClick={handlePrint}>
-            Generate PDF
-          </button>
+          {console.log("Test" )}
+          {console.log(services)}
+          <button className="filter-btn" name="show" onClick={handlePrint} disabled={!isApproved}>
+      Generate PDF
+    </button>
         </div>
 
         <div style={{display: "none"}}>
@@ -1424,7 +1464,7 @@ export default function LabOfficer() {
             <LaboratoryResultsTable/>
             <div style={{marginTop: "5%"}}>
             <button className="filter-btn" onClick={() => setShowPDF(false)}>DISAPPROVE</button>
-            <button className="filter-btn">APPROVE</button>
+            <button className="filter-btn" onClick={() => handleApproved()}>APPROVE</button>
             </div>
             <ToastContainer hideProgressBar={true} />
           </div>
