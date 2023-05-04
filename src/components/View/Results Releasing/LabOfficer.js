@@ -863,6 +863,32 @@ export default function LabOfficer() {
       })
       .catch(function (error) {
         console.log(error);
+        toast.error("Error Approval")
+      });
+
+      console.log("test");
+  }
+
+  const handleDisapproved = () => {
+    axios({
+      method: "post",
+      url: window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        updated_by: userId,
+        result_approval: "disapproved",
+      },
+    })
+      .then(function (response) {
+        toast.success("Results are Disapproved");
+        setShowPDF(false);
+        refreshPage();
+      })
+      .catch(function (error) {
+        console.log(error);
+        toast.error("Error Approval")
       });
 
       console.log("test");
@@ -1463,7 +1489,7 @@ export default function LabOfficer() {
           <div className="custom-modal">
             <LaboratoryResultsTable/>
             <div style={{marginTop: "5%"}}>
-            <button className="filter-btn" onClick={() => setShowPDF(false)}>DISAPPROVE</button>
+            <button className="filter-btn" onClick={() => handleDisapproved()}>DISAPPROVE</button>
             <button className="filter-btn" onClick={() => handleApproved()}>APPROVE</button>
             </div>
             <ToastContainer hideProgressBar={true} />
