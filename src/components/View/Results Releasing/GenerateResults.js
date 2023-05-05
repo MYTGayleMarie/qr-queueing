@@ -61,6 +61,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [selectedLab, setSelectedLab] = useState([]);
   const [labTestData, setLabTestData] = useState([]);
   const [labTestResults, setLabTestResults] = useState([]);
+  const [isApproved, setIsApproved] = useState(false);
 
   // Doctor Remarks
   const [medTech, setMedTech] = useState("");
@@ -194,6 +195,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
           }
           setReadyResults(true);
         }
+
+        const index = services.findIndex((service) => service.lab_test === labTestData.name);
+          if (services[index].result_approval === "approved") {
+            setIsApproved(true);
+          } else {
+            setIsApproved(false);
+          }
       })
       .catch((error) => {
         //console.log(error);
@@ -659,11 +667,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   onClick={handlePrint}
                   style={{
                     background:
-                      !readyCustomer && !readyBooking && !readyResults
+                      !readyCustomer && !readyBooking && !readyResults && !isApproved
                         ? "gray"
                         : "#55073A",
                   }}
-                  disabled={!readyCustomer && !readyBooking && !readyResults}
+                  disabled={!readyCustomer && !readyBooking && !readyResults && !isApproved}
                 >
                   GENERATE RESULTS
                 </button>
