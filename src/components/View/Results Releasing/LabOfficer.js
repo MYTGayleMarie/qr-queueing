@@ -102,7 +102,7 @@ export default function LabOfficer() {
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
   const [testIndex, setTestIndex] = useState();
-  const [isApproved, setIsApproved] = useState(false);
+  const [isApproved, setIsApproved] = useState("");
   const [withResults, setWithResults] = useState(false);
 
   // Lab Test options
@@ -463,11 +463,10 @@ export default function LabOfficer() {
 
           const index = services.findIndex((service) => service.lab_test === selectedLab.label);
           if (services[index].result_approval === "approved") {
-            setIsApproved(true);
-          } else {
-            setIsApproved(false);
+            setIsApproved("approved");
+          } else if (services[index].result_approval === "disapproved"){
+            setIsApproved("disapproved");
           }
-
         })
         .catch((error) => {
           handleLab(selectedLab);
@@ -475,6 +474,10 @@ export default function LabOfficer() {
         });
     }
   }, [selectedLab]);
+
+  useEffect(() => {
+    console.log("Test: " + isApproved);
+  }, [isApproved]);
 
   React.useEffect(() => {
     axios({
@@ -1532,10 +1535,10 @@ export default function LabOfficer() {
             className="filter-btn"
             name="show"
             onClick={handlePrint}
-            disabled={!isApproved || !withResults}
+            disabled={!isApproved === "approved" || !withResults}
             style={{
               background:
-                !withResults || !isApproved
+                !withResults || (isApproved !== "approved" && withResults)
                   ? "gray"
                   : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
             }}
@@ -1554,13 +1557,29 @@ export default function LabOfficer() {
             <div style={{marginTop: "5%"}}>
             <button 
               className="filter-btn" 
-              onClick={() => handleDisapproved()}>
+              onClick={() => handleDisapproved()}
+              disabled={(isApproved === "disapproved")}
+              style={{
+                background:
+                  isApproved === "disapproved"
+                    ? "gray"
+                    : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+              }}
+            >
                 DISAPPROVE
             </button>
 
             <button 
               className="filter-btn" 
-              onClick={() => handleApproved()}>
+              onClick={() => handleApproved()}
+              disabled={(isApproved === "approved")}
+              style={{
+                background:
+                  isApproved === "approved"
+                    ? "gray"
+                    : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+              }}
+            >
                 APPROVE
             </button>
             </div>

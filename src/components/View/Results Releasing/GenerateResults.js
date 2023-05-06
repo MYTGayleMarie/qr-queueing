@@ -667,11 +667,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   onClick={handlePrint}
                   style={{
                     background:
-                      !readyCustomer && !readyBooking && !readyResults && !isApproved
+                      !readyCustomer && !readyBooking && !readyResults
                         ? "gray"
                         : "#55073A",
                   }}
-                  disabled={!readyCustomer && !readyBooking && !readyResults && !isApproved}
+                  disabled={!readyCustomer && !readyBooking && !readyResults}
                 >
                   GENERATE RESULTS
                 </button>
