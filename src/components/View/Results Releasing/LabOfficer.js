@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useRef, memo } from "react";
+import React, { Fragment, useEffect, useState, useRef, useMemo } from "react";
 import axios from "axios";
 import { getToken, getUser, getRoleId } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
@@ -103,6 +103,7 @@ export default function LabOfficer() {
   const [redirect, setRedirect] = useState(false);
   const [testIndex, setTestIndex] = useState();
   const [isApproved, setIsApproved] = useState(false);
+  const [withResults, setWithResults] = useState(false);
 
   // Lab Test options
   const [labTestOptions, setLabTestOptions] = useState([]);
@@ -779,6 +780,33 @@ export default function LabOfficer() {
   const [rows, setRows] = useState([]);
   const [showConfirm, setShowConfirm] = React.useState(false);
 
+  const labTestDataWithResults = useMemo(() => {
+    if (!labTestData) return [];
+  
+    return labTestData.map((result) => {
+      setWithResults(true);
+      let reference_range = "";
+      if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
+        if (result.preferred_to === 999.99) {
+          reference_range = ">=" + result.preferred_from;
+        } else {
+          reference_range = result.preferred_from + " - " + result.preferred_to;
+        }
+      } else if (result.preferred !== " ") {
+        reference_range = result.preferred;
+      } else {
+        reference_range = "-";
+      }
+  
+      return {
+        lab_test: result.lab_test,
+        result: result.result,
+        unit: result.unit,
+        reference_range: reference_range,
+      };
+    });
+  }, [labTestData]);
+
   // Get Multiple Uploads
   async function getUploads() {
     if (id != null) {
@@ -967,27 +995,28 @@ export default function LabOfficer() {
     setRedirect(true);
   }
 
-  let labTestDataWithResults = labTestData.map((result) => {
-    let reference_range = "";
-    if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
-      if (result.preferred_to === 999.99) {
-        reference_range = ">=" + result.preferred_from;
-      } else {
-        reference_range = result.preferred_from + " - " + result.preferred_to;
-      }
-    } else if (result.preferred !== " ") {
-      reference_range = result.preferred;
-    } else {
-      reference_range = "-";
-    }
+  // let labTestDataWithResults = labTestData.map((result) => {
+  //   setWithResults(true);
+  //   let reference_range = "";
+  //   if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
+  //     if (result.preferred_to === 999.99) {
+  //       reference_range = ">=" + result.preferred_from;
+  //     } else {
+  //       reference_range = result.preferred_from + " - " + result.preferred_to;
+  //     }
+  //   } else if (result.preferred !== " ") {
+  //     reference_range = result.preferred;
+  //   } else {
+  //     reference_range = "-";
+  //   }
 
-    return {
-      lab_test: result.lab_test,
-      result: result.result,
-      unit: result.unit,
-      reference_range: reference_range,
-    };
-  });
+  //   return {
+  //     lab_test: result.lab_test,
+  //     result: result.result,
+  //     unit: result.unit,
+  //     reference_range: reference_range,
+  //   };
+  // });
 
   const Signature = () => {
     return (
@@ -1459,13 +1488,35 @@ export default function LabOfficer() {
           <ToastContainer hideProgressBar={true} />
         </Fragment>
 
-        <div className="d-flex justify-content-end" style={{marginRight: "5%"}}>
-          <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
+        <div className="d-flex justify-content-end" style={{ marginRight: "5%" }}>
+          <button
+            className="filter-btn"
+            name="show"
+            onClick={() => setShowPDF(true)}
+            disabled={!withResults}
+            style={{
+              background:
+                !withResults
+                  ? "gray"
+                  : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+            }}
+          >
             Show PDF
           </button>
-          <button className="filter-btn" name="show" onClick={handlePrint} disabled={!isApproved}>
-      Generate PDF
-    </button>
+          <button
+            className="filter-btn"
+            name="show"
+            onClick={handlePrint}
+            disabled={!isApproved || !withResults}
+            style={{
+              background:
+                !withResults || !isApproved
+                  ? "gray"
+                  : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+            }}
+          >
+            Generate PDF
+          </button>
         </div>
 
         <div style={{display: "none"}}>
