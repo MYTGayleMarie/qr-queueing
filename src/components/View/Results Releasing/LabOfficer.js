@@ -460,9 +460,7 @@ export default function LabOfficer() {
             handleLab(selectedLab);
           }
 
-          console.log(services);
           const index = services.findIndex((service) => service.lab_test === selectedLab.label);
-          console.log(index);
           if (services[index].result_approval === "approved") {
             setIsApproved(true);
           } else {
@@ -564,7 +562,6 @@ export default function LabOfficer() {
           params,
         })
           .then(function (response) {
-            console.log(response);
           })
           .catch(function (error) {
             console.log(error);
@@ -580,7 +577,6 @@ export default function LabOfficer() {
           params,
         })
           .then(function (response) {
-            console.log(response);
           })
           .catch(function (error) {
             console.log(error);
@@ -798,7 +794,7 @@ export default function LabOfficer() {
       })
         .then(function (response) {
           setData(response.data.message.booking_attachments);
-          console.log(response);
+
         })
         .catch(function (error) {
           setData(error);
@@ -824,7 +820,6 @@ export default function LabOfficer() {
       },
     })
       .then(function (response) {
-        console.log(response);
         setSelectedLab.remarks(remarks);
       })
       .catch(function (error) {
@@ -865,8 +860,6 @@ export default function LabOfficer() {
         console.log(error);
         toast.error("Error Approval")
       });
-
-      console.log("test");
   }
 
   const handleDisapproved = () => {
@@ -890,8 +883,6 @@ export default function LabOfficer() {
         console.log(error);
         toast.error("Error Approval")
       });
-
-      console.log("test");
   }
 
   function handleLab(e) {
@@ -978,7 +969,6 @@ export default function LabOfficer() {
 
   let labTestDataWithResults = labTestData.map((result) => {
     let reference_range = "";
-    console.log(result.preferred_from + "\n");
     if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
       if (result.preferred_to === 999.99) {
         reference_range = ">=" + result.preferred_from;
@@ -1039,7 +1029,6 @@ export default function LabOfficer() {
   };
 
   const LaboratoryResultsTable = () => {
-    console.log(labTestData);
     return (
       <div style={{backgroundColor: "white", width: "900px"}}>
       <div class="bg">
@@ -1474,8 +1463,6 @@ export default function LabOfficer() {
           <button className="filter-btn" name="show" onClick={() => setShowPDF(true)}>
             Show PDF
           </button>
-          {console.log("Test" )}
-          {console.log(services)}
           <button className="filter-btn" name="show" onClick={handlePrint} disabled={!isApproved}>
       Generate PDF
     </button>
