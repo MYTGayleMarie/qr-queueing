@@ -164,15 +164,14 @@
   }
 
   .bg {
-    /* background-image: url('../../../images/Watermark.png'); */
+    position: relative;
     background-color: white;
-    background-size: cover; /* or "contain" based on your requirement */
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     align-items: center;
     justify-content: center;
   }
-  
   .back-btn-container {
     margin-right: 5%;
     margin-bottom: 5%;
@@ -186,7 +185,7 @@
   .custom-modal-content {
     position: absolute;
     margin-top: 10%;
-    margin-left: -70%;
+    margin-left: -40%;
   }
 
   .custom-modal {
@@ -208,7 +207,9 @@
   
   .teal_header {
     position: absolute;
-    display: flex;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 20%;
+    height: 100%;
+    z-index: 0;
   }

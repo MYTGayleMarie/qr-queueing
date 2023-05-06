@@ -1064,14 +1064,39 @@ export default function LabOfficer() {
         <div>
           <div ref={componentRef}>
             {/* Header */}
-            <div
+            <div style={{ position: "relative" }}>
+            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header" />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: "transparent",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <img
+                  src={Logo}
+                  alt="QR DIAGNOSTICS"
+                  className="img-small"
+                  style={{ paddingRight: "50px" }}
+                />
+                <div style={{ display: "block" }}>
+                  <span className="resultTitle">Department of Clinical Laboratory</span>
+                  <span className="addressTitle">Unit A, M Block, Marasbaras, Tacloban City</span>
+                  <span className="addressTitle">0999 8888 6694</span>
+                </div>
+              </div>
+            </div>
+            {/* <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 backgroundColor: "transparent",
+                position: "relative",
+                zIndex: "1",
               }}
             >
-              <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header"/>
               
               <img
                 src={Logo}
@@ -1088,7 +1113,7 @@ export default function LabOfficer() {
                 </span>
                 <span className="addressTitle">0999 8888 6694</span>
               </div>
-            </div>
+            </div> */}
             <hr
               style={{
                 border: "2px solid black",
@@ -1527,8 +1552,17 @@ export default function LabOfficer() {
           <div className="custom-modal">
             <LaboratoryResultsTable/>
             <div style={{marginTop: "5%"}}>
-            <button className="filter-btn" onClick={() => handleDisapproved()}>DISAPPROVE</button>
-            <button className="filter-btn" onClick={() => handleApproved()}>APPROVE</button>
+            <button 
+              className="filter-btn" 
+              onClick={() => handleDisapproved()}>
+                DISAPPROVE
+            </button>
+
+            <button 
+              className="filter-btn" 
+              onClick={() => handleApproved()}>
+                APPROVE
+            </button>
             </div>
             <ToastContainer hideProgressBar={true} />
           </div>
