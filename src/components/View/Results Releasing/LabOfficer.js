@@ -475,10 +475,6 @@ export default function LabOfficer() {
     }
   }, [selectedLab]);
 
-  useEffect(() => {
-    console.log("Test: " + isApproved);
-  }, [isApproved]);
-
   React.useEffect(() => {
     axios({
       method: "get",
