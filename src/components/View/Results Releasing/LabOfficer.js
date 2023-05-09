@@ -15,7 +15,6 @@ import ReactQuill from "react-quill";
 import GenerateResults from "./GenerateResults";
 
 import "./FileUpload.css";
-import "./GenerateResults.css";
 import "./MedTech.css";
 import "./LabOfficer.css";
 
@@ -1064,7 +1063,7 @@ export default function LabOfficer() {
           <div ref={componentRef}>
             {/* Header */}
             <div style={{ position: "relative" }}>
-            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header" />
+            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header_laboff" />
               <div
                 style={{
                   display: "flex",
@@ -1087,32 +1086,6 @@ export default function LabOfficer() {
                 </div>
               </div>
             </div>
-            {/* <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "transparent",
-                position: "relative",
-                zIndex: "1",
-              }}
-            >
-              
-              <img
-                src={Logo}
-                alt="QR DIAGNOSTICS"
-                className="img-small"
-                style={{ paddingRight: "50px" }}
-              />
-              <div style={{ display: "block"}}>
-                <span className="resultTitle">
-                  Department of Clinical Laboratory
-                </span>
-                <span className="addressTitle">
-                  Unit A, M Block, Marasbaras, Tacloban City
-                </span>
-                <span className="addressTitle">0999 8888 6694</span>
-              </div>
-            </div> */}
             <hr
               style={{
                 border: "2px solid black",
