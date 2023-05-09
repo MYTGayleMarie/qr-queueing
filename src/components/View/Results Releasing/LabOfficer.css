@@ -162,7 +162,16 @@
     right: 30%;
     /* bottom: 15%; */
   }
-  
+
+  .bg {
+    position: relative;
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    align-items: center;
+    justify-content: center;
+  }
   .back-btn-container {
     margin-right: 5%;
     margin-bottom: 5%;
@@ -173,63 +182,27 @@
     padding: 0.3rem;
   }
 
-  .modal-body {
-    position: relative;
-    flex: 1 1 auto;
-    padding: 1rem;
-    text-align: center;
+  .custom-modal-content {
+    position: absolute;
+    margin-top: 10%;
+    margin-left: -40%;
   }
-  
-  /* 
-  
-  .file-upload{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .file-upload-btn-wrapper input[type=file] {
-    font-size: 50px;
-    position: relative;
-    z-index:-10000;
-    opacity: 10;
-  }
-  .form-file-upload {
-    height: 12rem;
-    width: 28rem;
-    max-width: 100%;
-    text-align: center;
-    position: relative;
-  }
-  
-  .label-file-upload{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-radius: 1rem;
-    border-style: dashed;
-    border-color: #cbd5e1;
-    background-color: #f8fafc;
-  }
-  .upload-file-btn{
-    color:rgba(85, 7, 58, 1);
-    cursor: pointer;
-    padding: 0.25rem;
-    font-size: 1rem;
-    border: none;
-    background-color: transparent;
-  }
-  .upload-file-btn:hover{
-    text-decoration-line: underline;
-  }
-  .upload-file-txt{
-    font-family: 'Montserrat-Regular';
-    font-size:0.9rem;
-    font-weight: normal;
-    color:dimgray;
-  
-  } */
 
+  .custom-modal {
+    margin: auto;
+    text-align: center;
+    background-color: white;
+  }
+
+  .parent-div {
+    position: relative;
+  }
   
+  .teal_header_laboff {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100% !important;
+    z-index: 0 !important;
+  }

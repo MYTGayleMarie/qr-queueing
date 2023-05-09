@@ -61,6 +61,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [selectedLab, setSelectedLab] = useState([]);
   const [labTestData, setLabTestData] = useState([]);
   const [labTestResults, setLabTestResults] = useState([]);
+  const [isApproved, setIsApproved] = useState("");
 
   // Doctor Remarks
   const [medTech, setMedTech] = useState("");
@@ -112,6 +113,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((response) => {
         const customerId = response.data.data.booking.customer_id;
+        console.log(response.data);
         axios({
           method: "post",
           url: window.$link + "customers/show/" + customerId,
@@ -155,7 +157,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
     // Get booking details by booking id
     axios({
-      method: "post",
+      method: "get",
       url: window.$link + "bookings/getBookingDetails/" + id,
       withCredentials: false,
       params: {
@@ -166,10 +168,12 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((booking) => {
         setServices(booking.data);
+        console.log(booking.data);
         setReadyBooking(true);
       })
       .catch((error) => {});
 
+      console.log(selectedLab.data);
     // Get Detail Results
     axios({
       method: "get",
@@ -183,6 +187,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((response) => {
         const data = response.data.data;
+        console.log(data);
         const packageDetailId = selectedLab.booking_id;
         if (data.booking_detail_results) {
           if (selectedLab.type == "lab") {
@@ -272,6 +277,23 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         });
     }
   }, []);
+
+  // set Approval
+  React.useEffect(() => {
+    console.log(servicesData[0]);
+    console.log(services);
+    const index = services.findIndex((service) => service.lab_test === servicesData[0].name);
+    console.log(index);
+    if (services[index]?.result_approval === "approved") {
+       console.log("Hello");
+       setIsApproved("approved");
+    } else if (services[index]?.result_approval === "disapproved") {
+      setIsApproved("disapproved");
+    }
+    console.log(isApproved);
+  },[readyBooking]);
+
+  console.log(isApproved);
 
   // Categorizing services into lab and packages
   React.useEffect(() => {
@@ -659,11 +681,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   onClick={handlePrint}
                   style={{
                     background:
-                      !readyCustomer && !readyBooking && !readyResults
+                      (!readyCustomer && !readyBooking && !readyResults) || !(isApproved==="approved")
                         ? "gray"
                         : "#55073A",
                   }}
-                  disabled={!readyCustomer && !readyBooking && !readyResults}
+                  disabled={(!readyCustomer && !readyBooking && !readyResults) || !(isApproved === "approved")}
                 >
                   GENERATE RESULTS
                 </button>
@@ -671,7 +693,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             </div>
           </div>
         </div>
+        <div>
         <LaboratoryResultsTable />
+        </div>
       </div>
     </div>
   );

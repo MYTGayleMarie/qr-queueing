@@ -83,6 +83,7 @@ function AddInvoicePayment() {
   const [total, setTotal] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
   const [pay, setPay] = useState(0);
+  const [tax, setTax] = useState(0);
   const [serviceFee, setServiceFee] = useState(0);
   const [mdCharge, setMdCharge] = useState(0);
   const [remarks, setRemarks] = useState("");
@@ -610,6 +611,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
+          withholdingtax: tax,
           remarks: remarks,
           added_by: userId,
         },
@@ -982,6 +984,23 @@ function AddInvoicePayment() {
           </div>
           <div className="col-sm-6">
             <div className="row">
+              <span className="amount-label">WITHHOLDING TAX</span>
+            </div>
+            <div className="row">
+              <input
+                type="number"
+                id="taxAmount"
+                name="taxAmount"
+                step="0.01"
+                value={tax}
+                className="cash-input pay"
+                placeholder="P"
+                onChange={(e) => setTax(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
               <span class="amount-label">CHANGE</span>
             </div>
             <div className="row">
@@ -990,7 +1009,8 @@ function AddInvoicePayment() {
                 id="changeAmount"
                 name="changeAmount"
                 class="cash-input pay"
-                value={(pay - grandTotal).toFixed(2)}
+                value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(2)}
+
                 placeholder="P"
               />
             </div>
