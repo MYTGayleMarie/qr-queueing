@@ -487,6 +487,7 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         setRemarks(response.data.data.booking_detail[0].remarks);
+        console.log(response.data.data.booking_detail[0].remarks + "TEst");
       })
       .catch(function (error) {
         console.log(error);
@@ -1282,12 +1283,12 @@ export default function LabOfficer() {
                       marginBottom: "0px",
                     }}
                   />
-                  <div>
+                  <div style={{ justifyContent: "left", alignItems: "left", textAlign: "left" }}>
                     <span>
                       <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span><i>{remark}</i></span>
+                    <span><div dangerouslySetInnerHTML={{ __html: remarks }}></div></span>
                   </div>
                 </div>
               <br />
