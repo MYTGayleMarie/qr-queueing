@@ -303,13 +303,15 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
         var labPrices = [];
         var location_value = "";
 
+        console.log(services)
+
         services.map((data, index) => {
-          if (data.type == 'lab') {
-            testId.push(data.labTestId);
-            labPrices.push(data.price);
-          } else if (data.type == 'package') {
+          if (data.type == 'package') {
             packageId.push(data.labTestId);
             packagePrices.push(data.price);
+          } else{
+            testId.push(data.labTestId);
+            labPrices.push(data.price);
           }
         });
 
