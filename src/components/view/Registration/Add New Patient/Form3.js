@@ -306,10 +306,10 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
         console.log(services)
 
         services.map((data, index) => {
-          if (data.type == 'package') {
+          if (data.type==='package') {
             packageId.push(data.labTestId);
             packagePrices.push(data.price);
-          } else{
+          } else if(data.type==='lab'){
             testId.push(data.labTestId);
             labPrices.push(data.price);
           }
