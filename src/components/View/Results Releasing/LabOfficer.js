@@ -465,6 +465,8 @@ export default function LabOfficer() {
             setIsApproved("approved");
           } else if (services[index].result_approval === "disapproved"){
             setIsApproved("disapproved");
+          } else {
+            setIsApproved("");
           }
         })
         .catch((error) => {
@@ -1081,9 +1083,8 @@ export default function LabOfficer() {
                   style={{ paddingRight: "50px" }}
                 />
                 <div style={{ display: "block" }}>
-                  <span className="resultTitle">Department of Clinical Laboratory</span>
-                  <span className="addressTitle">Unit A, M Block, Marasbaras, Tacloban City</span>
-                  <span className="addressTitle">0999 8888 6694</span>
+                  <span className="resultTitle">DEPARTMENT OF CLINICAL LABORATORY</span>
+                  <span className="addressTitle">Unit A, M Block, Marasbaras, Tacloban City | 0999 8888 6694</span>
                 </div>
               </div>
             </div>
@@ -1096,28 +1097,25 @@ export default function LabOfficer() {
             />
             <div>
               <div className="laboratory-title">
-                <span>{selectedLab.label}</span>
+                <span>{selectedLab.label}.toUpperCase()</span>
               </div>
               <br />
               <div class="tb">
-                <div class="row" style={{marginTop: "-10px"}}>
+                <div class="row">
                   <div class="col details_title">
                     <span>
-                      <b>Patient name :</b>
+                      NAME :
                     </span>
                   </div>
                   <div class="col">
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
-                      {middleName.toUpperCase}
+                      {middleName.toUpperCase()}
                     </span>
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Registration
-                        Date :
-                      </b>
+                        REQUEST DATE :
                     </span>
                   </div>
                   <div class="col">
@@ -1127,12 +1125,10 @@ export default function LabOfficer() {
                     </span>
                   </div>
                 </div>
-                <div class="row" style={{marginTop: "-10px"}}>
+                <div class="row" style={{marginTop: "2px"}}>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Age :
-                      </b>
+                        AGE :
                     </span>
                   </div>
                   <div class="col">
@@ -1140,22 +1136,17 @@ export default function LabOfficer() {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Contact
-                        Number :
-                      </b>
+                        CONTACT NUMBER :
                     </span>
                   </div>
                   <div class="col">
                     <span>{contactNo}</span>
                   </div>
                 </div>
-                <div class="row" style={{marginTop: "-10px"}}>
+                <div class="row" style={{marginTop: "2px"}}>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Sex :
-                      </b>
+                        GENDER :
                     </span>
                   </div>
                   <div class="col">
@@ -1163,22 +1154,17 @@ export default function LabOfficer() {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Date of
-                        Birth :
-                      </b>
+                        BIRTHDATE :
                     </span>
                   </div>
                   <div class="col">
                     <span>{birthDate.toUpperCase()}</span>
                   </div>
                 </div>
-                <div class="row" style={{marginTop: "-10px"}}>
+                <div class="row" style={{marginTop: "2px"}}>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Patient ID :
-                      </b>
+                        PATIENT ID :
                     </span>
                   </div>
                   <div class="col">
@@ -1186,7 +1172,7 @@ export default function LabOfficer() {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>Requesting Physician : </b>
+                      REQUESTING PHYSICIAN :
                     </span>
                   </div>
                   <div class="col">
@@ -1218,13 +1204,13 @@ export default function LabOfficer() {
                       </div>
                     </div>
                     {labTestData.map((result, resultIndex) => (
-                      <div className="row" style={{marginTop: "-10px", width: "100%"}} key={resultIndex}>
+                      <div className="row" style={{marginTop: "2px", width: "100%"}} key={resultIndex}>
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
                         <div className="col">
-                          {result["preferred"] !== " " ? (
-                            result["preferred"] === result["result"] ? (
+                          {result["preferred"] != " " ? (
+                            result["preferred"] == result["result"] ? (
                               <span>
                                 {result["result"] + " " + result["unit"]}
                               </span>
@@ -1233,8 +1219,8 @@ export default function LabOfficer() {
                                 {result["result"] + " " + result["unit"]}
                               </span>
                             )
-                          ) : result["preferred_from"] !== 0.0 &&
-                            result["preferred_to"] !== 0.0 ? (
+                          ) : result["preferred_from"] != 0.0 &&
+                            result["preferred_to"] != 0.0 ? (
                             parseFloat(result["preferred_from"]) >
                             parseFloat(result["result"]) ? (
                               <span class="red">
