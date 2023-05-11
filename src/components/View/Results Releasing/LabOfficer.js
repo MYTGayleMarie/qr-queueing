@@ -787,7 +787,7 @@ export default function LabOfficer() {
     return labTestData.map((result) => {
       setWithResults(true);
       let reference_range = "";
-      if (result.preferred_from !== 0.0 && result.preferred_to !== 0.0) {
+      if (result.preferred_from !== 0.0 || result.preferred_to !== 0.0) {
         if (result.preferred_to === 999.99) {
           reference_range = ">=" + result.preferred_from;
         } else {
@@ -796,7 +796,7 @@ export default function LabOfficer() {
       } else if (result.preferred !== " ") {
         reference_range = result.preferred;
       } else {
-        reference_range = "-";
+        reference_range = "";
       }
   
       return {
@@ -1099,7 +1099,6 @@ export default function LabOfficer() {
               <div className="laboratory-title">
                 <span>{selectedLab.label?.toUpperCase()}</span>
               </div>
-              <br />
               <div class="tb">
                 <div class="row">
                   <div class="col details_title">
@@ -1219,7 +1218,7 @@ export default function LabOfficer() {
                                 {result["result"] + " " + result["unit"]}
                               </span>
                             )
-                          ) : result["preferred_from"] != 0.0 &&
+                          ) : result["preferred_from"] != 0.0 ||
                             result["preferred_to"] != 0.0 ? (
                             parseFloat(result["preferred_from"]) >
                             parseFloat(result["result"]) ? (
@@ -1249,15 +1248,15 @@ export default function LabOfficer() {
                           )}
                         </div>
                         <div className="col">
-                          <span>
+                        <span>
                             {result["preferred"] != " " ?
                               result["preferred"]
                               :
-                                result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
+                                result["preferred_from"] != 0.0 || result["preferred_to"] != 0.0 ?
                                   result["preferred_to"] == 999.99 ?
-                                    ">=" + result["preferred_from"] :
-                                   result["preferred_from"] + "-" + result["preferred_to"] :
-                            "-"}</span>
+                                    ">=" + parseFloat(result["preferred_from"]).toFixed(2) :
+                                   parseFloat(result["preferred_from"]).toFixed(2) + "-" + parseFloat(result["preferred_to"]).toFixed(2) :
+                            ""}</span>
                         </div>  
                       </div>
                     ))}
@@ -1510,7 +1509,7 @@ export default function LabOfficer() {
         <Modal show={showPDF} onHide={() => setShowPDF(false)} animation={false} contentClassName="custom-modal-content" centered >
           <div className="custom-modal">
             <LaboratoryResultsTable/>
-            <div style={{marginTop: "5%"}}>
+            <div style={{marginTop: "5%", justifyContent: "center", textAlign: "center"}}>
             <button 
               className="filter-btn" 
               onClick={() => handleDisapproved()}
@@ -1539,8 +1538,10 @@ export default function LabOfficer() {
                 APPROVE
             </button>
             </div>
+            <br/>
             <ToastContainer hideProgressBar={true} />
           </div>
+          <br/>
         </Modal>
 
         <div className="personal-data-cont">

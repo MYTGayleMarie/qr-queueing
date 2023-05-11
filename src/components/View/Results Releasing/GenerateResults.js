@@ -453,7 +453,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               <div className="laboratory-title">
                 {servicesData[0].category.toUpperCase()}
               </div>
-              <br />
               <div class="tb">
                 <div class="row">
                   <div class="col details_title">
@@ -575,7 +574,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                 {result["result"] + " " + result["unit"]}
                               </span>
                             )
-                          ) : result["preferred_from"] != 0.0 &&
+                          ) : result["preferred_from"] != 0.0 ||
                             result["preferred_to"] != 0.0 ? (
                             parseFloat(result["preferred_from"]) >
                             parseFloat(result["result"]) ? (
@@ -609,11 +608,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                             {result["preferred"] != " " ?
                               result["preferred"]
                               :
-                                result["preferred_from"] != 0.0 && result["preferred_to"] != 0.0 ?
+                                result["preferred_from"] != 0.0 || result["preferred_to"] != 0.0 ?
                                   result["preferred_to"] == 999.99 ?
-                                    ">=" + result["preferred_from"] :
-                                   result["preferred_from"] + "-" + result["preferred_to"] :
-                            "-"}</span>
+                                    ">=" + parseFloat(result["preferred_from"]).toFixed(2) :
+                                   parseFloat(result["preferred_from"]).toFixed(2) + "-" + parseFloat(result["preferred_to"]).toFixed(2) :
+                            ""}</span>
                         </div>n  
                       </div>
                     ))}
