@@ -1097,7 +1097,7 @@ export default function LabOfficer() {
             />
             <div>
               <div className="laboratory-title">
-                <span>{selectedLab.label}.toUpperCase()</span>
+                <span>{selectedLab.label?.toUpperCase()}</span>
               </div>
               <br />
               <div class="tb">
@@ -1491,7 +1491,7 @@ export default function LabOfficer() {
             className="filter-btn"
             name="show"
             onClick={handlePrint}
-            disabled={!isApproved === "approved" || !withResults}
+            disabled={!(isApproved === "approved") && withResults}
             style={{
               background:
                 !withResults || (isApproved !== "approved" && withResults)
