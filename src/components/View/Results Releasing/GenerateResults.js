@@ -648,7 +648,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span><i>{remark}</i></span>
+                    <span><div dangerouslySetInnerHTML={{ __html: remark }}></div></span>
                   </div>
                 </div>
               ))}
