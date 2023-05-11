@@ -1,36 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
 .resultTitle {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Arial', sans-serif;
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     display: block;
     text-align: center;
     margin-left: 2px;
     background-color: transparent;
 }
 
+.PDFFont {
+  font-family: 'Arial', sans-serif;
+}
+
 .addressTitle {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Arial', sans-serif;
     font-size: 1rem;
     display: block;
     text-align: center;
 }
 
 .img-small {
-    width: 300px;
-    height: 150px;
+    width: 290px;
+    height: 140px;
     margin-right: 1px;
   }
 
 .laboratory-title {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Arial', sans-serif;
+    font-style: bold;
     font-size: 1.5rem;
     display: block;
     text-align: center;
+    margin-bottom: 0px;
 }
 
 .table-title {
     text-align: center;
-    font-family: "Arial", sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 1.5em; /* adjust font size as needed */
     font-weight: bold;
     text-transform: uppercase;
@@ -39,7 +47,7 @@
 
 h3 {
   text-align: center;
-  font-family: 'Arial', sans-serif; /* Replace with the desired font family */
+  font-family: 'Arial', sans-serif;
 }
 
 .wrapper {
@@ -73,7 +81,7 @@ h3 {
 }
 
 .row {
-  margin-bottom: 2px;
+  margin-bottom: 0px !important;
 }
 
 .bg {

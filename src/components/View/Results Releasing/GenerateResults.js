@@ -374,7 +374,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
   const Signature = () => {
     return (
-      <div>
+      <div className="PDFFont">
         <div className="wrapper">
           <div className="box">
             {/* {chooseMedTech()} */}
@@ -433,14 +433,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 className="img-small"
                 style={{ paddingRight: "50px" }}
               />
-              <div style={{ display: "block"}}>
+              <div className="PDFFont" style={{ display: "block"}}>
                 <span className="resultTitle">
-                  Department of Clinical Laboratory
+                  DEPARTMENT OF CLINICAL LABORATORY
                 </span>
                 <span className="addressTitle">
-                  Unit A, M Block, Marasbaras, Tacloban City
+                  Unit A, M Block, Marasbaras, Tacloban City | 0999 8888 6694
                 </span>
-                <span className="addressTitle">0999 8888 6694</span>
               </div>
             </div>
             <hr
@@ -459,7 +458,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <div class="row">
                   <div class="col details_title">
                     <span>
-                      <b>Patient name :</b>
+                      NAME :
                     </span>
                   </div>
                   <div class="col">
@@ -470,10 +469,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Registration
-                        Date :
-                      </b>
+                        REQUEST DATE :
                     </span>
                   </div>
                   <div class="col">
@@ -486,9 +482,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <div class="row">
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Age :
-                      </b>
+                        AGE :
                     </span>
                   </div>
                   <div class="col">
@@ -496,10 +490,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Contact
-                        Number :
-                      </b>
+                        CONTACT NUMBER :
                     </span>
                   </div>
                   <div class="col">
@@ -509,9 +500,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <div class="row">
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Sex :
-                      </b>
+                        GENDER :
                     </span>
                   </div>
                   <div class="col">
@@ -519,10 +508,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Date of
-                        Birth :
-                      </b>
+                        BIRTHDATE :
                     </span>
                   </div>
                   <div class="col">
@@ -532,9 +518,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 <div class="row">
                   <div class="col details_title">
                     <span>
-                      <b>
-                        Patient ID :
-                      </b>
+                        PATIENT ID :
                     </span>
                   </div>
                   <div class="col">
@@ -542,7 +526,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   </div>
                   <div class="col details_title">
                     <span>
-                      <b>Requesting Physician : </b>
+                      REQUESTING PHYSICIAN :
                     </span>
                   </div>
                   <div class="col">
@@ -557,7 +541,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               {servicesData.map((service, serviceIndex) => (
                 <div key={serviceIndex}>
                   {/* {getResults(service.id)} */}
-                  <br />
                   <div className="tb mid">
                     <div className="row bd">
                       <div className="col">
@@ -579,7 +562,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     {labTestResults.map((result, resultIndex) => (
                       <div className="row" key={resultIndex}>
                         <div className="col">
-                          <span>{result["lab_test"]}</span>
+                          <span>{result["lab_test"].toUpperCase()}</span>
                         </div>
                         <div className="col">
                           {result["preferred"] != " " ? (
@@ -648,7 +631,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span><i>{remark}</i></span>
+                    <span><div dangerouslySetInnerHTML={{ __html: remark }}></div></span>
                   </div>
                 </div>
               ))}
