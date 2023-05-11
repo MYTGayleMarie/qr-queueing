@@ -1097,7 +1097,7 @@ export default function LabOfficer() {
             />
             <div>
               <div className="laboratory-title">
-                <span>{selectedLab.label}.toUpperCase()</span>
+                <span>{selectedLab.label?.toUpperCase()}</span>
               </div>
               <br />
               <div class="tb">
