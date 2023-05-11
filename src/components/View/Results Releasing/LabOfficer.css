@@ -1,5 +1,9 @@
-.personal-data-cont {
-  text-align: "right"
+.personal-data-const {
+  text-align: left;
+}
+
+.personal-data {
+  font-size: 30px !important;
 }
 
 .form-control {
