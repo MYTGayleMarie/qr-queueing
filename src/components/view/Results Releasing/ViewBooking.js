@@ -721,7 +721,8 @@ export default function ViewBooking() {
                   )}
 
                   {/* THYROID PROFILE */}
-                  {thyroid_profile.length != 0 && (
+
+                  {thyroid_profile.length !== 0 && (
                     <div>
                       <div className="category label">THYROID PROFILE</div>
                       <GenerateResults

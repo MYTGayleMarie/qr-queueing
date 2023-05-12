@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
@@ -33,6 +33,9 @@ const userId = getUser();
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
   const { id, dateFrom, dateTo } = useParams();
+
+  const [loadData, setLoadData] = useState(false);
+
   const [labIds, setLabIds] = useState([]);
   const [packageIds, setPackageIds] = useState([]);
   const [servicesLab, setServicesLab] = useState([]);
@@ -77,6 +80,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [readyCustomer, setReadyCustomer] = useState(false);
   const [readyBooking, setReadyBooking] = useState(false);
   const [readyResults, setReadyResults] = useState(false);
+  const [labReady, setLabReady] = useState(false);
   var presentDate = new Date();
 
   var monthNames = [
@@ -113,7 +117,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((response) => {
         const customerId = response.data.data.booking.customer_id;
-        console.log(response.data);
+
         axios({
           method: "post",
           url: window.$link + "customers/show/" + customerId,
@@ -168,12 +172,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((booking) => {
         setServices(booking.data);
-        console.log(booking.data);
+
         setReadyBooking(true);
       })
       .catch((error) => {});
 
-      console.log(selectedLab.data);
     // Get Detail Results
     axios({
       method: "get",
@@ -187,7 +190,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     })
       .then((response) => {
         const data = response.data.data;
-        console.log(data);
+
         const packageDetailId = selectedLab.booking_id;
         if (data.booking_detail_results) {
           if (selectedLab.type == "lab") {
@@ -223,77 +226,96 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   });
 
   const handlePrint = () => {
-    setShowPDF(true);
-    printHandle();
+    if (labReady === true) {
+      setShowPDF(true);
+      printHandle();
+    }
   };
 
   // Function to get Booking Detail Results
   React.useEffect(() => {
-    if (servicesData[0].id !== "") {
-      axios({
-        method: "get",
-        url:
-          window.$link +
-          "Bookingdetails/getDetailsResult/" +
-          servicesData[0].id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          requester: userId,
-        },
-      })
-        .then((response) => {
-          setLabTestResults(
-            response.data.data?.booking_detail_results !== null
-              ? response.data.data?.booking_detail_results
-              : []
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    var lab_test_results = [];
+    if (servicesData.length > 0) {
+      servicesData.map(async (data, key) => {
+        if (data.id !== "") {
+          await axios({
+            method: "get",
+            url: window.$link + "Bookingdetails/getDetailsResult/" + data.id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ""),
+              requester: userId,
+            },
+          })
+            .then((response) => {
+              if (response.data.data?.booking_detail_results !== null) {
+                response.data.data.booking_detail_results.map((val) => {
+                  lab_test_results.push({ ...val });
+                });
+                // data.lab_test_results.push(
+                //   response.data.data.booking_detail_results[0]
+                // );
+              }
+              //old logic
+              // lab_test_results.push(
+              //   response.data.data?.booking_detail_results !== null
+              //     ? response.data.data?.booking_detail_results
+              //     : []
+              // );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
     }
+    setLabTestResults(lab_test_results);
+    setLabReady(true);
   }, []);
 
   // Function to get Booking Details get Details
   React.useEffect(() => {
-    if (servicesData[0].id !== "") {
-      axios({
-        method: "get",
-        url: window.$link + "Bookingdetails/getDetails/" + servicesData[0].id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          requester: userId,
-        },
-      })
-        .then((booking) => {
-          setRemark(booking.data.data.booking_detail[0]?.remarks ?? "");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (servicesData.length > 0 && loadData === true) {
+      servicesData.map((data) => {
+        if (data.id !== "") {
+          axios({
+            method: "get",
+            url: window.$link + "Bookingdetails/getDetails/" + data.id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ""),
+              requester: userId,
+            },
+          })
+            .then((booking) => {
+              setRemark(
+                remark !== ""
+                  ? remark + ", " + booking.data.data.booking_detail[0]?.remarks
+                  : booking.data.data.booking_detail[0]?.remarks
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
     }
-  }, []);
+  }, [loadData]);
 
   // set Approval
   React.useEffect(() => {
-    console.log(servicesData[0]);
-    console.log(services);
-    const index = services.findIndex((service) => service.lab_test === servicesData[0].name);
-    console.log(index);
+    const index = services.findIndex(
+      (service) => service.lab_test === servicesData[0].name
+    );
+
     if (services[index]?.result_approval === "approved") {
-       console.log("Hello");
-       setIsApproved("approved");
+      setIsApproved("approved");
     } else if (services[index]?.result_approval === "disapproved") {
       setIsApproved("disapproved");
     }
-    console.log(isApproved);
-  },[readyBooking]);
-
-  console.log(isApproved);
+  }, [readyBooking]);
 
   // Categorizing services into lab and packages
   React.useEffect(() => {
@@ -426,14 +448,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 backgroundColor: "transparent",
               }}
             >
-              
               <img
                 src={Logo}
                 alt="QR DIAGNOSTICS"
                 className="img-small"
                 style={{ paddingRight: "50px" }}
               />
-              <div className="PDFFont" style={{ display: "block"}}>
+              <div className="PDFFont" style={{ display: "block" }}>
                 <span className="resultTitle">
                   DEPARTMENT OF CLINICAL LABORATORY
                 </span>
@@ -456,9 +477,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               <div class="tb">
                 <div class="row">
                   <div class="col details_title">
-                    <span>
-                      NAME :
-                    </span>
+                    <span>NAME :</span>
                   </div>
                   <div class="col">
                     <span>
@@ -467,9 +486,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     </span>
                   </div>
                   <div class="col details_title">
-                    <span>
-                        REQUEST DATE :
-                    </span>
+                    <span>REQUEST DATE :</span>
                   </div>
                   <div class="col">
                     <span>
@@ -480,17 +497,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 </div>
                 <div class="row">
                   <div class="col details_title">
-                    <span>
-                        AGE :
-                    </span>
+                    <span>AGE :</span>
                   </div>
                   <div class="col">
                     <span>{age}</span>
                   </div>
                   <div class="col details_title">
-                    <span>
-                        CONTACT NUMBER :
-                    </span>
+                    <span>CONTACT NUMBER :</span>
                   </div>
                   <div class="col">
                     <span>{contactNo}</span>
@@ -498,17 +511,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 </div>
                 <div class="row">
                   <div class="col details_title">
-                    <span>
-                        GENDER :
-                    </span>
+                    <span>GENDER :</span>
                   </div>
                   <div class="col">
                     <span>{gender.toUpperCase()}</span>
                   </div>
                   <div class="col details_title">
-                    <span>
-                        BIRTHDATE :
-                    </span>
+                    <span>BIRTHDATE :</span>
                   </div>
                   <div class="col">
                     <span>{birthDate.toUpperCase()}</span>
@@ -516,29 +525,25 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 </div>
                 <div class="row">
                   <div class="col details_title">
-                    <span>
-                        PATIENT ID :
-                    </span>
+                    <span>PATIENT ID :</span>
                   </div>
                   <div class="col">
                     <span>{id}</span>
                   </div>
                   <div class="col details_title">
-                    <span>
-                      REQUESTING PHYSICIAN :
-                    </span>
+                    <span>REQUESTING PHYSICIAN :</span>
                   </div>
                   <div class="col">
-                    <span>
-                    </span>
+                    <span></span>
                   </div>
                 </div>
               </div>
               <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
 
               {/* Mapping of Detail Results */}
+
               {servicesData.map((service, serviceIndex) => (
-                <div key={serviceIndex}>
+                <div>
                   {/* {getResults(service.id)} */}
                   <div className="tb mid">
                     <div className="row bd">
@@ -558,64 +563,83 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                         </span>
                       </div>
                     </div>
-                    {labTestResults.map((result, resultIndex) => (
-                      <div className="row" key={resultIndex}>
-                        <div className="col">
-                          <span>{result["lab_test"].toUpperCase()}</span>
-                        </div>
-                        <div className="col">
-                          {result["preferred"] != " " ? (
-                            result["preferred"] == result["result"] ? (
-                              <span>
-                                {result["result"] + " " + result["unit"]}
-                              </span>
-                            ) : (
-                              <span class="red">
-                                {result["result"] + " " + result["unit"]}
-                              </span>
-                            )
-                          ) : result["preferred_from"] != 0.0 ||
-                            result["preferred_to"] != 0.0 ? (
-                            parseFloat(result["preferred_from"]) >
-                            parseFloat(result["result"]) ? (
-                              <span class="red">
-                                {parseFloat(result["result"]).toFixed(2) +
-                                  " " +
-                                  result["unit"] +
-                                  " (L)"}
-                              </span>
-                            ) : parseFloat(result["result"]) >
-                              parseFloat(result["preferred_to"]) ? (
-                              <span class="red">
-                                {parseFloat(result["result"]).toFixed(2) +
-                                  " " +
-                                  result["unit"] +
-                                  " (H)"}
-                              </span>
-                            ) : (
-                              <span>
-                                {parseFloat(result["result"]).toFixed(2) + " " + result["unit"]}
-                              </span>
-                            )
-                          ) : (
-                            <span>
-                              {result["result"] + " " + result["unit"]}
-                            </span>
+                    {/* {labTestResults.map((result, resultIndex) => ( */}
+                    {labTestResults.map((result, resultIndex) => {
+                      return (
+                        <>
+                          {result.booking_detail_id === service.id && (
+                            <div className="row" key={resultIndex}>
+                              <div className="col">
+                                <span>{result["lab_test"].toUpperCase()}</span>
+                              </div>
+                              <div className="col">
+                                {result["preferred"] !== "" ? (
+                                  result["preferred"] === result["result"] ? (
+                                    <span>
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  ) : (
+                                    <span class="red">
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  )
+                                ) : result["preferred_from"] !== "0.0" ||
+                                  result["preferred_to"] !== "0.0" ? (
+                                  parseFloat(result["preferred_from"]) >
+                                  parseFloat(result["result"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"] +
+                                        " (L)"}
+                                    </span>
+                                  ) : parseFloat(result["result"]) >
+                                    parseFloat(result["preferred_to"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"] +
+                                        " (H)"}
+                                    </span>
+                                  ) : (
+                                    <span>
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"]}
+                                    </span>
+                                  )
+                                ) : (
+                                  <span>
+                                    {result["result"] + " " + result["unit"]}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="col">
+                                <span>
+                                  {result["preferred"] != " "
+                                    ? result["preferred"]
+                                    : result["preferred_from"] !== "0.0" ||
+                                      result["preferred_to"] !== "0.0"
+                                    ? result["preferred_to"] === "999.99"
+                                      ? ">=" +
+                                        parseFloat(
+                                          result["preferred_from"]
+                                        ).toFixed(2)
+                                      : parseFloat(
+                                          result["preferred_from"]
+                                        ).toFixed(2) +
+                                        "-" +
+                                        parseFloat(
+                                          result["preferred_to"]
+                                        ).toFixed(2)
+                                    : ""}
+                                </span>
+                              </div>
+                            </div>
                           )}
-                        </div>
-                        <div className="col">
-                          <span>
-                            {result["preferred"] != " " ?
-                              result["preferred"]
-                              :
-                                result["preferred_from"] != 0.0 || result["preferred_to"] != 0.0 ?
-                                  result["preferred_to"] == 999.99 ?
-                                    ">=" + parseFloat(result["preferred_from"]).toFixed(2) :
-                                   parseFloat(result["preferred_from"]).toFixed(2) + "-" + parseFloat(result["preferred_to"]).toFixed(2) :
-                            ""}</span>
-                        </div>n  
-                      </div>
-                    ))}
+                        </>
+                      );
+                    })}
                   </div>
                   <hr
                     style={{
@@ -630,7 +654,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span><div dangerouslySetInnerHTML={{ __html: remark }}></div></span>
+                    <span>
+                      <div dangerouslySetInnerHTML={{ __html: remark }}></div>
+                    </span>
                   </div>
                 </div>
               ))}
@@ -660,14 +686,21 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               {
                 <button
                   className="upload-res-btn"
-                  onClick={handlePrint}
+                  onClick={() => {
+                    setLoadData(true);
+                    handlePrint();
+                  }}
                   style={{
                     background:
-                      (!readyCustomer && !readyBooking && !readyResults) || !(isApproved==="approved")
+                      (!readyCustomer && !readyBooking && !readyResults) ||
+                      !(isApproved === "approved")
                         ? "gray"
                         : "#55073A",
                   }}
-                  disabled={(!readyCustomer && !readyBooking && !readyResults) || !(isApproved === "approved")}
+                  disabled={
+                    (!readyCustomer && !readyBooking && !readyResults) ||
+                    !(isApproved === "approved")
+                  }
                 >
                   GENERATE RESULTS
                 </button>
@@ -676,7 +709,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
           </div>
         </div>
         <div>
-        <LaboratoryResultsTable />
+          <LaboratoryResultsTable />
         </div>
       </div>
     </div>
