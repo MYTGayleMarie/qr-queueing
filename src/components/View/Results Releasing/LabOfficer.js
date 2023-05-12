@@ -1145,7 +1145,21 @@ export default function LabOfficer() {
               />
               <div>
                 <div className="laboratory-title">
-                  <span>{selectedLab.label?.toUpperCase()}</span>
+                  <span>
+                    {selectedLab.label && (
+                      <>
+                        {selectedLab.label.toUpperCase() === "SERUMPT" ||
+                        selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
+                        selectedLab.label.toUpperCase() === "URINALYSIS" ? (
+                          "CLINICAL MICROSCOPY URINALYSIS"
+                        ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
+                          "CLINICAL MICROSCOPY FECALYSIS"
+                        ) : (
+                          selectedLab.label.toUpperCase()
+                        )}
+                      </>
+                    )}
+                  </span>
                 </div>
                 <div class="tb">
                   <div class="row">
@@ -1244,7 +1258,9 @@ export default function LabOfficer() {
                         key={resultIndex}
                       >
                         <div className="col">
-                          <span>{result["lab_test"]}</span>
+                          <div className="space-between">
+                          <span>{result["lab_test"].toUpperCase()}</span>
+                          </div>
                         </div>
                         <div className="col">
                           {result["preferred"] != " " ? (

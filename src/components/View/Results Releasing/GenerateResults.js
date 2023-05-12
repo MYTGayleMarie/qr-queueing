@@ -482,7 +482,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   <div class="col">
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
-                      {middleName.toUpperCase}
+                      {middleName.toUpperCase()}
                     </span>
                   </div>
                   <div class="col details_title">
@@ -653,7 +653,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     }}
                   />
 
-                  <div>
+<div
+                    style={{
+                      justifyContent: "left",
+                      alignItems: "left",
+                      textAlign: "left",
+                    }}
+                  >
                     <span>
                       <b>REMARKS: </b>
                     </span>
