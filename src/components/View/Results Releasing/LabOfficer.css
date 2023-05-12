@@ -145,6 +145,14 @@
     display:flex;
     flex-direction: row;
   }
+
+.space-between {
+  margin-top: 0px;
+}
+
+  .row {
+    margin-bottom: 0px !important;
+  }
   
   .email-btn {
     background: #55073A;
@@ -206,6 +214,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100% !important;
+    height: 200px !important;
     z-index: 0 !important;
   }

@@ -799,13 +799,13 @@ export default function LabOfficer() {
     return labTestData.map((result) => {
       setWithResults(true);
       let reference_range = "";
-      if (result.preferred_from !== 0.0 || result.preferred_to !== 0.0) {
-        if (result.preferred_to === 999.99) {
+      if (result.preferred_from != 0.0 || result.preferred_to != 0.0) {
+        if (result.preferred_to == 999.99) {
           reference_range = ">=" + result.preferred_from;
         } else {
           reference_range = result.preferred_from + " - " + result.preferred_to;
         }
-      } else if (result.preferred !== " ") {
+      } else if (result.preferred != " ") {
         reference_range = result.preferred;
       } else {
         reference_range = "";
@@ -1145,7 +1145,21 @@ export default function LabOfficer() {
               />
               <div>
                 <div className="laboratory-title">
-                  <span>{selectedLab.label?.toUpperCase()}</span>
+                  <span>
+                    {selectedLab.label && (
+                      <>
+                        {selectedLab.label.toUpperCase() === "SERUMPT" ||
+                        selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
+                        selectedLab.label.toUpperCase() === "URINALYSIS" ? (
+                          "CLINICAL MICROSCOPY URINALYSIS"
+                        ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
+                          "CLINICAL MICROSCOPY FECALYSIS"
+                        ) : (
+                          selectedLab.label.toUpperCase()
+                        )}
+                      </>
+                    )}
+                  </span>
                 </div>
                 <div class="tb">
                   <div class="row">
@@ -1244,7 +1258,9 @@ export default function LabOfficer() {
                         key={resultIndex}
                       >
                         <div className="col">
-                          <span>{result["lab_test"]}</span>
+                          <div className="space-between">
+                          <span>{result["lab_test"].toUpperCase()}</span>
+                          </div>
                         </div>
                         <div className="col">
                           {result["preferred"] != " " ? (
@@ -1548,7 +1564,7 @@ export default function LabOfficer() {
             className="filter-btn"
             name="show"
             onClick={handlePrint}
-            disabled={!(isApproved === "approved") && withResults}
+            disabled={ !withResults ||(isApproved !== "approved") && withResults}
             style={{
               background:
                 !withResults || (isApproved !== "approved" && withResults)

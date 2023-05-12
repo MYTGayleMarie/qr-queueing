@@ -482,7 +482,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   <div class="col">
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
-                      {middleName.toUpperCase}
+                      {middleName.toUpperCase()}
                     </span>
                   </div>
                   <div class="col details_title">
@@ -567,59 +567,63 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     {labTestResults.map((result, resultIndex) => {
                       return (
                         <>
-                          {result.booking_detail_id === service.id && (
+                          {result.booking_detail_id == service.id && (
                             <div className="row" key={resultIndex}>
                               <div className="col">
                                 <span>{result["lab_test"].toUpperCase()}</span>
                               </div>
                               <div className="col">
-                                {result["preferred"] !== "" ? (
-                                  result["preferred"] === result["result"] ? (
-                                    <span>
-                                      {result["result"] + " " + result["unit"]}
-                                    </span>
-                                  ) : (
-                                    <span class="red">
-                                      {result["result"] + " " + result["unit"]}
-                                    </span>
-                                  )
-                                ) : result["preferred_from"] !== "0.0" ||
-                                  result["preferred_to"] !== "0.0" ? (
-                                  parseFloat(result["preferred_from"]) >
-                                  parseFloat(result["result"]) ? (
-                                    <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
-                                        " " +
-                                        result["unit"] +
-                                        " (L)"}
-                                    </span>
-                                  ) : parseFloat(result["result"]) >
-                                    parseFloat(result["preferred_to"]) ? (
-                                    <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
-                                        " " +
-                                        result["unit"] +
-                                        " (H)"}
-                                    </span>
-                                  ) : (
-                                    <span>
-                                      {parseFloat(result["result"]).toFixed(2) +
-                                        " " +
-                                        result["unit"]}
-                                    </span>
-                                  )
-                                ) : (
+                              {result["preferred"] !== " " ? (
+                                result["preferred"] === result["result"] ? (
                                   <span>
                                     {result["result"] + " " + result["unit"]}
                                   </span>
-                                )}
+                                ) : (
+                                  <span class="red">
+                                    {result["result"] + " " + result["unit"]}
+                                  </span>
+                                )
+                              ) : result["preferred_from"] !== "0.00" ||
+                                result["preferred_to"] !== "0.00" ? (
+                                parseFloat(result["preferred_from"]) >
+                                parseFloat(result["result"]) ? (
+                                  <span class="red">
+                                    {parseFloat(result["result"]).toFixed(2) +
+                                      " " +
+                                      result["unit"] +
+                                      " (L)"}
+                                  </span>
+                                ) : parseFloat(result["result"]) >
+                                  parseFloat(result["preferred_to"]) ? (
+                                  <span class="red">
+                                    {parseFloat(result["result"]).toFixed(2) +
+                                      " " +
+                                      result["unit"] +
+                                      " (H)"}
+                                  </span>
+                                ) : (
+                                  result["result"] === "0.00" && result["preferred_from"] === "0.00" && result["preferred_to"] === "0.00" ? null :
+                                  <span>
+                                    {parseFloat(result["result"]).toFixed(2) +
+                                      " " +
+                                      result["unit"]}
+                                  </span>
+                                )
+                              ) : (
+                                <span>
+                                  {result["result"] + " " + result["unit"]}
+                                </span>
+                              )}
                               </div>
                               <div className="col">
                                 <span>
-                                  {result["preferred"] != " "
+                                  {result["preferred"] !== " "
                                     ? result["preferred"]
-                                    : result["preferred_from"] !== "0.0" ||
-                                      result["preferred_to"] !== "0.0"
+                                    : result["preferred_from"] === "0.00" &&
+                                    result["preferred_to"] === "0.00"
+                                    ? " "
+                                    : result["preferred_from"] !== "0.00" ||
+                                      result["preferred_to"] !== "0.00"
                                     ? result["preferred_to"] === "999.99"
                                       ? ">=" +
                                         parseFloat(
@@ -649,7 +653,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                     }}
                   />
 
-                  <div>
+<div
+                    style={{
+                      justifyContent: "left",
+                      alignItems: "left",
+                      textAlign: "left",
+                    }}
+                  >
                     <span>
                       <b>REMARKS: </b>
                     </span>
