@@ -374,7 +374,7 @@ export default function LabOfficer() {
       })
       .catch((error) => {});
   }, []);
-  
+
   // Function to get Booking Details get Details
   React.useEffect(() => {
     if (labTestData.id !== "") {
@@ -439,10 +439,9 @@ export default function LabOfficer() {
         },
       })
         .then((response) => {
-          const data = response.data.data;
-
-          const packageDetailId = selectedLab.booking_id;
-          if (data.booking_detail_results) {
+          var data = response.data.data;
+          var packageDetailId = selectedLab.booking_id;
+          if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
             } else if (data.booking_package_details_results[packageDetailId]) {
@@ -456,22 +455,37 @@ export default function LabOfficer() {
             data.booking_package_details_results[packageDetailId] == null
           ) {
             handleLab(selectedLab);
+          } else if (data.booking_package_details_results !== {}) {
+            setLabTestData(
+              data.booking_package_details_results[packageDetailId]
+            );
+            if (selectedLab.result_approval === "approved") {
+              setIsApproved("approved");
+            } else if (selectedLab.result_approval === "disapproved") {
+              setIsApproved("disapproved");
+            } else {
+              setIsApproved("");
+            }
           } else {
             handleLab(selectedLab);
           }
 
-          const index = services.findIndex((service) => service.lab_test === selectedLab.label);
-          if (services[index].result_approval === "approved") {
-            setIsApproved("approved");
-          } else if (services[index].result_approval === "disapproved"){
-            setIsApproved("disapproved");
-          } else {
-            setIsApproved("");
+          const index = services.findIndex(
+            (service) => service.lab_test === selectedLab.label
+          );
+          if (services[index] !== undefined) {
+            if (services[index].result_approval === "approved") {
+              setIsApproved("approved");
+            } else if (services[index].result_approval === "disapproved") {
+              setIsApproved("disapproved");
+            } else {
+              setIsApproved("");
+            }
           }
         })
         .catch((error) => {
+          console.log(error);
           handleLab(selectedLab);
-          //console.log(error);
         });
     }
   }, [selectedLab]);
@@ -489,7 +503,6 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         setRemarks(response.data.data.booking_detail[0].remarks);
-        console.log(response.data.data.booking_detail[0].remarks + "TEst");
       })
       .catch(function (error) {
         console.log(error);
@@ -563,8 +576,7 @@ export default function LabOfficer() {
           withCredentials: false,
           params,
         })
-          .then(function (response) {
-          })
+          .then(function (response) {})
           .catch(function (error) {
             console.log(error);
           });
@@ -578,8 +590,7 @@ export default function LabOfficer() {
           withCredentials: false,
           params,
         })
-          .then(function (response) {
-          })
+          .then(function (response) {})
           .catch(function (error) {
             console.log(error);
           });
@@ -610,7 +621,8 @@ export default function LabOfficer() {
                     label: "[P] " + data.lab_test,
                     id: data.booking_detail_id,
                     booking_id: data.id,
-                    type: data.type,
+                    type: data.type ? data.type : "package",
+                    result_approval: data.result_approval,
                   }
                 : null
             );
@@ -783,7 +795,7 @@ export default function LabOfficer() {
 
   const labTestDataWithResults = useMemo(() => {
     if (!labTestData) return [];
-  
+
     return labTestData.map((result) => {
       setWithResults(true);
       let reference_range = "";
@@ -798,7 +810,7 @@ export default function LabOfficer() {
       } else {
         reference_range = "";
       }
-  
+
       return {
         lab_test: result.lab_test,
         result: result.result,
@@ -823,7 +835,6 @@ export default function LabOfficer() {
       })
         .then(function (response) {
           setData(response.data.message.booking_attachments);
-
         })
         .catch(function (error) {
           setData(error);
@@ -869,9 +880,19 @@ export default function LabOfficer() {
   }
 
   const handleApproved = () => {
+    var link = "";
+    if (selectedLab.type === "lab") {
+      link =
+        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
+    } else {
+      link =
+        window.$link +
+        "Bookingpackage_details/updateResultApproval/" +
+        selectedLab.booking_id;
+    }
     axios({
       method: "post",
-      url: window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id,
+      url: link,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -887,14 +908,24 @@ export default function LabOfficer() {
       })
       .catch(function (error) {
         console.log(error);
-        toast.error("Error Approval")
+        toast.error("Error Approval");
       });
-  }
+  };
 
   const handleDisapproved = () => {
+    var link = "";
+    if (selectedLab.type === "lab") {
+      link =
+        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
+    } else {
+      link =
+        window.$link +
+        "Bookingpackage_details/updateResultApproval/" +
+        selectedLab.booking_id;
+    }
     axios({
       method: "post",
-      url: window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id,
+      url: link,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -910,12 +941,20 @@ export default function LabOfficer() {
       })
       .catch(function (error) {
         console.log(error);
-        toast.error("Error Approval")
+        toast.error("Error Approval");
       });
-  }
+  };
 
   function handleLab(e) {
     //setLabTests(e.target.value)
+
+    if (selectedLab.result_approval === "approved") {
+      setIsApproved("approved");
+    } else if (selectedLab.result_approval === "disapproved") {
+      setIsApproved("disapproved");
+    } else {
+      setIsApproved("");
+    }
 
     if (e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
       setLabTestData(labResultsData.labTestUrinalysis);
@@ -1060,127 +1099,123 @@ export default function LabOfficer() {
 
   const LaboratoryResultsTable = () => {
     return (
-      <div style={{backgroundColor: "white", width: "900px"}}>
-      <div class="bg">
-        <div>
-          <div ref={componentRef}>
-            {/* Header */}
-            <div style={{ position: "relative" }}>
-            <img src={Teal} alt="QR DIAGNOSTICS" className="teal_header_laboff" />
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  backgroundColor: "transparent",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
+      <div style={{ backgroundColor: "white", width: "900px" }}>
+        <div class="bg">
+          <div>
+            <div ref={componentRef}>
+              {/* Header */}
+              <div style={{ position: "relative" }}>
                 <img
-                  src={Logo}
+                  src={Teal}
                   alt="QR DIAGNOSTICS"
-                  className="img-small"
-                  style={{ paddingRight: "50px" }}
+                  className="teal_header_laboff"
                 />
-                <div style={{ display: "block" }}>
-                  <span className="resultTitle">DEPARTMENT OF CLINICAL LABORATORY</span>
-                  <span className="addressTitle">Unit A, M Block, Marasbaras, Tacloban City | 0999 8888 6694</span>
-                </div>
-              </div>
-            </div>
-            <hr
-              style={{
-                border: "2px solid black",
-                width: "100%",
-                marginBottom: "0px",
-              }}
-            />
-            <div>
-              <div className="laboratory-title">
-                <span>{selectedLab.label?.toUpperCase()}</span>
-              </div>
-              <div class="tb">
-                <div class="row">
-                  <div class="col details_title">
-                    <span>
-                      NAME :
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "transparent",
+                    position: "relative",
+                    zIndex: 1,
+                  }}
+                >
+                  <img
+                    src={Logo}
+                    alt="QR DIAGNOSTICS"
+                    className="img-small"
+                    style={{ paddingRight: "50px" }}
+                  />
+                  <div style={{ display: "block" }}>
+                    <span className="resultTitle">
+                      DEPARTMENT OF CLINICAL LABORATORY
                     </span>
-                  </div>
-                  <div class="col">
-                    <span>
-                      {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
-                      {middleName.toUpperCase()}
-                    </span>
-                  </div>
-                  <div class="col details_title">
-                    <span>
-                        REQUEST DATE :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>
-                      {monthNames[presentDate.getMonth()]}{" "}
-                      {presentDate.getDate()}, {presentDate.getFullYear()}
-                    </span>
-                  </div>
-                </div>
-                <div class="row" style={{marginTop: "2px"}}>
-                  <div class="col details_title">
-                    <span>
-                        AGE :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>{age}</span>
-                  </div>
-                  <div class="col details_title">
-                    <span>
-                        CONTACT NUMBER :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>{contactNo}</span>
-                  </div>
-                </div>
-                <div class="row" style={{marginTop: "2px"}}>
-                  <div class="col details_title">
-                    <span>
-                        GENDER :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>{gender.toUpperCase()}</span>
-                  </div>
-                  <div class="col details_title">
-                    <span>
-                        BIRTHDATE :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>{birthDate.toUpperCase()}</span>
-                  </div>
-                </div>
-                <div class="row" style={{marginTop: "2px"}}>
-                  <div class="col details_title">
-                    <span>
-                        PATIENT ID :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>{id}</span>
-                  </div>
-                  <div class="col details_title">
-                    <span>
-                      REQUESTING PHYSICIAN :
-                    </span>
-                  </div>
-                  <div class="col">
-                    <span>
+                    <span className="addressTitle">
+                      Unit A, M Block, Marasbaras, Tacloban City | 0999 8888
+                      6694
                     </span>
                   </div>
                 </div>
               </div>
-              <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
+              <hr
+                style={{
+                  border: "2px solid black",
+                  width: "100%",
+                  marginBottom: "0px",
+                }}
+              />
+              <div>
+                <div className="laboratory-title">
+                  <span>{selectedLab.label?.toUpperCase()}</span>
+                </div>
+                <div class="tb">
+                  <div class="row">
+                    <div class="col details_title">
+                      <span>NAME :</span>
+                    </div>
+                    <div class="col">
+                      <span>
+                        {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
+                        {middleName.toUpperCase()}
+                      </span>
+                    </div>
+                    <div class="col details_title">
+                      <span>REQUEST DATE :</span>
+                    </div>
+                    <div class="col">
+                      <span>
+                        {monthNames[presentDate.getMonth()]}{" "}
+                        {presentDate.getDate()}, {presentDate.getFullYear()}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row" style={{ marginTop: "2px" }}>
+                    <div class="col details_title">
+                      <span>AGE :</span>
+                    </div>
+                    <div class="col">
+                      <span>{age}</span>
+                    </div>
+                    <div class="col details_title">
+                      <span>CONTACT NUMBER :</span>
+                    </div>
+                    <div class="col">
+                      <span>{contactNo}</span>
+                    </div>
+                  </div>
+                  <div class="row" style={{ marginTop: "2px" }}>
+                    <div class="col details_title">
+                      <span>GENDER :</span>
+                    </div>
+                    <div class="col">
+                      <span>{gender.toUpperCase()}</span>
+                    </div>
+                    <div class="col details_title">
+                      <span>BIRTHDATE :</span>
+                    </div>
+                    <div class="col">
+                      <span>{birthDate.toUpperCase()}</span>
+                    </div>
+                  </div>
+                  <div class="row" style={{ marginTop: "2px" }}>
+                    <div class="col details_title">
+                      <span>PATIENT ID :</span>
+                    </div>
+                    <div class="col">
+                      <span>{id}</span>
+                    </div>
+                    <div class="col details_title">
+                      <span>REQUESTING PHYSICIAN :</span>
+                    </div>
+                    <div class="col">
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+                <img
+                  src={Watermark}
+                  alt="QR DIAGNOSTICS"
+                  className="watermark"
+                />
 
                 <div>
                   <br />
@@ -1203,7 +1238,11 @@ export default function LabOfficer() {
                       </div>
                     </div>
                     {labTestData.map((result, resultIndex) => (
-                      <div className="row" style={{marginTop: "2px", width: "100%"}} key={resultIndex}>
+                      <div
+                        className="row"
+                        style={{ marginTop: "2px", width: "100%" }}
+                        key={resultIndex}
+                      >
                         <div className="col">
                           <span>{result["lab_test"]}</span>
                         </div>
@@ -1238,7 +1277,9 @@ export default function LabOfficer() {
                               </span>
                             ) : (
                               <span>
-                                {parseFloat(result["result"]).toFixed(2) + " " + result["unit"]}
+                                {parseFloat(result["result"]).toFixed(2) +
+                                  " " +
+                                  result["unit"]}
                               </span>
                             )
                           ) : (
@@ -1248,16 +1289,24 @@ export default function LabOfficer() {
                           )}
                         </div>
                         <div className="col">
-                        <span>
-                            {result["preferred"] != " " ?
-                              result["preferred"]
-                              :
-                                result["preferred_from"] != 0.0 || result["preferred_to"] != 0.0 ?
-                                  result["preferred_to"] == 999.99 ?
-                                    ">=" + parseFloat(result["preferred_from"]).toFixed(2) :
-                                   parseFloat(result["preferred_from"]).toFixed(2) + "-" + parseFloat(result["preferred_to"]).toFixed(2) :
-                            ""}</span>
-                        </div>  
+                          <span>
+                            {result["preferred"] != " "
+                              ? result["preferred"]
+                              : result["preferred_from"] != 0.0 ||
+                                result["preferred_to"] != 0.0
+                              ? result["preferred_to"] == 999.99
+                                ? ">=" +
+                                  parseFloat(result["preferred_from"]).toFixed(
+                                    2
+                                  )
+                                : parseFloat(result["preferred_from"]).toFixed(
+                                    2
+                                  ) +
+                                  "-" +
+                                  parseFloat(result["preferred_to"]).toFixed(2)
+                              : ""}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1268,24 +1317,32 @@ export default function LabOfficer() {
                       marginBottom: "0px",
                     }}
                   />
-                  <div style={{ justifyContent: "left", alignItems: "left", textAlign: "left" }}>
+                  <div
+                    style={{
+                      justifyContent: "left",
+                      alignItems: "left",
+                      textAlign: "left",
+                    }}
+                  >
                     <span>
                       <b>REMARKS: </b>
                     </span>
                     <br />
-                    <span><div dangerouslySetInnerHTML={{ __html: remarks }}></div></span>
+                    <span>
+                      <div dangerouslySetInnerHTML={{ __html: remarks }}></div>
+                    </span>
                   </div>
                 </div>
-              <br />
-              <Signature />
+                <br />
+                <Signature />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
     );
   };
-  
+
   const handlePrint = () => {
     if (componentRef.current) {
       printHandle();
@@ -1304,7 +1361,6 @@ export default function LabOfficer() {
 
     setSaveRemarks(remarks);
   };
-
 
   return (
     <div>
@@ -1471,17 +1527,19 @@ export default function LabOfficer() {
           <ToastContainer hideProgressBar={true} />
         </Fragment>
 
-        <div className="d-flex justify-content-end" style={{ marginRight: "5%" }}>
+        <div
+          className="d-flex justify-content-end"
+          style={{ marginRight: "5%" }}
+        >
           <button
             className="filter-btn"
             name="show"
             onClick={() => setShowPDF(true)}
             disabled={!withResults}
             style={{
-              background:
-                !withResults
-                  ? "gray"
-                  : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+              background: !withResults
+                ? "gray"
+                : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
             }}
           >
             Show PDF
@@ -1502,46 +1560,58 @@ export default function LabOfficer() {
           </button>
         </div>
 
-        <div style={{display: "none"}}>
-          <LaboratoryResultsTable/>
+        <div style={{ display: "none" }}>
+          <LaboratoryResultsTable />
         </div>
 
-        <Modal show={showPDF} onHide={() => setShowPDF(false)} animation={false} contentClassName="custom-modal-content" centered >
+        <Modal
+          show={showPDF}
+          onHide={() => setShowPDF(false)}
+          animation={false}
+          contentClassName="custom-modal-content"
+          centered
+        >
           <div className="custom-modal">
-            <LaboratoryResultsTable/>
-            <div style={{marginTop: "5%", justifyContent: "center", textAlign: "center"}}>
-            <button 
-              className="filter-btn" 
-              onClick={() => handleDisapproved()}
-              disabled={(isApproved === "disapproved")}
+            <LaboratoryResultsTable />
+            <div
               style={{
-                background:
-                  isApproved === "disapproved"
-                    ? "gray"
-                    : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+                marginTop: "5%",
+                justifyContent: "center",
+                textAlign: "center",
               }}
             >
+              <button
+                className="filter-btn"
+                onClick={() => handleDisapproved()}
+                disabled={isApproved === "disapproved"}
+                style={{
+                  background:
+                    isApproved === "disapproved"
+                      ? "gray"
+                      : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+                }}
+              >
                 DISAPPROVE
-            </button>
+              </button>
 
-            <button 
-              className="filter-btn" 
-              onClick={() => handleApproved()}
-              disabled={(isApproved === "approved")}
-              style={{
-                background:
-                  isApproved === "approved"
-                    ? "gray"
-                    : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
-              }}
-            >
+              <button
+                className="filter-btn"
+                onClick={() => handleApproved()}
+                disabled={isApproved === "approved"}
+                style={{
+                  background:
+                    isApproved === "approved"
+                      ? "gray"
+                      : "linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%)",
+                }}
+              >
                 APPROVE
-            </button>
+              </button>
             </div>
-            <br/>
+            <br />
             <ToastContainer hideProgressBar={true} />
           </div>
-          <br/>
+          <br />
         </Modal>
 
         <div className="personal-data-cont">
