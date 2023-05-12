@@ -468,7 +468,7 @@ function Table({
               data-heading={data.key}
               className={data.val != null ? data.val.replace(/\s/g, "") : ""}
             >
-              {data.val}
+              {data.val === null ? "" : data.val}
             </td>
           ))}
           <td>

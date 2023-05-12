@@ -106,7 +106,7 @@ export default function Lab() {
   }
 
   if (redirectBooking == true) {
-    var link = "/LabOfficer/" + id;
+    var link = "/laboratory-officer/" + id;
     return <Navigate to={link} />;
   }
 
