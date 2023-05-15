@@ -607,7 +607,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: grandTotal,
+          amount: pay,
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
