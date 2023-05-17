@@ -795,7 +795,21 @@ function AddPayment() {
                                 <span class="amount-label">AMOUNT</span>
                             </div>
                             <div className="row">
-                                <input type="number" id="payAmount" name="payAmount" step="0.01" value={pay} class="cash-input pay" placeholder="P" onChange={(e) => setPay(e.target.value)}/>
+                            <input
+                                type="number"
+                                id="payAmount"
+                                name="payAmount"
+                                step="0.01"
+                                value={pay}
+                                className="cash-input pay"
+                                placeholder="P"
+                                onChange={(e) => {
+                                const inputValue = e.target.value;
+                                if (inputValue !== null) {
+                                    setPay(inputValue);
+                                }
+                                }}
+                            />
                             </div>
                         </div>
                         <div className="col-sm-6">
