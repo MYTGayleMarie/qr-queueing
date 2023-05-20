@@ -98,7 +98,7 @@ export class ChargeSlip extends React.PureComponent {
                   <tr>
                     <td className="slip-label">{data.name}<br/>{data.service}</td>
                     <td className="slip-label">{data.qty}</td>
-                    <td className="slip-label">P {parseFloat(data.grand_total).toFixed(2)}</td>
+                    <td className="slip-label">P {parseFloat(data.total).toFixed(2)}</td>
                   </tr>
                 )}
                 <tr>
