@@ -338,7 +338,7 @@ function AddInvoicePayment() {
           });
           paymentTotal = parseFloat(tempTotal).toFixed(2);
         }
-
+        console.log(invoice)
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success");
           setGrandTotal(invoice.total);

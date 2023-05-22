@@ -2405,7 +2405,7 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {data}
+            {data === null ? "" : data}
             {/* {!isReady && useLoader ? 
                     <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data} */}
           </tbody>
