@@ -159,10 +159,17 @@ export default function LabOfficer() {
       } else if (lab_test == "Transparency") {
         setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
         setIsDropdown(true);
-      } else if (
+      } else if (lab_test == "Pregnancy Test") {
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Protein" || lab_test == "Sugar") {
+        setLabTestOptions(labResultsData.urinalysisSugarProteinOptions);
+        setIsDropdown(true);
+      }
+      else if (
         lab_test == "Epithelial Cells" ||
         lab_test == "Bacteria" ||
-        lab_test == "Amorphous Urates/Phosphates" ||
+        lab_test == "Amorphous Urates/Phosphate" ||
         lab_test == "Mucus Threads"
       ) {
         setLabTestOptions(labResultsData.MicroscopicExamOptions);
@@ -1622,6 +1629,9 @@ export default function LabOfficer() {
                 }}
               >
                 APPROVE
+              </button>
+              <button className="filter-btn" onClick={() => setShowPDF(false)}>
+                BACK
               </button>
             </div>
             <br />

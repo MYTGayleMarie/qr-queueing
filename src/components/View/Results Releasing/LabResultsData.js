@@ -45,6 +45,44 @@
        label: 'STRAW'
        }
      ],
+
+     urinalysisSugarProteinOptions: [
+      {
+        value: 'NEGATIVE',
+        label: 'NEGATIVE'
+      },
+      {
+        value: 'TRACE',
+        label: 'TRACE'
+      },
+      {
+        value: '1+',
+        label: '1+'
+      },
+      {
+        value: '++',
+        label: '++'
+      },
+      {
+        value: '+++',
+        label: '+++'
+      },
+      {
+        value: '++++',
+        label: '++++'
+      }
+     ],
+
+     urinalysisPregnancyTestOptions: [
+      {
+        value: 'POSITIVE',
+        label: 'POSITIVE'
+      },
+      {
+        value: 'NEGATIVE',
+        label: 'NEGATIVE'
+      }
+     ],
    
      urinalysisTransparencyOptions : [
        {
