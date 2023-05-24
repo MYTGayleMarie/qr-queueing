@@ -692,14 +692,6 @@
          "preferred_from": 0.00,
          "preferred_to": 0.00,
        },
-       {
-         "lab_test": "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV",
-         "result": "",
-         "unit": "",
-         "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
-       },
      ],
      
          labTestHepatitisA : [
