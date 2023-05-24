@@ -357,15 +357,9 @@
           
        },
        {
-         "lab_test": "OTHERS",
-         "result": "",
-         "unit": "",
-         "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
-       },
-       {
          "lab_test": "Pregnancy Test",
+         "test_type": "MICROSCOPIC EXAMINATION",
+         "test_type_2": "OTHERS",
          "result": "POSITIVE",
          "unit": "",
          "preferred": " ",
