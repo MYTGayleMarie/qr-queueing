@@ -477,6 +477,8 @@
        labTestSpermAnalysis : [
        {
          "lab_test": "PH Reaction",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -485,6 +487,8 @@
        },
        {
          "lab_test": "Volume",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "ml",
          "preferred": " ",
@@ -493,6 +497,8 @@
        },
        {
          "lab_test": "Liquefaction Time",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "minutes",
          "preferred": " ",
@@ -501,6 +507,8 @@
        },
        {
          "lab_test": "Viscosity",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "cm",
          "preferred": " ",
@@ -509,14 +517,19 @@
        },
        {
          "lab_test": "Total Sperm Count",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "",
          "result": "",
          "unit": "x106/ ejaculate",
          "preferred": " ",
          "preferred_from": 0.00,
          "preferred_to": 0.00,
           
-       },{
+       },
+      {
          "lab_test": "Progresive (PR)",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -525,6 +538,8 @@
        },
        {
          "lab_test": "Non Progressive",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -533,6 +548,8 @@
        },
        {
          "lab_test": "Immotile",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -541,6 +558,8 @@
        },
        {
          "lab_test": "Total Motility (PR+NP)",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -549,6 +568,8 @@
        },
        {
          "lab_test": "Total Normal Forms",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -557,6 +578,8 @@
        },
        {
          "lab_test": "Pin Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -565,6 +588,8 @@
        },
        {
          "lab_test": "Double Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -573,6 +598,8 @@
        },
        {
          "lab_test": "Gaint Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -581,6 +608,8 @@
        },
        {
          "lab_test": "WBC",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "OTHERS",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -589,6 +618,8 @@
        },
        {
          "lab_test": "RBC",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "OTHERS",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",

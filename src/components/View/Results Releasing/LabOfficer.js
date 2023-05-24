@@ -1156,7 +1156,6 @@ export default function LabOfficer() {
                     {selectedLab.label && (
                       <>
                         {selectedLab.label.toUpperCase() === "SERUMPT" ||
-                        selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
                         selectedLab.label.toUpperCase() === "URINALYSIS" || 
                         selectedLab.label.toUpperCase() === "[P] URINALYSIS" ? (
                           "CLINICAL MICROSCOPY - URINALYSIS"
@@ -1165,6 +1164,8 @@ export default function LabOfficer() {
                         ) : selectedLab.label.toUpperCase() === "HBSAG (HEPATITIS B ANTIGEN)" || 
                         selectedLab.label.toUpperCase() === "[P] HBSAG (HEPATITIS B ANTIGEN)" ? (
                           "SEROLOGY"
+                        ) : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"  ? (
+                          "CLINICAL MICROSCOPY - SPERM ANALYSIS"
                         )
                         : (
                           selectedLab.label.toUpperCase()
@@ -1257,11 +1258,13 @@ export default function LabOfficer() {
                           <b>RESULT</b>
                         </span>
                       </div>
-                      {/* <div className="col">
+                      {selectedLab.label !== "Urinalysis" ? (
+                      <div className="col">
                         <span>
                           <b>REFERENCE RANGE</b>
                         </span>
-                      </div> */}
+                      </div>
+                      ) : null}
                     </div>
                     {labTestData.map((result, resultIndex) => (
                       <>
@@ -1274,7 +1277,13 @@ export default function LabOfficer() {
                         {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] 
                           ? (
                             <div className="space-between">
-                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>{result["test_type"]}</h6>
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", }}><u>{result["test_type"]}</u></h5>
+                            </div>
+                          ) : null}
+                           {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>{result["test_type_2"]}</h6>
                             </div>
                           ) : null}
                           <div className="space-between">
@@ -1282,12 +1291,19 @@ export default function LabOfficer() {
                           </div>
                         </div>
                         <div className="col">
+                        {/* Add Blank space for headers */}
                         {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] ? (
                             <div className="space-between">
-                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>&nbsp;</h6>
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type"]}</h5>
                             </div>
                         )
                         : null}
+                        {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)", marginLeft: "0 px"}}>{result["test_type_2"]}</h6>
+                            </div>
+                          ) : null}
                           {result["preferred"] != " " ? (
                             result["preferred"] == result["result"] ? (
                               <span>
@@ -1329,8 +1345,21 @@ export default function LabOfficer() {
                             </span>
                           )}
                         </div>
-                        {/* <div className="col">
+                        {selectedLab.label.toUpperCase() !== "URINALYSIS" ? (
+                        <div className="col">
                           <span>
+                          {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] ? (
+                            <div className="space-between">
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type"]}</h5>
+                            </div>
+                        )
+                        : null}
+                        {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type_2"]}</h6>
+                            </div>
+                          ) : null}
                             {result["preferred"] != " "
                               ? result["preferred"]
                               : result["preferred_from"] != 0.0 ||
@@ -1347,7 +1376,9 @@ export default function LabOfficer() {
                                   parseFloat(result["preferred_to"]).toFixed(2)
                               : ""}
                           </span>
-                        </div> */}
+                        </div>
+
+                        ) : null}
                       </div>
                       </>
                     ))}
