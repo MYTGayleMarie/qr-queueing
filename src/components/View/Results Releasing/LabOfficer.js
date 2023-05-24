@@ -1157,11 +1157,16 @@ export default function LabOfficer() {
                       <>
                         {selectedLab.label.toUpperCase() === "SERUMPT" ||
                         selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
-                        selectedLab.label.toUpperCase() === "URINALYSIS" ? (
+                        selectedLab.label.toUpperCase() === "URINALYSIS" || 
+                        selectedLab.label.toUpperCase() === "[P] URINALYSIS" ? (
                           "CLINICAL MICROSCOPY URINALYSIS"
                         ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
                           "CLINICAL MICROSCOPY FECALYSIS"
-                        ) : (
+                        ) : selectedLab.label.toUpperCase() === "HBSAG (HEPATITIS B ANTIGEN)" || 
+                        selectedLab.label.toUpperCase() === "[P] HBSAG (HEPATITIS B ANTIGEN)" ? (
+                          "SEROLOGY"
+                        )
+                        : (
                           selectedLab.label.toUpperCase()
                         )}
                       </>
@@ -1252,11 +1257,11 @@ export default function LabOfficer() {
                           <b>RESULT</b>
                         </span>
                       </div>
-                      <div className="col">
+                      {/* <div className="col">
                         <span>
                           <b>REFERENCE RANGE</b>
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                     {labTestData.map((result, resultIndex) => (
                       <div
@@ -1311,7 +1316,7 @@ export default function LabOfficer() {
                             </span>
                           )}
                         </div>
-                        <div className="col">
+                        {/* <div className="col">
                           <span>
                             {result["preferred"] != " "
                               ? result["preferred"]
@@ -1329,7 +1334,7 @@ export default function LabOfficer() {
                                   parseFloat(result["preferred_to"]).toFixed(2)
                               : ""}
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                     ))}
                   </div>
