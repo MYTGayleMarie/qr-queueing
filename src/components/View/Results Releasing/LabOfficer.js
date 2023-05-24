@@ -1162,7 +1162,11 @@ export default function LabOfficer() {
                           "CLINICAL MICROSCOPY URINALYSIS"
                         ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
                           "CLINICAL MICROSCOPY FECALYSIS"
-                        ) : (
+                        ) : selectedLab.label.toUpperCase() === "HBSAG (HEPATITIS B ANTIGEN)" || 
+                        selectedLab.label.toUpperCase() === "[P] HBSAG (HEPATITIS B ANTIGEN)" ? (
+                          "SEROLOGY"
+                        )
+                        : (
                           selectedLab.label.toUpperCase()
                         )}
                       </>
