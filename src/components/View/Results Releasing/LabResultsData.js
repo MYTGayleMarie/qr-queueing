@@ -234,6 +234,7 @@
        labTestUrinalysis : [
        {
          "lab_test": "Color",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -243,6 +244,7 @@
        },
        {
          "lab_test": "Transparency",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "",
@@ -253,6 +255,7 @@
        },
        {
          "lab_test": "Ph",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -262,6 +265,7 @@
        },
        {
          "lab_test": "Specific Gravity",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -271,6 +275,7 @@
        },
        {
          "lab_test": "Protein",
+         "test_type": "CHEMICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -280,6 +285,7 @@
        },
        {
          "lab_test": "Sugar",
+         "test_type": "CHEMICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -289,6 +295,7 @@
        },
        {
          "lab_test": "Pus Cells",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -298,6 +305,7 @@
        },
        {
          "lab_test": "RBC",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -307,6 +315,7 @@
        },
        {
          "lab_test": "Epithelial Cells",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "/LPF",
@@ -317,6 +326,7 @@
        },
        {
          "lab_test": "Bacteria",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "/HPF",
@@ -327,6 +337,7 @@
        },
        {
          "lab_test": "Amorphous Urates/Phosphate",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/LPF",
          "preferred": " ",
@@ -336,6 +347,7 @@
        },
        {
          "lab_test": "Mucus Threads",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/LPF",
          "resultType": "dropdown",

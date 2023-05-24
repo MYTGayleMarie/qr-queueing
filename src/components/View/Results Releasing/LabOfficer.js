@@ -1159,9 +1159,9 @@ export default function LabOfficer() {
                         selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
                         selectedLab.label.toUpperCase() === "URINALYSIS" || 
                         selectedLab.label.toUpperCase() === "[P] URINALYSIS" ? (
-                          "CLINICAL MICROSCOPY URINALYSIS"
+                          "CLINICAL MICROSCOPY - URINALYSIS"
                         ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
-                          "CLINICAL MICROSCOPY FECALYSIS"
+                          "CLINICAL MICROSCOPY - FECALYSIS"
                         ) : selectedLab.label.toUpperCase() === "HBSAG (HEPATITIS B ANTIGEN)" || 
                         selectedLab.label.toUpperCase() === "[P] HBSAG (HEPATITIS B ANTIGEN)" ? (
                           "SEROLOGY"
@@ -1264,17 +1264,30 @@ export default function LabOfficer() {
                       </div> */}
                     </div>
                     {labTestData.map((result, resultIndex) => (
+                      <>
                       <div
                         className="row"
                         style={{ marginTop: "2px", width: "100%" }}
                         key={resultIndex}
                       >
                         <div className="col">
+                        {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>{result["test_type"]}</h6>
+                            </div>
+                          ) : null}
                           <div className="space-between">
-                          <span>{result["lab_test"].toUpperCase()}</span>
+                            <span>{result["lab_test"].toUpperCase()}</span>
                           </div>
                         </div>
                         <div className="col">
+                        {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>&nbsp;</h6>
+                            </div>
+                        )
+                        : null}
                           {result["preferred"] != " " ? (
                             result["preferred"] == result["result"] ? (
                               <span>
@@ -1336,6 +1349,7 @@ export default function LabOfficer() {
                           </span>
                         </div> */}
                       </div>
+                      </>
                     ))}
                   </div>
                   <hr
