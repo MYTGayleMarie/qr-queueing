@@ -66,64 +66,61 @@ export default function FileUpload({servicesData, title, bookingId}){
 
   // Checking if lab has results already
   React.useEffect(()=>{
-    // Type is lab
-  if(servicesData[0].type=="lab"){
-    axios({
-      method: 'post',
-      url: window.$link + 'bookings/getBookingDetails/' + bookingId,
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
+    if(servicesData[0] != null){
+      if(servicesData[0].type=="lab"){
+        axios({
+          method: 'post',
+          url: window.$link + 'bookings/getBookingDetails/' + bookingId,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+        })
+        .then((lab)=>{
+          const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
+          // console.log(labDetail)
+          if (labDetail[0].file){
+            setWithResults(true)
+          }
+          // Check if there is md already
+          if (labDetail[0].md){
+            setWithMD(true)
+            setMDReadOnly(true)
+            setDoctorName(labDetail[0].md)
+          }
+        })
+        .catch((error)=>{console.log(error)})
       }
-    })
-    .then((lab)=>{
-      // console.log(lab)
-      const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
-      // console.log(labDetail)
-      if (labDetail[0].file){
-        setWithResults(true)
-      }
-      // Check if there is md already
-      if (labDetail[0].md){
-        setWithMD(true)
-        setMDReadOnly(true)
-        setDoctorName(labDetail[0].md)
-      }
-    })
-    .catch((error)=>{console.log(error)})
-  }
-
-  // Type is package
-  if(servicesData[0].type=="package"){
-    axios({
-      method: 'post',
-      url: window.$link + 'bookings/getBookingPackageDetails/' + servicesData[0].packageId,
-      withCredentials: false, 
-      params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }
-    })
-    .then((packages)=>{
-      // console.log(packages)
-      const packageDetail = packages.data.filter((details)=>details.id==servicesData[0].id)
-      // console.log(packageDetail)
-      // check if naa nay result
-      if (packageDetail[0].file){
-        setWithResults(true)
-      }
-      if (packageDetail[0].md){
-        setWithMD(true)
-        setMDReadOnly(true)
-        setDoctorName(packageDetail[0].md)
-      }
-    })
-    .catch((error)=>{console.log(error)})
-  }
-
+      if(servicesData[0] .type=="package"){
+        axios({
+          method: 'post',
+          url: window.$link + 'bookings/getBookingPackageDetails/' + servicesData[0].packageId,
+          withCredentials: false, 
+          params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ''),
+              requester: userId,
+          }
+        })
+        .then((packages)=>{
+          // console.log(packages)
+          const packageDetail = packages.data.filter((details)=>details.id==servicesData[0].id)
+          // console.log(packageDetail)
+          // check if naa nay result
+          if (packageDetail[0].file){
+            setWithResults(true)
+          }
+          if (packageDetail[0].md){
+            setWithMD(true)
+            setMDReadOnly(true)
+            setDoctorName(packageDetail[0].md)
+          }
+        })
+        .catch((error)=>{console.log(error)})
+      } 
+    }
   },[upload])
 
   // Convert file to base 64

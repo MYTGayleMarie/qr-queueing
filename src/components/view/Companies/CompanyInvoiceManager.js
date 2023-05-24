@@ -72,8 +72,8 @@ function CompanyInvoiceManager() {
             companyDetails.id = row.id;
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
-            companyDetails.discountCode = row.discount_code;
             companyDetails.discount_id = row.discount_id;
+            companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.total =
@@ -90,8 +90,8 @@ function CompanyInvoiceManager() {
             companyDetails.id = row.id;
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
-            companyDetails.discountCode = row.discount_code;
             companyDetails.discount_id = row.discount_id;
+            companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.total =
@@ -193,6 +193,7 @@ function CompanyInvoiceManager() {
                 "ID",
                 "INVOICE DATE",
                 "COMPANY NAME",
+                "DISCOUNT ID",
                 "DISCOUNT CODE",
                 "REMARKS",
                 "TOTAL",

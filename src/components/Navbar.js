@@ -127,12 +127,12 @@ function labReleasingNavbar(showNavbar,setShowNavbar) {
         <div class="d-flex justify-content-center">
           <img src={logo} alt={'logo'} class="navbar-logo"></img>
         </div>
-          <NavLink to="/lab" activeClassName="active" class="link">
+          {/* <NavLink to="/lab" activeClassName="active" class="link">
             <li href="/lab" class="nav-link imaging-nav">
               <img src={labIcon} alt={'lab'} class="lab icon"></img>
               <span class="mx-2">Laboratory Releasing</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -149,12 +149,12 @@ function laboratoryReleasingNavbar(showNavbar,setShowNavbar) {
         <div class="d-flex justify-content-center">
           <img src={logo} alt={'logo'} class="navbar-logo"></img>
         </div>
-          <NavLink to="/lab" activeClassName="active" class="link">
+          {/* <NavLink to="/lab" activeClassName="active" class="link">
               <li href="/lab" class="nav-link imaging-nav">
                 <img src={labIcon} alt={'lab'} class="lab icon"></img>
                 <span class="mx-2">Laboratory Releasing</span>
               </li>
-          </NavLink>
+          </NavLink> */}
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -171,12 +171,12 @@ function queueManagerNavbar(showNavbar,setShowNavbar) {
         <div class="d-flex justify-content-center">
           <img src={logo} alt={'logo'} class="navbar-logo"></img>
         </div>
-          <NavLink to="/queuemanager" activeClassName="active" class="link">
+          {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <li href="/lab" class="nav-link imaging-nav">
               <img src={labIcon} alt={'lab'} class="lab icon"></img>
               <span class="mx-2">Laboratory Releasing</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -267,12 +267,12 @@ function cashierNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
@@ -298,12 +298,12 @@ function cashierNavbar(showNavbar,setshowNavbar) {
             </li>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
             <li href="/lab" class="nav-link imaging-nav">
               <img src={labIcon} alt={'lab'} class="lab icon"></img>
               <span class="mx-2">Laboratory Releasing</span>
             </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/cmodule" activeClassName="active" class="link">
             <li href="/cmodule" class="nav-link imaging-nav">
               <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
@@ -311,12 +311,12 @@ function cashierNavbar(showNavbar,setshowNavbar) {
             </li>
         </NavLink> */}
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
             <li href="/registrationcmodule" class="nav-link imaging-nav">
               <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
               <span class="mx-2">Customer Module</span>
             </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
@@ -355,12 +355,12 @@ function registrationNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
@@ -386,12 +386,12 @@ function registrationNavbar(showNavbar,setshowNavbar) {
             </li>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
             <li href="/lab" class="nav-link imaging-nav">
               <img src={labIcon} alt={'lab'} class="lab icon"></img>
               <span class="mx-2">Laboratory Releasing</span>
             </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/cmodule" activeClassName="active" class="link">
             <li href="/cmodule" class="nav-link imaging-nav">
               <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
@@ -438,12 +438,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={'queue'} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
@@ -475,12 +475,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
           <li href="/lab" class="nav-link imaging-nav">
             <img src={labIcon} alt={'lab'} class="lab icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink to="/cmodule" activeClassName="active" class="link">
           <li href="/cmodule" class="nav-link imaging-nav">
@@ -489,12 +489,12 @@ function adminNavbar(showNavbar,setshowNavbar) {
           </li>
         </NavLink> */}
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
           <li href="/registrationcmodule" class="nav-link imaging-nav">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
             <img src={companiesIcon} alt={'companies'} class="supply icon"></img>
@@ -765,10 +765,10 @@ function LabReleasingNavbarTop(showNavbar, showMobileNavBar, showSupply, setShow
   <div id="side-nav">
     <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
       <div class="side-nav-content">
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
             <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
-        </NavLink>
+        </NavLink> */}
           <a href="#" class="nav-link" onClick={removeUserSession}>
             <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
             <span class="mx-2 logout-text">Log Out</span>
@@ -792,10 +792,10 @@ function QueueManagerNavbarTop(showNavbar, showMobileNavBar, showSupply, setShow
   <div id="side-nav">
     <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
       <div class="side-nav-content">
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
             <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
-        </NavLink>
+        </NavLink> */}
           <a href="#" class="nav-link" onClick={removeUserSession}>
             <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
             <span class="mx-2 logout-text">Log Out</span>
@@ -928,10 +928,10 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <img src={queueIcon} alt={'queue'} class="queue icon mobile-size-icon"></img>
             <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
@@ -947,12 +947,12 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
           </li>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
           <li href="/lab" class="nav-link imaging-nav">
             <img src={labIcon} alt={'lab'} class="lab icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink to="/cmodule" activeClassName="active" class="link">
           <li href="/cmodule" class="nav-link imaging-nav">
@@ -961,12 +961,12 @@ function RegisterNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupp
           </li>
         </NavLink> */}
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
           <li href="/registrationcmodule" class="nav-link imaging-nav">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
@@ -988,10 +988,10 @@ function LaboratoryReleasingNavbarTop(showNavbar, showMobileNavBar, showSupply, 
      <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
   </div>
   <div id="side-nav">
-      <NavLink to="/lab" activeClassName="active" class="link">
+      {/* <NavLink to="/lab" activeClassName="active" class="link">
             <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
-      </NavLink>
+      </NavLink> */}
       <a href="#" class="nav-link" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon mobile-size-icon"></img>
           <span class="mx-2 logout-text">Log Out</span>
@@ -1022,10 +1022,10 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <img src={queueIcon} alt={'queue'} class="queue icon mobile-size-icon"></img>
             <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
@@ -1047,19 +1047,19 @@ function AdminNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply,
             <span class="mx-2">Results Releasing</span>
         </NavLink>
 
-        <NavLink to="/lab" activeClassName="active" class="link">
+        {/* <NavLink to="/lab" activeClassName="active" class="link">
             <img src={labIcon} alt={'lab'} class="lab icon mobile-size-icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/cmodule" activeClassName="active" class="link">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon mobile-size-icon"></img>
             <span class="mx-2">Customer Module</span>
         </NavLink> */}
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon mobile-size-icon"></img>
             <span class="mx-2">Customer Module</span>
-        </NavLink>
+        </NavLink> */}
 
 
         <div class="side-nav-content">
