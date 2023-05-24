@@ -415,7 +415,7 @@
           
        },
        {
-         "lab_test": "Ova/Parasite",
+         "lab_test": "Intestinal Ova/Parasite seen",
          "result": "",
          "unit": "",
          "preferred": " ",
