@@ -649,10 +649,14 @@ function Table({
           </td>
         </tr>
       );
-    } else if (type === "payment-invoices") {
+    } else if (
+      type === "payment-invoices" ||
+      type === "payment-invoices-print"
+    ) {
       return (
         <tr key={row.id} style={{ color: "black" }}>
           {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
+
           {rowData.map((data, index) => (
             <td key={index} data-heading={data.key} className={data.val}>
               {isNaN(data.val) != true && index != 0 && index != 3
@@ -2739,6 +2743,23 @@ function Table({
           page={page}
           footerClass={givenClass}
         />
+      </div>
+    );
+  } else if (type === "payment-invoices-print") {
+    return (
+      <div className="table-container">
+        <div className="search-table-container d-flex justify-content-end"></div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {/* <th></th> */}
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{data}</tbody>
+        </table>
       </div>
     );
   } else if (type === "report") {

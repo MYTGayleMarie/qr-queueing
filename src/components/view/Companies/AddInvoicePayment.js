@@ -61,7 +61,7 @@ function AddInvoicePayment() {
 
   //Invoice details
   const { id, companyId, discountID, dateFrom, dateTo } = useParams();
-  console.log(companyId);
+
   const [redirect, setRedirect] = useState(false);
   const [redirectBack, setRedirectBack] = useState(false);
   const [info, setInfo] = useState([]);
@@ -338,7 +338,7 @@ function AddInvoicePayment() {
           });
           paymentTotal = parseFloat(tempTotal).toFixed(2);
         }
-        console.log(invoice)
+
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success");
           setGrandTotal(invoice.total);
@@ -1009,8 +1009,9 @@ function AddInvoicePayment() {
                 id="changeAmount"
                 name="changeAmount"
                 class="cash-input pay"
-                value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(2)}
-
+                value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(
+                  2
+                )}
                 placeholder="P"
               />
             </div>
