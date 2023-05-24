@@ -486,7 +486,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
                 alt={"registration"}
                 class="registration icon"
               ></img>
-              <span class="mx-2">Registration3</span>
+              <span class="mx-2">Registration</span>
             </li>
           </NavLink>
           <NavLink to="/add-old-patient" activeClassName="active" class="link">

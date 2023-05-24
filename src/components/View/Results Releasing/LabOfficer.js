@@ -190,7 +190,7 @@ export default function LabOfficer() {
       } else if (lab_test == "Fat Globules") {
         setLabTestOptions(labResultsData.MicroscopicExamOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Ova/Parasite") {
+      } else if (lab_test == "Intestinal Ova/Parasite seen") {
         setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
         setIsDropdown(true);
       } else if (lab_test == "Cyst/Trophozoite") {
@@ -1156,15 +1156,16 @@ export default function LabOfficer() {
                     {selectedLab.label && (
                       <>
                         {selectedLab.label.toUpperCase() === "SERUMPT" ||
-                        selectedLab.label.toUpperCase() === "SPERM ANALYSIS" ||
                         selectedLab.label.toUpperCase() === "URINALYSIS" || 
                         selectedLab.label.toUpperCase() === "[P] URINALYSIS" ? (
-                          "CLINICAL MICROSCOPY URINALYSIS"
+                          "CLINICAL MICROSCOPY - URINALYSIS"
                         ) : selectedLab.label.toUpperCase() === "FECALYSIS" ? (
-                          "CLINICAL MICROSCOPY FECALYSIS"
+                          "CLINICAL MICROSCOPY - FECALYSIS"
                         ) : selectedLab.label.toUpperCase() === "HBSAG (HEPATITIS B ANTIGEN)" || 
                         selectedLab.label.toUpperCase() === "[P] HBSAG (HEPATITIS B ANTIGEN)" ? (
                           "SEROLOGY"
+                        ) : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"  ? (
+                          "CLINICAL MICROSCOPY - SPERM ANALYSIS"
                         )
                         : (
                           selectedLab.label.toUpperCase()
@@ -1257,67 +1258,113 @@ export default function LabOfficer() {
                           <b>RESULT</b>
                         </span>
                       </div>
-                      {/* <div className="col">
+                      {(selectedLab.label !== "Urinalysis" && selectedLab.label !== "[P] Urinalysis")  && (selectedLab.label !== "Fecalysis" && selectedLab.label !== "[P] Fecalysis") ? (
+                      <div className="col">
                         <span>
                           <b>REFERENCE RANGE</b>
                         </span>
-                      </div> */}
+                      </div>
+                      ) : null}
                     </div>
                     {labTestData.map((result, resultIndex) => (
+                      <>
                       <div
                         className="row"
                         style={{ marginTop: "2px", width: "100%" }}
                         key={resultIndex}
                       >
                         <div className="col">
+                        {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] 
+                          ? (
+                            <div className="space-between">
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", }}><u>{result["test_type"]}</u></h5>
+                            </div>
+                          ) : null}
+                           {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px"}}>{result["test_type_2"]}</h6>
+                            </div>
+                          ) : null}
                           <div className="space-between">
-                          <span>{result["lab_test"].toUpperCase()}</span>
+                            <span>{result["lab_test"].toUpperCase()}</span>
                           </div>
                         </div>
                         <div className="col">
-                          {result["preferred"] != " " ? (
-                            result["preferred"] == result["result"] ? (
+                        {/* Add Blank space for headers */}
+                        {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] ? (
+                            <div className="space-between">
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type"]}</h5>
+                            </div>
+                        )
+                        : null}
+                        {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)", marginLeft: "0 px"}}>{result["test_type_2"]}</h6>
+                            </div>
+                          ) : null}
+                          {/* RESULTS */}
+                          {result["result"] !== "" ? (
+                            <>
+                            {result["preferred"] != " " ? (
+                              result["preferred"] == result["result"] ? (
+                                <span>
+                                  {result["result"] + " " + result["unit"]}
+                                </span>
+                              ) : (
+                                <span class="red">
+                                  {result["result"] + " " + result["unit"]}
+                                </span>
+                              )
+                            ) : result["preferred_from"] != 0.0 ||
+                              result["preferred_to"] != 0.0 ? (
+                              parseFloat(result["preferred_from"]) >
+                              parseFloat(result["result"]) ? (
+                                <span class="red">
+                                  {parseFloat(result["result"]).toFixed(2) +
+                                    " " +
+                                    result["unit"] +
+                                    " (L)"}
+                                </span>
+                              ) : parseFloat(result["result"]) >
+                                parseFloat(result["preferred_to"]) ? (
+                                <span class="red">
+                                  {parseFloat(result["result"]).toFixed(2) +
+                                    " " +
+                                    result["unit"] +
+                                    " (H)"}
+                                </span>
+                              ) : (
+                                <span>
+                                  {parseFloat(result["result"]).toFixed(2) +
+                                    " " +
+                                    result["unit"]}
+                                </span>
+                              )
+                            ) : (
                               <span>
                                 {result["result"] + " " + result["unit"]}
                               </span>
-                            ) : (
-                              <span class="red">
-                                {result["result"] + " " + result["unit"]}
-                              </span>
-                            )
-                          ) : result["preferred_from"] != 0.0 ||
-                            result["preferred_to"] != 0.0 ? (
-                            parseFloat(result["preferred_from"]) >
-                            parseFloat(result["result"]) ? (
-                              <span class="red">
-                                {parseFloat(result["result"]).toFixed(2) +
-                                  " " +
-                                  result["unit"] +
-                                  " (L)"}
-                              </span>
-                            ) : parseFloat(result["result"]) >
-                              parseFloat(result["preferred_to"]) ? (
-                              <span class="red">
-                                {parseFloat(result["result"]).toFixed(2) +
-                                  " " +
-                                  result["unit"] +
-                                  " (H)"}
-                              </span>
-                            ) : (
-                              <span>
-                                {parseFloat(result["result"]).toFixed(2) +
-                                  " " +
-                                  result["unit"]}
-                              </span>
-                            )
-                          ) : (
-                            <span>
-                              {result["result"] + " " + result["unit"]}
-                            </span>
-                          )}
+                            )}
+                            </>
+                          ) : null}
                         </div>
-                        {/* <div className="col">
+                        {(selectedLab.label.toUpperCase() !== "URINALYSIS" && selectedLab.label.toUpperCase() !== "[P] URINALYSIS") && (selectedLab.label.toUpperCase() !== "FECALYSIS" && selectedLab.label.toUpperCase() !== "[P] FECALYSIS")  ? (
+                        <div className="col">
                           <span>
+                          {resultIndex === 0 || result["test_type"] !== labTestData[resultIndex - 1]["test_type"] ? (
+                            <div className="space-between">
+                              <h5 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type"]}</h5>
+                            </div>
+                        )
+                        : null}
+                        {resultIndex === 0 || result["test_type_2"] !== labTestData[resultIndex - 1]["test_type_2"] 
+                          ? (
+                            <div className="space-between">
+                              <h6 style={{ fontStyle: "italic", marginTop: "10px", color: "rgba(0, 0, 0, 0)"}}>{result["test_type_2"]}</h6>
+                            </div>
+                          ) : null}
                             {result["preferred"] != " "
                               ? result["preferred"]
                               : result["preferred_from"] != 0.0 ||
@@ -1334,8 +1381,11 @@ export default function LabOfficer() {
                                   parseFloat(result["preferred_to"]).toFixed(2)
                               : ""}
                           </span>
-                        </div> */}
+                        </div>
+
+                        ) : null}
                       </div>
+                      </>
                     ))}
                   </div>
                   <hr

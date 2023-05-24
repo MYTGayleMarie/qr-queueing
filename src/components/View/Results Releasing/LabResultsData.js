@@ -234,6 +234,7 @@
        labTestUrinalysis : [
        {
          "lab_test": "Color",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -243,6 +244,7 @@
        },
        {
          "lab_test": "Transparency",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "",
@@ -253,6 +255,7 @@
        },
        {
          "lab_test": "Ph",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -262,6 +265,7 @@
        },
        {
          "lab_test": "Specific Gravity",
+         "test_type": "PHYSICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -271,6 +275,7 @@
        },
        {
          "lab_test": "Protein",
+         "test_type": "CHEMICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -280,6 +285,7 @@
        },
        {
          "lab_test": "Sugar",
+         "test_type": "CHEMICAL EXAMINATION",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -289,6 +295,7 @@
        },
        {
          "lab_test": "Pus Cells",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -298,6 +305,7 @@
        },
        {
          "lab_test": "RBC",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -307,6 +315,7 @@
        },
        {
          "lab_test": "Epithelial Cells",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "/LPF",
@@ -317,6 +326,7 @@
        },
        {
          "lab_test": "Bacteria",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "resultType": "dropdown",
          "unit": "/HPF",
@@ -327,6 +337,7 @@
        },
        {
          "lab_test": "Amorphous Urates/Phosphate",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/LPF",
          "preferred": " ",
@@ -336,6 +347,7 @@
        },
        {
          "lab_test": "Mucus Threads",
+         "test_type": "MICROSCOPIC EXAMINATION",
          "result": "",
          "unit": "/LPF",
          "resultType": "dropdown",
@@ -345,15 +357,9 @@
           
        },
        {
-         "lab_test": "OTHERS",
-         "result": "",
-         "unit": "",
-         "preferred": " ",
-         "preferred_from": 0.00,
-         "preferred_to": 0.00,
-       },
-       {
          "lab_test": "Pregnancy Test",
+         "test_type": "MICROSCOPIC EXAMINATION",
+         "test_type_2": "OTHERS",
          "result": "POSITIVE",
          "unit": "",
          "preferred": " ",
@@ -409,7 +415,7 @@
           
        },
        {
-         "lab_test": "Ova/Parasite",
+         "lab_test": "Intestinal Ova/Parasite seen",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -465,6 +471,8 @@
        labTestSpermAnalysis : [
        {
          "lab_test": "PH Reaction",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "",
          "preferred": " ",
@@ -473,6 +481,8 @@
        },
        {
          "lab_test": "Volume",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "ml",
          "preferred": " ",
@@ -481,6 +491,8 @@
        },
        {
          "lab_test": "Liquefaction Time",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "minutes",
          "preferred": " ",
@@ -489,6 +501,8 @@
        },
        {
          "lab_test": "Viscosity",
+         "test_type": "MACROSCOPIC",
+         "test_type_2": "GROSS APPEARANCE",
          "result": "",
          "unit": "cm",
          "preferred": " ",
@@ -497,14 +511,19 @@
        },
        {
          "lab_test": "Total Sperm Count",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "",
          "result": "",
          "unit": "x106/ ejaculate",
          "preferred": " ",
          "preferred_from": 0.00,
          "preferred_to": 0.00,
           
-       },{
+       },
+      {
          "lab_test": "Progresive (PR)",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -513,6 +532,8 @@
        },
        {
          "lab_test": "Non Progressive",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -521,6 +542,8 @@
        },
        {
          "lab_test": "Immotile",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -529,6 +552,8 @@
        },
        {
          "lab_test": "Total Motility (PR+NP)",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MOTILITY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -537,6 +562,8 @@
        },
        {
          "lab_test": "Total Normal Forms",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -545,6 +572,8 @@
        },
        {
          "lab_test": "Pin Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -553,6 +582,8 @@
        },
        {
          "lab_test": "Double Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -561,6 +592,8 @@
        },
        {
          "lab_test": "Gaint Head",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "MORPHOLOGY",
          "result": "",
          "unit": "%",
          "preferred": " ",
@@ -569,6 +602,8 @@
        },
        {
          "lab_test": "WBC",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "OTHERS",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
@@ -577,6 +612,8 @@
        },
        {
          "lab_test": "RBC",
+         "test_type": "MICROSCOPIC",
+         "test_type_2": "OTHERS",
          "result": "",
          "unit": "/HPF",
          "preferred": " ",
