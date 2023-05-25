@@ -46,8 +46,13 @@ export default function AgingReport() {
   }
 
   async function fetchReports() {
+    setIsReady(false);
     const response = await getAgingReports();
-    setRecords(response.data.records);
+    if (response.data) {
+      setRecords(response.data.records);
+    }
+
+    setIsReady(true);
   }
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"));

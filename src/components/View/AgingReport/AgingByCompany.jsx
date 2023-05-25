@@ -51,15 +51,19 @@ export default function AgingByCompany() {
   }
 
   async function fetchReports() {
+    setIsReady(false);
     const response = await getAgingBreakdown(company_id, type);
+    if (response.data) {
+      var arr = [];
+      response.data.company_invoices.map((data) => {
+        arr.push({ ...data, company_id: company_id });
+      });
 
+      setRecords(arr);
+    }
     // setRecords(response.data.company_invoices);
-    var arr = [];
-    response.data.company_invoices.map((data) => {
-      arr.push({ ...data, company_id: company_id });
-    });
 
-    setRecords(arr);
+    setIsReady(true);
   }
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"));

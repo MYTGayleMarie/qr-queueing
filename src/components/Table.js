@@ -2359,7 +2359,7 @@ function Table({
               </div>
             )}
           </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+          {/* <div className="col-sm-10 d-flex justify-content-end">
             <input
               type="date"
               className="from-date search"
@@ -2381,7 +2381,7 @@ function Table({
             >
               FILTER
             </button>
-          </div>
+          </div> */}
         </div>
         <table className={tableClass}>
           <thead>
@@ -2392,9 +2392,14 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {/* {!isReady && useLoader ? 
-                    <TableLoader1 tableHeaders={headingColumns}/> : data} */}
-            {data}
+            {useLoader && !isReady ? (
+              <TableLoader
+                tableHeaders={headingColumns}
+                className={type === "aging" ? "spinners-10" : "spinners-9"}
+              />
+            ) : (
+              data
+            )}
           </tbody>
         </table>
         <TableFooter
