@@ -22,3 +22,23 @@ export const getAgingReports = async () => {
     return { error: error.response };
   }
 };
+
+export const getAgingBreakdown = async (company_id, aging_type) => {
+  try {
+    const response = await postAPICall(
+      window.$link + "reports/agingByCompany",
+
+      {
+        requester: getUser(),
+        api_key: window.$api_key,
+        token: getToken().replace(/['"]+/g, ""),
+        company_id: company_id,
+        aging_type: aging_type,
+      }
+    );
+
+    return { data: response.data.data };
+  } catch (error) {
+    return { error: error.response };
+  }
+};
