@@ -313,7 +313,26 @@ function Table({
           <td key={index} data-heading={row.key} className={row.val}>
             {row.invoice_date}
           </td>
-          <td key={index} data-heading={row.key} className={row.val}>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(
+                "/add-invoice-payment/" +
+                  row.id +
+                  "/" +
+                  row.company_id +
+                  "/" +
+                  row.discount_id +
+                  "/" +
+                  new Date().toLocaleDateString("en-CA") +
+                  "/" +
+                  new Date().toLocaleDateString("en-CA")
+              )
+            }
+          >
             {row.id}
           </td>
           <td

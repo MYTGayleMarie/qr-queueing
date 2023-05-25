@@ -102,6 +102,7 @@ import QueueManager from "./components/View/Queue Manager/QueueManager";
 import QMOldPatientForm1 from "./components/View/Queue Manager/QMAdd Old Patient/QMOldPatientForm1";
 import QMSwitchForm2 from "./components/View/Queue Manager/QMAdd Old Patient/QMSwitchForm2";
 import AgingReport from "./components/View/AgingReport/AgingReport";
+import AgingByCompany from "./components/View/AgingReport/AgingByCompany";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -616,6 +617,10 @@ function App() {
           <Route
             path="/aging-report"
             element={token ? <AgingReport /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/aging-report/company/:company_id/:type"
+            element={token ? <AgingByCompany /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>
