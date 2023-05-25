@@ -17,6 +17,7 @@ import TableLoader7 from "./TableLoader7";
 import "./Table.scss";
 import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
+import { formatPrice } from "../utilities/Common";
 
 function Table({
   clickable,
@@ -58,6 +59,7 @@ function Table({
   useLoader = false,
   isReady,
 }) {
+  const navigate = useNavigate();
   //PAGINATION
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
@@ -224,26 +226,119 @@ function Table({
           <td key={index} data-heading={row.key} className={row.val}>
             {row.company}
           </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/current")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row.current)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/1-30")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_30"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/31-60")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_60"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/61-90")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_90"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/over 90")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["over_90"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.total)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.partial_paid)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.balance)}
+          </td>
+        </tr>
+      );
+    } else if (type === "aging-by-company") {
+      return (
+        <tr key={row.id}>
           <td key={index} data-heading={row.key} className={row.val}>
-            {row.current}
+            {row.invoice_date}
           </td>
           <td key={index} data-heading={row.key} className={row.val}>
-            {row["1_30_days"]}
+            {row.id}
           </td>
-          <td key={index} data-heading={row.key} className={row.val}>
-            {row["31_60_days"]}
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.total)}
           </td>
-          <td key={index} data-heading={row.key} className={row.val}>
-            {row["61_90_days"]}
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.paid_amount)}
           </td>
-          <td key={index} data-heading={row.key} className={row.val}>
-            {row.total}
-          </td>
-          <td key={index} data-heading={row.key} className={row.val}>
-            {row.partial_paid}
-          </td>
-          <td key={index} data-heading={row.key} className={row.val}>
-            {row.balance}
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.balance)}
           </td>
         </tr>
       );
@@ -2231,7 +2326,7 @@ function Table({
         />
       </div>
     );
-  } else if (type === "aging") {
+  } else if (type === "aging" || type === "aging-by-company") {
     const { from_date, to_date, done } = filteredData;
 
     return (
