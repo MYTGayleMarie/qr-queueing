@@ -128,6 +128,7 @@ export default function AgingReport() {
               "1-30 DAYS",
               "31-60 DAYS",
               "61-90 DAYS",
+              "OVER 90 DAYS",
               "TOTAL",
               "PARTIAL PAID",
               "BALANCE",
