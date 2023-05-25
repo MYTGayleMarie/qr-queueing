@@ -52,8 +52,14 @@ export default function AgingByCompany() {
 
   async function fetchReports() {
     const response = await getAgingBreakdown(company_id, type);
-    console.log(response);
-    setRecords(response.data.company_invoices);
+
+    // setRecords(response.data.company_invoices);
+    var arr = [];
+    response.data.company_invoices.map((data) => {
+      arr.push({ ...data, company_id: company_id });
+    });
+
+    setRecords(arr);
   }
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
@@ -97,30 +103,6 @@ export default function AgingByCompany() {
             buttons={buttons}
             tableData={patientData}
           />
-
-          {/* SEARCH BAR */}
-          {/* <div className="row">
-            <div className="col">
-              <div class="wrap d-flex justify-content-center">
-                <div class="search-bar">
-                  <input
-                    type="text"
-                    class="searchTerm"
-                    name="patientName"
-                    placeholder="Search Booking ID"
-                    onChange={(e) => setBookingId(e.target.value)}
-                  />
-                  <button
-                    type="submit"
-                    class="searchButton"
-                    onClick={searchBookingId}
-                  >
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> */}
 
           <Table
             type={"aging-by-company"}
