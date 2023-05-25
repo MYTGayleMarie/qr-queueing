@@ -12,6 +12,7 @@ import { Navigate, useParams } from "react-router-dom";
 import Header from "../../Header.js";
 import Navbar from "../../Navbar";
 import Table from "../../Table.js";
+import { getAgingReports } from "../../../Helpers/APIs/agingAPI";
 
 const buttons = [];
 const userToken = getToken();
@@ -22,6 +23,7 @@ var formattedPresentData = presentDate.toISOString().split("T")[0];
 
 export default function AgingReport() {
   document.body.style = "background: white;";
+  const [records, setRecords] = useState([]);
   const { dateFrom, dateTo } = useParams();
   const [filteredData, setFilter] = useForm({
     from_date: dateFrom ? dateFrom : formattedPresentData,
@@ -43,55 +45,16 @@ export default function AgingReport() {
     });
   }
 
-  //   React.useEffect(() => {
-  //     patientData.length = 0;
-  //     axios({
-  //       method: "get",
-  //       url: window.$link + "bookings/medtech",
-  //       withCredentials: false,
-  //       params: {
-  //         api_key: window.$api_key,
-  //         token: userToken.replace(/['"]+/g, ""),
-  //         requester: userId,
-  //         date_from: filteredData.from_date,
-  //         date_to: filteredData.to_date,
-  //       },
-  //     })
-  //       .then(function (response) {
-  //         // response.data.bookings.map(data=>{
-  //         //   console.log(data)
-  //         // })
-  //         var bookingArray = response.data.bookings;
-  //         bookingArray.map((booking, index) => {
-  //           var bookingTime = new Date(booking.added_on);
-  //           var formatBookingTime = bookingTime.toDateString().split(" ");
-  //           var bookingDetails = {};
-
-  //           bookingDetails.withDiscount = booking.discount_detail;
-  //           bookingDetails.id = booking.id;
-  //           bookingDetails.name = booking.customer;
-  //           bookingDetails.bookingTime =
-  //             formatBookingTime[1] +
-  //             " " +
-  //             formatBookingTime[2] +
-  //             ", " +
-  //             getTime(bookingTime);
-  //           bookingDetails.paymentStatus = booking.payment_status;
-  //           bookingDetails.uploadStatus =
-  //             booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
-  //           setPatientData((oldArray) => [...oldArray, bookingDetails]);
-  //           // patientData.push(bookingDetails)
-  //         });
-  //         setIsReady(true);
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //         setIsReady(false);
-  //       });
-  //   }, [render]);
-
+  async function fetchReports() {
+    const response = await getAgingReports();
+    setRecords(response.data.records);
+  }
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
+  }, []);
+
+  React.useEffect(() => {
+    fetchReports();
   }, []);
 
   function searchBookingId() {
@@ -154,8 +117,8 @@ export default function AgingReport() {
           </div> */}
 
           <Table
-            type={"medtech"}
-            tableData={patientData.sort((a, b) =>
+            type={"aging"}
+            tableData={records.sort((a, b) =>
               a.id > b.id ? 1 : b.id > a.id ? -1 : 0
             )}
             rowsPerPage={20}
@@ -175,7 +138,8 @@ export default function AgingReport() {
             setRender={setRender}
             render={render}
             givenClass={"register-mobile"}
-            link={viewBooking}
+            // link={viewBooking}
+            link={""}
             role={role}
             userId={userId}
             useLoader={true}

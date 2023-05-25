@@ -218,6 +218,35 @@ function Table({
           </td>
         </tr>
       );
+    } else if (type === "aging") {
+      return (
+        <tr key={row.id}>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.company}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.current}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row["1_30_days"]}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row["31_60_days"]}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row["61_90_days"]}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.total}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.partial_paid}
+          </td>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.balance}
+          </td>
+        </tr>
+      );
     } else if (type === "report-inventory") {
       return (
         <tr key={row.id}>
@@ -2182,6 +2211,69 @@ function Table({
                 <th key={index}>
                   {totalCount == null && index == 0 ? "" : col}
                 </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {/* {!isReady && useLoader ? 
+                    <TableLoader1 tableHeaders={headingColumns}/> : data} */}
+            {data}
+          </tbody>
+        </table>
+        <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    );
+  } else if (type === "aging") {
+    const { from_date, to_date, done } = filteredData;
+
+    return (
+      <div className="table-container">
+        <div className="search-table-container row">
+          <div className="col-sm-2">
+            {totalCount != null && (
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            )}
+          </div>
+          <div className="col-sm-10 d-flex justify-content-end">
+            <input
+              type="date"
+              className="from-date search"
+              name="from_date"
+              value={from_date}
+              onChange={setFilter}
+            />
+            <input
+              type="date"
+              className="to-date search"
+              name="to_date"
+              value={to_date}
+              onChange={setFilter}
+            />
+            <button
+              className="filter-btn"
+              name="done"
+              onClick={setRender != null ? (e) => setRender(!render) : ""}
+            >
+              FILTER
+            </button>
+          </div>
+        </div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
               ))}
             </tr>
           </thead>
