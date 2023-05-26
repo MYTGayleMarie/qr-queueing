@@ -18,7 +18,10 @@ const userToken = getToken();
 const userId = getUser();
 var queueNumber = "";
 var presentDate = new Date();
-const timeString = presentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+const timeString = presentDate.toLocaleTimeString([], {
+  hour: "2-digit",
+  minute: "2-digit",
+});
 
 var monthNames = [
   "JANUARY",
@@ -288,8 +291,15 @@ function Form1CModule({
             src="/logo.png"
             style={{ width: "160px", height: "80px", marginBottom: "3%" }}
           ></img>
-          <h1 style={{fontFamily: "Inter-Bold"}}>Customer Module</h1>
-          <div className="row" style={{ marginTop: "3%", alignItems: "center", justifyContent: "center"}}>
+          <h1 style={{ fontFamily: "Inter-Bold" }}>Customer Module</h1>
+          <div
+            className="row"
+            style={{
+              marginTop: "3%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <div className="col-sm d-flex justify-content-center">
               <div
                 style={{
@@ -302,9 +312,16 @@ function Form1CModule({
                   fontSize: "25px",
                 }}
               >
-                <p style={{fontSize: "35px"}}>Customer Created!</p> <br /> <br />
-                {`${customer.fname.toUpperCase()} ${customer.mname.toUpperCase()} ${customer.lname.toUpperCase()}`} <br />
-                {monthNames[presentDate.getMonth()] + " " + presentDate.getDate() + ", " + presentDate.getFullYear()} <br />
+                <p style={{ fontSize: "35px" }}>Customer Created!</p> <br />{" "}
+                <br />
+                {`${customer.fname.toUpperCase()} ${customer.mname.toUpperCase()} ${customer.lname.toUpperCase()}`}{" "}
+                <br />
+                {monthNames[presentDate.getMonth()] +
+                  " " +
+                  presentDate.getDate() +
+                  ", " +
+                  presentDate.getFullYear()}{" "}
+                <br />
                 {timeString} <br /> <br />
                 Your Queue Number is {queueNumber}.
               </div>
@@ -364,36 +381,46 @@ function Form1CModule({
     <div className="active-cont center" style={{ marginRight: "15%" }}>
       <Header type="thin" title="ADD PATIENT" />
 
-      <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
+      <h3 className="form-categories-header">
+        <strong>PERSONAL DETAILS</strong>
+      </h3>
 
       <div className="booking-form">
         <form className="needs-validation">
           <div className="forms">
-            <div className="row">
-              <div className="col-sm">
-                <label for="fname" className="form-label">
+            <div className="row mb-0 pb-0">
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
                   FIRST NAME <i>(required)</i>
                 </label>
-                <br />
+              </div>
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
+                  MIDDLE NAME <i>(required)</i>
+                </label>
+              </div>
+              <div className="col-sm-4">
+                <label for="lname" className="form-label font-large">
+                  LAST NAME <i>(required)</i>
+                </label>
+              </div>
+            </div>
+            <div className="row mt-0 pt-0">
+              <div className="col-sm-4">
                 <input
                   type="text"
-                  className="form-control"
+                  className="full-input"
                   id="fname"
                   name="fname"
                   value={fname}
                   onChange={setPersonal}
                   required
                 />
-                <br />
               </div>
-              <div className="col-sm">
-                <label for="fname" className="form-label">
-                  MIDDLE NAME <i>(required)</i>
-                </label>
-                <br />
+              <div className="col-sm-4">
                 <input
                   type="text"
-                  className="form-control"
+                  className="full-input"
                   id="mname"
                   name="mname"
                   value={mname}
@@ -401,14 +428,10 @@ function Form1CModule({
                 />
                 <br />
               </div>
-              <div className="col-sm">
-                <label for="lname" className="form-label">
-                  LAST NAME <i>(required)</i>
-                </label>
-                <br />
+              <div className="col-sm-4">
                 <input
                   type="text"
-                  className="form-control"
+                  className="full-input"
                   id="lname"
                   name="lname"
                   value={lname}
@@ -418,15 +441,28 @@ function Form1CModule({
                 <br />
               </div>
             </div>
-            <div className="row">
-              <div className="col-sm">
-                <label for="sex" className="form-label">
-                  SEX<i>(required)</i>
+            <div className="row mb-0 pb-0">
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
+                  SEX <i>(required)</i>
                 </label>
-                <br />
+              </div>
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
+                  DATE OF BIRTH <i>(required)</i>
+                </label>
+              </div>
+              <div className="col-sm-4">
+                <label for="lname" className="form-label font-large">
+                  SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
+                </label>
+              </div>
+            </div>
+            <div className="row mt-0 pt-0">
+              <div className="col-sm-4">
                 <select
                   name="sex"
-                  className="gender-select"
+                  className="form-select"
                   value={sex}
                   onChange={setPersonal}
                   required
@@ -435,24 +471,41 @@ function Form1CModule({
                   <option>Male</option>
                 </select>
               </div>
-              <div className="col-sm">
-                <label for="birthDate" className="form-label">
-                  DATE OF BIRTH<i>(required)</i>
-                </label>
-                <br />
+              <div className="col-sm-4">
                 <input
                   type="date"
                   id="date"
                   name="birthDate"
-                  className="schedule"
+                  className="full-input"
                   value={birthDate}
                   onChange={setPersonal}
                   required
-                ></input>
+                />
+              </div>
+              <div className="col-sm-4">
+                <input
+                  type="text"
+                  id="senior_id"
+                  name="seniorId"
+                  className="full-input"
+                  value={isSenior ? "" : seniorId}
+                  onChange={setPersonal}
+                  disabled={!isSenior}
+                  style={{ background: !isSenior ? "whitesmoke" : "" }}
+                  required
+                />
               </div>
             </div>
-            <div className="row">
-              <div className="col-sm">
+            <div className="row mb-0 pb-0">
+              <div className="col-sm-6"></div>
+              <div className="col-sm-6">
+                <label for="fname" className="form-label font-large">
+                  PWD ID {isPWD && <i>(required)</i>}
+                </label>
+              </div>
+            </div>
+            <div className="row mt-0 pt-0">
+              <div className="col-sm-6">
                 <input
                   type="checkbox"
                   name="is_pwd"
@@ -466,100 +519,85 @@ function Form1CModule({
                   Person With Disabilities
                 </label>
               </div>
-              {isPWD && !isSenior && (
-                <div className="col-sm-6">
-                  <label for="pwd" className="form-label">
-                    PWD ID
-                  </label>
-                  <br />
-                  <input
-                    type="text"
-                    id="pwd_id"
-                    name="pwdId"
-                    className="schedule"
-                    value={pwdId}
-                    onChange={setPersonal}
-                    required
-                  ></input>
-                </div>
-              )}
-              {isSenior && (
-                <div className="col-sm-6">
-                  <label for="senior" className="form-label">
-                    SENIOR CITIZEN ID
-                  </label>
-                  <br />
-                  <input
-                    type="text"
-                    id="senior_id"
-                    name="seniorId"
-                    className="schedule"
-                    value={seniorId}
-                    onChange={setPersonal}
-                    required
-                  ></input>
-                </div>
-              )}
-            </div>
-            <div className="row">
+
               <div className="col-sm-6">
-                <label for="email" className="form-label">
-                  EMAIL
-                </label>
-                <br />
                 <input
                   type="text"
-                  className="form-control"
+                  id="pwd_id"
+                  name="pwdId"
+                  className="full-input"
+                  value={!isPWD || isSenior ? "" : pwdId}
+                  disabled={!isPWD}
+                  onChange={setPersonal}
+                  required
+                  style={{ background: !isPWD ? "whitesmoke" : "" }}
+                />
+              </div>
+            </div>
+            <div className="row mb-0 pb-0">
+              <div className="col-sm-6">
+                <label for="fname" className="form-label font-large">
+                  EMAIL
+                </label>
+              </div>
+              <div className="col-sm-6">
+                <label for="fname" className="form-label font-large">
+                  CONTACT NUMBER <i>(required)</i>
+                </label>
+              </div>
+            </div>
+            <div className="row mt-0 pt-0">
+              <div className="col-sm-6">
+                <input
+                  type="text"
+                  className="full-input"
                   id="email"
                   name="email"
                   value={email}
                   onChange={setPersonal}
                   required
                 />
-                <br />
               </div>
               <div className="col-sm-6">
-                <label for="contactNum" className="form-label">
-                  CONTACT NUMBER <i>(required)</i>
-                </label>
-                <br />
                 <input
                   type="text"
-                  className="form-control"
+                  className="full-input"
                   id="contactNum"
                   name="contactNum"
                   value={contactNum}
                   onChange={setPersonal}
                   required
                 />
-                <br />
               </div>
             </div>
-            <div className="row">
-              <label for="address" className="form-label">
-                ADDRESS <i>(required)</i>
-              </label>
-              <br />
-              <input
-                type="text"
-                className="form-control full"
-                id="address"
-                name="address"
-                value={address}
-                onChange={setPersonal}
-                onFocus={() => {
-                  setRenderSuggest(true);
-                }}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setRenderSuggest(false);
-                  }, 200);
-                }}
-                required
-              />
-              <br />
-            </div>
 
+            <div className="row">
+              <div className="col-sm-12">
+                <label for="address" className="form-label font-large">
+                  ADDRESS <i>(required)</i>
+                </label>
+              </div>
+
+              <div className="col-sm-12">
+                <input
+                  type="text"
+                  className="full-input"
+                  id="address"
+                  name="address"
+                  value={address}
+                  onChange={setPersonal}
+                  onFocus={() => {
+                    setRenderSuggest(true);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => {
+                      setRenderSuggest(false);
+                    }, 200);
+                  }}
+                  required
+                />
+              </div>
+            </div>
             {suggestions.length !== 0 && renderSuggest && (
               <div className="suggestions-list">
                 {suggestions.map((data, index) => (
@@ -582,12 +620,20 @@ function Form1CModule({
               </div>
             )}
 
-            <div className="row">
-              <label for="location" className="radio-header">
-                LOCATION SERVICE
-              </label>
-              <br />
-              <div className="col">
+            <div className="row mb-0 pb-0">
+              <div className="col-sm-4">
+                <label for="location" className="radio-header">
+                  LOCATION SERVICE
+                </label>
+              </div>
+              <div className="col-sm-8">
+                <label for="result" className="radio-header">
+                  RESULTS
+                </label>
+              </div>
+            </div>
+            <div className="row mt-0 pt-0">
+              <div className="col-sm-4">
                 <input
                   type="radio"
                   id="clinicbtn"
@@ -600,51 +646,56 @@ function Form1CModule({
                   CLINIC
                 </label>
               </div>
+              <div className="col-sm-8">
+                <div className="row justify-content-between">
+                  <div className="col-sm">
+                    <input
+                      type="radio"
+                      id="emailbtn"
+                      name="result"
+                      value="email"
+                      checked={result === "email"}
+                      onChange={setPersonal}
+                    />
+                    <label for="emailbtn" className="radio-label">
+                      EMAIL
+                    </label>
+                  </div>
+                  <div className="col-sm">
+                    <input
+                      type="radio"
+                      id="printbtn"
+                      name="result"
+                      value="print"
+                      checked={result === "print"}
+                      onChange={setPersonal}
+                    />
+                    <label for="printbtn" className="radio-label">
+                      PRINT
+                    </label>
+                  </div>
+                  <div className="col-sm">
+                    <input
+                      type="radio"
+                      id="bothbtn"
+                      name="result"
+                      value="both"
+                      checked={result === "both"}
+                      onChange={setPersonal}
+                    />
+                    <label for="bothbtn" className="radio-label">
+                      BOTH
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div className="row">
-              <label for="result" className="radio-header">
-                RESULTS
-              </label>
               <br />
-              <div className="col">
-                <input
-                  type="radio"
-                  id="emailbtn"
-                  name="result"
-                  value="email"
-                  checked={result === "email"}
-                  onChange={setPersonal}
-                />
-                <label for="emailbtn" className="radio-label">
-                  EMAIL
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="radio"
-                  id="printbtn"
-                  name="result"
-                  value="print"
-                  checked={result === "print"}
-                  onChange={setPersonal}
-                />
-                <label for="printbtn" className="radio-label">
-                  PRINT
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="radio"
-                  id="bothbtn"
-                  name="result"
-                  value="both"
-                  checked={result === "both"}
-                  onChange={setPersonal}
-                />
-                <label for="bothbtn" className="radio-label">
-                  BOTH
-                </label>
-              </div>
+              <div className="col"></div>
+              <div className="col"></div>
+              <div className="col"></div>
             </div>
           </div>
           <Modal show={show} onHide={handleClose}>
