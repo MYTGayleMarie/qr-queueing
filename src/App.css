@@ -9,6 +9,16 @@
   pointer-events: none;
 }
 
+.react-datetime-picker__wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  border: none !important; /* width: 100%;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da !important;
+  border-radius: 0.25rem; */
+}
+
 .full-input {
   /* width: 100% !important; */
   display: block;
