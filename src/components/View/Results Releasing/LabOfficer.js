@@ -159,7 +159,7 @@ export default function LabOfficer() {
       } else if (lab_test == "Transparency") {
         setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Pregnancy Test") {
+      } else if (lab_test == "Pregnancy Test" || lab_test == "Pregnancy_Test") {
         setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
         setIsDropdown(true);
       } else if (lab_test == "Protein" || lab_test == "Sugar") {
@@ -816,13 +816,26 @@ export default function LabOfficer() {
       } else {
         reference_range = "";
       }
-
-      return {
-        lab_test: result.lab_test,
-        result: result.result,
-        unit: result.unit,
-        reference_range: reference_range,
-      };
+      console.log(selectedLab);
+      if (
+        selectedLab.label !== "Urinalysis" &&
+        selectedLab.label !== "[P] Urinalysis" &&
+        selectedLab.label !== "Fecalysis" &&
+        selectedLab.label !== "[P] Fecalysis"
+      ) {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+          unit: result.unit,
+          reference_range: reference_range,
+        };
+      } else {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+          unit: result.unit,
+        };
+      }
     });
   }, [labTestData]);
 
@@ -1256,6 +1269,7 @@ export default function LabOfficer() {
                           <b>RESULT</b>
                         </span>
                       </div>
+
                       {selectedLab.label !== "Urinalysis" &&
                       selectedLab.label !== "[P] Urinalysis" &&
                       selectedLab.label !== "Fecalysis" &&
@@ -1619,13 +1633,14 @@ export default function LabOfficer() {
               a.id > b.id ? 1 : b.id > a.id ? -1 : 0
             )}
             rowsPerPage={20}
-            headingColumns={[
-              "LAB NAME",
-              "RESULTS",
-              "UNIT",
-              "REFERENCE RANGE",
-              "ACTION",
-            ]}
+            headingColumns={
+              selectedLab.label !== "Urinalysis" &&
+              selectedLab.label !== "[P] Urinalysis" &&
+              selectedLab.label !== "Fecalysis" &&
+              selectedLab.label !== "[P] Fecalysis"
+                ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
+                : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+            }
             filteredData={filteredData}
             //dropdownData={labTests}
             setFilter={setFilter}
