@@ -1366,11 +1366,9 @@ export default function LabOfficer() {
                               ""
                             )}
                             {/* RESULTS */}
-                            {result["result"] !== "" &&
-                            result["result"] !== null ? (
+                            {result["result"] !== "" ? (
                               <>
-                                {result["preferred"] != " " &&
-                                result["preferred"] !== null ? (
+                                {result["preferred"] != " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>
                                       {result["result"] + " " + result["unit"]}
@@ -1407,7 +1405,10 @@ export default function LabOfficer() {
                                   )
                                 ) : (
                                   <span>
-                                    {result["result"] + " " + result["unit"]}
+                                    {" "}
+                                    {result["result"] +
+                                      " " +
+                                      result["unit"]}{" "}
                                   </span>
                                 )}
                               </>
@@ -1459,6 +1460,7 @@ export default function LabOfficer() {
                                 ) : (
                                   ""
                                 )}
+
                                 {result["preferred"] != " "
                                   ? result["preferred"]
                                   : result["preferred_from"] != 0.0 ||
