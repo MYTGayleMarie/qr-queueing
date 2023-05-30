@@ -514,8 +514,7 @@ function AddPatient({
                     name="is_pwd"
                     value="isPWD"
                     id="mdCharge"
-                    checked={isPWD && !isSenior}
-                    disabled={isSenior}
+                    checked={isPWD}
                     onChange={(e) => setIsPWD(e.target.checked)}
                   />
                   <label for="mdCharge" className="booking-label font-large">
@@ -532,7 +531,7 @@ function AddPatient({
                   id="pwd_id"
                   name="pwd_id"
                   className="full-input"
-                  value={!isPWD || isSenior ? "" : pwd_id}
+                  value={!isPWD ? "" : pwd_id}
                   disabled={!isPWD}
                   onChange={setPersonal}
                   required

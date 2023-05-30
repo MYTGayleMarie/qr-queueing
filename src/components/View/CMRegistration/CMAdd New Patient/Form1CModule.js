@@ -488,7 +488,7 @@ function Form1CModule({
                   id="senior_id"
                   name="seniorId"
                   className="full-input"
-                  value={isSenior ? "" : seniorId}
+                  value={!isSenior ? "" : seniorId}
                   onChange={setPersonal}
                   disabled={!isSenior}
                   style={{ background: !isSenior ? "whitesmoke" : "" }}
@@ -511,8 +511,7 @@ function Form1CModule({
                   name="is_pwd"
                   value="isPWD"
                   id="mdCharge"
-                  checked={isPWD && !isSenior}
-                  disabled={isSenior}
+                  checked={isPWD}
                   onChange={(e) => setIsPWD(e.target.checked)}
                 />
                 <label for="mdCharge" className="booking-label">
@@ -526,7 +525,7 @@ function Form1CModule({
                   id="pwd_id"
                   name="pwdId"
                   className="full-input"
-                  value={!isPWD || isSenior ? "" : pwdId}
+                  value={!isPWD ? "" : pwdId}
                   disabled={!isPWD}
                   onChange={setPersonal}
                   required
