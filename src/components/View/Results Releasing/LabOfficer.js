@@ -547,12 +547,13 @@ export default function LabOfficer() {
     // params for labtests
     namesArray.forEach((lab, index) => {
       const labParam = `lab_tests[${index}]`;
-      params[labParam] = namesArray[index].replace(" ", "_");
+      params[labParam] = namesArray[index].replaceAll(" ", "_");
     });
 
     // params for results
     namesArray.forEach((lab, index) => {
-      const resultParam = `result_${lab.replace(" ", "_")}`;
+      const resultParam = `result_${lab.replaceAll(" ", "_")}`;
+
       params[resultParam] = resultsArray[index];
     });
 
@@ -816,7 +817,7 @@ export default function LabOfficer() {
       } else {
         reference_range = "";
       }
-      console.log(selectedLab);
+
       if (
         selectedLab.label !== "Urinalysis" &&
         selectedLab.label !== "[P] Urinalysis" &&
