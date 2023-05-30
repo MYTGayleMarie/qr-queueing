@@ -63,7 +63,7 @@ function Table({
   //PAGINATION
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
-  const { slice, range } = useTable(tableData, page, rowsPerPage);
+  const { slice, range } = useTable(tableData, page, rowsPerPage, type);
   const [loading, setLoading] = useState(true);
 
   let tableClass = "table-container__table";
