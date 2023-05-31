@@ -825,7 +825,8 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Urinalysis" &&
         selectedLab.label !== "Fecalysis" &&
         selectedLab.label !== "[P] Fecalysis" &&
-        selectedLab.label !== "Syphilis/RPR/VDRL"
+        selectedLab.label !== "Syphilis/RPR/VDRL" &&
+        selectedLab.label !== "KOH"
       ) {
         return {
           lab_test: result.lab_test,
@@ -1278,7 +1279,8 @@ export default function LabOfficer() {
                         selectedLab.label !== "[P] Urinalysis" &&
                         selectedLab.label !== "Fecalysis" &&
                         selectedLab.label !== "[P] Fecalysis" &&
-                        selectedLab.label !== "Syphilis/RPR/VDRL" && (
+                        selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                        selectedLab.label !== "KOH" && (
                           <div className="col">
                             <span>
                               <b>REFERENCE RANGE</b>
@@ -1424,7 +1426,8 @@ export default function LabOfficer() {
                             selectedLab.label.toUpperCase() !== "FECALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
-                            selectedLab.label !== "Syphilis/RPR/VDRL" && (
+                            selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                            selectedLab.label !== "KOH" && (
                               <div className="col">
                                 <span>
                                   {resultIndex === 0 ||
@@ -1644,7 +1647,8 @@ export default function LabOfficer() {
               selectedLab.label !== "[P] Urinalysis" &&
               selectedLab.label !== "Fecalysis" &&
               selectedLab.label !== "[P] Fecalysis" &&
-              selectedLab.label !== "Syphilis/RPR/VDRL"
+              selectedLab.label !== "Syphilis/RPR/VDRL" &&
+              selectedLab.label !== "KOH"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
                 : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
