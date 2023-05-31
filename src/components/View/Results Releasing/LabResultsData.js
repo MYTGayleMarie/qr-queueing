@@ -10,7 +10,7 @@ const labResultsData = {
     "KOH",
     "Dengue",
     "Syphilis/RPR/VDRL",
-    "HIV SCreening (Anti HIV)",
+    "HIV Screening (Anti HIV)",
     "H. Pylori",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",

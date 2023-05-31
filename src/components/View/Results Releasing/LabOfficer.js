@@ -416,9 +416,15 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-
+      console.log(booking);
+      console.log("labResultsData", labResultsData.testsToCheck);
       const labOptions = booking.data
         .map((data) => {
+          console.log(data);
+          console.log(labResultsData.testsToCheck.includes(data.lab_test));
+          console.log(
+            labResultsData.testsToCheck.includes("HIV SCreening (Anti HIV)")
+          );
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
             return {
@@ -430,6 +436,7 @@ export default function LabOfficer() {
           return null;
         })
         .filter((option) => option !== null);
+
       setLabOptions(labOptions);
     });
 
@@ -826,7 +833,8 @@ export default function LabOfficer() {
         selectedLab.label !== "Fecalysis" &&
         selectedLab.label !== "[P] Fecalysis" &&
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
-        selectedLab.label !== "KOH"
+        selectedLab.label !== "KOH" &&
+        selectedLab.label !== "HIV Screening (Anti HIV)"
       ) {
         return {
           lab_test: result.lab_test,
@@ -1016,7 +1024,7 @@ export default function LabOfficer() {
     ) {
       setLabTestData(labResultsData.labTestSyphilis);
     } else if (
-      e.label === "HIV SCreening (Anti HIV)" ||
+      e.label === "HIV Screening (Anti HIV)" ||
       e.label === "[P] HIV SCreening (Anti HIV)"
     ) {
       setLabTestData(labResultsData.labTestHIVScreening);
@@ -1280,7 +1288,8 @@ export default function LabOfficer() {
                         selectedLab.label !== "Fecalysis" &&
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                        selectedLab.label !== "KOH" && (
+                        selectedLab.label !== "KOH" &&
+                        selectedLab.label !== "HIV Screening (Anti HIV)" && (
                           <div className="col">
                             <span>
                               <b>REFERENCE RANGE</b>
@@ -1427,7 +1436,9 @@ export default function LabOfficer() {
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                            selectedLab.label !== "KOH" && (
+                            selectedLab.label !== "KOH" &&
+                            selectedLab.label !==
+                              "HIV Screening (Anti HIV)" && (
                               <div className="col">
                                 <span>
                                   {resultIndex === 0 ||
@@ -1648,7 +1659,8 @@ export default function LabOfficer() {
               selectedLab.label !== "Fecalysis" &&
               selectedLab.label !== "[P] Fecalysis" &&
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
-              selectedLab.label !== "KOH"
+              selectedLab.label !== "KOH" &&
+              selectedLab.label !== "HIV Screening (Anti HIV)"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
                 : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
