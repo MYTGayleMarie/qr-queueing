@@ -727,7 +727,7 @@ export default function ViewBooking() {
                       <div className="category label">THYROID PROFILE</div>
                       <GenerateResults
                         servicesData={thyroid_profile}
-                        title={"SEROLOGY - THYROID PROFILE"}
+                        title={"THYROID PROFILE"}
                         bookingId={bookingId}
                       />
                       <hr className="labtest-line mb-5" />
