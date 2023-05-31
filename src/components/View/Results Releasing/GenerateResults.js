@@ -553,11 +553,16 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       <b>RESULT</b>
                     </span>
                   </div>
-                  <div className="col">
-                    <span>
-                      <b>REFERENCE RANGE</b>
-                    </span>
-                  </div>
+                  {servicesData[0].category.toUpperCase() !==
+                    "CLINICAL MICROSCOPY FECALYSIS" &&
+                    servicesData[0].category.toUpperCase() !==
+                      "CLINICAL MICROSCOPY URINALYSIS" && (
+                      <div className="col">
+                        <span>
+                          <b>REFERENCE RANGE</b>
+                        </span>
+                      </div>
+                    )}
                 </div>
               </div>
               {servicesData.map((service, serviceIndex) => (
@@ -617,30 +622,35 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                   </span>
                                 )}
                               </div>
-                              <div className="col">
-                                <span>
-                                  {result["preferred"] !== " "
-                                    ? result["preferred"]
-                                    : result["preferred_from"] === "0.00" &&
-                                      result["preferred_to"] === "0.00"
-                                    ? " "
-                                    : result["preferred_from"] !== "0.00" ||
-                                      result["preferred_to"] !== "0.00"
-                                    ? result["preferred_to"] === "999.99"
-                                      ? ">=" +
-                                        parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2)
-                                      : parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2) +
-                                        "-" +
-                                        parseFloat(
-                                          result["preferred_to"]
-                                        ).toFixed(2)
-                                    : ""}
-                                </span>
-                              </div>
+                              {servicesData[0].category.toUpperCase() !==
+                                "CLINICAL MICROSCOPY FECALYSIS" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "CLINICAL MICROSCOPY URINALYSIS" && (
+                                  <div className="col">
+                                    <span>
+                                      {result["preferred"] !== " "
+                                        ? result["preferred"]
+                                        : result["preferred_from"] === "0.00" &&
+                                          result["preferred_to"] === "0.00"
+                                        ? " "
+                                        : result["preferred_from"] !== "0.00" ||
+                                          result["preferred_to"] !== "0.00"
+                                        ? result["preferred_to"] === "999.99"
+                                          ? ">=" +
+                                            parseFloat(
+                                              result["preferred_from"]
+                                            ).toFixed(2)
+                                          : parseFloat(
+                                              result["preferred_from"]
+                                            ).toFixed(2) +
+                                            "-" +
+                                            parseFloat(
+                                              result["preferred_to"]
+                                            ).toFixed(2)
+                                        : ""}
+                                    </span>
+                                  </div>
+                                )}
                             </div>
                           )}
                         </>
