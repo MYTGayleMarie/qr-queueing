@@ -541,28 +541,29 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
 
               {/* Mapping of Detail Results */}
-
+              <div className="tb mid">
+                <div className="row bd">
+                  <div className="col">
+                    <span>
+                      <b>TEST</b>
+                    </span>
+                  </div>
+                  <div className="col">
+                    <span>
+                      <b>RESULT</b>
+                    </span>
+                  </div>
+                  <div className="col">
+                    <span>
+                      <b>REFERENCE RANGE</b>
+                    </span>
+                  </div>
+                </div>
+              </div>
               {servicesData.map((service, serviceIndex) => (
                 <div>
                   {/* {getResults(service.id)} */}
                   <div className="tb mid">
-                    <div className="row bd">
-                      <div className="col">
-                        <span>
-                          <b>TEST</b>
-                        </span>
-                      </div>
-                      <div className="col">
-                        <span>
-                          <b>RESULT</b>
-                        </span>
-                      </div>
-                      <div className="col">
-                        <span>
-                          <b>REFERENCE RANGE</b>
-                        </span>
-                      </div>
-                    </div>
                     {/* {labTestResults.map((result, resultIndex) => ( */}
                     {labTestResults.map((result, resultIndex) => {
                       return (
@@ -573,54 +574,55 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                 <span>{result["lab_test"].toUpperCase()}</span>
                               </div>
                               <div className="col">
-                              {result["preferred"] !== " " ? (
-                                result["preferred"] === result["result"] ? (
+                                {result["preferred"] !== " " ? (
+                                  result["preferred"] === result["result"] ? (
+                                    <span>
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  ) : (
+                                    <span class="red">
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  )
+                                ) : result["preferred_from"] !== "0.00" ||
+                                  result["preferred_to"] !== "0.00" ? (
+                                  parseFloat(result["preferred_from"]) >
+                                  parseFloat(result["result"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"] +
+                                        " (L)"}
+                                    </span>
+                                  ) : parseFloat(result["result"]) >
+                                    parseFloat(result["preferred_to"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"] +
+                                        " (H)"}
+                                    </span>
+                                  ) : result["result"] === "0.00" &&
+                                    result["preferred_from"] === "0.00" &&
+                                    result["preferred_to"] === "0.00" ? null : (
+                                    <span>
+                                      {parseFloat(result["result"]).toFixed(2) +
+                                        " " +
+                                        result["unit"]}
+                                    </span>
+                                  )
+                                ) : (
                                   <span>
                                     {result["result"] + " " + result["unit"]}
                                   </span>
-                                ) : (
-                                  <span class="red">
-                                    {result["result"] + " " + result["unit"]}
-                                  </span>
-                                )
-                              ) : result["preferred_from"] !== "0.00" ||
-                                result["preferred_to"] !== "0.00" ? (
-                                parseFloat(result["preferred_from"]) >
-                                parseFloat(result["result"]) ? (
-                                  <span class="red">
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"] +
-                                      " (L)"}
-                                  </span>
-                                ) : parseFloat(result["result"]) >
-                                  parseFloat(result["preferred_to"]) ? (
-                                  <span class="red">
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"] +
-                                      " (H)"}
-                                  </span>
-                                ) : (
-                                  result["result"] === "0.00" && result["preferred_from"] === "0.00" && result["preferred_to"] === "0.00" ? null :
-                                  <span>
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"]}
-                                  </span>
-                                )
-                              ) : (
-                                <span>
-                                  {result["result"] + " " + result["unit"]}
-                                </span>
-                              )}
+                                )}
                               </div>
                               <div className="col">
                                 <span>
                                   {result["preferred"] !== " "
                                     ? result["preferred"]
                                     : result["preferred_from"] === "0.00" &&
-                                    result["preferred_to"] === "0.00"
+                                      result["preferred_to"] === "0.00"
                                     ? " "
                                     : result["preferred_from"] !== "0.00" ||
                                       result["preferred_to"] !== "0.00"
@@ -645,31 +647,42 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       );
                     })}
                   </div>
-                  <hr
-                    style={{
-                      border: "2px solid black",
-                      width: "100%",
-                      marginBottom: "0px",
-                    }}
-                  />
-
-<div
-                    style={{
-                      justifyContent: "left",
-                      alignItems: "left",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span>
-                      <b>REMARKS: </b>
-                    </span>
-                    <br />
-                    <span>
-                      <div dangerouslySetInnerHTML={{ __html: remark }}></div>
-                    </span>
-                  </div>
+                  {servicesData[0].category.toUpperCase() !==
+                    "THYROID PROFILE" && (
+                    <hr
+                      style={{
+                        border: "2px solid black",
+                        width: "100%",
+                        marginBottom: "0px",
+                      }}
+                    />
+                  )}
                 </div>
               ))}
+              {servicesData[0].category.toUpperCase() === "THYROID PROFILE" && (
+                <hr
+                  style={{
+                    border: "2px solid black",
+                    width: "100%",
+                    marginBottom: "0px",
+                  }}
+                />
+              )}
+              <div
+                style={{
+                  justifyContent: "left",
+                  alignItems: "left",
+                  textAlign: "left",
+                }}
+              >
+                <span>
+                  <b>REMARKS: </b>
+                </span>
+                <br />
+                <span>
+                  <div dangerouslySetInnerHTML={{ __html: remark }}></div>
+                </span>
+              </div>
               <br />
               <Signature />
             </div>
