@@ -742,8 +742,8 @@ const labResultsData = {
       result: "",
       unit: "mIU / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 0.3,
+      preferred_to: 4.2,
     },
   ],
 
@@ -753,8 +753,8 @@ const labResultsData = {
       result: "",
       unit: "pmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 12,
+      preferred_to: 22,
     },
   ],
 
@@ -764,8 +764,8 @@ const labResultsData = {
       result: "",
       unit: "pmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 2.8,
+      preferred_to: 7.1,
     },
   ],
 
