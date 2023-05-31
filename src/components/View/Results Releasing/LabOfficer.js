@@ -416,15 +416,8 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-      console.log(booking);
-      console.log("labResultsData", labResultsData.testsToCheck);
       const labOptions = booking.data
         .map((data) => {
-          console.log(data);
-          console.log(labResultsData.testsToCheck.includes(data.lab_test));
-          console.log(
-            labResultsData.testsToCheck.includes("HIV SCreening (Anti HIV)")
-          );
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
             return {
@@ -813,8 +806,7 @@ export default function LabOfficer() {
     return labTestData.map((result) => {
       setWithResults(true);
       let reference_range = "";
-      console.log("result", result);
-      console.log("selected lab", selectedLab);
+
       if (result.preferred_from != 0.0 || result.preferred_to != 0.0) {
         if (result.preferred_to == 999.99) {
           reference_range = ">=" + result.preferred_from;
