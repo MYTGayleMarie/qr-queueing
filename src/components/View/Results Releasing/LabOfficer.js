@@ -806,6 +806,8 @@ export default function LabOfficer() {
     return labTestData.map((result) => {
       setWithResults(true);
       let reference_range = "";
+      console.log("result", result);
+      console.log("selected lab", selectedLab);
       if (result.preferred_from != 0.0 || result.preferred_to != 0.0) {
         if (result.preferred_to == 999.99) {
           reference_range = ">=" + result.preferred_from;
@@ -822,7 +824,8 @@ export default function LabOfficer() {
         selectedLab.label !== "Urinalysis" &&
         selectedLab.label !== "[P] Urinalysis" &&
         selectedLab.label !== "Fecalysis" &&
-        selectedLab.label !== "[P] Fecalysis"
+        selectedLab.label !== "[P] Fecalysis" &&
+        selectedLab.label !== "Syphilis/RPR/VDRL"
       ) {
         return {
           lab_test: result.lab_test,
@@ -1272,17 +1275,16 @@ export default function LabOfficer() {
                       </div>
 
                       {selectedLab.label !== "Urinalysis" &&
-                      selectedLab.label !== "[P] Urinalysis" &&
-                      selectedLab.label !== "Fecalysis" &&
-                      selectedLab.label !== "[P] Fecalysis" ? (
-                        <div className="col">
-                          <span>
-                            <b>REFERENCE RANGE</b>
-                          </span>
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                        selectedLab.label !== "[P] Urinalysis" &&
+                        selectedLab.label !== "Fecalysis" &&
+                        selectedLab.label !== "[P] Fecalysis" &&
+                        selectedLab.label !== "Syphilis/RPR/VDRL" && (
+                          <div className="col">
+                            <span>
+                              <b>REFERENCE RANGE</b>
+                            </span>
+                          </div>
+                        )}
                     </div>
                     {labTestData.map((result, resultIndex) => (
                       <>
@@ -1417,72 +1419,73 @@ export default function LabOfficer() {
                             )}
                           </div>
                           {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
-                          selectedLab.label.toUpperCase() !==
-                            "[P] URINALYSIS" &&
-                          selectedLab.label.toUpperCase() !== "FECALYSIS" &&
-                          selectedLab.label.toUpperCase() !==
-                            "[P] FECALYSIS" ? (
-                            <div className="col">
-                              <span>
-                                {resultIndex === 0 ||
-                                result["test_type"] !==
-                                  labTestData[resultIndex - 1]["test_type"] ? (
-                                  <div className="space-between">
-                                    <h5
-                                      style={{
-                                        fontStyle: "italic",
-                                        marginTop: "10px",
-                                        color: "rgba(0, 0, 0, 0)",
-                                      }}
-                                    >
-                                      {result["test_type"]}
-                                    </h5>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-                                {resultIndex === 0 ||
-                                result["test_type_2"] !==
-                                  labTestData[resultIndex - 1][
-                                    "test_type_2"
-                                  ] ? (
-                                  <div className="space-between">
-                                    <h6
-                                      style={{
-                                        fontStyle: "italic",
-                                        marginTop: "10px",
-                                        color: "rgba(0, 0, 0, 0)",
-                                      }}
-                                    >
-                                      {result["test_type_2"]}
-                                    </h6>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
+                            selectedLab.label.toUpperCase() !==
+                              "[P] URINALYSIS" &&
+                            selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                            selectedLab.label.toUpperCase() !==
+                              "[P] FECALYSIS" &&
+                            selectedLab.label !== "Syphilis/RPR/VDRL" && (
+                              <div className="col">
+                                <span>
+                                  {resultIndex === 0 ||
+                                  result["test_type"] !==
+                                    labTestData[resultIndex - 1][
+                                      "test_type"
+                                    ] ? (
+                                    <div className="space-between">
+                                      <h5
+                                        style={{
+                                          fontStyle: "italic",
+                                          marginTop: "10px",
+                                          color: "rgba(0, 0, 0, 0)",
+                                        }}
+                                      >
+                                        {result["test_type"]}
+                                      </h5>
+                                    </div>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {resultIndex === 0 ||
+                                  result["test_type_2"] !==
+                                    labTestData[resultIndex - 1][
+                                      "test_type_2"
+                                    ] ? (
+                                    <div className="space-between">
+                                      <h6
+                                        style={{
+                                          fontStyle: "italic",
+                                          marginTop: "10px",
+                                          color: "rgba(0, 0, 0, 0)",
+                                        }}
+                                      >
+                                        {result["test_type_2"]}
+                                      </h6>
+                                    </div>
+                                  ) : (
+                                    ""
+                                  )}
 
-                                {result["preferred"] != " "
-                                  ? result["preferred"]
-                                  : result["preferred_from"] != 0.0 ||
-                                    result["preferred_to"] != 0.0
-                                  ? result["preferred_to"] == 999.99
-                                    ? ">=" +
-                                      parseFloat(
-                                        result["preferred_from"]
-                                      ).toFixed(2)
-                                    : parseFloat(
-                                        result["preferred_from"]
-                                      ).toFixed(2) +
-                                      "-" +
-                                      parseFloat(
-                                        result["preferred_to"]
-                                      ).toFixed(2)
-                                  : ""}
-                              </span>
-                            </div>
-                          ) : (
-                            ""
-                          )}
+                                  {result["preferred"] != " "
+                                    ? result["preferred"]
+                                    : result["preferred_from"] != 0.0 ||
+                                      result["preferred_to"] != 0.0
+                                    ? result["preferred_to"] == 999.99
+                                      ? ">=" +
+                                        parseFloat(
+                                          result["preferred_from"]
+                                        ).toFixed(2)
+                                      : parseFloat(
+                                          result["preferred_from"]
+                                        ).toFixed(2) +
+                                        "-" +
+                                        parseFloat(
+                                          result["preferred_to"]
+                                        ).toFixed(2)
+                                    : ""}
+                                </span>
+                              </div>
+                            )}
                         </div>
                       </>
                     ))}
@@ -1640,7 +1643,8 @@ export default function LabOfficer() {
               selectedLab.label !== "Urinalysis" &&
               selectedLab.label !== "[P] Urinalysis" &&
               selectedLab.label !== "Fecalysis" &&
-              selectedLab.label !== "[P] Fecalysis"
+              selectedLab.label !== "[P] Fecalysis" &&
+              selectedLab.label !== "Syphilis/RPR/VDRL"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
                 : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
