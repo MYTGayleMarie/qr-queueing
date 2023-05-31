@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { getToken, getUser, refreshPage } from '../../../../utilities/Common';
-import { Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
+import { Navigate } from "react-router-dom";
 
 //css
-import './Form3.css';
+import "./Form3.css";
 
 //components
-import Navbar from '../../../Navbar';
-import Header from '../../../Header.js';
-import ServiceItems from '../../../ServiceItems';
+import Navbar from "../../../Navbar";
+import Header from "../../../Header.js";
+import ServiceItems from "../../../ServiceItems";
 import {
   getAnnualWellnessPackageBasic,
   getPregnancyLabPackage,
@@ -43,21 +43,20 @@ import {
   getUltrasound,
   getPromo,
   getOtherTests,
-} from '../../../../services/services';
+} from "../../../../services/services";
 
 /*********************************
  * FUNCTIONS
  ********************************/
 
 //VARIABLES
-var itemDetails; 
+var itemDetails;
 var newLabTotal = 0;
 var newPackageTotal = 0;
 var labDiscountedTotal = 0;
 var packageDiscountedTotal = 0;
 const userToken = getToken();
 const userId = getUser();
-
 
 // //Packages
 // const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -96,137 +95,208 @@ const userId = getUser();
  * RENDER VIEW
  ********************************/
 
-function Form2({ service, customer, location, packagePrice, labPrice,  setPackagePrice, setLabPrice, isService, isPackage, discount, setDiscount, isCompany, setServices, lastMeal, navigation, mdCharge, serviceFee, dateOfTesting, discountDetails }) {
-    //get all lab tests
-    const [allLabServices, setAllLabServices] = useState([])
-    React.useEffect(()=>{
+function Form2({
+  service,
+  customer,
+  location,
+  packagePrice,
+  labPrice,
+  setPackagePrice,
+  setLabPrice,
+  isService,
+  isPackage,
+  discount,
+  setDiscount,
+  isCompany,
+  setServices,
+  lastMeal,
+  navigation,
+  mdCharge,
+  serviceFee,
+  dateOfTesting,
+  discountDetails,
+}) {
+  //get all lab tests
+  const [allLabServices, setAllLabServices] = useState([]);
+  React.useEffect(() => {
     axios({
-        method: 'post',
-        url: window.$link + 'lab_tests/getAll',
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
+      method: "post",
+      url: window.$link + "lab_tests/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
     })
-    .then((response)=>{
-      console.log(response)
-        const tests = response.data.lab_tests.filter(test=>test.is_deleted != 1).sort((x, y)=>x.id-y.id)
+      .then((response) => {
+        console.log(response);
+        const tests = response.data.lab_tests
+          .filter((test) => test.is_deleted != 1)
+          .sort((x, y) => x.id - y.id);
         // console.log(tests)
-        tests.map((test,index)=>{   
-            var testDetails = {};
-            // if (test.id == 129){ //otherTest
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
-            // } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
-            // } else {
-            //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
-            // }    
-            testDetails.key = test.name.replace(/[2)}{(.,&-\s/]/g, '')+"_"+test.category_id;      
-            testDetails.name = test.name;
-            testDetails.categoryId = test.category_id;
-            testDetails.labTestId = test.id;
-            testDetails.price = test.price;
-            testDetails.type = "lab";
-            setAllLabServices(oldArray=>[...oldArray, testDetails]) // append each item to services   
-        })
-        
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-    },[])
+        tests.map((test, index) => {
+          var testDetails = {};
+          // if (test.id == 129){ //otherTest
+          //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
+          // } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
+          //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+22;
+          // } else {
+          //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
+          // }
+          testDetails.key =
+            test.name.replace(/[2)}{(.,&-\s/]/g, "") + "_" + test.category_id;
+          testDetails.name = test.name;
+          testDetails.categoryId = test.category_id;
+          testDetails.labTestId = test.id;
+          testDetails.price = test.price;
+          testDetails.type = "lab";
+          setAllLabServices((oldArray) => [...oldArray, testDetails]); // append each item to services
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
+  // // Lab Tests Categories
+  const clinicalMicroscopy = allLabServices.filter(
+    (item) => item.categoryId == 1
+  );
+  const clinicalUrinalysis = allLabServices.filter(
+    (item) => item.categoryId == 23
+  );
+  const clinicalFecalysis = allLabServices.filter(
+    (item) => item.categoryId == 24
+  );
+  const hematology = allLabServices.filter((item) => item.categoryId == 2);
+  const electrolytes = allLabServices.filter(
+    (item) => item.categoryId == 3 || item.categoryId == 4
+  );
+  const glucoseTests = allLabServices.filter((item) => item.categoryId == 5);
+  const kidneyFunctionTests = allLabServices.filter(
+    (item) => item.categoryId == 6
+  );
+  const lipidProfile = allLabServices.filter((item) => item.categoryId == 7);
+  const pancreaticTests = allLabServices.filter((item) => item.categoryId == 8);
+  const liverFunctionTests = allLabServices.filter(
+    (item) => item.categoryId == 9
+  );
+  const immunology = allLabServices.filter((item) => item.categoryId == 11);
+  const hepatitisProfileScreening = allLabServices.filter(
+    (item) => item.categoryId == 12
+  );
+  const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13);
+  const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14);
+  const histopathology = allLabServices.filter((item) => item.categoryId == 15);
+  const COVIDRapidTests = allLabServices.filter(
+    (item) => item.categoryId == 16
+  );
+  const microbiology = allLabServices.filter((item) => item.categoryId == 17);
+  const xray = allLabServices.filter((item) => item.categoryId == 18);
+  const cardiology = allLabServices.filter((item) => item.categoryId == 19);
+  const medicalCertificate = allLabServices.filter(
+    (item) => item.categoryId == 20
+  );
+  const ultrasound = allLabServices.filter((item) => item.categoryId == 21);
+  const promo = allLabServices.filter(
+    (item) =>
+      item.labTestId == 119 ||
+      item.labTestId == 120 ||
+      item.labTestId == 121 ||
+      item.labTestId == 117
+  );
+  const otherTests = allLabServices.filter(
+    (item) => item.categoryId == 29 || item.categoryId == 22
+  );
 
-    // // Lab Tests Categories
-    const clinicalMicroscopy = allLabServices.filter(item=>item.categoryId == 1)
-    const clinicalUrinalysis = allLabServices.filter(item=>item.categoryId == 23)
-    const clinicalFecalysis = allLabServices.filter(item=>item.categoryId == 24)
-    const hematology = allLabServices.filter(item=>item.categoryId == 2)
-    const electrolytes = allLabServices.filter(item=>item.categoryId == 3 || item.categoryId == 4)
-    const glucoseTests = allLabServices.filter(item=>item.categoryId == 5)
-    const kidneyFunctionTests = allLabServices.filter(item=>item.categoryId == 6)
-    const lipidProfile = allLabServices.filter(item=>item.categoryId == 7)
-    const pancreaticTests = allLabServices.filter(item=>item.categoryId == 8)
-    const liverFunctionTests = allLabServices.filter(item=>item.categoryId == 9)   
-    const immunology = allLabServices.filter(item=>item.categoryId == 11)
-    const hepatitisProfileScreening = allLabServices.filter(item=>item.categoryId == 12) 
-    const thyroidProfile = allLabServices.filter(item=>item.categoryId == 13)
-    const tumorMarkers = allLabServices.filter(item=>item.categoryId == 14) 
-    const histopathology = allLabServices.filter(item=>item.categoryId == 15) 
-    const COVIDRapidTests = allLabServices.filter(item=>item.categoryId == 16) 
-    const microbiology = allLabServices.filter(item=>item.categoryId == 17) 
-    const xray = allLabServices.filter(item=>item.categoryId == 18) 
-    const cardiology = allLabServices.filter(item=>item.categoryId == 19) 
-    const medicalCertificate = allLabServices.filter(item=>item.categoryId == 20) 
-    const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
-    const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
-    const otherTests = allLabServices.filter(item=>item.categoryId == 29||item.categoryId == 22)
-
-    //get all packages
-    const [allPackages, setAllPackages] = useState([])
-    React.useEffect(()=>{
+  //get all packages
+  const [allPackages, setAllPackages] = useState([]);
+  React.useEffect(() => {
     axios({
-        method: 'post',
-        url: window.$link + 'packages/getAll',
-        withCredentials: false, 
-        params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-        }
+      method: "post",
+      url: window.$link + "packages/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
     })
-    .then((response)=>{
-        const packagesArray = response.data.packages.sort((x, y)=>x.id-y.id)
-        console.log(packagesArray)
-        packagesArray.map((item,index)=>{  
-            // console.log(item) 
-            var packageDetails = {};
-            var packageCode = "";
-            if( item.id==1 || item.id==2 || item.id==3 || item.id==44){                        
-                packageCode="package1"
-            } else if ( item.id==9 || item.id==10 || item.id==11 || item.id==45){
-                packageCode="package2"
-            } else if ( item.id==4){
-                packageCode="package3"
-            } else if ( item.id==12 || item.id==13 || item.id==14){
-                packageCode="package4"
-            } else {
-                packageCode="package"+item.id
-            }
-            packageDetails.category = packageCode
-            packageDetails.key = item.name.replace(/[1234567890)}{(,-\s/]/g, '')+item.id+"_"+"package";  
-            packageDetails.name = item.name;
+      .then((response) => {
+        const packagesArray = response.data.packages.sort(
+          (x, y) => x.id - y.id
+        );
+        console.log(packagesArray);
+        packagesArray.map((item, index) => {
+          // console.log(item)
+          var packageDetails = {};
+          var packageCode = "";
+          if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
+            packageCode = "package1";
+          } else if (
+            item.id == 9 ||
+            item.id == 10 ||
+            item.id == 11 ||
+            item.id == 45
+          ) {
+            packageCode = "package2";
+          } else if (item.id == 4) {
+            packageCode = "package3";
+          } else if (item.id == 12 || item.id == 13 || item.id == 14) {
+            packageCode = "package4";
+          } else {
+            packageCode = "package" + item.id;
+          }
+          packageDetails.category = packageCode;
+          packageDetails.key =
+            item.name.replace(/[1234567890)}{(,-\s/]/g, "") +
+            item.id +
+            "_" +
+            "package";
+          packageDetails.name = item.name;
 
-            packageDetails.labTestId = item.id;
-            packageDetails.price = item.price;
-            packageDetails.type = 'package';
-            setAllPackages(oldArray=>[...oldArray, packageDetails]) // append each item to packages
-            
-        })
+          packageDetails.labTestId = item.id;
+          packageDetails.price = item.price;
+          packageDetails.type = "package";
+          setAllPackages((oldArray) => [...oldArray, packageDetails]); // append each item to packages
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-    },[])
-
-    //Packages category
-    const preEmploymentPackageBasic = allPackages.filter(item=>item.category==="package1")   
-    const preEmploymentPackageDiscount = allPackages.filter(item=>item.category==="package2")   
-    const pregnancyLabPackage = allPackages.filter(item=>item.category==="package3") 
-    const annualWellnessPackageBasic = allPackages.filter(item=>item.category==="package4") 
-    const thyroidTestPackage = allPackages.filter(item=>item.category==="package5") 
-    const annualWellnessPackagePremium = allPackages.filter(item=>item.category==="package6") 
-    const liverFunctionTest = allPackages.filter(item=>item.category==="package7") 
-    const diabetesAndCholesterolPackage = allPackages.filter(item=>item.category==="package8") 
-
+  //Packages category
+  const preEmploymentPackageBasic = allPackages.filter(
+    (item) => item.category === "package1"
+  );
+  const preEmploymentPackageDiscount = allPackages.filter(
+    (item) => item.category === "package2"
+  );
+  const pregnancyLabPackage = allPackages.filter(
+    (item) => item.category === "package3"
+  );
+  const annualWellnessPackageBasic = allPackages.filter(
+    (item) => item.category === "package4"
+  );
+  const thyroidTestPackage = allPackages.filter(
+    (item) => item.category === "package5"
+  );
+  const annualWellnessPackagePremium = allPackages.filter(
+    (item) => item.category === "package6"
+  );
+  const liverFunctionTest = allPackages.filter(
+    (item) => item.category === "package7"
+  );
+  const diabetesAndCholesterolPackage = allPackages.filter(
+    (item) => item.category === "package8"
+  );
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-  },[]);
-  document.body.style = 'background: white;';
+  }, []);
+  document.body.style = "background: white;";
 
   const [bookingId, setBookingId] = useState("");
 
@@ -242,12 +312,12 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
 
   var totalMDCharge = 0;
 
-  if(mdCharge.physical_exam == true) {
-  totalMDCharge += 50.00;
+  if (mdCharge.physical_exam == true) {
+    totalMDCharge += 50.0;
   }
 
-  if(mdCharge.medical_certificate == true) {
-  totalMDCharge += 50.00;
+  if (mdCharge.medical_certificate == true) {
+    totalMDCharge += 50.0;
   }
 
   //functions
@@ -269,11 +339,11 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
   function submit(e, customer, location, services, totalPrice) {
     e.preventDefault();
 
-    if(isClicked == false) {
+    if (isClicked == false) {
       setClicked(true);
       axios({
-        method: 'post',
-        url: window.$link + 'customers/create',
+        method: "post",
+        url: window.$link + "customers/create",
         withCredentials: false,
         params: {
           token: userToken,
@@ -281,18 +351,20 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
           first_name: customer.fname,
           last_name: customer.lname,
           middle_name: customer.mname,
-          suffix: '',
+          suffix: "",
           birthdate: customer.birthDate,
           contact_no: customer.contactNum,
           email: customer.email,
           gender: customer.sex,
           address: customer.address,
-          emergency_contact: '',
-          emergency_contact_no: '',
-          relation_w_contact: '',
+          emergency_contact: "",
+          emergency_contact_no: "",
+          relation_w_contact: "",
           last_meal: lastMeal,
-          remarks: '',
+          remarks: "",
           added_by: userId,
+          senior_id: customer.senior_id,
+          pwd_id: customer.pwd_id,
         },
       }).then(function (response) {
         // console.log(response);
@@ -303,13 +375,11 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
         var labPrices = [];
         var location_value = "";
 
-        console.log(services)
-
         services.map((data, index) => {
-          if (data.type==='package') {
+          if (data.type === "package") {
             packageId.push(data.labTestId);
             packagePrices.push(data.price);
-          } else if(data.type==='lab'){
+          } else if (data.type === "lab") {
             testId.push(data.labTestId);
             labPrices.push(data.price);
           }
@@ -323,27 +393,27 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
         var resultDates = [];
         var fileResults = [];
         var finalMdCharge = [];
-        
-        if(mdCharge.physical_exam == true){
-            finalMdCharge.push("physical exam");
+
+        if (mdCharge.physical_exam == true) {
+          finalMdCharge.push("physical exam");
         }
-        if(mdCharge.medical_certificate == true) {
-            finalMdCharge.push("medical certificate");
+        if (mdCharge.medical_certificate == true) {
+          finalMdCharge.push("medical certificate");
         }
-        
-        if(location === "3"){
-          location_value = "Company"
+
+        if (location === "3") {
+          location_value = "Company";
         }
-        if(location === "0" || location === "1" || location === "2"){
-          location_value = "Home Service"
+        if (location === "0" || location === "1" || location === "2") {
+          location_value = "Home Service";
         }
-        if(location === "4"){
-          location_value = "Mobile Charge"
-        } 
+        if (location === "4") {
+          location_value = "Mobile Charge";
+        }
 
         axios({
-          method: 'post',
-          url: window.$link + 'bookings/create',
+          method: "post",
+          url: window.$link + "bookings/create",
           withCredentials: false,
           params: {
             token: userToken,
@@ -351,24 +421,24 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
             customer: response.data.data.customer_id,
             discount_id: customer.discountId,
             booking_time: dateOfTesting,
-            company_contract_id: '',
+            company_contract_id: "",
             doctors_referal: customer.referral,
             type: customer.serviceLocation,
             result: customer.result,
             total_amount: totalPrice,
             discount_reference_no: customer.discountDetail,
             home_service_fee: serviceFee,
-            service_location:location_value, 
+            service_location: location_value,
             md_charge: finalMdCharge,
             grand_total: totalPrice,
-            status: 'pending',
-            reference_code: '',
-            payment_type: 'PENDING',
+            status: "pending",
+            reference_code: "",
+            payment_type: "PENDING",
             lab_tests: testId,
             package_tests: packageId,
             lab_prices: labPrices,
             package_prices: packagePrices,
-            status: 'pending',
+            status: "pending",
             lab_extracted_dates: extractedDates,
             lab_test_starts: testStarts,
             lab_test_finishes: testFinishes,
@@ -379,20 +449,19 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
             package_test_finishes: testFinishes,
             package_result_dates: resultDates,
             package_file_result: fileResults,
-            remarks: '',
+            remarks: "",
             added_by: userId,
           },
         }).then(function (response) {
           // console.log(response);
           setBookingId(response.data.data.booking_id);
           toast.success(response.data.message.success);
-          
 
-          if(isCompany === false) {
+          if (isCompany === false) {
             setTimeout(function () {
               setRedirect(true);
             }, 2000);
-          }else {
+          } else {
             setPrint(true);
           }
         });
@@ -414,14 +483,13 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
   const checkedServices = asArray.filter(([key, value]) => value == true);
   var checkedServicesDetails = [];
 
-
   checkedServices.map((data, index) => {
-    var categoryDetails = data[0].split('_');
+    var categoryDetails = data[0].split("_");
     var categoryId = parseInt(categoryDetails[1]);
 
     //packages
     switch (categoryDetails[1]) {
-      case 'package':
+      case "package":
         getDetails(allPackages, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
@@ -459,8 +527,6 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
       // break;
     }
 
-    
-
     //lab
     switch (categoryId) {
       case 1:
@@ -472,9 +538,9 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
         checkedServicesDetails.push(itemDetails);
         break;
       case 3:
-          getDetails(electrolytes, data[0]);
-          checkedServicesDetails.push(itemDetails);
-          break;
+        getDetails(electrolytes, data[0]);
+        checkedServicesDetails.push(itemDetails);
+        break;
       case 4:
         getDetails(electrolytes, data[0]);
         checkedServicesDetails.push(itemDetails);
@@ -548,104 +614,104 @@ function Form2({ service, customer, location, packagePrice, labPrice,  setPackag
       //   checkedServicesDetails.push(itemDetails);
       //   break;
       case 22:
-          getDetails(otherTests, data[0]);
-          checkedServicesDetails.push(itemDetails);
-      break;
+        getDetails(otherTests, data[0]);
+        checkedServicesDetails.push(itemDetails);
+        break;
       case 23:
-          getDetails(clinicalUrinalysis, data[0]);
-          checkedServicesDetails.push(itemDetails);
-      break;
+        getDetails(clinicalUrinalysis, data[0]);
+        checkedServicesDetails.push(itemDetails);
+        break;
       case 24:
-          getDetails(clinicalFecalysis, data[0]);
-          checkedServicesDetails.push(itemDetails);
-      break;
+        getDetails(clinicalFecalysis, data[0]);
+        checkedServicesDetails.push(itemDetails);
+        break;
     }
   });
 
   React.useEffect(() => {
     axios({
-      method: 'post',
-      url: window.$link + 'discounts/show/' + customer.discountId,
-      withCredentials: false, 
+      method: "post",
+      url: window.$link + "discounts/show/" + customer.discountId,
+      withCredentials: false,
       params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }
-  }).then(function (response) {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    }).then(function (response) {
       setDiscountCode(response.data.data.discount.discount_code);
-  });
-},[discountDetails]);
- 
-//Total discount labs/packages
-if(typeof checkedServicesDetails[0] !== 'undefined') {
-checkedServicesDetails.map((data, index) => {
-  // console.log(data);
+    });
+  }, [discountDetails]);
 
-  //To insert condition for discount for specific labs/packages
-  if(index == 0) {
-      labDiscountedTotal = 0;
-      packageDiscountedTotal = 0;
-  }
-  if( discountDetails != null) {
-  discountDetails.map((detail) => {
-      if(data.type == 'lab' && detail.type == 'service') {
-          if(data.labTestId == detail.source_id) {
+  //Total discount labs/packages
+  if (typeof checkedServicesDetails[0] !== "undefined") {
+    checkedServicesDetails.map((data, index) => {
+      //To insert condition for discount for specific labs/packages
+      if (index == 0) {
+        labDiscountedTotal = 0;
+        packageDiscountedTotal = 0;
+      }
+      if (discountDetails != null) {
+        discountDetails.map((detail) => {
+          if (data.type == "lab" && detail.type == "service") {
+            if (data.labTestId == detail.source_id) {
               discountedTotalPrice += parseFloat(data.price);
+            }
+          } else if (data.type == "package" && detail.type == "package") {
+            if (data.packageId == detail.source_id) {
+              discountedTotalPrice += parseFloat(data.price);
+            }
           }
+        });
       }
-      else if (data.type == 'package' && detail.type == 'package') {
-          if(data.packageId == detail.source_id) {
-             discountedTotalPrice += parseFloat(data.price);
-          }
+    });
+  }
+  if (typeof checkedServicesDetails[0] !== "undefined") {
+    checkedServicesDetails.map((data, index) => {
+      //To insert condition for discount for specific labs/packages
+      if (index == 0) {
+        newLabTotal = 0;
+        labDiscountedTotal = 0;
+        newPackageTotal = 0;
+        packageDiscountedTotal = 0;
+        setLabPrice(0);
+        setPackagePrice(0);
       }
-  });
-}
 
-});
-}
-if(typeof checkedServicesDetails[0] !== 'undefined') {
-checkedServicesDetails.map((data, index) => {
-// console.log(data);
-//To insert condition for discount for specific labs/packages
-if(index == 0) {
-  newLabTotal = 0;
-  labDiscountedTotal = 0;
-  newPackageTotal = 0;
-  packageDiscountedTotal = 0;
-  setLabPrice(0);
-  setPackagePrice(0);
-}
-
-if(data.type == 'lab') {
-  if(discountDetails != null ) {
-      discountDetails.map((detail) => {
-          if(detail.source_id != data.labTestId && detail.type == "service") {
+      if (data.type == "lab") {
+        if (discountDetails != null) {
+          discountDetails.map((detail) => {
+            if (
+              detail.source_id != data.labTestId &&
+              detail.type == "service"
+            ) {
               newLabTotal += parseFloat(data.price);
               setLabPrice(newLabTotal);
-          }
-      });
-  } else {
-      newLabTotal += parseFloat(data.price);
-      setLabPrice(newLabTotal);
-  }
-}
-else if (data.type == 'package') {
-  if(discountDetails != null) {
-      discountDetails.map((detail) => {
-          if(detail.source_id != data.labTestId && detail.type == "package") {
+            }
+          });
+        } else {
+          newLabTotal += parseFloat(data.price);
+          setLabPrice(newLabTotal);
+        }
+      } else if (data.type == "package") {
+        if (discountDetails != null) {
+          discountDetails.map((detail) => {
+            if (
+              detail.source_id != data.labTestId &&
+              detail.type == "package"
+            ) {
               newPackageTotal += parseFloat(data.price);
               setPackagePrice(newPackageTotal);
-          }
-      });
-  } else {
-      newPackageTotal += parseFloat(data.price);
-      setPackagePrice(newPackageTotal);
+            }
+          });
+        } else {
+          newPackageTotal += parseFloat(data.price);
+          setPackagePrice(newPackageTotal);
+        }
+      }
+      totalPrice += parseFloat(data.price);
+    });
   }
-}
-totalPrice += parseFloat(data.price);
-});
-}
 
   if (print == true) {
     return <Navigate to={"/print-booking/" + bookingId} />;
@@ -660,9 +726,16 @@ totalPrice += parseFloat(data.price);
         <Header type="thin" title="ADD PATIENT" />
 
         <div className="booking-form">
-          <form className="needs-validation" onSubmit={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}>
+          <form
+            className="needs-validation"
+            onSubmit={(e) =>
+              submit(e, customer, location, checkedServicesDetails, totalPrice)
+            }
+          >
             <div className="row clinical-services-container">
-              <h3 className="form-categories-header italic">CLINICAL SERVICES</h3>
+              <h3 className="form-categories-header italic">
+                CLINICAL SERVICES
+              </h3>
 
               {/* <ServiceItems
                 category="CLINICAL MICROSCOPY"
@@ -670,25 +743,40 @@ totalPrice += parseFloat(data.price);
                 formData={service}
                 setForm={setServices}
               /> */}
-              <ServiceItems 
-                category='CLINICAL MICROSCOPY URINALYSIS' 
+              <ServiceItems
+                category="CLINICAL MICROSCOPY URINALYSIS"
                 items={clinicalUrinalysis}
                 formData={service}
                 setForm={setServices}
               />
 
-              <ServiceItems 
-                category='CLINICAL MICROSCOPY FECALYSIS' 
+              <ServiceItems
+                category="CLINICAL MICROSCOPY FECALYSIS"
                 items={clinicalFecalysis}
                 formData={service}
                 setForm={setServices}
               />
 
-              <ServiceItems category="HEMATOLOGY" items={hematology} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="HEMATOLOGY"
+                items={hematology}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems category="ELECTROLYTES" items={electrolytes} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="ELECTROLYTES"
+                items={electrolytes}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems category="GLUCOSE TESTS" items={glucoseTests} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="GLUCOSE TESTS"
+                items={glucoseTests}
+                formData={service}
+                setForm={setServices}
+              />
 
               <ServiceItems
                 category="KIDNEY FUNCTION TESTS"
@@ -697,7 +785,12 @@ totalPrice += parseFloat(data.price);
                 setForm={setServices}
               />
 
-              <ServiceItems category="LIPID PROFILE" items={lipidProfile} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="LIPID PROFILE"
+                items={lipidProfile}
+                formData={service}
+                setForm={setServices}
+              />
 
               <ServiceItems
                 category="PANCREATIC TEST"
@@ -713,7 +806,12 @@ totalPrice += parseFloat(data.price);
                 setForm={setServices}
               />
 
-              <ServiceItems category="IMMUNOLOGY" items={immunology} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="IMMUNOLOGY"
+                items={immunology}
+                formData={service}
+                setForm={setServices}
+              />
 
               <ServiceItems
                 category="HEPATITIS PROFILE SCREENING"
@@ -729,9 +827,19 @@ totalPrice += parseFloat(data.price);
                 setForm={setServices}
               />
 
-              <ServiceItems category="TUMOR MARKERS" items={tumorMarkers} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="TUMOR MARKERS"
+                items={tumorMarkers}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems category="HISTOPATHOLOGY" items={histopathology} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="HISTOPATHOLOGY"
+                items={histopathology}
+                formData={service}
+                setForm={setServices}
+              />
 
               <ServiceItems
                 category="COVID Rapid Tests"
@@ -740,11 +848,26 @@ totalPrice += parseFloat(data.price);
                 setForm={setServices}
               />
 
-              <ServiceItems category="MICROBIOLOGY" items={microbiology} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="MICROBIOLOGY"
+                items={microbiology}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems category="XRAY" items={xray} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="XRAY"
+                items={xray}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems category="CARDIOLOGY" items={cardiology} formData={service} setForm={setServices} />
+              <ServiceItems
+                category="CARDIOLOGY"
+                items={cardiology}
+                formData={service}
+                setForm={setServices}
+              />
 
               <ServiceItems
                 category="MEDICAL CERTIFICATE"
@@ -753,27 +876,27 @@ totalPrice += parseFloat(data.price);
                 setForm={setServices}
               />
 
-              <ServiceItems 
-                category="ULTRASOUND" 
-                items={ultrasound} 
-                formData={service} 
-                setForm={setServices} 
+              <ServiceItems
+                category="ULTRASOUND"
+                items={ultrasound}
+                formData={service}
+                setForm={setServices}
               />
 
-              <ServiceItems 
-                category="TEST PROMOS" 
-                items={promo} 
-                formData={service} 
-                setForm={setServices} 
-                />
+              <ServiceItems
+                category="TEST PROMOS"
+                items={promo}
+                formData={service}
+                setForm={setServices}
+              />
 
-              <ServiceItems 
-                category="OTHER TESTS" 
-                items={otherTests} 
-                formData={service} 
-                setForm={setServices} 
-                />
-                
+              <ServiceItems
+                category="OTHER TESTS"
+                items={otherTests}
+                formData={service}
+                setForm={setServices}
+              />
+
               {/*
                 <h3 className="form-categories-header italic">PACKAGES</h3>
 
@@ -807,118 +930,295 @@ totalPrice += parseFloat(data.price);
             </div>
 
             <div className="row summary-text">
-                    <h3 className="form-categories-header italic medium-text ">TOTAL SUMMARY</h3>
+              <h3 className="form-categories-header italic medium-text ">
+                TOTAL SUMMARY
+              </h3>
 
-                    { typeof checkedServicesDetails[0] !== 'undefined' ?
-                    checkedServicesDetails.map((data, index) => (
-                        <div className="row">
-                           <div className="col-2">
-                               {index + 1}
-                           </div>
-                           <div className="col">
-                               <p className="item">{data.name}</p>
-                           </div>
-                           <div className="col d-flex justify-content-end">
-                               <span className="price"><span className="currency">P</span> {parseFloat(data.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</span>
-                           </div>
-                       </div>
-                    )):null}
-                </div>
-
-                <div className="row">
-                    <div className="col d-flex justify-content-end">
-                      {isCompany == false && discount != "" && discountDetails.length == 0 && (
-                             <span className="total-price"><b>DISCOUNT {
-                                discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
-                            }%</b></span>
-                        )}
-                         {isCompany == false && discount != "" && discountDetails.length != 0 && (
-                             <span className="total-price"><b>DISCOUNT {
-                                discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
-                            }%</b> - {discountCode}</span>
-                        )}
-                         {isCompany != false && discount != "" && (
-                             <span className="total-price"><b>DISCOUNT P{
-                                discount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})
-                            }</b></span>
-                        )}
+              {typeof checkedServicesDetails[0] !== "undefined"
+                ? checkedServicesDetails.map((data, index) => (
+                    <div className="row">
+                      <div className="col-2">{index + 1}</div>
+                      <div className="col">
+                        <p className="item">{data.name}</p>
+                      </div>
+                      <div className="col d-flex justify-content-end">
+                        <span className="price">
+                          <span className="currency">P</span>{" "}
+                          {parseFloat(data.price).toLocaleString("en-US", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </span>
+                      </div>
                     </div>
-                </div>
+                  ))
+                : null}
+            </div>
 
-
-                {totalMDCharge != 0 && (
-                 <div className="col d-flex justify-content-end">
-                     <span className="total-price"><b>MEDICAL CHARGE P {parseFloat(totalMDCharge).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                 </div>
+            <div className="row">
+              <div className="col d-flex justify-content-end">
+                {isCompany == false &&
+                  discount != "" &&
+                  discountDetails.length == 0 && (
+                    <span className="total-price">
+                      <b>
+                        DISCOUNT{" "}
+                        {discount.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                        %
+                      </b>
+                    </span>
+                  )}
+                {isCompany == false &&
+                  discount != "" &&
+                  discountDetails.length != 0 && (
+                    <span className="total-price">
+                      <b>
+                        DISCOUNT{" "}
+                        {discount.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                        %
+                      </b>{" "}
+                      - {discountCode}
+                    </span>
+                  )}
+                {isCompany != false && discount != "" && (
+                  <span className="total-price">
+                    <b>
+                      DISCOUNT P
+                      {discount.toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </b>
+                  </span>
                 )}
-                
-                {serviceFee != "" && (
-                 <div className="col d-flex justify-content-end">
-                     <span className="total-price"><b>SERVICE FEE P {parseFloat(serviceFee).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                 </div>
+              </div>
+            </div>
+
+            {totalMDCharge != 0 && (
+              <div className="col d-flex justify-content-end">
+                <span className="total-price">
+                  <b>
+                    MEDICAL CHARGE P{" "}
+                    {parseFloat(totalMDCharge).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
+            )}
+
+            {serviceFee != "" && (
+              <div className="col d-flex justify-content-end">
+                <span className="total-price">
+                  <b>
+                    SERVICE FEE P{" "}
+                    {parseFloat(serviceFee).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
+            )}
+
+            <div className="row">
+              <div className="col d-flex justify-content-end">
+                <span className="total-price">
+                  <b>
+                    SUBTOTAL P{" "}
+                    {totalPrice.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
+            </div>
+
+            <div className="row">
+              {isCompany == false &&
+                discountedTotalPrice != 0 &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          (discountedTotalPrice * discount) / 100
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
                 )}
-                
-                <div className="row">
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>SUBTOTAL P {totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
+              {isCompany == false && isPackage == true && totalPrice != 0 && (
+                <div className="col d-flex justify-content-end">
+                  <span className="total-price">
+                    <b>
+                      GRANDTOTAL P{" "}
+                      {(
+                        totalPrice +
+                        parseFloat(serviceFee) +
+                        parseFloat(totalMDCharge) -
+                        (packagePrice * discount) / 100
+                      ).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </b>
+                  </span>
                 </div>
-
-                <div className="row">
-                  {isCompany == false && discountedTotalPrice != 0 && totalPrice != 0  && (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                    {isCompany == false && isPackage == true && totalPrice != 0  && (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (packagePrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                      {isCompany == false && isService == true && totalPrice != 0  &&  (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - (labPrice * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                    {isCompany == false && isService != true && totalPrice != 0 && isPackage != true && discountedTotalPrice == 0 && (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  - ((totalPrice) * discount / 100 )).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                    {isCompany == true && discountedTotalPrice != 0 && totalPrice != 0 && (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - (discountedTotalPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                    {isCompany == true && isPackage == true && totalPrice != 0  &&  (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) +  (packagePrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                     {isCompany == true && isService == true && totalPrice != 0  &&  (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge))  +  (labPrice - discount)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
-                     {isCompany == true && isService != true && isPackage != true && totalPrice != 0 && discountedTotalPrice == 0 &&  (
-                    <div className="col d-flex justify-content-end">
-                        <span className="total-price"><b>GRANDTOTAL P {((totalPrice + parseFloat(serviceFee) + parseFloat(totalMDCharge)) - discount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits:2})}</b></span>
-                    </div>
-                    )}
+              )}
+              {isCompany == false && isService == true && totalPrice != 0 && (
+                <div className="col d-flex justify-content-end">
+                  <span className="total-price">
+                    <b>
+                      GRANDTOTAL P{" "}
+                      {(
+                        totalPrice +
+                        parseFloat(serviceFee) +
+                        parseFloat(totalMDCharge) -
+                        (labPrice * discount) / 100
+                      ).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </b>
+                  </span>
                 </div>
-
+              )}
+              {isCompany == false &&
+                isService != true &&
+                totalPrice != 0 &&
+                isPackage != true &&
+                discountedTotalPrice == 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          (totalPrice * discount) / 100
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {isCompany == true &&
+                discountedTotalPrice != 0 &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          (discountedTotalPrice - discount)
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {isCompany == true && isPackage == true && totalPrice != 0 && (
+                <div className="col d-flex justify-content-end">
+                  <span className="total-price">
+                    <b>
+                      GRANDTOTAL P{" "}
+                      {(
+                        totalPrice +
+                        parseFloat(serviceFee) +
+                        parseFloat(totalMDCharge) +
+                        (packagePrice - discount)
+                      ).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </b>
+                  </span>
+                </div>
+              )}
+              {isCompany == true && isService == true && totalPrice != 0 && (
+                <div className="col d-flex justify-content-end">
+                  <span className="total-price">
+                    <b>
+                      GRANDTOTAL P{" "}
+                      {(
+                        totalPrice +
+                        parseFloat(serviceFee) +
+                        parseFloat(totalMDCharge) +
+                        (labPrice - discount)
+                      ).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </b>
+                  </span>
+                </div>
+              )}
+              {isCompany == true &&
+                isService != true &&
+                isPackage != true &&
+                totalPrice != 0 &&
+                discountedTotalPrice == 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          discount
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+            </div>
 
             <div className="row">
               <div className="col-sm-6">
                 <div className="d-flex justify-content-start">
-                  <button className="back-btn" onClick={() => navigation.previous()}>
+                  <button
+                    className="back-btn"
+                    onClick={() => navigation.previous()}
+                  >
                     BACK
                   </button>
                 </div>
               </div>
               <div className="col-sm-6">
                 <div className="d-flex justify-content-end">
-                  <button type="button" className="proceed-btn" onClick={handleShow}>
+                  <button
+                    type="button"
+                    className="proceed-btn"
+                    onClick={handleShow}
+                  >
                     SAVE BOOKING
                   </button>
                   <ToastContainer />
@@ -938,7 +1238,15 @@ totalPrice += parseFloat(data.price);
                 <Button
                   type="submit"
                   variant="primary"
-                  onClick={(e) => submit(e, customer, location, checkedServicesDetails, totalPrice)}
+                  onClick={(e) =>
+                    submit(
+                      e,
+                      customer,
+                      location,
+                      checkedServicesDetails,
+                      totalPrice
+                    )
+                  }
                 >
                   Submit
                 </Button>

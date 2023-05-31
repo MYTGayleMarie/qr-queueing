@@ -17,6 +17,7 @@ import TableLoader7 from "./TableLoader7";
 import "./Table.scss";
 import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
+import { formatPrice } from "../utilities/Common";
 
 function Table({
   clickable,
@@ -58,10 +59,11 @@ function Table({
   useLoader = false,
   isReady,
 }) {
+  const navigate = useNavigate();
   //PAGINATION
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
-  const { slice, range } = useTable(tableData, page, rowsPerPage);
+  const { slice, range } = useTable(tableData, page, rowsPerPage, type);
   const [loading, setLoading] = useState(true);
 
   let tableClass = "table-container__table";
@@ -215,6 +217,147 @@ function Table({
             >
               VIEW BOOKING
             </button>
+          </td>
+        </tr>
+      );
+    } else if (type === "aging") {
+      return (
+        <tr key={row.id}>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.company}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/current")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row.current)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/1-30")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_30"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/31-60")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_60"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/61-90")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["until_90"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            onClick={() =>
+              navigate("/aging-report/company/" + row.company_id + "/over 90")
+            }
+            style={{ cursor: "pointer", textAlign: "right" }}
+          >
+            {formatPrice(row["over_90"])}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.total)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.partial_paid)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.balance)}
+          </td>
+        </tr>
+      );
+    } else if (type === "aging-by-company") {
+      return (
+        <tr key={row.id}>
+          <td key={index} data-heading={row.key} className={row.val}>
+            {row.invoice_date}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(
+                "/add-invoice-payment/" +
+                  row.id +
+                  "/" +
+                  row.company_id +
+                  "/" +
+                  row.discount_id +
+                  "/" +
+                  new Date().toLocaleDateString("en-CA") +
+                  "/" +
+                  new Date().toLocaleDateString("en-CA")
+              )
+            }
+          >
+            {row.id}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.total)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.paid_amount)}
+          </td>
+          <td
+            key={index}
+            data-heading={row.key}
+            className={row.val}
+            style={{ textAlign: "right" }}
+          >
+            {formatPrice(row.balance)}
           </td>
         </tr>
       );
@@ -649,10 +792,14 @@ function Table({
           </td>
         </tr>
       );
-    } else if (type === "payment-invoices") {
+    } else if (
+      type === "payment-invoices" ||
+      type === "payment-invoices-print"
+    ) {
       return (
         <tr key={row.id} style={{ color: "black" }}>
           {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
+
           {rowData.map((data, index) => (
             <td key={index} data-heading={data.key} className={data.val}>
               {isNaN(data.val) != true && index != 0 && index != 3
@@ -2198,6 +2345,74 @@ function Table({
         />
       </div>
     );
+  } else if (type === "aging" || type === "aging-by-company") {
+    const { from_date, to_date, done } = filteredData;
+
+    return (
+      <div className="table-container">
+        <div className="search-table-container row">
+          <div className="col-sm-2">
+            {totalCount != null && (
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            )}
+          </div>
+          {/* <div className="col-sm-10 d-flex justify-content-end">
+            <input
+              type="date"
+              className="from-date search"
+              name="from_date"
+              value={from_date}
+              onChange={setFilter}
+            />
+            <input
+              type="date"
+              className="to-date search"
+              name="to_date"
+              value={to_date}
+              onChange={setFilter}
+            />
+            <button
+              className="filter-btn"
+              name="done"
+              onClick={setRender != null ? (e) => setRender(!render) : ""}
+            >
+              FILTER
+            </button>
+          </div> */}
+        </div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {useLoader && !isReady ? (
+              <TableLoader
+                tableHeaders={headingColumns}
+                className={type === "aging" ? "spinners-10" : "spinners-9"}
+              />
+            ) : (
+              data
+            )}
+          </tbody>
+        </table>
+        <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    );
   } else if (type === "services") {
     return (
       <div className="table-container">
@@ -2739,6 +2954,23 @@ function Table({
           page={page}
           footerClass={givenClass}
         />
+      </div>
+    );
+  } else if (type === "payment-invoices-print") {
+    return (
+      <div className="table-container">
+        <div className="search-table-container d-flex justify-content-end"></div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {/* <th></th> */}
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{data}</tbody>
+        </table>
       </div>
     );
   } else if (type === "report") {
