@@ -826,6 +826,7 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Fecalysis" &&
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
+        selectedLab.label !== "Gram Stain" &&
         selectedLab.label !== "HIV Screening (Anti HIV)"
       ) {
         return {
@@ -1281,6 +1282,7 @@ export default function LabOfficer() {
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
+                        selectedLab.label !== "Gram Stain" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" && (
                           <div className="col">
                             <span>
@@ -1429,6 +1431,7 @@ export default function LabOfficer() {
                               "[P] FECALYSIS" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
+                            selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
@@ -1652,6 +1655,7 @@ export default function LabOfficer() {
               selectedLab.label !== "[P] Fecalysis" &&
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
               selectedLab.label !== "KOH" &&
+              selectedLab.label !== "Gram Stain" &&
               selectedLab.label !== "HIV Screening (Anti HIV)"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
                 : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
