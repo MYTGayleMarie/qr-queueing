@@ -556,7 +556,10 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   {servicesData[0].category.toUpperCase() !==
                     "CLINICAL MICROSCOPY FECALYSIS" &&
                     servicesData[0].category.toUpperCase() !==
-                      "CLINICAL MICROSCOPY URINALYSIS" && (
+                      "CLINICAL MICROSCOPY URINALYSIS" &&
+                    servicesData[0].category.toUpperCase() !== "SEROLOGY" &&
+                    servicesData[0].category.toUpperCase() !==
+                      "MICROBIOLOGY" && (
                       <div className="col">
                         <span>
                           <b>REFERENCE RANGE</b>
@@ -625,7 +628,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                               {servicesData[0].category.toUpperCase() !==
                                 "CLINICAL MICROSCOPY FECALYSIS" &&
                                 servicesData[0].category.toUpperCase() !==
-                                  "CLINICAL MICROSCOPY URINALYSIS" && (
+                                  "CLINICAL MICROSCOPY URINALYSIS" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "SEROLOGY" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "MICROBIOLOGY" && (
                                   <div className="col">
                                     <span>
                                       {result["preferred"] !== " "
@@ -657,7 +664,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                       );
                     })}
                   </div>
-                  {servicesData[0].category.toUpperCase() !==
+                  {/* {servicesData[0].category.toUpperCase() !==
                     "THYROID PROFILE" && (
                     <hr
                       style={{
@@ -666,7 +673,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                         marginBottom: "0px",
                       }}
                     />
-                  )}
+                  )} */}
                 </div>
               ))}
               {servicesData[0].category.toUpperCase() === "THYROID PROFILE" && (
@@ -679,6 +686,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 />
               )}
               <div
+                className="mt-2"
                 style={{
                   justifyContent: "left",
                   alignItems: "left",
