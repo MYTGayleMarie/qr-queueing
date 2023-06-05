@@ -142,7 +142,7 @@ function Cashier() {
               bookingDetails.serviceType = booking_service.toUpperCase();
               bookingDetails.amount = booking.grand_total;
               
-              if (booking.paid_amount == booking.grand_total) {
+              if (booking.paid_amount >= booking.grand_total) {
                 bookingDetails.payment = 'PAID';
               } else if (booking.paid_amount < booking.grand_total) {
                 bookingDetails.payment = 'PENDING';
