@@ -53,7 +53,8 @@ function QMSwitchForm2() {
   const [customerID, setCustomerID] = useState("");
 
   const [discountDetails, setDiscountDetails] = useState();
-
+  const [isSenior, setIsSenior] = useState(false);
+  const [isPWD, setIsPWD] = useState(false);
   const [service, setServices] = useForm(serviceData);
   const { step, navigation } = useStep({
     steps,
@@ -85,6 +86,10 @@ function QMSwitchForm2() {
     setResult,
     customerID,
     setCustomerID,
+    isSenior,
+    setIsSenior,
+    isPWD,
+    setIsPWD,
   };
   const serviceProps = {
     service,

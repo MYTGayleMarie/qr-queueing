@@ -39,10 +39,15 @@ function QMOldPatientForm1({
   setResult,
   customerID,
   setCustomerID,
+  isSenior,
+  setIsSenior,
+  isPWD,
+  setIsPWD,
 }) {
   setLocation("clinic");
   document.body.style = "background: white;";
   //customer details
+  const [isEditing, setIsEditing] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -97,7 +102,8 @@ function QMOldPatientForm1({
         setFirstName(customer.data.first_name);
         setMiddleName(customer.data.middle_name);
         setLastName(customer.data.last_name);
-        setBirthDate(birthDate.toDateString());
+
+        setBirthDate(new Date(birthDate).toLocaleDateString("en-CA"));
         setGender(customer.data.gender);
         setAge(age);
         setContactNo(customer.data.contact_no);
@@ -336,131 +342,337 @@ function QMOldPatientForm1({
       <div className="active-cont">
         <Header type="thin" title="PATIENT DETAILS" />
 
-        <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
-
-        <div className="personal-data-cont">
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="first-name label">FIRST NAME</span>
-              <span className="first-name detail">
-                {firstName.toUpperCase()}
-              </span>
-            </div>
-            <div className="col-sm-4">
-              <span className="last-name label">LAST NAME</span>
-              <span className="last-name detail">{lastName.toUpperCase()}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="middle-name label">MIDDLE NAME</span>
-              <span className="middle-name detail">
-                {middleName.toUpperCase()}
-              </span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="date-of-birth label">DATE OF BIRTH</span>
-              <span className="date-of-birth detail">{birthday}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="sex label">SEX</span>
-              <span className="sex detail">{gender.toUpperCase()}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="contact-number label">CONTACT NUMBER</span>
-              <span className="contact-number detail">{contactNo}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="email label">EMAIL</span>
-              <span className="email detail">{emailadd}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <span className="address label">ADDRESS</span>
-              <span className="address detail">
-                {homeaddress.toUpperCase()}
-              </span>
-            </div>
-          </div>
-          <div className="row">
-            {pwdId?.length > 0 ? (
-              <div className="col-sm-6">
-                <span className="pwd-id label">PWD ID</span>
-                <span className="pwd-id detail">{pwdId.toUpperCase()}</span>
-              </div>
-            ) : null}
-          </div>
-          <div className="row">
-            {seniorId?.length > 0 ? (
-              <div className="col-sm-6">
-                <span className="pwd-id label">SENIOR ID</span>
-                <span className="pwd-id detail">{seniorId}</span>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
+        <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
         <div className="booking-form">
-          <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
           <form className="needs-validation">
             <div className="row">
-              <label for="address" className="form-label">
-                REFERRAL
-              </label>
-              <br />
-              <input
-                type="text"
-                className="form-control full"
-                id="referral"
-                name="referral"
-                value={referral}
-                onChange={setPersonal}
-                required
-              />
-              <br />
-            </div>
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
+                  FIRST NAME <i>(required)</i>
+                </label>
 
+                <input
+                  type="text"
+                  className="full-input"
+                  id="firstName"
+                  name="firstName"
+                  value={firstName}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                />
+              </div>
+              <div className="col-sm-4">
+                <label for="fname" className="form-label font-large">
+                  MIDDLE NAME
+                </label>
+
+                <input
+                  type="text"
+                  className="full-input"
+                  id="middleName"
+                  name="middleName"
+                  value={middleName}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                />
+                <br />
+              </div>
+              <div className="col-sm-4">
+                <label for="lname" className="form-label font-large">
+                  LAST NAME <i>(required)</i>
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="lastName"
+                  name="lastName"
+                  value={lastName}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                />
+                <br />
+              </div>
+            </div>
             <div className="row">
+              <div className="col-sm-4">
+                <label for="sex" className="form-label font-large">
+                  SEX <i>(required)</i>
+                </label>
+
+                <select
+                  name="gender"
+                  className="form-select"
+                  value={gender}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                >
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                </select>
+              </div>
+              <div className="col-sm-4">
+                <label for="birthDate" className="form-label font-large">
+                  DATE OF BIRTH <i>(required)</i>
+                </label>
+                <br />
+                <input
+                  type="date"
+                  id="date"
+                  name="birthday"
+                  className="full-input"
+                  value={birthday}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                ></input>
+              </div>
+              <div className="col-sm-4">
+                <label for="senior_id" className="form-label font-large">
+                  SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
+                </label>
+
+                <input
+                  type="text"
+                  id="seniorId"
+                  name="seniorId"
+                  className="full-input"
+                  value={!isSenior ? "" : seniorId}
+                  onChange={setPersonal}
+                  disabled={!isSenior}
+                  style={{ background: !isSenior ? "whitesmoke" : "" }}
+                  required
+                />
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-sm-6 mt-3">
+                <label for="mdCharge" className="form-label">
+                  {" "}
+                </label>
+                <br />
+                <span>
+                  <input
+                    type="checkbox"
+                    name="is_pwd"
+                    value="isPWD"
+                    id="mdCharge"
+                    checked={isPWD}
+                    onChange={(e) => setIsPWD(e.target.checked)}
+                  />
+                  <label for="mdCharge" className="booking-label font-large">
+                    Person With Disabilities
+                  </label>
+                </span>
+              </div>
               <div className="col-sm-6">
-                <label for="address" className="form-label">
+                <label for="contactNum" className="form-label font-large">
+                  PWD ID {isPWD && <i>(required)</i>}
+                </label>
+                <input
+                  type="text"
+                  id="pwd_id"
+                  name="pwd_id"
+                  className="full-input"
+                  value={!isPWD ? "" : pwdId}
+                  disabled={!isPWD}
+                  onChange={setPersonal}
+                  required
+                  style={{ background: !isPWD ? "whitesmoke" : "" }}
+                />
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-sm-4">
+                <label for="email" className="form-label font-large">
+                  EMAIL
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="emailadd"
+                  name="emailadd"
+                  value={emailadd}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                />
+                <br />
+              </div>
+              <div className="col-sm-4">
+                <label for="contactNum" className="form-label font-large">
+                  CONTACT NUMBER <i>(required)</i>
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="contactNo"
+                  name="contactNo"
+                  value={contactNo}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  required
+                />
+                <br />
+              </div>
+              <div className="col-sm-4">
+                <label for="address" className="form-label font-large">
+                  REFERRAL
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="referral"
+                  name="referral"
+                  value={referral}
+                  onChange={setPersonal}
+                  // onFocus={() => {
+                  //   setRenderMDSuggest(true);
+                  // }}
+                  // onBlur={() => {
+                  //   setTimeout(() => {
+                  //     setRenderMDSuggest(false);
+                  //   }, 200);
+                  // }}
+                />
+                <br />
+              </div>
+
+              {/* <div className="col-sm-4">
+                <label for="address" className="form-label font-large">
+                  REFERRAL
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="referral"
+                  name="referral"
+                  value={referral}
+                  onChange={setPersonal}
+                  // onFocus={() => {
+                  //   setRenderMDSuggest(true);
+                  // }}
+                  // onBlur={() => {
+                  //   setTimeout(() => {
+                  //     setRenderMDSuggest(false);
+                  //   }, 200);
+                  // }}
+                />
+                <br />
+              </div> */}
+            </div>
+            <div className="row">
+              <div className="col-sm-12">
+                <label for="address" className="form-label font-large">
+                  ADDRESS <i>(required)</i>
+                </label>
+                <br />
+                <input
+                  type="text"
+                  className="full-input"
+                  id="homeaddress"
+                  name="homeaddress"
+                  value={homeaddress}
+                  disabled={!isEditing}
+                  style={{ background: !isEditing ? "whitesmoke" : "" }}
+                  // onChange={setPersonal}
+                  // onFocus={() => {
+                  //   setRenderSuggest(true);
+                  // }}
+                  // onBlur={() => {
+                  //   setTimeout(() => {
+                  //     setRenderSuggest(false);
+                  //   }, 200);
+                  // }}
+                  required
+                />
+              </div>
+            </div>
+            {/* {suggestions.length !== 0 && renderSuggest && (
+              <div className="suggestions-list">
+                {suggestions.map((data, index) => (
+                  <>
+                    <button
+                      key={index}
+                      className="suggestions-item"
+                      name="address"
+                      value={data}
+                      onClick={(e) => {
+                        setPersonal(e);
+                        setRenderSuggest(false);
+                      }}
+                    >
+                      {data}
+                    </button>
+                    <br />
+                  </>
+                ))}
+              </div>
+            )}
+
+            {MDSuggestions.length !== 0 && renderMDSuggest && (
+              <div className="suggestions-list">
+                {MDSuggestions.map((data, index) => (
+                  <>
+                    <button
+                      key={index}
+                      className="suggestions-item"
+                      name="referral"
+                      value={data}
+                      onClick={(e) => {
+                        setPersonal(e);
+                        setRenderMDSuggest(false);
+                      }}
+                    >
+                      {data}
+                    </button>
+                    <br />
+                  </>
+                ))}
+              </div>
+            )} */}
+            <div className="row mt-4">
+              <div className="col-sm-6">
+                <label for="address" className="form-label font-large">
                   DISCOUNT CODE
                 </label>
                 <br />
                 <select
-                  className="select-input full"
+                  className="form-select"
                   id="discount_code"
                   name="discountId"
                   value={discountId}
                   onChange={setPersonal}
                 >
-                  <option value="">None</option>
+                  <option value="" selected>
+                    None
+                  </option>
                   {listOfDiscount}
                 </select>
                 <br />
               </div>
               <div className="col-sm-6">
-                <label for="address" className="form-label">
-                  DISCOUNT REMARKS
-                </label>
-                <br />
-                <span className="remarks ">
-                  {companyRemarks != "" && companyRemarks}
-                </span>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-sm-12">
-                <label for="address" className="form-label">
+                <label for="address" className="form-label font-large">
                   DISCOUNT DETAIL
                 </label>
                 <br />
                 <input
                   type="text"
-                  className="form-control full"
+                  className="full-input"
                   id="discount_detail"
                   name="discountDetail"
                   value={discountDetail}
@@ -469,44 +681,52 @@ function QMOldPatientForm1({
                 <br />
               </div>
             </div>
-
             <div className="row small-gap">
               <div className="col-sm-6">
+                <label className="radio-header font-large">
+                  LOCATION OF SERVICE
+                </label>
+                <br />
                 <div className="row">
-                  <span className="radio-header">LOCATION OF SERVICE</span>
-                  <br />
-                  <div className="col">
+                  <div className="col-sm-6">
                     <input
                       type="radio"
-                      id="clinic"
-                      name="location"
+                      id="serviceLocationClinic"
+                      name="serviceLocation"
                       value="clinic"
-                      defaultChecked={location === "clinic"}
                       checked={location === "clinic"}
-                      onChange={() => setLocation("clinic")}
-                    />
-                    <label for="clinic" className="radio-label">
+                      // onChange={setPersonal}
+                    />{" "}
+                    <label
+                      htmlFor="serviceLocationClinic"
+                      className="location-radio-label font-large"
+                    >
+                      {" "}
                       CLINIC
                     </label>
                   </div>
-                  {/* <div className="col">
-                    <input
+                  <div className="col-sm-6">
+                    {/* <input
                       type="radio"
-                      id="home-service"
+                      id="serviceLocationHome"
                       name="serviceLocation"
                       value="home service"
-                      checked={serviceLocation === "home service"}
-                      onChange={() => setServiceLocation("home service")}
-                    />
-                    <label for="home-service" className="radio-label">
+                      // checked={serviceLocation === "home service"}
+                      onChange={setPersonal}
+                    />{" "}
+                    <label
+                      htmlFor="serviceLocationHome"
+                      className="location-radio-label font-large"
+                    >
+                      {" "}
                       HOME SERVICE
-                    </label>
-                  </div> */}
+                    </label> */}
+                  </div>
                 </div>
               </div>
               <div className="col-sm-6">
                 <div className="row">
-                  <label for="result" className="radio-header">
+                  <label for="result" className="radio-header font-large">
                     RESULTS
                   </label>
                   <br />
@@ -555,59 +775,72 @@ function QMOldPatientForm1({
                 </div>
               </div>
             </div>
+
             <div className="row small-gap">
-              <div className="col-sm-6">
-                <div className="row">
-                  <span className="radio-header">MD CHARGE</span>
-                  <br />
-                  <div className="col">
+              <div className="col-sm-6 mt-3">
+                <span className="radio-header font-large">MD CHARGE</span>
+                <div className="row mt-2">
+                  <div className="col-sm-6">
                     <input
                       type="checkbox"
+                      id="physical_exam"
                       name="physical_exam"
                       value="physical exam"
                       checked={mdCharge.physical_exam == true}
                       onChange={setMdCharge}
-                    />
-                    <label for="mdCharge" className="booking-label">
+                    />{" "}
+                    <label
+                      for="physical_exam"
+                      className="md-booking-label font-large"
+                    >
                       Physical Exam
                     </label>
                   </div>
-                  <div className="col">
+                  <div className="col-sm-6">
                     <input
                       type="checkbox"
+                      id="medical_certificate"
                       name="medical_certificate"
                       value="medical certificate"
                       checked={mdCharge.medical_certificate == true}
                       onChange={setMdCharge}
-                    />
-                    <label for="mdCharge" className="booking-label">
+                    />{" "}
+                    <label
+                      for="medical_certificate"
+                      className="md-booking-label font-large"
+                    >
                       Medical Certificate
                     </label>
                   </div>
                 </div>
               </div>
-              {/* <div className="col-sm-6">
-                            {homeServiceFeeDisplay()}
-                        </div> */}
+              {/* <div className="col-sm-6">{homeServiceFeeDisplay()}</div> */}
             </div>
-
             <div className="row date-of-testing-container large-gap">
               <div className="col-sm-4">
-                <label for="date" className="form-label">
+                <label for="date" className="form-label font-large">
                   DATE OF TESTING<i>(required)</i>
                 </label>
                 <br />
-                <DateTimePicker onChange={setDOT} value={dateOfTesting} />
+                <DateTimePicker
+                  className="full-input"
+                  onChange={setDOT}
+                  value={dateOfTesting}
+                />
               </div>
               <div className="col-sm-4">
-                <label for="last_meal" className="form-label">
+                <label for="last_meal" className="form-label font-large">
                   LAST MEAL<i>(required)</i>
                 </label>
                 <br />
-                <DateTimePicker onChange={setLastMeal} value={lastMeal} />
+                <DateTimePicker
+                  className="full-input"
+                  onChange={setLastMeal}
+                  value={lastMeal}
+                />
               </div>
               <div className="col-sm-4">
-                <label for="date" className="form-label">
+                <label for="date" className="form-label font-large">
                   SINCE LAST MEAL
                 </label>
                 <br />
@@ -617,6 +850,7 @@ function QMOldPatientForm1({
 
             <div>{proceed()}</div>
           </form>
+          {/* <ToastContaine /> */}
         </div>
       </div>
     </div>
