@@ -830,7 +830,7 @@ function QMOldPatientForm1({
               </div>
               <div className="col-sm-4">
                 <label for="last_meal" className="form-label font-large">
-                  LAST MEAL<i>(required)</i>
+                  DATE OF EXTRACTION<i>(required)</i>
                 </label>
                 <br />
                 <DateTimePicker
@@ -839,13 +839,13 @@ function QMOldPatientForm1({
                   value={lastMeal}
                 />
               </div>
-              <div className="col-sm-4">
+              {/* <div className="col-sm-4">
                 <label for="date" className="form-label font-large">
                   SINCE LAST MEAL
                 </label>
                 <br />
                 <span className="since-lastmeal">{sinceLastMeal()}</span>
-              </div>
+              </div> */}
             </div>
 
             <div>{proceed()}</div>

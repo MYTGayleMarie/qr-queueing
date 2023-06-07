@@ -618,18 +618,18 @@ console.log(location)
               </div>
               <div className="col-sm-4">
                 <label for="last_meal" className="form-label">
-                  LAST MEAL<i>(required)</i>
+                  DATE OF EXTRACTION<i>(required)</i>
                 </label>
                 <br />
                 <DateTimePicker onChange={setLastMeal} value={lastMeal} />
               </div>
-              <div className="col-sm-4">
+              {/* <div className="col-sm-4">
                 <label for="date" className="form-label">
                   SINCE LAST MEAL
                 </label>
                 <br />
                 <span className="since-lastmeal">{sinceLastMeal()}</span>
-              </div>
+              </div> */}
             </div>
 
             <div>{proceed()}</div>
