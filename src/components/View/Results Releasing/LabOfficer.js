@@ -80,6 +80,7 @@ export default function LabOfficer() {
   });
 
   // Patient details
+  const [editingLab, setEditingLab] = useState("");
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -148,6 +149,7 @@ export default function LabOfficer() {
   }
 
   function update(lab_test) {
+    setEditingLab(lab_test);
     setIsDropdown(false);
     // For dropdowns in Edit modal
     if (
@@ -1391,7 +1393,7 @@ export default function LabOfficer() {
                                   parseFloat(result["preferred_from"]) >
                                   parseFloat(result["result"]) ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
+                                      {parseFloat(result["result"]) +
                                         " " +
                                         result["unit"] +
                                         " (L)"}
@@ -1399,7 +1401,7 @@ export default function LabOfficer() {
                                   ) : parseFloat(result["result"]) >
                                     parseFloat(result["preferred_to"]) ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
+                                      {parseFloat(result["result"]) +
                                         " " +
                                         result["unit"] +
                                         " (H)"}
@@ -1703,7 +1705,21 @@ export default function LabOfficer() {
                       type="text"
                       className="results-input"
                       defaultValue={result}
-                      onChange={(e) => setResult(e.target.value)}
+                      onChange={(e) => {
+                        var value = e.target.value;
+                        if (editingLab === "Ph") {
+                          value = parseFloat(e.target.value)
+                            .toFixed(1)
+                            .toString();
+                        } else if (editingLab === "Specific Gravity") {
+                          value = parseFloat(e.target.value)
+                            .toFixed(3)
+                            .toString();
+                        } else {
+                          value = e.target.value;
+                        }
+                        setResult(value);
+                      }}
                     />
                   )}
                 </div>
