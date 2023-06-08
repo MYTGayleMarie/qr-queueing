@@ -1,6 +1,11 @@
 import React, { Fragment, useEffect, useState, useRef, useMemo } from "react";
 import axios from "axios";
-import { getToken, getUser, getRoleId } from "../../../utilities/Common";
+import {
+  getToken,
+  getUser,
+  getRoleId,
+  formatDate,
+} from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
 import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
@@ -365,7 +370,7 @@ export default function LabOfficer() {
         setLastName(response.data.data.booking.last_name);
 
         var birthDate = new Date(response.data.data.booking.birthdate);
-        setBirthDate(birthDate.toDateString());
+        setBirthDate(formatDate(birthDate));
 
         setGender(response.data.data.booking.gender);
 
@@ -1093,7 +1098,7 @@ export default function LabOfficer() {
           <div className="box">
             <img src={Image9} alt="MedTech" />
           </div>
-          <div className="box">
+          <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
           </div>
         </div>
@@ -1240,7 +1245,7 @@ export default function LabOfficer() {
                       <span>BIRTHDATE :</span>
                     </div>
                     <div class="col">
-                      <span>{birthDate.toUpperCase()}</span>
+                      <span>{birthDate}</span>
                     </div>
                   </div>
                   <div class="row" style={{ marginTop: "2px" }}>
