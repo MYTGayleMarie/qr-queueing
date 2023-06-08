@@ -1091,7 +1091,7 @@ export default function LabOfficer() {
       <div>
         <div className="wrapper">
           <div className="box">
-            <img src={chooseImage()} alt="MedTech" />
+            <img src={Image9} alt="MedTech" />
           </div>
           <div className="box">
             <img src={Image1} alt="MedTech" />
