@@ -24,8 +24,11 @@ export default function Lab() {
   document.body.style = "background: white;";
   const { dateFrom, dateTo } = useParams();
   const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : formattedPresentData, //datas in table
-    to_date: dateTo ? dateTo : formattedPresentData, //datas in table
+    from_date: dateFrom ? dateFrom : "", //datas in table
+    to_date: dateTo ? dateTo : "", //datas in table
+    // from_date: dateFrom ? dateFrom : formattedPresentData, //datas in table
+    // to_date: dateTo ? dateTo : formattedPresentData, //datas in table
+    last_name: "",
     done: false,
   });
   const [render, setRender] = useState([]);
@@ -55,6 +58,7 @@ export default function Lab() {
         requester: userId,
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
+        last_name: filteredData.last_name,
       },
     })
       .then(function (response) {
@@ -129,15 +133,23 @@ export default function Lab() {
                 <div class="search-bar">
                   <input
                     type="text"
+                    placeholder="Search Patient's Last Name"
+                    class="searchTerm"
+                    name="last_name"
+                    value={filteredData.last_name}
+                    onChange={setFilter}
+                  />
+                  {/* <input
+                    type="text"
                     class="searchTerm"
                     name="patientName"
                     placeholder="Search Booking ID"
                     onChange={(e) => setBookingId(e.target.value)}
-                  />
+                  /> */}
                   <button
                     type="submit"
                     class="searchButton"
-                    onClick={searchBookingId}
+                    onClick={setRender != null ? (e) => setRender(!render) : ""}
                   >
                     <i class="fa fa-search"></i>
                   </button>
