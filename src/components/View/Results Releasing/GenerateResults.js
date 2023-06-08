@@ -402,7 +402,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         <div className="wrapper">
           <div className="box">
             {/* {chooseMedTech()} */}
-            <img src={chooseImage()} alt="MedTech" />
+            <img src={Image9} alt="MedTech" />
           </div>
           <div className="box">
             <img src={Image1} alt="MedTech" />
