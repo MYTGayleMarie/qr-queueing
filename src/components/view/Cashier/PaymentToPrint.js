@@ -327,6 +327,7 @@ export class PaymentToPrint extends React.PureComponent {
         function generateTickets(
             queue,
             patientId,
+            bookingId,
             name,
             age,
             gender,
@@ -345,7 +346,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="print-column"> 
                         <div class="d-flex justify-content-left mx-0">
                             <img src={logo} alt={'logo'} className="payment-logo"></img>
-                            <span className="to-right request-header">#{queue} Request Form - Patient ID:{patientId}</span>
+                            <span className="to-right request-header">#{bookingId} Request Form - Patient ID:{patientId}</span>
                             <span className="to-right-test request-header-test">{serviceName}</span>
                         </div>
                         <div className='row mx-0'>
@@ -524,6 +525,7 @@ export class PaymentToPrint extends React.PureComponent {
                                 generateTickets(
                                 this.props.queue,
                                 this.props.patientId,
+                                this.props.bookingId,
                                 this.props.name,
                                 this.props.age,
                                 this.props.gender,
@@ -652,7 +654,7 @@ export class PaymentToPrint extends React.PureComponent {
                   <div className="claim-stub-rotate"> 
                     <div class="d-flex justify-content-left mx-0">
                         <img src={logo} alt={'logo'} class="small-logo"></img>
-                        <span className="to-right claim-span">#{this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
+                        <span className="to-right claim-span">#{this.props.queue == "0" ? this.props.queue.bookingId : this.props.queue} CLAIM STUB - Patient ID:{this.props.patientId}</span>
                     </div>
                     <table>
                         <tr>

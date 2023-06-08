@@ -441,6 +441,7 @@ function PrintBookingCModule() {
                         bookingID={id}
                         ref={componentRef} 
                         patientId = {patientId}
+                        bookingId = {id}
                         name={lastName + ", " + firstName + " " + middleName}
                         birthdate={birthDate}
                         gender={gender}

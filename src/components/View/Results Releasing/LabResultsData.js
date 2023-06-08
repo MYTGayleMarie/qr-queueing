@@ -59,6 +59,10 @@ const labResultsData = {
       value: "NEGATIVE",
       label: "NEGATIVE",
     },
+    {
+      value: "N/A",
+      label: "N/A",
+    },
   ],
 
   urinalysisSugarProteinOptions: [
@@ -96,6 +100,10 @@ const labResultsData = {
     {
       value: "NEGATIVE",
       label: "NEGATIVE",
+    },
+    {
+      value: "N/A",
+      label: "N/A",
     },
   ],
 

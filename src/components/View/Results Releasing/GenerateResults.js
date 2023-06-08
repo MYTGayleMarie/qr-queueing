@@ -24,6 +24,7 @@ import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png";
 import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
+import Image9 from "../../../images/med_tech/image9.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -370,7 +371,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     } else if (userId === "29") {
       setMedTechPRC("PRC LIC. NO.: 0072875");
     } else {
-      setMedTechPRC("No PRC License Number");
+      setMedTechPRC("PRC LIC. NO.: 0112611");
     }
   }, []);
 
@@ -390,7 +391,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     } else if (userId === "29") {
       return Image8;
     } else {
-      return DummyImg;
+      return Image9;
     }
   }
 
@@ -416,7 +417,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">{medTechPRC}</span>
+            <span className="tspan">MARK ANTHONY R. LOBIGAS, RMT</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPathoPRC}</span>

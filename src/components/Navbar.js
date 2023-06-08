@@ -319,12 +319,12 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Queue Manager</span>
           </li>
         </NavLink> */}
-        {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
+        <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
             <span class="mx-2">Patient</span>
           </li>
-        </NavLink> */}
+        </NavLink>
         <NavLink to="/cashier" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
@@ -359,7 +359,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             </li>
         </NavLink> */}
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -368,7 +368,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
 
         <li href="#" class="nav-link supply-nav">
@@ -506,12 +506,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Patient</span>
             </li>
           </NavLink>
-          <NavLink to="/queuemanager" activeClassName="active" class="link">
+          {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img src={queueIcon} alt={"queue"} class="queue icon"></img>
               <span class="mx-2">Queue Manager</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
 
           <li href="#" class="nav-link cashier-nav">
@@ -560,7 +560,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink> */}
 
-          <NavLink
+          {/* <NavLink
             to="/registrationcmodule"
             activeClassName="active"
             class="link"
@@ -569,7 +569,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
               <span class="mx-2">Customer Module</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/aging-report" activeClassName="active" class="link">
             <li href="/aging-report" class="nav-link imaging-nav">
               <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
@@ -1186,14 +1186,14 @@ function RegisterNavbarTop(
           <span class="mx-2">Patient</span>
         </NavLink>
 
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
             alt={"queue"}
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
@@ -1229,7 +1229,7 @@ function RegisterNavbarTop(
         </NavLink> */}
 
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1239,7 +1239,7 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink> */}
+        </NavLink> */} 
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
@@ -1335,19 +1335,19 @@ function AdminNavbarTop(
           <span class="mx-2">Patient</span>
         </NavLink>
 
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
             alt={"queue"}
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
-        {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
+        <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
             <span class="mx-2">Patient</span>
-        </NavLink> */}
+        </NavLink>
         <NavLink to="/cashier" activeClassName="active" class="link">
           <img
             src={cashierIcon}
@@ -1388,7 +1388,7 @@ function AdminNavbarTop(
         </NavLink> */}
 
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1399,7 +1399,7 @@ function AdminNavbarTop(
             class="cmodule icon mobile-size-icon"
           ></img>
           <span class="mx-2">Customer Module</span>
-        </NavLink>
+        </NavLink> */}
 
 
         <div class="side-nav-content">
@@ -1555,7 +1555,7 @@ function Navbar() {
           setShowSupply
         )}
       {showNavbar == false &&
-        (role == 5 || role == 10) &&
+        (role == 5) &&
         ResultsReleasingNavbarTop(
           showNavbar,
           showMobileNavBar,
@@ -1596,7 +1596,7 @@ function Navbar() {
         role == 6 &&
         purchasingNavbar(showNavbar, setshowNavbar)}
       {showNavbar == true &&
-        (role == 5 || role == 10) &&
+        (role == 5) &&
         resultsReleasingNavbar(showNavbar, setshowNavbar)}
       {showNavbar == true &&
         role == 7 &&
@@ -1604,7 +1604,7 @@ function Navbar() {
       {showNavbar == true &&
         role == 8 &&
         accountingNavbar(showNavbar, setshowNavbar)}
-      {/* {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)} */}
+      {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)}
     </div>
   );
 }
