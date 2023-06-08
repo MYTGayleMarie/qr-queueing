@@ -1385,7 +1385,7 @@ export default function LabOfficer() {
                                     </span>
                                   ) : (
                                     <span class="red">
-                                      {result["result"] + " " + result["unit"]}
+                                      {result["result"] + " " + result["unit"]}{" "}
                                     </span>
                                   )
                                 ) : result["preferred_from"] != 0.0 ||
@@ -1393,32 +1393,28 @@ export default function LabOfficer() {
                                   parseFloat(result["preferred_from"]) >
                                   parseFloat(result["result"]) ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]) +
+                                      {result["result"] +
                                         " " +
                                         result["unit"] +
-                                        " (L)"}
+                                        " (L)"}{" "}
                                     </span>
-                                  ) : parseFloat(result["result"]) >
-                                    parseFloat(result["preferred_to"]) ? (
+                                  ) : result["result"] >
+                                    result["preferred_to"] ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]) +
+                                      {result["result"] +
                                         " " +
                                         result["unit"] +
-                                        " (H)"}
+                                        " (H)"}{" "}
                                     </span>
                                   ) : (
                                     <span>
-                                      {parseFloat(result["result"]).toFixed(2) +
-                                        " " +
-                                        result["unit"]}
+                                      {result["result"] + " " + result["unit"]}{" "}
                                     </span>
                                   )
                                 ) : (
                                   <span>
                                     {" "}
-                                    {result["result"] +
-                                      " " +
-                                      result["unit"]}{" "}
+                                    {result["result"] + " " + result["unit"]}
                                   </span>
                                 )}
                               </>

@@ -24,10 +24,10 @@ export default function Lab() {
   document.body.style = "background: white;";
   const { dateFrom, dateTo } = useParams();
   const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : "", //datas in table
-    to_date: dateTo ? dateTo : "", //datas in table
-    // from_date: dateFrom ? dateFrom : formattedPresentData, //datas in table
-    // to_date: dateTo ? dateTo : formattedPresentData, //datas in table
+    // from_date: dateFrom ? dateFrom : "", //datas in table
+    // to_date: dateTo ? dateTo : "", //datas in table
+    from_date: dateFrom ? dateFrom : formattedPresentData, //datas in table
+    to_date: dateTo ? dateTo : formattedPresentData, //datas in table
     last_name: "",
     done: false,
   });
