@@ -252,6 +252,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             .then((response) => {
               if (response.data.data?.booking_detail_results !== null) {
                 response.data.data.booking_detail_results.map((val) => {
+                  console.log(response)
                   lab_test_results.push({ ...val });
                 });
                 // data.lab_test_results.push(
