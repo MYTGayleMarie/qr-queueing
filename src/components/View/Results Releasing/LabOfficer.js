@@ -14,7 +14,7 @@ import useTable from "../../../utilities/Pagination";
 import TableFooter from "../../TableFooter";
 import { Navigate, useParams } from "react-router-dom";
 import Select from "react-select";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import GenerateResults from "./GenerateResults";
@@ -1631,7 +1631,33 @@ export default function LabOfficer() {
                   LABORATORY
                 </label>
                 <br />
-                <Select
+                {console.log("allOptions", allOptions)}
+                {/* <div className="row"> */}
+                {allOptions.map((data) => {
+                  return (
+                    <Button
+                      className="m-2"
+                      style={{
+                        background:
+                          selectedLab.label === data.label
+                            ? "#bfbc4b"
+                            : "#419EA3",
+                        borderColor:
+                          selectedLab.label === data.label
+                            ? "#bfbc4b"
+                            : "#419EA3",
+                      }}
+                      size="sm"
+                      // onChange={() => setSelectedLab(data)}
+                      onClick={() => setSelectedLab(data)}
+                    >
+                      {data.label}
+                    </Button>
+                  );
+                })}
+                {/* </div> */}
+
+                {/* <Select
                   isSearchable
                   options={allOptions}
                   defaultValue={selectedLab}
@@ -1639,7 +1665,7 @@ export default function LabOfficer() {
                   getOptionValue={(option) => option.label}
                   //onChange={e => { setSelectedLab; handleLab() }}
                   labelledBy="Select Laboratory"
-                />
+                /> */}
               </div>
             </div>
           </div>
