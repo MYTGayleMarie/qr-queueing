@@ -41,7 +41,7 @@ function SwitchFormCModule() {
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
   const [dateOfTesting, setDOT] = useState(new Date());
-
+  const [extractionDate, setExtractionDate] = useState(new Date());
   const [packagePrice, setPackagePrice] = useState("");
   const [labPrice, setLabPrice] = useState("");
 
@@ -81,6 +81,8 @@ function SwitchFormCModule() {
     setDOT,
     discountDetails,
     setDiscountDetails,
+    extractionDate,
+    setExtractionDate,
   };
   const serviceProps = {
     service,

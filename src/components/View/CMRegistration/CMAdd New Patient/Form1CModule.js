@@ -59,6 +59,8 @@ function Form1CModule({
   setDOT,
   discountDetails,
   setDiscountDetails,
+  extractionDate,
+  setExtractionDate,
 }) {
   //Redirection
   const [redirect, setRedirect] = useState(false);
@@ -160,6 +162,7 @@ function Form1CModule({
           result: customer.result,
           added_by: userId,
           service_location: customer.service_location,
+          extractionDate: extractionDate,
         },
       }).then(function (response) {
         toast.success(response.data.message.success);
