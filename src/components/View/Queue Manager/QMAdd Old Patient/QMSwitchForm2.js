@@ -37,7 +37,7 @@ function QMSwitchForm2() {
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
   const [dateOfTesting, setDOT] = useState(new Date());
-
+  const [extractionDate, setExtractionDate] = useState(new Date());
   const [packagePrice, setPackagePrice] = useState("");
   const [labPrice, setLabPrice] = useState("");
 
@@ -90,6 +90,8 @@ function QMSwitchForm2() {
     setIsSenior,
     isPWD,
     setIsPWD,
+    extractionDate,
+    setExtractionDate,
   };
   const serviceProps = {
     service,
@@ -115,6 +117,8 @@ function QMSwitchForm2() {
     setResult,
     customerID,
     setCustomerID,
+    extractionDate,
+    setExtractionDate,
   };
 
   switch (step.id) {

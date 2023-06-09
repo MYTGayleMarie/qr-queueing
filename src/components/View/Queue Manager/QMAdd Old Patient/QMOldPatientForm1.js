@@ -43,6 +43,8 @@ function QMOldPatientForm1({
   setIsSenior,
   isPWD,
   setIsPWD,
+  extractionDate,
+  setExtractionDate,
 }) {
   setLocation("clinic");
   document.body.style = "background: white;";
@@ -835,8 +837,8 @@ function QMOldPatientForm1({
                 <br />
                 <DateTimePicker
                   className="full-input"
-                  onChange={setLastMeal}
-                  value={lastMeal}
+                  onChange={setExtractionDate}
+                  value={extractionDate}
                 />
               </div>
               {/* <div className="col-sm-4">

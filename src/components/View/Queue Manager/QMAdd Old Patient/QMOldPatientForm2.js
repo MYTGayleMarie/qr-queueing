@@ -98,6 +98,8 @@ function QMOldPatientForm2({
   result,
   setResult,
   customerID,
+  extractionDate,
+  setExtractionDate,
 }) {
   document.body.style = "background: white;";
   window.scrollTo(0, 0);

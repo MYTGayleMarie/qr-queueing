@@ -105,6 +105,8 @@ function QMOldPatientForm3({
   result,
   setResult,
   customerID,
+  extractionDate,
+  setExtractionDate,
 }) {
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([]);
@@ -391,6 +393,7 @@ function QMOldPatientForm3({
           emergency_contact_no: "",
           relation_w_contact: "",
           last_meal: lastMeal,
+          extraction_date: extractionDate,
           remarks: "",
           updated_by: userId,
         },
