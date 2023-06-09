@@ -264,6 +264,15 @@ function Form1CModule({
       });
   }, []);
 
+  const Print = () => {
+    //console.log('print');
+    let printContents = document.getElementById("cust-printout").innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  };
+
   React.useEffect(() => {
     const birthDate = new Date(customer.birthDate);
     if (
@@ -280,6 +289,7 @@ function Form1CModule({
     return (
       <div>
         <div
+          id="cust-printout"
           className="row"
           style={{
             marginTop: "6%",
@@ -326,7 +336,8 @@ function Form1CModule({
                   presentDate.getFullYear()}{" "}
                 <br />
                 {timeString} <br /> <br />
-                Your Queue Number is {queueNumber}.
+                Your Queue Number is {queueNumber}. <br />
+                Please wait for your name to be called.
               </div>
             </div>
             <div
@@ -344,25 +355,45 @@ function Form1CModule({
                 fontSize: "25px",
               }}
             >
-              Please wait for your name to be called.
+              {/* Please wait for your name to be called. */}
             </div>
             <div className="col-sm-4"></div>
           </div>
         </div>
         <div className="row"></div>
         <div className="row"></div>
-        <div className="row">
+        <div className="row justify-content-end">
           <div className="col-sm-3"></div>
           <div className="col-sm-3"></div>
-          <div className="col-sm-3"></div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 mb-3">
+            <a>
+              <button
+                variant="default"
+                style={{
+                  padding: "7px",
+                  margin: "5px",
+                  width: "100%",
+                  height: "75%",
+                  borderRadius: "8px",
+                  border: "1px",
+                  color: "#419ea3",
+                  fontFamily: "Inter-Bold",
+                  fontSize: "15px",
+                }}
+                onClick={Print}
+              >
+                Print
+              </button>
+            </a>
+          </div>
+          <div className="col-sm-3 mb-3">
             <a href="/RegistrationCModule">
               <button
                 variant="default"
                 style={{
                   padding: "7px",
                   margin: "5px",
-                  width: "25%",
+                  width: "100%",
                   height: "75%",
                   borderRadius: "8px",
                   border: "1px",
