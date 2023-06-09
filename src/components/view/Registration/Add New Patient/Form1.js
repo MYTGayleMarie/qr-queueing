@@ -41,6 +41,8 @@ function AddPatient({
   setIsSenior,
   isPWD,
   setIsPWD,
+  extractionDate,
+  setExtractionDate,
 }) {
   document.body.style = "background: white;";
 
@@ -860,8 +862,8 @@ function AddPatient({
                 <br />
                 <DateTimePicker
                   className="full-input"
-                  onChange={setLastMeal}
-                  value={lastMeal}
+                  onChange={setExtractionDate}
+                  value={extractionDate}
                 />
               </div>
               {/* <div className="col-sm-4">

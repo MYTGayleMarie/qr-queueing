@@ -115,6 +115,8 @@ function Form2({
   serviceFee,
   dateOfTesting,
   discountDetails,
+  extractionDate,
+  setExtractionDate,
 }) {
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([]);
@@ -361,6 +363,7 @@ function Form2({
           emergency_contact_no: "",
           relation_w_contact: "",
           last_meal: lastMeal,
+          extraction_date: extractionDate,
           remarks: "",
           added_by: userId,
           senior_id: customer.senior_id,
@@ -451,6 +454,7 @@ function Form2({
             package_file_result: fileResults,
             remarks: "",
             added_by: userId,
+            extraction_date: extractionDate,
           },
         }).then(function (response) {
           // console.log(response);

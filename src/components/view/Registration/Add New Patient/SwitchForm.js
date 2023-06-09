@@ -36,6 +36,7 @@ function SwitchForm() {
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
   const [dateOfTesting, setDOT] = useState(new Date());
+  const [extractionDate, setExtractionDate] = useState(new Date());
 
   const [packagePrice, setPackagePrice] = useState("");
   const [labPrice, setLabPrice] = useState("");
@@ -82,6 +83,8 @@ function SwitchForm() {
     setIsSenior,
     isPWD,
     setIsPWD,
+    extractionDate,
+    setExtractionDate,
   };
   const serviceProps = {
     service,
@@ -103,6 +106,8 @@ function SwitchForm() {
     location,
     dateOfTesting,
     discountDetails,
+    extractionDate,
+    setExtractionDate,
   };
 
   switch (step.id) {
