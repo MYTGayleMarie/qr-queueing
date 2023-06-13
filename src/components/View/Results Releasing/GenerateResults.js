@@ -25,6 +25,7 @@ import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
+import Image10 from "../../../images/med_tech/image10.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -357,36 +358,33 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         });
     }
 
-    if (userId === "24") {
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    } else if (userId === "25") {
-      setMedTechPRC("PRC LIC. NO.: 0094539");
-    } else if (userId === "26") {
-      setMedTechPRC("PRC LIC. NO.: 0093629");
-    } else if (userId === "23") {
-      setMedTechPRC("PRC LIC. NO.: 0092410");
-    } else if (userId === "27") {
-      setMedTechPRC("PRC LIC. NO.: 0085690");
-    } else if (userId === "28") {
-      setMedTechPRC("PRC LIC. NO.: 0052556");
-    } else if (userId === "29") {
-      setMedTechPRC("PRC LIC. NO.: 0072875");
-    } else {
+    
+    if (userId === "23") {
       setMedTechPRC("PRC LIC. NO.: 0112611");
+    } else if(userId === "24"){
+      setMedTechPRC("PRC LIC. NO.: 0052932")
+    } else if(userId === "25"){
+      setMedTechPRC("PRC LIC. NO.: 0085690")
+    }else if(userId === "26"){
+      setMedTechPRC("PRC LIC. NO.: 0092410");
+    }else if(userId === "27"){
+      setMedTechPRC("PRC LIC. NO.: 0109359");
+    }else {
+      setMedTechPRC("No PRC LIC. NO.");
     }
   }, []);
 
   function chooseImage() {
-    if (userId === "24") {
+    if (userId === "23") {
+      return Image9;
+    } else if (userId === "24") {
       return Image2;
     } else if (userId === "25") {
-      return Image3;
+      return Image6;
     } else if (userId === "26") {
       return Image4;
-    } else if (userId === "23") {
-      return Image5;
     } else if (userId === "27") {
-      return Image6;
+      return Image10;
     } else if (userId === "28") {
       return Image7;
     } else if (userId === "29") {
@@ -401,8 +399,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       <div className="PDFFont">
         <div className="wrapper">
           <div className="box">
-            {/* {chooseMedTech()} */}
-            <img src={Image9} alt="MedTech" />
+            {chooseImage()}
+            {/* <img src={Image9} alt="MedTech" /> */}
           </div>
           <div className="box">
             <img src={Image1} alt="MedTech" />
@@ -418,7 +416,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">MARK ANTHONY R. LOBIGAS, RMT</span>
+            <span className="tspan">PRC LIC. NO.: 0112611</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPathoPRC}</span>
@@ -590,7 +588,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                       {result["result"] + " " + result["unit"]}
                                     </span>
                                   ) : (
-                                    <span class="red">
+                                    <span>
                                       {result["result"] + " " + result["unit"]}
                                     </span>
                                   )

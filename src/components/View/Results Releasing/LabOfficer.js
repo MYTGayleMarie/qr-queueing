@@ -42,6 +42,7 @@ import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
+import Image10 from "../../../images/med_tech/image10.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -298,40 +299,49 @@ export default function LabOfficer() {
         });
     }
 
-    if (userId === "24") {
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    } else if (userId === "25") {
-      setMedTechPRC("PRC LIC. NO.: 0094539");
-    } else if (userId === "26") {
-      setMedTechPRC("PRC LIC. NO.: 0093629");
-    } else if (userId === "23") {
-      setMedTechPRC("PRC LIC. NO.: 0092410");
-    } else if (userId === "27") {
-      setMedTechPRC("PRC LIC. NO.: 0085690");
-    } else if (userId === "28") {
-      setMedTechPRC("PRC LIC. NO.: 0052556");
-    } else if (userId === "29") {
-      setMedTechPRC("PRC LIC. NO.: 0072875");
-    } else {
+    if (userId === "23") {
       setMedTechPRC("PRC LIC. NO.: 0112611");
+    // } else if (userId === "25") {
+    //   setMedTechPRC("PRC LIC. NO.: 0094539");
+    // } else if (userId === "26") {
+    //   setMedTechPRC("PRC LIC. NO.: 0093629");
+    // } else if (userId === "23") {
+    //   setMedTechPRC("PRC LIC. NO.: 0092410");
+    // } else if (userId === "27") {
+    //   setMedTechPRC("PRC LIC. NO.: 0085690");
+    // } else if (userId === "28") {
+    //   setMedTechPRC("PRC LIC. NO.: 0052556");
+    // } else if (userId === "29") {
+    //   setMedTechPRC("PRC LIC. NO.: 0072875");
+    } else if(userId === "24"){
+      setMedTechPRC("PRC LIC. NO.: 0052932")
+    } else if(userId === "25"){
+      setMedTechPRC("PRC LIC. NO.: 0085690")
+    }else if(userId === "26"){
+      setMedTechPRC("PRC LIC. NO.: 0092410");
+    }else if(userId === "27"){
+      setMedTechPRC("PRC LIC. NO.: 0109359");
+    }else {
+      setMedTechPRC("No PRC LIC. NO.");
     }
   }, []);
 
   function chooseImage() {
-    if (userId === "24") {
+    
+    if (userId === "23"){
+      return Image9;
+    } else if (userId === "24") {
       return Image2;
     } else if (userId === "25") {
-      return Image3;
+      return Image6;
     } else if (userId === "26") {
-      return Image4;
-    } else if (userId === "23") {
       return Image5;
     } else if (userId === "27") {
-      return Image6;
+      return Image10;
     } else if (userId === "28") {
-      return Image7;
-    } else if (userId === "29") {
       return Image8;
+    } else if (userId === "29") {
+      return Image9;
     } else {
       return Image9;
     }
@@ -507,7 +517,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/getDetails/" + selectedLab.id,
+      url: window.$link + "Bookingdetails/getDetails/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -587,7 +597,7 @@ export default function LabOfficer() {
       if (selectedLab.type == "lab") {
         axios({
           method: "post",
-          url: window.$link + "/Bookingdetails/editResult/" + selectedLab.id,
+          url: window.$link + "Bookingdetails/editResult/" + selectedLab.id,
           withCredentials: false,
           params,
         })
@@ -883,7 +893,7 @@ export default function LabOfficer() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: window.$link + "/Bookingdetails/editRemarks/" + selectedLab.id,
+      url: window.$link + "Bookingdetails/editRemarks/" + selectedLab.id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -916,7 +926,7 @@ export default function LabOfficer() {
     var link = "";
     if (selectedLab.type === "lab") {
       link =
-        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
+        window.$link + "Bookingdetails/updateResultApproval/" + selectedLab.id;
     } else {
       link =
         window.$link +
@@ -949,7 +959,7 @@ export default function LabOfficer() {
     var link = "";
     if (selectedLab.type === "lab") {
       link =
-        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
+        window.$link + "Bookingdetails/updateResultApproval/" + selectedLab.id;
     } else {
       link =
         window.$link +
@@ -1096,7 +1106,7 @@ export default function LabOfficer() {
       <div>
         <div className="wrapper">
           <div className="box">
-            <img src={Image9} alt="MedTech" />
+            <img src={chooseImage()} alt="MedTech" />
           </div>
           <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
@@ -1104,7 +1114,7 @@ export default function LabOfficer() {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">MARK ANTHONY R. LOBIGAS, RMT</span>
+            <span className="tspan">{medTech}</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPatho}</span>
@@ -1389,7 +1399,7 @@ export default function LabOfficer() {
                                       {result["result"] + " " + result["unit"]}
                                     </span>
                                   ) : (
-                                    <span class="red">
+                                    <span>
                                       {result["result"] + " " + result["unit"]}{" "}
                                     </span>
                                   )
