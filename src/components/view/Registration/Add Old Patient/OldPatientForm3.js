@@ -478,6 +478,7 @@ function OldPatientForm3({
             package_file_result: fileResults,
             remarks: "",
             added_by: userId,
+            extraction_date: extractionDate,
           },
         })
           .then(function (response) {
