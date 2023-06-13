@@ -157,7 +157,6 @@ function labReleasingNavbar(showNavbar, setShowNavbar) {
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
-
         </li>
       </ul>
     </div>
@@ -184,7 +183,6 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
-
         </li>
       </ul>
     </div>
@@ -211,7 +209,6 @@ function queueManagerNavbar(showNavbar, setShowNavbar) {
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
-
         </li>
       </ul>
     </div>
@@ -321,7 +318,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
         </NavLink> */}
         <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
-            <img src={patientIcon} alt={'patient'} class="patient icon"></img>
+            <img src={patientIcon} alt={"patient"} class="patient icon"></img>
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
@@ -343,7 +340,6 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Results Releasing</span>
           </li>
         </NavLink>
-
 
         <NavLink to="/lab" activeClassName="active" class="link">
           <li href="/lab" class="nav-link imaging-nav">
@@ -369,7 +365,6 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Customer Module</span>
           </li>
         </NavLink> */}
-
 
         <li href="#" class="nav-link supply-nav">
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
@@ -481,7 +476,6 @@ function registrationNavbar(showNavbar, setshowNavbar) {
 function adminNavbar(showNavbar, setshowNavbar) {
   return (
     <div>
-
       <div
         class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
         id="sidebar"
@@ -544,14 +538,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink>
 
-
           <NavLink to="/lab" activeClassName="active" class="link">
             <li href="/lab" class="nav-link imaging-nav">
               <img src={labIcon} alt={"lab"} class="lab icon"></img>
               <span class="mx-2">Laboratory Releasing</span>
             </li>
           </NavLink>
-
 
           {/* <NavLink to="/cmodule" activeClassName="active" class="link">
           <li href="/cmodule" class="nav-link imaging-nav">
@@ -576,7 +568,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Aging Report</span>
             </li>
           </NavLink>
-
+          <NavLink to="/extraction" activeClassName="active" class="link">
+            <li href="/extraction" class="nav-link imaging-nav">
+              <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
+              <span class="mx-2">Extractions</span>
+            </li>
+          </NavLink>
 
           <li href="#" class="nav-link supply-nav">
             <img
@@ -926,7 +923,6 @@ function LabReleasingNavbarTop(
   setShowSupply
 ) {
   return (
-
     <div class="navbar">
       <div class="logo-mobile">
         <img src={logo} alt={"logo"} class="navbar-logo"></img>
@@ -971,7 +967,6 @@ function QueueManagerNavbarTop(
   setShowSupply
 ) {
   return (
-
     <div class="navbar">
       <div class="logo-mobile">
         <img src={logo} alt={"logo"} class="navbar-logo"></img>
@@ -1228,7 +1223,6 @@ function RegisterNavbarTop(
           </li>
         </NavLink> */}
 
-
         {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
@@ -1239,7 +1233,7 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink> */} 
+        </NavLink> */}
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
@@ -1263,7 +1257,6 @@ function LaboratoryReleasingNavbarTop(
   setShowCompany
 ) {
   return (
-
     <div class="navbar">
       <div class="logo-mobile">
         <img src={logo} alt={"logo"} class="navbar-logo"></img>
@@ -1345,8 +1338,12 @@ function AdminNavbarTop(
         </NavLink> */}
 
         <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
-            <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
-            <span class="mx-2">Patient</span>
+          <img
+            src={patientIcon}
+            alt={"patient"}
+            class="patient icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Patient</span>
         </NavLink>
         <NavLink to="/cashier" activeClassName="active" class="link">
           <img
@@ -1387,7 +1384,6 @@ function AdminNavbarTop(
             <span class="mx-2">Customer Module</span>
         </NavLink> */}
 
-
         {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
@@ -1400,7 +1396,6 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Customer Module</span>
         </NavLink> */}
-
 
         <div class="side-nav-content">
           <div
@@ -1555,7 +1550,7 @@ function Navbar() {
           setShowSupply
         )}
       {showNavbar == false &&
-        (role == 5) &&
+        role == 5 &&
         ResultsReleasingNavbarTop(
           showNavbar,
           showMobileNavBar,
@@ -1596,7 +1591,7 @@ function Navbar() {
         role == 6 &&
         purchasingNavbar(showNavbar, setshowNavbar)}
       {showNavbar == true &&
-        (role == 5) &&
+        role == 5 &&
         resultsReleasingNavbar(showNavbar, setshowNavbar)}
       {showNavbar == true &&
         role == 7 &&
@@ -1604,7 +1599,9 @@ function Navbar() {
       {showNavbar == true &&
         role == 8 &&
         accountingNavbar(showNavbar, setshowNavbar)}
-      {showNavbar == true && role == 10 && laboratoryReleasingNavbar(showNavbar,setshowNavbar)}
+      {showNavbar == true &&
+        role == 10 &&
+        laboratoryReleasingNavbar(showNavbar, setshowNavbar)}
     </div>
   );
 }

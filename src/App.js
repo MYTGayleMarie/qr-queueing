@@ -103,6 +103,7 @@ import QMOldPatientForm1 from "./components/View/Queue Manager/QMAdd Old Patient
 import QMSwitchForm2 from "./components/View/Queue Manager/QMAdd Old Patient/QMSwitchForm2";
 import AgingReport from "./components/View/AgingReport/AgingReport";
 import AgingByCompany from "./components/View/AgingReport/AgingByCompany";
+import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -181,10 +182,10 @@ function App() {
             path="/add-payment/:id"
             element={token ? <AddPayment /> : <Navigate to="/" />}
           />
-          <Route
+          {/* <Route
             path="/extraction"
             element={token ? <Extraction /> : <Navigate to="/" />}
-          />
+          /> */}
           <Route
             path="/laboratory-test/:id"
             element={token ? <LaboratoryTests /> : <Navigate to="/" />}
@@ -621,6 +622,11 @@ function App() {
           <Route
             path="/aging-report/company/:company_id/:type"
             element={token ? <AgingByCompany /> : <Navigate to="/" />}
+          />
+          {/* Extraction Module */}
+          <Route
+            path="/extraction"
+            element={token ? <ExtractionManager /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

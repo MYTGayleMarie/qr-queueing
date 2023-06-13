@@ -17,7 +17,7 @@ import TableLoader7 from "./TableLoader7";
 import "./Table.scss";
 import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
-import { formatPrice } from "../utilities/Common";
+import { formatDate, formatPrice } from "../utilities/Common";
 
 function Table({
   clickable,
@@ -58,6 +58,7 @@ function Table({
   download,
   useLoader = false,
   isReady,
+  onExtractionClick,
 }) {
   const navigate = useNavigate();
   //PAGINATION
@@ -218,6 +219,33 @@ function Table({
               VIEW BOOKING
             </button>
           </td>
+        </tr>
+      );
+    } else if (type === "extraction") {
+      return (
+        <tr
+          key={row.id}
+          onClick={() => onExtractionClick(row)}
+          style={{ cursor: "pointer" }}
+        >
+          <td>{row.booking_id}</td>
+          <td>
+            {row.first_name} {row.middle_name} {row.last_name}
+          </td>
+          <td>{row.extraction_date}</td>
+        </tr>
+        // <tr key={row.id}>
+        //   {rowData.map((data, index) => (
+        //     <td key={index} data-heading={data.key} className={data.val}>
+        //       {data.val}
+        //     </td>
+        //   ))}
+        // </tr>
+      );
+    } else if (type === "extraction-details") {
+      return (
+        <tr key={row}>
+          <td>{row}</td>
         </tr>
       );
     } else if (type === "aging") {
@@ -2345,7 +2373,12 @@ function Table({
         />
       </div>
     );
-  } else if (type === "aging" || type === "aging-by-company") {
+  } else if (
+    type === "aging" ||
+    type === "aging-by-company" ||
+    type === "extraction" ||
+    type === "extraction-details"
+  ) {
     const { from_date, to_date, done } = filteredData;
 
     return (
