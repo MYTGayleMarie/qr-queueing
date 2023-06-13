@@ -252,7 +252,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             .then((response) => {
               if (response.data.data?.booking_detail_results !== null) {
                 response.data.data.booking_detail_results.map((val) => {
-                  console.log(response)
+                  console.log(response);
                   lab_test_results.push({ ...val });
                 });
                 // data.lab_test_results.push(
@@ -404,7 +404,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             {/* {chooseMedTech()} */}
             <img src={Image9} alt="MedTech" />
           </div>
-          <div className="box">
+          <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
           </div>
         </div>
