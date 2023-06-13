@@ -95,8 +95,6 @@ function OldPatientForm2({
   serviceFee,
   mdCharge,
   discountDetails,
-  extractionDate,
-  setExtractionDate,
 }) {
   document.body.style = "background: white;";
   window.scrollTo(0, 0);
