@@ -33,6 +33,8 @@ const mdData = {};
 const steps = [{ id: "customer" }, { id: "packages" }, { id: "services" }];
 
 function QMSwitchForm2() {
+  const [pwdId, setPwdId] = useState("");
+  const [seniorId, setSeniorId] = useState("");
   const [customer, setPersonal] = useForm(personalData);
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
@@ -90,10 +92,15 @@ function QMSwitchForm2() {
     setIsSenior,
     isPWD,
     setIsPWD,
+    pwdId,
+    setPwdId,
+    seniorId,
+    setSeniorId,
     extractionDate,
     setExtractionDate,
   };
   const serviceProps = {
+    customer,
     service,
     packagePrice,
     labPrice,
@@ -119,6 +126,10 @@ function QMSwitchForm2() {
     setCustomerID,
     extractionDate,
     setExtractionDate,
+    pwdId,
+    setPwdId,
+    seniorId,
+    setSeniorId,
   };
 
   switch (step.id) {
