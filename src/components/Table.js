@@ -59,6 +59,7 @@ function Table({
   useLoader = false,
   isReady,
   onExtractionClick,
+  selectedRowExtraction,
 }) {
   const navigate = useNavigate();
   //PAGINATION
@@ -224,9 +225,15 @@ function Table({
     } else if (type === "extraction") {
       return (
         <tr
-          key={row.id}
+          key={row.booking_id}
           onClick={() => onExtractionClick(row)}
           style={{ cursor: "pointer" }}
+          className={
+            selectedRowExtraction !== {} &&
+            selectedRowExtraction.booking_id === row.booking_id
+              ? "selected-extraction"
+              : ""
+          }
         >
           <td>{row.booking_id}</td>
           <td>

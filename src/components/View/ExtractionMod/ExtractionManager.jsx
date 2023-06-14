@@ -2,11 +2,19 @@ import React, { useState, useEffect, Fragment } from "react";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 import Table from "../../Table.js";
-import { ToastContainer } from "react-toastify";
-import { getRoleId, getToken, getUser } from "../../../utilities/Common";
-import { getExtractionPatients } from "../../../Helpers/APIs/extractionAPI";
+import { ToastContainer, toast } from "react-toastify";
+import {
+  getRoleId,
+  getToken,
+  getUser,
+  refreshPage,
+} from "../../../utilities/Common";
+import {
+  getExtractionPatients,
+  updateExtractionPatient,
+} from "../../../Helpers/APIs/extractionAPI";
 import "./ExtractionManager.css";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 const buttons = [];
 const patientData = "";
 const userToken = getToken();
@@ -25,13 +33,27 @@ function ExtractionManager() {
   const [records, setRecords] = useState([]);
   const [selectedRow, setSelectedRow] = useState({});
   const [recordsDetails, setRecordsDetails] = useState([]);
+  const [labIds, setLabIds] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
   function handleExtractionClick(row) {
     var lab_tests = row.lab_test.split("|");
-    console.log(lab_tests);
+    var lab_tests_id = row.booking_detail_id.split("|");
+
     setSelectedRow({ ...row, lab_tests: lab_tests });
     setRecordsDetails(lab_tests);
+    setLabIds(lab_tests_id);
+  }
+
+  async function handleUpdateBooking(index) {
+    const response = await updateExtractionPatient(
+      selectedRow,
+      labIds[parseInt(index)]
+    );
+    if (response.data) {
+      toast.success(response.data.message.success.toUpperCase());
+      refreshPage();
+    }
   }
   async function fetchRecords() {
     const response = await getExtractionPatients();
@@ -64,6 +86,7 @@ function ExtractionManager() {
                   a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                 )}
                 rowsPerPage={20}
+                selectedRowExtraction={selectedRow}
                 headingColumns={["BOOKING ID", "NAME", "EXTRACTION DATE"]}
                 filteredData={filteredData}
                 setFilter={setFilter}
@@ -82,10 +105,26 @@ function ExtractionManager() {
               <div className="extraction-details">
                 <div className="extraction-header">TEST</div>
                 <ListGroup defaultActiveKey="#link1">
-                  {recordsDetails.map((data) => {
+                  {recordsDetails.map((data, index) => {
                     return (
                       <ListGroup.Item className="extraction-test">
-                        {data}
+                        <div className="row justify-content-between">
+                          <div className="col">{data}</div>
+                          <div className="col text-right align-right">
+                            <Button
+                              size="sm"
+                              style={{
+                                background: "#bfbc4b",
+                                // : "#419EA3",
+                                borderColor: "#bfbc4b",
+                                // : "#419EA3",
+                              }}
+                              onClick={() => handleUpdateBooking(index)}
+                            >
+                              Extracted
+                            </Button>
+                          </div>
+                        </div>
                       </ListGroup.Item>
                     );
                   })}
