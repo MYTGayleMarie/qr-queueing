@@ -43,6 +43,10 @@ function QMOldPatientForm1({
   setIsSenior,
   isPWD,
   setIsPWD,
+  pwdId,
+  setPwdId,
+  seniorId,
+  setSeniorId,
   extractionDate,
   setExtractionDate,
 }) {
@@ -59,9 +63,6 @@ function QMOldPatientForm1({
   const [contactNo, setContactNo] = useState("");
   const [emailadd, setEmail] = useState("");
   const [homeaddress, setAddress] = useState("");
-
-  const [pwdId, setPwdId] = useState("");
-  const [seniorId, setSeniorId] = useState("");
 
   const { id } = useParams();
 
@@ -357,11 +358,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="firstName"
-                  name="firstName"
+                  name="fname"
                   value={firstName}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 />
               </div>
@@ -374,11 +378,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="middleName"
-                  name="middleName"
+                  name="mname"
                   value={middleName}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setMiddleName(e.target.value);
+                    setPersonal(e);
+                  }}
                 />
                 <br />
               </div>
@@ -391,11 +398,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="lastName"
-                  name="lastName"
+                  name="lname"
                   value={lastName}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 />
                 <br />
@@ -408,12 +418,15 @@ function QMOldPatientForm1({
                 </label>
 
                 <select
-                  name="gender"
+                  name="sex"
                   className="form-select"
                   value={gender}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 >
                   <option value="female">Female</option>
@@ -428,12 +441,15 @@ function QMOldPatientForm1({
                 <input
                   type="date"
                   id="date"
-                  name="birthday"
+                  name="birthDate"
                   className="full-input"
                   value={birthday}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setBirthDate(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 ></input>
               </div>
@@ -448,7 +464,7 @@ function QMOldPatientForm1({
                   name="seniorId"
                   className="full-input"
                   value={!isSenior ? "" : seniorId}
-                  onChange={setPersonal}
+                  onChange={(e) => setSeniorId(e.target.value)}
                   disabled={!isSenior}
                   style={{ background: !isSenior ? "whitesmoke" : "" }}
                   required
@@ -486,7 +502,7 @@ function QMOldPatientForm1({
                   className="full-input"
                   value={!isPWD ? "" : pwdId}
                   disabled={!isPWD}
-                  onChange={setPersonal}
+                  onChange={(e) => setPwdId(e.target.value)}
                   required
                   style={{ background: !isPWD ? "whitesmoke" : "" }}
                 />
@@ -502,11 +518,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="emailadd"
-                  name="emailadd"
+                  name="email"
                   value={emailadd}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 />
                 <br />
@@ -520,11 +539,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="contactNo"
-                  name="contactNo"
+                  name="contactNum"
                   value={contactNo}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setContactNo(e.target.value);
+                    setPersonal(e);
+                  }}
                   required
                 />
                 <br />
@@ -587,11 +609,14 @@ function QMOldPatientForm1({
                   type="text"
                   className="full-input"
                   id="homeaddress"
-                  name="homeaddress"
+                  name="address"
                   value={homeaddress}
                   disabled={!isEditing}
                   style={{ background: !isEditing ? "whitesmoke" : "" }}
-                  // onChange={setPersonal}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                    setPersonal(e);
+                  }}
                   // onFocus={() => {
                   //   setRenderSuggest(true);
                   // }}
@@ -697,7 +722,7 @@ function QMOldPatientForm1({
                       name="serviceLocation"
                       value="clinic"
                       checked={location === "clinic"}
-                      // onChange={setPersonal}
+                      onChange={setPersonal}
                     />{" "}
                     <label
                       htmlFor="serviceLocationClinic"
