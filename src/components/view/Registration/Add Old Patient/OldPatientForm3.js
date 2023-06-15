@@ -367,7 +367,6 @@ function OldPatientForm3({
     e.preventDefault();
 
     if (isClicked == false) {
-      alert(extractionDate);
       setClicked(true);
       axios({
         method: "post",
