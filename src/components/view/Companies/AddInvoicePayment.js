@@ -958,6 +958,7 @@ function AddInvoicePayment() {
           <span className="label">
             PAYMENT TYPE: <b className="invoice-total"> {new_payments.type} </b>
           </span>
+          <br />
           <span className="label">
             CHECK NO./ REFERENCE NO.:{" "}
             <b className="invoice-total">
@@ -977,6 +978,10 @@ function AddInvoicePayment() {
                 maximumFractionDigits: 2,
               })}
             </b>
+          </span>
+          <br />
+          <span className="label">
+            REMARKS: <b className="invoice-total">{new_payments.remarks}</b>
           </span>
           <br />
           <br />
