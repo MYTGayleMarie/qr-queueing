@@ -27,7 +27,9 @@ function Costing({
   toPay,
   paymentStatus,
   paidAmount,
+  paymentBreakdown = {},
 }) {
+  console.log(paymentBreakdown);
   var totalCost = 0;
   var labTotal = 0;
 
@@ -46,7 +48,7 @@ function Costing({
 
     return (
       <div class="row">
-        {toPay != false && (
+        {toPay != false ? (
           <div className="col-sm-1 ">
             <button
               className="delete-btn"
@@ -60,6 +62,8 @@ function Costing({
               />
             </button>
           </div>
+        ) : (
+          <div className="col-sm-1"></div>
         )}
         <div className="col-sm-5 service">
           {row.lab_test ? row.lab_test : row.package}
@@ -214,6 +218,50 @@ function Costing({
           </div>
           <div className="col-sm-3"></div>
         </div>
+        {toPay !== true && (
+          <div className="row">
+            <div className="col-12 mb-4">
+              <h1 className="summary-label">PAYMENT DETAILS</h1>
+            </div>
+            <div className="col-6">
+              <span class="summary-total-label">
+                {" "}
+                PAYMENT TYPE: <strong>{paymentBreakdown.payment_type}</strong>
+              </span>
+            </div>
+            <div className="col-6">
+              <span class="summary-total-label">
+                {" "}
+                PAID AMOUNT:{" "}
+                <strong>
+                  {" "}
+                  P{" "}
+                  {parseFloat(paymentBreakdown.paid_amount).toLocaleString(
+                    "en-US",
+                    {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }
+                  )}
+                </strong>
+              </span>
+            </div>
+            <div className="col-6">
+              <span class="summary-total-label">
+                {" "}
+                CHECK NO. / REFERENCE NO.:{" "}
+                <strong>
+                  {paymentBreakdown.payment_type === "cash"
+                    ? "N/A"
+                    : paymentBreakdown.reference_code}
+                </strong>
+              </span>
+            </div>
+            <div className="col-6">
+              <span class="summary-total-label"> PAYMENT DATE:</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
