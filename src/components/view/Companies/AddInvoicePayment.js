@@ -175,6 +175,21 @@ function AddInvoicePayment() {
     setShowModal(false);
   };
 
+  //Bank Transfer Details
+  const [bankTransferDetails, setBankTransferDetails] = useState({
+    bank_name: "",
+    transferee: "",
+    reference_no: "",
+    paid_amount: "",
+    withholding_tax: "",
+    remarks: "",
+  });
+
+  function handleBankChange(e) {
+    const { name, value } = e.target;
+    setBankTransferDetails({ ...bankTransferDetails, [name]: value });
+  }
+
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -1052,6 +1067,117 @@ function AddInvoicePayment() {
       </div>
     );
   }
+  function bankTransferForm() {
+    return (
+      <div class="pay-cash-cont">
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="amount-label">
+                BANK NAME <em>(required)</em>
+              </span>
+            </div>
+            <div className="row">
+              <input
+                type="text"
+                id="bank_name"
+                name="bank_name"
+                onChange={handleBankChange}
+                class="cash-input pay"
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="amount-label">TRANSFEREE NAME</span>
+            </div>
+            <div className="row">
+              <input
+                type="text"
+                id="transferee"
+                name="transferee"
+                onChange={handleBankChange}
+                class="cash-input pay"
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="amount-label">
+                REFERENCE NO <em>(required)</em>
+              </span>
+            </div>
+            <div className="row">
+              <input
+                type="text"
+                id="reference_no"
+                name="reference_no"
+                onChange={handleBankChange}
+                class="cash-input pay"
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="amount-label">
+                PAID AMOUNT <em>(required)</em>
+              </span>
+            </div>
+            <div className="row">
+              <input
+                type="number"
+                id="paid_amount"
+                name="paid_amount"
+                step="0.01"
+                class="cash-input pay"
+                placeholder="P"
+                onChange={handleBankChange}
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <span className="amount-label">WITHHOLDING TAX</span>
+            </div>
+            <div className="row">
+              <input
+                type="number"
+                id="withholding_tax"
+                name="withholding_tax"
+                step="0.01"
+                className="cash-input pay"
+                placeholder="P"
+                onChange={handleBankChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="remarks-payment-label">REMARKS (optional)</span>
+            </div>
+            <div className="row">
+              <textarea
+                id="remarks"
+                name="remarks"
+                className="invoice-remarks-input"
+                rows="4"
+                cols="100"
+                onChange={handleBankChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row d-flex justify-content-end">
+          {paymentStatus == "paid" && printButton()}
+          <button className="save-btn" onClick={(e) => submit(e)}>
+            SAVE PAYMENT{" "}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   function checkForm() {
     return (
@@ -1372,12 +1498,14 @@ function AddInvoicePayment() {
 
             <br />
 
-            <span className="method-label">METHOD</span>
+            <span className="method-label ">METHOD</span>
+            <br />
             <input
               type="radio"
               id="cash"
               name="payment_method"
               value="cash"
+              style={{ marginLeft: "25px" }}
               onClick={() => setPayment("cash")}
             />
             <span className="cash method">CASH</span>
@@ -1399,6 +1527,15 @@ function AddInvoicePayment() {
             <span className="check method">CARD</span>
             <input
               type="radio"
+              id="banktransfer"
+              name="payment_method"
+              value="banktransfer"
+              onClick={() => setPayment("banktransfer")}
+            />
+            <span className="check method">BANK TRANSFER</span>
+
+            <input
+              type="radio"
               id="others"
               name="payment_method"
               value="others"
@@ -1410,6 +1547,7 @@ function AddInvoicePayment() {
             <p>{payment === "check" && checkForm()}</p>
             <p>{payment === "card" && cardForm()}</p>
             <p>{payment === "others" && othersForm()}</p>
+            <p>{payment === "banktransfer" && bankTransferForm()}</p>
 
             <ToastContainer hideProgressBar={true} />
           </div>
