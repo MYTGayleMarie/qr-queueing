@@ -259,6 +259,9 @@ function Costing({
             <div className="col-6">
               <span class="summary-total-label"> PAYMENT DATE:</span>
             </div>
+            <div className="col-6">
+              <span class="summary-total-label"> REMARKS:</span>
+            </div>
           </div>
         )}
       </div>
