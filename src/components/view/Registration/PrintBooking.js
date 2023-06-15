@@ -79,8 +79,6 @@ function PrintBooking() {
       },
     })
       .then(function (response) {
-        // console.log(response)
-        // console.log(response.data.payment_type)
         setEncodedOn(response.data.added_on);
         setBookingDate(response.data.booking_time);
         setPayment(response.data.payment_type);
@@ -107,7 +105,6 @@ function PrintBooking() {
           },
         })
           .then(function (customer) {
-            // console.log(customer)
             var presentDate = new Date();
             var birthDate = new Date(customer.data.birthdate);
             var age = presentDate.getFullYear() - birthDate.getFullYear();
@@ -149,7 +146,6 @@ function PrintBooking() {
             },
           })
             .then(function (contracts) {
-              //console.log(contracts)
               setCompanyCode(contracts.data.company_code);
             })
             .catch(function (error) {
@@ -187,7 +183,6 @@ function PrintBooking() {
       },
     })
       .then(function (booking) {
-        // console.log(booking)
         setServices(booking.data);
       })
       .catch(function (error) {
@@ -200,7 +195,6 @@ function PrintBooking() {
     labTests.length = 0;
     packages.length = 0;
     services.map((info, index1) => {
-      // console.log(info)
       if (info.type === "package") {
         let packageInfo = {};
         packageInfo.name = info.package;
@@ -218,7 +212,6 @@ function PrintBooking() {
           },
         }).then(function (response) {
           response.data.map((packageCat, index2) => {
-            // console.log(packageCat)
             if (index2 < response.data.length - 1) {
               packageInfo.details += packageCat.lab_test + ", ";
             } else {
@@ -246,7 +239,7 @@ function PrintBooking() {
                 }
                 serviceDetails.category = category.data.name;
                 serviceDetails.name = packageCat.lab_test;
-                console.log(serviceDetails);
+
                 setPrintServices((oldArray) => [...oldArray, serviceDetails]);
               })
               .catch(function (error) {
@@ -309,11 +302,9 @@ function PrintBooking() {
         date_to: formattedPresentData,
       },
     }).then(function (response) {
-      //   console.log(response)
       const arrangedObj = response.data.bookings.sort((a, b) => a.id - b.id);
 
       arrangedObj.map((booking, index) => {
-        //   console.log(booking.id)
         var bookingInfo = {};
         bookingInfo.queue = index;
         bookingInfo.id = booking.id;
@@ -368,8 +359,6 @@ function PrintBooking() {
     return <Navigate to="/registration" />;
   }
 
-  // console.log(printServices)
-  // console.log(packages)
   return (
     <div>
       <Navbar />
