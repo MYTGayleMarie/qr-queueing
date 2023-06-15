@@ -29,7 +29,6 @@ function Costing({
   paidAmount,
   paymentBreakdown = {},
 }) {
-  console.log(paymentBreakdown);
   var totalCost = 0;
   var labTotal = 0;
 

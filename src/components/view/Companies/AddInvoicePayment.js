@@ -943,6 +943,15 @@ function AddInvoicePayment() {
           <span className="label">
             PAYMENT TYPE: <b className="invoice-total"> {new_payments.type} </b>
           </span>
+          <span className="label">
+            CHECK NO./ REFERENCE NO.:{" "}
+            <b className="invoice-total">
+              {" "}
+              {new_payments.payment_type === "cash"
+                ? "N/A"
+                : new_payments.reference_code}{" "}
+            </b>
+          </span>
           <br />
           <span className="label">
             PAID AMOUNT:{" "}
