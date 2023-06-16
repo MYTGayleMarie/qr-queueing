@@ -26,6 +26,7 @@ import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
 import Image10 from "../../../images/med_tech/Image10.png";
+import Image11 from "../../../images/med_tech/OSMA.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -35,7 +36,7 @@ const userId = getUser();
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
   const approverId = servicesData[servicesData.length - 1].approver;
-
+  console.log("Hello")
   const { id, dateFrom, dateTo } = useParams();
 
   const [loadData, setLoadData] = useState(false);
@@ -364,18 +365,20 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       if (approverId === "24") {
         setMedTechPRC("PRC LIC. NO.: 0052932");
       } else if (approverId === "25") {
-        setMedTechPRC("PRC LIC. NO.: 0094539");
+        setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (approverId === "26") {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (approverId === "23") {
-        setMedTechPRC("PRC LIC. NO.: 0092410");
+        setMedTechPRC("PRC LIC. NO.: 0112611");
       } else if (approverId === "27") {
         setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (approverId === "28") {
-        setMedTechPRC("PRC LIC. NO.: 0052556");
+        setMedTechPRC("PRC LIC. NO.: 0094539");
       } else if (approverId === "29") {
-        setMedTechPRC("PRC LIC. NO.: 0072875");
-      } else {
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (approverId === "30") {
+        setMedTechPRC("PRC LIC. NO.: 0094334");
+      } else{
         // setMedTechPRC("PRC LIC. NO.: 0112611");
         setMedTechPRC("No PRC LIC. NO.");
       }
@@ -383,19 +386,20 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       if (userId === "24") {
         setMedTechPRC("PRC LIC. NO.: 0052932");
       } else if (userId === "25") {
-        setMedTechPRC("PRC LIC. NO.: 0094539");
+        setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (userId === "26") {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (userId === "23") {
-        setMedTechPRC("PRC LIC. NO.: 0092410");
+        setMedTechPRC("PRC LIC. NO.: 0112611");
       } else if (userId === "27") {
         setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (userId === "28") {
-        setMedTechPRC("PRC LIC. NO.: 0052556");
+        setMedTechPRC("PRC LIC. NO.: 0094539");
       } else if (userId === "29") {
-        setMedTechPRC("PRC LIC. NO.: 0072875");
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (userId === "30") {
+        setMedTechPRC("PRC LIC. NO.: 0094334");
       } else {
-        // setMedTechPRC("PRC LIC. NO.: 0112611");
         setMedTechPRC("No PRC LIC. NO.");
       }
     }
@@ -414,9 +418,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       } else if (approverId === "27") {
         return <img src={Image10} alt="MedTech" />;
       } else if (approverId === "28") {
-        return <img src={Image8} alt="MedTech" />;
+        return <img src={Image3} alt="MedTech" />;
       } else if (approverId === "29") {
-        return <img src={Image9} alt="MedTech" />;
+        return <img src={Image4} alt="MedTech" />;
+      } else if (approverId === "29") {
+        return <img src={Image11} alt="MedTech" />;
       } else {
         // return <img src={Image10} alt="MedTech" />;
         return <></>;
@@ -426,24 +432,27 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         return <img src={Image2} alt="MedTech" />;
         // return Image2;
       } else if (userId === "25") {
-        return <img src={Image3} alt="MedTech" />;
+        return <img src={Image6} alt="MedTech" />;
         // return Image3;
       } else if (userId === "26") {
-        return <img src={Image4} alt="MedTech" />;
+        return <img src={Image5} alt="MedTech" />;
         // return Image4;
       } else if (userId === "23") {
-        return <img src={Image5} alt="MedTech" />;
+        return <img src={Image9} alt="MedTech" />;
         // return Image5;
       } else if (userId === "27") {
-        return <img src={Image6} alt="MedTech" />;
+        return <img src={Image10} alt="MedTech" />;
         // return Image6;
       } else if (userId === "28") {
-        return <img src={Image7} alt="MedTech" />;
+        return <img src={Image3} alt="MedTech" />;
         // return Image7;
       } else if (userId === "29") {
-        return <img src={Image8} alt="MedTech" />;
+        return <img src={Image4} alt="MedTech" />;
         // return Image8;
-      } else {
+      } else if (userId === "30") {
+        return <img src={Image11} alt="MedTech" />;
+        // return Image8;
+      }else {
         return <img src={Image9} alt="MedTech" />;
         // return Image9;
       }

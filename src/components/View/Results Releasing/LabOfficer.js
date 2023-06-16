@@ -42,6 +42,8 @@ import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
+import Image10 from "../../../images/med_tech/Image10.png";
+import Image11 from "../../../images/med_tech/OSMA.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -278,9 +280,8 @@ export default function LabOfficer() {
   React.useEffect(() => {
     setClinicPatho("JENNIFER D. ABIERAS");
     setClinicPathoPRC("PRC LIC. NO.: 0085469");
-
     if (medTech === "") {
-      axios({
+      axios({ 
         method: "get",
         url: window.$link + "users/show/" + userId,
         withCredentials: false,
@@ -297,43 +298,51 @@ export default function LabOfficer() {
           console.log(error);
         });
     }
-
-    if (userId === "24") {
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    } else if (userId === "25") {
-      setMedTechPRC("PRC LIC. NO.: 0094539");
-    } else if (userId === "26") {
-      setMedTechPRC("PRC LIC. NO.: 0093629");
-    } else if (userId === "23") {
-      setMedTechPRC("PRC LIC. NO.: 0092410");
-    } else if (userId === "27") {
-      setMedTechPRC("PRC LIC. NO.: 0085690");
-    } else if (userId === "28") {
-      setMedTechPRC("PRC LIC. NO.: 0052556");
-    } else if (userId === "29") {
-      setMedTechPRC("PRC LIC. NO.: 0072875");
-    } else {
-      setMedTechPRC("PRC LIC. NO.: 0112611");
-    }
   }, []);
+  console.log(medTech)
 
-  function chooseImage() {
-    if (userId === "24") {
-      return Image2;
-    } else if (userId === "25") {
-      return Image3;
-    } else if (userId === "26") {
-      return Image4;
-    } else if (userId === "23") {
-      return Image5;
-    } else if (userId === "27") {
-      return Image6;
-    } else if (userId === "28") {
-      return Image7;
-    } else if (userId === "29") {
-      return Image8;
+  function choosePRC(prc_id){
+    if (prc_id=== "24") {
+      return "PRC LIC. NO.: 0052932";
+    } else if (prc_id === "25") {
+      return "PRC LIC. NO.: 0085690";
+    } else if (prc_id === "26") {
+      return "PRC LIC. NO.: 0093629";
+    } else if (prc_id === "23") {
+      return "PRC LIC. NO.: 0112611";
+    } else if (prc_id === "27") {
+      return "PRC LIC. NO.: 0085690";
+    } else if (prc_id === "28") {
+      return "PRC LIC. NO.: 0094539";
+    } else if (prc_id === "29") {
+      return "PRC LIC. NO.: 0093629";
+    } else if (prc_id === "30") {
+      return "PRC LIC. NO.: 0094334";
     } else {
+      return "No PRC No.";
+    }
+  }
+
+  function chooseImage(prc_sig) {
+    if (prc_sig === "23"){
       return Image9;
+    } else if (prc_sig === "24") {
+      return Image2;
+    } else if (prc_sig === "25") {
+      return Image6;
+    } else if (prc_sig === "26") {
+      return Image5;
+    } else if (prc_sig === "27") {
+      return Image10;
+    } else if (prc_sig === "28") {
+      return Image3;
+    } else if (prc_sig === "29") {
+      return Image4;
+    } else if (prc_sig === "30") {
+      return Image11;
+    }
+    else {
+      return "";
     }
   }
 
@@ -638,6 +647,8 @@ export default function LabOfficer() {
                     booking_id: data.id,
                     type: data.type ? data.type : "package",
                     result_approval: data.result_approval,
+                    approver: data.approver,
+                    approved_id:data.approved_by
                   }
                 : null
             );
@@ -902,6 +913,8 @@ export default function LabOfficer() {
 
   function filter() {}
 
+  
+
   if (redirectBack === true) {
     if (dateFrom !== undefined && dateTo !== undefined) {
       var link = "/lab/" + dateFrom + "/" + dateTo;
@@ -1096,7 +1109,7 @@ export default function LabOfficer() {
       <div>
         <div className="wrapper">
           <div className="box">
-            <img src={Image9} alt="MedTech" />
+            <img src={selectedLab.result_approval === "approved" ? chooseImage(selectedLab.approved_id): chooseImage(userId)} alt="MedTech" />
           </div>
           <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
@@ -1104,7 +1117,7 @@ export default function LabOfficer() {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">MARK ANTHONY R. LOBIGAS, RMT</span>
+            <span className="tspan">{selectedLab.result_approval === "approved" ? selectedLab.approver : medTech}</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPatho}</span>
@@ -1112,7 +1125,7 @@ export default function LabOfficer() {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">{medTechPRC}</span>
+            <span className="tspan">{selectedLab.result_approval === "approved" ? choosePRC(selectedLab.approved_id): choosePRC(userId)}</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPathoPRC}</span>
@@ -1383,13 +1396,23 @@ export default function LabOfficer() {
                             {/* RESULTS */}
                             {result["result"] !== "" ? (
                               <>
-                                {result["preferred"] != " " ? (
+                                {result["preferred"] == " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>
                                       {result["result"] + " " + result["unit"]}
                                     </span>
                                   ) : (
-                                    <span class="red">
+                                    <span>
+                                      {result["result"] + " " + result["unit"]}{" "}
+                                    </span>
+                                  )
+                                ) : result["preferred"] != " " ? (
+                                  result["preferred"] == result["result"] ? (
+                                    <span>
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  ) : (
+                                    <span>
                                       {result["result"] + " " + result["unit"]}{" "}
                                     </span>
                                   )
@@ -1669,7 +1692,6 @@ export default function LabOfficer() {
               </div>
             </div>
           </div>
-
           <Table
             type={"med-tech"}
             clickable={true}
