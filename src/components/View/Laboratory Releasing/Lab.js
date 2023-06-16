@@ -122,7 +122,7 @@ export default function Lab() {
           <Header
             type="thick"
             title="LABORATORY RELEASING MANAGER"
-            buttons={buttons}
+            // buttons={buttons}
             tableData={patientData}
           />
 
