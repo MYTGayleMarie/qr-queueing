@@ -84,6 +84,9 @@ function AddInvoicePayment() {
   const [grandTotal, setGrandTotal] = useState(0);
   const [pay, setPay] = useState(0);
   const [tax, setTax] = useState(0);
+  const [cardTax, setCardTax] = useState(0);
+  const [checkTax, setCheckTax] = useState(0);
+  const [othersTax, setOthersTax] = useState(0);
   const [serviceFee, setServiceFee] = useState(0);
   const [mdCharge, setMdCharge] = useState(0);
   const [remarks, setRemarks] = useState("");
@@ -303,7 +306,6 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
-        console.log("306", response.data);
         if (response.data.status == 404) {
           // setHasLogs(false);
         } else {
@@ -378,7 +380,6 @@ function AddInvoicePayment() {
         //   });
       })
       .then(function (error) {
-        console.log("381 error");
         // setHasLogs(false);
         console.log(error);
       });
@@ -666,6 +667,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grandTotal: grandTotal,
+          withholdingtax: checkTax,
           remarks: remarks,
           added_by: userId,
         },
@@ -701,6 +703,7 @@ function AddInvoicePayment() {
           card_bank: cardBank,
           senior_pwd_id: seniorPwdId,
           discount: discount,
+          withholdingtax: cardTax,
           grandTotal: grandTotal,
           remarks: remarks,
           added_by: userId,
@@ -733,6 +736,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grandTotal: grandTotal,
+          withholdingtax: othersTax,
           remarks: remarks,
           added_by: userId,
         },
@@ -1204,6 +1208,7 @@ function AddInvoicePayment() {
             />
           </div>
         </div>
+
         <div className="row">
           <div className="col-sm-8">
             <span class="check-label">CHECK BANK</span>
@@ -1225,6 +1230,20 @@ function AddInvoicePayment() {
               name="check_date"
               class="check"
               onChange={(e) => setCheckDate(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-8">
+            <span class="check-label">WITHHOLDING TAX</span>
+            <input
+              type="number"
+              id="taxAmount"
+              name="taxAmount"
+              step="0.01"
+              className="cash-input pay"
+              placeholder="P"
+              onChange={(e) => setCheckTax(e.target.value)}
             />
           </div>
         </div>
@@ -1309,6 +1328,18 @@ function AddInvoicePayment() {
           />
         </div>
         <div className="row">
+          <span class="check-label">WITHHOLDING TAX</span>
+          <input
+            type="number"
+            id="taxAmount"
+            name="taxAmount"
+            step="0.01"
+            className="cash-input pay"
+            placeholder="P"
+            onChange={(e) => setCardTax(e.target.value)}
+          />
+        </div>
+        <div className="row">
           <div className="col-sm-6">
             <div className="row">
               <span class="remarks-payment-label">REMARKS (optional)</span>
@@ -1364,6 +1395,22 @@ function AddInvoicePayment() {
                 name="reference_number"
                 class="cash-input pay"
                 onChange={(e) => setRemarks(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <span class="check-label">WITHHOLDING TAX</span>
+            </div>
+            <div className="row">
+              <input
+                type="number"
+                id="taxAmount"
+                name="taxAmount"
+                step="0.01"
+                className="cash-input pay"
+                placeholder="P"
+                onChange={(e) => setOthersTax(e.target.value)}
               />
             </div>
           </div>
@@ -1496,8 +1543,7 @@ function AddInvoicePayment() {
             </div>
           </div>
         )}
-        {console.log("hasPay", hasPay)}
-        {console.log("haslogs", haslogs)}
+
         {haslogs === true && hasPay === false && (
           <div className="payment-cont">
             <h1 className="payment-label">ADD PAYMENT</h1>
