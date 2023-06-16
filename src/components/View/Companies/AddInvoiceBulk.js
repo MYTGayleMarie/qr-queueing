@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { getToken, getUser, getRoleId } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
@@ -14,6 +14,7 @@ import Navbar from "../../Navbar";
 import Table from "../../Table.js";
 import { getAgingReports } from "../../../Helpers/APIs/agingAPI";
 import AddInvoice from "./AddInvoice";
+import { getAllCompanies } from "../../../Helpers/APIs/invoiceAPI";
 
 const buttons = [];
 const userToken = getToken();
@@ -38,6 +39,8 @@ export default function AddInvoiceBulk() {
   const [bookingId, setBookingId] = useState("");
   const [isReady, setIsReady] = useState(false);
 
+  const [companies, setCompanies] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState([]);
   const [selectedDiscounts, setSelectedDiscounts] = useState([]);
   const [discountOptions, setDiscountOptions] = useState([
     { label: "Sample 1", value: "1" },
@@ -82,16 +85,20 @@ export default function AddInvoiceBulk() {
     setRedirectBooking(true);
   }
 
-  if (redirectBooking == true) {
-    var link =
-      "/results-view-booking/" +
-      id +
-      "/" +
-      filteredData.from_date +
-      "/" +
-      filteredData.to_date;
-    return <Navigate to={link} />;
+  async function fetchAllCompanies() {
+    const response = await getAllCompanies();
+    if (response.data) {
+      var arr = [];
+      response.data.companys.map((data) => {
+        arr.push({ ...data, label: data.name, value: data.id });
+      });
+      setCompanies(arr);
+      //   setCompanies(response.data.companys);
+    }
   }
+  useEffect(() => {
+    fetchAllCompanies();
+  }, []);
 
   return (
     <div>
@@ -112,16 +119,15 @@ export default function AddInvoiceBulk() {
                 </label>
               </div>
               <div class="col-sm-3">
-                <select
-                  class="form-select"
-                  aria-label="Default select example"
-                  style={{ zIndex: "100" }}
-                >
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <Select
+                  placeholder={"Select Company"}
+                  name="company"
+                  defaultValue={selectedCompany}
+                  onChange={setSelectedCompany}
+                  options={companies}
+                  isMulti={false}
+                  isSearchable={true}
+                />
               </div>
             </div>
             <div class="row g-3 align-items-center mt-2">
