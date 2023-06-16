@@ -204,6 +204,7 @@ export default function ViewBooking() {
                 serviceDetails.id = packageCat.id;
                 serviceDetails.test_id = packageCat.test_id;
                 serviceDetails.packageId = info.id;
+                serviceDetails.approver = info.approved_by;
                 // serviceDetails.md =
                 setLabTests((oldArray) => [...oldArray, serviceDetails]);
               });
@@ -242,6 +243,7 @@ export default function ViewBooking() {
             serviceDetails.id = info.id;
             serviceDetails.test_id = info.test_id;
             serviceDetails.md = info.md;
+            serviceDetails.approver = info.approved_by;
             setLabTests((oldArray) => [...oldArray, serviceDetails]);
           })
           .catch((error) => {

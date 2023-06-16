@@ -25,6 +25,7 @@ import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
+import Image10 from "../../../images/med_tech/Image10.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -33,6 +34,8 @@ const userToken = getToken();
 const userId = getUser();
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
+  const approverId = servicesData[servicesData.length - 1].approver;
+
   const { id, dateFrom, dateTo } = useParams();
 
   const [loadData, setLoadData] = useState(false);
@@ -82,6 +85,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [readyBooking, setReadyBooking] = useState(false);
   const [readyResults, setReadyResults] = useState(false);
   const [labReady, setLabReady] = useState(false);
+
   var presentDate = new Date();
 
   var monthNames = [
@@ -341,7 +345,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     if (medTech === "") {
       axios({
         method: "get",
-        url: window.$link + "users/show/" + userId,
+        url: window.$link + "users/show/" + approverId,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -356,43 +360,93 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
           console.log(error);
         });
     }
-
-    if (userId === "24") {
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    } else if (userId === "25") {
-      setMedTechPRC("PRC LIC. NO.: 0094539");
-    } else if (userId === "26") {
-      setMedTechPRC("PRC LIC. NO.: 0093629");
-    } else if (userId === "23") {
-      setMedTechPRC("PRC LIC. NO.: 0092410");
-    } else if (userId === "27") {
-      setMedTechPRC("PRC LIC. NO.: 0085690");
-    } else if (userId === "28") {
-      setMedTechPRC("PRC LIC. NO.: 0052556");
-    } else if (userId === "29") {
-      setMedTechPRC("PRC LIC. NO.: 0072875");
+    if (approverId !== null) {
+      if (approverId === "24") {
+        setMedTechPRC("PRC LIC. NO.: 0052932");
+      } else if (approverId === "25") {
+        setMedTechPRC("PRC LIC. NO.: 0094539");
+      } else if (approverId === "26") {
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (approverId === "23") {
+        setMedTechPRC("PRC LIC. NO.: 0092410");
+      } else if (approverId === "27") {
+        setMedTechPRC("PRC LIC. NO.: 0085690");
+      } else if (approverId === "28") {
+        setMedTechPRC("PRC LIC. NO.: 0052556");
+      } else if (approverId === "29") {
+        setMedTechPRC("PRC LIC. NO.: 0072875");
+      } else {
+        // setMedTechPRC("PRC LIC. NO.: 0112611");
+        setMedTechPRC("No PRC LIC. NO.");
+      }
     } else {
-      setMedTechPRC("PRC LIC. NO.: 0112611");
+      if (userId === "24") {
+        setMedTechPRC("PRC LIC. NO.: 0052932");
+      } else if (userId === "25") {
+        setMedTechPRC("PRC LIC. NO.: 0094539");
+      } else if (userId === "26") {
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (userId === "23") {
+        setMedTechPRC("PRC LIC. NO.: 0092410");
+      } else if (userId === "27") {
+        setMedTechPRC("PRC LIC. NO.: 0085690");
+      } else if (userId === "28") {
+        setMedTechPRC("PRC LIC. NO.: 0052556");
+      } else if (userId === "29") {
+        setMedTechPRC("PRC LIC. NO.: 0072875");
+      } else {
+        // setMedTechPRC("PRC LIC. NO.: 0112611");
+        setMedTechPRC("No PRC LIC. NO.");
+      }
     }
   }, []);
 
   function chooseImage() {
-    if (userId === "24") {
-      return Image2;
-    } else if (userId === "25") {
-      return Image3;
-    } else if (userId === "26") {
-      return Image4;
-    } else if (userId === "23") {
-      return Image5;
-    } else if (userId === "27") {
-      return Image6;
-    } else if (userId === "28") {
-      return Image7;
-    } else if (userId === "29") {
-      return Image8;
+    if (approverId !== null) {
+      if (approverId === "23") {
+        return <img src={Image9} alt="MedTech" />;
+      } else if (approverId === "24") {
+        return <img src={Image2} alt="MedTech" />;
+      } else if (approverId === "25") {
+        return <img src={Image6} alt="MedTech" />;
+      } else if (approverId === "26") {
+        return <img src={Image5} alt="MedTech" />;
+      } else if (approverId === "27") {
+        return <img src={Image10} alt="MedTech" />;
+      } else if (approverId === "28") {
+        return <img src={Image8} alt="MedTech" />;
+      } else if (approverId === "29") {
+        return <img src={Image9} alt="MedTech" />;
+      } else {
+        // return <img src={Image10} alt="MedTech" />;
+        return <></>;
+      }
     } else {
-      return Image9;
+      if (userId === "24") {
+        return <img src={Image2} alt="MedTech" />;
+        // return Image2;
+      } else if (userId === "25") {
+        return <img src={Image3} alt="MedTech" />;
+        // return Image3;
+      } else if (userId === "26") {
+        return <img src={Image4} alt="MedTech" />;
+        // return Image4;
+      } else if (userId === "23") {
+        return <img src={Image5} alt="MedTech" />;
+        // return Image5;
+      } else if (userId === "27") {
+        return <img src={Image6} alt="MedTech" />;
+        // return Image6;
+      } else if (userId === "28") {
+        return <img src={Image7} alt="MedTech" />;
+        // return Image7;
+      } else if (userId === "29") {
+        return <img src={Image8} alt="MedTech" />;
+        // return Image8;
+      } else {
+        return <img src={Image9} alt="MedTech" />;
+        // return Image9;
+      }
     }
   }
 
@@ -401,8 +455,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       <div className="PDFFont">
         <div className="wrapper">
           <div className="box">
-            {/* {chooseMedTech()} */}
-            <img src={Image9} alt="MedTech" />
+            {chooseImage()}
+            {/* <img src={medtechImage} alt="MedTech" /> */}
           </div>
           <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
@@ -418,7 +472,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">MARK ANTHONY R. LOBIGAS, RMT</span>
+            <span className="tspan">{medTechPRC}</span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPathoPRC}</span>
