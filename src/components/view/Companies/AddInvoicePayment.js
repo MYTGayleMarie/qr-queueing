@@ -339,7 +339,6 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
-        alert("entered");
         setHasLogs(true);
         var invoice = response.data.data.company_invoices;
 
@@ -752,6 +751,41 @@ function AddInvoicePayment() {
           toast.error("Payment Unsuccessful!");
         });
     }
+    if (payment === "bank transfer") {
+      axios({
+        method: "post",
+        url: window.$link + "invoice_payments/create",
+        withCredentials: false,
+        params: {
+          token: userToken,
+          api_key: window.$api_key,
+          invoice_no: infoId,
+          // prices: [info[0].price],
+          // totals: [info[0].total],
+          type: "bank transfer",
+          amount: bankTransferDetails.paid_amount,
+          senior_pwd_id: seniorPwdId,
+          discount: discount,
+          grand_total: grandTotal,
+          withholdingtax: bankTransferDetails.withholding_tax,
+          remarks: bankTransferDetails.remarks,
+          added_by: userId,
+          bank_name: bankTransferDetails.bank_name,
+          bank_transferee: bankTransferDetails.transferee,
+          bank_reference_no: bankTransferDetails.reference_no,
+        },
+      })
+        .then(function (response) {
+          toast.success("Payment Successful!");
+          // setTimeout(function () {
+          //   setRedirect(true);
+          // }, 2000);
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.error("Payment Unsuccessful!");
+        });
+    }
   }
 
   function ReceiptPrintLog() {
@@ -947,7 +981,7 @@ function AddInvoicePayment() {
     var new_payments = payments[0];
     var date = new Date(payments[0].added_on);
     var formattedDate = date.toDateString().split(" ");
-
+    console.log(new_payments);
     return (
       <div className="paymentDetails">
         <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
@@ -1582,7 +1616,7 @@ function AddInvoicePayment() {
               id="banktransfer"
               name="payment_method"
               value="banktransfer"
-              onClick={() => setPayment("banktransfer")}
+              onClick={() => setPayment("bank transfer")}
             />
             <span className="check method">BANK TRANSFER</span>
 
@@ -1599,7 +1633,7 @@ function AddInvoicePayment() {
             <p>{payment === "check" && checkForm()}</p>
             <p>{payment === "card" && cardForm()}</p>
             <p>{payment === "others" && othersForm()}</p>
-            <p>{payment === "banktransfer" && bankTransferForm()}</p>
+            <p>{payment === "bank transfer" && bankTransferForm()}</p>
 
             <ToastContainer hideProgressBar={true} />
           </div>
