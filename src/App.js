@@ -104,6 +104,7 @@ import QMSwitchForm2 from "./components/View/Queue Manager/QMAdd Old Patient/QMS
 import AgingReport from "./components/View/AgingReport/AgingReport";
 import AgingByCompany from "./components/View/AgingReport/AgingByCompany";
 import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager";
+import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -296,6 +297,10 @@ function App() {
           <Route
             path="/add-discount/:id"
             element={token ? <AddDiscount /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/company-invoices/add-invoice-bulk"
+            element={token ? <AddInvoiceBulk /> : <Navigate to="/" />}
           />
           <Route
             path="/company-invoices"
