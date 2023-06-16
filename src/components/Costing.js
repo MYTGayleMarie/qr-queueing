@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getToken, getUser } from "../utilities/Common";
+import { formatDate, getToken, getUser } from "../utilities/Common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
@@ -217,7 +217,8 @@ function Costing({
           </div>
           <div className="col-sm-3"></div>
         </div>
-        {toPay !== true && (
+
+        {paymentBreakdown.payment_status === "paid" && (
           <div className="row">
             <div className="col-12 mb-4">
               <h1 className="summary-label">PAYMENT DETAILS</h1>
@@ -252,15 +253,21 @@ function Costing({
                 <strong>
                   {paymentBreakdown.payment_type === "cash"
                     ? "N/A"
-                    : paymentBreakdown.reference_code}
+                    : paymentBreakdown.reference_no}
                 </strong>
               </span>
             </div>
             <div className="col-6">
-              <span class="summary-total-label"> PAYMENT DATE:</span>
+              <span class="summary-total-label">
+                {" "}
+                PAYMENT DATE: {formatDate(paymentBreakdown.payment_date)}
+              </span>
             </div>
             <div className="col-6">
-              <span class="summary-total-label"> REMARKS:</span>
+              <span class="summary-total-label">
+                {" "}
+                REMARKS: {paymentBreakdown.remarks}
+              </span>
             </div>
           </div>
         )}

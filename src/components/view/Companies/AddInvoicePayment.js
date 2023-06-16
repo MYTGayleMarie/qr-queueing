@@ -981,7 +981,7 @@ function AddInvoicePayment() {
     var new_payments = payments[0];
     var date = new Date(payments[0].added_on);
     var formattedDate = date.toDateString().split(" ");
-    console.log(new_payments);
+
     return (
       <div className="paymentDetails">
         <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
