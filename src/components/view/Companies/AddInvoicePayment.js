@@ -67,7 +67,7 @@ function AddInvoicePayment() {
   const [info, setInfo] = useState([]);
   const [infoId, setInfoId] = useState("");
   const [checked, setChecked] = useForm(checkedData);
-  const [haslogs, setHasLogs] = useState(true);
+  const [haslogs, setHasLogs] = useState(false);
   const [paidAmount, setPaidAmount] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [payments, setPayments] = useState("");
@@ -303,8 +303,9 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
+        console.log("306", response.data);
         if (response.data.status == 404) {
-          setHasLogs(false);
+          // setHasLogs(false);
         } else {
           var array = response.data.data.logs.filter(
             (info) =>
@@ -314,7 +315,7 @@ function AddInvoicePayment() {
           );
 
           if (array.length == 0) {
-            setHasLogs(false);
+            // setHasLogs(false);
           }
         }
       })
@@ -336,6 +337,8 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
+        alert("entered");
+        setHasLogs(true);
         var invoice = response.data.data.company_invoices;
 
         setInvoiceData(invoice);
@@ -375,6 +378,8 @@ function AddInvoicePayment() {
         //   });
       })
       .then(function (error) {
+        console.log("381 error");
+        // setHasLogs(false);
         console.log(error);
       });
   }, []);
@@ -1415,7 +1420,6 @@ function AddInvoicePayment() {
         <Header type="thin" title="COMPANY INVOICES" addInvoice={handleShow} />
         <ToastContainer />
         {/* <h4 className="form-categories-header italic">COMPANY DETAILS</h4> */}
-
         <div className="po-details">
           <div className="row">
             <div className="col-sm-2">
@@ -1456,15 +1460,12 @@ function AddInvoicePayment() {
             </div>
           </div>
         </div>
-
         {/* <h4 className="form-categories-header italic">INVOICE DETAILS</h4> */}
-
         <div className="row">
           <div className="col-sm-12 d-flex justify-content-start">
             {hasPay == true && paymentDetails()}
           </div>
         </div>
-
         <Table
           type={"payment-invoices"}
           tableData={info}
@@ -1479,7 +1480,6 @@ function AddInvoicePayment() {
           givenClass={"company-mobile"}
           // setChecked={setChecked}
         />
-
         {grandTotal != null && grandTotal != 0 && (
           <div className="row">
             <div className="col d-flex justify-content-end grand-total">
@@ -1496,8 +1496,9 @@ function AddInvoicePayment() {
             </div>
           </div>
         )}
-
-        {haslogs == true && hasPay == false && (
+        {console.log("hasPay", hasPay)}
+        {console.log("haslogs", haslogs)}
+        {haslogs === true && hasPay === false && (
           <div className="payment-cont">
             <h1 className="payment-label">ADD PAYMENT</h1>
 
@@ -1566,7 +1567,6 @@ function AddInvoicePayment() {
             {printChargeSlip()}
           </div>
         </div>
-
         <div className="d-flex justify-content-end back-btn-container">
           <button className="back-btn" onClick={() => setRedirectBack(true)}>
             Back
