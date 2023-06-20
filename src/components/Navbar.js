@@ -484,6 +484,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
           <div class="d-flex justify-content-center">
             <img src={logo} alt={"logo"} class="navbar-logo"></img>
           </div>
+          <NavLink to="/now-serving" activeClassName="active" class="link">
+            <li href="/now-serving" class="nav-link imaging-nav">
+              <img src={patientIcon} alt={"medTech"} class="medTech icon"></img>
+              <span class="mx-2">Now Serving</span>
+            </li>
+          </NavLink>
           <NavLink to="/registration" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img
