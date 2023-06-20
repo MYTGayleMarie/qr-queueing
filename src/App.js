@@ -105,6 +105,7 @@ import AgingReport from "./components/View/AgingReport/AgingReport";
 import AgingByCompany from "./components/View/AgingReport/AgingByCompany";
 import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager";
 import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
+import NowServing from "./components/View/NowServing/NowServing";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -632,6 +633,11 @@ function App() {
           <Route
             path="/extraction"
             element={token ? <ExtractionManager /> : <Navigate to="/" />}
+          />
+          {/* Now Serving */}
+          <Route
+            path="/now-serving"
+            element={token ? <NowServing /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>
