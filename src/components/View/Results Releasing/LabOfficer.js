@@ -47,6 +47,7 @@ import Image11 from "../../../images/med_tech/OSMA.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
+import { setISODay } from "date-fns";
 
 const buttons = ["add-new-patient", "add-old-patient"];
 const userToken = getToken();
@@ -113,6 +114,7 @@ export default function LabOfficer() {
   const [isApproved, setIsApproved] = useState("");
   const [withResults, setWithResults] = useState(false);
 
+  const [isReady, setIsReady] = useState(false);
   // Lab Test options
   const [labTestOptions, setLabTestOptions] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -281,7 +283,7 @@ export default function LabOfficer() {
     setClinicPatho("JENNIFER D. ABIERAS");
     setClinicPathoPRC("PRC LIC. NO.: 0085469");
     if (medTech === "") {
-      axios({ 
+      axios({
         method: "get",
         url: window.$link + "users/show/" + userId,
         withCredentials: false,
@@ -299,10 +301,9 @@ export default function LabOfficer() {
         });
     }
   }, []);
-  console.log(medTech)
 
-  function choosePRC(prc_id){
-    if (prc_id=== "24") {
+  function choosePRC(prc_id) {
+    if (prc_id === "24") {
       return "PRC LIC. NO.: 0052932";
     } else if (prc_id === "25") {
       return "PRC LIC. NO.: 0085690";
@@ -324,7 +325,7 @@ export default function LabOfficer() {
   }
 
   function chooseImage(prc_sig) {
-    if (prc_sig === "23"){
+    if (prc_sig === "23") {
       return Image9;
     } else if (prc_sig === "24") {
       return Image2;
@@ -340,8 +341,7 @@ export default function LabOfficer() {
       return Image4;
     } else if (prc_sig === "30") {
       return Image11;
-    }
-    else {
+    } else {
       return "";
     }
   }
@@ -451,6 +451,7 @@ export default function LabOfficer() {
     });
 
     if (selectedLab.id != null) {
+      setIsReady(false);
       axios({
         method: "get",
         url: window.$link + "Bookingdetails/getDetailsResult/" + selectedLab.id,
@@ -505,8 +506,10 @@ export default function LabOfficer() {
               setIsApproved("");
             }
           }
+          setIsReady(true);
         })
         .catch((error) => {
+          setIsReady(true);
           console.log(error);
           handleLab(selectedLab);
         });
@@ -514,6 +517,7 @@ export default function LabOfficer() {
   }, [selectedLab]);
 
   React.useEffect(() => {
+    setIsReady(false);
     axios({
       method: "get",
       url: window.$link + "/Bookingdetails/getDetails/" + selectedLab.id,
@@ -526,8 +530,10 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         setRemarks(response.data.data.booking_detail[0].remarks);
+        setIsReady(true);
       })
       .catch(function (error) {
+        setIsReady(true);
         console.log(error);
       });
   }, [selectedLab]);
@@ -648,7 +654,7 @@ export default function LabOfficer() {
                     type: data.type ? data.type : "package",
                     result_approval: data.result_approval,
                     approver: data.approver,
-                    approved_id:data.approved_by
+                    approved_id: data.approved_by,
                   }
                 : null
             );
@@ -913,8 +919,6 @@ export default function LabOfficer() {
 
   function filter() {}
 
-  
-
   if (redirectBack === true) {
     if (dateFrom !== undefined && dateTo !== undefined) {
       var link = "/lab/" + dateFrom + "/" + dateTo;
@@ -1109,7 +1113,14 @@ export default function LabOfficer() {
       <div>
         <div className="wrapper">
           <div className="box">
-            <img src={selectedLab.result_approval === "approved" ? chooseImage(selectedLab.approved_id): chooseImage(userId)} alt="MedTech" />
+            <img
+              src={
+                selectedLab.result_approval === "approved"
+                  ? chooseImage(selectedLab.approved_id)
+                  : chooseImage(userId)
+              }
+              alt="MedTech"
+            />
           </div>
           <div className="box pt-5">
             <img src={Image1} alt="MedTech" />
@@ -1117,7 +1128,11 @@ export default function LabOfficer() {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">{selectedLab.result_approval === "approved" ? selectedLab.approver : medTech}</span>
+            <span className="tspan">
+              {selectedLab.result_approval === "approved"
+                ? selectedLab.approver
+                : medTech}
+            </span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPatho}</span>
@@ -1125,7 +1140,11 @@ export default function LabOfficer() {
         </div>
         <div className="wrapper">
           <div className="box">
-            <span className="tspan">{selectedLab.result_approval === "approved" ? choosePRC(selectedLab.approved_id): choosePRC(userId)}</span>
+            <span className="tspan">
+              {selectedLab.result_approval === "approved"
+                ? choosePRC(selectedLab.approved_id)
+                : choosePRC(userId)}
+            </span>
           </div>
           <div className="box">
             <span className="tspan">{clinicPathoPRC}</span>
@@ -1654,7 +1673,7 @@ export default function LabOfficer() {
                   LABORATORY
                 </label>
                 <br />
-                {console.log("allOptions", allOptions)}
+
                 {/* <div className="row"> */}
                 {allOptions.map((data) => {
                   return (
@@ -1721,8 +1740,8 @@ export default function LabOfficer() {
             givenClass={"register-mobile"}
             role={role}
             userId={userId}
-            //useLoader={true}
-            //isReady={isReady}
+            useLoader={true}
+            isReady={isReady}
           />
 
           <Modal show={show} onHide={handleClose} animation={false} centered>

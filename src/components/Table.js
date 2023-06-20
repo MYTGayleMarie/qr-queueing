@@ -2662,7 +2662,12 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {data === null ? "" : data}
+            {useLoader && !isReady ? (
+              <TableLoader tableHeaders={headingColumns} data={data} />
+            ) : (
+              data
+            )}
+            {/* {data === null ? "" : data} */}
             {/* {!isReady && useLoader ? 
                     <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data} */}
           </tbody>
