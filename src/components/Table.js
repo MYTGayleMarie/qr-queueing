@@ -60,6 +60,7 @@ function Table({
   isReady,
   onExtractionClick,
   selectedRowExtraction,
+  queueAttender,
 }) {
   const navigate = useNavigate();
   //PAGINATION
@@ -669,6 +670,9 @@ function Table({
           <td key={row.id} data-heading={row.id} className={row.val}>
             {row.name}
           </td>
+          <td key={row.id} data-heading={row.id} className={row.val}>
+            {row.status.toUpperCase()}
+          </td>
           <td>
             <div
               style={{
@@ -678,16 +682,44 @@ function Table({
                 alignItems: "center",
               }}
             >
+              {row.status === "available" && (
+                <button
+                  className="action-btn mb-1"
+                  role="button"
+                  onClick={() => queueAttender(row, "attending")}
+                  style={{
+                    width: "100px",
+                    background: "#bfbc4b",
+                    borderColor: "#bfbc4b",
+                  }}
+                >
+                  ATTEND
+                </button>
+              )}
+              {row.status === "attending" && (
+                <button
+                  className="action-btn mb-1"
+                  role="button"
+                  onClick={() => queueAttender(row, "done")}
+                  style={{
+                    width: "100px",
+                    background: "#bfbc4b",
+                    borderColor: "#bfbc4b",
+                  }}
+                >
+                  DONE
+                </button>
+              )}{" "}
               <button
-                class="action-btn"
+                className="action-btn mb-1"
                 role="button"
                 onClick={() => link(row.customerId)}
                 style={{ width: "100px" }}
               >
                 ADD BOOKING
-              </button>
+              </button>{" "}
               <button
-                class="action-btn"
+                className="action-btn mb-1"
                 role="button"
                 onClick={() => deleteCustomer(row.queueNumber)}
                 style={{ width: "100px" }}
