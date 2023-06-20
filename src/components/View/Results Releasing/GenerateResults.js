@@ -36,11 +36,11 @@ const userId = getUser();
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
   const approverId = servicesData[servicesData.length - 1].approver;
-  console.log("Hello")
+
   const { id, dateFrom, dateTo } = useParams();
 
   const [loadData, setLoadData] = useState(false);
-
+  const [hasImage, setHasImage] = useState(true);
   const [labIds, setLabIds] = useState([]);
   const [packageIds, setPackageIds] = useState([]);
   const [servicesLab, setServicesLab] = useState([]);
@@ -257,7 +257,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             .then((response) => {
               if (response.data.data?.booking_detail_results !== null) {
                 response.data.data.booking_detail_results.map((val) => {
-                  console.log(response);
                   lab_test_results.push({ ...val });
                 });
                 // data.lab_test_results.push(
@@ -378,7 +377,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (approverId === "30") {
         setMedTechPRC("PRC LIC. NO.: 0094334");
-      } else{
+      } else {
         // setMedTechPRC("PRC LIC. NO.: 0112611");
         setMedTechPRC("No PRC LIC. NO.");
       }
@@ -408,54 +407,198 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   function chooseImage() {
     if (approverId !== null) {
       if (approverId === "23") {
-        return <img src={Image9} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (approverId === "24") {
-        return <img src={Image2} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image2}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (approverId === "25") {
-        return <img src={Image6} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image6}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (approverId === "26") {
-        return <img src={Image5} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image5}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
       } else if (approverId === "27") {
-        return <img src={Image10} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image10}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
       } else if (approverId === "28") {
-        return <img src={Image3} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image8}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (approverId === "29") {
-        return <img src={Image4} alt="MedTech" />;
-      } else if (approverId === "29") {
-        return <img src={Image11} alt="MedTech" />;
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else {
-        // return <img src={Image10} alt="MedTech" />;
-        return <></>;
+        setHasImage(false);
+
+        return <div className="mt-5"></div>;
       }
     } else {
-      if (userId === "24") {
-        return <img src={Image2} alt="MedTech" />;
-        // return Image2;
+      if (userId === "23") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "24") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image2}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (userId === "25") {
-        return <img src={Image6} alt="MedTech" />;
-        // return Image3;
+        setHasImage(true);
+        return (
+          <img
+            src={Image6}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (userId === "26") {
-        return <img src={Image5} alt="MedTech" />;
-        // return Image4;
-      } else if (userId === "23") {
-        return <img src={Image9} alt="MedTech" />;
-        // return Image5;
+        setHasImage(true);
+        return (
+          <img
+            src={Image5}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
       } else if (userId === "27") {
-        return <img src={Image10} alt="MedTech" />;
-        // return Image6;
+        setHasImage(true);
+        return (
+          <img
+            src={Image10}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
       } else if (userId === "28") {
-        return <img src={Image3} alt="MedTech" />;
-        // return Image7;
+        setHasImage(true);
+        return (
+          <img
+            src={Image8}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
       } else if (userId === "29") {
-        return <img src={Image4} alt="MedTech" />;
-        // return Image8;
-      } else if (userId === "30") {
-        return <img src={Image11} alt="MedTech" />;
-        // return Image8;
-      }else {
-        return <img src={Image9} alt="MedTech" />;
-        // return Image9;
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else {
+        setHasImage(false);
+        return <div className="mt-5"></div>;
       }
+      // if (userId === "24") {
+      //   return <img src={Image2} alt="MedTech" />;
+      //   // return Image2;
+      // } else if (userId === "25") {
+      //   return <img src={Image6} alt="MedTech" />;
+      //   // return Image3;
+      // } else if (userId === "26") {
+      //   return <img src={Image5} alt="MedTech" />;
+      //   // return Image4;
+      // } else if (userId === "23") {
+      //   return <img src={Image9} alt="MedTech" />;
+      //   // return Image5;
+      // } else if (userId === "27") {
+      //   return <img src={Image10} alt="MedTech" />;
+      //   // return Image6;
+      // } else if (userId === "28") {
+      //   return <img src={Image3} alt="MedTech" />;
+      //   // return Image7;
+      // } else if (userId === "29") {
+      //   return <img src={Image4} alt="MedTech" />;
+      //   // return Image8;
+      // } else if (userId === "30") {
+      //   return <img src={Image11} alt="MedTech" />;
+      //   // return Image8;
+      // } else {
+      //   setHasImage(false)
+      //   return <img src={Image9} alt="MedTech" />;
+      //   // return Image9;
+      // }
     }
   }
 
@@ -467,11 +610,18 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             {chooseImage()}
             {/* <img src={medtechImage} alt="MedTech" /> */}
           </div>
-          <div className="box pt-5">
-            <img src={Image1} alt="MedTech" />
+          <div className="box">
+            <img
+              src={Image1}
+              alt="MedTech"
+              style={{ zIndex: "50", marginTop: "60px" }}
+            />
           </div>
         </div>
-        <div className="wrapper">
+        <div
+          className="wrapper"
+          style={{ marginTop: hasImage ? "-13px" : "-5px" }}
+        >
           <div className="box">
             <span className="tspan">{medTech}</span>
           </div>
