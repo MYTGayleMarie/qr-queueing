@@ -20,3 +20,21 @@ export const changeStatus = async (queue_id, status) => {
     return { error: error.response };
   }
 };
+
+export const fetchServing = async () => {
+  try {
+    const response = await postAPICall(
+      window.$link + "customers/nowServing",
+
+      {
+        requester: getUser(),
+        api_key: window.$api_key,
+        token: getToken().replace(/['"]+/g, ""),
+      }
+    );
+
+    return { data: response.data };
+  } catch (error) {
+    return { error: error.response };
+  }
+};
