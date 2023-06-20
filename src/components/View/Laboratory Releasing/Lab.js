@@ -47,6 +47,7 @@ export default function Lab() {
   }
 
   React.useEffect(() => {
+    setIsReady(false);
     patientData.length = 0;
     axios({
       method: "get",
@@ -89,7 +90,7 @@ export default function Lab() {
       })
       .catch(function (error) {
         console.log(error);
-        setIsReady(false);
+        setIsReady(true);
       });
   }, [render]);
 

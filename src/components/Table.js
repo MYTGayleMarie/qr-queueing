@@ -2364,9 +2364,11 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {/* {!isReady && useLoader ? 
-                    <TableLoader1 tableHeaders={headingColumns}/> : data} */}
-            {data}
+            {useLoader && !isReady ? (
+              <TableLoader tableHeaders={headingColumns} data={data} />
+            ) : (
+              data
+            )}
           </tbody>
         </table>
         <TableFooter
