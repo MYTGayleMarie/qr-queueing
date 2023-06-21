@@ -93,16 +93,16 @@ export default function NowServing() {
 
   return (
     <div>
-      <Navbar />
-      <div className="active-cont">
+      {/* <Navbar /> */}
+      <div className="">
         <Fragment>
-          <Header
+          {/* <Header
             type="thick"
             title=""
             buttons={buttons}
             tableData={patientData}
-          />
-          <div className="row justify-content-center">
+          /> */}
+          <div className="row justify-content-center mt-5">
             {records.length > 0 ? (
               records.map((data) => {
                 return (
