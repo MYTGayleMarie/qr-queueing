@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTable from "../../../utilities/Pagination";
 import TableFooter from "../../TableFooter";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 //components
 import Header from "../../Header.js";
@@ -14,76 +14,30 @@ import Navbar from "../../Navbar";
 import Table from "../../Table.js";
 import { getAgingReports } from "../../../Helpers/APIs/agingAPI";
 import AddInvoice from "./AddInvoice";
-import { getAllCompanies } from "../../../Helpers/APIs/invoiceAPI";
+import {
+  generateBulkInvoice,
+  getAllCompanies,
+  getCompanyDiscounts,
+} from "../../../Helpers/APIs/invoiceAPI";
+import { Button } from "react-bootstrap";
 
 const buttons = [];
-const userToken = getToken();
-const userId = getUser();
-var id = "";
-var presentDate = new Date();
-var formattedPresentData = presentDate.toISOString().split("T")[0];
 
 export default function AddInvoiceBulk() {
   document.body.style = "background: white;";
-  const [records, setRecords] = useState([]);
-  const { dateFrom, dateTo } = useParams();
-  const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : formattedPresentData,
-    to_date: dateTo ? dateTo : formattedPresentData,
-    done: false,
-  });
-  const [render, setRender] = useState([]);
-  const [patientData, setPatientData] = useState([]);
-  const [redirectBooking, setRedirectBooking] = useState(false);
+  const navigate = useNavigate();
   const [role, setRole] = useState("");
-  const [bookingId, setBookingId] = useState("");
-  const [isReady, setIsReady] = useState(false);
-
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState([]);
   const [selectedDiscounts, setSelectedDiscounts] = useState([]);
-  const [discountOptions, setDiscountOptions] = useState([
-    { label: "Sample 1", value: "1" },
-    { label: "Sample 2", value: "2" },
-    { label: "Sample 3", value: "3" },
-  ]);
-
-  function getTime(date) {
-    return date.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-  }
-
-  async function fetchReports() {
-    setIsReady(false);
-    const response = await getAgingReports();
-    if (response.data) {
-      setRecords(response.data.records);
-    }
-
-    setIsReady(true);
-  }
+  const [discountOptions, setDiscountOptions] = useState([]);
+  const [details, setDetails] = useState({
+    remarks: "",
+    particulars: "",
+  });
   React.useEffect(() => {
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
   }, []);
-
-  React.useEffect(() => {
-    fetchReports();
-  }, []);
-
-  function searchBookingId() {
-    id = bookingId;
-    setRedirectBooking(true);
-  }
-
-  function filter() {}
-
-  function viewBooking(bookingId) {
-    id = bookingId;
-    setRedirectBooking(true);
-  }
 
   async function fetchAllCompanies() {
     const response = await getAllCompanies();
@@ -93,24 +47,53 @@ export default function AddInvoiceBulk() {
         arr.push({ ...data, label: data.name, value: data.id });
       });
       setCompanies(arr);
-      //   setCompanies(response.data.companys);
     }
   }
+
+  async function fetchAllDiscounts(id) {
+    setSelectedDiscounts([]);
+    setDiscountOptions([]);
+    const response = await getCompanyDiscounts(id);
+    if (response.data) {
+      var arr = [];
+      response.data.map((data) => {
+        arr.push({ ...data, label: data.discount_code, value: data.id });
+      });
+      setDiscountOptions(arr);
+    }
+  }
+
+  async function handleGenerate() {
+    const response = await generateBulkInvoice(
+      selectedCompany,
+      selectedDiscounts,
+      details.remarks,
+      details.particulars
+    );
+    if (response.data) {
+      toast.success("Company Invoices Created Successfully");
+      navigate("/company-discounts");
+    }
+    if (response.error) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  }
+
   useEffect(() => {
     fetchAllCompanies();
   }, []);
+  useEffect(() => {
+    if (Object.keys(selectedCompany).length > 0) {
+      fetchAllDiscounts(selectedCompany.value);
+    }
+  }, [selectedCompany]);
 
   return (
     <div>
       <Navbar />
       <div className="active-cont">
         <Fragment>
-          <Header
-            type="thick"
-            title="ADD BULK INVOICE"
-            buttons={buttons}
-            tableData={patientData}
-          />
+          <Header type="thick" title="ADD BULK INVOICE" buttons={buttons} />
           <div style={{ marginLeft: "30px", height: "100vh" }}>
             <div class="row g-3 align-items-center mt-2">
               <div class="col-sm-3">
@@ -159,6 +142,9 @@ export default function AddInvoiceBulk() {
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
+                  onChange={(e) =>
+                    setDetails({ ...details, particulars: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -173,9 +159,24 @@ export default function AddInvoiceBulk() {
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
+                  onChange={(e) =>
+                    setDetails({ ...details, remarks: e.target.value })
+                  }
                 />
               </div>
             </div>
+
+            {selectedDiscounts.length > 0 &&
+              Object.keys(selectedCompany).length > 0 && (
+                <div className="row d-flex justify-content-end">
+                  <button
+                    className="back-btn less-width"
+                    onClick={handleGenerate}
+                  >
+                    GENERATE BULK INVOICE
+                  </button>
+                </div>
+              )}
           </div>
           <ToastContainer hideProgressBar={true} />
         </Fragment>
