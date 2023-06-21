@@ -50,9 +50,9 @@ export default function NowServing() {
     // setIsReady(false);
     const response = await fetchServing();
 
-    // if (response.data) {
-    setRecords(response.data.now_serving[0]);
-    // }
+    if (response.data) {
+      setRecords(response.data.now_serving);
+    }
 
     // setIsReady(true);
   }
@@ -62,6 +62,10 @@ export default function NowServing() {
 
   React.useEffect(() => {
     fetchNowServing();
+  }, []);
+
+  React.useEffect(() => {
+    setInterval(fetchNowServing, 10000);
   }, []);
 
   function searchBookingId() {
@@ -99,55 +103,35 @@ export default function NowServing() {
             tableData={patientData}
           />
           <div className="row justify-content-center">
-            <div className="col-12 text-center align-center queue-attendee">
-              NOW SERVING
-            </div>
-            <div className="col-12 text-center align-center queue-no">
-              {records.id}
-            </div>
-            <div className="col-12 text-center align-center queue-patient">
-              {records.first_name.toUpperCase()}{" "}
-              {records.middle_name.toUpperCase()}{" "}
-              {records.last_name.toUpperCase()}
-            </div>
-            <div className="col-12 text-center align-center queue-attendee">
-              Attended By: {records.served_by}
-            </div>
+            {records.length > 0 ? (
+              records.map((data) => {
+                return (
+                  <div className="col-4">
+                    <div className="row justify-content-center">
+                      <div className="col-12 text-center align-center queue-attendee">
+                        NOW SERVING
+                      </div>
+                      <div className="col-12 text-center align-center queue-no">
+                        {data.id}
+                      </div>
+                      <div className="col-12 text-center align-center queue-patient">
+                        {data.first_name.toUpperCase()}{" "}
+                        {data.middle_name.toUpperCase()}{" "}
+                        {data.last_name.toUpperCase()}
+                      </div>
+                      <div className="col-12 text-center align-center queue-attendee">
+                        Attended By: {data.served_by.toUpperCase()}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="row justify-content-center queue-attendee mt-5">
+                NOTHING IN QUEUE.
+              </div>
+            )}
           </div>
-          {/* <div className="row p-2">
-            <div className="col-6">
-              <div className="row justify-content-center">
-                <div className="col-12 text-center align-center queue-attendee">
-                  NOW SERVING
-                </div>
-                <div className="col-12 text-center align-center queue-no">
-                  28
-                </div>
-                <div className="col-12 text-center align-center queue-patient">
-                  BANBAN GWAPA
-                </div>
-                <div className="col-12 text-center align-center queue-attendee">
-                  Attended By: CASHIER 1
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="row justify-content-center">
-                <div className="col-12 text-center align-center queue-attendee">
-                  NOW SERVING
-                </div>
-                <div className="col-12 text-center align-center queue-no">
-                  {records.id}
-                </div>
-                <div className="col-12 text-center align-center queue-patient">
-                  {records.first_name} {records.middle_name} {records.last_name}
-                </div>
-                <div className="col-12 text-center align-center queue-attendee">
-                  Attended By: {records.served_by}
-                </div>
-              </div>
-            </div>
-          </div> */}
         </Fragment>
       </div>
     </div>
