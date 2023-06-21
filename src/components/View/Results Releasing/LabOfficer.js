@@ -149,6 +149,7 @@ export default function LabOfficer() {
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
 
+  const [hasImage, setHasImage] = useState(true);
   function getTime(date) {
     return date.toLocaleString("en-US", {
       hour: "numeric",
@@ -326,24 +327,118 @@ export default function LabOfficer() {
 
   function chooseImage(prc_sig) {
     if (prc_sig === "23") {
-      return Image9;
+      setHasImage(true);
+      return (
+        <img
+          src={Image9}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={100}
+          height={50}
+        />
+      );
     } else if (prc_sig === "24") {
-      return Image2;
+      setHasImage(true);
+      return (
+        <img
+          src={Image2}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={100}
+          height={50}
+        />
+      );
     } else if (prc_sig === "25") {
-      return Image6;
+      setHasImage(true);
+      return (
+        <img
+          src={Image6}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={100}
+          height={50}
+        />
+      );
     } else if (prc_sig === "26") {
-      return Image5;
+      setHasImage(true);
+      return (
+        <img
+          src={Image5}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={50}
+          height={50}
+        />
+      );
     } else if (prc_sig === "27") {
-      return Image10;
+      setHasImage(true);
+      return (
+        <img
+          src={Image10}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={50}
+          height={50}
+        />
+      );
     } else if (prc_sig === "28") {
-      return Image3;
+      setHasImage(true);
+      return (
+        <img
+          src={Image8}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={100}
+          height={50}
+        />
+      );
     } else if (prc_sig === "29") {
-      return Image4;
-    } else if (prc_sig === "30") {
-      return Image11;
+      setHasImage(true);
+      return (
+        <img
+          src={Image9}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+          width={100}
+          height={50}
+        />
+      );
     } else {
-      return "";
+      setHasImage(false);
+
+      return (
+        <div
+          // className="mt-5"
+          style={{ marginTop: "6rem" }}
+        ></div>
+      );
     }
+    // if (prc_sig === "23") {
+    //   return Image9;
+    // } else if (prc_sig === "24") {
+    //   return Image2;
+    // } else if (prc_sig === "25") {
+    //   return Image6;
+    // } else if (prc_sig === "26") {
+    //   return Image5;
+    // } else if (prc_sig === "27") {
+    //   return Image10;
+    // } else if (prc_sig === "28") {
+    //   return Image3;
+    // } else if (prc_sig === "29") {
+    //   return Image4;
+    // } else if (prc_sig === "30") {
+    //   return Image11;
+    // } else {
+    //   return Image9;
+    // }
   }
 
   const printHandle = useReactToPrint({
@@ -1113,25 +1208,38 @@ export default function LabOfficer() {
       <div>
         <div className="wrapper">
           <div className="box">
-            <img
+            {selectedLab.result_approval === "approved"
+              ? chooseImage(selectedLab.approved_id)
+              : chooseImage(userId)}
+            {/* <img
               src={
                 selectedLab.result_approval === "approved"
                   ? chooseImage(selectedLab.approved_id)
                   : chooseImage(userId)
               }
               alt="MedTech"
-            />
+              className="mt-5"
+              width={100}
+              height={100}
+            /> */}
           </div>
           <div className="box pt-5">
-            <img src={Image1} alt="MedTech" />
+            <img
+              src={Image1}
+              alt="MedTech"
+              style={{ zIndex: "50", marginTop: "60px" }}
+            />
           </div>
         </div>
-        <div className="wrapper">
+        <div
+          className="wrapper"
+          style={{ marginTop: hasImage ? "-13px" : "-5px" }}
+        >
           <div className="box">
             <span className="tspan">
               {selectedLab.result_approval === "approved"
                 ? selectedLab.approver
-                : medTech}
+                : medTech}{" "}
             </span>
           </div>
           <div className="box">
