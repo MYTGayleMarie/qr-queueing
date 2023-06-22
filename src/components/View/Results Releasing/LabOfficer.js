@@ -333,7 +333,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={100}
           height={50}
         />
@@ -345,7 +345,7 @@ export default function LabOfficer() {
           src={Image2}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={100}
           height={50}
         />
@@ -357,7 +357,7 @@ export default function LabOfficer() {
           src={Image6}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={100}
           height={50}
         />
@@ -369,7 +369,7 @@ export default function LabOfficer() {
           src={Image5}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={50}
           height={50}
         />
@@ -381,7 +381,7 @@ export default function LabOfficer() {
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={50}
           height={50}
         />
@@ -393,7 +393,7 @@ export default function LabOfficer() {
           src={Image8}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={100}
           height={50}
         />
@@ -405,7 +405,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
           width={100}
           height={50}
         />
@@ -416,7 +416,7 @@ export default function LabOfficer() {
       return (
         <div
           // className="mt-5"
-          style={{ marginTop: "6rem" }}
+          style={{ marginTop: "3rem" }}
         ></div>
       );
     }
@@ -1227,7 +1227,7 @@ export default function LabOfficer() {
             <img
               src={Image1}
               alt="MedTech"
-              style={{ zIndex: "50", marginTop: "60px" }}
+              style={{ zIndex: "50", marginTop: "10px" }}
             />
           </div>
         </div>
@@ -1443,7 +1443,7 @@ export default function LabOfficer() {
                       <>
                         <div
                           className="row"
-                          style={{ marginTop: "2px", width: "100%" }}
+                          style={{ marginTop: "1px", width: "100%" }}
                           key={resultIndex}
                         >
                           <div className="col">
@@ -1657,7 +1657,7 @@ export default function LabOfficer() {
                     style={{
                       border: "2px solid black",
                       width: "100%",
-                      marginBottom: "0px",
+                      marginBottom: "0",
                     }}
                   />
                   <div
@@ -1674,10 +1674,10 @@ export default function LabOfficer() {
                     <span>
                       <div dangerouslySetInnerHTML={{ __html: remarks }}></div>
                     </span>
+                    <Signature />
                   </div>
                 </div>
                 <br />
-                <Signature />
               </div>
             </div>
           </div>
