@@ -240,7 +240,7 @@ function Table({
           <td>
             {row.first_name} {row.middle_name} {row.last_name}
           </td>
-          <td>{row.extraction_date}</td>
+          <td>{formatDate(new Date(row.extraction_date))}</td>
         </tr>
         // <tr key={row.id}>
         //   {rowData.map((data, index) => (
