@@ -189,31 +189,31 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
   );
 }
 
-function queueManagerNavbar(showNavbar, setShowNavbar) {
-  return (
-    <div
-      class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
-      id="sidebar"
-    >
-      <ul class="nav flex-column text-white w-100">
-        <div class="d-flex justify-content-center">
-          <img src={logo} alt={"logo"} class="navbar-logo"></img>
-        </div>
+// function queueManagerNavbar(showNavbar, setShowNavbar) {
+//   return (
+//     <div
+//       class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+//       id="sidebar"
+//     >
+//       <ul class="nav flex-column text-white w-100">
+//         <div class="d-flex justify-content-center">
+//           <img src={logo} alt={"logo"} class="navbar-logo"></img>
+//         </div>
 
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
-          <li href="/lab" class="nav-link imaging-nav">
-            <img src={labIcon} alt={"lab"} class="lab icon"></img>
-            <span class="mx-2">Laboratory Releasing</span>
-          </li>
-        </NavLink>
-        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
-          <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
-          <span class="mx-2">Log Out</span>
-        </li>
-      </ul>
-    </div>
-  );
-}
+//         <NavLink to="/queuemanager" activeClassName="active" class="link">
+//           <li href="/lab" class="nav-link imaging-nav">
+//             <img src={labIcon} alt={"lab"} class="lab icon"></img>
+//             <span class="mx-2">Laboratory Releasing</span>
+//           </li>
+//         </NavLink>
+//         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+//           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+//           <span class="mx-2">Log Out</span>
+//         </li>
+//       </ul>
+//     </div>
+//   );
+// }
 
 // function cModuleNavbar(showNavbar,setShowNavbar) {
 //   return (
@@ -484,12 +484,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
           <div class="d-flex justify-content-center">
             <img src={logo} alt={"logo"} class="navbar-logo"></img>
           </div>
-          <NavLink to="/now-serving" activeClassName="active" class="link">
+          {/* <NavLink to="/now-serving" activeClassName="active" class="link">
             <li href="/now-serving" class="nav-link imaging-nav">
               <img src={patientIcon} alt={"medTech"} class="medTech icon"></img>
               <span class="mx-2">Now Serving</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/registration" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img
@@ -574,12 +574,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Aging Report</span>
             </li>
           </NavLink>
-          <NavLink to="/extraction" activeClassName="active" class="link">
+          {/* <NavLink to="/extraction" activeClassName="active" class="link">
             <li href="/extraction" class="nav-link imaging-nav">
               <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
               <span class="mx-2">Extractions</span>
             </li>
-          </NavLink>
+          </NavLink> */}
 
           <li href="#" class="nav-link supply-nav">
             <img

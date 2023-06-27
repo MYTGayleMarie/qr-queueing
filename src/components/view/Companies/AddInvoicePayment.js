@@ -767,7 +767,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
-          withholdingtax: bankTransferDetails.withholding_tax,
+          withholdingtax: bankTransferDetails.withholding_tax || "0",
           remarks: bankTransferDetails.remarks,
           added_by: userId,
           bank_name: bankTransferDetails.bank_name,
@@ -777,9 +777,9 @@ function AddInvoicePayment() {
       })
         .then(function (response) {
           toast.success("Payment Successful!");
-          // setTimeout(function () {
-          //   setRedirect(true);
-          // }, 2000);
+          setTimeout(function () {
+            setRedirect(true);
+          }, 2000);
         })
         .catch(function (error) {
           console.log(error);
@@ -1066,7 +1066,7 @@ function AddInvoicePayment() {
                 step="0.01"
                 value={tax}
                 className="cash-input pay"
-                placeholder="P"
+                placeholder="% (in percentage)"
                 onChange={(e) => setTax(e.target.value)}
               />
             </div>
@@ -1194,7 +1194,7 @@ function AddInvoicePayment() {
                 name="withholding_tax"
                 step="0.01"
                 className="cash-input pay"
-                placeholder="P"
+                placeholder="% (in percentage)"
                 onChange={handleBankChange}
               />
             </div>
@@ -1276,7 +1276,7 @@ function AddInvoicePayment() {
               name="taxAmount"
               step="0.01"
               className="cash-input pay"
-              placeholder="P"
+              placeholder="% (in percentage)"
               onChange={(e) => setCheckTax(e.target.value)}
             />
           </div>
@@ -1369,7 +1369,7 @@ function AddInvoicePayment() {
             name="taxAmount"
             step="0.01"
             className="cash-input pay"
-            placeholder="P"
+            placeholder="% (in percentage)"
             onChange={(e) => setCardTax(e.target.value)}
           />
         </div>
@@ -1588,6 +1588,14 @@ function AddInvoicePayment() {
             <br />
             <input
               type="radio"
+              id="banktransfer"
+              name="payment_method"
+              value="banktransfer"
+              onClick={() => setPayment("bank transfer")}
+            />
+            <span className="check method">BANK TRANSFER</span>
+            <input
+              type="radio"
               id="cash"
               name="payment_method"
               value="cash"
@@ -1603,7 +1611,7 @@ function AddInvoicePayment() {
               onClick={() => setIsModalCheck(true)}
             />
             <span className="check method">CHECK</span>
-            <input
+            {/* <input
               type="radio"
               id="card"
               name="payment_method"
@@ -1611,14 +1619,7 @@ function AddInvoicePayment() {
               onClick={() => setIsModalCard(true)}
             />
             <span className="check method">CARD</span>
-            <input
-              type="radio"
-              id="banktransfer"
-              name="payment_method"
-              value="banktransfer"
-              onClick={() => setPayment("bank transfer")}
-            />
-            <span className="check method">BANK TRANSFER</span>
+             */}
 
             <input
               type="radio"
@@ -1628,12 +1629,11 @@ function AddInvoicePayment() {
               onClick={() => setIsModalOthers(true)}
             />
             <span className="check method">OTHERS</span>
-
+            <p>{payment === "bank transfer" && bankTransferForm()}</p>
             <p>{payment === "cash" && cashForm()}</p>
             <p>{payment === "check" && checkForm()}</p>
             <p>{payment === "card" && cardForm()}</p>
             <p>{payment === "others" && othersForm()}</p>
-            <p>{payment === "bank transfer" && bankTransferForm()}</p>
 
             <ToastContainer hideProgressBar={true} />
           </div>

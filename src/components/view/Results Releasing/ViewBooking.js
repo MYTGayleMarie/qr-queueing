@@ -75,6 +75,7 @@ export default function ViewBooking() {
 
   // Lab Tests
   const [services, setServices] = useState([]);
+  const [packageServices,setPackageServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -155,8 +156,27 @@ export default function ViewBooking() {
         setServices(booking.data);
       })
       .catch((error) => {});
+
+    
+    // Get booking details by booking id from packages
+    axios({
+      method: "post",
+      url: window.$link + "/bookings/getBookingPackageDetails/" + id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then((booking) => {
+        
+        setPackageServices(booking.data);
+      })
+      .catch((error) => {});
   }, []);
 
+console.log(packageServices)
   React.useEffect(() => {
     getUploads(data);
   }, []);
@@ -321,6 +341,7 @@ export default function ViewBooking() {
   const detailUrinalysis = services.filter(
     (info) => info.lab_test === "Urinalysis"
   );
+  console.log(services)
 
   const spermAnalysis = labTests.filter((info) => info.test_id === "7");
   const detailSperm = services.filter(
@@ -546,8 +567,8 @@ export default function ViewBooking() {
                   {/* CLINICAL MICROSCOPY URINALYSIS */}
                   {(clinicalUrinalysis.length !== 0 ||
                     spermAnalysis.length !== 0 ||
-                    (serumPT.length !== 0 &&
-                      clinicalUrineLab.length !== 0)) && (
+                    serumPT.length !== 0 ||
+                      clinicalUrineLab.length !== 0) && (
                     <div>
                       <div className="category label">
                         CLINICAL MICROSCOPY URINALYSIS

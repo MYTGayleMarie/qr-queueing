@@ -159,12 +159,13 @@ export default function LabOfficer() {
   }
 
   function update(lab_test) {
+    console.log(lab_test)
     setEditingLab(lab_test);
     setIsDropdown(false);
     // For dropdowns in Edit modal
     if (
       selectedLab.label == "Urinalysis" ||
-      selectedLab.label == "[P] Urinalysis"
+      selectedLab.label == "[P] Urinalysis" || selectedLab.label == "Serum Pregnancy"
     ) {
       if (lab_test == "Color") {
         setLabTestOptions(labResultsData.urinalysisColorOptions);
@@ -172,7 +173,7 @@ export default function LabOfficer() {
       } else if (lab_test == "Transparency") {
         setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Pregnancy Test" || lab_test == "Pregnancy_Test") {
+      } else if (lab_test == "Pregnancy Test" || lab_test == "Pregnancy_Test" ||lab_test =="Serum Pregnancy Test"||lab_test =="Serum_Pregnancy_Test") {
         setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
         setIsDropdown(true);
       } else if (lab_test == "Protein" || lab_test == "Sugar") {
@@ -381,9 +382,9 @@ export default function LabOfficer() {
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
-          width={50}
-          height={50}
+          style={{ marginTop: "1rem" }}
+          width={100}
+          height={100}
         />
       );
     } else if (prc_sig === "28") {
@@ -410,7 +411,33 @@ export default function LabOfficer() {
           height={50}
         />
       );
-    } else {
+    } 
+    else if (prc_sig === "30") {
+      setHasImage(true);
+      return (
+        <img
+          src={Image11}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "3rem" }}
+          width={100}
+          height={50}
+        />
+      );
+    }
+    // else{
+    //   setHasImage(true);
+    //   return (
+    //     <img
+    //       src={Image10}
+    //       alt="MedTech"
+    //       // className="mt-5"
+    //       style={{ marginTop: "3rem" }}
+    //       width={70}
+    //       height={60}
+    //     />
+    //   );
+  {
       setHasImage(false);
 
       return (
@@ -1119,7 +1146,7 @@ export default function LabOfficer() {
       e.label === "Serum Pregnancy Test" ||
       e.label === "[P] Serum Pregnancy Test"
     ) {
-      setLabTestData(labResultsData.labTestPregnancyTest);
+      setLabTestData(labResultsData.labTestSerumPregnancyTest);
     } else if (
       e.label === "Sperm Analysis" ||
       e.label === "[P] Sperm Analysis"

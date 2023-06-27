@@ -75,6 +75,7 @@ export default function Lab() {
           bookingDetails.withDiscount = booking.discount_detail;
           bookingDetails.id = booking.id;
           bookingDetails.name = booking.customer;
+          bookingDetails.result_status = (booking.result_status).toUpperCase();
           bookingDetails.bookingTime =
             formatBookingTime[1] +
             " " +
@@ -169,6 +170,7 @@ export default function Lab() {
               "WITH DISCOUNT",
               "BOOKING ID",
               "PATIENT NAME",
+              "STATUS",
               "BOOKING DATE",
               "ACTION",
             ]}
