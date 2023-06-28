@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage} from "../../../utilities/Common";
+import { getToken, getUser, refreshPage, getRoleId} from "../../../utilities/Common";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
@@ -23,6 +23,10 @@ import Table from '../../Table.js';
 //variables
 const userToken = getToken();
 const userId = getUser();
+const roleId = getRoleId();
+
+console.log(roleId)
+
 
 function ReviewPurchaseOrder() {
     document.body.style = 'background: white;';
@@ -293,7 +297,7 @@ function ReviewPurchaseOrder() {
             <div className="col-sm-1">
                 {parseFloat(data.qty * data.amount - data.discount).toFixed(2)}
             </div>
-            {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
+            {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && roleId!=='"6"' && (
               <div className="col-sm-2">
                  <button className="disapprove-btn" onClick={(e) => showDisapproveItemPrompt(data.po_id)}>DISAPPROVE</button>
               </div>
@@ -580,7 +584,7 @@ function ReviewPurchaseOrder() {
                         <div className="col-sm-1 service">
                             TOTAL
                         </div>
-                        {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && (
+                        {status != "approved" && status != "disapproved" && status != "printed" && status != "completed" && roleId!=='"6"' && (
                             <div className="col-sm-1 service">
                             ACTION
                         </div>
@@ -619,7 +623,7 @@ function ReviewPurchaseOrder() {
                 </div>
             </div>
 
-            {poItems.length != 0 && status != "approved" && status != "disapproved" && status != "printed" &&  status !="completed" && showPOButtons()}
+            {poItems.length != 0 && status != "approved" && status != "disapproved" && status != "printed" &&  status !="completed" && roleId!=='"6"' && showPOButtons()}
 
                 <div className="row d-flex justify-content-center">
                 {print == true || poItems.length != 0 && status != "pending" && status != "for approval" && (

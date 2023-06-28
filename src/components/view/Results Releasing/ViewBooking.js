@@ -176,7 +176,7 @@ export default function ViewBooking() {
       .catch((error) => {});
   }, []);
 
-console.log(packageServices)
+console.log(services)
   React.useEffect(() => {
     getUploads(data);
   }, []);
