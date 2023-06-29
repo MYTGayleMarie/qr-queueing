@@ -12,6 +12,7 @@ import {
 import {
   getExtractionPatients,
   updateExtractionPatient,
+  updateExtractionPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI";
 import "./ExtractionManager.css";
 import { Button, ListGroup } from "react-bootstrap";
@@ -38,18 +39,15 @@ function ExtractionManager() {
 
   function handleExtractionClick(row) {
     var lab_tests = row.lab_test.split("|");
-    var lab_tests_id = row.booking_detail_id.split("|");
+    // var lab_tests_id = row.booking_detail_id.split("|");
 
     setSelectedRow({ ...row, lab_tests: lab_tests });
     setRecordsDetails(lab_tests);
-    setLabIds(lab_tests_id);
+    // setLabIds(lab_tests_id);
   }
 
-  async function handleUpdateBooking(index) {
-    const response = await updateExtractionPatient(
-      selectedRow,
-      labIds[parseInt(index)]
-    );
+  async function handleUpdateBooking() {
+    const response = await updateExtractionPatientBulk(selectedRow);
     if (response.data) {
       toast.success(response.data.message.success.toUpperCase());
       refreshPage();
@@ -108,27 +106,35 @@ function ExtractionManager() {
                   {recordsDetails.map((data, index) => {
                     return (
                       <ListGroup.Item className="extraction-test">
-                        <div className="row justify-content-between">
+                        <div className="row justify-content-start">
                           <div className="col">{data}</div>
-                          <div className="col text-right align-right">
-                            <Button
-                              size="sm"
-                              style={{
-                                background: "#bfbc4b",
-                                // : "#419EA3",
-                                borderColor: "#bfbc4b",
-                                // : "#419EA3",
-                              }}
-                              onClick={() => handleUpdateBooking(index)}
-                            >
-                              Extracted
-                            </Button>
-                          </div>
                         </div>
                       </ListGroup.Item>
                     );
                   })}
                 </ListGroup>
+                {recordsDetails.length > 0 ? (
+                  <div className="p-2">
+                    <Button
+                      className="mt-2"
+                      // size="sm"
+                      style={{
+                        width: "100%",
+                        background: "#bfbc4b",
+                        // : "#419EA3",
+                        borderColor: "#bfbc4b",
+                        // : "#419EA3",
+                      }}
+                      onClick={handleUpdateBooking}
+                    >
+                      Extracted
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="p-2 text-center align-center">
+                    No Tests found.
+                  </p>
+                )}
               </div>
               {/* <Table
                 type={"extraction-details"}
