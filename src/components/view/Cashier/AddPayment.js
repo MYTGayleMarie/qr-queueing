@@ -19,6 +19,7 @@ import Navbar from "../../Navbar";
 import Header from "../../Header.js";
 import PersonalDetails from "../../PersonalDetails";
 import Costing from "../../Costing";
+import { RingLoader } from "react-spinners";
 
 const userToken = getToken();
 const userId = getUser();
@@ -134,6 +135,10 @@ function AddPayment() {
   const [discountCode, setDiscountCode] = useState("");
   const [discountDetails, setDiscountDetails] = useState("");
 
+  //Loaders
+  const [loadingCust, setLoadingCust] = useState(false);
+  const [loadingBooking, setLoadingBooking] = useState(false);
+
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -224,8 +229,10 @@ function AddPayment() {
             setContactNo(customer.data.contact_no);
             setEmail(customer.data.email);
             setAddress(customer.data.address);
+            setLoadingCust(true);
           })
           .catch(function (error) {
+            setLoadingCust(true);
             console.log(error);
           });
       })
@@ -291,9 +298,11 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
+        setLoadingBooking(true);
         setServices(booking.data);
       })
       .catch(function (error) {
+        setLoadingBooking(true);
         console.log(error);
       });
   }, []);
@@ -345,8 +354,10 @@ function AddPayment() {
                 ) {
                   setPrintData(true);
                 }
+                setLoadingBooking(true);
               })
               .catch(function (error) {
+                setLoadingBooking(true);
                 console.log(error);
               });
           });
@@ -382,9 +393,11 @@ function AddPayment() {
               encodedOn != null
             ) {
               setPrintData(true);
+              setLoadingBooking(true);
             }
           })
           .catch(function (error) {
+            setLoadingBooking(true);
             console.log(error);
           });
       }
@@ -443,8 +456,10 @@ function AddPayment() {
                 }
                 serviceDetails.category = category.data.name;
                 serviceDetails.name = packageCat.lab_test;
+                setLoadingBooking(true);
               })
               .catch(function (error) {
+                setLoadingBooking(true);
                 console.log(error);
               });
           });
@@ -474,8 +489,10 @@ function AddPayment() {
             serviceDetails.name = info.lab_test;
             let labTest = { name: info.lab_test, qty: "1", price: info.price };
             setLabTests((prev) => [...prev, labTest]);
+            setLoadingBooking(true);
           })
           .catch(function (error) {
+            setLoadingBooking(true);
             console.log(error);
           });
       }
@@ -1264,266 +1281,289 @@ function AddPayment() {
   return (
     <div>
       <Navbar />
-      <div className="active-cont">
-        <Header type="thin" title="ADD PAYMENT" />
 
-        <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
+      {loadingBooking && loadingCust ? (
+        <div className="active-cont">
+          <Header type="thin" title="ADD PAYMENT" />
 
-        <div className="personal-data-cont">
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="first-name label">FIRST NAME</span>
-              <span className="first-name detail">
-                {firstName.toUpperCase()}
-              </span>
-            </div>
-            <div className="col-sm-4">
-              <span className="last-name label">LAST NAME</span>
-              <span className="last-name detail">{lastName.toUpperCase()}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="middle-name label">MIDDLE NAME</span>
-              <span className="middle-name detail">
-                {middleName.toUpperCase()}
-              </span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="date-of-birth label">DATE OF BIRTH</span>
-              <span className="date-of-birth detail">{birthDate}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="sex label">SEX</span>
-              <span className="sex detail">{gender.toUpperCase()}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="age label">AGE</span>
-              <span className="age detail">{age}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-4">
-              <span className="contact-number label">CONTACT NUMBER</span>
-              <span className="contact-number detail">{contactNo}</span>
-            </div>
-            <div className="col-sm-4">
-              <span className="email label">EMAIL</span>
-              <span className="email detail">{email}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <span className="address label">ADDRESS</span>
-              <span className="address detail">{address.toUpperCase()}</span>
-            </div>
-          </div>
-        </div>
+          <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
-        <Costing
-          data={services}
-          deleteService={handleRemove}
-          withDiscount={seniorPwdId}
-          total={total}
-          setTotal={setTotal}
-          grandTotal={grandTotal}
-          serviceFee={serviceFee}
-          mdCharge={mdCharge}
-          setGrandTotal={setGrandTotal}
-          setDiscount={setDiscount}
-          discount={discount}
-          paidAmount={paidAmount}
-          toPay={paymentStatus == "paid" ? false : true}
-        />
-
-        {paymentStatus != "paid" && (
-          <div className="row">
-            <div className="col-sm-9 d-flex justify-content-end">
-              <button className="add-tests-btn" onClick={handleShow}>
-                ADD TESTS
-              </button>
-            </div>
-          </div>
-        )}
-
-        {paymentStatus == "paid" && queueNumber != "" && printData == true && (
-          <div className="row">
-            <div className="col-sm-12 d-flex justify-content-end">
-              {printButton()}
-            </div>
-          </div>
-        )}
-
-        {paymentStatus != "paid" && printData == false && (
-          <div className="row">
-            <div className="col-sm-12 d-flex justify-content-end">
-              <button className="save-btn">Loading Data...</button>
-            </div>
-          </div>
-        )}
-
-        {paymentStatus != "paid" && (
-          <div className="payment-cont">
-            <h1 className="payment-label">ADD PAYMENT</h1>
-
+          <div className="personal-data-cont">
             <div className="row">
-              <div className="col-sm-3">
-                <span className="discount-header method-label">DISCOUNT</span>
+              <div className="col-sm-4">
+                <span className="first-name label">FIRST NAME</span>
+                <span className="first-name detail">
+                  {firstName.toUpperCase()}
+                </span>
               </div>
-
-              <div className="col-sm-9">
-                <span className="amount">
-                  {"P " +
-                    parseFloat(discount).toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }) +
-                    ""}
+              <div className="col-sm-4">
+                <span className="last-name label">LAST NAME</span>
+                <span className="last-name detail">
+                  {lastName.toUpperCase()}
+                </span>
+              </div>
+              <div className="col-sm-4">
+                <span className="middle-name label">MIDDLE NAME</span>
+                <span className="middle-name detail">
+                  {middleName.toUpperCase()}
                 </span>
               </div>
             </div>
-            <br />
-
-            <span className="method-label">METHOD</span>
-            <input
-              type="radio"
-              id="cash"
-              name="payment_method"
-              value="cash"
-              onClick={() => setPayment("cash")}
-            />
-            <span className="cash method">CASH</span>
-            <input
-              type="radio"
-              id="check"
-              name="payment_method"
-              value="check"
-              onClick={() => setPayment("check")}
-            />
-            <span className="check method">CHECK</span>
-            <input
-              type="radio"
-              id="card"
-              name="payment_method"
-              value="card"
-              onClick={() => setPayment("card")}
-            />
-            <span className="check method">CARD</span>
-            <input
-              type="radio"
-              id="others"
-              name="payment_method"
-              value="others"
-              onClick={() => setPayment("others")}
-            />
-            <span className="check method">OTHERS</span>
-
-            {/* <form> */}
-            <p>{payment === "cash" && cashForm()}</p>
-            <p>{payment === "check" && checkForm()}</p>
-            <p>{payment === "card" && cardForm()}</p>
-            <p>{payment === "others" && othersForm()}</p>
-            {/* </form> */}
-            <ToastContainer hideProgressBar={true} />
-
-            <Modal show={showRemove} onHide={handleRemoveClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>SUBMIT</Modal.Title>
-              </Modal.Header>
-              <form>
-                <Modal.Body>
-                  Are you sure you want to remove service?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleRemoveClose}>
-                    Close
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    onClick={removeService}
-                  >
-                    Submit
-                  </Button>
-                </Modal.Footer>
-              </form>
-            </Modal>
-
-            <Modal show={show} onHide={handleClose} size="xl">
-              <Modal.Header closeButton>
-                <Modal.Title className="w-100 add-test-header">
-                  ADD TESTS
-                </Modal.Title>
-              </Modal.Header>
-              <form>
-                <Modal.Body>
-                  <label for="input-label">SERVICE:</label>
-
-                  <select
-                    className="input-select"
-                    id="service"
-                    name="service"
-                    onChange={(e) => setAddTestType(e.target.value)}
-                  >
-                    <option value="" selected disabled hidden>
-                      CHOOSE TYPE
-                    </option>
-                    <option value="CLINICAL SERVICES">CLINICAL SERVICES</option>
-                    <option value="PACKAGES">PACKAGES</option>
-                  </select>
-
-                  <br />
-
-                  <p>
-                    {addTestType === "CLINICAL SERVICES" && showAvailableLab()}
-                  </p>
-                  <p>{addTestType === "PACKAGES" && showAvailablePackages()}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <button
-                    type="submit"
-                    className="add-tests-btn"
-                    onClick={() => addService()}
-                  >
-                    Submit
-                  </button>
-                </Modal.Footer>
-              </form>
-            </Modal>
+            <div className="row">
+              <div className="col-sm-4">
+                <span className="date-of-birth label">DATE OF BIRTH</span>
+                <span className="date-of-birth detail">{birthDate}</span>
+              </div>
+              <div className="col-sm-4">
+                <span className="sex label">SEX</span>
+                <span className="sex detail">{gender.toUpperCase()}</span>
+              </div>
+              <div className="col-sm-4">
+                <span className="age label">AGE</span>
+                <span className="age detail">{age}</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-4">
+                <span className="contact-number label">CONTACT NUMBER</span>
+                <span className="contact-number detail">{contactNo}</span>
+              </div>
+              <div className="col-sm-4">
+                <span className="email label">EMAIL</span>
+                <span className="email detail">{email}</span>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-6">
+                <span className="address label">ADDRESS</span>
+                <span className="address detail">{address.toUpperCase()}</span>
+              </div>
+            </div>
           </div>
-        )}
 
-        <div
-          style={{ display: "none" }} // This make ComponentToPrint show   only while printing
-        >
-          <PaymentToPrint
-            ref={componentRef}
-            patientId={patientId}
-            bookingId={id}
-            name={lastName + ", " + firstName + " " + middleName}
-            birthdate={birthDate}
-            gender={gender}
-            age={age}
-            contact={contactNo}
-            email={email}
-            address={address}
-            bookingDate={bookingDate}
-            payment={paymentType}
-            result={result}
-            services={printServices}
-            isCompany={true}
-            packages={packages}
-            labTests={labTests}
-            discount={discount}
+          <Costing
+            data={services}
+            deleteService={handleRemove}
+            withDiscount={seniorPwdId}
+            total={total}
+            setTotal={setTotal}
             grandTotal={grandTotal}
-            queue={queueNumber}
-            encodedOn={encodedOn}
-            referral={referral}
-            discountCode={discountCode}
-            setPrintReadyFinal={setPrintReadyFinal}
+            serviceFee={serviceFee}
+            mdCharge={mdCharge}
+            setGrandTotal={setGrandTotal}
+            setDiscount={setDiscount}
+            discount={discount}
+            paidAmount={paidAmount}
+            toPay={paymentStatus == "paid" ? false : true}
           />
+
+          {paymentStatus != "paid" && (
+            <div className="row">
+              <div className="col-sm-9 d-flex justify-content-end">
+                <button className="add-tests-btn" onClick={handleShow}>
+                  ADD TESTS
+                </button>
+              </div>
+            </div>
+          )}
+
+          {paymentStatus == "paid" &&
+            queueNumber != "" &&
+            printData == true && (
+              <div className="row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  {printButton()}
+                </div>
+              </div>
+            )}
+
+          {paymentStatus != "paid" && printData == false && (
+            <div className="row">
+              <div className="col-sm-12 d-flex justify-content-end">
+                <button className="save-btn">Loading Data...</button>
+              </div>
+            </div>
+          )}
+
+          {paymentStatus != "paid" && (
+            <div className="payment-cont">
+              <h1 className="payment-label">ADD PAYMENT</h1>
+
+              <div className="row">
+                <div className="col-sm-3">
+                  <span className="discount-header method-label">DISCOUNT</span>
+                </div>
+
+                <div className="col-sm-9">
+                  <span className="amount">
+                    {"P " +
+                      parseFloat(discount).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }) +
+                      ""}
+                  </span>
+                </div>
+              </div>
+              <br />
+
+              <span className="method-label">METHOD</span>
+              <input
+                type="radio"
+                id="cash"
+                name="payment_method"
+                value="cash"
+                onClick={() => setPayment("cash")}
+              />
+              <span className="cash method">CASH</span>
+              <input
+                type="radio"
+                id="check"
+                name="payment_method"
+                value="check"
+                onClick={() => setPayment("check")}
+              />
+              <span className="check method">CHECK</span>
+              <input
+                type="radio"
+                id="card"
+                name="payment_method"
+                value="card"
+                onClick={() => setPayment("card")}
+              />
+              <span className="check method">CARD</span>
+              <input
+                type="radio"
+                id="others"
+                name="payment_method"
+                value="others"
+                onClick={() => setPayment("others")}
+              />
+              <span className="check method">OTHERS</span>
+
+              {/* <form> */}
+              <p>{payment === "cash" && cashForm()}</p>
+              <p>{payment === "check" && checkForm()}</p>
+              <p>{payment === "card" && cardForm()}</p>
+              <p>{payment === "others" && othersForm()}</p>
+              {/* </form> */}
+              <ToastContainer hideProgressBar={true} />
+
+              <Modal show={showRemove} onHide={handleRemoveClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>SUBMIT</Modal.Title>
+                </Modal.Header>
+                <form>
+                  <Modal.Body>
+                    Are you sure you want to remove service?
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleRemoveClose}>
+                      Close
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      onClick={removeService}
+                    >
+                      Submit
+                    </Button>
+                  </Modal.Footer>
+                </form>
+              </Modal>
+
+              <Modal show={show} onHide={handleClose} size="xl">
+                <Modal.Header closeButton>
+                  <Modal.Title className="w-100 add-test-header">
+                    ADD TESTS
+                  </Modal.Title>
+                </Modal.Header>
+                <form>
+                  <Modal.Body>
+                    <label for="input-label">SERVICE:</label>
+
+                    <select
+                      className="input-select"
+                      id="service"
+                      name="service"
+                      onChange={(e) => setAddTestType(e.target.value)}
+                    >
+                      <option value="" selected disabled hidden>
+                        CHOOSE TYPE
+                      </option>
+                      <option value="CLINICAL SERVICES">
+                        CLINICAL SERVICES
+                      </option>
+                      <option value="PACKAGES">PACKAGES</option>
+                    </select>
+
+                    <br />
+
+                    <p>
+                      {addTestType === "CLINICAL SERVICES" &&
+                        showAvailableLab()}
+                    </p>
+                    <p>
+                      {addTestType === "PACKAGES" && showAvailablePackages()}
+                    </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <button
+                      type="submit"
+                      className="add-tests-btn"
+                      onClick={() => addService()}
+                    >
+                      Submit
+                    </button>
+                  </Modal.Footer>
+                </form>
+              </Modal>
+            </div>
+          )}
+
+          <div
+            style={{ display: "none" }} // This make ComponentToPrint show   only while printing
+          >
+            <PaymentToPrint
+              ref={componentRef}
+              patientId={patientId}
+              bookingId={id}
+              name={lastName + ", " + firstName + " " + middleName}
+              birthdate={birthDate}
+              gender={gender}
+              age={age}
+              contact={contactNo}
+              email={email}
+              address={address}
+              bookingDate={bookingDate}
+              payment={paymentType}
+              result={result}
+              services={printServices}
+              isCompany={true}
+              packages={packages}
+              labTests={labTests}
+              discount={discount}
+              grandTotal={grandTotal}
+              queue={queueNumber}
+              encodedOn={encodedOn}
+              referral={referral}
+              discountCode={discountCode}
+              setPrintReadyFinal={setPrintReadyFinal}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="active-cont">
+          <div className="row justify-content-center mt-5 pt-5">
+            <div
+              className="col-12 mt-5 pt-5 align-center"
+              style={{ textAlign: "-webkit-center" }}
+            >
+              <RingLoader color={"#3a023a"} showLoading={true} size={200} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
