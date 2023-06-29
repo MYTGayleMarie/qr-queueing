@@ -279,6 +279,7 @@ function ReviewPurchaseOrder() {
     }
 
     //components
+    {console.log("hello")}
     const listItems = poItems.map((data,index) => {
         return (
         <div className="row">
