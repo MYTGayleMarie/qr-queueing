@@ -157,23 +157,21 @@ export default function LabOfficer() {
       hour12: true,
     });
   }
-
   function update(lab_test) {
-    console.log(lab_test)
     setEditingLab(lab_test);
     setIsDropdown(false);
     // For dropdowns in Edit modal
     if (
       selectedLab.label == "Urinalysis" ||
-      selectedLab.label == "[P] Urinalysis" || selectedLab.label == "Serum Pregnancy"
-    ) {
+      selectedLab.label == "[P] Urinalysis"){
       if (lab_test == "Color") {
         setLabTestOptions(labResultsData.urinalysisColorOptions);
         setIsDropdown(true);
       } else if (lab_test == "Transparency") {
         setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Pregnancy Test" || lab_test == "Pregnancy_Test" ||lab_test =="Serum Pregnancy Test"||lab_test =="Serum_Pregnancy_Test") {
+      } 
+      else if (lab_test == "Pregnancy Test" || lab_test == "Pregnancy_Test" ||lab_test =="Serum Pregnancy Test"||lab_test =="Serum_Pregnancy_Test") {
         setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
         setIsDropdown(true);
       } else if (lab_test == "Protein" || lab_test == "Sugar") {
@@ -191,6 +189,14 @@ export default function LabOfficer() {
         setIsDropdown(false);
       }
     } else if (
+      selectedLab.label == "Serum Pregnancy Test"){
+        if(lab_test==="Serum Pregnancy Test" || lab_test==="Serum_Pregnancy_Test"){
+          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+          setIsDropdown(true);
+        }else {
+          setIsDropdown(false);
+        }
+    }else if (
       selectedLab.label == "Fecalysis" ||
       selectedLab.label == "[P] Fecalysis"
     ) {
@@ -1117,6 +1123,7 @@ export default function LabOfficer() {
       });
   };
 
+  console.log(gender)
   function handleLab(e) {
     //setLabTests(e.target.value)
 
@@ -1127,10 +1134,12 @@ export default function LabOfficer() {
     } else {
       setIsApproved("");
     }
-
-    if (e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
+    console.log(gender==="Male")
+    if ((e.label === "Urinalysis" || e.label === "[P] Urinalysis") && gender==="female" ) {
       setLabTestData(labResultsData.labTestUrinalysis);
-    } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
+    } else if ((e.label === "Urinalysis" || e.label === "[P] Urinalysis") && gender==="Male" ) {
+      setLabTestData(labResultsData.labTestUrinalysisNoPreg);
+    }else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
       setLabTestData(labResultsData.labTestFecalysis);
     } else if (
       e.label === "Fecal Occult Blood" ||

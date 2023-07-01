@@ -525,13 +525,13 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Cashier</span>
             </li>
           </NavLink>
-          {/* <NavLink to="/extraction" activeClassName="active" class="link">
+          <NavLink to="/extraction" activeClassName="active" class="link">
           <li href="#" class="nav-link extraction-nav">
             <img src={extractionIcon} alt={'extraction'} class="extraction icon"></img>
             <span class="mx-2">Extraction</span>
           </li>
         </NavLink>
-        <NavLink to="/imaging" activeClassName="active" class="link">
+       {/*  <NavLink to="/imaging" activeClassName="active" class="link">
           <li href="#" class="nav-link imaging-nav">
             <img src={imagingIcon} alt={'imaging'} class="imaging icon"></img>
             <span class="mx-2">Imaging</span>
@@ -574,12 +574,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Aging Report</span>
             </li>
           </NavLink>
-          {/* <NavLink to="/extraction" activeClassName="active" class="link">
+          <NavLink to="/extraction" activeClassName="active" class="link">
             <li href="/extraction" class="nav-link imaging-nav">
               <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
               <span class="mx-2">Extractions</span>
             </li>
-          </NavLink> */}
+          </NavLink>
 
           <li href="#" class="nav-link supply-nav">
             <img
@@ -1359,11 +1359,11 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Cashier</span>
         </NavLink>
-        {/* <NavLink to="/extraction" activeClassName="active" class="link">
+        <NavLink to="/extraction" activeClassName="active" class="link">
             <img src={extractionIcon} alt={'extraction'} class="extraction icon mobile-size-icon"></img>
             <span class="mx-2">Extraction</span>
         </NavLink>
-        <NavLink to="/imaging" activeClassName="active" class="link">
+        {/* <NavLink to="/imaging" activeClassName="active" class="link">
             <img src={imagingIcon} alt={'imaging'} class="imaging icon mobile-size-icon"></img>
             <span class="mx-2">Imaging</span>
         </NavLink> */}
