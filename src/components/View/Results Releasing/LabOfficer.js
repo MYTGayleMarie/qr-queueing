@@ -388,9 +388,9 @@ export default function LabOfficer() {
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1rem" }}
-          width={100}
-          height={100}
+          style={{ marginTop: "3rem" }}
+          width={50}
+          height={50}
         />
       );
     } else if (prc_sig === "28") {
@@ -431,27 +431,27 @@ export default function LabOfficer() {
         />
       );
     }
-    // else{
-    //   setHasImage(true);
-    //   return (
-    //     <img
-    //       src={Image10}
-    //       alt="MedTech"
-    //       // className="mt-5"
-    //       style={{ marginTop: "3rem" }}
-    //       width={70}
-    //       height={60}
-    //     />
-    //   );
-  {
-      setHasImage(false);
-
+    else{
+      setHasImage(true);
       return (
-        <div
+        <img
+          src={Image10}
+          alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
-        ></div>
+          style={{ marginTop: "1.5rem" }}
+          width={100}
+          height={90}
+        />
       );
+  // {
+  //     setHasImage(false);
+
+      // return (
+      //   <div
+      //     // className="mt-5"
+      //     style={{ marginTop: "3rem" }}
+      //   ></div>
+      // );
     }
     // if (prc_sig === "23") {
     //   return Image9;
