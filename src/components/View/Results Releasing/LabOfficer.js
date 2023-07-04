@@ -453,11 +453,24 @@ export default function LabOfficer() {
       setHasImage(false);
 
       return (
-        <div
+        <img
+          src={Image10}
+          alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
-        ></div>
+          style={{ marginTop: "1.5rem" }}
+          width={100}
+          height={90}
+        />
       );
+  // {
+  //     setHasImage(false);
+
+      // return (
+      //   <div
+      //     // className="mt-5"
+      //     style={{ marginTop: "3rem" }}
+      //   ></div>
+      // );
     }
     // if (prc_sig === "23") {
     //   return Image9;
