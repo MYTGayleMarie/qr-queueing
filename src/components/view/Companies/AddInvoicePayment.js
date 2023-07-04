@@ -19,6 +19,7 @@ import Table from "../../Table.js";
 import { ChargeSlip } from "./ChargeSlip";
 import ModalPopUp from "../../../components/Modal/UploadModal";
 import { ConsoleView } from "react-device-detect";
+import { RingLoader } from "react-spinners";
 
 //variables
 const userToken = getToken();
@@ -174,6 +175,14 @@ function AddInvoicePayment() {
   const [showModal, setShowModal] = useState(false);
   const [ifYes, setIfYes] = useState(false);
 
+  //For Loaders
+  const [loadingCompany, setLoadingCompany] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [loadingDiscounts, setLoadingDiscounts] = useState(false);
+  const [loadingInvoices, setloadingInvoices] = useState(false);
+  const [loadingBookingDiscounts, setLoadingBookingDiscounts] = useState(false);
+  const [loadingBookings, setLoadingBookings] = useState(false);
+
   const handlePrintInvoice = () => {
     setShowModal(false);
   };
@@ -253,9 +262,11 @@ function AddInvoicePayment() {
         setEmail(company.data.company_email);
         setAddress(company.data.address);
         setContactPerson(company.data.contact_person);
+        setLoadingCompany(true);
       })
       .then(function (error) {
         console.log(error);
+        setLoadingCompany(true);
       });
 
     axios({
@@ -269,6 +280,7 @@ function AddInvoicePayment() {
       },
     }).then(function (response) {
       setUser(response.data.name);
+      setLoadingUser(true);
     });
   }, []);
 
@@ -288,8 +300,10 @@ function AddInvoicePayment() {
         setDiscountCode(
           response.data.filter((val) => discountID === val.id)[0].discount_code
         );
+        setLoadingDiscounts(true);
       })
       .then(function (error) {
+        setLoadingDiscounts(true);
         console.log(error);
       });
   }, []);
@@ -375,12 +389,13 @@ function AddInvoicePayment() {
         });
 
         setDiscountId(invoice[0].discount_id);
-
+        setloadingInvoices(true);
         //   });
       })
       .then(function (error) {
         // setHasLogs(false);
         console.log(error);
+        setloadingInvoices(true);
       });
   }, []);
 
@@ -524,13 +539,17 @@ function AddInvoicePayment() {
               if (dataLength - 1 == index) {
                 setTimeout(setChargeSlipReady(true), 5000);
               }
+              setLoadingBookingDiscounts(true);
             })
             .catch((err) => {
+              setLoadingBookingDiscounts(true);
               console.log(err);
             });
         });
+        setLoadingBookingDiscounts(true);
       })
       .catch((error) => {
+        setLoadingBookingDiscounts(true);
         console.log(error);
       });
   }, [discountCode]);
@@ -590,8 +609,10 @@ function AddInvoicePayment() {
             // setContactNo(customer.data.contact_no);
             // setEmail(customer.data.email);
             // setAddress(customer.data.address);
+            setLoadingBookings(true);
           })
           .catch(function (error) {
+            setLoadingBookings(true);
             console.log(error);
           });
       })
@@ -1497,121 +1518,126 @@ function AddInvoicePayment() {
   return (
     <div>
       <Navbar />
-      <div className="active-cont">
-        <Header type="thin" title="COMPANY INVOICES" addInvoice={handleShow} />
-        <ToastContainer />
-        {/* <h4 className="form-categories-header italic">COMPANY DETAILS</h4> */}
-        <div className="po-details">
+      {loadingCompany && info.length > 0 ? (
+        <div className="active-cont">
+          <Header
+            type="thin"
+            title="COMPANY INVOICES"
+            addInvoice={handleShow}
+          />
+          <ToastContainer />
+          {/* <h4 className="form-categories-header italic">COMPANY DETAILS</h4> */}
+          <div className="po-details">
+            <div className="row">
+              <div className="col-sm-2">
+                <div className="label">COMPANY NAME</div>
+              </div>
+              <div className="col-sm-8">
+                <div className="detail">{name}</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-2">
+                <div className="label">CONTACT NUMBER</div>
+              </div>
+              <div className="col-sm-4">
+                <div className="detail">{contactNo}</div>
+              </div>
+              <div className="col-sm-2">
+                <div className="label">COMPANY EMAIL</div>
+              </div>
+              <div className="col-sm-3">
+                <div className="detail">{email}</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-2">
+                <div className="label">COMPANY ADDRESS</div>
+              </div>
+              <div className="col-sm-8">
+                <div className="detail">{address}</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-2">
+                <div className="label">CONTACT PERSON</div>
+              </div>
+              <div className="col-sm-8">
+                <div className="detail">{contactPerson}</div>
+              </div>
+            </div>
+          </div>
+          {/* <h4 className="form-categories-header italic">INVOICE DETAILS</h4> */}
           <div className="row">
-            <div className="col-sm-2">
-              <div className="label">COMPANY NAME</div>
-            </div>
-            <div className="col-sm-8">
-              <div className="detail">{name}</div>
+            <div className="col-sm-12 d-flex justify-content-start">
+              {hasPay == true && paymentDetails()}
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-2">
-              <div className="label">CONTACT NUMBER</div>
+          <Table
+            type={"payment-invoices"}
+            tableData={info}
+            rowsPerPage={4}
+            headingColumns={[
+              "INVOICE DATE",
+              "DISCOUNT CODE",
+              "PRICE",
+              "QTY",
+              "TOTAL",
+            ]}
+            givenClass={"company-mobile"}
+            // setChecked={setChecked}
+          />
+          {grandTotal != null && grandTotal != 0 && (
+            <div className="row">
+              <div className="col d-flex justify-content-end grand-total">
+                <span className="label">
+                  GRAND TOTAL:{" "}
+                  <b className="invoice-total">
+                    P{" "}
+                    {parseFloat(grandTotal).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
             </div>
-            <div className="col-sm-4">
-              <div className="detail">{contactNo}</div>
-            </div>
-            <div className="col-sm-2">
-              <div className="label">COMPANY EMAIL</div>
-            </div>
-            <div className="col-sm-3">
-              <div className="detail">{email}</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-2">
-              <div className="label">COMPANY ADDRESS</div>
-            </div>
-            <div className="col-sm-8">
-              <div className="detail">{address}</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-2">
-              <div className="label">CONTACT PERSON</div>
-            </div>
-            <div className="col-sm-8">
-              <div className="detail">{contactPerson}</div>
-            </div>
-          </div>
-        </div>
-        {/* <h4 className="form-categories-header italic">INVOICE DETAILS</h4> */}
-        <div className="row">
-          <div className="col-sm-12 d-flex justify-content-start">
-            {hasPay == true && paymentDetails()}
-          </div>
-        </div>
-        <Table
-          type={"payment-invoices"}
-          tableData={info}
-          rowsPerPage={4}
-          headingColumns={[
-            "INVOICE DATE",
-            "DISCOUNT CODE",
-            "PRICE",
-            "QTY",
-            "TOTAL",
-          ]}
-          givenClass={"company-mobile"}
-          // setChecked={setChecked}
-        />
-        {grandTotal != null && grandTotal != 0 && (
-          <div className="row">
-            <div className="col d-flex justify-content-end grand-total">
-              <span className="label">
-                GRAND TOTAL:{" "}
-                <b className="invoice-total">
-                  P{" "}
-                  {parseFloat(grandTotal).toLocaleString("en-US", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </b>
-              </span>
-            </div>
-          </div>
-        )}
+          )}
 
-        {haslogs === true && hasPay === false && (
-          <div className="payment-cont">
-            <h1 className="payment-label">ADD PAYMENT</h1>
+          {haslogs === true && hasPay === false && (
+            <div className="payment-cont">
+              <h1 className="payment-label">ADD PAYMENT</h1>
 
-            <br />
+              <br />
 
-            <span className="method-label ">METHOD</span>
-            <br />
-            <input
-              type="radio"
-              id="banktransfer"
-              name="payment_method"
-              value="banktransfer"
-              onClick={() => setPayment("bank transfer")}
-            />
-            <span className="check method">BANK TRANSFER</span>
-            <input
-              type="radio"
-              id="cash"
-              name="payment_method"
-              value="cash"
-              style={{ marginLeft: "25px" }}
-              onClick={() => setPayment("cash")}
-            />
-            <span className="cash method">CASH</span>
-            <input
-              type="radio"
-              id="check"
-              name="payment_method"
-              value="check"
-              onClick={() => setIsModalCheck(true)}
-            />
-            <span className="check method">CHECK</span>
-            {/* <input
+              <span className="method-label ">METHOD</span>
+              <br />
+              <input
+                type="radio"
+                id="banktransfer"
+                name="payment_method"
+                value="banktransfer"
+                onClick={() => setPayment("bank transfer")}
+              />
+              <span className="check method">BANK TRANSFER</span>
+              <input
+                type="radio"
+                id="cash"
+                name="payment_method"
+                value="cash"
+                style={{ marginLeft: "25px" }}
+                onClick={() => setPayment("cash")}
+              />
+              <span className="cash method">CASH</span>
+              <input
+                type="radio"
+                id="check"
+                name="payment_method"
+                value="check"
+                onClick={() => setIsModalCheck(true)}
+              />
+              <span className="check method">CHECK</span>
+              {/* <input
               type="radio"
               id="card"
               name="payment_method"
@@ -1621,38 +1647,50 @@ function AddInvoicePayment() {
             <span className="check method">CARD</span>
              */}
 
-            <input
-              type="radio"
-              id="others"
-              name="payment_method"
-              value="others"
-              onClick={() => setIsModalOthers(true)}
-            />
-            <span className="check method">OTHERS</span>
-            <p>{payment === "bank transfer" && bankTransferForm()}</p>
-            <p>{payment === "cash" && cashForm()}</p>
-            <p>{payment === "check" && checkForm()}</p>
-            <p>{payment === "card" && cardForm()}</p>
-            <p>{payment === "others" && othersForm()}</p>
+              <input
+                type="radio"
+                id="others"
+                name="payment_method"
+                value="others"
+                onClick={() => setIsModalOthers(true)}
+              />
+              <span className="check method">OTHERS</span>
+              <p>{payment === "bank transfer" && bankTransferForm()}</p>
+              <p>{payment === "cash" && cashForm()}</p>
+              <p>{payment === "check" && checkForm()}</p>
+              <p>{payment === "card" && cardForm()}</p>
+              <p>{payment === "others" && othersForm()}</p>
 
-            <ToastContainer hideProgressBar={true} />
+              <ToastContainer hideProgressBar={true} />
+            </div>
+          )}
+          <hr />
+          <div className="row pt-4">
+            <div className="col-sm-12 d-flex justify-content-center">
+              {hasPay == true && printButton()}
+              {hasPay == false && printInvoiceButton()}
+              {hasPay == false && emailButton()}
+              {printChargeSlip()}
+            </div>
           </div>
-        )}
-        <hr />
-        <div className="row pt-4">
-          <div className="col-sm-12 d-flex justify-content-center">
-            {hasPay == true && printButton()}
-            {hasPay == false && printInvoiceButton()}
-            {hasPay == false && emailButton()}
-            {printChargeSlip()}
+          <div className="d-flex justify-content-end back-btn-container">
+            <button className="back-btn" onClick={() => setRedirectBack(true)}>
+              Back
+            </button>
           </div>
         </div>
-        <div className="d-flex justify-content-end back-btn-container">
-          <button className="back-btn" onClick={() => setRedirectBack(true)}>
-            Back
-          </button>
+      ) : (
+        <div className="active-cont">
+          <div className="row justify-content-center mt-5 pt-5">
+            <div
+              className="col-12 mt-5 pt-5 align-center"
+              style={{ textAlign: "-webkit-center" }}
+            >
+              <RingLoader color={"#3a023a"} showLoading={true} size={200} />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       <Modal show={isModalCheck} onHide={handleCheckClose} size="md">
         <Modal.Header closeButton className="text-center">
