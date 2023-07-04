@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getToken, getUser, refreshPage } from "../../../utilities/Common";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
 import { useForm, useStep } from "react-hooks-helper";
@@ -1056,78 +1056,84 @@ function AddInvoicePayment() {
 
   function cashForm() {
     return (
-      <div class="pay-cash-cont">
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">AMOUNT</span>
-            </div>
-            <div className="row">
-              <input
-                type="number"
-                id="payAmount"
-                name="payAmount"
-                step="0.01"
-                value={pay}
-                class="cash-input pay"
-                placeholder="P"
-                onChange={(e) => setPay(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span className="amount-label">WITHHOLDING TAX</span>
-            </div>
-            <div className="row">
-              <input
-                type="number"
-                id="taxAmount"
-                name="taxAmount"
-                step="0.01"
-                value={tax}
-                className="cash-input pay"
-                placeholder="% (in percentage)"
-                onChange={(e) => setTax(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">CHANGE</span>
-            </div>
-            <div className="row">
-              <input
-                type="number"
-                id="changeAmount"
-                name="changeAmount"
-                class="cash-input pay"
-                value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(
-                  2
-                )}
-                placeholder="P"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="remarks-payment-label">REMARKS (optional)</span>
-            </div>
-            <div className="row">
-              <textarea
-                id="remarks"
-                name="remarks"
-                className="invoice-remarks-input"
-                rows="4"
-                cols="100"
-                onChange={(e) => setRemarks(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-flex justify-content-end">
+      <div className="pay-cash-cont mb-5 mt-4">
+        <Row className="input-group">
+          <Col xs={1}>
+            <label for="inputPassword6" className="col-form-label">
+              Amount
+            </label>
+          </Col>
+          <Col xs={3} className="input-group-sm">
+            <input
+              type="number"
+              id="payAmount"
+              name="payAmount"
+              step="0.01"
+              value={pay}
+              className="form-control"
+              placeholder="P"
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                if (inputValue !== null) {
+                  setPay(inputValue);
+                }
+              }}
+            />
+          </Col>
+          <Col xs={1}>
+            <label for="inputPassword6" className="col-form-label">
+              Change
+            </label>
+          </Col>
+          <Col xs={2} className="input-group-sm">
+            <input
+              type="number"
+              id="changeAmount"
+              name="changeAmount"
+              className="form-control"
+              value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(
+                2
+              )}
+              placeholder="P"
+            />
+          </Col>
+          <Col xs={2}>
+            <label for="inputPassword6" className="col-form-label">
+              Withholding Tax
+            </label>
+          </Col>
+          <Col xs={3} className="input-group-sm">
+            <input
+              type="number"
+              id="taxAmount"
+              name="taxAmount"
+              step="0.01"
+              value={tax}
+              className="form-control"
+              placeholder="% (in percentage)"
+              onChange={(e) => setTax(e.target.value)}
+            />
+          </Col>
+
+          <Col xs={1}>
+            {" "}
+            <label for="inputPassword6" className="col-form-label">
+              Remarks
+            </label>
+          </Col>
+          <Col xs={11} className="input-group-sm">
+            <textarea
+              id="remarks"
+              name="remarks"
+              className="full-input"
+              style={{ width: "92%" }}
+              cols="100"
+              rows="3"
+              onChange={(e) => setRemarks(e.target.value)}
+            ></textarea>
+          </Col>
+        </Row>
+        <div className="row d-flex justify-content-end mt-4">
           {paymentStatus == "paid" && printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE PAYMENT{" "}
