@@ -1443,7 +1443,7 @@ function AddInvoicePayment() {
                 name="taxAmount"
                 step="0.01"
                 className="cash-input pay"
-                placeholder="P"
+                placeholder="% (in percentage)"
                 onChange={(e) => setOthersTax(e.target.value)}
               />
             </div>
