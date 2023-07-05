@@ -24,6 +24,7 @@ import Header from "../../Header.js";
 import Navbar from "../../Navbar";
 import Table from "../../Table.js";
 import { compileAsync } from "sass";
+import { File } from "buffer";
 
 //variables
 var servId = "";
@@ -341,7 +342,7 @@ console.log(services)
   const detailUrinalysis = services.filter(
     (info) => info.lab_test === "Urinalysis"
   );
-  console.log(services)
+
 
   const spermAnalysis = labTests.filter((info) => info.test_id === "7");
   const detailSperm = services.filter(
@@ -351,6 +352,11 @@ console.log(services)
   const serumPT = labTests.filter((info) => info.test_id === "130");
   const detailSerumPT = services.filter(
     (info) => info.lab_test === "Serum Pregnancy Test"
+  );
+
+  const pregnancyRPK = labTests.filter((info) => info.test_id === "6");
+  const detailpregnancyRPK = services.filter(
+    (info) => info.lab_test === "Pregnancy test (RPK-Lateral Flow)"
   );
 
   /****************/
@@ -603,17 +609,17 @@ console.log(services)
                               bookingId={bookingId}
                             />
                           ))}
-
-                        {clinicalUrinalysis.length > 0 &&
-                          (detailUrinalysis[0]?.with_result === "1" ? (
+                        
+                        {pregnancyRPK.length > 0 &&
+                          (detailpregnancyRPK[0]?.with_result === "1" ? (
                             <GenerateResults
-                              servicesData={clinicalUrinalysis}
+                              servicesData={pregnancyRPK}
                               title={"CLINICAL MICROSCOPY URINALYSIS"}
                               bookingId={bookingId}
                             />
                           ) : (
                             <FileUpload
-                              servicesData={clinicalUrinalysis}
+                              servicesData={pregnancyRPK}
                               title={"CLINICAL MICROSCOPY URINALYSIS"}
                               bookingId={bookingId}
                             />
@@ -691,7 +697,7 @@ console.log(services)
                         />
                       )}
                       {hematology.length != 0 && (
-                        <GenerateResults
+                        <FileUpload
                           servicesData={hematology}
                           title={"HEMATOLOGY"}
                           bookingId={bookingId}
@@ -800,7 +806,7 @@ console.log(services)
                   {xray.length != 0 && (
                     <div>
                       <div className="category label">XRAY</div>
-                      <GenerateResults
+                      <FileUpload
                         servicesData={xray}
                         title={"XRAY"}
                         bookingId={bookingId}
@@ -813,7 +819,7 @@ console.log(services)
                   {ecg.length != 0 && (
                     <div>
                       <div className="category label">ECG</div>
-                      <GenerateResults
+                      <FileUpload
                         servicesData={ecg}
                         title={"ECG"}
                         bookingId={bookingId}
@@ -826,7 +832,7 @@ console.log(services)
                   {ultrasound.length != 0 && (
                     <div>
                       <div className="category label">ULTRASOUND</div>
-                      <GenerateResults
+                      <FileUpload
                         servicesData={ultrasound}
                         title={"ULTRASOUND"}
                         bookingId={bookingId}
@@ -839,7 +845,7 @@ console.log(services)
                   {others.length != 0 && (
                     <div>
                       <div className="category label">OTHER TESTS</div>
-                      <GenerateResults
+                      <FileUpload
                         servicesData={others}
                         title={"OTHER TESTS"}
                         bookingId={bookingId}
