@@ -264,7 +264,7 @@ function App() {
             element={token ? <ViewPdf /> : <Navigate to="/" />}
           />
           <Route
-            path="/laboratory-officer/:id"
+            path="/laboratory-officer/:id/:dateFrom/:dateTo"
             element={token ? <LabOfficer /> : <Navigate to="/" />}
           />
           <Route
