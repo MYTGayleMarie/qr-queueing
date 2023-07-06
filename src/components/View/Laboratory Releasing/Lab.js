@@ -75,7 +75,7 @@ export default function Lab() {
           bookingDetails.withDiscount = booking.discount_detail;
           bookingDetails.id = booking.id;
           bookingDetails.name = booking.customer;
-          bookingDetails.result_status = (booking.result_status).toUpperCase();
+          bookingDetails.result_status = booking.result_status.toUpperCase();
           bookingDetails.bookingTime =
             formatBookingTime[1] +
             " " +
@@ -112,7 +112,13 @@ export default function Lab() {
   }
 
   if (redirectBooking == true) {
-    var link = "/laboratory-officer/" + id;
+    var link =
+      "/laboratory-officer/" +
+      id +
+      "/" +
+      filteredData.from_date +
+      "/" +
+      filteredData.to_date;
     return <Navigate to={link} />;
   }
 

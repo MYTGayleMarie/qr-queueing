@@ -462,8 +462,8 @@ export default function LabOfficer() {
           height={90}
         />
       );
-  // {
-  //     setHasImage(false);
+      // {
+      //     setHasImage(false);
 
       // return (
       //   <div
@@ -1067,6 +1067,7 @@ export default function LabOfficer() {
   function filter() {}
 
   if (redirectBack === true) {
+    console.log(dateFrom);
     if (dateFrom !== undefined && dateTo !== undefined) {
       var link = "/lab/" + dateFrom + "/" + dateTo;
       return <Navigate to={link} />;
