@@ -93,7 +93,7 @@ function AddPatient({
       ((isPWD && pwd_id !== "") || !isPWD)
     ) {
       return (
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-end mb-5">
           <button className="proceed-btn" onClick={() => navigation.next()}>
             PROCEED
           </button>
@@ -404,7 +404,7 @@ function AddPatient({
 
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
-        <div className="booking-form">
+        <div style={{ width: "85%", marginLeft: "5%" }}>
           <form className="needs-validation">
             <div className="row">
               <div className="col-sm-4">

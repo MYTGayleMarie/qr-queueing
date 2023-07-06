@@ -729,7 +729,7 @@ function Form2({
       <div className="active-cont">
         <Header type="thin" title="ADD PATIENT" />
 
-        <div className="booking-form">
+        <div style={{ width: "85%", marginLeft: "5%" }}>
           <form
             className="needs-validation"
             onSubmit={(e) =>
@@ -933,7 +933,7 @@ function Form2({
                 /> */}
             </div>
 
-            <div className="row summary-text">
+            <div className="row summary-text mt-1 mb-1">
               <h3 className="form-categories-header italic medium-text ">
                 TOTAL SUMMARY
               </h3>
@@ -1205,7 +1205,7 @@ function Form2({
                 )}
             </div>
 
-            <div className="row">
+            <div className="row mb-3">
               <div className="col-sm-6">
                 <div className="d-flex justify-content-start">
                   <button
