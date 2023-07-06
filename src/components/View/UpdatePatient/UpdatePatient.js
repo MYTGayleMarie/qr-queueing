@@ -12,7 +12,7 @@ import "./Form1CModule.css";
 //components
 import Header from "../../Header.js";
 import Navbar from "../../Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 //VARIABLES
 const userToken = getToken();
@@ -40,26 +40,28 @@ var monthNames = [
 ];
 
 function UpdatePatient() {
-  const {id} = useParams()
- const [patientDetails, setPatientDetails] = useState({  fname: "",
- lname: "",
- mname: "",
- sex: "female",
- birthDate: "",
- email: "",
- contactNum: "",
- address: "",
- referral: "",
- discountId: "",
- discountDetail: "",
- serviceLocation: "",
- mdCharge: "",
- homeServiceFee: "",
- result: "",
- dateOfTesting: "",
- lastmeal: "",
- pwd_id: "",
- senior_id: "",})
+  const { id } = useParams();
+  const [patientDetails, setPatientDetails] = useState({
+    fname: "",
+    lname: "",
+    mname: "",
+    sex: "female",
+    birthDate: "",
+    email: "",
+    contactNum: "",
+    address: "",
+    referral: "",
+    discountId: "",
+    discountDetail: "",
+    serviceLocation: "",
+    mdCharge: "",
+    homeServiceFee: "",
+    result: "",
+    dateOfTesting: "",
+    lastmeal: "",
+    pwd_id: "",
+    senior_id: "",
+  });
   //Redirection
   const [redirect, setRedirect] = useState(false);
 
@@ -79,17 +81,14 @@ function UpdatePatient() {
   };
 
   document.body.style = "background: white;";
-
-
+  const navigate = useNavigate();
   const [activation, setActive] = useState(false);
   const [companyId, setCompanyId] = useState("");
   const [companyRemarks, setCompanyRemarks] = useState("");
   const [isSenior, setIsSenior] = useState(false);
   const [isPWD, setIsPWD] = useState(false);
-  const [seniorId, setSeniorId] = useState("")
-  const [pwdId, setPwdId] = useState("")
-
-
+  const [seniorId, setSeniorId] = useState("");
+  const [pwdId, setPwdId] = useState("");
 
   const [people, setPeople] = useState(0);
   const [km, setKm] = useState(0);
@@ -106,8 +105,7 @@ function UpdatePatient() {
       patientDetails.sex != "" &&
       patientDetails.birthDate != "" &&
       patientDetails.contactNum != "" &&
-      patientDetails.address != "" 
-     
+      patientDetails.address != ""
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -117,7 +115,6 @@ function UpdatePatient() {
         </div>
       );
     } else {
-      // console.log('Incomplete');
     }
   }
 
@@ -141,20 +138,20 @@ function UpdatePatient() {
         if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
           age--;
         }
-        setPatientDetails({...patientDetails,
-          fname :customer.data.first_name,
-          lname :customer.data.last_name,
-          mname :customer.data.middle_name,
-          sex :customer.data.gender,
-          birthDate :customer.data.birthdate,
-          email :customer.data.email,
-          contactNum :customer.data.contact_no,
-          address :customer.data.address,
-        })
-        
-        setSeniorId(customer.senior_id)
-        setPwdId(customer.pwd_id)
-        
+        setPatientDetails({
+          ...patientDetails,
+          fname: customer.data.first_name,
+          lname: customer.data.last_name,
+          mname: customer.data.middle_name,
+          sex: customer.data.gender,
+          birthDate: customer.data.birthdate,
+          email: customer.data.email,
+          contactNum: customer.data.contact_no,
+          address: customer.data.address,
+        });
+
+        setSeniorId(customer.senior_id);
+        setPwdId(customer.pwd_id);
       })
       .catch(function (error) {
         console.log(error);
@@ -166,10 +163,11 @@ function UpdatePatient() {
       setClicked(true);
       axios({
         method: "post",
-        url: window.$link + "customers/update",
+        url: window.$link + "customers/update/" + id,
         withCredentials: false,
         params: {
-          token: userToken,
+          updated_by: userId,
+          token: userToken.replace(/['"]+/g, ""),
           api_key: window.$api_key,
           first_name: customer.fname,
           last_name: customer.lname,
@@ -180,37 +178,35 @@ function UpdatePatient() {
           email: customer.email,
           gender: customer.sex,
           address: customer.address,
-          senior_id:setSeniorId,
-          pwd_id:pwdId
-          
-         
+          senior_id: seniorId,
+          pwd_id: pwdId,
         },
       }).then(function (response) {
         toast.success(response.data.message.success);
-        //Generate Queue Number
-        axios({
-          method: "post",
-          url: window.$link + "customers/generateQueue",
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            customer_id: response.data.data.customer_id,
-          },
-        }).then(function (queue) {
-          queueNumber = queue.data.data.queue_no;
-          toast.success("Queue " + queue.data.message);
-          setRedirect(true);
-        });
-        handleClose();
+        navigate("/registration");
+        // //Generate Queue Number
+        // axios({
+        //   method: "post",
+        //   url: window.$link + "customers/generateQueue",
+        //   withCredentials: false,
+        //   params: {
+        //     api_key: window.$api_key,
+        //     customer_id: response.data.data.customer_id,
+        //   },
+        // }).then(function (queue) {
+        //   queueNumber = queue.data.data.queue_no;
+        //   toast.success("Queue " + queue.data.message);
+        //   setRedirect(true);
+        // });
+        // handleClose();
       });
     }
   }
 
-  function handleDetailChange(e){
-    const {name, value} = e.target
-    setPatientDetails({...patientDetails, [name]:value})
+  function handleDetailChange(e) {
+    const { name, value } = e.target;
+    setPatientDetails({ ...patientDetails, [name]: value });
   }
-
 
   // auto suggest address
   const [suggestions, setSuggestions] = useState([]);
@@ -291,233 +287,230 @@ function UpdatePatient() {
     }
   });
 
-  
-
   return (
     <div>
-       <Navbar />
-       <div className="active-cont">
-    <Fragment>
-       
-      <Header type="thin" title="EDIT PATIENT"/>
+      <Navbar />
+      <div className="active-cont">
+        <Fragment>
+          <Header type="thin" title="EDIT PATIENT" />
 
-      <h3 className="form-categories-header">
-        <strong>PERSONAL DETAILS</strong>
-      </h3>
+          <h3 className="form-categories-header">
+            <strong>PERSONAL DETAILS</strong>
+          </h3>
 
-      <div className="booking-form">
-        <form className="needs-validation">
-          <div className="forms">
-            <div className="row mb-0 pb-0">
-              <div className="col-sm-4">
-                <label for="fname" className="form-label font-large">
-                  FIRST NAME <i>(required)</i>
-                </label>
-              </div>
-              <div className="col-sm-4">
-                <label for="fname" className="form-label font-large">
-                  MIDDLE NAME <i>(required)</i>
-                </label>
-              </div>
-              <div className="col-sm-4">
-                <label for="lname" className="form-label font-large">
-                  LAST NAME <i>(required)</i>
-                </label>
-              </div>
-            </div>
-            <div className="row mt-0 pt-0">
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="fname"
-                  name="fname"
-                  value={patientDetails.fname}
-                  onChange={handleDetailChange}
-                  required
-                />
-              </div>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="mname"
-                  name="mname"
-                  value={patientDetails.mname}
-                  onChange={handleDetailChange}
-                />
-                <br />
-              </div>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="lname"
-                  name="lname"
-                  value={patientDetails.lname}
-                  onChange={handleDetailChange}
-                  required
-                />
-                <br />
-              </div>
-            </div>
-            <div className="row mb-0 pb-0">
-              <div className="col-sm-4">
-                <label for="fname" className="form-label font-large">
-                  SEX <i>(required)</i>
-                </label>
-              </div>
-              <div className="col-sm-4">
-                <label for="fname" className="form-label font-large">
-                  DATE OF BIRTH <i>(required)</i>
-                </label>
-              </div>
-              <div className="col-sm-4">
-                <label for="lname" className="form-label font-large">
-                  SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
-                </label>
-              </div>
-            </div>
-            <div className="row mt-0 pt-0">
-              <div className="col-sm-4">
-                <select
-                  name="sex"
-                  className="form-select"
-                  value={patientDetails.sex}
-                  onChange={handleDetailChange}
-                  required
-                >
-                  <option>Female</option>
-                  <option>Male</option>
-                </select>
-              </div>
-              <div className="col-sm-4">
-                <input
-                  type="date"
-                  id="date"
-                  name="birthDate"
-                  className="full-input"
-                  value={patientDetails.birthDate}
-                  onChange={handleDetailChange}
-                  required
-                />
-              </div>
-              <div className="col-sm-4">
-                <input
-                  type="text"
-                  id="senior_id"
-                  name="seniorId"
-                  className="full-input"
-                  value={!isSenior ? "" : seniorId}
-                  onChange={handleDetailChange}
-                  disabled={!isSenior}
-                  style={{ background: !isSenior ? "whitesmoke" : "" }}
-                  required
-                />
-              </div>
-            </div>
-            <div className="row mb-0 pb-0">
-              <div className="col-sm-6"></div>
-              <div className="col-sm-6">
-                <label for="fname" className="form-label font-large">
-                  PWD ID {isPWD && <i>(required)</i>}
-                </label>
-              </div>
-            </div>
-            <div className="row mt-0 pt-0">
-              <div className="col-sm-6">
-                <input
-                  type="checkbox"
-                  name="is_pwd"
-                  value="isPWD"
-                  id="mdCharge"
-                  checked={isPWD}
-                  onChange={(e) => setIsPWD(e.target.checked)}
-                />
-                <label for="mdCharge" className="booking-label">
-                  Person With Disabilities
-                </label>
-              </div>
+          <div className="booking-form">
+            <form className="needs-validation">
+              <div className="forms">
+                <div className="row mb-0 pb-0">
+                  <div className="col-sm-4">
+                    <label for="fname" className="form-label font-large">
+                      FIRST NAME <i>(required)</i>
+                    </label>
+                  </div>
+                  <div className="col-sm-4">
+                    <label for="fname" className="form-label font-large">
+                      MIDDLE NAME <i>(required)</i>
+                    </label>
+                  </div>
+                  <div className="col-sm-4">
+                    <label for="lname" className="form-label font-large">
+                      LAST NAME <i>(required)</i>
+                    </label>
+                  </div>
+                </div>
+                <div className="row mt-0 pt-0">
+                  <div className="col-sm-4">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="fname"
+                      name="fname"
+                      value={patientDetails.fname}
+                      onChange={handleDetailChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-sm-4">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="mname"
+                      name="mname"
+                      value={patientDetails.mname}
+                      onChange={handleDetailChange}
+                    />
+                    <br />
+                  </div>
+                  <div className="col-sm-4">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="lname"
+                      name="lname"
+                      value={patientDetails.lname}
+                      onChange={handleDetailChange}
+                      required
+                    />
+                    <br />
+                  </div>
+                </div>
+                <div className="row mb-0 pb-0">
+                  <div className="col-sm-4">
+                    <label for="fname" className="form-label font-large">
+                      SEX <i>(required)</i>
+                    </label>
+                  </div>
+                  <div className="col-sm-4">
+                    <label for="fname" className="form-label font-large">
+                      DATE OF BIRTH <i>(required)</i>
+                    </label>
+                  </div>
+                  <div className="col-sm-4">
+                    <label for="lname" className="form-label font-large">
+                      SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
+                    </label>
+                  </div>
+                </div>
+                <div className="row mt-0 pt-0">
+                  <div className="col-sm-4">
+                    <select
+                      name="sex"
+                      className="form-select"
+                      value={patientDetails.sex}
+                      onChange={handleDetailChange}
+                      required
+                    >
+                      <option>Female</option>
+                      <option>Male</option>
+                    </select>
+                  </div>
+                  <div className="col-sm-4">
+                    <input
+                      type="date"
+                      id="date"
+                      name="birthDate"
+                      className="full-input"
+                      value={patientDetails.birthDate}
+                      onChange={handleDetailChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-sm-4">
+                    <input
+                      type="text"
+                      id="senior_id"
+                      name="seniorId"
+                      className="full-input"
+                      value={!isSenior ? "" : seniorId}
+                      onChange={handleDetailChange}
+                      disabled={!isSenior}
+                      style={{ background: !isSenior ? "whitesmoke" : "" }}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row mb-0 pb-0">
+                  <div className="col-sm-6"></div>
+                  <div className="col-sm-6">
+                    <label for="fname" className="form-label font-large">
+                      PWD ID {isPWD && <i>(required)</i>}
+                    </label>
+                  </div>
+                </div>
+                <div className="row mt-0 pt-0">
+                  <div className="col-sm-6">
+                    <input
+                      type="checkbox"
+                      name="is_pwd"
+                      value="isPWD"
+                      id="mdCharge"
+                      checked={isPWD}
+                      onChange={(e) => setIsPWD(e.target.checked)}
+                    />
+                    <label for="mdCharge" className="booking-label">
+                      Person With Disabilities
+                    </label>
+                  </div>
 
-              <div className="col-sm-6">
-                <input
-                  type="text"
-                  id="pwd_id"
-                  name="pwdId"
-                  className="full-input"
-                  value={!isPWD ? "" : pwdId}
-                  disabled={!isPWD}
-                  onChange={handleDetailChange}
-                  required
-                  style={{ background: !isPWD ? "whitesmoke" : "" }}
-                />
-              </div>
-            </div>
-            <div className="row mb-0 pb-0">
-              <div className="col-sm-6">
-                <label for="fname" className="form-label font-large">
-                  EMAIL
-                </label>
-              </div>
-              <div className="col-sm-6">
-                <label for="fname" className="form-label font-large">
-                  CONTACT NUMBER <i>(required)</i>
-                </label>
-              </div>
-            </div>
-            <div className="row mt-0 pt-0">
-              <div className="col-sm-6">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="email"
-                  name="email"
-                  value={patientDetails.email}
-                  onChange={handleDetailChange}
-                  required
-                />
-              </div>
-              <div className="col-sm-6">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="contactNum"
-                  name="contactNum"
-                  value={patientDetails.contact_no}
-                  onChange={handleDetailChange}
-                  required
-                />
-              </div>
-            </div>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      id="pwd_id"
+                      name="pwdId"
+                      className="full-input"
+                      value={!isPWD ? "" : pwdId}
+                      disabled={!isPWD}
+                      onChange={handleDetailChange}
+                      required
+                      style={{ background: !isPWD ? "whitesmoke" : "" }}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-0 pb-0">
+                  <div className="col-sm-6">
+                    <label for="fname" className="form-label font-large">
+                      EMAIL
+                    </label>
+                  </div>
+                  <div className="col-sm-6">
+                    <label for="fname" className="form-label font-large">
+                      CONTACT NUMBER <i>(required)</i>
+                    </label>
+                  </div>
+                </div>
+                <div className="row mt-0 pt-0">
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="email"
+                      name="email"
+                      value={patientDetails.email}
+                      onChange={handleDetailChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="contactNum"
+                      name="contactNum"
+                      value={patientDetails.contact_no}
+                      onChange={handleDetailChange}
+                      required
+                    />
+                  </div>
+                </div>
 
-            <div className="row">
-              <div className="col-sm-12">
-                <label for="address" className="form-label font-large">
-                  ADDRESS <i>(required)</i>
-                </label>
-              </div>
+                <div className="row">
+                  <div className="col-sm-12">
+                    <label for="address" className="form-label font-large">
+                      ADDRESS <i>(required)</i>
+                    </label>
+                  </div>
 
-              <div className="col-sm-12 mb-4">
-                <input
-                  type="text"
-                  className="full-input"
-                  id="address"
-                  name="address"
-                  value={patientDetails.address}
-                  onChange={handleDetailChange}
-                  onFocus={() => {
-                    setRenderSuggest(true);
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      setRenderSuggest(false);
-                    }, 200);
-                  }}
-                  required
-                />
-              </div>
-            </div>
-            {/* {suggestions.length !== 0 && renderSuggest && (
+                  <div className="col-sm-12 mb-4">
+                    <input
+                      type="text"
+                      className="full-input"
+                      id="address"
+                      name="address"
+                      value={patientDetails.address}
+                      onChange={handleDetailChange}
+                      onFocus={() => {
+                        setRenderSuggest(true);
+                      }}
+                      onBlur={() => {
+                        setTimeout(() => {
+                          setRenderSuggest(false);
+                        }, 200);
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+                {/* {suggestions.length !== 0 && renderSuggest && (
               <div className="suggestions-list">
                 {suggestions.map((data, index) => (
                   <>
@@ -538,33 +531,33 @@ function UpdatePatient() {
                 ))}
               </div>
             )} */}
-
-         
+              </div>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>SUBMIT</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to submit the form?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    onClick={(e) => submit(e, patientDetails)}
+                  >
+                    Submit
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              <div>{showSubmitButton()}</div>
+            </form>
+            <ToastContainer />
           </div>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>SUBMIT</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Are you sure you want to submit the form?</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                onClick={(e) => submit(e, patientDetails)}
-              >
-                Submit
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <div>{showSubmitButton()}</div>
-        </form>
-        <ToastContainer />
+        </Fragment>
       </div>
-    </Fragment>
-    </div>
     </div>
   );
 }
