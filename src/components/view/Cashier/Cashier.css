@@ -1,91 +1,96 @@
 .content {
-    position: relative;
+  position: relative;
+}
+
+.cashier-row {
+  margin-bottom: -60px !important;
 }
 
 .cash-count-btn {
-    float: right;
-    font-size: 0.8rem !important;
-    margin-top: 3.8rem;
-    margin-right: 2rem;
-    width: 25%;
-    height: 20%;
-    font-size: 40%;
-    color: #55073A;
-    border: 1px solid #55073A;
-    box-sizing: border-box;
-    background-color: transparent;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 11px;
-    overflow: hidden;
+  float: right;
+  font-size: 0.8rem !important;
+  margin-top: 3.8rem;
+  margin-right: 2rem;
+  width: 25%;
+  height: 20%;
+  font-size: 40%;
+  color: #55073a;
+  border: 1px solid #55073a;
+  box-sizing: border-box;
+  background-color: transparent;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 11px;
+  overflow: hidden;
 }
 
 .cash-count-header {
-    font-family: 'Montserrat-Italic';
-    font-size: 36px;
-    color: #BFBC4B;
+  font-family: "Montserrat-Italic";
+  font-size: 36px;
+  color: #bfbc4b;
 }
 
 .close-btn {
-    background-color: #1087a5;
-    color: white;
-    border: none;
-    width: 15% !important;
-    border-radius: 1em;
-    padding:  0.5%;
+  background-color: #1087a5;
+  color: white;
+  border: none;
+  width: 15% !important;
+  border-radius: 1em;
+  padding: 0.5%;
 }
 
 .cash-count-sub-header {
-    font-family: 'Montserrat-Bold';
-    font-size: 20px;
-    line-height: 29px;
-    letter-spacing: 0.135em;
-    text-decoration-line: underline;
+  font-family: "Montserrat-Bold";
+  font-size: 20px;
+  line-height: 29px;
+  letter-spacing: 0.135em;
+  text-decoration-line: underline;
 
-    color: #419EA3;
-
+  color: #419ea3;
 }
-
-
 
 /*******
 Values
 *******/
 
 .HOMESERVICE {
-    color: #419EA3 !important;
-    font-weight: bold;
+  color: #419ea3 !important;
+  font-weight: bold;
 }
 
 .CLINIC {
-    color: #55073A;
-    font-weight: bold;
+  color: #55073a;
+  font-weight: bold;
 }
 
 .PAID {
-    color: #19A451;
+  color: #19a451;
 }
 
-.PENDING, .UNPAID {
-    font-weight: bold;
-    color: #DAC92F;
+.PENDING,
+.UNPAID {
+  font-weight: bold;
+  color: #dac92f;
 }
 
 .for-approval {
-    color: #DAC92F;
-    text-transform: uppercase;
-    font-weight: bold;
+  color: #dac92f;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
-.HOME, .CLINIC, .PAID, .PENDING, .CREDIT {
-    font-weight: bold;
+.HOME,
+.CLINIC,
+.PAID,
+.PENDING,
+.CREDIT {
+  font-weight: bold;
 }
 
-@media only screen and (max-width: 1000px){ 
-    .cash-count-btn {
-        margin-top: 3em;
-        padding-top: 1em;
-        padding-bottom: 3em;
-        font-size: 0.5em !important;
-    }
+@media only screen and (max-width: 1000px) {
+  .cash-count-btn {
+    margin-top: 3em;
+    padding-top: 1em;
+    padding-bottom: 3em;
+    font-size: 0.5em !important;
+  }
 }
-
