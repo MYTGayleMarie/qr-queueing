@@ -144,6 +144,14 @@ function Registration() {
     )
   }
 
+  if(redirectPrint == true) {
+    var link =  "/add-payment/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+
+
   if(redirectPay == true) {
     var link =  "/add-payment/" + id;
     return (

@@ -646,7 +646,7 @@ function OldPatientForm2({
 
               {typeof checkedServicesDetails[0] !== "undefined"
                 ? checkedServicesDetails.map((data, index) => (
-                    <div className="row">
+                    <div className="row lh-sm p-0 m-0">
                       <div className="col-2">{index + 1}</div>
                       <div className="col">
                         <p className="item">{data.name}</p>
