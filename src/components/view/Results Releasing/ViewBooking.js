@@ -284,18 +284,8 @@ console.log(services)
   /****************/
   const hematology = labTests.filter(
     (info) =>
-      info.key === "hematology" &&
-      info.test_id !== "8" &&
-      info.test_id !== "13" &&
-      info.test_id !== "15"
+      info.key === "hematology"
   );
-
-  const cbc = labTests.filter((info) => info.test_id === "8");
-
-  const esr = labTests.filter((info) => info.test_id === "13");
-
-  const clotting = labTests.filter((info) => info.test_id === "15");
-
   /****************/
 
   // previously serology
@@ -669,33 +659,9 @@ console.log(services)
                   )}
 
                   {/* HEMATOLOGY */}
-                  {(hematology.length != 0 ||
-                    cbc.length != 0 ||
-                    esr.length != 0 ||
-                    clotting.length != 0) && (
+                  {(hematology.length != 0) && (
                     <div>
                       <div className="category label">HEMATOLOGY</div>
-                      {cbc.length != 0 && (
-                        <GenerateResults
-                          servicesData={cbc}
-                          title={"HEMATOLOGY"}
-                          bookingId={bookingId}
-                        />
-                      )}
-                      {esr.length != 0 && (
-                        <GenerateResults
-                          servicesData={esr}
-                          title={"HEMATOLOGY"}
-                          bookingId={bookingId}
-                        />
-                      )}
-                      {clotting.length != 0 && (
-                        <GenerateResults
-                          servicesData={clotting}
-                          title={"HEMATOLOGY"}
-                          bookingId={bookingId}
-                        />
-                      )}
                       {hematology.length != 0 && (
                         <FileUpload
                           servicesData={hematology}

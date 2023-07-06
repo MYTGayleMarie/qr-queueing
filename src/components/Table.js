@@ -44,6 +44,7 @@ function Table({
   selectSupplier,
   handleOnChange,
   deleteBooking,
+  editBooking,
   deleteCustomer,
   userId,
   editAction,
@@ -165,6 +166,18 @@ function Table({
                   ADD PAYMENT
                 </button>
                 {(userId == 10 || userId == 18) && (
+                <>
+                  <br />
+                  <button
+                    class="action-btn"
+                    role="button"
+                    onClick={() => editBooking(row.id)}
+                  >
+                    UPDATE PATIENT
+                  </button>
+                </>
+              )}
+                {(userId == 10 || userId == 18) && (
                   <>
                     <br />
                     <button
@@ -178,8 +191,8 @@ function Table({
                 )}
               </td>
             )}
-          {(rowData[5].val == "paid" ||
-            rowData[0].val != "no_company_discount") && (
+          {(rowData[6].val == "paid" ||
+            rowData[1].val != "no_company_discount") && (
             <td>
               <button
                 class="action-btn"
@@ -188,6 +201,18 @@ function Table({
               >
                 PRINT BOOKING
               </button>
+              {(userId == 10 || userId == 18) && (
+                <>
+                  <br />
+                  <button
+                    class="action-btn"
+                    role="button"
+                    onClick={() => editBooking(row.customer_id)}
+                  >
+                    UPDATE PATIENT
+                  </button>
+                </>
+              )}
               {(userId == 10 || userId == 18) && (
                 <>
                   <br />
