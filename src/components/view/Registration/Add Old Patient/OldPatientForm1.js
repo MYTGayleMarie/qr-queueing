@@ -38,7 +38,6 @@ function OldPatientForm1({
   extractionDate,
   setExtractionDate,
 }) {
-  console.log("THIS IS A TEST ", customer);
   document.body.style = "background: white;";
   //customer details
   const [firstName, setFirstName] = useState("");
@@ -123,10 +122,13 @@ function OldPatientForm1({
       referral != ""
     ) {
       return (
-        <div className="d-flex justify-content-end">
-          <button className="proceed-btn" onClick={() => navigation.next()}>
-            PROCEED
-          </button>
+        <div className="row d-flex justify-content-end mb-3">
+          <div className="col-6 align-right text-right">
+            <button className="proceed-btn" onClick={() => navigation.next()}>
+              PROCEED
+            </button>
+          </div>
+          <div className="col-1"></div>
         </div>
       );
     }
@@ -359,7 +361,7 @@ function OldPatientForm1({
 
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
-        <div className="personal-data-cont">
+        <div className="personal-data-cont ">
           <div className="row">
             <div className="col-sm-4">
               <span className="first-name label">FIRST NAME</span>
@@ -423,35 +425,42 @@ function OldPatientForm1({
             ) : null}
           </div>
         </div>
-
-        <div className="booking-form">
-          <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
+        <h3
+          className="form-categories-header italic"
+          style={{ marginTop: "0px" }}
+        >
+          BOOKING DETAILS
+        </h3>
+        <div
+          className="personal-data-cont mb-5"
+          style={{ marginBottom: "0px" }}
+        >
           <form className="needs-validation">
             <div className="row">
-              <label for="address" className="form-label">
-                REFERRAL <i>(required)</i>
-              </label>
-              <br />
-              <input
-                type="text"
-                className="form-control full"
-                id="referral"
-                name="referral"
-                value={referral}
-                onChange={setPersonal}
-                required
-              />
-              <br />
-            </div>
-
-            <div className="row">
-              <div className="col-sm-6">
-                <label for="address" className="form-label">
-                  DISCOUNT CODE
-                </label>
+              <div className="col-sm-12 input-group-sm">
+                <span className="first-name label">
+                  REFERRAL <i>(required)</i>
+                </span>
                 <br />
+
+                <input
+                  type="text"
+                  className="form-control full input-group"
+                  id="referral"
+                  name="referral"
+                  value={referral}
+                  onChange={setPersonal}
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-6 input-group-sm">
+                <span className="first-name label">DISCOUNT CODE</span>
+                <br />
+
                 <select
-                  className="select-input full"
+                  className="select-input full form-select form-select-sm"
                   id="discount_code"
                   name="discountId"
                   value={discountId}
@@ -460,25 +469,21 @@ function OldPatientForm1({
                   <option value="">None</option>
                   {listOfDiscount}
                 </select>
-                <br />
               </div>
-              <div className="col-sm-6">
-                <label for="address" className="form-label">
-                  DISCOUNT REMARKS
-                </label>
+              <div className="col-sm-6 input-group-sm">
+                <span className="first-name label">DISCOUNT REMARKS</span>
                 <br />
+
                 <span className="remarks ">
                   {companyRemarks != "" && companyRemarks}
                 </span>
               </div>
             </div>
-
             <div className="row">
-              <div className="col-sm-12">
-                <label for="address" className="form-label">
-                  DISCOUNT DETAIL
-                </label>
+              <div className="col-sm-12 input-group-sm">
+                <span className="first-name label">DISCOUNT DETAIL</span>
                 <br />
+
                 <input
                   type="text"
                   className="form-control full"
@@ -487,15 +492,14 @@ function OldPatientForm1({
                   value={discountDetail}
                   onChange={setPersonal}
                 />
-                <br />
               </div>
             </div>
+            <div className="row">
+              <div className="col-sm-6 input-group-sm">
+                <span className="radio-header">LOCATION OF SERVICE</span>
+                <br />
 
-            <div className="row small-gap">
-              <div className="col-sm-6">
                 <div className="row">
-                  <span className="radio-header">LOCATION OF SERVICE</span>
-                  <br />
                   <div className="col">
                     <input
                       type="radio"
@@ -505,7 +509,11 @@ function OldPatientForm1({
                       checked={serviceLocation === "clinic"}
                       onChange={setPersonal}
                     />
-                    <label for="clinic" className="radio-label">
+                    <label
+                      for="clinic"
+                      className="radio-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       CLINIC
                     </label>
                   </div>
@@ -518,19 +526,22 @@ function OldPatientForm1({
                       checked={serviceLocation === "home service"}
                       onChange={setPersonal}
                     />
-                    <label for="home-service" className="radio-label">
+                    <label
+                      for="home-service"
+                      className="radio-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       HOME SERVICE
                     </label>
                   </div>
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 input-group-sm">
+                <span className="radio-header">RESULTS</span>
+                <br />
+
                 <div className="row">
-                  <label for="result" className="radio-header">
-                    RESULTS
-                  </label>
-                  <br />
-                  <div className="col">
+                  <div className="col-3">
                     <input
                       type="radio"
                       id="result"
@@ -539,11 +550,15 @@ function OldPatientForm1({
                       checked={result === "email"}
                       onChange={setPersonal}
                     />
-                    <label for="email" className="radio-label">
+                    <label
+                      for="email"
+                      className="radio-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       EMAIL
                     </label>
                   </div>
-                  <div className="col">
+                  <div className="col-5">
                     <input
                       type="radio"
                       id="result"
@@ -552,11 +567,15 @@ function OldPatientForm1({
                       checked={result === "print with pickup"}
                       onChange={setPersonal}
                     />
-                    <label for="print-with-pickup" className="radio-label">
+                    <label
+                      for="print-with-pickup"
+                      className="radio-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       PRINT WITH PICKUP
                     </label>
                   </div>
-                  <div className="col">
+                  <div className="col-4">
                     <input
                       type="radio"
                       id="result"
@@ -565,18 +584,23 @@ function OldPatientForm1({
                       checked={result === "both"}
                       onChange={setPersonal}
                     />
-                    <label for="print-with-pickup" className="radio-label">
+                    <label
+                      for="print-with-pickup"
+                      className="radio-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       BOTH
                     </label>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row small-gap">
-              <div className="col-sm-6">
+            <div className="row">
+              <div className="col-sm-6 input-group-sm">
+                <span className="radio-header">MD CHARGE</span>
+                <br />
+
                 <div className="row">
-                  <span className="radio-header">MD CHARGE</span>
-                  <br />
                   <div className="col">
                     <input
                       type="checkbox"
@@ -585,7 +609,11 @@ function OldPatientForm1({
                       checked={mdCharge.physical_exam == true}
                       onChange={setMdCharge}
                     />
-                    <label for="mdCharge" className="booking-label">
+                    <label
+                      for="mdCharge"
+                      className="booking-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       Physical Exam
                     </label>
                   </div>
@@ -597,7 +625,11 @@ function OldPatientForm1({
                       checked={mdCharge.medical_certificate == true}
                       onChange={setMdCharge}
                     />
-                    <label for="mdCharge" className="booking-label">
+                    <label
+                      for="mdCharge"
+                      className="booking-label"
+                      style={{ fontSize: "medium" }}
+                    >
                       Medical Certificate
                     </label>
                   </div>
@@ -605,32 +637,27 @@ function OldPatientForm1({
               </div>
               <div className="col-sm-6">{homeServiceFeeDisplay()}</div>
             </div>
-
-            <div className="row date-of-testing-container large-gap">
-              <div className="col-sm-4">
-                <label for="date" className="form-label">
-                  DATE OF TESTING<i>(required)</i>
-                </label>
+            <div className="row mb-3">
+              <div className="col-sm-6 input-group-sm">
+                <span className="first-name label">
+                  DATE OF TESTING <i>(required)</i>
+                </span>
                 <br />
+
                 <DateTimePicker onChange={setDOT} value={dateOfTesting} />
               </div>
-              <div className="col-sm-4">
-                <label for="last_meal" className="form-label">
-                  DATE OF EXTRACTION<i>(required)</i>
-                </label>
+              <div className="col-sm-6 input-group-sm">
+                <span className="first-name label">
+                  DATE OF EXTRACTION <i>(required)</i>
+                </span>
                 <br />
+
                 <DateTimePicker
                   onChange={setExtractionDate}
                   value={extractionDate}
                 />
               </div>
-              {/* <div className="col-sm-4">
-                     <label for="date" className="form-label">SINCE LAST MEAL</label><br />
-                         <span className="since-lastmeal">{sinceLastMeal()}</span>
-
-                     </div> */}
             </div>
-
             <div>{proceed()}</div>
           </form>
         </div>

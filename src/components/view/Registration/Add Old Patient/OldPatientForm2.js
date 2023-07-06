@@ -201,9 +201,8 @@ function OldPatientForm2({
         const packagesArray = response.data.packages.sort(
           (x, y) => x.id - y.id
         );
-        console.log(packagesArray);
+
         packagesArray.map((item, index) => {
-          // console.log(item)
           var packageDetails = {};
           var packageCode = "";
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
@@ -556,11 +555,16 @@ function OldPatientForm2({
       <div className="active-cont">
         <Header type="thin" title="ADD BOOKING" />
 
-        <div className="booking-form">
+        <div style={{ width: "85%", marginLeft: "5%" }}>
           <form className="needs-validation">
             <div className="row clinical-services-container">
               <div className="col-sm-6">
-                <h3 className="form-categories-header italic">PACKAGES</h3>
+                <h3
+                  className="form-categories-header italic"
+                  style={{ marginTop: "0px" }}
+                >
+                  PACKAGES
+                </h3>
               </div>
               <div className="col-sm-6">
                 <div className="d-flex justify-content-end">
@@ -635,7 +639,7 @@ function OldPatientForm2({
                 /> */}
             </div>
 
-            <div className="row summary-text">
+            <div className="row summary-text mt-1 mb-1">
               <h3 className="form-categories-header italic medium-text ">
                 TOTAL SUMMARY
               </h3>
@@ -661,10 +665,10 @@ function OldPatientForm2({
                 : null}
             </div>
 
-            <div className="col d-flex justify-content-end">
-              {isCompany == false &&
-                discount != "" &&
-                discountDetails.length == 0 && (
+            {isCompany == false &&
+              discount != "" &&
+              discountDetails.length == 0 && (
+                <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
@@ -675,10 +679,12 @@ function OldPatientForm2({
                       %
                     </b>
                   </span>
-                )}
-              {isCompany == false &&
-                discount != "" &&
-                discountDetails.length != 0 && (
+                </div>
+              )}
+            {isCompany == false &&
+              discount != "" &&
+              discountDetails.length != 0 && (
+                <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
@@ -699,8 +705,10 @@ function OldPatientForm2({
                       }
                     })}
                   </span>
-                )}
-              {isCompany != false && discount != "" && (
+                </div>
+              )}
+            {isCompany != false && discount != "" && (
+              <div className="col d-flex justify-content-end">
                 <span className="total-price">
                   <b>
                     DISCOUNT P
@@ -710,8 +718,8 @@ function OldPatientForm2({
                     })}
                   </b>
                 </span>
-              )}
-            </div>
+              </div>
+            )}
 
             {totalMDCharge != 0 && (
               <div className="col d-flex justify-content-end">
@@ -741,8 +749,8 @@ function OldPatientForm2({
               </div>
             )}
 
-            <div className="row">
-              <div className="col d-flex justify-content-end">
+            <div className="d-flex row justify-content-end">
+              <div className="col text-right align-right">
                 <span className="total-price">
                   <b>
                     SUBTOTAL P{" "}
@@ -914,7 +922,7 @@ function OldPatientForm2({
                 )}
             </div>
 
-            <div className="row">
+            <div className="row mt-0">
               <div className="col-sm-6">
                 <div className="d-flex justify-content-start">
                   <button
@@ -925,7 +933,7 @@ function OldPatientForm2({
                   </button>
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 mb-5">
                 <div className="d-flex justify-content-end">
                   <button
                     className="proceed-btn"

@@ -212,9 +212,8 @@ function OldPatientForm3({
         const packagesArray = response.data.packages.sort(
           (x, y) => x.id - y.id
         );
-        console.log(packagesArray);
+
         packagesArray.map((item, index) => {
-          // console.log(item)
           var packageDetails = {};
           var packageCode = "";
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
@@ -349,7 +348,6 @@ function OldPatientForm3({
   //functions
   function getDetails(categoryItems, checkedItem) {
     categoryItems.map((data, index) => {
-      console.log(data);
       if (data.key == checkedItem) {
         itemDetails = {
           name: data.name,
@@ -434,8 +432,6 @@ function OldPatientForm3({
           location_value = "Mobile Charge";
         }
 
-        console.log(location);
-
         axios({
           method: "post",
           url: window.$link + "bookings/create",
@@ -481,7 +477,6 @@ function OldPatientForm3({
           },
         })
           .then(function (response) {
-            // console.log(response.data.data);
             setBookingId(response.data.data.booking_id);
             toast.success(response.data.message.success);
 
@@ -513,10 +508,8 @@ function OldPatientForm3({
   const asArray = Object.entries(service);
   const checkedServices = asArray.filter(([key, value]) => value == true);
   var checkedServicesDetails = [];
-  // console.log(checkedServices)
 
   checkedServices.map((data, index) => {
-    console.log(data);
     var categoryDetails = data[0].split("_");
     var categoryId = parseInt(categoryDetails[1]);
 
@@ -560,7 +553,6 @@ function OldPatientForm3({
       // break;
     }
 
-    // console.log(checkedServicesDetails)
     //lab
     switch (categoryId) {
       case 1:
@@ -680,8 +672,6 @@ function OldPatientForm3({
   //Total discount labs/packages
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
-      // console.log(data);
-
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
         labDiscountedTotal = 0;
@@ -702,11 +692,9 @@ function OldPatientForm3({
       }
     });
   }
-  // console.log(checkedServicesDetails)
 
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
-      // console.log(data);
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
         newLabTotal = 0;
@@ -766,7 +754,7 @@ function OldPatientForm3({
       <div className="active-cont">
         <Header type="thin" title="ADD PATIENT" />
 
-        <div className="booking-form">
+        <div style={{ width: "85%", marginLeft: "10%" }}>
           <form
             className="needs-validation"
             onSubmit={(e) =>
@@ -969,7 +957,7 @@ function OldPatientForm3({
                 /> */}
             </div>
 
-            <div className="row summary-text">
+            <div className="row summary-text mt-1 mb-0">
               <h3 className="form-categories-header italic medium-text ">
                 TOTAL SUMMARY
               </h3>
@@ -995,10 +983,10 @@ function OldPatientForm3({
                 : null}
             </div>
 
-            <div className="col d-flex justify-content-end">
-              {isCompany == false &&
-                discount != "" &&
-                discountDetails.length == 0 && (
+            {isCompany == false &&
+              discount != "" &&
+              discountDetails.length == 0 && (
+                <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
@@ -1009,10 +997,12 @@ function OldPatientForm3({
                       %
                     </b>
                   </span>
-                )}
-              {isCompany == false &&
-                discount != "" &&
-                discountDetails.length != 0 && (
+                </div>
+              )}
+            {isCompany == false &&
+              discount != "" &&
+              discountDetails.length != 0 && (
+                <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
@@ -1024,8 +1014,10 @@ function OldPatientForm3({
                     </b>{" "}
                     - {discountCode}
                   </span>
-                )}
-              {isCompany != false && discount != "" && (
+                </div>
+              )}
+            {isCompany != false && discount != "" && (
+              <div className="col d-flex justify-content-end">
                 <span className="total-price">
                   <b>
                     DISCOUNT P
@@ -1035,8 +1027,8 @@ function OldPatientForm3({
                     })}
                   </b>
                 </span>
-              )}
-            </div>
+              </div>
+            )}
 
             {totalMDCharge != 0 && (
               <div className="col d-flex justify-content-end">
@@ -1239,7 +1231,7 @@ function OldPatientForm3({
                 )}
             </div>
 
-            <div className="row">
+            <div className="row mb-5">
               <div className="col-sm-6">
                 <div className="d-flex justify-content-start">
                   <button
