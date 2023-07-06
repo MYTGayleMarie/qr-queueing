@@ -166,17 +166,17 @@ function Table({
                   ADD PAYMENT
                 </button>
                 {(userId == 10 || userId == 18) && (
-                <>
-                  <br />
-                  <button
-                    class="action-btn"
-                    role="button"
-                    onClick={() => editBooking(row.id)}
-                  >
-                    UPDATE PATIENT
-                  </button>
-                </>
-              )}
+                  <>
+                    <br />
+                    <button
+                      class="action-btn"
+                      role="button"
+                      onClick={() => editBooking(row.id)}
+                    >
+                      UPDATE PATIENT
+                    </button>
+                  </>
+                )}
                 {(userId == 10 || userId == 18) && (
                   <>
                     <br />
@@ -1286,15 +1286,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1357,15 +1365,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1425,15 +1441,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1493,15 +1517,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1562,15 +1594,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1630,15 +1670,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1729,15 +1777,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2311,15 +2367,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2378,15 +2442,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2450,15 +2522,17 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          {/* <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          {/* <div className={totalCount !== null ? "col-sm-10 d-flex justify-content-end":"col-sm-12 d-flex justify-content-end"}>
             <input
               type="date"
               className="from-date search"
@@ -2563,15 +2637,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2641,14 +2723,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          {/* <div className="col-sm-2">
-                    {totalCount != null && (
-                        <div className="total-count-container">
-                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
-                        </div>
-                    )}
-                </div> */}
-          <div className="col-sm-10 d-flex justify-content-end">
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            </div>
+          )}
+
+          {/* <div */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
