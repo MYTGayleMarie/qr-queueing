@@ -98,6 +98,8 @@ export default function LabOfficer() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [senior_id, setSeniorId] = useState("");
+  const [pwd_id, setPWDId] = useState(""); 
   const componentRef = useRef();
 
   // Lab Tests
@@ -541,6 +543,8 @@ export default function LabOfficer() {
         setContactNo(response.data.data.booking.contact_no);
         setEmail(response.data.data.booking.customer_email);
         setAddress(response.data.data.booking.customer_address);
+        setSeniorId(response.data.data.booking.senior_id);
+        setPWDId(response.data.data.booking.pwd_id)
       })
       .catch((error) => {});
   }, []);
@@ -1826,10 +1830,18 @@ export default function LabOfficer() {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-6">
+                <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
-              </div>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
+                </div>
             </div>
           </div>
           <br />

@@ -76,7 +76,9 @@ function AddPayment() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [seniorPwdId, setID] = useState("");
+  const [seniorPwdId, setseniorPwdId] = useState("");
+  const [senior_id, setSeniorId] = useState("");
+  const [pwd_id, setPWDId] = useState("");
   const [patientId, setPatientId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [paymentType, setPaymentType] = useState("");
@@ -229,6 +231,8 @@ function AddPayment() {
             setContactNo(customer.data.contact_no);
             setEmail(customer.data.email);
             setAddress(customer.data.address);
+            setSeniorId(customer.data.senior_id);
+            setPWDId(customer.data.pwd_id);
             setLoadingCust(true);
           })
           .catch(function (error) {
@@ -1405,10 +1409,18 @@ function AddPayment() {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-6">
+                <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
-              </div>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
+                </div>
             </div>
           </div>
 

@@ -57,6 +57,8 @@ function PrintBooking() {
   const [address, setAddress] = useState("");
   const [seniorPwdId, setID] = useState("");
   const [patientId, setPatientId] = useState("");
+  const [senior_id, setSeniorId] = useState("");
+  const [pwd_id, setPWDId] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [companyCode, setCompanyCode] = useState("");
   const [paidAmount, setPaidAmount] = useState(0);
@@ -125,6 +127,8 @@ function PrintBooking() {
             setEmail(customer.data.email);
             setAddress(customer.data.address);
             setPatientId(response.data.customer_id);
+            setSeniorId(customer.data.senior_id);
+            setPWDId(customer.data.pwd_id);
           })
           .catch(function (error) {
             console.log(error);
@@ -411,11 +415,19 @@ function PrintBooking() {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6">
-              <span className="address label">ADDRESS</span>
-              <span className="address detail">{address.toUpperCase()}</span>
+                <div className="col-sm-4">
+                <span className="address label">ADDRESS</span>
+                <span className="address detail">{address.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
+                </div>
             </div>
-          </div>
         </div>
 
         <h1 className="test-header">LABORATORY TESTS</h1>
