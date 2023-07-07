@@ -2,13 +2,13 @@
   font-size: 20px;
 }
 
-.col-sm-2 {
+/* .col-sm-2 {
   margin: 5%;
 }
 
 .col {
   margin: 5%;
-}
+} */
 
 .booking-form {
   margin: 10%;
@@ -34,7 +34,7 @@
 label {
   font-family: "Montserrat-Bold";
   color: #419ea3;
-  font-size: 25px;
+  /* font-size: 25px; */
 }
 
 .forms .row + .row {

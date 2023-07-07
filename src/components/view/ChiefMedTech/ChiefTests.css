@@ -1,20 +1,19 @@
 .personal-data-cont {
-    margin: 2% 0% 0% 4%;
-    width: 100%;
+  margin: 2% 0% 0% 4%;
+  width: 100%;
 }
 
 .label {
-    color: #419EA3;
-    font-family: 'Montserrat-Bold';
-    height: 50px;
+  color: #419ea3;
+  font-family: "Montserrat-Bold";
+  height: 50px;
 }
 
 .detail {
-    margin-left: 8%;
-    font-family: 'Montserrat-Regular';
-
+  margin-left: 8%;
+  font-family: "Montserrat-Regular";
 }
 
 .row {
-    margin-bottom: 2%;
+  /* margin-bottom: 2%; */
 }

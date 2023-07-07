@@ -34,7 +34,7 @@
 label {
   font-family: "Montserrat-Bold";
   color: #419ea3;
-  font-size: 25px;
+  /* font-size: 25px; */
 }
 
 .forms .row + .row {
