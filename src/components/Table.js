@@ -2181,6 +2181,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -2188,6 +2189,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="service_location" onChange={setFilter}>
               <option value="" selected>
