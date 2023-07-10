@@ -531,7 +531,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Extraction</span>
           </li>
         </NavLink> */}
-       {/*  <NavLink to="/imaging" activeClassName="active" class="link">
+          {/*  <NavLink to="/imaging" activeClassName="active" class="link">
           <li href="#" class="nav-link imaging-nav">
             <img src={imagingIcon} alt={'imaging'} class="imaging icon"></img>
             <span class="mx-2">Imaging</span>
@@ -650,6 +650,72 @@ function adminNavbar(showNavbar, setshowNavbar) {
             <li href="#" class="nav-link users-nav">
               <img src={usersIcon} alt={"users"} class="users icon"></img>
               <span class="mx-2">Users</span>
+            </li>
+          </NavLink>
+
+          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+            <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+            <span class="mx-2">Log Out</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function supervisorNavbar(showNavbar, setshowNavbar) {
+  return (
+    <div>
+      <div
+        class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+        id="sidebar"
+      >
+        <ul class="nav flex-column text-white w-100">
+          <div class="d-flex justify-content-center">
+            <img src={logo} alt={"logo"} class="navbar-logo"></img>
+          </div>
+
+          <NavLink to="/registration" activeClassName="active" class="link">
+            <li href="#" class="nav-link cashier-nav">
+              <img
+                src={registrationIcon}
+                alt={"registration"}
+                class="registration icon"
+              ></img>
+              <span class="mx-2">Registration</span>
+            </li>
+          </NavLink>
+          <NavLink to="/add-old-patient" activeClassName="active" class="link">
+            <li href="#" class="nav-link cashier-nav">
+              <img src={patientIcon} alt={"patient"} class="patient icon"></img>
+              <span class="mx-2">Patient</span>
+            </li>
+          </NavLink>
+
+          <NavLink to="/cashier" activeClassName="active" class="link">
+            <li href="#" class="nav-link cashier-nav">
+              <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
+              <span class="mx-2">Cashier</span>
+            </li>
+          </NavLink>
+
+          <NavLink to="/medtech" activeClassName="active" class="link">
+            <li href="/medtech" class="nav-link imaging-nav">
+              <img src={medTechIcon} alt={"medTech"} class="medTech icon"></img>
+              <span class="mx-2">Results Releasing</span>
+            </li>
+          </NavLink>
+          {/* 
+          <NavLink to="/aging-report" activeClassName="active" class="link">
+            <li href="/aging-report" class="nav-link imaging-nav">
+              <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
+              <span class="mx-2">Aging Report</span>
+            </li>
+          </NavLink> */}
+          <NavLink to="/reports" activeClassName="active" class="link">
+            <li href="#" class="nav-link report-nav">
+              <img src={reportIcon} alt={"report"} class="report icon"></img>
+              <span class="mx-2">Reports</span>
             </li>
           </NavLink>
 
@@ -1476,6 +1542,84 @@ function AdminNavbarTop(
     </div>
   );
 }
+function supervisorNavbarTop(
+  showNavbar,
+  showMobileNavBar,
+  showSupply,
+  setShowSupply,
+  showCompany,
+  setShowCompany
+) {
+  return (
+    <div class="navbar">
+      <div class="logo-mobile">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+      <div id="nav-icon">
+        <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+      </div>
+      <div id="side-nav">
+        <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+        <NavLink to="/registration" activeClassName="active" class="link">
+          <img
+            src={registrationIcon}
+            alt={"registration"}
+            class="registration icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Registration</span>
+        </NavLink>
+        <NavLink to="/add-old-patient" activeClassName="active" class="link">
+          <img
+            src={patientIcon}
+            alt={"patient"}
+            class="patient icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Patient</span>
+        </NavLink>
+
+        <NavLink to="/cashier" activeClassName="active" class="link">
+          <img
+            src={cashierIcon}
+            alt={"cashier"}
+            class="cashier icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Cashier</span>
+        </NavLink>
+
+        <NavLink to="/medtech" activeClassName="active" class="link">
+          <img
+            src={medTechIcon}
+            alt={"medTech"}
+            class="medTech icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Results Releasing</span>
+        </NavLink>
+
+        <NavLink to="/reports" activeClassName="active" class="link">
+          <img
+            src={reportIcon}
+            alt={"report"}
+            class="report icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Reports</span>
+        </NavLink>
+
+        <a href="#" class="nav-link" onClick={removeUserSession}>
+          <img
+            src={logoutIcon}
+            alt={"logout"}
+            class="logout icon mobile-size-icon"
+          ></img>
+          <span class="mx-2 logout-text">Log Out</span>
+        </a>
+      </div>
+    </div>
+  );
+}
 
 function Navbar() {
   const [role, setRole] = useState("");
@@ -1546,6 +1690,16 @@ function Navbar() {
           showCompany,
           setShowCompany
         )}
+      {showNavbar == false &&
+        role == 12 &&
+        supervisorNavbarTop(
+          showNavbar,
+          showMobileNavBar,
+          showSupply,
+          setShowSupply,
+          showCompany,
+          setShowCompany
+        )}
 
       {showNavbar == false &&
         role == 6 &&
@@ -1608,6 +1762,9 @@ function Navbar() {
       {showNavbar == true &&
         role == 10 &&
         laboratoryReleasingNavbar(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 12 &&
+        supervisorNavbar(showNavbar, setshowNavbar)}
     </div>
   );
 }
