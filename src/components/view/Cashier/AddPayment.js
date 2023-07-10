@@ -135,7 +135,7 @@ function AddPayment() {
   //Discount
   const [discountList, setDiscountList] = useState([]);
   const [discountCode, setDiscountCode] = useState("");
-  const [discountDetails, setDiscountDetails] = useState("");
+  const [discountDetail, setDiscountDetail] = useState("");
 
   //Loaders
   const [loadingCust, setLoadingCust] = useState(false);
@@ -180,6 +180,7 @@ function AddPayment() {
       },
     })
       .then(function (response) {
+        setDiscountDetail(response.data.discount_detail);
         setPaidAmount(response.data.paid_amount);
         setPaymentStatus(response.data.payment_status);
         setPaymentType(response.data.payment_type);
@@ -1409,18 +1410,22 @@ function AddPayment() {
               </div>
             </div>
             <div className="row">
-                <div className="col-sm-4">
+              <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
-                </div>
-                <div className="col-sm-4">
+              </div>
+              <div className="col-sm-4">
                 <span className="address label">Senior ID</span>
-                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
-                </div>
-                <div className="col-sm-4">
+                <span className="address detail">
+                  {senior_id !== null ? senior_id.toUpperCase() : "N/A"}
+                </span>
+              </div>
+              <div className="col-sm-4">
                 <span className="address label">PWD ID</span>
-                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
-                </div>
+                <span className="address detail">
+                  {pwd_id !== null ? pwd_id.toUpperCase() : "N/A"}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -1450,15 +1455,16 @@ function AddPayment() {
             </div>
           )}
 
-          {paymentStatus == "paid" &&
+          {((paymentStatus == "paid" &&
             queueNumber != "" &&
-            printData == true && (
-              <div className="row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  {printButton()}
-                </div>
+            printData == true) ||
+            discountDetail === "with_company_discount") && (
+            <div className="row">
+              <div className="col-sm-12 d-flex justify-content-end">
+                {printButton()}
               </div>
-            )}
+            </div>
+          )}
 
           {paymentStatus != "paid" && printData == false && (
             <div className="row">
