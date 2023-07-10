@@ -261,6 +261,21 @@ export default function LabOfficer() {
     ) {
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
       setIsDropdown(true);
+    }else if (
+        selectedLab.label == "Anti HBs/HBSab (Hepatitis B Antibody)"
+      ) {
+        if (lab_test == "Hepatitis B Surface Antibody Test") {
+          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+          setIsDropdown(true);
+        } else if (lab_test == "Anti-HCV") {
+          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+          setIsDropdown(true);
+        } else if (lab_test == "Anti-HAV	") {
+          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+          setIsDropdown(true);
+        } else {
+          setIsDropdown(false);
+        }
     } else {
       setIsDropdown(false);
     }

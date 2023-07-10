@@ -849,13 +849,29 @@ const labResultsData = {
 
   labTestHepatitisA: [
     {
-      lab_test: "Hepatitis B Surface Antibody Test, Anti-HCV, Anti-HAV",
+      lab_test: "Hepatitis B Surface Antibody Test",
       result: "",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
+    {
+      lab_test: "Anti-HCV",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HAV",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    }
   ],
 
   labTestTSH: [
