@@ -1997,6 +1997,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -2004,6 +2005,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="status" value={status} onChange={setFilter}>
               <option value="for approval" selected>
