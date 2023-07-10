@@ -17,7 +17,12 @@ import TableLoader7 from "./TableLoader7";
 import "./Table.scss";
 import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
-import { formatDate, formatPrice } from "../utilities/Common";
+import {
+  formatDate,
+  formatPrice,
+  getRole,
+  getRoleId,
+} from "../utilities/Common";
 
 function Table({
   clickable,
@@ -65,6 +70,7 @@ function Table({
 }) {
   const navigate = useNavigate();
   //PAGINATION
+  const [roleId, setRoleId] = useState(getRoleId().replace(/^"(.*)"$/, "$1"));
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(tableData, page, rowsPerPage, type);
@@ -3052,11 +3058,13 @@ function Table({
             value={to_date}
             onChange={setFilter}
           />
-          <select name="status_filter" onChange={setFilter}>
-            <option value="unpaid">UNPAID</option>
-            <option value="paid">PAID</option>
-            <option value="all">ALL</option>
-          </select>
+          {roleId !== "3" && (
+            <select name="status_filter" onChange={setFilter}>
+              <option value="unpaid">UNPAID</option>
+              <option value="paid">PAID</option>
+              <option value="all">ALL</option>
+            </select>
+          )}
           <button
             className="filter-btn"
             name="done"
