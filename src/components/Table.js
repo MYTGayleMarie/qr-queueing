@@ -155,7 +155,7 @@ function Table({
               {totalCount == null && index == 0 ? "" : data.val}
             </td>
           ))}
-          {rowData[5].val == "unpaid" &&
+          {rowData[6].val == "unpaid" &&
             rowData[0].val == "no_company_discount" && (
               <td>
                 <button
@@ -192,7 +192,7 @@ function Table({
               </td>
             )}
           {(rowData[6].val == "paid" ||
-            rowData[1].val != "no_company_discount") && (
+            rowData[0].val === "with_company_discount") && (
             <td>
               <button
                 class="action-btn"
