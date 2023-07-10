@@ -1691,7 +1691,9 @@ function Table({
           {/* </div> */}
           <div
             className={
-              totalCount !== null && totalCount !== undefined
+              totalCount !== null &&
+              totalCount !== undefined &&
+              parseInt(totalCount) <= 0
                 ? "col-sm-10 d-flex justify-content-end"
                 : "col-sm-12 d-flex justify-content-end mb-1"
             }
@@ -1702,6 +1704,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1709,6 +1712,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="status" onChange={setFilter}>
               <option value="all" selected>
