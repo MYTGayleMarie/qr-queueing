@@ -1546,6 +1546,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1553,11 +1554,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
