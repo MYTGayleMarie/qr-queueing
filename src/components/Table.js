@@ -2112,7 +2112,11 @@ function Table({
       <div className="table-container">
         <div className="search-table-container row">
           <div className="col-sm-12 d-flex justify-content-end">
-            <select value={year} onChange={setFilter}>
+            <select
+              value={year}
+              onChange={setFilter}
+              disabled={roleId === "12"}
+            >
               {yearRange.map((data) => {
                 return <option value={data}>{data}</option>;
               })}
