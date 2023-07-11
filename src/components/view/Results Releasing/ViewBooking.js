@@ -331,6 +331,12 @@ export default function ViewBooking() {
     (info) => info.lab_test === "Urinalysis"
   );
 
+  const detailSerology = services.filter(
+    (info) =>
+      info.lab_test === "Syphilis/RPR/VDRL" ||
+      info.lab_test === "HBSag (Hepatitis B Antigen)"
+  );
+
   const spermAnalysis = labTests.filter((info) => info.test_id === "7");
   const detailSperm = services.filter(
     (info) => info.lab_test === "Sperm Analysis"
@@ -704,7 +710,8 @@ export default function ViewBooking() {
                   {serology.length != 0 && (
                     <div>
                       <div className="category label">SEROLOGY</div>
-                      {services[0].with_results === 1 ? (
+
+                      {detailSerology[0].with_result === "1" ? (
                         <GenerateResults
                           servicesData={serology}
                           title={"SEROLOGY"}

@@ -1537,7 +1537,11 @@ export default function LabOfficer() {
                       <>
                         <div
                           className="row"
-                          style={{ marginTop: "1px", width: "100%" }}
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
                           key={resultIndex}
                         >
                           <div className="col">
