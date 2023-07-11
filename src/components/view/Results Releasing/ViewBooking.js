@@ -76,7 +76,7 @@ export default function ViewBooking() {
 
   // Lab Tests
   const [services, setServices] = useState([]);
-  const [packageServices,setPackageServices] = useState([]);
+  const [packageServices, setPackageServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -158,7 +158,6 @@ export default function ViewBooking() {
       })
       .catch((error) => {});
 
-    
     // Get booking details by booking id from packages
     axios({
       method: "post",
@@ -171,13 +170,12 @@ export default function ViewBooking() {
       },
     })
       .then((booking) => {
-        
         setPackageServices(booking.data);
       })
       .catch((error) => {});
   }, []);
 
-console.log(services)
+  console.log(services);
   React.useEffect(() => {
     getUploads(data);
   }, []);
@@ -228,6 +226,7 @@ console.log(services)
                 serviceDetails.approver = info.approved_by;
                 // serviceDetails.md =
                 setLabTests((oldArray) => [...oldArray, serviceDetails]);
+                console.log(serviceDetails);
               });
             });
           })
@@ -266,6 +265,7 @@ console.log(services)
             serviceDetails.md = info.md;
             serviceDetails.approver = info.approved_by;
             setLabTests((oldArray) => [...oldArray, serviceDetails]);
+            console.log("268", serviceDetails);
           })
           .catch((error) => {
             // console.log(error)
@@ -282,10 +282,7 @@ console.log(services)
   const ecg = labTests.filter((info) => info.key === "cardiology");
 
   /****************/
-  const hematology = labTests.filter(
-    (info) =>
-      info.key === "hematology"
-  );
+  const hematology = labTests.filter((info) => info.key === "hematology");
   /****************/
 
   // previously serology
@@ -313,6 +310,10 @@ console.log(services)
 
   /****************/
 
+  const urinalysisOnly = labTests.filter(
+    (info) =>
+      info.key === "clinical_microscopy_urinalysis" && info.test_id === "1"
+  );
   const clinicalUrinalysis = labTests.filter(
     (info) =>
       info.key === "clinical_microscopy_urinalysis" &&
@@ -329,10 +330,10 @@ console.log(services)
       info.test_id !== "1"
   );
 
+  // console.log("info", labTests)
   const detailUrinalysis = services.filter(
     (info) => info.lab_test === "Urinalysis"
   );
-
 
   const spermAnalysis = labTests.filter((info) => info.test_id === "7");
   const detailSperm = services.filter(
@@ -563,13 +564,21 @@ console.log(services)
                   {/* CLINICAL MICROSCOPY URINALYSIS */}
                   {(clinicalUrinalysis.length !== 0 ||
                     spermAnalysis.length !== 0 ||
+                    urinalysisOnly.length !== 0 ||
                     serumPT.length !== 0 ||
-                      clinicalUrineLab.length !== 0) && (
+                    clinicalUrineLab.length !== 0) && (
                     <div>
                       <div className="category label">
                         CLINICAL MICROSCOPY URINALYSIS
                       </div>
                       <>
+                        {urinalysisOnly.length > 0 && (
+                          <GenerateResults
+                            servicesData={urinalysisOnly}
+                            title={"CLINICAL MICROSCOPY URINALYSIS"}
+                            bookingId={bookingId}
+                          />
+                        )}
                         {serumPT.length > 0 &&
                           (detailSerumPT[0]?.with_result === "1" ? (
                             <GenerateResults
@@ -599,7 +608,7 @@ console.log(services)
                               bookingId={bookingId}
                             />
                           ))}
-                        
+
                         {pregnancyRPK.length > 0 &&
                           (detailpregnancyRPK[0]?.with_result === "1" ? (
                             <GenerateResults
@@ -614,6 +623,7 @@ console.log(services)
                               bookingId={bookingId}
                             />
                           ))}
+
                         {clinicalUrineLab.length > 0 && (
                           <FileUpload
                             servicesData={clinicalUrineLab}
@@ -659,7 +669,7 @@ console.log(services)
                   )}
 
                   {/* HEMATOLOGY */}
-                  {(hematology.length != 0) && (
+                  {hematology.length != 0 && (
                     <div>
                       <div className="category label">HEMATOLOGY</div>
                       {hematology.length != 0 && (
