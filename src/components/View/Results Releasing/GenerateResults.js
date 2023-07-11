@@ -401,7 +401,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (userId === "30") {
         setMedTechPRC("PRC LIC. NO.: 0094334");
-      }  else if (userId === "45") {
+      } else if (userId === "45") {
         return "PRC LIC. NO.: 0085308";
       } else {
         setMedTechPRC("No PRC LIC. NO.");
@@ -571,8 +571,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             height={50}
           />
         );
-      } 
-      else if (userId === "45") {
+      } else if (userId === "45") {
         setHasImage(true);
         return (
           <img
@@ -829,7 +828,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                   parseFloat(result["preferred_from"]) >
                                   parseFloat(result["result"]) ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
+                                      {parseFloat(result["result"]) +
                                         " " +
                                         result["unit"] +
                                         " (L)"}
@@ -837,7 +836,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                   ) : parseFloat(result["result"]) >
                                     parseFloat(result["preferred_to"]) ? (
                                     <span class="red">
-                                      {parseFloat(result["result"]).toFixed(2) +
+                                      {parseFloat(result["result"]) +
                                         " " +
                                         result["unit"] +
                                         " (H)"}
@@ -846,7 +845,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                     result["preferred_from"] === "0.00" &&
                                     result["preferred_to"] === "0.00" ? null : (
                                     <span>
-                                      {parseFloat(result["result"]).toFixed(2) +
+                                      {parseFloat(result["result"]) +
                                         " " +
                                         result["unit"]}
                                     </span>
@@ -876,16 +875,12 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                           result["preferred_to"] !== "0.00"
                                         ? result["preferred_to"] === "999.99"
                                           ? ">=" +
-                                            parseFloat(
-                                              result["preferred_from"]
-                                            ).toFixed(2)
+                                            parseFloat(result["preferred_from"])
                                           : parseFloat(
                                               result["preferred_from"]
-                                            ).toFixed(2) +
+                                            ) +
                                             "-" +
-                                            parseFloat(
-                                              result["preferred_to"]
-                                            ).toFixed(2)
+                                            parseFloat(result["preferred_to"])
                                         : ""}
                                     </span>
                                   </div>
