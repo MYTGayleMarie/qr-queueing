@@ -729,6 +729,41 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
   );
 }
 
+function receivingNavbar(showNavbar, setshowNavbar) {
+  return (
+    <div>
+      <div
+        class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+        id="sidebar"
+      >
+        <ul class="nav flex-column text-white w-100">
+          <div class="d-flex justify-content-center">
+            <img src={logo} alt={"logo"} class="navbar-logo"></img>
+          </div>
+
+          <li href="#" class="nav-link supply-nav">
+            <img src={supplyIcon} alt={"supply"} class="supply icon"></img>
+            <span class="mx-2">Supply</span>
+            <ul class="sub-menu">
+              <Link to="/purchase-order" className="sub-link">
+                <li class="sub-list">PURCHASE ORDER</li>
+              </Link>
+              <Link to="/receives" className="sub-link">
+                <li class="sub-list">RECEIVES</li>
+              </Link>
+            </ul>
+          </li>
+
+          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+            <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+            <span class="mx-2">Log Out</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function supplySideNav() {
   return (
     <div className="reports-show-nav">
@@ -746,6 +781,18 @@ function supplySideNav() {
       </Link>
       <Link to="/suppliers">
         <span class="mx-2 nav-item">SUPPLIERS</span>
+      </Link>
+    </div>
+  );
+}
+function supplyReceivingSideNav() {
+  return (
+    <div className="reports-show-nav">
+      <Link to="/purchase-order">
+        <span class="mx-2 nav-item">PURCHASE ORDER</span>
+      </Link>
+      <Link to="/receives" className="sub-link">
+        <span class="mx-2 nav-item">RECEIVES</span>
       </Link>
     </div>
   );
@@ -1621,6 +1668,61 @@ function supervisorNavbarTop(
   );
 }
 
+function receivingNavbarTop(
+  showNavbar,
+  showMobileNavBar,
+  showSupply,
+  setShowSupply,
+  showCompany,
+  setShowCompany
+) {
+  return (
+    <div class="navbar">
+      <div class="logo-mobile">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+      <div id="nav-icon">
+        <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+      </div>
+      <div id="side-nav">
+        <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+
+        <div class="side-nav-content">
+          <div
+            className="reports-show-nav"
+            onClick={(e) => setShowSupply(!showSupply)}
+          >
+            <img
+              src={supplyIcon}
+              alt={"supply"}
+              class="supply icon mobile-size-icon"
+            ></img>
+            <span class="mx-2">Supply</span>
+            <span>
+              {showSupply == true && caretUp()}
+              {showSupply == false && caretDown()}
+            </span>
+            {showSupply == true && supplyReceivingSideNav()}
+          </div>
+        </div>
+
+        <a href="#" class="nav-link" onClick={removeUserSession}>
+          <img
+            src={logoutIcon}
+            alt={"logout"}
+            class="logout icon mobile-size-icon"
+          ></img>
+          <span class="mx-2 logout-text">Log Out</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function Navbar() {
   const [role, setRole] = useState("");
   const [showNavbar, setshowNavbar] = useState(false);
@@ -1735,6 +1837,16 @@ function Navbar() {
           showCompany,
           setShowCompany
         )}
+      {showNavbar == false &&
+        role == 11 &&
+        receivingNavbarTop(
+          showNavbar,
+          showMobileNavBar,
+          showSupply,
+          setShowSupply,
+          showCompany,
+          setShowCompany
+        )}
       {/* {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)} */}
 
       {showNavbar == true &&
@@ -1765,6 +1877,9 @@ function Navbar() {
       {showNavbar == true &&
         role == 12 &&
         supervisorNavbar(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 11 &&
+        receivingNavbar(showNavbar, setshowNavbar)}
     </div>
   );
 }
