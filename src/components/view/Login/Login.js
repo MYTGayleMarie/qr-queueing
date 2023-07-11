@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
-import { Navigate } from 'react-router';
-import { refreshPage, getRoleId } from '../../../utilities/Common';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import { Navigate } from "react-router";
+import { refreshPage, getRoleId } from "../../../utilities/Common";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //css
-import './Login.css';
+import "./Login.css";
 
 //images
-import clinic from '../../../images/clinic.png';
-import logo from '../../../images/logo.png';
-import axios from 'axios';
+import clinic from "../../../images/clinic.png";
+import logo from "../../../images/logo.png";
+import axios from "axios";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,18 +23,18 @@ function Login() {
   };
 
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   let NavigationRedirection;
 
   function submit(e) {
     e.preventDefault();
-    if(click == false) {
+    if (click == false) {
       axios({
-        method: 'post',
-        url: window.$link + 'login',
+        method: "post",
+        url: window.$link + "login",
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -43,19 +43,24 @@ function Login() {
         },
       })
         .then(function (response) {
-     
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-          localStorage.setItem('user', JSON.stringify(response.data.id));
-          localStorage.setItem('role_id', JSON.stringify(response.data.role_id));
-          localStorage.setItem('token_expiry', JSON.stringify(response.data.token_expiry));
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          localStorage.setItem("user", JSON.stringify(response.data.id));
+          localStorage.setItem(
+            "role_id",
+            JSON.stringify(response.data.role_id)
+          );
+          localStorage.setItem(
+            "token_expiry",
+            JSON.stringify(response.data.token_expiry)
+          );
           refreshPage();
         })
         .catch(function (error) {
           // console.log(error)
-          toast.error('Invalid Login');
+          toast.error("Invalid Login");
           setTimeout(() => {
             refreshPage();
-          },2000);
+          }, 2000);
         });
     }
 
@@ -69,49 +74,44 @@ function Login() {
   }
 
   if (window.$userToken != null) {
-      var roleId = window.$roleId.replace(/^"(.*)"$/, '$1');
+    var roleId = window.$roleId.replace(/^"(.*)"$/, "$1");
     if (roleId === "3") {
       NavigationRedirection = <Navigate to="/cashier" />;
-    }
-    else if (roleId === "5") {
+    } else if (roleId === "5") {
       NavigationRedirection = <Navigate to="/medtech" />;
-    }
-    else if (roleId === "6") {
+    } else if (roleId === "6") {
       NavigationRedirection = <Navigate to="/purchase-order" />;
-    }
-    else if (roleId === "7") {
+    } else if (roleId === "7") {
       NavigationRedirection = <Navigate to="/items" />;
-    }
-    else if (roleId === "8") {
+    } else if (roleId === "8") {
       NavigationRedirection = <Navigate to="/companies" />;
-    }
-    else if (roleId === "9"){
+    } else if (roleId === "9") {
       NavigationRedirection = <Navigate to="/registrationcmodule" />;
-    }
-    else if (roleId === "10"){
+    } else if (roleId === "10") {
       NavigationRedirection = <Navigate to="/lab" />;
-    }
-    else {
+    } else if (roleId === "11") {
+      NavigationRedirection = <Navigate to="/purchase-order" />;
+    } else {
       NavigationRedirection = <Navigate to="/registration" />;
     }
 
     return NavigationRedirection;
   }
 
-  document.body.style = 'background: white;';
+  document.body.style = "background: white;";
 
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-lg d-flex justify-content-center">
-            <img src={clinic} alt={'clinic'} className="login-clinic"></img>
+            <img src={clinic} alt={"clinic"} className="login-clinic"></img>
           </div>
           <div className="col-lg d-flex justify-content-center">
             <div className="login-container">
               <div className="row">
                 <div className="col-sm-12">
-                  <img src={logo} alt={'logo'} className="logo"></img>
+                  <img src={logo} alt={"logo"} className="logo"></img>
                 </div>
               </div>
               <div className="row">
@@ -148,16 +148,16 @@ function Login() {
                       id="password"
                       value={data.password}
                       className="login-input"
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       placeholder="Password"
                     />
                     <div className="eye-icon">
                       <FontAwesomeIcon
-                        icon={showPassword ? 'eye' : 'eye-slash'}
-                        alt={'eye'}
+                        icon={showPassword ? "eye" : "eye-slash"}
+                        alt={"eye"}
                         aria-hidden="true"
                         onClick={togglePassword}
-                        />
+                      />
                     </div>
                   </div>
                 </div>
