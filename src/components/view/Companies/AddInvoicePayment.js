@@ -1535,40 +1535,40 @@ function AddInvoicePayment() {
           {/* <h4 className="form-categories-header italic">COMPANY DETAILS</h4> */}
           <div className="po-details">
             <div className="row">
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <div className="label">COMPANY NAME</div>
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-7">
                 <div className="detail">{name}</div>
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <div className="label">CONTACT NUMBER</div>
               </div>
-              <div className="col-sm-4">
+              <div className="col-sm-7">
                 <div className="detail">{contactNo}</div>
               </div>
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <div className="label">COMPANY EMAIL</div>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-7">
                 <div className="detail">{email}</div>
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <div className="label">COMPANY ADDRESS</div>
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-7">
                 <div className="detail">{address}</div>
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <div className="label">CONTACT PERSON</div>
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-7">
                 <div className="detail">{contactPerson}</div>
               </div>
             </div>

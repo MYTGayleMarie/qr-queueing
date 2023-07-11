@@ -10,36 +10,34 @@
   width: 91% !important;
 }
 
-.mr-3{
+.mr-3 {
   margin-right: 9%;
 }
 
 .edit-header {
-  font-family: 'Montserrat-Italic';
+  font-family: "Montserrat-Italic";
   font-size: 36px;
-  color: #BFBC4B;
+  color: #bfbc4b;
 }
 
 .edit-sub-header {
-  font-family: 'Montserrat-Bold';
+  font-family: "Montserrat-Bold";
   font-size: 20px;
   line-height: 29px;
   letter-spacing: 0.135em;
   text-decoration-line: underline;
 
-  color: #419EA3;
-
+  color: #419ea3;
 }
 
-.edit-preferred{
-  font-family: 'Montserrat-Bold';
+.edit-preferred {
+  font-family: "Montserrat-Bold";
   font-size: 17px;
   line-height: 29px;
   letter-spacing: 0.135em;
   text-decoration-line: underline;
 
-  color: #419EA3;
-
+  color: #419ea3;
 }
 
 .results-input {
@@ -52,168 +50,167 @@
 }
 
 .category {
-    height:fit-content !important;
-  }
-  .pdf-upload-icon {
-    margin:auto;
-    opacity: 0.8;
-  }
-  
-  .pdfObject{
-    width:100vw;
-    height:100vh;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-  }
-  
-  .upload-res-btn{
-    background: #55073A;
-    padding: 2px 20px;
-    border-radius: 20px;
-    font-size: 1rem;
-    color:#ffffff;
-  }
-  .result-cont{
-    height:fit-content;
-    /* margin-bottom: 3rem !important; */
-  }
-  .labtest-line{
-    width: 70vw;
-    color: #B1ADAC;
-  }
-  .submit-btn{
-    background: #55073A;
-    padding: 2px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
-    color: #ffffff;
-    margin:0 0 0 2rem;
-  }
-  .pdf-icon{
-    width:1.1rem;
-    margin-right: 2rem;
-  }
-  /* pdf upload area */
-  .upload-cont{
-    margin:auto;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    
-  }
-  .file-upload-area {
-    padding:12px;
-    width: 60%;
-    height: 60%;
-    background: #FCFCFC;
-    border: 3px dashed rgba(85, 7, 58, 0.76);
-    box-sizing: border-box;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .input-file-upload {
-    display: none;
-  }
-  .upload-file-icon {
-    opacity: 0.8;
-    width: 50px;
-    margin-bottom: 10px;
-  }
-  .upload-file-btn {
-    color: rgba(85, 7, 58, 1);
-    cursor: pointer;
-    padding: 0.25rem;
-    font-size: 1rem;
-    border: none;
-    background-color: transparent;
-    font-family: 'Montserrat-Bold';
-  }
-  .upload-file-btn:hover {
-    text-decoration-line: underline;
-  }
-  .file-name{
-    font-family: 'Montserrat-Bold';
-    font-size: 1rem;
-    color: rgba(85, 7, 58, 1);
-    margin:0 2rem 0 0;
-  }
-  .file-upload-remove{
-    display:flex;
-    flex-direction: row;
-  }
+  height: fit-content !important;
+}
+.pdf-upload-icon {
+  margin: auto;
+  opacity: 0.8;
+}
+
+.pdfObject {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.upload-res-btn {
+  background: #55073a;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #ffffff;
+}
+.result-cont {
+  height: fit-content;
+  /* margin-bottom: 3rem !important; */
+}
+.labtest-line {
+  width: 70vw;
+  color: #b1adac;
+}
+.submit-btn {
+  background: #55073a;
+  padding: 2px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0 0 0 2rem;
+}
+.pdf-icon {
+  width: 1.1rem;
+  margin-right: 2rem;
+}
+/* pdf upload area */
+.upload-cont {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.file-upload-area {
+  padding: 12px;
+  width: 60%;
+  height: 60%;
+  background: #fcfcfc;
+  border: 3px dashed rgba(85, 7, 58, 0.76);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input-file-upload {
+  display: none;
+}
+.upload-file-icon {
+  opacity: 0.8;
+  width: 50px;
+  margin-bottom: 10px;
+}
+.upload-file-btn {
+  color: rgba(85, 7, 58, 1);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+  font-family: "Montserrat-Bold";
+}
+.upload-file-btn:hover {
+  text-decoration-line: underline;
+}
+.file-name {
+  font-family: "Montserrat-Bold";
+  font-size: 1rem;
+  color: rgba(85, 7, 58, 1);
+  margin: 0 2rem 0 0;
+}
+.file-upload-remove {
+  display: flex;
+  flex-direction: row;
+}
 
 .space-between {
   margin-top: 0px;
 }
 
-  .row {
-    margin-bottom: 0px !important;
-  }
-  
-  .email-btn {
-    background: #55073A;
-    position: absolute;
-    padding: 2px 20px;
-    border-radius: 20px;
-    font-size: 1rem;
-    color:#ffffff;
-    right: 30%;
-    background-size: 20%;
-  }
-  .pass-btn {
-    background: #55073A;
-    position: absolute;
-    padding: 2px 20px;
-    border-radius: 20px;
-    font-size: 1rem;
-    color:#ffffff;
-    right: 30%;
-    /* bottom: 15%; */
-  }
+.row {
+  /* margin-bottom: 0px !important; */
+}
 
-  .bg {
-    position: relative;
-    background-color: white;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    align-items: center;
-    justify-content: center;
-  }
-  .back-btn-container {
-    margin-right: 5%;
-    margin-bottom: 5%;
-  }
+.email-btn {
+  background: #55073a;
+  position: absolute;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #ffffff;
+  right: 30%;
+  background-size: 20%;
+}
+.pass-btn {
+  background: #55073a;
+  position: absolute;
+  padding: 2px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #ffffff;
+  right: 30%;
+  /* bottom: 15%; */
+}
 
-  .input-category {
-    margin-left: 0rem !important;
-    padding: 0.3rem;
-  }
+.bg {
+  position: relative;
+  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  align-items: center;
+  justify-content: center;
+}
+.back-btn-container {
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
 
-  .custom-modal-content {
-    position: absolute;
-    margin-top: 10%;
-    margin-left: -40%;
-  }
+.input-category {
+  margin-left: 0rem !important;
+  padding: 0.3rem;
+}
 
-  .custom-modal {
-    margin: auto;
-    background-color: white;
-  }
+.custom-modal-content {
+  position: absolute;
+  margin-top: 10%;
+  margin-left: -40%;
+}
 
-  .parent-div {
-    position: relative;
-  }
-  
-  .teal_header_laboff {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 200px !important;
-    z-index: 0 !important;
-  }
+.custom-modal {
+  margin: auto;
+  background-color: white;
+}
+
+.parent-div {
+  position: relative;
+}
+
+.teal_header_laboff {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px !important;
+  z-index: 0 !important;
+}
