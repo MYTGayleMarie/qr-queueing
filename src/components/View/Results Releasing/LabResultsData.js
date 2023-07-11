@@ -490,7 +490,7 @@ const labResultsData = {
       preferred: " ",
       preferred_from: 0.0,
       preferred_to: 0.0,
-    }
+    },
   ],
 
   labTestFecalysis: [
@@ -838,16 +838,13 @@ const labResultsData = {
 
   labTestHepatitisB: [
     {
-      lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
+      lab_test: "Hepatitis B Surface Antigen (HbsAg)",
       result: "",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
-  ],
-
-  labTestHepatitisA: [
     {
       lab_test: "Hepatitis B Surface Antibody Test",
       result: "",
@@ -871,7 +868,65 @@ const labResultsData = {
       preferred: " ",
       preferred_from: 0.0,
       preferred_to: 0.0,
-    }
+    },
+    // {
+    //   lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
+    //   result: "",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
+  ],
+
+  labTestHepatitisA: [
+    {
+      lab_test: "Hepatitis B Surface Antigen (HbsAg)",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Hepatitis B Surface Antibody Test",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HCV",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HAV",
+      result: "",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
+
+  hepatitisTestOptions: [
+    {
+      value: "POSITIVE",
+      label: "POSITIVE",
+    },
+    {
+      value: "NEGATIVE",
+      label: "NEGATIVE",
+    },
+    {
+      value: "N/A",
+      label: "N/A",
+    },
   ],
 
   labTestTSH: [
