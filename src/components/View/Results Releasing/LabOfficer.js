@@ -100,7 +100,7 @@ export default function LabOfficer() {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [senior_id, setSeniorId] = useState("");
-  const [pwd_id, setPWDId] = useState(""); 
+  const [pwd_id, setPWDId] = useState("");
   const componentRef = useRef();
 
   // Lab Tests
@@ -262,21 +262,22 @@ export default function LabOfficer() {
     ) {
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
       setIsDropdown(true);
-    }else if (
-        selectedLab.label == "Anti HBs/HBSab (Hepatitis B Antibody)"
-      ) {
-        if (lab_test == "Hepatitis B Surface Antibody Test") {
-          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
-          setIsDropdown(true);
-        } else if (lab_test == "Anti-HCV") {
-          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
-          setIsDropdown(true);
-        } else if (lab_test == "Anti-HAV	") {
-          setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
-          setIsDropdown(true);
-        } else {
-          setIsDropdown(false);
-        }
+    } else if (selectedLab.label == "Anti HBs/HBSab (Hepatitis B Antibody)") {
+      if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Hepatitis B Surface Antibody Test") {
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Anti-HCV") {
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setIsDropdown(true);
+      } else if (lab_test == "Anti-HAV	") {
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
     } else {
       setIsDropdown(false);
     }
@@ -354,7 +355,7 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0094334";
     } else if (prc_id === "45") {
       return "PRC LIC. NO.: 0085308";
-    }  else {
+    } else {
       return "No PRC No.";
     }
   }
@@ -456,8 +457,7 @@ export default function LabOfficer() {
           height={50}
         />
       );
-    }
-    else if (prc_sig === "45") {
+    } else if (prc_sig === "45") {
       setHasImage(true);
       return (
         <img
@@ -645,6 +645,7 @@ export default function LabOfficer() {
         .then((response) => {
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
+
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
@@ -1100,7 +1101,6 @@ export default function LabOfficer() {
   function filter() {}
 
   if (redirectBack === true) {
-    console.log(dateFrom);
     if (dateFrom !== undefined && dateTo !== undefined) {
       var link = "/lab/" + dateFrom + "/" + dateTo;
       return <Navigate to={link} />;
@@ -1176,7 +1176,6 @@ export default function LabOfficer() {
       });
   };
 
-  console.log(gender);
   function handleLab(e) {
     //setLabTests(e.target.value)
 
@@ -1187,7 +1186,7 @@ export default function LabOfficer() {
     } else {
       setIsApproved("");
     }
-    console.log(gender === "Male");
+
     if (
       (e.label === "Urinalysis" || e.label === "[P] Urinalysis") &&
       gender === "female"
@@ -1859,11 +1858,11 @@ export default function LabOfficer() {
               </div>
             </div>
             <div className="row">
-                <div className="col-sm-4">
+              <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
-                </div>
-                {/* <div className="col-sm-4">
+              </div>
+              {/* <div className="col-sm-4">
                 <span className="address label">Senior ID</span>
                 <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
                 </div>
@@ -1904,7 +1903,13 @@ export default function LabOfficer() {
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
                     >
-                      {data.label}
+                      {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                      data.label === "HBSag (Hepatitis B Antigen)" ||
+                      data.label === "HHepatitis B Surface Antigen (HbsAg)" ||
+                      data.label === "Anti-HAV" ||
+                      data.label === "Anti-HCV"
+                        ? "Hepatitis Profile Tests"
+                        : data.label}
                     </Button>
                   );
                 })}
