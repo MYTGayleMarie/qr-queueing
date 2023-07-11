@@ -27,6 +27,7 @@ import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
 import Image10 from "../../../images/med_tech/Image10.png";
 import Image11 from "../../../images/med_tech/OSMA.png";
+import image11 from "../../../images/med_tech/image11.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -377,6 +378,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (approverId === "30") {
         setMedTechPRC("PRC LIC. NO.: 0094334");
+      } else if (approverId === "45") {
+        return "PRC LIC. NO.: 0085308";
       } else {
         // setMedTechPRC("PRC LIC. NO.: 0112611");
         setMedTechPRC("No PRC LIC. NO.");
@@ -398,6 +401,8 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setMedTechPRC("PRC LIC. NO.: 0093629");
       } else if (userId === "30") {
         setMedTechPRC("PRC LIC. NO.: 0094334");
+      }  else if (userId === "45") {
+        return "PRC LIC. NO.: 0085308";
       } else {
         setMedTechPRC("No PRC LIC. NO.");
       }
@@ -560,6 +565,18 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         return (
           <img
             src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } 
+      else if (userId === "45") {
+        setHasImage(true);
+        return (
+          <img
+            src={image11}
             alt="MedTech"
             className="mt-5"
             width={100}
