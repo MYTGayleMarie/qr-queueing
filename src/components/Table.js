@@ -2010,16 +2010,23 @@ function Table({
               onChange={setFilter}
               disabled={roleId === "12"}
             />
-            <select name="status" value={status} onChange={setFilter}>
-              <option value="for approval" selected>
-                FOR APPROVAL
-              </option>
-              <option value="approved">APPROVED</option>
-              <option value="completed">COMPLETED</option>
-              <option value="disapproved">DISAPPROVED</option>
-              <option value="printed">PRINTED</option>
-              <option value="">ALL</option>
-            </select>
+            {roleId !== "11" ? (
+              <select name="status" value={status} onChange={setFilter}>
+                <option value="for approval" selected>
+                  FOR APPROVAL
+                </option>
+                <option value="approved">APPROVED</option>
+                <option value="completed">COMPLETED</option>
+                <option value="disapproved">DISAPPROVED</option>
+                <option value="printed">PRINTED</option>
+                <option value="">ALL</option>
+              </select>
+            ) : (
+              <select name="status" value={status} onChange={setFilter}>
+                <option value="approved">APPROVED</option>
+              </select>
+            )}
+
             <button
               className="filter-btn"
               name="done"
