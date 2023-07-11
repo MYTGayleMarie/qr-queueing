@@ -175,7 +175,6 @@ export default function ViewBooking() {
       .catch((error) => {});
   }, []);
 
-  console.log(services);
   React.useEffect(() => {
     getUploads(data);
   }, []);
@@ -226,7 +225,6 @@ export default function ViewBooking() {
                 serviceDetails.approver = info.approved_by;
                 // serviceDetails.md =
                 setLabTests((oldArray) => [...oldArray, serviceDetails]);
-                console.log(serviceDetails);
               });
             });
           })
@@ -265,7 +263,6 @@ export default function ViewBooking() {
             serviceDetails.md = info.md;
             serviceDetails.approver = info.approved_by;
             setLabTests((oldArray) => [...oldArray, serviceDetails]);
-            console.log("268", serviceDetails);
           })
           .catch((error) => {
             // console.log(error)
@@ -330,7 +327,6 @@ export default function ViewBooking() {
       info.test_id !== "1"
   );
 
-  // console.log("info", labTests)
   const detailUrinalysis = services.filter(
     (info) => info.lab_test === "Urinalysis"
   );
