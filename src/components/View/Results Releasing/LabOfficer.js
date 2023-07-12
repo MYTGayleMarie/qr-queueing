@@ -425,7 +425,7 @@ export default function LabOfficer() {
       setHasImage(true);
       return (
         <img
-          src={Image8}
+          src={Image3}
           alt="MedTech"
           // className="mt-5"
           style={{ marginTop: "3rem" }}

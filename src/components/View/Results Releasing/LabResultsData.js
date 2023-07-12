@@ -289,8 +289,8 @@ const labResultsData = {
       result: "",
       unit: "",
       preferred: " ",
-      preferred_from: 1.005,
-      preferred_to: 1.03,
+      preferred_from: 0.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Protein",
@@ -413,8 +413,8 @@ const labResultsData = {
       result: "",
       unit: "",
       preferred: " ",
-      preferred_from: 1.005,
-      preferred_to: 1.03,
+      preferred_from: 0.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Protein",
