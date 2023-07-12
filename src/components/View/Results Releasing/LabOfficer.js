@@ -645,7 +645,8 @@ export default function LabOfficer() {
         .then((response) => {
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
-
+          console.log(selectedLab);
+          console.log(data);
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
@@ -1189,12 +1190,12 @@ export default function LabOfficer() {
 
     if (
       (e.label === "Urinalysis" || e.label === "[P] Urinalysis") &&
-      gender === "female"
+      gender?.toUpperCase() === "FEMALE"
     ) {
-      setLabTestData(labResultsData.labTestUrinalysis);
+      setLabTestData(labResultsData.labTestUrinalysisNoPreg);
     } else if (
       (e.label === "Urinalysis" || e.label === "[P] Urinalysis") &&
-      gender === "Male"
+      gender?.toUpperCase() === "MALE"
     ) {
       setLabTestData(labResultsData.labTestUrinalysisNoPreg);
     } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
