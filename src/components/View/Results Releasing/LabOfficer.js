@@ -163,6 +163,7 @@ export default function LabOfficer() {
   function update(lab_test) {
     setEditingLab(lab_test);
     setIsDropdown(false);
+
     // For dropdowns in Edit modal
     if (
       selectedLab.label == "Urinalysis" ||
@@ -251,6 +252,7 @@ export default function LabOfficer() {
       lab_test == "IgM" ||
       lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"
     ) {
+      console.log("255");
       setLabTestOptions(labResultsData.posNegOptions2);
       setIsDropdown(true);
     } else if (lab_test == "Syphilis/RPR/VDRL" || lab_test == "H. Pylori") {
@@ -258,11 +260,16 @@ export default function LabOfficer() {
       setIsDropdown(true);
     } else if (
       lab_test == "Anti-HIV" ||
-      lab_test == "Hepatitis B Surface Antigen Test (HBSag)"
+      lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
+      lab_test == "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label == "Anti-HCV" ||
+      selectedLab.label == "Anti-HAV" ||
+      selectedLab.label == "Hepatitis B Surface Antibody Test"
     ) {
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
       setIsDropdown(true);
-    } else if (selectedLab.label == "Anti HBs/HBSab (Hepatitis B Antibody)") {
+    } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
       if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
         setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
@@ -613,7 +620,15 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-      const labOptions = booking.data
+      var serology = booking.data.filter((data) => data.category_id === "12");
+
+      var booking_wo_serology = booking.data.filter(
+        (data) => data.category_id !== "12"
+      );
+      if (serology.length > 0) {
+        booking_wo_serology.push(serology[0]);
+      }
+      const labOptions = booking_wo_serology
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
@@ -645,8 +660,7 @@ export default function LabOfficer() {
         .then((response) => {
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
-          console.log(selectedLab);
-          console.log(data);
+
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
@@ -1188,9 +1202,7 @@ export default function LabOfficer() {
       setIsApproved("");
     }
 
-    if (
-      (e.label === "Urinalysis" || e.label === "[P] Urinalysis")
-    ) {
+    if (e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
       setLabTestData(labResultsData.labTestUrinalysisNoPreg);
     } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
       setLabTestData(labResultsData.labTestFecalysis);
@@ -1236,7 +1248,8 @@ export default function LabOfficer() {
       e.label === "HBSag (Hepatitis B Antigen)" ||
       e.label === "[P] HBSag (Hepatitis B Antigen)"
     ) {
-      setLabTestData(labResultsData.labTestHepatitisB);
+      // setLabTestData(labResultsData.labTestHepatitisB);
+      setLabTestData(labResultsData.labTestHepatitisA);
     } else if (
       e.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       e.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)"
@@ -1904,7 +1917,7 @@ export default function LabOfficer() {
                     >
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
-                      data.label === "HHepatitis B Surface Antigen (HbsAg)" ||
+                      data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                       data.label === "Anti-HAV" ||
                       data.label === "Anti-HCV"
                         ? "Hepatitis Profile Tests"
