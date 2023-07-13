@@ -1188,13 +1188,7 @@ export default function LabOfficer() {
     }
 
     if (
-      (e.label === "Urinalysis" || e.label === "[P] Urinalysis") &&
-      gender === "female"
-    ) {
-      setLabTestData(labResultsData.labTestUrinalysis);
-    } else if (
-      (e.label === "Urinalysis" || e.label === "[P] Urinalysis") &&
-      gender === "Male"
+      (e.label === "Urinalysis" || e.label === "[P] Urinalysis")
     ) {
       setLabTestData(labResultsData.labTestUrinalysisNoPreg);
     } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
