@@ -264,16 +264,16 @@ export default function LabOfficer() {
       setIsDropdown(true);
     } else if (selectedLab.label == "Anti HBs/HBSab (Hepatitis B Antibody)") {
       if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
       } else if (lab_test == "Hepatitis B Surface Antibody Test") {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
       } else if (lab_test == "Anti-HCV") {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Anti-HAV	") {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+      } else if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
       } else {
         setIsDropdown(false);
@@ -645,7 +645,8 @@ export default function LabOfficer() {
         .then((response) => {
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
-
+          console.log(selectedLab);
+          console.log(data);
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);

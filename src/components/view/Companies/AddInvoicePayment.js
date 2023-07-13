@@ -1144,194 +1144,248 @@ function AddInvoicePayment() {
   }
   function bankTransferForm() {
     return (
-      <div class="pay-cash-cont">
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">
-                BANK NAME <em>(required)</em>
-              </span>
-            </div>
-            <div className="row">
+      <>
+        <div className="pay-cash-cont mb-5 mt-4">
+          <Row className="input-group">
+            <Col xs={12}>
+              <label for="inputPassword6" className="col-form-label">
+                Bank Transfer Details
+              </label>
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Bank
+              </label>
+            </Col>
+            <Col xs={2} className="input-group-sm">
               <input
                 type="text"
-                id="bank_name"
+                id="check"
+                className="form-control"
                 name="bank_name"
                 onChange={handleBankChange}
-                class="cash-input pay"
               />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">TRANSFEREE NAME</span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Transferee Name
+              </label>
+            </Col>
+            <Col xs={2} className="input-group-sm">
               <input
                 type="text"
-                id="transferee"
+                id="check"
+                className="form-control"
                 name="transferee"
                 onChange={handleBankChange}
-                class="cash-input pay"
               />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">
-                REFERENCE NO <em>(required)</em>
-              </span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Reference No
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm mb-4">
               <input
                 type="text"
-                id="reference_no"
+                id="check"
+                className="form-control"
                 name="reference_no"
                 onChange={handleBankChange}
-                class="cash-input pay"
               />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">
-                PAID AMOUNT <em>(required)</em>
-              </span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={12}>
+              <hr style={{ width: "92%" }} />
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Paid Amount
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
               <input
                 type="number"
-                id="paid_amount"
+                id="payAmount"
                 name="paid_amount"
                 step="0.01"
-                class="cash-input pay"
+                value={pay}
+                className="form-control"
                 placeholder="P"
                 onChange={handleBankChange}
               />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span className="amount-label">WITHHOLDING TAX</span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={1}></Col>
+            <Col xs={2} className="input-group-sm"></Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Withholding Tax
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
               <input
                 type="number"
-                id="withholding_tax"
+                id="taxAmount"
                 name="withholding_tax"
                 step="0.01"
-                className="cash-input pay"
+                className="form-control"
                 placeholder="% (in percentage)"
                 onChange={handleBankChange}
               />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="remarks-payment-label">REMARKS (optional)</span>
-            </div>
-            <div className="row">
+            </Col>
+
+            <Col xs={1}>
+              {" "}
+              <label for="inputPassword6" className="col-form-label">
+                Remarks
+              </label>
+            </Col>
+            <Col xs={11} className="input-group-sm">
               <textarea
+                className="full-input"
+                style={{ width: "92%" }}
                 id="remarks"
                 name="remarks"
-                className="invoice-remarks-input"
-                rows="4"
+                rows="3"
                 cols="100"
                 onChange={handleBankChange}
-              />
-            </div>
+              ></textarea>
+            </Col>
+          </Row>
+          <div className="row d-flex justify-content-end mt-4">
+            {paymentStatus == "paid" && printButton()}
+            <button className="save-btn" onClick={(e) => submit(e)}>
+              SAVE PAYMENT{" "}
+            </button>
           </div>
         </div>
-        <div className="row d-flex justify-content-end">
-          {paymentStatus == "paid" && printButton()}
-          <button className="save-btn" onClick={(e) => submit(e)}>
-            SAVE PAYMENT{" "}
-          </button>
-        </div>
-      </div>
+      </>
     );
   }
 
   function checkForm() {
     return (
-      <div class="pay-check-cont">
-        <div className="row">
-          <div className="col-sm-8">
-            <span class="check-label">CHECK NO</span>
-            <input
-              type="text"
-              id="check"
-              name="check_no"
-              class="check"
-              onChange={(e) => setCheckNo(e.target.value)}
-            />
-          </div>
-        </div>
+      <>
+        <div className="pay-cash-cont mb-5 mt-4">
+          <Row className="input-group">
+            <Col xs={12}>
+              <label for="inputPassword6" className="col-form-label">
+                Check Details
+              </label>
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Bank
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="text"
+                id="check"
+                name="check_bank"
+                className="form-control"
+                onChange={(e) => setCheckBank(e.target.value)}
+              />
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Number
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="text"
+                id="check"
+                name="check_no"
+                className="form-control"
+                onChange={(e) => setCheckNo(e.target.value)}
+              />
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Date
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm mb-4">
+              <input
+                type="date"
+                id="check"
+                name="check_date"
+                className="form-control"
+                onChange={(e) => setCheckDate(e.target.value)}
+              />
+            </Col>
+            <Col xs={12}>
+              <hr style={{ width: "92%" }} />
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Amount
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="number"
+                id="payAmount"
+                name="payAmount"
+                step="0.01"
+                value={pay}
+                className="form-control"
+                placeholder="P"
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  if (inputValue !== null) {
+                    setPay(inputValue);
+                  }
+                }}
+              />
+            </Col>
+            <Col xs={1}></Col>
+            <Col xs={2} className="input-group-sm"></Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Withholding Tax
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="number"
+                id="taxAmount"
+                name="taxAmount"
+                step="0.01"
+                className="form-control"
+                placeholder="% (in percentage)"
+                onChange={(e) => {
+                  setCheckTax(e.target.value);
+                }}
+              />
+            </Col>
 
-        <div className="row">
-          <div className="col-sm-8">
-            <span class="check-label">CHECK BANK</span>
-            <input
-              type="text"
-              id="check"
-              name="check_bank"
-              class="check"
-              onChange={(e) => setCheckBank(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-8">
-            <span class="check-label">CHECK DATE</span>
-            <input
-              type="date"
-              id="check"
-              name="check_date"
-              class="check"
-              onChange={(e) => setCheckDate(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-8">
-            <span class="check-label">WITHHOLDING TAX</span>
-            <input
-              type="number"
-              id="taxAmount"
-              name="taxAmount"
-              step="0.01"
-              className="cash-input pay"
-              placeholder="% (in percentage)"
-              onChange={(e) => setCheckTax(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="remarks-payment-label">REMARKS (optional)</span>
-            </div>
-            <div className="row">
+            <Col xs={1}>
+              {" "}
+              <label for="inputPassword6" className="col-form-label">
+                Remarks
+              </label>
+            </Col>
+            <Col xs={11} className="input-group-sm">
               <textarea
+                className="full-input"
+                style={{ width: "92%" }}
                 id="remarks"
                 name="remarks"
-                className="invoice-remarks-input"
-                rows="4"
+                rows="3"
                 cols="100"
                 onChange={(e) => setRemarks(e.target.value)}
-              />
-            </div>
+              ></textarea>
+            </Col>
+          </Row>
+          <div className="row d-flex justify-content-end mt-4">
+            {paymentStatus == "paid" && printButton()}
+            <button className="save-btn" onClick={(e) => submit(e)}>
+              SAVE PAYMENT{" "}
+            </button>
           </div>
         </div>
-        <div className="row d-flex justify-content-end">
-          {paymentStatus == "paid" && printButton()}
-          <button className="save-btn" onClick={(e) => submit(e)}>
-            SAVE PAYMENT{" "}
-          </button>
-        </div>
-      </div>
+      </>
     );
   }
 
@@ -1429,77 +1483,101 @@ function AddInvoicePayment() {
 
   function othersForm() {
     return (
-      <div class="pay-cash-cont">
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">SOURCE</span>
-            </div>
-            <div className="row">
+      <>
+        <div className="pay-cash-cont mb-5 mt-4">
+          <Row className="input-group">
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Amount
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
               <input
-                type="text"
+                type="number"
                 id="payAmount"
-                name="source"
-                class="cash-input pay"
-                onChange={(e) => setSource(e.target.value)}
+                name="payAmount"
+                step="0.01"
+                value={pay}
+                className="form-control"
+                placeholder="P"
+                onChange={(e) => setPay(e.target.value)}
               />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="amount-label">REFERENCE NUMBER</span>
-            </div>
-            <div className="row">
-              <input
-                type="text"
-                id="changeAmount"
-                name="reference_number"
-                class="cash-input pay"
-                onChange={(e) => setRemarks(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="check-label">WITHHOLDING TAX</span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={1}></Col>
+            <Col xs={2} className="input-group-sm"></Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Withholding Tax
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
               <input
                 type="number"
                 id="taxAmount"
                 name="taxAmount"
                 step="0.01"
-                className="cash-input pay"
+                className="form-control"
                 placeholder="% (in percentage)"
                 onChange={(e) => setOthersTax(e.target.value)}
               />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="row">
-              <span class="remarks-payment-label">REMARKS (optional)</span>
-            </div>
-            <div className="row">
+            </Col>
+            <Col xs={1}>
+              <label for="inputPassword6" className="col-form-label">
+                Source
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="text"
+                id="payAmount"
+                name="source"
+                className="form-control"
+                onChange={(e) => setSource(e.target.value)}
+              />
+            </Col>
+            <Col xs={1}></Col>
+            <Col xs={2} className="input-group-sm"></Col>
+            <Col xs={2}>
+              <label for="inputPassword6" className="col-form-label">
+                Reference Number
+              </label>
+            </Col>
+            <Col xs={3} className="input-group-sm">
+              <input
+                type="text"
+                id="changeAmount"
+                name="reference_number"
+                className="form-control"
+                onChange={(e) => setReference(e.target.value)}
+              />
+            </Col>
+
+            <Col xs={1}>
+              {" "}
+              <label for="inputPassword6" className="col-form-label">
+                Remarks
+              </label>
+            </Col>
+            <Col xs={11} className="input-group-sm">
               <textarea
+                className="full-input"
+                style={{ width: "92%" }}
                 id="remarks"
                 name="remarks"
-                className="invoice-remarks-input"
-                rows="4"
+                rows="3"
                 cols="100"
                 onChange={(e) => setRemarks(e.target.value)}
-              />
-            </div>
+              ></textarea>
+            </Col>
+          </Row>
+          <div className="row d-flex justify-content-end mt-4">
+            {paymentStatus == "paid" && printButton()}
+            <button className="save-btn" onClick={(e) => submit(e)}>
+              SAVE PAYMENT{" "}
+            </button>
           </div>
         </div>
-        <div className="row d-flex justify-content-end">
-          {paymentStatus == "paid" && printButton()}
-          <button className="save-btn" onClick={(e) => submit(e)}>
-            SAVE PAYMENT{" "}
-          </button>
-        </div>
-      </div>
+      </>
     );
   }
 
