@@ -324,6 +324,7 @@ export default function ViewBooking() {
       info.key === "clinical_microscopy_urinalysis" &&
       info.test_id !== "7" &&
       info.test_id !== "130" &&
+      info.test_id !== "136 " &&
       info.test_id !== "1"
   );
 
@@ -347,9 +348,13 @@ export default function ViewBooking() {
     (info) => info.lab_test === "Serum Pregnancy Test"
   );
 
-  const pregnancyRPK = labTests.filter((info) => info.test_id === "6");
+  const pregnancyRPK = labTests.filter(
+    (info) => info.test_id === "136"
+    // (info) => info.test_id === "6" || info.test_id === "136"
+  );
   const detailpregnancyRPK = services.filter(
-    (info) => info.lab_test === "Pregnancy test (RPK-Lateral Flow)"
+    (info) =>
+      info.lab_test.toUpperCase() === "PREGNANCY TEST (RPK LATERAL FLOW)"
   );
 
   /****************/
