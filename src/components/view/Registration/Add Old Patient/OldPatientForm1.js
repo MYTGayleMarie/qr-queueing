@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DateTimePicker from "react-datetime-picker";
 import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
@@ -60,35 +60,37 @@ function OldPatientForm1({
   const [people, setPeople] = useState(0);
   const [km, setKm] = useState(0);
 
-  axios({
-    method: "post",
-    url: window.$link + "customers/show/" + id,
-    withCredentials: false,
-    params: {
-      api_key: window.$api_key,
-      token: userToken.replace(/['"]+/g, ""),
-      requester: userId,
-    },
-  })
-    .then(function (customer) {
-      var presentDate = new Date();
-      var birthDate = new Date(customer.data.birthdate);
-      const age = presentDate.getFullYear() - birthDate.getFullYear();
-      setFirstName(customer.data.first_name);
-      setMiddleName(customer.data.middle_name);
-      setLastName(customer.data.last_name);
-      setBirthDate(birthDate.toDateString());
-      setGender(customer.data.gender);
-      setAge(age);
-      setContactNo(customer.data.contact_no);
-      setEmail(customer.data.email);
-      setAddress(customer.data.address);
-      setPwdId(customer.data.pwd_id);
-      setSeniorId(customer.data.senior_id);
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: window.$link + "customers/show/" + id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then(function (customer) {
+        var presentDate = new Date();
+        var birthDate = new Date(customer.data.birthdate);
+        const age = presentDate.getFullYear() - birthDate.getFullYear();
+        setFirstName(customer.data.first_name);
+        setMiddleName(customer.data.middle_name);
+        setLastName(customer.data.last_name);
+        setBirthDate(birthDate.toDateString());
+        setGender(customer.data.gender);
+        setAge(age);
+        setContactNo(customer.data.contact_no);
+        setEmail(customer.data.email);
+        setAddress(customer.data.address);
+        setPwdId(customer.data.pwd_id);
+        setSeniorId(customer.data.senior_id);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const {
     fname,
