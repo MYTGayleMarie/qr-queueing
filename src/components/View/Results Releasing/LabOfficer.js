@@ -268,7 +268,14 @@ export default function LabOfficer() {
       selectedLab.label == "Hepatitis B Surface Antibody Test"
     ) {
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
+
       setIsDropdown(true);
+      if (lab_test == "Anti-HCV") {
+        setLabTestOptions(labResultsData.posNegOptions2);
+      }
+      if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
+        setLabTestOptions(labResultsData.posNegOptions2);
+      }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
       if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
         setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
@@ -277,10 +284,10 @@ export default function LabOfficer() {
         setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
       } else if (lab_test == "Anti-HCV") {
-        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
+        setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
       } else if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
-        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
+        setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
       } else {
         setIsDropdown(false);
