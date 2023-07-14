@@ -324,7 +324,7 @@ export default function ViewBooking() {
       info.key === "clinical_microscopy_urinalysis" &&
       info.test_id !== "7" &&
       info.test_id !== "130" &&
-      info.test_id !== "136 " &&
+      info.test_id !== "136" &&
       info.test_id !== "1"
   );
 
@@ -335,7 +335,10 @@ export default function ViewBooking() {
   const detailSerology = services.filter(
     (info) =>
       info.lab_test === "Syphilis/RPR/VDRL" ||
-      info.lab_test === "HBSag (Hepatitis B Antigen)"
+      info.lab_test === "HBSag (Hepatitis B Antigen)"||
+      info.lab_test === "Anti-HAV" || 
+      info.lab_test === "Anti-HCV" || 
+      info.lab_test === "Hepatitis B Surface Antibody Test"
   );
 
   const spermAnalysis = labTests.filter((info) => info.test_id === "7");
@@ -350,11 +353,10 @@ export default function ViewBooking() {
 
   const pregnancyRPK = labTests.filter(
     (info) => info.test_id === "136"
-    // (info) => info.test_id === "6" || info.test_id === "136"
   );
   const detailpregnancyRPK = services.filter(
     (info) =>
-      info.lab_test.toUpperCase() === "PREGNANCY TEST (RPK LATERAL FLOW)"
+      info.lab_test === "Pregnancy Test(RPK Flow)"
   );
 
   /****************/
@@ -573,7 +575,7 @@ export default function ViewBooking() {
                     spermAnalysis.length !== 0 ||
                     urinalysisOnly.length !== 0 ||
                     serumPT.length !== 0 ||
-                    clinicalUrineLab.length !== 0) && (
+                    clinicalUrineLab.length !== 0 || pregnancyRPK.length !== 0) && (
                     <div>
                       <div className="category label">
                         CLINICAL MICROSCOPY URINALYSIS
@@ -715,8 +717,7 @@ export default function ViewBooking() {
                   {serology.length != 0 && (
                     <div>
                       <div className="category label">SEROLOGY</div>
-
-                      {detailSerology[0].with_result === "1" ? (
+                      {detailSerology[0]?.with_result === "1" ? (
                         <GenerateResults
                           servicesData={serology}
                           title={"SEROLOGY"}
