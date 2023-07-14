@@ -1591,7 +1591,7 @@ export default function LabOfficer() {
                               ""
                             )}
                             <div className="space-between">
-                              <span>{result["lab_test"].toUpperCase()}</span>
+                              <span>{result["lab_test"]}</span>
                             </div>
                           </div>
                           <div className="col">

@@ -778,7 +778,7 @@ const labResultsData = {
 
   labTestDengue: [
     {
-      lab_test: "NS1 AG",
+      lab_test: "NS1 Ag",
       result: "",
       unit: "",
       preferred: " ",
