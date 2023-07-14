@@ -914,6 +914,41 @@ const labResultsData = {
     },
   ],
 
+  labTestThyroid: [
+    {
+      lab_test: "TSH",
+      result: "",
+      unit: "mIU / L",
+      preferred: " ",
+      preferred_from: 0.3,
+      preferred_to: 4.2,
+    },
+    {
+      lab_test: "FT3",
+      result: "",
+      unit: "pmol / L",
+      preferred: " ",
+      preferred_from: 2.8,
+      preferred_to: 7.1,
+    },
+    {
+      lab_test: "FT4",
+      result: "",
+      unit: "pmol / L",
+      preferred: " ",
+      preferred_from: 12,
+      preferred_to: 20,
+    },
+    {
+      lab_test: "T2,T3",
+      result: "",
+      unit: "nmol / L",
+      preferred: " ",
+      preferred_from: 1.23,
+      preferred_to: 3.07,
+    },
+  ],
+
   hepatitisTestOptions: [
     {
       value: "POSITIVE",

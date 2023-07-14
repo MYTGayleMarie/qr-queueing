@@ -252,7 +252,6 @@ export default function LabOfficer() {
       lab_test == "IgM" ||
       lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"
     ) {
-      console.log("255");
       setLabTestOptions(labResultsData.posNegOptions2);
       setIsDropdown(true);
     } else if (lab_test == "Syphilis/RPR/VDRL" || lab_test == "H. Pylori") {
@@ -290,7 +289,16 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false);
       }
-    } else {
+    }else if(selectedLab.label == "Dengue"){
+      if(lab_test === "NS1 Ag" || lab_test === "IgG" || lab_test === "IgM"){
+        setLabTestOptions(labResultsData.posNegOptions2);
+        setIsDropdown(true);
+      }
+      else {
+        setIsDropdown(false);
+      }
+    } 
+    else {
       setIsDropdown(false);
     }
 
@@ -1261,14 +1269,17 @@ export default function LabOfficer() {
     ) {
       setLabTestData(labResultsData.labTestHepatitisA);
     } else if (e.label === "TSH" || e.label === "[P] TSH") {
-      setLabTestData(labResultsData.labTestTSH);
+      setLabTestData(labResultsData.labTestThyroid);
     } else if (e.label === "FT4" || e.label === "[P] FT4") {
-      setLabTestData(labResultsData.labTestFT4);
+      setLabTestData(labResultsData.labTestThyroid);
     } else if (e.label === "FT3" || e.label === "[P] FT3") {
-      setLabTestData(labResultsData.labTestFT3);
+      setLabTestData(labResultsData.labTestThyroid);
     } else if (e.label === "T3" || e.label === "[P] T3") {
-      setLabTestData(labResultsData.labTestT3);
-    } else if (e.label === "PSA" || e.label === "[P] PSA") {
+      setLabTestData(labResultsData.labTestThyroid);
+    } else if (e.label === "T4" || e.label === "[P] T4") {
+      setLabTestData(labResultsData.labTestThyroid);
+    } 
+    else if (e.label === "PSA" || e.label === "[P] PSA") {
       setLabTestData(labResultsData.labTestPSA);
     } else if (e.label === "CEA" || e.label === "[P] CEA") {
       setLabTestData(labResultsData.labTestCEA);
@@ -1926,7 +1937,17 @@ export default function LabOfficer() {
                       data.label === "Anti-HAV" ||
                       data.label === "Anti-HCV"
                         ? "Hepatitis Profile Tests"
-                        : data.label}
+                        : 
+                        <>
+                          {data.label === "T4" ||
+                            data.label === "T3" ||
+                            data.label === "FT4" ||
+                            data.label === "FT3" ||
+                            data.label === "TSH"
+                              ? "Thyroid Profile Tests"
+                              : data.label}
+                        </>
+                      }
                     </Button>
                   );
                 })}
