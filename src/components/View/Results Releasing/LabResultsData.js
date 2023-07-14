@@ -18,6 +18,7 @@ const labResultsData = {
     "FT4",
     "FT3",
     "T3",
+    "T4",
     "PSA",
     "CEA",
     "VITAMIN D",

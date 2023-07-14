@@ -633,15 +633,19 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
+      var thyroid = booking.data.filter((data) => data.category_id === "13");
       var serology = booking.data.filter((data) => data.category_id === "12");
-
-      var booking_wo_serology = booking.data.filter(
-        (data) => data.category_id !== "12"
-      );
+      var booking_wo_serology_thyroid = booking.data.filter(
+        (data) => data.category_id !== "12" || data.category_id !== "13"
+      )
+      console.log(booking_wo_serology_thyroid)
       if (serology.length > 0) {
-        booking_wo_serology.push(serology[0]);
+        booking_wo_serology_thyroid.push(serology[0]);
       }
-      const labOptions = booking_wo_serology
+      if (thyroid.length > 0) {
+        booking_wo_serology_thyroid.push(thyroid[0]);
+      }
+      const labOptions = booking_wo_serology_thyroid
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
@@ -1270,15 +1274,17 @@ export default function LabOfficer() {
       setLabTestData(labResultsData.labTestHepatitisA);
     } else if (e.label === "TSH" || e.label === "[P] TSH") {
       setLabTestData(labResultsData.labTestThyroid);
-    } else if (e.label === "FT4" || e.label === "[P] FT4") {
+    // } else if (e.label === "FT4" || e.label === "[P] FT4") {
+    //   setLabTestData(labResultsData.labTestThyroid);
+    // } else if (e.label === "FT3" || e.label === "[P] FT3") {
+    //   setLabTestData(labResultsData.labTestThyroid);
+    // } else if (e.label === "T3" || e.label === "[P] T3") {
+    //   setLabTestData(labResultsData.labTestThyroid);
+    // } else if (e.label === "T4" || e.label === "[P] T4") {
+    //   setLabTestData(labResultsData.labTestThyroid);}
+    } else if (["TSH", "[P] TSH", "FT4", "[P] FT4", "FT3", "[P] FT3", "T3", "[P] T3", "T4", "[P] T4"].includes(e.label)) {
       setLabTestData(labResultsData.labTestThyroid);
-    } else if (e.label === "FT3" || e.label === "[P] FT3") {
-      setLabTestData(labResultsData.labTestThyroid);
-    } else if (e.label === "T3" || e.label === "[P] T3") {
-      setLabTestData(labResultsData.labTestThyroid);
-    } else if (e.label === "T4" || e.label === "[P] T4") {
-      setLabTestData(labResultsData.labTestThyroid);
-    } 
+    }
     else if (e.label === "PSA" || e.label === "[P] PSA") {
       setLabTestData(labResultsData.labTestPSA);
     } else if (e.label === "CEA" || e.label === "[P] CEA") {
