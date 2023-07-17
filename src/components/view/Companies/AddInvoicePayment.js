@@ -193,7 +193,7 @@ function AddInvoicePayment() {
     transferee: "",
     reference_no: "",
     paid_amount: "",
-    withholding_tax: "",
+    withholding_tax: 0,
     remarks: "",
   });
 
@@ -375,6 +375,7 @@ function AddInvoicePayment() {
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success");
           setGrandTotal(invoice.total);
+          setPay(invoice.total);
           setDiscountCode(invoice[0].discount_code);
           setPaidAmount(paymentTotal);
           setPayments(payments);
@@ -648,7 +649,8 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay,
+          amount: pay + pay * (parseFloat(tax) / 100),
+
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
@@ -680,7 +682,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: grandTotal,
+          amount: pay + pay * (parseFloat(checkTax) / 100),
           check_no: checkNo,
           check_bank: checkBank,
           check_date: checkDate,
@@ -715,7 +717,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: grandTotal,
+          amount: pay + pay * (parseFloat(cardTax) / 100),
           cardName: cardName,
           card_no: cardNo,
           card_type: cardType,
@@ -724,7 +726,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           withholdingtax: cardTax,
-          grandTotal: grandTotal,
+          grandTotal: pay + pay * (parseFloat(cardTax) / 100),
           remarks: remarks,
           added_by: userId,
         },
@@ -750,7 +752,7 @@ function AddInvoicePayment() {
           api_key: window.$api_key,
           invoice_no: infoId,
           type: payment,
-          amount: grandTotal,
+          amount: pay + pay * (parseFloat(othersTax) / 100),
           other_source: source,
           other_reference_no: reference,
           senior_pwd_id: seniorPwdId,
@@ -787,7 +789,8 @@ function AddInvoicePayment() {
           amount: bankTransferDetails.paid_amount,
           senior_pwd_id: seniorPwdId,
           discount: discount,
-          grand_total: grandTotal,
+          grand_total:
+            pay + pay * (parseFloat(bankTransferDetails.withholding_tax) / 100),
           withholdingtax: bankTransferDetails.withholding_tax || "0",
           remarks: bankTransferDetails.remarks,
           added_by: userId,
@@ -1069,24 +1072,25 @@ function AddInvoicePayment() {
               id="payAmount"
               name="payAmount"
               step="0.01"
-              value={pay}
+              value={pay + pay * (parseFloat(tax) / 100)}
+              disabled
               className="form-control"
               placeholder="P"
-              onChange={(e) => {
-                const inputValue = e.target.value;
-                if (inputValue !== null) {
-                  setPay(inputValue);
-                }
-              }}
+              // onChange={(e) => {
+              //   const inputValue = e.target.value;
+              //   if (inputValue !== null) {
+              //     setPay(inputValue);
+              //   }
+              // }}
             />
           </Col>
           <Col xs={1}>
-            <label for="inputPassword6" className="col-form-label">
+            {/* <label for="inputPassword6" className="col-form-label">
               Change
-            </label>
+            </label> */}
           </Col>
           <Col xs={2} className="input-group-sm">
-            <input
+            {/* <input
               type="number"
               id="changeAmount"
               name="changeAmount"
@@ -1095,7 +1099,7 @@ function AddInvoicePayment() {
                 2
               )}
               placeholder="P"
-            />
+            /> */}
           </Col>
           <Col xs={2}>
             <label for="inputPassword6" className="col-form-label">
@@ -1142,6 +1146,7 @@ function AddInvoicePayment() {
       </div>
     );
   }
+
   function bankTransferForm() {
     return (
       <>
@@ -1208,10 +1213,14 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="paid_amount"
                 step="0.01"
-                value={pay}
+                value={
+                  pay +
+                  pay * (parseFloat(bankTransferDetails.withholding_tax) / 100)
+                }
+                disabled
                 className="form-control"
                 placeholder="P"
-                onChange={handleBankChange}
+                // onChange={handleBankChange}
               />
             </Col>
             <Col xs={1}></Col>
@@ -1328,7 +1337,8 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay}
+                value={pay + pay * (parseFloat(checkTax) / 100)}
+                disabled
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
@@ -1497,7 +1507,8 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay}
+                value={pay + pay * (parseFloat(othersTax) / 100)}
+                disabled
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => setPay(e.target.value)}
