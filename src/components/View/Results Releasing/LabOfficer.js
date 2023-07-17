@@ -289,16 +289,14 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false);
       }
-    }else if(selectedLab.label == "Dengue"){
-      if(lab_test === "NS1 Ag" || lab_test === "IgG" || lab_test === "IgM"){
+    } else if (selectedLab.label == "Dengue") {
+      if (lab_test === "NS1 Ag" || lab_test === "IgG" || lab_test === "IgM") {
         setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
-      }
-      else {
+      } else {
         setIsDropdown(false);
       }
-    } 
-    else {
+    } else {
       setIsDropdown(false);
     }
 
@@ -636,9 +634,9 @@ export default function LabOfficer() {
       var thyroid = booking.data.filter((data) => data.category_id === "13");
       var serology = booking.data.filter((data) => data.category_id === "12");
       var booking_wo_serology_thyroid = booking.data.filter(
-        (data) => data.category_id !== "12" || data.category_id !== "13"
-      )
-      console.log(booking_wo_serology_thyroid)
+        (data) => data.category_id !== "12" && data.category_id !== "13"
+      );
+
       if (serology.length > 0) {
         booking_wo_serology_thyroid.push(serology[0]);
       }
@@ -1274,18 +1272,30 @@ export default function LabOfficer() {
       setLabTestData(labResultsData.labTestHepatitisA);
     } else if (e.label === "TSH" || e.label === "[P] TSH") {
       setLabTestData(labResultsData.labTestThyroid);
-    // } else if (e.label === "FT4" || e.label === "[P] FT4") {
-    //   setLabTestData(labResultsData.labTestThyroid);
-    // } else if (e.label === "FT3" || e.label === "[P] FT3") {
-    //   setLabTestData(labResultsData.labTestThyroid);
-    // } else if (e.label === "T3" || e.label === "[P] T3") {
-    //   setLabTestData(labResultsData.labTestThyroid);
-    // } else if (e.label === "T4" || e.label === "[P] T4") {
-    //   setLabTestData(labResultsData.labTestThyroid);}
-    } else if (["TSH", "[P] TSH", "FT4", "[P] FT4", "FT3", "[P] FT3", "T3", "[P] T3", "T4", "[P] T4"].includes(e.label)) {
+      // } else if (e.label === "FT4" || e.label === "[P] FT4") {
+      //   setLabTestData(labResultsData.labTestThyroid);
+      // } else if (e.label === "FT3" || e.label === "[P] FT3") {
+      //   setLabTestData(labResultsData.labTestThyroid);
+      // } else if (e.label === "T3" || e.label === "[P] T3") {
+      //   setLabTestData(labResultsData.labTestThyroid);
+      // } else if (e.label === "T4" || e.label === "[P] T4") {
+      //   setLabTestData(labResultsData.labTestThyroid);}
+    } else if (
+      [
+        "TSH",
+        "[P] TSH",
+        "FT4",
+        "[P] FT4",
+        "FT3",
+        "[P] FT3",
+        "T3",
+        "[P] T3",
+        "T4",
+        "[P] T4",
+      ].includes(e.label)
+    ) {
       setLabTestData(labResultsData.labTestThyroid);
-    }
-    else if (e.label === "PSA" || e.label === "[P] PSA") {
+    } else if (e.label === "PSA" || e.label === "[P] PSA") {
       setLabTestData(labResultsData.labTestPSA);
     } else if (e.label === "CEA" || e.label === "[P] CEA") {
       setLabTestData(labResultsData.labTestCEA);
@@ -1940,19 +1950,19 @@ export default function LabOfficer() {
                       data.label === "HBSag (Hepatitis B Antigen)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                       data.label === "Anti-HAV" ||
-                      data.label === "Anti-HCV"
-                        ? "Hepatitis Profile Tests"
-                        : 
+                      data.label === "Anti-HCV" ? (
+                        "Hepatitis Profile Tests"
+                      ) : (
                         <>
                           {data.label === "T4" ||
-                            data.label === "T3" ||
-                            data.label === "FT4" ||
-                            data.label === "FT3" ||
-                            data.label === "TSH"
-                              ? "Thyroid Profile Tests"
-                              : data.label}
+                          data.label === "T3" ||
+                          data.label === "FT4" ||
+                          data.label === "FT3" ||
+                          data.label === "TSH"
+                            ? "Thyroid Profile Tests"
+                            : data.label}
                         </>
-                      }
+                      )}
                     </Button>
                   );
                 })}
