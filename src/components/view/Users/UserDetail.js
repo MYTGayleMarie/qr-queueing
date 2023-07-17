@@ -68,46 +68,45 @@ function UserDetail() {
             setEditRoleId(response.data.role_id);
            
             
-            if(row.role_id == 1) {
-              userDetails.role = "User";
+            if(response.data.role_id == 1) {
+              setRole("User");
           }
-          else if(row.role_id == 2) {
-              userDetails.role = "Registration Officer";
+          else if(response.data.role_id == 2) {
+              setRole("Registration Officer");
           }
-          else if(row.role_id == 3) {
-              userDetails.role = "Cashier";
+          else if(response.data.role_id == 3) {
+              setRole("Cashier");
           }
-          else if(row.role_id == 4){
-              userDetails.role = "Admin";
+          else if(response.data.role_id == 4){
+              setRole("Admin");
           }
-          else if(row.role_id == 5){
-              userDetails.role = "Results Releasing Officer";
+          else if(response.data.role_id == 5){
+              setRole("Results Releasing Officer");
           }
-          else if(row.role_id == 6){
-              userDetails.role = "Purchasing Officer";
+          else if(response.data.role_id == 6){
+              setRole("Purchasing Officer");
           }
-          else if(row.role_id == 7){
-              userDetails.role = "Supply Officer";
+          else if(response.data.role_id == 7){
+              setRole("Supply Officer");
           }
-          else if(row.role_id == 8){
-              userDetails.role = "Accounting Officer";
+          else if(response.data.role_id == 8){
+              setRole("Accounting Officer");
           }
-          else if(row.role_id == 9){
-              userDetails.role = "Customer Queue";
+          else if(response.data.role_id == 9){
+              setRole("Customer Queue");
           }
-          else if(row.role_id == 10){
-              userDetails.role = "Lab Officer";
+          else if(response.data.role_id == 10){
+              setRole("Lab Officer");
           }
-          else if(row.role_id == 11){
-              userDetails.role = "Receiving";
+          else if(response.data.role_id == 11){
+              setRole("Receiving");
           }
-          else if(row.role_id == 12){
-              userDetails.role = "Supervisor";
+          else if(response.data.role_id == 12){
+              setRole("Supervisor");
           }
           else{
-              userDetails.role = "User";
+              setRole("User");
           }
-
         }).catch(function (error) {
             console.log(error);
         });
