@@ -1427,8 +1427,7 @@ export default function LabOfficer() {
                       DEPARTMENT OF CLINICAL LABORATORY
                     </span>
                     <span className="addressTitle">
-                      Unit A, M Block, Marasbaras, Tacloban City | 0999 8888
-                      6694
+                      Unit A, M Block, Marasbaras, Tacloban City | 0999-888-6694
                     </span>
                   </div>
                 </div>
