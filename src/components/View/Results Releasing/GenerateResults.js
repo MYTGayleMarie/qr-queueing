@@ -199,7 +199,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         const data = response.data.data;
 
         const packageDetailId = selectedLab.booking_id;
+
         if (data.booking_detail_results) {
+          setReadyResults(true);
           if (selectedLab.type == "lab") {
             setLabTestData(data.booking_detail_results);
           } else {
@@ -207,7 +209,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               data.booking_package_details_results[packageDetailId]
             );
           }
-          setReadyResults(true);
         }
       })
       .catch((error) => {
@@ -260,10 +261,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 response.data.data.booking_detail_results.map((val) => {
                   lab_test_results.push({ ...val });
                 });
+
                 // data.lab_test_results.push(
                 //   response.data.data.booking_detail_results[0]
                 // );
               }
+              setReadyResults(true);
+
               //old logic
               // lab_test_results.push(
               //   response.data.data?.booking_detail_results !== null
@@ -278,6 +282,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       });
     }
     setLabTestResults(lab_test_results);
+
     setLabReady(true);
   }, []);
 
@@ -317,10 +322,20 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       (service) => service.lab_test === servicesData[0].name
     );
 
-    if (services[index]?.result_approval === "approved") {
-      setIsApproved("approved");
-    } else if (services[index]?.result_approval === "disapproved") {
-      setIsApproved("disapproved");
+    if (servicesData[0].key === "thyroid_profile") {
+      var services_copy = [...services];
+      setIsApproved(
+        services_copy.filter((data) => data.result_approval === "approved")
+          .length > 0
+          ? "approved"
+          : ""
+      );
+    } else {
+      if (services[index]?.result_approval === "approved") {
+        setIsApproved("approved");
+      } else if (services[index]?.result_approval === "disapproved") {
+        setIsApproved("disapproved");
+      }
     }
   }, [readyBooking]);
 
