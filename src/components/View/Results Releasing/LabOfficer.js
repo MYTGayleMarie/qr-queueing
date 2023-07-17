@@ -1465,8 +1465,23 @@ export default function LabOfficer() {
                           : selectedLab.label.toUpperCase() ===
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
-                              "[P] HBSAG (HEPATITIS B ANTIGEN)"
+                              "[P] HBSAG (HEPATITIS B ANTIGEN)"||
+                            selectedLab.label.toUpperCase() ===
+                              "ANTIHAV"||
+                            selectedLab.label.toUpperCase() ===
+                              "ANTIHCV"
                           ? "SEROLOGY"
+                          : selectedLab.label.toUpperCase() ===
+                              "FT4" ||
+                            selectedLab.label.toUpperCase() ===
+                              "FT3"||
+                            selectedLab.label.toUpperCase() ===
+                              "TSH"||
+                            selectedLab.label.toUpperCase() ===
+                              "T4"||
+                            selectedLab.label.toUpperCase() ===
+                              "T3"
+                          ? "THYROID PROFILE"
                           : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                           ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
                           : selectedLab.label.toUpperCase()}

@@ -68,18 +68,46 @@ function UserDetail() {
             setEditRoleId(response.data.role_id);
            
             
-            if(response.data.role_id == 1) {
-                setRole("User");
-            }
-            else if(response.data.role_id == 2) {
-                setRole("Registration Officer");
-            }
-            else if(response.data.role_id == 3) {
-                setRole("Cashier");
-            }
-            else {
-                setRole("Admin");
-            }
+            if(row.role_id == 1) {
+              userDetails.role = "User";
+          }
+          else if(row.role_id == 2) {
+              userDetails.role = "Registration Officer";
+          }
+          else if(row.role_id == 3) {
+              userDetails.role = "Cashier";
+          }
+          else if(row.role_id == 4){
+              userDetails.role = "Admin";
+          }
+          else if(row.role_id == 5){
+              userDetails.role = "Results Releasing Officer";
+          }
+          else if(row.role_id == 6){
+              userDetails.role = "Purchasing Officer";
+          }
+          else if(row.role_id == 7){
+              userDetails.role = "Supply Officer";
+          }
+          else if(row.role_id == 8){
+              userDetails.role = "Accounting Officer";
+          }
+          else if(row.role_id == 9){
+              userDetails.role = "Customer Queue";
+          }
+          else if(row.role_id == 10){
+              userDetails.role = "Lab Officer";
+          }
+          else if(row.role_id == 11){
+              userDetails.role = "Receiving";
+          }
+          else if(row.role_id == 12){
+              userDetails.role = "Supervisor";
+          }
+          else{
+              userDetails.role = "User";
+          }
+
         }).catch(function (error) {
             console.log(error);
         });
