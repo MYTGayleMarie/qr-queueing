@@ -545,7 +545,8 @@ export default function LabOfficer() {
   }
 
   const printHandle = useReactToPrint({
-    onAfterPrint: handleRedirect,
+    // onAfterPrint: handleRedirect,
+    onAfterPrint: refreshPage,
     content: () => componentRef.current,
     pageStyle: () => `
           @page { size: letter; margin: 0.5in;}
@@ -1165,7 +1166,8 @@ export default function LabOfficer() {
       .then(function (response) {
         toast.success("Results are Approved");
         setShowPDF(false);
-        refreshPage();
+        handlePrint();
+        // refreshPage();
       })
       .catch(function (error) {
         console.log(error);
