@@ -360,11 +360,11 @@ export default function LabOfficer() {
     } else if (prc_id === "25") {
       return "PRC LIC. NO.: 0085690";
     } else if (prc_id === "26") {
-      return "PRC LIC. NO.: 0093629";
+      return "PRC LIC. NO.: 0092410";
     } else if (prc_id === "23") {
       return "PRC LIC. NO.: 0112611";
     } else if (prc_id === "27") {
-      return "PRC LIC. NO.: 0085690";
+      return "PRC LIC. NO.: 0109359";
     } else if (prc_id === "28") {
       return "PRC LIC. NO.: 0094539";
     } else if (prc_id === "29") {

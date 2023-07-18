@@ -382,11 +382,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       } else if (approverId === "25") {
         setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (approverId === "26") {
-        setMedTechPRC("PRC LIC. NO.: 0093629");
+        setMedTechPRC("PRC LIC. NO.: 0092410");
       } else if (approverId === "23") {
         setMedTechPRC("PRC LIC. NO.: 0112611");
       } else if (approverId === "27") {
-        setMedTechPRC("PRC LIC. NO.: 0085690");
+        setMedTechPRC("PRC LIC. NO.: 0109359");
       } else if (approverId === "28") {
         setMedTechPRC("PRC LIC. NO.: 0094539");
       } else if (approverId === "29") {
@@ -405,11 +405,11 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       } else if (userId === "25") {
         setMedTechPRC("PRC LIC. NO.: 0085690");
       } else if (userId === "26") {
-        setMedTechPRC("PRC LIC. NO.: 0093629");
+        setMedTechPRC("PRC LIC. NO.: 0092410");
       } else if (userId === "23") {
         setMedTechPRC("PRC LIC. NO.: 0112611");
       } else if (userId === "27") {
-        setMedTechPRC("PRC LIC. NO.: 0085690");
+        setMedTechPRC("PRC LIC. NO.: 0109359");
       } else if (userId === "28") {
         setMedTechPRC("PRC LIC. NO.: 0094539");
       } else if (userId === "29") {
