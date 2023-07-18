@@ -207,7 +207,7 @@ function Table({
               >
                 PRINT BOOKING
               </button>
-              {(userId == 10 || userId == 18) && (
+              {(userId == 10 || userId == 18 || userId == 5 || userId == 11) && (
                 <>
                   <br />
                   <button
