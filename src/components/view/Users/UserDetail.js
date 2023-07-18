@@ -236,7 +236,14 @@ function UserDetail() {
                            <option value="2">Registration Officer</option>
                            <option value="3">Cashier Officer</option>
                            <option value="4">Admin</option>
-                           <option value="0">Other</option>
+                           <option value="5">Results Releasing Officer</option>
+                           <option value="6">Purchasing Officer</option>
+                           <option value="7">Supply Officer</option>
+                           <option value="8">Accounting Officer</option>
+                           <option value="9">Customer Queue</option>
+                           <option value="10">Laboratory Officer</option>
+                           <option value="11">Receiving Officer</option>
+                           <option value="12">Supervisor</option>
                          </select>
                         </div>
                       </div>
