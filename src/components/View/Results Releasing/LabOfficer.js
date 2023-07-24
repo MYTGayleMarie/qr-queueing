@@ -549,10 +549,14 @@ export default function LabOfficer() {
     onAfterPrint: refreshPage,
     content: () => componentRef.current,
     pageStyle: () => `
-          @page { size: letter; margin: 0.5in;}
+          @page { size: letter; margin: 0.5in;margin-bottom:0in}
           @media print {
             .print-break {
-              margin-top: 1rem;
+              margin: 0.5in;
+              margin-top:0.5in;
+              margin-left:0.5in;
+              margin-right:0.5in;
+              margin-bottom:0in;
               display: block;
               page-break-before: always;
             }
@@ -1465,22 +1469,15 @@ export default function LabOfficer() {
                           : selectedLab.label.toUpperCase() ===
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
-                              "[P] HBSAG (HEPATITIS B ANTIGEN)"||
-                            selectedLab.label.toUpperCase() ===
-                              "ANTIHAV"||
-                            selectedLab.label.toUpperCase() ===
-                              "ANTIHCV"
+                              "[P] HBSAG (HEPATITIS B ANTIGEN)" ||
+                            selectedLab.label.toUpperCase() === "ANTIHAV" ||
+                            selectedLab.label.toUpperCase() === "ANTIHCV"
                           ? "SEROLOGY"
-                          : selectedLab.label.toUpperCase() ===
-                              "FT4" ||
-                            selectedLab.label.toUpperCase() ===
-                              "FT3"||
-                            selectedLab.label.toUpperCase() ===
-                              "TSH"||
-                            selectedLab.label.toUpperCase() ===
-                              "T4"||
-                            selectedLab.label.toUpperCase() ===
-                              "T3"
+                          : selectedLab.label.toUpperCase() === "FT4" ||
+                            selectedLab.label.toUpperCase() === "FT3" ||
+                            selectedLab.label.toUpperCase() === "TSH" ||
+                            selectedLab.label.toUpperCase() === "T4" ||
+                            selectedLab.label.toUpperCase() === "T3"
                           ? "THYROID PROFILE"
                           : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                           ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
