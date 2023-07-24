@@ -222,10 +222,14 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     onAfterPrint: handleRedirect,
     content: () => componentRef.current,
     pageStyle: () => `
-          @page { size: letter; margin: 0.5in;}
+          @page { size: letter; margin: 0.5in;margin-bottom: 0in;}
           @media print {
             .print-break {
-              margin-top: 1rem;
+              margin: 0.5in;
+              margin-top:0.5in;
+              margin-left:0.5in;
+              margin-right:0.5in;
+              margin-bottom: 0in;
               display: block;
               page-break-before: always;
             }
