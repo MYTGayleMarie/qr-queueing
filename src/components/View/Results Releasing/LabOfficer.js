@@ -107,7 +107,10 @@ export default function LabOfficer() {
   const [services, setServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
   const [labTestData, setLabTestData] = useState([]);
-  const [selectedLab, setSelectedLab] = useState([]);
+  const [selectedLab, setSelectedLab] = useState({
+    label: "",
+  });
+  const [isDataFetched, setIsDataFetched] = useState(false);
   const [labOptions, setLabOptions] = useState([]);
   const [labOptionsPackage, setLabOptionsPackage] = useState([]);
   const allOptions = (labOptions || []).concat(labOptionsPackage || []);
@@ -190,7 +193,8 @@ export default function LabOfficer() {
         lab_test == "Epithelial Cells" ||
         lab_test == "Bacteria" ||
         lab_test == "Amorphous Urates/Phosphate" ||
-        lab_test == "Mucus Threads"||lab_test == "Epithelial_Cells" ||
+        lab_test == "Mucus Threads" ||
+        lab_test == "Epithelial_Cells" ||
         lab_test == "Bacteria" ||
         lab_test == "Amorphous_Urates/Phosphate" ||
         lab_test == "Mucus_Threads"
@@ -627,6 +631,7 @@ export default function LabOfficer() {
   }, []);
 
   React.useEffect(() => {
+    setIsDataFetched(false);
     // Lab Options
     axios({
       method: "post",
@@ -669,6 +674,7 @@ export default function LabOfficer() {
     });
 
     if (selectedLab.id != null) {
+      setIsDataFetched(false);
       setIsReady(false);
       axios({
         method: "get",
@@ -726,10 +732,12 @@ export default function LabOfficer() {
             }
           }
           setIsReady(true);
+          setIsDataFetched(true);
         })
         .catch((error) => {
           setIsReady(true);
           console.log(error);
+
           handleLab(selectedLab);
         });
     }
@@ -1313,6 +1321,7 @@ export default function LabOfficer() {
     } else {
       setLabTestData([]);
     }
+    setIsDataFetched(true);
   }
 
   const { from_date, to_date, done } = filteredData;
@@ -1946,6 +1955,8 @@ export default function LabOfficer() {
 
                 {/* <div className="row"> */}
                 {allOptions.map((data) => {
+                  {
+                  }
                   return (
                     <Button
                       className="m-2"
@@ -1960,6 +1971,11 @@ export default function LabOfficer() {
                             : "#419EA3",
                       }}
                       size="sm"
+                      disabled={
+                        !isDataFetched &&
+                        !selectedLab.label !== data.label &&
+                        selectedLab.label !== ""
+                      }
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
                     >
