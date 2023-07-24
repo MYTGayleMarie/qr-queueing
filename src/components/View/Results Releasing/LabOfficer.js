@@ -190,7 +190,10 @@ export default function LabOfficer() {
         lab_test == "Epithelial Cells" ||
         lab_test == "Bacteria" ||
         lab_test == "Amorphous Urates/Phosphate" ||
-        lab_test == "Mucus Threads"
+        lab_test == "Mucus Threads"||lab_test == "Epithelial_Cells" ||
+        lab_test == "Bacteria" ||
+        lab_test == "Amorphous_Urates/Phosphate" ||
+        lab_test == "Mucus_Threads"
       ) {
         setLabTestOptions(labResultsData.MicroscopicExamOptions);
         setIsDropdown(true);
