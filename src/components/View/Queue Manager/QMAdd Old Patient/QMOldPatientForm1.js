@@ -117,7 +117,12 @@ function QMOldPatientForm1({
         setLocation(customer.data.service_location);
         setResult(customer.data.result);
         setCustomerID(customer.data.id);
-
+        if (customer.data.pwd_id !== "") {
+          setIsPWD(true);
+        }
+        if (customer.data.senior_id !== "") {
+          setIsSenior(true);
+        }
         //setResult(customer.data.result);
       })
       .catch(function (error) {
