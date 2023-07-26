@@ -215,15 +215,15 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
 //   );
 // }
 
-function cModuleNavbar(showNavbar,setShowNavbar) {
+function cModuleNavbar(showNavbar, setShowNavbar) {
   return (
     <div class=" d-flex justify-content-between flex-wrap flex-column">
       <ul class=" flex-column text-white w-100">
         <div class="d-flex justify-content-center">
-          <img src={logo} alt={'logo'} class="navbar-logo"></img>
+          <img src={logo} alt={"logo"} class="navbar-logo"></img>
         </div>
-          {/* <NavLink to="/cmodule" activeClassName="active" class="link">
-            <li href="/cmodule" class="nav-link imaging-nav">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+            <li href="/registrationcmodule" class="nav-link imaging-nav">
               <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
               <span class="mx-2">Customer Module</span>
             </li>
@@ -348,11 +348,15 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink to="/cmodule" activeClassName="active" class="link">
-            <li href="/cmodule" class="nav-link imaging-nav">
-              <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
-              <span class="mx-2">Customer Module</span>
-            </li>
+        <NavLink
+          to="/registrationcmodule"
+          activeClassName="active"
+          class="link"
+        >
+          <li href="/registrationcmodule" class="nav-link imaging-nav">
+            <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
+            <span class="mx-2">Customer Module</span>
+          </li>
         </NavLink>
 
         {/* <NavLink
@@ -448,11 +452,15 @@ function registrationNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink to="/cmodule" activeClassName="active" class="link">
-            <li href="/cmodule" class="nav-link imaging-nav">
-              <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
-              <span class="mx-2">Customer Module</span>
-            </li>
+        <NavLink
+          to="/registrationcmodule"
+          activeClassName="active"
+          class="link"
+        >
+          <li href="/registrationcmodule" class="nav-link imaging-nav">
+            <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
+            <span class="mx-2">Customer Module</span>
+          </li>
         </NavLink>
 
         <li href="#" class="nav-link supply-nav">
@@ -551,12 +559,16 @@ function adminNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink>
 
-          <NavLink to="/cmodule" activeClassName="active" class="link">
-          <li href="/cmodule" class="nav-link imaging-nav">
-            <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
-            <span class="mx-2">Customer Module</span>
-          </li>
-        </NavLink>
+          <NavLink
+            to="/registrationcmodule"
+            activeClassName="active"
+            class="link"
+          >
+            <li href="/registrationcmodule" class="nav-link imaging-nav">
+              <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
+              <span class="mx-2">Customer Module</span>
+            </li>
+          </NavLink>
 
           {/* <NavLink
             to="/registrationcmodule"
@@ -1136,7 +1148,7 @@ function QueueManagerNavbarTop(
 //   {/* <div id="side-nav">
 //     <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>&#9776;</a>
 //       <div class="side-nav-content">
-//         <NavLink to="/cmodule" activeClassName="active" class="link">
+//         <NavLink to="/registrationcmodule" activeClassName="active" class="link">
 //             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon mobile-size-icon"></img>
 //             <span class="mx-2">Customer Module</span>
 //         </NavLink>
@@ -1335,8 +1347,8 @@ function RegisterNavbarTop(
           </li>
         </NavLink> */}
 
-        {/* <NavLink to="/cmodule" activeClassName="active" class="link">
-          <li href="/cmodule" class="nav-link imaging-nav">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+          <li href="/registrationcmodule" class="nav-link imaging-nav">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
@@ -1498,7 +1510,7 @@ function AdminNavbarTop(
           <span class="mx-2">Laboratory Releasing</span>
         </NavLink>
 
-        {/* <NavLink to="/cmodule" activeClassName="active" class="link">
+        {/* <NavLink to="/registrationcmodule" activeClassName="active" class="link">
             <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon mobile-size-icon"></img>
             <span class="mx-2">Customer Module</span>
         </NavLink> */}
