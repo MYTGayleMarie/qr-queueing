@@ -207,7 +207,10 @@ function Table({
               >
                 PRINT BOOKING
               </button>
-              {(userId == 10 || userId == 18 || userId == 5 || userId == 11) && (
+              {(userId == 10 ||
+                userId == 18 ||
+                userId == 5 ||
+                userId == 11) && (
                 <>
                   <br />
                   <button
@@ -701,7 +704,20 @@ function Table({
           <td key={row.id} data-heading={row.id} className={row.val}>
             {row.name}
           </td>
-          <td key={row.id} data-heading={row.id} className={row.val}>
+          <td
+            key={row.id}
+            data-heading={row.id}
+            className={row.val}
+            style={{
+              color:
+                row.status === "available"
+                  ? "green"
+                  : row.status === "attending"
+                  ? "red"
+                  : "orange",
+              fontWeight: "bold",
+            }}
+          >
             {row.status.toUpperCase()}
           </td>
           <td>
