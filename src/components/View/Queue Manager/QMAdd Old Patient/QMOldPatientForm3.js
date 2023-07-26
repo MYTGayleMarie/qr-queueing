@@ -111,6 +111,15 @@ function QMOldPatientForm3({
   setSeniorId,
   extractionDate,
   setExtractionDate,
+  firstName,
+  middleName,
+  lastName,
+  birthday,
+  gender,
+  age,
+  contactNo,
+  emailadd,
+  homeaddress,
 }) {
   const {
     fname,
@@ -236,7 +245,6 @@ function QMOldPatientForm3({
           (x, y) => x.id - y.id
         );
         packagesArray.map((item, index) => {
-          // console.log(item)
           var packageDetails = {};
           var packageCode = "";
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
@@ -309,14 +317,14 @@ function QMOldPatientForm3({
   const [discountCode, setDiscountCode] = useState("");
 
   //customer details
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthday, setBirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [emailadd, setEmail] = useState("");
-  const [homeaddress, setAddress] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [middleName, setMiddleName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [birthday, setBirthDate] = useState("");
+  // const [gender, setGender] = useState("");
+  // const [contactNo, setContactNo] = useState("");
+  // const [emailadd, setEmail] = useState("");
+  // const [homeaddress, setAddress] = useState("");
   const [bookingId, setBookingId] = useState("");
   const { id } = useParams();
 
@@ -338,39 +346,39 @@ function QMOldPatientForm3({
     totalMDCharge += 50.0;
   }
 
-  React.useEffect(() => {
-    axios({
-      method: "post",
-      url: window.$link + "customers/show/" + id,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        requester: userId,
-      },
-    })
-      .then(function (customer) {
-        // customerId = customer.data.id;
-        var presentDate = new Date();
-        var birthDate = new Date(customer.data.birthdate);
-        var age = presentDate.getFullYear() - birthDate.getFullYear();
-        var m = presentDate.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
-          age--;
-        }
-        setFirstName(customer.data.first_name);
-        setMiddleName(customer.data.middle_name);
-        setLastName(customer.data.last_name);
-        setBirthDate(birthDate.toDateString());
-        setGender(customer.data.gender);
-        setContactNo(customer.data.contact_no);
-        setEmail(customer.data.email);
-        setAddress(customer.data.address);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   axios({
+  //     method: "post",
+  //     url: window.$link + "customers/show/" + id,
+  //     withCredentials: false,
+  //     params: {
+  //       api_key: window.$api_key,
+  //       token: userToken.replace(/['"]+/g, ""),
+  //       requester: userId,
+  //     },
+  //   })
+  //     .then(function (customer) {
+  //       // customerId = customer.data.id;
+  //       var presentDate = new Date();
+  //       var birthDate = new Date(customer.data.birthdate);
+  //       var age = presentDate.getFullYear() - birthDate.getFullYear();
+  //       var m = presentDate.getMonth() - birthDate.getMonth();
+  //       if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
+  //         age--;
+  //       }
+  //       setFirstName(customer.data.first_name);
+  //       setMiddleName(customer.data.middle_name);
+  //       setLastName(customer.data.last_name);
+  //       setBirthDate(birthDate.toDateString());
+  //       setGender(customer.data.gender);
+  //       setContactNo(customer.data.contact_no);
+  //       setEmail(customer.data.email);
+  //       setAddress(customer.data.address);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   //functions
   function getDetails(categoryItems, checkedItem) {
@@ -400,15 +408,15 @@ function QMOldPatientForm3({
         params: {
           token: userToken.replace(/['"]+/g, ""),
           api_key: window.$api_key,
-          first_name: fname,
-          last_name: lname,
-          middle_name: mname,
+          first_name: firstName,
+          last_name: lastName,
+          middle_name: middleName,
           suffix: "",
-          birthdate: birthDate,
-          contact_no: contactNum,
-          email: email,
-          gender: sex,
-          address: address,
+          birthdate: birthday,
+          contact_no: contactNo,
+          email: emailadd,
+          gender: gender,
+          address: homeaddress,
           emergency_contact: "",
           emergency_contact_no: "",
           relation_w_contact: "",
@@ -561,7 +569,6 @@ function QMOldPatientForm3({
   const asArray = Object.entries(service);
   const checkedServices = asArray.filter(([key, value]) => value == true);
   var checkedServicesDetails = [];
-  // console.log(checkedServices)
 
   checkedServices.map((data, index) => {
     var categoryDetails = data[0].split("_");
@@ -607,7 +614,6 @@ function QMOldPatientForm3({
       // break;
     }
 
-    // console.log(checkedServicesDetails)
     //lab
     switch (categoryId) {
       case 1:
@@ -727,8 +733,6 @@ function QMOldPatientForm3({
   //Total discount labs/packages
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
-      // console.log(data);
-
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
         labDiscountedTotal = 0;
@@ -749,11 +753,9 @@ function QMOldPatientForm3({
       }
     });
   }
-  // console.log(checkedServicesDetails)
 
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
-      // console.log(data);
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
         newLabTotal = 0;

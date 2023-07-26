@@ -63,6 +63,16 @@ function QMSwitchForm2() {
     initialStep: 0,
   });
 
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthday, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [emailadd, setEmail] = useState("");
+  const [homeaddress, setAddress] = useState("");
+
   const personalProps = {
     customer,
     setPersonal,
@@ -98,6 +108,24 @@ function QMSwitchForm2() {
     setSeniorId,
     extractionDate,
     setExtractionDate,
+    firstName,
+    setFirstName,
+    middleName,
+    setMiddleName,
+    lastName,
+    setLastName,
+    birthday,
+    setBirthDate,
+    gender,
+    setGender,
+    age,
+    setAge,
+    contactNo,
+    setContactNo,
+    emailadd,
+    setEmail,
+    homeaddress,
+    setAddress,
   };
   const serviceProps = {
     customer,
@@ -130,6 +158,24 @@ function QMSwitchForm2() {
     setPwdId,
     seniorId,
     setSeniorId,
+    firstName,
+    setFirstName,
+    middleName,
+    setMiddleName,
+    lastName,
+    setLastName,
+    birthday,
+    setBirthDate,
+    gender,
+    setGender,
+    age,
+    setAge,
+    contactNo,
+    setContactNo,
+    emailadd,
+    setEmail,
+    homeaddress,
+    setAddress,
   };
 
   switch (step.id) {

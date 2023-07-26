@@ -49,20 +49,29 @@ function QMOldPatientForm1({
   setSeniorId,
   extractionDate,
   setExtractionDate,
+  firstName,
+  setFirstName,
+  middleName,
+  setMiddleName,
+  lastName,
+  setLastName,
+  birthday,
+  setBirthDate,
+  gender,
+  setGender,
+  age,
+  setAge,
+  contactNo,
+  setContactNo,
+  emailadd,
+  setEmail,
+  homeaddress,
+  setAddress,
 }) {
   setLocation("clinic");
   document.body.style = "background: white;";
   //customer details
   const [isEditing, setIsEditing] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthday, setBirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [emailadd, setEmail] = useState("");
-  const [homeaddress, setAddress] = useState("");
 
   const { id } = useParams();
 
