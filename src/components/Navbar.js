@@ -703,7 +703,18 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Patient</span>
             </li>
           </NavLink>
-
+          
+          <NavLink to="/add-old-patient" activeClassName="active" class="link">
+            <li href="#" class="nav-link supply-nav">
+              <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
+              <span class="mx-2">Companies</span>
+              <ul class="sub-menu">
+                <Link to="/companies" className="sub-link">
+                  <li class="sub-list">COMPANY MANAGER</li>
+                </Link>
+              </ul>
+            </li>
+          </NavLink>
           <NavLink to="/cashier" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>

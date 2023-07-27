@@ -11,7 +11,7 @@ function TableLoader({ tableHeaders, data, className }) {
   React.useEffect(() => {
     let loadingTime = setTimeout(() => {
       setShowLoading(false);
-    }, 15000);
+    }, 1000);
     return () => {
       clearTimeout(loadingTime);
     };
