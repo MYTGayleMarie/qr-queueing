@@ -649,8 +649,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay + pay * (parseFloat(tax) / 100),
-
+          amount: pay - pay * (parseFloat(tax) / 100),
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
@@ -682,7 +681,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay + pay * (parseFloat(checkTax) / 100),
+          amount: pay - pay * (parseFloat(checkTax) / 100),
           check_no: checkNo,
           check_bank: checkBank,
           check_date: checkDate,
@@ -717,7 +716,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay + pay * (parseFloat(cardTax) / 100),
+          amount: pay - pay * (parseFloat(cardTax) / 100),
           cardName: cardName,
           card_no: cardNo,
           card_type: cardType,
@@ -752,7 +751,7 @@ function AddInvoicePayment() {
           api_key: window.$api_key,
           invoice_no: infoId,
           type: payment,
-          amount: pay + pay * (parseFloat(othersTax) / 100),
+          amount: pay - pay * (parseFloat(othersTax) / 100),
           other_source: source,
           other_reference_no: reference,
           senior_pwd_id: seniorPwdId,
@@ -790,7 +789,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total:
-            pay + pay * (parseFloat(bankTransferDetails.withholding_tax) / 100),
+            pay - pay * (parseFloat(bankTransferDetails.withholding_tax) / 100),
           withholdingtax: bankTransferDetails.withholding_tax || "0",
           remarks: bankTransferDetails.remarks,
           added_by: userId,
@@ -1072,7 +1071,7 @@ function AddInvoicePayment() {
               id="payAmount"
               name="payAmount"
               step="0.01"
-              value={pay + pay * (parseFloat(tax) / 100)}
+              value={pay - (pay * (parseFloat(tax) / 100))}
               disabled
               className="form-control"
               placeholder="P"
@@ -1214,8 +1213,8 @@ function AddInvoicePayment() {
                 name="paid_amount"
                 step="0.01"
                 value={
-                  pay +
-                  pay * (parseFloat(bankTransferDetails.withholding_tax) / 100)
+                  pay -
+                  (pay * (parseFloat(bankTransferDetails.withholding_tax) / 100))
                 }
                 disabled
                 className="form-control"
