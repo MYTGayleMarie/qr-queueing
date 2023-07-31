@@ -182,6 +182,7 @@ function AddInvoicePayment() {
   const [loadingInvoices, setloadingInvoices] = useState(false);
   const [loadingBookingDiscounts, setLoadingBookingDiscounts] = useState(false);
   const [loadingBookings, setLoadingBookings] = useState(false);
+  const [paidAmountInvoice, setPaidAmountInvoice] = useState(0);
 
   const handlePrintInvoice = () => {
     setShowModal(false);
@@ -353,6 +354,7 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
+        console.log("ci show", response.data);
         setHasLogs(true);
         var invoice = response.data.data.company_invoices;
 
@@ -377,7 +379,7 @@ function AddInvoicePayment() {
           setGrandTotal(invoice.total);
           setPay(invoice.total);
           setDiscountCode(invoice[0].discount_code);
-          setPaidAmount(paymentTotal);
+          setPaidAmount(invoice.paid_amount);
           setPayments(payments);
           setInfoId(invoice[0].id);
           setHasPay(
@@ -1007,50 +1009,54 @@ function AddInvoicePayment() {
     return (
       <div className="paymentDetails">
         <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
-        <div>
-          <span className="label">
-            PAYMENT DATE:{" "}
-            <b className="invoice-total">
-              {" "}
-              {formattedDate[1] +
-                " " +
-                formattedDate[2] +
-                " " +
-                formattedDate[3]}{" "}
-            </b>
-          </span>
-          <br />
-          <span className="label">
-            PAYMENT TYPE: <b className="invoice-total"> {new_payments.type} </b>
-          </span>
-          <br />
-          <span className="label">
-            CHECK NO./ REFERENCE NO.:{" "}
-            <b className="invoice-total">
-              {" "}
-              {new_payments.payment_type === "cash"
-                ? "N/A"
-                : new_payments.reference_code}{" "}
-            </b>
-          </span>
-          <br />
-          <span className="label">
-            PAID AMOUNT:{" "}
-            <b className="invoice-total">
-              P{" "}
-              {parseFloat(new_payments.amount).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </b>
-          </span>
-          <br />
-          <span className="label">
-            REMARKS: <b className="invoice-total">{new_payments.remarks}</b>
-          </span>
-          <br />
-          <br />
-        </div>
+        {payments.map((data) => {
+          return (
+            <div>
+              <span className="label">
+                PAYMENT DATE:{" "}
+                <b className="invoice-total">
+                  {" "}
+                  {new Date(data.added_on).toDateString().split(" ")[1] +
+                    " " +
+                    new Date(data.added_on).toDateString().split(" ")[2] +
+                    " " +
+                    new Date(data.added_on).toDateString().split(" ")[3]}{" "}
+                </b>
+              </span>
+              <br />
+              <span className="label">
+                PAYMENT TYPE: <b className="invoice-total"> {data.type} </b>
+              </span>
+              <br />
+              <span className="label">
+                CHECK NO./ REFERENCE NO.:{" "}
+                <b className="invoice-total">
+                  {" "}
+                  {data.payment_type === "cash"
+                    ? "N/A"
+                    : data.reference_code}{" "}
+                </b>
+              </span>
+              <br />
+              <span className="label">
+                PAID AMOUNT:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {parseFloat(data.amount).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </b>
+              </span>
+              <br />
+              <span className="label">
+                REMARKS: <b className="invoice-total">{data.remarks}</b>
+              </span>
+              <br />
+              <br />
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -1850,41 +1856,44 @@ function AddInvoicePayment() {
               </div>
             </div>
           )}
+          {console.log("1853", payments[0])}
+          {console.log("1853", paidAmount)}
 
-          {haslogs === true && hasPay === false && (
-            <div className="payment-cont">
-              <h1 className="payment-label">ADD PAYMENT</h1>
+          {haslogs === true &&
+            parseFloat(paidAmount) < parseFloat(grandTotal) && (
+              <div className="payment-cont">
+                <h1 className="payment-label">ADD PAYMENT</h1>
 
-              <br />
+                <br />
 
-              <span className="method-label ">METHOD</span>
-              <br />
-              <input
-                type="radio"
-                id="banktransfer"
-                name="payment_method"
-                value="banktransfer"
-                onClick={() => setPayment("bank transfer")}
-              />
-              <span className="check method">BANK TRANSFER</span>
-              <input
-                type="radio"
-                id="cash"
-                name="payment_method"
-                value="cash"
-                style={{ marginLeft: "25px" }}
-                onClick={() => setPayment("cash")}
-              />
-              <span className="cash method">CASH</span>
-              <input
-                type="radio"
-                id="check"
-                name="payment_method"
-                value="check"
-                onClick={() => setIsModalCheck(true)}
-              />
-              <span className="check method">CHECK</span>
-              {/* <input
+                <span className="method-label ">METHOD</span>
+                <br />
+                <input
+                  type="radio"
+                  id="banktransfer"
+                  name="payment_method"
+                  value="banktransfer"
+                  onClick={() => setPayment("bank transfer")}
+                />
+                <span className="check method">BANK TRANSFER</span>
+                <input
+                  type="radio"
+                  id="cash"
+                  name="payment_method"
+                  value="cash"
+                  style={{ marginLeft: "25px" }}
+                  onClick={() => setPayment("cash")}
+                />
+                <span className="cash method">CASH</span>
+                <input
+                  type="radio"
+                  id="check"
+                  name="payment_method"
+                  value="check"
+                  onClick={() => setIsModalCheck(true)}
+                />
+                <span className="check method">CHECK</span>
+                {/* <input
               type="radio"
               id="card"
               name="payment_method"
@@ -1894,23 +1903,23 @@ function AddInvoicePayment() {
             <span className="check method">CARD</span>
              */}
 
-              <input
-                type="radio"
-                id="others"
-                name="payment_method"
-                value="others"
-                onClick={() => setIsModalOthers(true)}
-              />
-              <span className="check method">OTHERS</span>
-              <p>{payment === "bank transfer" && bankTransferForm()}</p>
-              <p>{payment === "cash" && cashForm()}</p>
-              <p>{payment === "check" && checkForm()}</p>
-              <p>{payment === "card" && cardForm()}</p>
-              <p>{payment === "others" && othersForm()}</p>
+                <input
+                  type="radio"
+                  id="others"
+                  name="payment_method"
+                  value="others"
+                  onClick={() => setIsModalOthers(true)}
+                />
+                <span className="check method">OTHERS</span>
+                <p>{payment === "bank transfer" && bankTransferForm()}</p>
+                <p>{payment === "cash" && cashForm()}</p>
+                <p>{payment === "check" && checkForm()}</p>
+                <p>{payment === "card" && cardForm()}</p>
+                <p>{payment === "others" && othersForm()}</p>
 
-              <ToastContainer hideProgressBar={true} />
-            </div>
-          )}
+                <ToastContainer hideProgressBar={true} />
+              </div>
+            )}
           <hr />
           <div className="row pt-4">
             <div className="col-sm-12 d-flex justify-content-center">
