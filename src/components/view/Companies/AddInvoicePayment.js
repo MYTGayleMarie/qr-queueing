@@ -725,7 +725,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           withholdingtax: cardTax,
-          grandTotal: pay + pay * (parseFloat(cardTax) / 100),
+          grandTotal: pay - pay * (parseFloat(cardTax) / 100),
           remarks: remarks,
           added_by: userId,
         },
@@ -1336,7 +1336,7 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay + pay * (parseFloat(checkTax) / 100)}
+                value={pay - (pay * (parseFloat(checkTax) / 100))}
                 disabled
                 className="form-control"
                 placeholder="P"
@@ -1506,7 +1506,7 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay + pay * (parseFloat(othersTax) / 100)}
+                value={pay - (pay * (parseFloat(othersTax) / 100))}
                 disabled
                 className="form-control"
                 placeholder="P"
