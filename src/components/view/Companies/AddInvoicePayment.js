@@ -649,7 +649,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay - pay * (parseFloat(tax) / 100),
+          amount: pay,
           senior_pwd_id: seniorPwdId,
           discount: discount,
           grand_total: grandTotal,
@@ -681,7 +681,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay - pay * (parseFloat(checkTax) / 100),
+          amount: pay,
           check_no: checkNo,
           check_bank: checkBank,
           check_date: checkDate,
@@ -716,7 +716,7 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
-          amount: pay - pay * (parseFloat(cardTax) / 100),
+          amount: pay,
           cardName: cardName,
           card_no: cardNo,
           card_type: cardType,
@@ -725,7 +725,7 @@ function AddInvoicePayment() {
           senior_pwd_id: seniorPwdId,
           discount: discount,
           withholdingtax: cardTax,
-          grandTotal: pay - pay * (parseFloat(cardTax) / 100),
+          grandTotal: grandTotal,
           remarks: remarks,
           added_by: userId,
         },
@@ -751,7 +751,7 @@ function AddInvoicePayment() {
           api_key: window.$api_key,
           invoice_no: infoId,
           type: payment,
-          amount: pay - pay * (parseFloat(othersTax) / 100),
+          amount: pay,
           other_source: source,
           other_reference_no: reference,
           senior_pwd_id: seniorPwdId,
@@ -785,11 +785,10 @@ function AddInvoicePayment() {
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: "bank transfer",
-          amount: bankTransferDetails.paid_amount,
+          amount: pay,
           senior_pwd_id: seniorPwdId,
           discount: discount,
-          grand_total:
-            pay - pay * (parseFloat(bankTransferDetails.withholding_tax) / 100),
+          grand_total: grandTotal,
           withholdingtax: bankTransferDetails.withholding_tax || "0",
           remarks: bankTransferDetails.remarks,
           added_by: userId,
@@ -1071,35 +1070,19 @@ function AddInvoicePayment() {
               id="payAmount"
               name="payAmount"
               step="0.01"
-              value={pay - (pay * (parseFloat(tax) / 100))}
-              disabled
+              value={pay}
               className="form-control"
               placeholder="P"
-              // onChange={(e) => {
-              //   const inputValue = e.target.value;
-              //   if (inputValue !== null) {
-              //     setPay(inputValue);
-              //   }
-              // }}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                if (inputValue !== null) {
+                  setPay(inputValue);
+                }
+              }}
             />
           </Col>
-          <Col xs={1}>
-            {/* <label for="inputPassword6" className="col-form-label">
-              Change
-            </label> */}
-          </Col>
-          <Col xs={2} className="input-group-sm">
-            {/* <input
-              type="number"
-              id="changeAmount"
-              name="changeAmount"
-              className="form-control"
-              value={(grandTotal - parseFloat(pay) + parseFloat(tax)).toFixed(
-                2
-              )}
-              placeholder="P"
-            /> */}
-          </Col>
+          <Col xs={1}></Col>
+          <Col xs={2} className="input-group-sm"></Col>
           <Col xs={2}>
             <label for="inputPassword6" className="col-form-label">
               Withholding Tax
@@ -1136,6 +1119,39 @@ function AddInvoicePayment() {
             ></textarea>
           </Col>
         </Row>
+        <div className="row mt-2">
+          <div className="col-11 d-flex justify-content-end grand-total">
+            <span className="label">
+              GRAND TOTAL:{" "}
+              <b className="invoice-total">
+                P{" "}
+                {parseFloat(grandTotal).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </b>
+            </span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-11 d-flex justify-content-end grand-total">
+            <span className="label">
+              GRAND TOTAL WITH TAX:{" "}
+              <b className="invoice-total">
+                P{" "}
+                {isNaN(
+                  parseFloat(grandTotal) -
+                    parseFloat(grandTotal) * (parseFloat(tax) / 100)
+                )
+                  ? parseFloat(grandTotal).toFixed(2)
+                  : (
+                      parseFloat(grandTotal) -
+                      parseFloat(grandTotal) * (parseFloat(tax) / 100)
+                    ).toFixed(2)}
+              </b>
+            </span>
+          </div>
+        </div>
         <div className="row d-flex justify-content-end mt-4">
           {paymentStatus == "paid" && printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
@@ -1210,16 +1226,18 @@ function AddInvoicePayment() {
               <input
                 type="number"
                 id="payAmount"
-                name="paid_amount"
+                name="payAmount"
                 step="0.01"
-                value={
-                  pay -
-                  (pay * (parseFloat(bankTransferDetails.withholding_tax) / 100))
-                }
-                disabled
+                value={pay}
+                // disabled
                 className="form-control"
                 placeholder="P"
-                // onChange={handleBankChange}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  if (inputValue !== null) {
+                    setPay(inputValue);
+                  }
+                }}
               />
             </Col>
             <Col xs={1}></Col>
@@ -1259,6 +1277,42 @@ function AddInvoicePayment() {
               ></textarea>
             </Col>
           </Row>
+          <div className="row mt-2">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {parseFloat(grandTotal).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </b>
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL WITH TAX:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {isNaN(
+                    parseFloat(grandTotal) -
+                      parseFloat(grandTotal) *
+                        (parseFloat(bankTransferDetails.withholding_tax) / 100)
+                  )
+                    ? parseFloat(grandTotal).toFixed(2)
+                    : (
+                        parseFloat(grandTotal) -
+                        parseFloat(grandTotal) *
+                          (parseFloat(bankTransferDetails.withholding_tax) /
+                            100)
+                      ).toFixed(2)}
+                </b>
+              </span>
+            </div>
+          </div>
           <div className="row d-flex justify-content-end mt-4">
             {paymentStatus == "paid" && printButton()}
             <button className="save-btn" onClick={(e) => submit(e)}>
@@ -1336,8 +1390,8 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay - (pay * (parseFloat(checkTax) / 100))}
-                disabled
+                value={pay}
+                // disabled
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
@@ -1387,6 +1441,39 @@ function AddInvoicePayment() {
               ></textarea>
             </Col>
           </Row>
+          <div className="row mt-2">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {parseFloat(grandTotal).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </b>
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL WITH TAX:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {isNaN(
+                    parseFloat(grandTotal) -
+                      parseFloat(grandTotal) * (parseFloat(checkTax) / 100)
+                  )
+                    ? parseFloat(grandTotal).toFixed(2)
+                    : (
+                        parseFloat(grandTotal) -
+                        parseFloat(grandTotal) * (parseFloat(checkTax) / 100)
+                      ).toFixed(2)}
+                </b>
+              </span>
+            </div>
+          </div>
           <div className="row d-flex justify-content-end mt-4">
             {paymentStatus == "paid" && printButton()}
             <button className="save-btn" onClick={(e) => submit(e)}>
@@ -1480,6 +1567,39 @@ function AddInvoicePayment() {
             </div>
           </div>
         </div>
+        <div className="row mt-2">
+          <div className="col-11 d-flex justify-content-end grand-total">
+            <span className="label">
+              GRAND TOTAL:{" "}
+              <b className="invoice-total">
+                P{" "}
+                {parseFloat(grandTotal).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </b>
+            </span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-11 d-flex justify-content-end grand-total">
+            <span className="label">
+              GRAND TOTAL WITH TAX:{" "}
+              <b className="invoice-total">
+                P{" "}
+                {isNaN(
+                  parseFloat(grandTotal) -
+                    parseFloat(grandTotal) * (parseFloat(cardTax) / 100)
+                )
+                  ? parseFloat(grandTotal).toFixed(2)
+                  : (
+                      parseFloat(grandTotal) -
+                      parseFloat(grandTotal) * (parseFloat(cardTax) / 100)
+                    ).toFixed(2)}
+              </b>
+            </span>
+          </div>
+        </div>
         <div className="row d-flex justify-content-end">
           {paymentStatus == "paid" && printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
@@ -1506,8 +1626,8 @@ function AddInvoicePayment() {
                 id="payAmount"
                 name="payAmount"
                 step="0.01"
-                value={pay - (pay * (parseFloat(othersTax) / 100))}
-                disabled
+                value={pay}
+                // disabled
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => setPay(e.target.value)}
@@ -1580,6 +1700,39 @@ function AddInvoicePayment() {
               ></textarea>
             </Col>
           </Row>
+          <div className="row mt-2">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {parseFloat(grandTotal).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </b>
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-11 d-flex justify-content-end grand-total">
+              <span className="label">
+                GRAND TOTAL WITH TAX:{" "}
+                <b className="invoice-total">
+                  P{" "}
+                  {isNaN(
+                    parseFloat(grandTotal) -
+                      parseFloat(grandTotal) * (parseFloat(othersTax) / 100)
+                  )
+                    ? parseFloat(grandTotal).toFixed(2)
+                    : (
+                        parseFloat(grandTotal) -
+                        parseFloat(grandTotal) * (parseFloat(othersTax) / 100)
+                      ).toFixed(2)}
+                </b>
+              </span>
+            </div>
+          </div>
           <div className="row d-flex justify-content-end mt-4">
             {paymentStatus == "paid" && printButton()}
             <button className="save-btn" onClick={(e) => submit(e)}>
