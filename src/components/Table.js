@@ -2700,14 +2700,14 @@ function Table({
       <div className="table-container">
         <div className="search-table-container row">
           {/* <div className="col-sm-2"> */}
-          {totalCount != null && totalCount !== undefined && (
+          {/* {totalCount != null && totalCount !== undefined && (
             <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
             </div>
-          )}
+          )} */}
           {/* </div> */}
           <div
             className={
@@ -2715,7 +2715,7 @@ function Table({
               totalCount !== undefined &&
               parseInt(totalCount) <= 0
                 ? "col-sm-10 d-flex justify-content-end"
-                : "col-sm-12 d-flex justify-content-end mb-1"
+                : "col-sm-12 d-flex justify-content-end mb-1 mt-2"
             }
           >
             <input

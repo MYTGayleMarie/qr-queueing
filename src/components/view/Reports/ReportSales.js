@@ -51,6 +51,7 @@ function ReportSales() {
   const [accountDetails, setAccountDetails] = useState([]);
   const [byDate, setByDate] = useState([]);
   const [byMethod, setByMethod] = useState([]);
+  const [generalSalesSummary, setGeneralSalesSummary] = useState([])
 
     React.useEffect(()=>{
       sales.length=0; 
@@ -70,7 +71,9 @@ function ReportSales() {
       })
       .then((response)=>{
       //  setIsReady(false)
-        // console.log(response)
+       
+        setGeneralSalesSummary(response.data.data.sales)
+
         axios({
           method: 'post',
           url: window.$link + 'reports/salesSummaryWithCompanyDiscount',
@@ -164,6 +167,7 @@ console.log(sales)
       let tempData = salesData.concat(sales)
       // console.log(tempData)
       setByDate(Object.values(groupArrayOfObjects(tempData,"date")));
+      console.log("tempdata",salesData)
       // setIsReady(true)
     },[salesData])
   
@@ -196,6 +200,17 @@ console.log(sales)
             status={printReadyFinal}
             totalExcel={total}
              />
+             {console.log("generalsales",generalSalesSummary)}
+             <div style={{marginLeft:"20px"}}>
+             <div className='row p-2' style={{borderRadius:"10px", background:"#f6f0f2", width:"100%"}}>{
+              generalSalesSummary.map(data=>{
+               return( <div className='col-6'>
+               <span style={{color:"#04b4cc", fontWeight:"bolder"}}>TOTAL {data[0].type.toUpperCase()}</span>
+               <span> : </span><span>P {data[0].grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+               </div>)
+                  
+              })
+             }</div></div>
           <Table
             clickable={true}
             title="QR DIAGNOSTICS REPORT" 
