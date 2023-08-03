@@ -1178,7 +1178,14 @@ function Table({
           <table className="method-row">{othersItems}</table>
           <table className="method-row">{creditItems}</table>
           <td key={row[0].amount} data-heading="TOTAL" className="TOTAL">
-            P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            P{" "}
+            {row
+
+              .map((data, key) => (key === 0 ? 0 : parseFloat(data.amount)))
+              .reduce((a, b) => a + b, 0)
+              .toFixed(2)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
           </td>
         </tr>
       );
