@@ -556,7 +556,7 @@ function AddInvoicePayment() {
         console.log(error);
       });
   }, [discountCode]);
-
+console.log(haslogs)
   React.useEffect(() => {
     var totalAmount;
     var discount;

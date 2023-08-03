@@ -244,7 +244,7 @@ function ReportSales() {
                   <>
                     <div className="col-6">
                       <span style={{ color: "#04b4cc", fontWeight: "bolder" }}>
-                        TOTAL CASH
+                        TOTAL {data[0]?.type?.toUpperCase()}
                       </span>
                       <span> : </span>
                       <span>
