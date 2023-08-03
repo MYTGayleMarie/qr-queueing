@@ -51,6 +51,7 @@ function ReportSales() {
   const [byDate, setByDate] = useState([]);
   const [byMethod, setByMethod] = useState([]);
   const [generalSalesSummary, setGeneralSalesSummary] = useState([]);
+  const [generalTotalSales, setGeneralTotalSales] = useState([]);
 
   React.useEffect(() => {
     sales.length = 0;
@@ -71,6 +72,25 @@ function ReportSales() {
       //  setIsReady(false)
 
       setGeneralSalesSummary(response.data.data.sales);
+      var totals = [];
+      response.data.data.sales.map((value) =>
+        totals.push(
+          value
+            .map((data) =>
+              data.grand_total !== "" ? parseFloat(data.grand_total) : 0
+            )
+            .reduce((a, b) => a + b, 0)
+        )
+      );
+
+      setGeneralTotalSales(
+        totals
+          .map((data) => data)
+          .reduce((a, b) => a + b, 0)
+          .toFixed(2)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      );
 
       axios({
         method: "post",
@@ -85,7 +105,6 @@ function ReportSales() {
         },
       })
         .then((credit_response) => {
-          // console.log(credit_response)
           // setIsReady(false)
           const salesArray = credit_response.data.data.sales;
           salesArray.map((arr, index1) => {
@@ -135,7 +154,6 @@ function ReportSales() {
                   info.amount = account.amount;
                   if (method.type != "credit") {
                     temp_total += parseFloat(info.amount);
-                    console.log(temp_total);
                   }
                   setSales((oldArray) => [...oldArray, info]);
                   // setIsReady(true)
@@ -158,8 +176,6 @@ function ReportSales() {
     });
   }, [render]);
 
-  console.log(sales);
-
   React.useEffect(() => {
     const noCredit = sales.filter((info) => info.method !== "credit");
     const res = Array.from(
@@ -177,9 +193,9 @@ function ReportSales() {
 
   React.useEffect(() => {
     let tempData = salesData.concat(sales);
-    // console.log(tempData)
+
     setByDate(Object.values(groupArrayOfObjects(tempData, "date")));
-    console.log("tempdata", salesData);
+
     // setIsReady(true)
   }, [salesData]);
 
@@ -213,7 +229,7 @@ function ReportSales() {
             status={printReadyFinal}
             totalExcel={total}
           />
-          {console.log("generalsales", generalSalesSummary)}
+
           <div style={{ marginLeft: "20px" }}>
             <div
               className="row p-2"
@@ -225,18 +241,30 @@ function ReportSales() {
             >
               {generalSalesSummary.map((data) => {
                 return (
-                  <div className="col-6">
-                    <span style={{ color: "#04b4cc", fontWeight: "bolder" }}>
-                      TOTAL {data[0].type.toUpperCase()}
-                    </span>
-                    <span> : </span>
-                    <span>
-                      P{" "}
-                      {data[0].grand_total
+                  <>
+                    <div className="col-6">
+                      <span style={{ color: "#04b4cc", fontWeight: "bolder" }}>
+                        TOTAL CASH
+                      </span>
+                      <span> : </span>
+                      <span>
+                        P{" "}
+                        {data
+                          .map((value) =>
+                            value.grand_total !== ""
+                              ? parseFloat(value.grand_total)
+                              : 0
+                          )
+                          .reduce((a, b) => a + b, 0)
+                          .toFixed(2)
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        {/* {data[0].grand_total
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </span>
-                  </div>
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
+                      </span>
+                    </div>
+                  </>
                 );
               })}
             </div>
@@ -255,19 +283,7 @@ function ReportSales() {
                   TOTAL SALES
                 </span>
                 <span> : </span>
-                <span>
-                  P{" "}
-                  {generalSalesSummary
-                    .map((data) =>
-                      data[0].grand_total !== ""
-                        ? parseFloat(data[0].grand_total)
-                        : 0
-                    )
-                    .reduce((a, b) => a + b, 0)
-                    .toFixed(2)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </span>
+                <span>P {generalTotalSales}</span>
               </div>
             </div>
           </div>
