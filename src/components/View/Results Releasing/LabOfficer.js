@@ -36,15 +36,16 @@ import Logo from "../../../images/logo.png";
 import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png";
 import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png";
 import Image3 from "../../../images/med_tech/DEVIO_ANECA.png";
-import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
+// import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
 import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png";
 import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
-import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
-import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
+// import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
+// import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
 import Image9 from "../../../images/med_tech/image9.png";
 import Image10 from "../../../images/med_tech/Image10.png";
 import Image11 from "../../../images/med_tech/OSMA.png";
 import image11 from "../../../images/med_tech/image11.png";
+import image12 from "../../../images/med_tech/image12.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -380,7 +381,10 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0094334";
     } else if (prc_id === "45") {
       return "PRC LIC. NO.: 0085308";
-    } else {
+    } else if (prc_id === "48") {
+      return "PRC LIC. NO.: 0109437";
+    }
+     else {
       return "No PRC No.";
     }
   }
@@ -494,7 +498,19 @@ export default function LabOfficer() {
           height={50}
         />
       );
-    }
+    } else if (prc_sig === "48") {
+    setHasImage(true);
+    return (
+      <img
+        src={image12}
+        alt="MedTech"
+        // className="mt-5"
+        style={{ marginTop: "3rem" }}
+        width={100}
+        height={50}
+      />
+    );
+  }
     // else{
     //   setHasImage(true);
     //   return (
@@ -508,27 +524,27 @@ export default function LabOfficer() {
     //     />
     //   );
     {
-      setHasImage(false);
-
-      return (
-        <img
-          src={Image10}
-          alt="MedTech"
-          // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
-          width={100}
-          height={90}
-        />
-      );
-      // {
-      //     setHasImage(false);
+      // setHasImage(false);
 
       // return (
-      //   <div
+      //   <img
+      //     src={Image10}
+      //     alt="MedTech"
       //     // className="mt-5"
-      //     style={{ marginTop: "3rem" }}
-      //   ></div>
+      //     style={{ marginTop: "1.5rem" }}
+      //     width={100}
+      //     height={90}
+      //   />
       // );
+      // {
+          setHasImage(false);
+
+      return (
+        <div
+          // className="mt-5"
+          style={{ marginTop: "3rem" }}
+        ></div>
+      );
     }
     // if (prc_sig === "23") {
     //   return Image9;

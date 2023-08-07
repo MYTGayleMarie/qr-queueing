@@ -556,7 +556,7 @@ function AddInvoicePayment() {
         console.log(error);
       });
   }, [discountCode]);
-console.log(haslogs)
+console.log(haslogs);
   React.useEffect(() => {
     var totalAmount;
     var discount;
@@ -1859,7 +1859,7 @@ console.log(haslogs)
           {console.log("1853", payments[0])}
           {console.log("1853", paidAmount)}
 
-          {haslogs === true &&
+          {haslogs &&
             parseFloat(paidAmount) < parseFloat(grandTotal) && (
               <div className="payment-cont">
                 <h1 className="payment-label">ADD PAYMENT</h1>

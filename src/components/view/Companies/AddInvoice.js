@@ -148,19 +148,19 @@ function AddInvoice() {
     });
   },[discountInfo]);
 
-
   React.useEffect(()=>{
     setInfo([])
     var temp_total = 0
     particulars.map((arr, index)=>{
       var amt = arr.total_amount.split(" ");
+      console.log(amt)
       amt.map((temp_amt, index) => {
         var info = {};
         var date = new Date(arr.booking_time)
         var formattedDate = date.toDateString().split(" ")
         const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
         info.date=temp_date
-        info.price = arr.grand_total
+        info.price = temp_amt
         setInfo(oldArray=>[...oldArray, info])
       })
     })
@@ -197,7 +197,6 @@ function AddInvoice() {
       });
     }
   }
-
 
   if(redirect == true) {
       return (
