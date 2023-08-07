@@ -72,6 +72,7 @@ function ReportSales() {
       //  setIsReady(false)
 
       setGeneralSalesSummary(response.data.data.sales);
+      setIsReady(true);
       var totals = [];
       response.data.data.sales.map((value) =>
         totals.push(
@@ -223,7 +224,8 @@ function ReportSales() {
             tableData={byDate}
             typeData={"sales"}
             total={
-              "P " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              generalTotalSales
+              // "P " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             tableHeaders={["DATE", "METHOD", "ACCOUNT", "AMOUNT", "TOTAL"]}
             status={printReadyFinal}
