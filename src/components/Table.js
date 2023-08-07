@@ -391,11 +391,11 @@ function Table({
             onClick={() =>
               navigate(
                 "/add-invoice-payment/" +
-                  row.id +
+                  row.invoice_id +
                   "/" +
                   row.company_id +
-                  "/" +
-                  row.discount_id +
+                  // "/" +
+                  // row.discount_id +
                   "/" +
                   new Date().toLocaleDateString("en-CA") +
                   "/" +
@@ -1007,7 +1007,7 @@ function Table({
               class="action-btn"
               role="button"
               onClick={() =>
-                link(row.id, row.company_id, row.discountCode, row.discount_id)
+                link(row.invoice_id, row.company_id)
               }
             >
               {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}

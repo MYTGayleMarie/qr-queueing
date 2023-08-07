@@ -70,6 +70,7 @@ function CompanyInvoiceManager() {
           if (filteredData.status_filter == "unpaid" && row.is_paid === "0") {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row.invoice_id.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
             companyDetails.discount_id = row.discount_id;
@@ -89,6 +90,7 @@ function CompanyInvoiceManager() {
           ) {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row?.invoice_id?.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
             companyDetails.discount_id = row.discount_id;
@@ -104,6 +106,7 @@ function CompanyInvoiceManager() {
           } else if (filteredData.status_filter == "all") {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row?.invoice_id?.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
             companyDetails.description = row.company_name;
@@ -147,10 +150,8 @@ function CompanyInvoiceManager() {
           "/add-invoice-payment/" +
           id +
           "/" +
-          company_id +
-          "/" +
-          discount_id +
-          "/" +
+          company_id + 
+          "/"+
           filteredData.from_date +
           "/" +
           filteredData.to_date

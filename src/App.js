@@ -331,7 +331,7 @@ function App() {
           />
           {/** With date filter */}
           <Route
-            path="/add-invoice-payment/:id/:companyId/:discountID/:dateFrom/:dateTo"
+            path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
           />
           <Route
