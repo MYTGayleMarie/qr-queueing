@@ -153,7 +153,6 @@ function AddInvoice() {
     var temp_total = 0
     particulars.map((arr, index)=>{
       var amt = arr.total_amount.split(" ");
-      console.log(amt)
       amt.map((temp_amt, index) => {
         var info = {};
         var date = new Date(arr.booking_time)
@@ -165,8 +164,6 @@ function AddInvoice() {
       })
     })
   }, [particulars])
-
-  console.log(info)
 
   function addInvoice() {
     if(isClicked == false) {
