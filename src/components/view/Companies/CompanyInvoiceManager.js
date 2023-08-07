@@ -77,7 +77,7 @@ function CompanyInvoiceManager() {
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total = row.total
+            companyDetails.total = row.sum_total
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
@@ -97,7 +97,7 @@ function CompanyInvoiceManager() {
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total = row.total
+            companyDetails.total = row.sum_total
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status = "PAID";
@@ -114,7 +114,7 @@ function CompanyInvoiceManager() {
             companyDetails.discount_id = row.discount_id;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total = row.total
+            companyDetails.total = row.sum_total
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
