@@ -28,7 +28,7 @@ export const generateBulkInvoice = async (
       }
     );
 
-    return { data: response.data.data };
+    return { data: response.data };
   } catch (error) {
     return { error: error.response };
   }
