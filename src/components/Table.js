@@ -971,8 +971,26 @@ function Table({
         <tr key={row.id}>
           <td>{row.date}</td>
           <td>{row.description}</td>
-          <td>{row.discountCode}</td>
-          <td>{row.total}</td>
+          <td>
+            {row.discountCode.split("|").map((data) => {
+              return (
+                <>
+                  {data}
+                  <br />
+                </>
+              );
+            })}
+          </td>
+          <td>
+            {row.total.split("|").map((data) => {
+              return (
+                <>
+                  P {data}
+                  <br />
+                </>
+              );
+            })}
+          </td>
           <td>{row.payment_status}</td>
           {/* {rowData.map((data, index) => (
             <td
