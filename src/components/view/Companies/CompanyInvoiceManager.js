@@ -189,13 +189,13 @@ function CompanyInvoiceManager() {
               )}
               rowsPerPage={4}
               headingColumns={[
-                "COMPANY ID",
-                "ID",
+                // "COMPANY ID",
+                // "ID",
                 "INVOICE DATE",
                 "COMPANY NAME",
-                "DISCOUNT ID",
+                // "DISCOUNT ID",
                 "DISCOUNT CODE",
-                "REMARKS",
+                // "REMARKS",
                 "TOTAL",
                 "PAYMENT STATUS",
                 "ACTION",

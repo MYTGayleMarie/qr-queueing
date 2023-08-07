@@ -969,15 +969,21 @@ function Table({
     } else if (type === "company-invoices") {
       return (
         <tr key={row.id}>
-          {rowData.map((data, index) => (
+          <td>{row.date}</td>
+          <td>{row.description}</td>
+          <td>{row.discountCode}</td>
+          <td>{row.total}</td>
+          <td>{row.payment_status}</td>
+          {/* {rowData.map((data, index) => (
             <td
               key={index}
               data-heading={data.key}
               className={index == 3 ? "company_name" : data.val}
             >
+              {console.log(index)}
               {index == 0 || index == 1 ? "" : data.val}
             </td>
-          ))}
+          ))} */}
           <td>
             <button
               class="action-btn"
@@ -3145,7 +3151,7 @@ function Table({
             <tr>
               {headingColumns.map((col, index) => (
                 <th key={index} className={index == 3 ? "company_name" : ""}>
-                  {index == 0 || index == 1 ? "" : col}
+                  {col}
                 </th>
               ))}
             </tr>
