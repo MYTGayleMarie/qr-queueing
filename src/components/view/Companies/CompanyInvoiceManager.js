@@ -68,7 +68,7 @@ function CompanyInvoiceManager() {
           var companyDetails = {};
 
           if (filteredData.status_filter == "unpaid" && row.is_paid === "0") {
-            companyDetails.company_id = row.company_id;
+            companyDetails.company_id =row.company_id;
             companyDetails.id = row.id;
             companyDetails.invoice_id = row.invoice_id.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
