@@ -76,8 +76,9 @@ function CompanyInvoiceManager() {
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
               row.is_paid == 1 ? "PAID" : "UNPAID";
 
@@ -94,8 +95,9 @@ function CompanyInvoiceManager() {
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status = "PAID";
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails]);
@@ -109,8 +111,9 @@ function CompanyInvoiceManager() {
             companyDetails.discount_id = row.discount_id;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
               row.is_paid == 1 ? "PAID" : "UNPAID";
 
