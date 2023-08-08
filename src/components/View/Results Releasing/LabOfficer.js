@@ -1624,12 +1624,20 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                           <b>RESULT</b>
                         </span>
                       </div>
-                      <div className="col">
-                        <span>
-                          <b>UNIT</b>
-                        </span>
-                      </div>
-
+                      {selectedLab.label !== "Urinalysis" &&
+                        selectedLab.label !== "[P] Urinalysis" &&
+                        selectedLab.label !== "Fecalysis" &&
+                        selectedLab.label !== "[P] Fecalysis" &&
+                        selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                        selectedLab.label !== "KOH" &&
+                        selectedLab.label !== "Gram Stain" &&
+                        selectedLab.label !== "HIV Screening (Anti HIV)" && (
+                          <div className="col">
+                            <span>
+                              <b>UNIT</b>
+                            </span>
+                          </div>
+                        )}
                       {selectedLab.label !== "Urinalysis" &&
                         selectedLab.label !== "[P] Urinalysis" &&
                         selectedLab.label !== "Fecalysis" &&
@@ -1787,9 +1795,20 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                               ""
                             )}
                           </div>
+                          {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
+                            selectedLab.label.toUpperCase() !==
+                              "[P] URINALYSIS" &&
+                            selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                            selectedLab.label.toUpperCase() !==
+                              "[P] FECALYSIS" &&
+                            selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                            selectedLab.label !== "KOH" &&
+                            selectedLab.label !== "Gram Stain" &&
+                            selectedLab.label !==
+                              "HIV Screening (Anti HIV)" && (
                           <div className="col">
                           <span>{result["unit"]}</span>
-                          </div>
+                          </div>)}
                           {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] URINALYSIS" &&
