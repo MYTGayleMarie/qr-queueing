@@ -92,7 +92,6 @@ export default function LabOfficer() {
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-
   // Patient details
   const [editingLab, setEditingLab] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -570,9 +569,28 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     //   return Image9;
     // }
   }
-
+  var label_test = "";
+  selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                      selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                      selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                      selectedLab.label === "Anti-HAV" ||
+                      selectedLab.label === "Anti-HCV" ? (
+                        label_test = "Hepatitis Profile Tests"
+                      ) : (
+                        <>
+                          { selectedLab.label === "T4" ||
+                           selectedLab.label === "T3" ||
+                           selectedLab.label === "FT4" ||
+                           selectedLab.label === "FT3" ||
+                           selectedLab.label === "TSH"
+                            ?  label_test = "Thyroid Profile Tests"
+                            :  label_test = selectedLab.label}
+                        </>
+    )
+  const fileName = lastName +", "+firstName + "-"+label_test;
   const printHandle = useReactToPrint({
     // onAfterPrint: handleRedirect,
+    documentTitle: fileName,
     onAfterPrint: refreshPage,
     content: () => componentRef.current,
     pageStyle: () => `
