@@ -89,6 +89,10 @@ export default function LabOfficer() {
     done: false,
   });
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
   // Patient details
   const [editingLab, setEditingLab] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -604,15 +608,17 @@ export default function LabOfficer() {
         setMiddleName(response.data.data.booking.middle_name);
         setLastName(response.data.data.booking.last_name);
 
-        var birthDate = new Date(response.data.data.booking.birthdate);
-        setBirthDate(formatDate(birthDate));
+        var temp = new Date(response.data.data.booking.birthdate);
+        console.log(monthNames[temp.getMonth()]?.toUpperCase() + " " + temp.getDate() + ", " + temp.getFullYear())
+        var date_temp = monthNames[temp.getMonth()] + " " + temp.getDate() + ", " + temp.getFullYear();
+        setBirthDate(date_temp);
 
         setGender(response.data.data.booking.gender);
 
         var presentDate = new Date();
-        var age = presentDate.getFullYear() - birthDate.getFullYear();
-        var m = presentDate.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) {
+        var age = presentDate.getFullYear() - temp.getFullYear();
+        var m = presentDate.getMonth() - temp.getMonth();
+        if (m < 0 || (m === 0 && presentDate.getDate() < temp.getDate())) {
           age--;
         }
         setAge(age);
@@ -1514,6 +1520,7 @@ export default function LabOfficer() {
                     )}
                   </span>
                 </div>
+                <div className="laboratory-space"></div>
                 <div class="tb">
                   <div class="row">
                     <div class="col details_title">
@@ -1578,6 +1585,7 @@ export default function LabOfficer() {
                     </div>
                   </div>
                 </div>
+                <div className="laboratory-space"></div>
                 <img
                   src={Watermark}
                   alt="QR DIAGNOSTICS"
@@ -1596,6 +1604,11 @@ export default function LabOfficer() {
                       <div className="col">
                         <span>
                           <b>RESULT</b>
+                        </span>
+                      </div>
+                      <div className="col">
+                        <span>
+                          <b>UNIT</b>
                         </span>
                       </div>
 
@@ -1705,21 +1718,21 @@ export default function LabOfficer() {
                                 {result["preferred"] == " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>
-                                      {result["result"] + " " + result["unit"]}
+                                      {result["result"] }
                                     </span>
                                   ) : (
                                     <span>
-                                      {result["result"] + " " + result["unit"]}{" "}
+                                      {result["result"] }{" "}
                                     </span>
                                   )
                                 ) : result["preferred"] != " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>
-                                      {result["result"] + " " + result["unit"]}
+                                      {result["result"] }
                                     </span>
                                   ) : (
                                     <span>
-                                      {result["result"] + " " + result["unit"]}{" "}
+                                      {result["result"] }{" "}
                                     </span>
                                   )
                                 ) : result["preferred_from"] != 0.0 ||
@@ -1730,7 +1743,7 @@ export default function LabOfficer() {
                                       {result["result"] +
                                         " " +
                                         result["unit"] +
-                                        " (L)"}{" "}
+                                        " (L)"}
                                     </span>
                                   ) : result["result"] >
                                     result["preferred_to"] ? (
@@ -1738,23 +1751,26 @@ export default function LabOfficer() {
                                       {result["result"] +
                                         " " +
                                         result["unit"] +
-                                        " (H)"}{" "}
+                                        " (H)"}
                                     </span>
                                   ) : (
                                     <span>
-                                      {result["result"] + " " + result["unit"]}{" "}
+                                      {result["result"]}{" "}
                                     </span>
                                   )
                                 ) : (
                                   <span>
                                     {" "}
-                                    {result["result"] + " " + result["unit"]}
+                                    {result["result"] }
                                   </span>
                                 )}
                               </>
                             ) : (
                               ""
                             )}
+                          </div>
+                          <div className="col">
+                          <span>{result["unit"]}</span>
                           </div>
                           {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
                             selectedLab.label.toUpperCase() !==

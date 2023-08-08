@@ -1016,12 +1016,22 @@ const labResultsData = {
 
   labTestT3: [
     {
-      lab_test: "T2-T3",
+      lab_test: "T3",
       result: "",
       unit: "nmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 1.23,
+      preferred_to: 3.07,
+    },
+  ],
+  labTestT4: [
+    {
+      lab_test: "T4",
+      result: "",
+      unit: "nmol / L",
+      preferred: " ",
+      preferred_from: 66,
+      preferred_to: 181,
     },
   ],
 
