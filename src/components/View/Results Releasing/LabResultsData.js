@@ -66,8 +66,8 @@ const labResultsData = {
       label: "NEGATIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -108,8 +108,8 @@ const labResultsData = {
       label: "NEGATIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -283,8 +283,8 @@ const labResultsData = {
       label: "WEAKLY POSITIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -298,8 +298,8 @@ const labResultsData = {
       label: "REACTIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -313,8 +313,8 @@ const labResultsData = {
       label: "REACTIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -1050,8 +1050,8 @@ const labResultsData = {
       label: "NEGATIVE",
     },
     {
-      value: "N/A",
-      label: "N/A",
+      value: "-",
+      label: "-",
     },
   ],
 
