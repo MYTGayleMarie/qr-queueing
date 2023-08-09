@@ -222,15 +222,19 @@ function cModuleNavbar(showNavbar, setShowNavbar) {
         <div class="d-flex justify-content-center">
           <img src={logo} alt={"logo"} class="navbar-logo"></img>
         </div>
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
-            <li href="/registrationcmodule" class="nav-link imaging-nav">
-              <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
-              <span class="mx-2">Customer Module</span>
-            </li>
-          </NavLink>
-          <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
-            <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
-            <span class="mx-2">Log Out</span>
+        <NavLink
+          to="/registrationcmodule"
+          activeClassName="active"
+          class="link"
+        >
+          <li href="/registrationcmodule" class="nav-link imaging-nav">
+            <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
+            <span class="mx-2">Customer Module</span>
+          </li>
+        </NavLink>
+        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+          <span class="mx-2">Log Out</span>
         </li>
       </ul>
     </div>
@@ -272,6 +276,19 @@ function purchasingNavbar(showNavbar, setShowNavbar) {
             </Link>
             <Link to="/suppliers" className="sub-link">
               <li class="sub-list">SUPPLIERS</li>
+            </Link>
+          </ul>
+        </li>
+        <li href="#" class="nav-link supply-nav">
+          <img
+            src={reportIcon}
+            alt={"supply"}
+            class="supply icon supply-icon"
+          ></img>
+          <span class="mx-2">Reports</span>
+          <ul class="sub-menu">
+            <Link to="/reports-services-packages" className="sub-link">
+              <li class="sub-list">Services and Packages</li>
             </Link>
           </ul>
         </li>
@@ -703,10 +720,14 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Patient</span>
             </li>
           </NavLink>
-          
+
           <NavLink to="/add-old-patient" activeClassName="active" class="link">
             <li href="#" class="nav-link supply-nav">
-              <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
+              <img
+                src={companiesIcon}
+                alt={"companies"}
+                class="supply icon"
+              ></img>
               <span class="mx-2">Companies</span>
               <ul class="sub-menu">
                 <Link to="/companies" className="sub-link">
@@ -804,6 +825,15 @@ function supplySideNav() {
       </Link>
       <Link to="/suppliers">
         <span class="mx-2 nav-item">SUPPLIERS</span>
+      </Link>
+    </div>
+  );
+}
+function reportSideNav() {
+  return (
+    <div className="reports-show-nav">
+      <Link to="/reports-services-packages">
+        <span class="mx-2 nav-item">Services and Packages</span>
       </Link>
     </div>
   );
@@ -1176,7 +1206,9 @@ function PurchasingNavbarTop(
   showNavbar,
   showMobileNavBar,
   showSupply,
-  setShowSupply
+  setShowSupply,
+  showReport,
+  setShowReport
 ) {
   return (
     <div class="navbar">
@@ -1202,12 +1234,28 @@ function PurchasingNavbarTop(
               alt={"supply"}
               class="supply icon mobile-size-icon"
             ></img>
-            <span class="mx-2">Reports</span>
+            <span class="mx-2">Supply</span>
             <span>
               {showSupply == true && caretUp()}
               {showSupply == false && caretDown()}
             </span>
             {showSupply == true && supplySideNav()}
+          </div>
+          <div
+            className="reports-show-nav"
+            onClick={(e) => setShowReport(!showReport)}
+          >
+            <img
+              src={reportIcon}
+              alt={"supply"}
+              class="supply icon mobile-size-icon"
+            ></img>
+            <span class="mx-2">Reports</span>
+            <span>
+              {showReport == true && caretUp()}
+              {showReport == false && caretDown()}
+            </span>
+            {showReport == true && reportSideNav()}
           </div>
           <a href="#" class="nav-link" onClick={removeUserSession}>
             <img
@@ -1358,9 +1406,13 @@ function RegisterNavbarTop(
           </li>
         </NavLink> */}
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
+        <NavLink
+          to="/registrationcmodule"
+          activeClassName="active"
+          class="link"
+        >
           <li href="/registrationcmodule" class="nav-link imaging-nav">
-            <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon"></img>
+            <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
         </NavLink>
@@ -1370,7 +1422,6 @@ function RegisterNavbarTop(
           activeClassName="active"
           class="link"
         >
-
           <li href="/registrationcmodule" class="nav-link imaging-nav">
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
@@ -1521,9 +1572,17 @@ function AdminNavbarTop(
           <span class="mx-2">Laboratory Releasing</span>
         </NavLink>
 
-        <NavLink to="/registrationcmodule" activeClassName="active" class="link">
-            <img src={cmoduleIcon} alt={'cmodule'} class="cmodule icon mobile-size-icon"></img>
-            <span class="mx-2">Customer Module</span>
+        <NavLink
+          to="/registrationcmodule"
+          activeClassName="active"
+          class="link"
+        >
+          <img
+            src={cmoduleIcon}
+            alt={"cmodule"}
+            class="cmodule icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Customer Module</span>
         </NavLink>
 
         <NavLink
@@ -1752,6 +1811,7 @@ function Navbar() {
   const [showMobileSideBar, setShowMobileSideBar] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const [showSupply, setShowSupply] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const [showCompany, setShowCompany] = useState(false);
 
   const handleWindowSizeChange = () => {
@@ -1832,7 +1892,9 @@ function Navbar() {
           showNavbar,
           showMobileNavBar,
           showSupply,
-          setShowSupply
+          setShowSupply,
+          showReport,
+          setShowReport
         )}
       {showNavbar == false &&
         role == 5 &&
