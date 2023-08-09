@@ -254,6 +254,10 @@ const labResultsData = {
       value: "WEAKLY POSITIVE",
       label: "WEAKLY POSITIVE",
     },
+    {
+      value: "N/A",
+      label: "N/A",
+    },
   ],
 
   reactiveNonReactiveOptions: [
@@ -264,6 +268,25 @@ const labResultsData = {
     {
       value: "REACTIVE",
       label: "REACTIVE",
+    },
+    {
+      value: "N/A",
+      label: "N/A",
+    },
+  ],
+
+  reactiveNonReactiveOptions2: [
+    {
+      value: "NON REACTIVE",
+      label: "NON REACTIVE",
+    },
+    {
+      value: "REACTIVE",
+      label: "REACTIVE",
+    },
+    {
+      value: "N/A",
+      label: "N/A",
     },
   ],
 

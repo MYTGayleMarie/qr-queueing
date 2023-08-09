@@ -236,6 +236,15 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       } else {
         setIsDropdown(false);
       }
+    } else if (selectedLab.label == "HIV Screening (Anti HIV)") {
+      if (
+        lab_test === "Anti-HIV"
+      ) {
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions2);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
     } else if (
       selectedLab.label == "Fecalysis" ||
       selectedLab.label == "[P] Fecalysis"
@@ -1782,7 +1791,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                                     </span>
                                   ) : (
                                     <span>
-                                      {result["result"] }{" "}
+                                      {result["result"] }
                                     </span>
                                   )
                                 ) : result["preferred"] != " " ? (
@@ -1801,21 +1810,17 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                                   parseFloat(result["result"]) ? (
                                     <span class="red">
                                       {result["result"] +
-                                        " " +
-                                        result["unit"] +
                                         " (L)"}
                                     </span>
                                   ) : result["result"] >
                                     result["preferred_to"] ? (
                                     <span class="red">
                                       {result["result"] +
-                                        " " +
-                                        result["unit"] +
                                         " (H)"}
                                     </span>
                                   ) : (
                                     <span>
-                                      {result["result"]}{" "}
+                                      {result["result"]}
                                     </span>
                                   )
                                 ) : (
