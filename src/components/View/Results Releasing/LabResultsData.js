@@ -630,7 +630,7 @@ const labResultsData = {
   labTestPregnancyTest: [
     {
       lab_test: "Pregnancy Test",
-      result: "",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -641,7 +641,7 @@ const labResultsData = {
   labTestSerumPregnancyTest: [
     {
       lab_test: "Serum Pregnancy Test",
-      result: "",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -665,7 +665,7 @@ const labResultsData = {
       lab_test: "PH Reaction",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 1.5,
@@ -675,7 +675,7 @@ const labResultsData = {
       lab_test: "Volume",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "ml",
       preferred: " ",
       preferred_from: 7.2,
