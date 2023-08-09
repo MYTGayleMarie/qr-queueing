@@ -226,6 +226,14 @@ const labResultsData = {
       value: "MUSHY",
       label: "MUSHY",
     },
+    {
+      value: "MUCO-MUSHY",
+      label: "MUCO-MUSHY",
+    },
+    {
+      value: "LOOSE",
+      label: "LOOSE",
+    }
   ],
 
   fecalysisOvaParasiteOptions: [
