@@ -1668,6 +1668,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Gram Stain" &&
+                        selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
                         selectedLab.label !== "Serum Pregnancy Test" &&
@@ -1685,6 +1686,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !== "H. Pylori Ag" &&
+                        selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
                         selectedLab.label !== "Serum Pregnancy Test" &&
                         selectedLab.label !== "Gram Stain" &&
@@ -1696,6 +1698,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                           </div>
                         )}
                     </div>
+                    {console.log(labTestData)}
                     {labTestData.map((result, resultIndex) => (
                       <>
                         <div
@@ -1845,6 +1848,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "KOH" &&
+                            selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
@@ -1863,6 +1867,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
+                            selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
