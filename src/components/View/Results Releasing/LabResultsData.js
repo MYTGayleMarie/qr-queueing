@@ -43,6 +43,10 @@ const labResultsData = {
       label: "DARK YELLOW",
     },
     {
+      value: "PINKISH YELLOW",
+      label: "PINKISH YELLOW",
+    },
+    {
       value: "AMBER",
       label: "AMBER",
     },
@@ -126,12 +130,24 @@ const labResultsData = {
       label: "CLEAR",
     },
     {
+      value: "SLIGHTLY HAZY",
+      label: "SLIGHTLY HAZY",
+    },
+    {
       value: "HAZY",
       label: "HAZY",
     },
     {
+      value: "SLIGHTLY CLOUDY",
+      label: "SLIGHTLY CLOUDY",
+    },
+    {
       value: "CLOUDY",
       label: "CLOUDY",
+    },
+    {
+      value: "SLIGHTLY TURBID",
+      label: "SLIGHTLY TURBID",
     },
     {
       value: "TURBID",
@@ -155,6 +171,10 @@ const labResultsData = {
     {
       value: "MANY",
       label: "MANY",
+    },
+    {
+      value: "OCCASIONAL",
+      label: "OCCASIONAL",
     },
   ],
 
