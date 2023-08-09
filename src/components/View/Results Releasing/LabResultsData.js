@@ -11,7 +11,7 @@ const labResultsData = {
     "Dengue",
     "Syphilis/RPR/VDRL",
     "HIV Screening (Anti HIV)",
-    "H. Pylori",
+    "H. Pylori Ag",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",
     "TSH",
@@ -20,6 +20,7 @@ const labResultsData = {
     "T3",
     "T4",
     "PSA",
+    "Antigen Rapid Swab (Nasal)", 
     "CEA",
     "VITAMIN D",
   ],
@@ -106,6 +107,17 @@ const labResultsData = {
       value: "N/A",
       label: "N/A",
     },
+  ],
+
+  posNegTestOptions: [
+    {
+      value: "POSITIVE",
+      label: "POSITIVE",
+    },
+    {
+      value: "NEGATIVE",
+      label: "NEGATIVE",
+    }
   ],
 
   urinalysisTransparencyOptions: [
@@ -578,6 +590,17 @@ const labResultsData = {
   labTestSerumPregnancyTest: [
     {
       lab_test: "Serum Pregnancy Test",
+      result: "",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
+
+  labTestCovidAntigenTest: [
+    {
+      lab_test: "COVID Antigen Rapid Test",
       result: "",
       unit: " ",
       preferred: " ",

@@ -213,7 +213,25 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
         lab_test === "Serum Pregnancy Test" ||
         lab_test === "Serum_Pregnancy_Test"
       ) {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
+        setLabTestOptions(labResultsData.posNegTestOptions);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
+    } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)") {
+      if (
+        lab_test === "COVID Antigen Rapid Test"
+      ) {
+        setLabTestOptions(labResultsData.posNegTestOptions);
+        setIsDropdown(true);
+      } else {
+        setIsDropdown(false);
+      }
+    } else if (selectedLab.label == "H. Pylori Ag") {
+      if (
+        lab_test === "H. Pylori"
+      ) {
+        setLabTestOptions(labResultsData.posNegTestOptions);
         setIsDropdown(true);
       } else {
         setIsDropdown(false);
@@ -1294,6 +1312,10 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     ) {
       setLabTestData(labResultsData.labTestSerumPregnancyTest);
     } else if (
+      e.label === "Antigen Rapid Swab (Nasal)"
+    ) {
+      setLabTestData(labResultsData.labTestCovidAntigenTest);
+    } else if (
       e.label === "Sperm Analysis" ||
       e.label === "[P] Sperm Analysis"
     ) {
@@ -1314,7 +1336,12 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       e.label === "[P] HIV SCreening (Anti HIV)"
     ) {
       setLabTestData(labResultsData.labTestHIVScreening);
-    } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
+    }else if (
+      e.label === "H. Pylori Ag"
+    ) {
+      setLabTestData(labResultsData.labTestHPylori);
+    }  
+    else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
       setLabTestData(labResultsData.labTestHPylori);
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
@@ -1630,8 +1657,12 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
+                        selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Gram Stain" &&
-                        selectedLab.label !== "HIV Screening (Anti HIV)" && (
+                        selectedLab.label !== "HIV Screening (Anti HIV)" &&
+                        selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                        selectedLab.label !== "Serum Pregnancy Test" &&
+                        (
                           <div className="col">
                             <span>
                               <b>UNIT</b>
@@ -1644,6 +1675,9 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
+                        selectedLab.label !== "H. Pylori Ag" &&
+                        selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                        selectedLab.label !== "Serum Pregnancy Test" &&
                         selectedLab.label !== "Gram Stain" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" && (
                           <div className="col">
@@ -1801,7 +1835,10 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label.toUpperCase() !== "FECALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
+                            selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                            selectedLab.label !== "Serum Pregnancy Test" &&   
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                            selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
@@ -1815,6 +1852,9 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label.toUpperCase() !== "FECALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
+                            selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                            selectedLab.label !== "Serum Pregnancy Test" &&  
+                            selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
