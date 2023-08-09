@@ -1498,6 +1498,8 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     );
   };
 
+  console.log(selectedLab.label);
+
   const LaboratoryResultsTable = () => {
     return (
       <div style={{ backgroundColor: "white", width: "900px" }}>
@@ -1667,6 +1669,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !== "H. Pylori Ag" &&
+                        selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
+                        selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
+                        selectedLab.label === "Anti-HAV" &&
+                        selectedLab.label === "Anti-HCV"&&
                         selectedLab.label !== "Gram Stain" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" &&
@@ -1685,6 +1692,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
+                        selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
+                        selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
+                        selectedLab.label === "Anti-HAV" &&
+                        selectedLab.label === "Anti-HCV"&&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -1848,6 +1860,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "KOH" &&
+                            selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                            selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
+                            selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
+                            selectedLab.label === "Anti-HAV" &&
+                            selectedLab.label === "Anti-HCV"&&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
@@ -1855,6 +1872,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                           <div className="col">
                           <span>{result["unit"]}</span>
                           </div>)}
+                         
                           {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] URINALYSIS" &&
@@ -1867,6 +1885,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
+                            selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
