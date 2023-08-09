@@ -1671,13 +1671,13 @@ export default function LabOfficer() {
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !== "H. Pylori Ag" &&
-                        // selectedLab.label ===
-                        //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        // selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                        // selectedLab.label ===
-                        //   "Hepatitis B Surface Antigen (HbsAg)" &&
-                        // selectedLab.label === "Anti-HAV" &&
-                        // selectedLab.label === "Anti-HCV" &&
+                        selectedLab.label !==
+                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                        selectedLab.label !==
+                          "Hepatitis B Surface Antigen (HbsAg)" &&
+                        selectedLab.label !== "Anti-HAV" &&
+                        selectedLab.label !== "Anti-HCV" &&
                         // selectedLab.label === "TSH" &&
                         // selectedLab.label === "FT3" &&
                         // selectedLab.label === "FT4" &&
@@ -1700,13 +1700,13 @@ export default function LabOfficer() {
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
-                        // selectedLab.label ===
-                        //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        // selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                        // selectedLab.label ===
-                        //   "Hepatitis B Surface Antigen (HbsAg)" &&
-                        // selectedLab.label === "Anti-HAV" &&
-                        // selectedLab.label === "Anti-HCV" &&
+                        selectedLab.label !==
+                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                        selectedLab.label !==
+                          "Hepatitis B Surface Antigen (HbsAg)" &&
+                        selectedLab.label !== "Anti-HAV" &&
+                        selectedLab.label !== "Anti-HCV" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -1876,14 +1876,14 @@ export default function LabOfficer() {
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "KOH" &&
-                            // selectedLab.label ===
-                            //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                            // selectedLab.label ===
-                            //   "HBSag (Hepatitis B Antigen)" &&
-                            // selectedLab.label ===
-                            //   "Hepatitis B Surface Antigen (HbsAg)" &&
-                            // selectedLab.label === "Anti-HAV" &&
-                            // selectedLab.label === "Anti-HCV" &&
+                            selectedLab.label !==
+                              "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                            selectedLab.label !==
+                              "HBSag (Hepatitis B Antigen)" &&
+                            selectedLab.label !==
+                              "Hepatitis B Surface Antigen (HbsAg)" &&
+                            selectedLab.label !== "Anti-HAV" &&
+                            selectedLab.label !== "Anti-HCV" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
