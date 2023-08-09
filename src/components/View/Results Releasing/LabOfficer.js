@@ -89,9 +89,20 @@ export default function LabOfficer() {
     done: false,
   });
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   // Patient details
   const [editingLab, setEditingLab] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -219,27 +230,21 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
         setIsDropdown(false);
       }
     } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)") {
-      if (
-        lab_test === "COVID Antigen Rapid Test"
-      ) {
+      if (lab_test === "COVID Antigen Rapid Test") {
         setLabTestOptions(labResultsData.posNegTestOptions);
         setIsDropdown(true);
       } else {
         setIsDropdown(false);
       }
     } else if (selectedLab.label == "H. Pylori Ag") {
-      if (
-        lab_test === "H. Pylori"
-      ) {
+      if (lab_test === "H. Pylori") {
         setLabTestOptions(labResultsData.posNegTestOptions);
         setIsDropdown(true);
       } else {
         setIsDropdown(false);
       }
     } else if (selectedLab.label == "HIV Screening (Anti HIV)") {
-      if (
-        lab_test === "Anti-HIV"
-      ) {
+      if (lab_test === "Anti-HIV") {
         setLabTestOptions(labResultsData.reactiveNonReactiveOptions2);
         setIsDropdown(true);
       } else {
@@ -413,8 +418,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       return "PRC LIC. NO.: 0085308";
     } else if (prc_id === "48") {
       return "PRC LIC. NO.: 0109437";
-    }
-     else {
+    } else {
       return "No PRC No.";
     }
   }
@@ -529,18 +533,18 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
         />
       );
     } else if (prc_sig === "48") {
-    setHasImage(true);
-    return (
-      <img
-        src={image12}
-        alt="MedTech"
-        // className="mt-5"
-        style={{ marginTop: "3rem" }}
-        width={100}
-        height={50}
-      />
-    );
-  }
+      setHasImage(true);
+      return (
+        <img
+          src={image12}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "3rem" }}
+          width={100}
+          height={50}
+        />
+      );
+    }
     // else{
     //   setHasImage(true);
     //   return (
@@ -567,7 +571,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       //   />
       // );
       // {
-          setHasImage(false);
+      setHasImage(false);
 
       return (
         <div
@@ -598,23 +602,23 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   }
   var label_test = "";
   selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
-                      selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
-                      selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-                      selectedLab.label === "Anti-HAV" ||
-                      selectedLab.label === "Anti-HCV" ? (
-                        label_test = "Hepatitis Profile Tests"
-                      ) : (
-                        <>
-                          { selectedLab.label === "T4" ||
-                           selectedLab.label === "T3" ||
-                           selectedLab.label === "FT4" ||
-                           selectedLab.label === "FT3" ||
-                           selectedLab.label === "TSH"
-                            ?  label_test = "Thyroid Profile Tests"
-                            :  label_test = selectedLab.label}
-                        </>
-    )
-  const fileName = lastName +", "+firstName + "-"+label_test;
+  selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+  selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+  selectedLab.label === "Anti-HAV" ||
+  selectedLab.label === "Anti-HCV" ? (
+    (label_test = "Hepatitis Profile Tests")
+  ) : (
+    <>
+      {selectedLab.label === "T4" ||
+      selectedLab.label === "T3" ||
+      selectedLab.label === "FT4" ||
+      selectedLab.label === "FT3" ||
+      selectedLab.label === "TSH"
+        ? (label_test = "Thyroid Profile Tests")
+        : (label_test = selectedLab.label)}
+    </>
+  );
+  const fileName = lastName + ", " + firstName + "-" + label_test;
   const printHandle = useReactToPrint({
     // onAfterPrint: handleRedirect,
     documentTitle: fileName,
@@ -654,8 +658,13 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
         setLastName(response.data.data.booking.last_name);
 
         var temp = new Date(response.data.data.booking.birthdate);
-        console.log(monthNames[temp.getMonth()]?.toUpperCase() + " " + temp.getDate() + ", " + temp.getFullYear())
-        var date_temp = monthNames[temp.getMonth()] + " " + temp.getDate() + ", " + temp.getFullYear();
+
+        var date_temp =
+          monthNames[temp.getMonth()] +
+          " " +
+          temp.getDate() +
+          ", " +
+          temp.getFullYear();
         setBirthDate(date_temp);
 
         setGender(response.data.data.booking.gender);
@@ -1320,9 +1329,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       e.label === "[P] Serum Pregnancy Test"
     ) {
       setLabTestData(labResultsData.labTestSerumPregnancyTest);
-    } else if (
-      e.label === "Antigen Rapid Swab (Nasal)"
-    ) {
+    } else if (e.label === "Antigen Rapid Swab (Nasal)") {
       setLabTestData(labResultsData.labTestCovidAntigenTest);
     } else if (
       e.label === "Sperm Analysis" ||
@@ -1345,12 +1352,9 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       e.label === "[P] HIV SCreening (Anti HIV)"
     ) {
       setLabTestData(labResultsData.labTestHIVScreening);
-    }else if (
-      e.label === "H. Pylori Ag"
-    ) {
+    } else if (e.label === "H. Pylori Ag") {
       setLabTestData(labResultsData.labTestHPylori);
-    }  
-    else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
+    } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
       setLabTestData(labResultsData.labTestHPylori);
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
@@ -1497,8 +1501,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
       </div>
     );
   };
-
-  console.log(selectedLab.label);
 
   const LaboratoryResultsTable = () => {
     return (
@@ -1669,17 +1671,23 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !== "H. Pylori Ag" &&
-                        selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                        selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
-                        selectedLab.label === "Anti-HAV" &&
-                        selectedLab.label === "Anti-HCV"&&
+                        // selectedLab.label ===
+                        //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        // selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
+                        // selectedLab.label ===
+                        //   "Hepatitis B Surface Antigen (HbsAg)" &&
+                        // selectedLab.label === "Anti-HAV" &&
+                        // selectedLab.label === "Anti-HCV" &&
+                        // selectedLab.label === "TSH" &&
+                        // selectedLab.label === "FT3" &&
+                        // selectedLab.label === "FT4" &&
+                        // selectedLab.label === "T3" &&
+                        // selectedLab.label === "T4" &&
                         selectedLab.label !== "Gram Stain" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                        selectedLab.label !== "Serum Pregnancy Test" &&
-                        (
+                        selectedLab.label !== "Serum Pregnancy Test" && (
                           <div className="col">
                             <span>
                               <b>UNIT</b>
@@ -1692,11 +1700,13 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
-                        selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        selectedLab.label ===
+                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
                         selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                        selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
+                        selectedLab.label ===
+                          "Hepatitis B Surface Antigen (HbsAg)" &&
                         selectedLab.label === "Anti-HAV" &&
-                        selectedLab.label === "Anti-HCV"&&
+                        selectedLab.label === "Anti-HCV" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -1723,9 +1733,14 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                           key={resultIndex}
                         >
                           <div className="col">
-                            {resultIndex === 0 ||
-                            result["test_type"] !==
-                              labTestData[resultIndex - 1]["test_type"] ? (
+                            {selectedLab.label !== "TSH" &&
+                            selectedLab.label !== "FT3" &&
+                            selectedLab.label !== "FT4" &&
+                            selectedLab.label !== "T3" &&
+                            selectedLab.label !== "T4" &&
+                            (resultIndex === 0 ||
+                              result["test_type"] !==
+                                labTestData[resultIndex - 1]["test_type"]) ? (
                               <div className="space-between">
                                 <h5
                                   style={{
@@ -1739,9 +1754,14 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             ) : (
                               ""
                             )}
-                            {resultIndex === 0 ||
-                            result["test_type_2"] !==
-                              labTestData[resultIndex - 1]["test_type_2"] ? (
+                            {selectedLab.label !== "TSH" &&
+                            selectedLab.label !== "FT3" &&
+                            selectedLab.label !== "FT4" &&
+                            selectedLab.label !== "T3" &&
+                            selectedLab.label !== "T4" &&
+                            (resultIndex === 0 ||
+                              result["test_type_2"] !==
+                                labTestData[resultIndex - 1]["test_type_2"]) ? (
                               <div className="space-between">
                                 <h6
                                   style={{
@@ -1761,9 +1781,14 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                           </div>
                           <div className="col">
                             {/* Add Blank space for headers */}
-                            {resultIndex === 0 ||
-                            result["test_type"] !==
-                              labTestData[resultIndex - 1]["test_type"] ? (
+                            {selectedLab.label !== "TSH" &&
+                            selectedLab.label !== "FT3" &&
+                            selectedLab.label !== "FT4" &&
+                            selectedLab.label !== "T3" &&
+                            selectedLab.label !== "T4" &&
+                            (resultIndex === 0 ||
+                              result["test_type"] !==
+                                labTestData[resultIndex - 1]["test_type"]) ? (
                               <div className="space-between">
                                 <h5
                                   style={{
@@ -1778,9 +1803,14 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             ) : (
                               ""
                             )}
-                            {resultIndex === 0 ||
-                            result["test_type_2"] !==
-                              labTestData[resultIndex - 1]["test_type_2"] ? (
+                            {selectedLab.label !== "TSH" &&
+                            selectedLab.label !== "FT3" &&
+                            selectedLab.label !== "FT4" &&
+                            selectedLab.label !== "T3" &&
+                            selectedLab.label !== "T4" &&
+                            (resultIndex === 0 ||
+                              result["test_type_2"] !==
+                                labTestData[resultIndex - 1]["test_type_2"]) ? (
                               <div className="space-between">
                                 <h6
                                   style={{
@@ -1801,48 +1831,33 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                               <>
                                 {result["preferred"] == " " ? (
                                   result["preferred"] == result["result"] ? (
-                                    <span>
-                                      {result["result"] }
-                                    </span>
+                                    <span>{result["result"]}</span>
                                   ) : (
-                                    <span>
-                                      {result["result"] }
-                                    </span>
+                                    <span>{result["result"]}</span>
                                   )
                                 ) : result["preferred"] != " " ? (
                                   result["preferred"] == result["result"] ? (
-                                    <span>
-                                      {result["result"] }
-                                    </span>
+                                    <span>{result["result"]}</span>
                                   ) : (
-                                    <span>
-                                      {result["result"] }{" "}
-                                    </span>
+                                    <span>{result["result"]} </span>
                                   )
                                 ) : result["preferred_from"] != 0.0 ||
                                   result["preferred_to"] != 0.0 ? (
                                   parseFloat(result["preferred_from"]) >
                                   parseFloat(result["result"]) ? (
                                     <span class="red">
-                                      {result["result"] +
-                                        " (L)"}
+                                      {result["result"] + " (L)"}
                                     </span>
                                   ) : result["result"] >
                                     result["preferred_to"] ? (
                                     <span class="red">
-                                      {result["result"] +
-                                        " (H)"}
+                                      {result["result"] + " (H)"}
                                     </span>
                                   ) : (
-                                    <span>
-                                      {result["result"]}
-                                    </span>
+                                    <span>{result["result"]}</span>
                                   )
                                 ) : (
-                                  <span>
-                                    {" "}
-                                    {result["result"] }
-                                  </span>
+                                  <span> {result["result"]}</span>
                                 )}
                               </>
                             ) : (
@@ -1855,37 +1870,49 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                             selectedLab.label.toUpperCase() !== "FECALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
-                            selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                            selectedLab.label !== "Serum Pregnancy Test" &&   
+                            selectedLab.label !==
+                              "Antigen Rapid Swab (Nasal)" &&
+                            selectedLab.label !== "Serum Pregnancy Test" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "KOH" &&
-                            selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                            selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                            selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" &&
-                            selectedLab.label === "Anti-HAV" &&
-                            selectedLab.label === "Anti-HCV"&&
+                            // selectedLab.label ===
+                            //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                            // selectedLab.label ===
+                            //   "HBSag (Hepatitis B Antigen)" &&
+                            // selectedLab.label ===
+                            //   "Hepatitis B Surface Antigen (HbsAg)" &&
+                            // selectedLab.label === "Anti-HAV" &&
+                            // selectedLab.label === "Anti-HCV" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
-                          <div className="col">
-                          <span>{result["unit"]}</span>
-                          </div>)}
-                         
+                              <div className="col">
+                                <span>{result["unit"]}</span>
+                              </div>
+                            )}
+
                           {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] URINALYSIS" &&
                             selectedLab.label.toUpperCase() !== "FECALYSIS" &&
                             selectedLab.label.toUpperCase() !==
                               "[P] FECALYSIS" &&
-                            selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                            selectedLab.label !== "Serum Pregnancy Test" &&  
+                            selectedLab.label !==
+                              "Antigen Rapid Swab (Nasal)" &&
+                            selectedLab.label !== "Serum Pregnancy Test" &&
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
-                            selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                            selectedLab.label !== "TSH" &&
+                            selectedLab.label !== "FT3" &&
+                            selectedLab.label !== "FT4" &&
+                            selectedLab.label !== "T3" &&
+                            selectedLab.label !== "T4" &&
+                            selectedLab.label !==
+                              "HBSag (Hepatitis B Antigen)" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
