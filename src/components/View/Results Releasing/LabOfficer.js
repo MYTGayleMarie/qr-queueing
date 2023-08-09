@@ -1700,13 +1700,13 @@ export default function LabOfficer() {
                         selectedLab.label !== "[P] Fecalysis" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
-                        selectedLab.label ===
-                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
-                        selectedLab.label ===
-                          "Hepatitis B Surface Antigen (HbsAg)" &&
-                        selectedLab.label === "Anti-HAV" &&
-                        selectedLab.label === "Anti-HCV" &&
+                        // selectedLab.label ===
+                        //   "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                        // selectedLab.label === "HBSag (Hepatitis B Antigen)" &&
+                        // selectedLab.label ===
+                        //   "Hepatitis B Surface Antigen (HbsAg)" &&
+                        // selectedLab.label === "Anti-HAV" &&
+                        // selectedLab.label === "Anti-HCV" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -1720,7 +1720,7 @@ export default function LabOfficer() {
                           </div>
                         )}
                     </div>
-                    {console.log(labTestData)}
+
                     {labTestData.map((result, resultIndex) => (
                       <>
                         <div
@@ -1906,11 +1906,6 @@ export default function LabOfficer() {
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
                             selectedLab.label !== "Gram Stain" &&
-                            selectedLab.label !== "TSH" &&
-                            selectedLab.label !== "FT3" &&
-                            selectedLab.label !== "FT4" &&
-                            selectedLab.label !== "T3" &&
-                            selectedLab.label !== "T4" &&
                             selectedLab.label !==
                               "HBSag (Hepatitis B Antigen)" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
@@ -1918,11 +1913,16 @@ export default function LabOfficer() {
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
                                 <span>
-                                  {resultIndex === 0 ||
-                                  result["test_type"] !==
-                                    labTestData[resultIndex - 1][
-                                      "test_type"
-                                    ] ? (
+                                  {selectedLab.label !== "TSH" &&
+                                  selectedLab.label !== "FT3" &&
+                                  selectedLab.label !== "FT4" &&
+                                  selectedLab.label !== "T3" &&
+                                  selectedLab.label !== "T4" &&
+                                  (resultIndex === 0 ||
+                                    result["test_type"] !==
+                                      labTestData[resultIndex - 1][
+                                        "test_type"
+                                      ]) ? (
                                     <div className="space-between">
                                       <h5
                                         style={{
@@ -1937,11 +1937,16 @@ export default function LabOfficer() {
                                   ) : (
                                     ""
                                   )}
-                                  {resultIndex === 0 ||
-                                  result["test_type_2"] !==
-                                    labTestData[resultIndex - 1][
-                                      "test_type_2"
-                                    ] ? (
+                                  {selectedLab.label !== "TSH" &&
+                                  selectedLab.label !== "FT3" &&
+                                  selectedLab.label !== "FT4" &&
+                                  selectedLab.label !== "T3" &&
+                                  selectedLab.label !== "T4" &&
+                                  (resultIndex === 0 ||
+                                    result["test_type_2"] !==
+                                      labTestData[resultIndex - 1][
+                                        "test_type_2"
+                                      ]) ? (
                                     <div className="space-between">
                                       <h6
                                         style={{
