@@ -1684,7 +1684,8 @@ export default function LabOfficer() {
                         // selectedLab.label === "T3" &&
                         // selectedLab.label === "T4" &&
                         selectedLab.label !== "Gram Stain" &&
-                        selectedLab.label !== "Pregnancy Test (RPK Lateral Flow)" &&
+                        selectedLab.label !==
+                          "Pregnancy Test (RPK Lateral Flow)" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "HIV Screening (Anti HIV)" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -1707,7 +1708,8 @@ export default function LabOfficer() {
                         selectedLab.label !==
                           "Hepatitis B Surface Antigen (HbsAg)" &&
                         selectedLab.label !== "Anti-HAV" &&
-                        selectedLab.label !== "Pregnancy Test (RPK Lateral Flow)" &&
+                        selectedLab.label !==
+                          "Pregnancy Test (RPK Lateral Flow)" &&
                         selectedLab.label !== "Anti-HCV" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
@@ -1886,13 +1888,23 @@ export default function LabOfficer() {
                               "Hepatitis B Surface Antigen (HbsAg)" &&
                             selectedLab.label !== "Anti-HAV" &&
                             selectedLab.label !== "Anti-HCV" &&
-                            selectedLab.label !== "Pregnancy Test (RPK Lateral Flow)" &&
+                            selectedLab.label !==
+                              "Pregnancy Test (RPK Lateral Flow)" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
-                                <span>{result["unit"]}</span>
+                                {/* { result["preferred_from"] != 0.0 ||
+                                  result["preferred_to"] != 0.0 ? ( */}
+                                {parseFloat(result["result"]) >=
+                                  parseFloat(result["preferred_from"]) &&
+                                parseFloat(result["result"]) <=
+                                  parseFloat(result["preferred_to"]) ? (
+                                  <span>{result["unit"]}</span>
+                                ) : (
+                                  <span class="red">{result["unit"]}</span>
+                                )}
                               </div>
                             )}
 
@@ -1908,7 +1920,8 @@ export default function LabOfficer() {
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
-                            selectedLab.label !== "Pregnancy Test (RPK Lateral Flow)" &&
+                            selectedLab.label !==
+                              "Pregnancy Test (RPK Lateral Flow)" &&
                             selectedLab.label !== "Gram Stain" &&
                             selectedLab.label !==
                               "HBSag (Hepatitis B Antigen)" &&
