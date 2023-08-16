@@ -363,6 +363,7 @@ function AddInvoicePayment() {
         setInvoiceStatus(!invoiceStatus);
         setDiscountId(invoice[0].discount_id);
         var payments = response.data.data.payments;
+
         var paymentTotal;
         if (payments.length < 1) {
           paymentTotal = parseFloat(0).toFixed(2);
@@ -377,10 +378,12 @@ function AddInvoicePayment() {
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success");
           setGrandTotal(invoice.total);
+          console.log("invoice total", invoice.total)
           setPay(invoice.total);
           setDiscountCode(invoice[0].discount_code);
           setPaidAmount(invoice.paid_amount);
           setPayments(payments);
+          console.log("385 payments", payments)
           setInfoId(invoice[0].id);
           setHasPay(
             paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
@@ -1004,7 +1007,7 @@ function AddInvoicePayment() {
 
   function paymentDetails() {
     var new_payments = payments[0];
-    var date = new Date(payments[0].added_on);
+    var date = new Date(payments[0]?.added_on);
     var formattedDate = date.toDateString().split(" ");
 
     return (
@@ -1859,6 +1862,7 @@ function AddInvoicePayment() {
           )}
           {console.log("1853", payments[0])}
           {console.log("1853", paidAmount)}
+          {console.log("1853", grandTotal)}
 
           {haslogs &&
             parseFloat(paidAmount) < parseFloat(grandTotal) && (
