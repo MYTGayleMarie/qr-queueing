@@ -1895,12 +1895,15 @@ export default function LabOfficer() {
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
+                                {console.log("result", result["result"])}
+                                {console.log("pref from", result["preferred_from"])}
+                                {console.log("pref to", result["preferred_to"])}
                                 {/* { result["preferred_from"] != 0.0 ||
                                   result["preferred_to"] != 0.0 ? ( */}
-                                {parseFloat(result["result"]) >=
+                                {result["result"] === "-" || (parseFloat(result["result"]) >=
                                   parseFloat(result["preferred_from"]) &&
                                 parseFloat(result["result"]) <=
-                                  parseFloat(result["preferred_to"]) ? (
+                                  parseFloat(result["preferred_to"])) ? (
                                   <span>{result["unit"]}</span>
                                 ) : (
                                   <span class="red">{result["unit"]}</span>
