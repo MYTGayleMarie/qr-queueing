@@ -61,4 +61,17 @@
     width: 90%;
 }
 
+.po-header{
+    margin: 1.5rem;
+    color:#BFBC4B;
+    font-weight: bold;
+}
+
+.save-po-btn{
+    background: #55073A !important;
+    color: whitesmoke !important;
+    width: 100% !important;
+    border-radius: 10px !important;
+}
+
 

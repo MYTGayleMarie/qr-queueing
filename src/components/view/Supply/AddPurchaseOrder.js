@@ -81,7 +81,7 @@ function AddPurchaseOrder() {
     if(list[index]["order_quantity"] != " " && list[index]["cost"]) {
       list[index]["total"] = parseFloat((list[index]["order_quantity"] * list[index]["cost"]) - item_discount).toFixed(2);
     }
-    console.log(list)
+
     setItems(list);
 
 
@@ -263,39 +263,47 @@ function AddPurchaseOrder() {
   var purchaseItems = items.map((row, index) => {   
     return (
                     <tr key={index}>
-                        <td>
-                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
+                        <td className='input-group input-group-sm'>
+                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="form-control qty" style={{width:"80%"}} />
                         </td>
                         {row.with_conversion === "0" ? 
                         <td>
-                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} className="purchase-item qty" readonly/>
+                          <div className='input-group input-group-sm'>
+                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} className="form-control qty" style={{width:"80%"}} readonly/>
+                          </div>
                         </td> : 
                         <td>
-                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item qty" />
+                            <div className='input-group input-group-sm'>
+                          <input type="number" name="inventory_quantity" id="inventory_quantity" value={row.inventory_quantity} onChange={(e) => handleItemChange(e, index)} className="form-control" style={{width:"80%"}} />
+                          </div>
                         </td>}
                         <td>
-                          <input type="text" name="unit" id="unit" value={row.unit} className="purchase-item unit" readOnly/>
+                        <div className='input-group input-group-sm'>
+                          <input type="text" name="unit" id="unit" value={row.unit} className="form-control unit" readOnly/></div>
                         </td>
                         <td>
-                          <select className='purchase-select' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
+                          <select className='form-select form-select-sm' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
                             <option  value="" selected disabled>Select Item</option>
                             {itemInfo.map((data,info) => {
                                 return <option value={data.id}>{data.name}</option>
                             })}
                           </select>
                         </td>
-                        <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item cost"/>
+                        <td align='right'>
+                        <div className='input-group input-group-sm'>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="form-control cost"/></div>
                         </td>
-                        <td>
-                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item item-discount" />
+                        <td align='right'>
+                        <div className='input-group input-group-sm'>
+                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="form-control item-discount" /></div>
                         </td>
-                        <td>
-                          <input type="number" name="total" id="total" value={row.total} onChange={(e) => handleItemChange(e, index)} className="purchase-item total" />
+                        <td align='right'>
+                        <div className='input-group input-group-sm'>
+                          <input type="number" name="total" id="total" value={row.total} onChange={(e) => handleItemChange(e, index)} className="form-control total" /></div>
                         </td>
                         <td>
                         {items.length !== 1 && (
-                          <button className="delete-purchase-btn" onClick={() => removeItems(index)}>
+                          <button className="btn btn-danger btn-sm" onClick={() => removeItems(index)}>
                             DELETE
                           </button> 
                         )}
@@ -309,6 +317,11 @@ function AddPurchaseOrder() {
     return <Navigate to="/purchase-order" />;
   }
 
+  const customControlStyles = base => ({
+    // height: 15,
+    // minHeight: 20
+});
+
   return (
     <div>
       <Navbar />
@@ -316,35 +329,41 @@ function AddPurchaseOrder() {
         <Header type="thin" title="ADD PURCHASE ORDER" />
         <ToastContainer/>
 
-        <h1 className="item-header">PURCHASE ORDER INFO</h1>
+        <h4 className="po-header">PURCHASE ORDER INFO</h4>
           <div className="item-details-cont">
-            <div className="row">
-              <div className="col-sm-4">
+            <div className="row mb-2">
+              <div className="col-sm-3 pt-1">
                 <span className="item-id-label">PURCHASE DATE</span>
               </div>
-              <div className="col-sm-8">
-                <input type="date" name="purchase_date" className="item-name-input" onChange={setInfo}/>
+              <div className="col-sm-7">
+                <div className='input-group input-group-sm'>
+                <input type="date" name="purchase_date" className="form-control" onChange={setInfo}/>
+                </div>
+                
               </div>
             </div>
-            <div className="row">
-              <div className="col-sm-4">
+            <div className="row mb-2">
+              <div className="col-sm-3 pt-1">
                 <span className="item-id-label">PAYMENT DATE</span>
               </div>
-              <div className="col-sm-8">
-                <input type="date" name="payment_date" className="item-name-input" onChange={setInfo}/>
+              <div className="col-sm-7">
+              <div className='input-group input-group-sm'>
+                <input type="date" name="payment_date" className="form-control" onChange={setInfo}/>
+              </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-4">
-                <span className="item-name-label">SUPPLIER</span>
+              <div className="col-sm-3 pt-2">
+                <span className="item-id-label">SUPPLIER</span>
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-7">
                 <Select 
+                // styles={{control: customControlStyles}}
                   isSearchable
                   defaultValue={selectedSuppliers}
                   onChange={setSelectedSuppliers}
                   options={suppliers}
-                  className="supplier-input"
+                  // className="supplier-input"
                 />
                 {/* <select name="supplier" className="item-supplier-input" onChange={setInfo}>
                 <option value="" selected disabled>Choose here</option>
@@ -382,15 +401,16 @@ function AddPurchaseOrder() {
             </div>  */}
           </div>
 
-          <h1 className="item-header">ADDITIONAL INFO</h1>
-
+          <h4 className="po-header">ADDITIONAL INFO</h4>
           <div className="item-details-cont">
-            <div className="row">
-              <div className="col-sm-4">
+            <div className="row mb-2">
+              <div className="col-sm-3 pt-1">
                 <span className="item-id-label">DELIVERY DATE</span>
               </div>
-              <div className="col-sm-8">
-                <input type="date" name="delivery_date" className="item-name-input" onChange={setInfo}/>
+              <div className="col-sm-7">
+              <div className='input-group input-group-sm'>
+                <input type="date" name="delivery_date" className="form-control" onChange={setInfo}/>
+              </div>
               </div>
             </div>
             {/* <div className="row">
@@ -410,11 +430,13 @@ function AddPurchaseOrder() {
               </div>
             </div> */}
             <div className="row">
-              <div className="col-sm-4">
+              <div className="col-sm-3 pt-1">
                 <span className="item-name-label">REMARKS</span>
               </div>
-              <div className="col-sm-8">
-                <input type="text" name="remarks" className="item-name-input" onChange={setInfo}/>
+              <div className="col-sm-7">
+              <div className='input-group input-group-sm'>
+                <input type="text" name="remarks" className="form-control" onChange={setInfo}/>
+              </div>
               </div>
             </div>
           </div>
@@ -448,32 +470,39 @@ function AddPurchaseOrder() {
             </div>
           </div>
 
-        <div className="row d-flex justify-content-end mb-0">
-          <div className="col-sm-2">
+        <div className="row d-flex justify-content-end m-5 mb-2">
+          <div className="col-sm-3 text-right">
               <span className="item-name-label">SUBTOTAL</span>
           </div>
-          <div className="col-sm-2">
-              <span>P {subTotal != null ? parseFloat(subTotal).toFixed(2) : "0.00"}</span>
+          <div className="col-sm-3 text-right" >
+              <span style={{fontWeight:"bold"}}>P {subTotal != null ? parseFloat(subTotal).toFixed(2) : "0.00"}</span>
           </div>
         </div>     
-        <div className="row d-flex justify-content-end mb-0">
-          <div className="col-sm-2">
+        <div className="row d-flex justify-content-end m-5 mb-2 mt-2">
+          <div className="col-sm-3 text-right">
               <span className="item-name-label">DISCOUNT TOTAL</span>
           </div>
-          <div className="col-sm-2">
-              P <input type="number" name="general_discount" className="discount-input" onChange={(e) => setGeneralDiscount(e.target.value)}/>
+          <div className="col-sm-3 text-right" >
+            {/* <div  className='input-group input-group-sm'> */}
+            <span style={{fontWeight:"bold"}}>
+
+              P {" "}<input type="number" name="general_discount" className="discount-input" onChange={(e) => setGeneralDiscount(e.target.value)}/></span>
           </div>
+          {/* </div> */}
         </div>     
-        <div className="row d-flex justify-content-end mb-0">
-          <div className="col-sm-2">
+        <div className="row d-flex justify-content-end m-5 mb-2 mt-2">
+          <div className="col-sm-3 text-right">
               <span className="item-name-label">GRAND TOTAL</span>
           </div>
-          <div className="col-sm-2">
-              <span>P {grandTotal != null ? parseFloat(grandTotal).toFixed(2) : "0.00"}</span>
+          <div className="col-sm-3 align-right text-right" >
+              <span style={{fontWeight:"bold"}}>P {grandTotal != null ? parseFloat(grandTotal).toFixed(2) : "100,000.00"}</span>
           </div>
         </div>     
-        <div className="row d-flex justify-content-center m-5">
-          <button className="save-items-btn" onClick={(e) => submit(e, info, items)}>SAVE</button>
+        <div className="row d-flex justify-content-end m-5">
+          <div className='col-sm-3'>
+          <button class="btn save-po-btn" type="submit" onClick={(e) => submit(e, info, items)}>SAVE</button>
+          {/* <button className="save-items-btn" onClick={(e) => submit(e, info, items)}>SAVE</button> */}
+          </div>
         </div>
       </div>
     </div>
