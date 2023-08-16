@@ -550,7 +550,7 @@ function QMOldPatientForm1({
                 </label>
                 <br />
                 <input
-                  type="text"
+                  type="number"
                   className="full-input"
                   id="contactNo"
                   name="contactNum"

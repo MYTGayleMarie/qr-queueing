@@ -593,7 +593,7 @@ function Form1CModule({
               </div>
               <div className="col-sm-6">
                 <input
-                  type="text"
+                  type="number"
                   className="full-input"
                   id="contactNum"
                   name="contactNum"
