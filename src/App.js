@@ -103,6 +103,10 @@ import QMOldPatientForm1 from "./components/View/Queue Manager/QMAdd Old Patient
 import QMSwitchForm2 from "./components/View/Queue Manager/QMAdd Old Patient/QMSwitchForm2";
 import AgingReport from "./components/View/AgingReport/AgingReport";
 import AgingByCompany from "./components/View/AgingReport/AgingByCompany";
+import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager";
+import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
+import NowServing from "./components/View/NowServing/NowServing";
+import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -181,10 +185,10 @@ function App() {
             path="/add-payment/:id"
             element={token ? <AddPayment /> : <Navigate to="/" />}
           />
-          <Route
+          {/* <Route
             path="/extraction"
             element={token ? <Extraction /> : <Navigate to="/" />}
-          />
+          /> */}
           <Route
             path="/laboratory-test/:id"
             element={token ? <LaboratoryTests /> : <Navigate to="/" />}
@@ -260,8 +264,12 @@ function App() {
             element={token ? <ViewPdf /> : <Navigate to="/" />}
           />
           <Route
-            path="/laboratory-officer/:id"
+            path="/laboratory-officer/:id/:dateFrom/:dateTo"
             element={token ? <LabOfficer /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/update-patient/:id"
+            element={token ? <UpdatePatient /> : <Navigate to="/" />}
           />
           {/** With date filter */}
           <Route
@@ -297,6 +305,10 @@ function App() {
             element={token ? <AddDiscount /> : <Navigate to="/" />}
           />
           <Route
+            path="/company-invoices/add-invoice-bulk"
+            element={token ? <AddInvoiceBulk /> : <Navigate to="/" />}
+          />
+          <Route
             path="/company-invoices"
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
           />
@@ -313,13 +325,13 @@ function App() {
             path="/add-invoice/:id/:discount"
             element={token ? <AddInvoice /> : <Navigate to="/" />}
           />
-          <Route
+          {/* <Route
             path="/add-invoice-payment/:id/:companyId"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
-          />
+          /> */}
           {/** With date filter */}
           <Route
-            path="/add-invoice-payment/:id/:companyId/:discountID/:dateFrom/:dateTo"
+            path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
           />
           <Route
@@ -621,6 +633,16 @@ function App() {
           <Route
             path="/aging-report/company/:company_id/:type"
             element={token ? <AgingByCompany /> : <Navigate to="/" />}
+          />
+          {/* Extraction Module */}
+          <Route
+            path="/extraction"
+            element={token ? <ExtractionManager /> : <Navigate to="/" />}
+          />
+          {/* Now Serving */}
+          <Route
+            path="/now-serving"
+            element={token ? <NowServing /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

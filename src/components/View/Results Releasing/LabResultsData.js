@@ -10,15 +10,17 @@ const labResultsData = {
     "KOH",
     "Dengue",
     "Syphilis/RPR/VDRL",
-    "HIV SCreening (Anti HIV)",
-    "H. Pylori",
+    "HIV Screening (Anti HIV)",
+    "H. Pylori Ag",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",
     "TSH",
     "FT4",
     "FT3",
     "T3",
+    "T4",
     "PSA",
+    "Antigen Rapid Swab (Nasal)", 
     "CEA",
     "VITAMIN D",
   ],
@@ -41,6 +43,10 @@ const labResultsData = {
       label: "DARK YELLOW",
     },
     {
+      value: "PINKISH YELLOW",
+      label: "PINKISH YELLOW",
+    },
+    {
       value: "AMBER",
       label: "AMBER",
     },
@@ -58,6 +64,10 @@ const labResultsData = {
     {
       value: "NEGATIVE",
       label: "NEGATIVE",
+    },
+    {
+      value: "-",
+      label: "-",
     },
   ],
 
@@ -97,6 +107,21 @@ const labResultsData = {
       value: "NEGATIVE",
       label: "NEGATIVE",
     },
+    {
+      value: "-",
+      label: "-",
+    },
+  ],
+
+  posNegTestOptions: [
+    {
+      value: "POSITIVE",
+      label: "POSITIVE",
+    },
+    {
+      value: "NEGATIVE",
+      label: "NEGATIVE",
+    }
   ],
 
   urinalysisTransparencyOptions: [
@@ -105,12 +130,24 @@ const labResultsData = {
       label: "CLEAR",
     },
     {
+      value: "SLIGHTLY HAZY",
+      label: "SLIGHTLY HAZY",
+    },
+    {
       value: "HAZY",
       label: "HAZY",
     },
     {
+      value: "SLIGHTLY CLOUDY",
+      label: "SLIGHTLY CLOUDY",
+    },
+    {
       value: "CLOUDY",
       label: "CLOUDY",
+    },
+    {
+      value: "SLIGHTLY TURBID",
+      label: "SLIGHTLY TURBID",
     },
     {
       value: "TURBID",
@@ -134,6 +171,10 @@ const labResultsData = {
     {
       value: "MANY",
       label: "MANY",
+    },
+    {
+      value: "OCCASIONAL",
+      label: "OCCASIONAL",
     },
   ],
 
@@ -185,6 +226,14 @@ const labResultsData = {
       value: "MUSHY",
       label: "MUSHY",
     },
+    {
+      value: "MUCO-MUSHY",
+      label: "MUCO-MUSHY",
+    },
+    {
+      value: "LOOSE",
+      label: "LOOSE",
+    }
   ],
 
   fecalysisOvaParasiteOptions: [
@@ -233,6 +282,10 @@ const labResultsData = {
       value: "WEAKLY POSITIVE",
       label: "WEAKLY POSITIVE",
     },
+    {
+      value: "-",
+      label: "-",
+    },
   ],
 
   reactiveNonReactiveOptions: [
@@ -244,13 +297,32 @@ const labResultsData = {
       value: "REACTIVE",
       label: "REACTIVE",
     },
+    {
+      value: "-",
+      label: "-",
+    },
+  ],
+
+  reactiveNonReactiveOptions2: [
+    {
+      value: "NON REACTIVE",
+      label: "NON REACTIVE",
+    },
+    {
+      value: "REACTIVE",
+      label: "REACTIVE",
+    },
+    {
+      value: "-",
+      label: "-",
+    },
   ],
 
   labTestUrinalysis: [
     {
       lab_test: "Color",
       test_type: "PHYSICAL EXAMINATION",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -259,7 +331,7 @@ const labResultsData = {
     {
       lab_test: "Transparency",
       test_type: "PHYSICAL EXAMINATION",
-      result: "",
+      result: "-",
       resultType: "dropdown",
       unit: "",
       preferred: " ",
@@ -269,7 +341,7 @@ const labResultsData = {
     {
       lab_test: "Ph",
       test_type: "PHYSICAL EXAMINATION",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 5.0,
@@ -278,16 +350,16 @@ const labResultsData = {
     {
       lab_test: "Specific Gravity",
       test_type: "PHYSICAL EXAMINATION",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
-      preferred_from: 1.005,
-      preferred_to: 1.03,
+      preferred_from: 0.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Protein",
       test_type: "CHEMICAL EXAMINATION",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -296,7 +368,7 @@ const labResultsData = {
     {
       lab_test: "Sugar",
       test_type: "CHEMICAL EXAMINATION",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -305,7 +377,7 @@ const labResultsData = {
     {
       lab_test: "Pus Cells",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -314,7 +386,7 @@ const labResultsData = {
     {
       lab_test: "RBC",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -323,7 +395,7 @@ const labResultsData = {
     {
       lab_test: "Epithelial Cells",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       resultType: "dropdown",
       unit: "/LPF",
       preferred: " ",
@@ -333,7 +405,7 @@ const labResultsData = {
     {
       lab_test: "Bacteria",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       resultType: "dropdown",
       unit: "/HPF",
       preferred: " ",
@@ -343,7 +415,7 @@ const labResultsData = {
     {
       lab_test: "Amorphous Urates/Phosphate",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       unit: "/LPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -352,7 +424,7 @@ const labResultsData = {
     {
       lab_test: "Mucus Threads",
       test_type: "MICROSCOPIC EXAMINATION",
-      result: "",
+      result: "-",
       unit: "/LPF",
       resultType: "dropdown",
       preferred: " ",
@@ -370,11 +442,125 @@ const labResultsData = {
       preferred_to: 0.0,
     },
   ],
+  labTestUrinalysisNoPreg: [
+    {
+      lab_test: "Color",
+      test_type: "PHYSICAL EXAMINATION",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Transparency",
+      test_type: "PHYSICAL EXAMINATION",
+      result: "-",
+      resultType: "dropdown",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Ph",
+      test_type: "PHYSICAL EXAMINATION",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 5.0,
+      preferred_to: 9.0,
+    },
+    {
+      lab_test: "Specific Gravity",
+      test_type: "PHYSICAL EXAMINATION",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Protein",
+      test_type: "CHEMICAL EXAMINATION",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Sugar",
+      test_type: "CHEMICAL EXAMINATION",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Pus Cells",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      unit: "/HPF",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 2.0,
+    },
+    {
+      lab_test: "RBC",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      unit: "/HPF",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 2.0,
+    },
+    {
+      lab_test: "Epithelial Cells",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      resultType: "dropdown",
+      unit: "/LPF",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Bacteria",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      resultType: "dropdown",
+      unit: "/HPF",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Amorphous Urates/Phosphate",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      unit: "/LPF",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Mucus Threads",
+      test_type: "MICROSCOPIC EXAMINATION",
+      result: "-",
+      unit: "/LPF",
+      resultType: "dropdown",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
 
   labTestFecalysis: [
     {
       lab_test: "Color",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -382,7 +568,7 @@ const labResultsData = {
     },
     {
       lab_test: "Consistency",
-      result: "",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -390,7 +576,7 @@ const labResultsData = {
     },
     {
       lab_test: "RBC",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 3.0,
@@ -398,7 +584,7 @@ const labResultsData = {
     },
     {
       lab_test: "Pus Cells",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -406,7 +592,7 @@ const labResultsData = {
     },
     {
       lab_test: "Fat Globules",
-      result: "",
+      result: "-",
       unit: "/LPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -414,7 +600,7 @@ const labResultsData = {
     },
     {
       lab_test: "Intestinal Ova/Parasite seen",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -422,7 +608,7 @@ const labResultsData = {
     },
     {
       lab_test: "Cyst/Trophozoite",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -433,7 +619,7 @@ const labResultsData = {
   labTestFecalOccultBlood: [
     {
       lab_test: "Fecal Occult Blood",
-      result: "",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -444,7 +630,7 @@ const labResultsData = {
   labTestPregnancyTest: [
     {
       lab_test: "Pregnancy Test",
-      result: "",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -455,7 +641,18 @@ const labResultsData = {
   labTestSerumPregnancyTest: [
     {
       lab_test: "Serum Pregnancy Test",
-      result: "",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
+
+  labTestCovidAntigenTest: [
+    {
+      lab_test: "COVID Antigen Rapid Test",
+      result: "-",
       unit: " ",
       preferred: " ",
       preferred_from: 0.0,
@@ -468,7 +665,7 @@ const labResultsData = {
       lab_test: "PH Reaction",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 1.5,
@@ -478,7 +675,7 @@ const labResultsData = {
       lab_test: "Volume",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "ml",
       preferred: " ",
       preferred_from: 7.2,
@@ -488,7 +685,7 @@ const labResultsData = {
       lab_test: "Liquefaction Time",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "minutes",
       preferred: " ",
       preferred_from: 30.0,
@@ -498,7 +695,7 @@ const labResultsData = {
       lab_test: "Viscosity",
       test_type: "MACROSCOPIC",
       test_type_2: "GROSS APPEARANCE",
-      result: "",
+      result: "-",
       unit: "cm",
       preferred: " ",
       preferred_from: 2.0,
@@ -508,7 +705,7 @@ const labResultsData = {
       lab_test: "Total Sperm Count",
       test_type: "MICROSCOPIC",
       test_type_2: "",
-      result: "",
+      result: "-",
       unit: "x106/ ejaculate",
       preferred: " ",
       preferred_from: 0.0,
@@ -518,7 +715,7 @@ const labResultsData = {
       lab_test: "Progresive (PR)",
       test_type: "MICROSCOPIC",
       test_type_2: "MOTILITY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 40.0,
@@ -528,7 +725,7 @@ const labResultsData = {
       lab_test: "Non Progressive",
       test_type: "MICROSCOPIC",
       test_type_2: "MOTILITY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 32.0,
@@ -538,7 +735,7 @@ const labResultsData = {
       lab_test: "Immotile",
       test_type: "MICROSCOPIC",
       test_type_2: "MOTILITY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 0.0,
@@ -548,7 +745,7 @@ const labResultsData = {
       lab_test: "Total Motility (PR+NP)",
       test_type: "MICROSCOPIC",
       test_type_2: "MOTILITY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 32.0,
@@ -558,7 +755,7 @@ const labResultsData = {
       lab_test: "Total Normal Forms",
       test_type: "MICROSCOPIC",
       test_type_2: "MORPHOLOGY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 0.0,
@@ -568,7 +765,7 @@ const labResultsData = {
       lab_test: "Pin Head",
       test_type: "MICROSCOPIC",
       test_type_2: "MORPHOLOGY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 0.0,
@@ -578,7 +775,7 @@ const labResultsData = {
       lab_test: "Double Head",
       test_type: "MICROSCOPIC",
       test_type_2: "MORPHOLOGY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 0.0,
@@ -588,7 +785,7 @@ const labResultsData = {
       lab_test: "Gaint Head",
       test_type: "MICROSCOPIC",
       test_type_2: "MORPHOLOGY",
-      result: "",
+      result: "-",
       unit: "%",
       preferred: " ",
       preferred_from: 0.0,
@@ -598,7 +795,7 @@ const labResultsData = {
       lab_test: "WBC",
       test_type: "MICROSCOPIC",
       test_type_2: "OTHERS",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -608,7 +805,7 @@ const labResultsData = {
       lab_test: "RBC",
       test_type: "MICROSCOPIC",
       test_type_2: "OTHERS",
-      result: "",
+      result: "-",
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
@@ -619,7 +816,7 @@ const labResultsData = {
   labTestGramStain: [
     {
       lab_test: "Gram Staining",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -627,7 +824,7 @@ const labResultsData = {
     },
     {
       lab_test: "Epithelial Cells",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -635,7 +832,7 @@ const labResultsData = {
     },
     {
       lab_test: "Specimen: Conjunctival and Corneal Scraping",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -646,7 +843,7 @@ const labResultsData = {
   labTestKOH: [
     {
       lab_test: "KOH, Nail Scrapping, Conjunctival Scrapping",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -656,8 +853,8 @@ const labResultsData = {
 
   labTestDengue: [
     {
-      lab_test: "NS1 AG",
-      result: "",
+      lab_test: "NS1 Ag",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -665,7 +862,7 @@ const labResultsData = {
     },
     {
       lab_test: "IgG",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -673,7 +870,7 @@ const labResultsData = {
     },
     {
       lab_test: "IgM",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -684,7 +881,7 @@ const labResultsData = {
   labTestSyphilis: [
     {
       lab_test: "Syphilis/RPR/VDRL",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -695,7 +892,7 @@ const labResultsData = {
   labTestHIVScreening: [
     {
       lab_test: "Anti-HIV",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -706,7 +903,7 @@ const labResultsData = {
   labTestHPylori: [
     {
       lab_test: "H. Pylori",
-      result: "",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -716,8 +913,75 @@ const labResultsData = {
 
   labTestHepatitisB: [
     {
-      lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
-      result: "",
+      lab_test: "Hepatitis B Surface Antigen (HbsAg)",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Hepatitis B Surface Antibody Test",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HCV",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HAV",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    // {
+    //   lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
+    //   result: "-",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
+  ],
+
+  labTestHepatitisA: [
+    {
+      lab_test: "Hepatitis B Surface Antigen (HbsAg)",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Hepatitis B Surface Antibody Test",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HCV",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Anti-HAV",
+      result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
@@ -725,87 +989,152 @@ const labResultsData = {
     },
   ],
 
-  labTestHepatitisA: [
+  labTestThyroid: [
     {
-      lab_test: "Hepatitis A Surface Antibody Test, Anti-HCV, Anti-HAV",
-      result: "",
-      unit: "",
+      lab_test: "TSH",
+      result: "-",
+      unit: "mIU / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 0.3,
+      preferred_to: 4.2,
+    },
+    {
+      lab_test: "FT3",
+      result: "-",
+      unit: "pmol / L",
+      preferred: " ",
+      preferred_from: 2.8,
+      preferred_to: 7.1,
+    },
+    {
+      lab_test: "FT4",
+      result: "-",
+      unit: "pmol / L",
+      preferred: " ",
+      preferred_from: 12,
+      preferred_to: 22,
+    },
+    {
+      lab_test: "T4",
+      result: "-",
+      unit: "nmol / L",
+      preferred: " ",
+      preferred_from: 66,
+      preferred_to: 181,
+    },
+    {
+      lab_test: "T3",
+      result: "-",
+      unit: "nmol / L",
+      preferred: " ",
+      preferred_from: 1.23,
+      preferred_to: 3.07,
+    },
+    // {
+    //   lab_test: "T2,T3",
+    //   result: "-",
+    //   unit: "nmol / L",
+    //   preferred: " ",
+    //   preferred_from: 1.23,
+    //   preferred_to: 3.07,
+    // },
+  ],
+
+  hepatitisTestOptions: [
+    {
+      value: "POSITIVE",
+      label: "POSITIVE",
+    },
+    {
+      value: "NEGATIVE",
+      label: "NEGATIVE",
+    },
+    {
+      value: "-",
+      label: "-",
     },
   ],
 
   labTestTSH: [
     {
       lab_test: "TSH",
-      result: "",
+      result: "-",
       unit: "mIU / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 0.3,
+      preferred_to: 4.2,
     },
   ],
 
   labTestFT4: [
     {
       lab_test: "FT4",
-      result: "",
+      result: "-",
       unit: "pmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 12,
+      preferred_to: 22,
     },
   ],
 
   labTestFT3: [
     {
       lab_test: "FT3",
-      result: "",
+      result: "-",
       unit: "pmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 2.8,
+      preferred_to: 7.1,
     },
   ],
 
   labTestT3: [
     {
-      lab_test: "T2-T3",
-      result: "",
+      lab_test: "T3",
+      result: "-",
       unit: "nmol / L",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 1.23,
+      preferred_to: 3.07,
+    },
+  ],
+  labTestT4: [
+    {
+      lab_test: "T4",
+      result: "-",
+      unit: "nmol / L",
+      preferred: " ",
+      preferred_from: 66,
+      preferred_to: 181,
     },
   ],
 
   labTestPSA: [
     {
       lab_test: "PSA",
-      result: "",
+      result: "-",
       unit: "ng / mL",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_to: 4.0,
     },
   ],
 
   labTestCEA: [
     {
       lab_test: "CEA",
-      result: "",
+      result: "-",
       unit: "ng / mL",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_to: 5.0,
     },
   ],
 
   labTestVitaminD: [
     {
       lab_test: "Vitamin D",
-      result: "",
+      result: "-",
       unit: "ng / mL",
       preferred: " ",
       preferred_from: 0.0,

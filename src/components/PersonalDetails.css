@@ -1,20 +1,20 @@
 .personal-data-cont {
-    margin: 2% 0% 0% 4%;
+  margin: 2% 0% 0% 4%;
 }
 
 .label {
-    color: #419EA3;
-    font-family: 'Montserrat-Bold';
+  color: #419ea3;
+  font-family: "Montserrat-Bold";
 }
 
 .add-td-gap {
-    width: 160px !important;
+  width: 160px !important;
 }
 
 .detail {
-    font-family: 'Montserrat-Regular';
+  font-family: "Montserrat-Regular";
 }
 
 .row {
-    margin-bottom: 2%;
+  /* margin-bottom: 2%; */
 }

@@ -148,7 +148,6 @@ function AddInvoice() {
     });
   },[discountInfo]);
 
-
   React.useEffect(()=>{
     setInfo([])
     var temp_total = 0
@@ -160,13 +159,11 @@ function AddInvoice() {
         var formattedDate = date.toDateString().split(" ")
         const temp_date = formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
         info.date=temp_date
-        info.price = arr.grand_total
+        info.price = temp_amt
         setInfo(oldArray=>[...oldArray, info])
       })
     })
   }, [particulars])
-
-  console.log(info)
 
   function addInvoice() {
     if(isClicked == false) {
@@ -197,7 +194,6 @@ function AddInvoice() {
       });
     }
   }
-
 
   if(redirect == true) {
       return (

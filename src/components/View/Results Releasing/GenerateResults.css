@@ -1,74 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap");
 
 .resultTitle {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    font-size: 1.2rem;
-    display: block;
-    text-align: center;
-    margin-left: 2px;
-    background-color: transparent;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: block;
+  text-align: center;
+  margin-left: 2px;
+  background-color: transparent;
 }
 
 .PDFFont {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .addressTitle {
-    font-family: 'Arial', sans-serif;
-    font-size: 1rem;
-    display: block;
-    text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  display: block;
+  text-align: center;
 }
 
 .img-small {
-    width: 290px;
-    height: 140px;
-    margin-right: 1px;
-  }
+  width: 290px;
+  height: 140px;
+  margin-right: 1px;
+}
 
 .laboratory-title {
-    font-family: 'Arial', sans-serif;
-    font-style: bold;
-    font-size: 1.5rem;
-    display: block;
-    text-align: center;
-    margin-bottom: 0px;
+  font-family: "Arial", sans-serif;
+  font-style: bold;
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.laboratory-space {
+  margin-bottom: 10px;
 }
 
 .table-title {
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.5em; /* adjust font size as needed */
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 1.5em; /* adjust font size as needed */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 h3 {
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .wrapper {
   display: flex; /* Use flexbox layout */
   justify-content: space-between; /* Spacing between boxes */
   width: 100%; /* Set width of the container */
-  text-align: center  ;
+  text-align: center;
   background-color: transparent;
 }
 
-.box{
+.box {
   width: 50%; /* Set equal width for both boxes */
   background-color: transparent;
-  padding: -5px;
+  padding: -1px;
 }
 
 .tspan {
-  margin-top: -10px;
+  /* margin-top: -1px; */
 }
 
-.resText{
+.resText {
   text-align: center;
 }
 
@@ -82,11 +85,11 @@ h3 {
 }
 
 .row {
-  margin-bottom: 0px !important;
+  /* margin-bottom: 0px !important; */
 }
 
 .bg {
-  background-image: url('../../../images/Watermark.png');
+  background-image: url("../../../images/Watermark.png");
   background-size: cover; /* or "contain" based on your requirement */
   background-repeat: no-repeat;
   background-position: center center;
@@ -97,7 +100,6 @@ h3 {
   border-bottom: 1px solid black;
   border-left: 0px;
   border-right: 0px;
-
 }
 
 .watermark {

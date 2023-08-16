@@ -1,0 +1,27 @@
+.extraction-details {
+  background: #c4c4c438 !important;
+  /* height: 70vh; */
+  width: 95%;
+  border-radius: 5px;
+}
+
+.extraction-header {
+  padding: 3%;
+  text-align: center;
+  font-weight: bold;
+  background: #f1f1f1 !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.extraction-test {
+  background: #ddd;
+}
+.extraction-test:hover {
+  background: #dedede !important;
+  cursor: pointer;
+}
+
+.selected-extraction {
+  background: #cdcdcd !important;
+}

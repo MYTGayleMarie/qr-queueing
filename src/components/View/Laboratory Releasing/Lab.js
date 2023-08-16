@@ -24,8 +24,11 @@ export default function Lab() {
   document.body.style = "background: white;";
   const { dateFrom, dateTo } = useParams();
   const [filteredData, setFilter] = useForm({
+    // from_date: dateFrom ? dateFrom : "", //datas in table
+    // to_date: dateTo ? dateTo : "", //datas in table
     from_date: dateFrom ? dateFrom : formattedPresentData, //datas in table
     to_date: dateTo ? dateTo : formattedPresentData, //datas in table
+    last_name: "",
     done: false,
   });
   const [render, setRender] = useState([]);
@@ -44,6 +47,7 @@ export default function Lab() {
   }
 
   React.useEffect(() => {
+    setIsReady(false);
     patientData.length = 0;
     axios({
       method: "get",
@@ -55,6 +59,7 @@ export default function Lab() {
         requester: userId,
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
+        last_name: filteredData.last_name,
       },
     })
       .then(function (response) {
@@ -70,6 +75,7 @@ export default function Lab() {
           bookingDetails.withDiscount = booking.discount_detail;
           bookingDetails.id = booking.id;
           bookingDetails.name = booking.customer;
+          bookingDetails.result_status = booking.result_status.toUpperCase();
           bookingDetails.bookingTime =
             formatBookingTime[1] +
             " " +
@@ -85,7 +91,7 @@ export default function Lab() {
       })
       .catch(function (error) {
         console.log(error);
-        setIsReady(false);
+        setIsReady(true);
       });
   }, [render]);
 
@@ -106,7 +112,13 @@ export default function Lab() {
   }
 
   if (redirectBooking == true) {
-    var link = "/laboratory-officer/" + id;
+    var link =
+      "/laboratory-officer/" +
+      id +
+      "/" +
+      filteredData.from_date +
+      "/" +
+      filteredData.to_date;
     return <Navigate to={link} />;
   }
 
@@ -118,7 +130,7 @@ export default function Lab() {
           <Header
             type="thick"
             title="LABORATORY RELEASING MANAGER"
-            buttons={buttons}
+            // buttons={buttons}
             tableData={patientData}
           />
 
@@ -129,15 +141,23 @@ export default function Lab() {
                 <div class="search-bar">
                   <input
                     type="text"
+                    placeholder="Search Patient's Last Name"
+                    class="searchTerm"
+                    name="last_name"
+                    value={filteredData.last_name}
+                    onChange={setFilter}
+                  />
+                  {/* <input
+                    type="text"
                     class="searchTerm"
                     name="patientName"
                     placeholder="Search Booking ID"
                     onChange={(e) => setBookingId(e.target.value)}
-                  />
+                  /> */}
                   <button
                     type="submit"
                     class="searchButton"
-                    onClick={searchBookingId}
+                    onClick={setRender != null ? (e) => setRender(!render) : ""}
                   >
                     <i class="fa fa-search"></i>
                   </button>
@@ -156,6 +176,7 @@ export default function Lab() {
               "WITH DISCOUNT",
               "BOOKING ID",
               "PATIENT NAME",
+              "STATUS",
               "BOOKING DATE",
               "ACTION",
             ]}

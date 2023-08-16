@@ -227,7 +227,7 @@ if(redirect == true) {
                         </div>
                         <div className="col-sm-6">
                             <label for="contact_no" className="form-label">CONTACT NUMBER<i> (required)</i></label><br />
-                            <input type="text" className="form-control full" id="contact_no" name="contact_no" onChange={setCompany}  required/><br />
+                            <input type="number" className="form-control full" id="contact_no" name="contact_no" onChange={setCompany}  required/><br />
                         </div>
                     </div>
                     <div className="row">

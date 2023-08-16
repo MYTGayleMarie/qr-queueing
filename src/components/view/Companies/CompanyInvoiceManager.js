@@ -68,16 +68,18 @@ function CompanyInvoiceManager() {
           var companyDetails = {};
 
           if (filteredData.status_filter == "unpaid" && row.is_paid === "0") {
-            companyDetails.company_id = row.company_id;
+            companyDetails.company_id =row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row.invoice_id.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
             companyDetails.discount_id = row.discount_id;
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.sum_total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
               row.is_paid == 1 ? "PAID" : "UNPAID";
 
@@ -88,20 +90,23 @@ function CompanyInvoiceManager() {
           ) {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row?.invoice_id?.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
             companyDetails.discount_id = row.discount_id;
             companyDetails.discountCode = row.discount_code;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.sum_total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status = "PAID";
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails]);
           } else if (filteredData.status_filter == "all") {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
+            companyDetails.invoice_id = row?.invoice_id?.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             // formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
             companyDetails.description = row.company_name;
@@ -109,8 +114,9 @@ function CompanyInvoiceManager() {
             companyDetails.discount_id = row.discount_id;
             companyDetails.remarks = row.remarks;
             // companyDetails.total = row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            companyDetails.total =
-              "P " + row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            companyDetails.total = row.sum_total
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
               row.is_paid == 1 ? "PAID" : "UNPAID";
 
@@ -144,10 +150,8 @@ function CompanyInvoiceManager() {
           "/add-invoice-payment/" +
           id +
           "/" +
-          company_id +
-          "/" +
-          discount_id +
-          "/" +
+          company_id + 
+          "/"+
           filteredData.from_date +
           "/" +
           filteredData.to_date
@@ -189,13 +193,13 @@ function CompanyInvoiceManager() {
               )}
               rowsPerPage={4}
               headingColumns={[
-                "COMPANY ID",
-                "ID",
+                // "COMPANY ID",
+                // "ID",
                 "INVOICE DATE",
                 "COMPANY NAME",
-                "DISCOUNT ID",
+                // "DISCOUNT ID",
                 "DISCOUNT CODE",
-                "REMARKS",
+                // "REMARKS",
                 "TOTAL",
                 "PAYMENT STATUS",
                 "ACTION",

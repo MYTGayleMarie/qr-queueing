@@ -1,0 +1,15 @@
+.queue-no {
+  font-size: 30vh;
+  font-weight: bold;
+  color: rgb(65, 158, 163);
+}
+.queue-patient {
+  font-size: 5vh;
+  font-weight: bold;
+  color: rgb(65, 158, 163);
+}
+.queue-attendee {
+  font-size: 5vh;
+  font-weight: bold;
+  color: rgb(191, 188, 75);
+}

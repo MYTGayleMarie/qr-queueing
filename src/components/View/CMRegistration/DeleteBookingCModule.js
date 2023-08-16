@@ -48,6 +48,8 @@ function DeleteBookingCModule() {
        const [email, setEmail] = useState("");
        const [address, setAddress] = useState("");
        const [patientId, setPatientId] = useState("");
+       const [senior_id, setSeniorId] = usestate("");
+       const [pwd_id, setPWDId] = useState("")
 
 
        //other states
@@ -66,11 +68,6 @@ function DeleteBookingCModule() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response)
-            // console.log(response.data)
-            //setBookingDate(response.data.booking_time);
-            //setPayment(response.data.payment_type);
-            //setResult(response.data.result);
             setTotal(response.data.total_amount);
             setDiscount(response.data.discount);
             setGrandTotal(response.data.grand_total);
@@ -99,6 +96,8 @@ function DeleteBookingCModule() {
                 setEmail(customer.data.email);
                 setAddress(customer.data.address);
                 setPatientId(response.data.customer_id);
+                setSeniorId(customer.data.senior_id);
+                setPWDId(customer.data.pwd_id);
     
             }).catch(function (error) {
                 console.log(error);
@@ -244,9 +243,17 @@ function DeleteBookingCModule() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
                 </div>
             </div>
             </div>

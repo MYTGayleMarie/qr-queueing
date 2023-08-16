@@ -17,7 +17,12 @@ import TableLoader7 from "./TableLoader7";
 import "./Table.scss";
 import { useNavigate } from "react-router-dom";
 import TableLoader8 from "./TableLoader8";
-import { formatPrice } from "../utilities/Common";
+import {
+  formatDate,
+  formatPrice,
+  getRole,
+  getRoleId,
+} from "../utilities/Common";
 
 function Table({
   clickable,
@@ -44,6 +49,7 @@ function Table({
   selectSupplier,
   handleOnChange,
   deleteBooking,
+  editBooking,
   deleteCustomer,
   userId,
   editAction,
@@ -58,9 +64,13 @@ function Table({
   download,
   useLoader = false,
   isReady,
+  onExtractionClick,
+  selectedRowExtraction,
+  queueAttender,
 }) {
   const navigate = useNavigate();
   //PAGINATION
+  const [roleId, setRoleId] = useState(getRoleId().replace(/^"(.*)"$/, "$1"));
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(tableData, page, rowsPerPage, type);
@@ -151,7 +161,7 @@ function Table({
               {totalCount == null && index == 0 ? "" : data.val}
             </td>
           ))}
-          {rowData[5].val == "unpaid" &&
+          {rowData[6].val == "unpaid" &&
             rowData[0].val == "no_company_discount" && (
               <td>
                 <button
@@ -167,6 +177,18 @@ function Table({
                     <button
                       class="action-btn"
                       role="button"
+                      onClick={() => editBooking(row.id)}
+                    >
+                      UPDATE PATIENT
+                    </button>
+                  </>
+                )}
+                {(userId == 10 || userId == 18) && (
+                  <>
+                    <br />
+                    <button
+                      class="action-btn"
+                      role="button"
                       onClick={() => deleteBooking(row.id)}
                     >
                       DELETE BOOKING
@@ -175,8 +197,8 @@ function Table({
                 )}
               </td>
             )}
-          {(rowData[5].val == "paid" ||
-            rowData[0].val != "no_company_discount") && (
+          {(rowData[6].val == "paid" ||
+            rowData[0].val === "with_company_discount") && (
             <td>
               <button
                 class="action-btn"
@@ -185,6 +207,21 @@ function Table({
               >
                 PRINT BOOKING
               </button>
+              {(userId == 10 ||
+                userId == 18 ||
+                userId == 5 ||
+                userId == 11) && (
+                <>
+                  <br />
+                  <button
+                    class="action-btn"
+                    role="button"
+                    onClick={() => editBooking(row.customer_id)}
+                  >
+                    UPDATE PATIENT
+                  </button>
+                </>
+              )}
               {(userId == 10 || userId == 18) && (
                 <>
                   <br />
@@ -218,6 +255,39 @@ function Table({
               VIEW BOOKING
             </button>
           </td>
+        </tr>
+      );
+    } else if (type === "extraction") {
+      return (
+        <tr
+          key={row.booking_id}
+          onClick={() => onExtractionClick(row)}
+          style={{ cursor: "pointer" }}
+          className={
+            selectedRowExtraction !== {} &&
+            selectedRowExtraction.booking_id === row.booking_id
+              ? "selected-extraction"
+              : ""
+          }
+        >
+          <td>{row.booking_id}</td>
+          <td>
+            {row.first_name} {row.middle_name} {row.last_name}
+          </td>
+          <td>{formatDate(new Date(row.extraction_date))}</td>
+        </tr>
+        // <tr key={row.id}>
+        //   {rowData.map((data, index) => (
+        //     <td key={index} data-heading={data.key} className={data.val}>
+        //       {data.val}
+        //     </td>
+        //   ))}
+        // </tr>
+      );
+    } else if (type === "extraction-details") {
+      return (
+        <tr key={row}>
+          <td>{row}</td>
         </tr>
       );
     } else if (type === "aging") {
@@ -321,11 +391,11 @@ function Table({
             onClick={() =>
               navigate(
                 "/add-invoice-payment/" +
-                  row.id +
+                  row.invoice_id +
                   "/" +
                   row.company_id +
-                  "/" +
-                  row.discount_id +
+                  // "/" +
+                  // row.discount_id +
                   "/" +
                   new Date().toLocaleDateString("en-CA") +
                   "/" +
@@ -634,6 +704,22 @@ function Table({
           <td key={row.id} data-heading={row.id} className={row.val}>
             {row.name}
           </td>
+          <td
+            key={row.id}
+            data-heading={row.id}
+            className={row.val}
+            style={{
+              color:
+                row.status === "available"
+                  ? "green"
+                  : row.status === "attending"
+                  ? "red"
+                  : "orange",
+              fontWeight: "bold",
+            }}
+          >
+            {row.status.toUpperCase()}
+          </td>
           <td>
             <div
               style={{
@@ -643,16 +729,44 @@ function Table({
                 alignItems: "center",
               }}
             >
+              {row.status === "available" && (
+                <button
+                  className="action-btn mb-1"
+                  role="button"
+                  onClick={() => queueAttender(row, "attending")}
+                  style={{
+                    width: "100px",
+                    background: "#bfbc4b",
+                    borderColor: "#bfbc4b",
+                  }}
+                >
+                  ATTEND
+                </button>
+              )}
+              {row.status === "attending" && (
+                <button
+                  className="action-btn mb-1"
+                  role="button"
+                  onClick={() => queueAttender(row, "done")}
+                  style={{
+                    width: "100px",
+                    background: "#bfbc4b",
+                    borderColor: "#bfbc4b",
+                  }}
+                >
+                  DONE
+                </button>
+              )}{" "}
               <button
-                class="action-btn"
+                className="action-btn mb-1"
                 role="button"
                 onClick={() => link(row.customerId)}
                 style={{ width: "100px" }}
               >
                 ADD BOOKING
-              </button>
+              </button>{" "}
               <button
-                class="action-btn"
+                className="action-btn mb-1"
                 role="button"
                 onClick={() => deleteCustomer(row.queueNumber)}
                 style={{ width: "100px" }}
@@ -855,21 +969,45 @@ function Table({
     } else if (type === "company-invoices") {
       return (
         <tr key={row.id}>
-          {rowData.map((data, index) => (
+          <td>{row.date}</td>
+          <td>{row.description}</td>
+          <td>
+            {row.discountCode.split("|").map((data) => {
+              return (
+                <>
+                  {data}
+                  <br />
+                </>
+              );
+            })}
+          </td>
+          <td>
+            {row.total.split("|").map((data) => {
+              return (
+                <>
+                  P {data}
+                  <br />
+                </>
+              );
+            })}
+          </td>
+          <td>{row.payment_status}</td>
+          {/* {rowData.map((data, index) => (
             <td
               key={index}
               data-heading={data.key}
               className={index == 3 ? "company_name" : data.val}
             >
+              {console.log(index)}
               {index == 0 || index == 1 ? "" : data.val}
             </td>
-          ))}
+          ))} */}
           <td>
             <button
               class="action-btn"
               role="button"
               onClick={() =>
-                link(row.id, row.company_id, row.discountCode, row.discount_id)
+                link(row.invoice_id, row.company_id)
               }
             >
               {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
@@ -1064,7 +1202,14 @@ function Table({
           <table className="method-row">{othersItems}</table>
           <table className="method-row">{creditItems}</table>
           <td key={row[0].amount} data-heading="TOTAL" className="TOTAL">
-            P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            P{" "}
+            {row
+
+              .map((data, key) => (key === 0 ? 0 : parseFloat(data.amount)))
+              .reduce((a, b) => a + b, 0)
+              .toFixed(2)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
           </td>
         </tr>
       );
@@ -1194,21 +1339,30 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1216,11 +1370,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
@@ -1265,15 +1421,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -1333,21 +1497,30 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1355,11 +1528,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
@@ -1401,21 +1576,30 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1423,11 +1607,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
@@ -1470,21 +1656,30 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1492,11 +1687,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
@@ -1538,21 +1735,32 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null &&
+              totalCount !== undefined &&
+              parseInt(totalCount) <= 0
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1560,6 +1768,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="status" onChange={setFilter}>
               <option value="all" selected>
@@ -1637,21 +1846,30 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1659,6 +1877,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="status" onChange={setFilter}>
               <option value="UNPAID" selected>
@@ -1755,6 +1974,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1762,6 +1982,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="status" value={status} onChange={setFilter}>
               <option value="for approval" selected>
@@ -1826,6 +2047,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1833,17 +2055,25 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
-            <select name="status" value={status} onChange={setFilter}>
-              <option value="for approval" selected>
-                FOR APPROVAL
-              </option>
-              <option value="approved">APPROVED</option>
-              <option value="completed">COMPLETED</option>
-              <option value="disapproved">DISAPPROVED</option>
-              <option value="printed">PRINTED</option>
-              <option value="">ALL</option>
-            </select>
+            {roleId !== "11" ? (
+              <select name="status" value={status} onChange={setFilter}>
+                <option value="for approval" selected>
+                  FOR APPROVAL
+                </option>
+                <option value="approved">APPROVED</option>
+                <option value="completed">COMPLETED</option>
+                <option value="disapproved">DISAPPROVED</option>
+                <option value="printed">PRINTED</option>
+                <option value="">ALL</option>
+              </select>
+            ) : (
+              <select name="status" value={status} onChange={setFilter}>
+                <option value="approved">APPROVED</option>
+              </select>
+            )}
+
             <button
               className="filter-btn"
               name="done"
@@ -1897,6 +2127,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -1904,6 +2135,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
@@ -1954,7 +2186,11 @@ function Table({
       <div className="table-container">
         <div className="search-table-container row">
           <div className="col-sm-12 d-flex justify-content-end">
-            <select value={year} onChange={setFilter}>
+            <select
+              value={year}
+              onChange={setFilter}
+              disabled={roleId === "12"}
+            >
               {yearRange.map((data) => {
                 return <option value={data}>{data}</option>;
               })}
@@ -2012,6 +2248,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -2019,6 +2256,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <select name="service_location" onChange={setFilter}>
               <option value="" selected>
@@ -2080,6 +2318,7 @@ function Table({
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -2087,11 +2326,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
               name="done"
               onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
             >
               FILTER
             </button>
@@ -2219,15 +2460,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2286,15 +2535,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2329,9 +2586,11 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {/* {!isReady && useLoader ? 
-                    <TableLoader1 tableHeaders={headingColumns}/> : data} */}
-            {data}
+            {useLoader && !isReady ? (
+              <TableLoader tableHeaders={headingColumns} data={data} />
+            ) : (
+              data
+            )}
           </tbody>
         </table>
         <TableFooter
@@ -2345,21 +2604,28 @@ function Table({
         />
       </div>
     );
-  } else if (type === "aging" || type === "aging-by-company") {
+  } else if (
+    type === "aging" ||
+    type === "aging-by-company" ||
+    type === "extraction" ||
+    type === "extraction-details"
+  ) {
     const { from_date, to_date, done } = filteredData;
 
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          {/* <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )}
+          {/* </div> */}
+          {/* <div className={totalCount !== null ? "col-sm-10 d-flex justify-content-end":"col-sm-12 d-flex justify-content-end"}>
             <input
               type="date"
               className="from-date search"
@@ -2464,21 +2730,32 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          <div className="col-sm-2">
-            {totalCount != null && (
+          {/* <div className="col-sm-2"> */}
+          {/* {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
                 <span className="total-count-data">{totalCount}</span>
               </div>
-            )}
-          </div>
-          <div className="col-sm-10 d-flex justify-content-end">
+            </div>
+          )} */}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null &&
+              totalCount !== undefined &&
+              parseInt(totalCount) <= 0
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1 mt-2"
+            }
+          >
             <input
               type="date"
               className="from-date search"
               name="from_date"
               value={from_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <input
               type="date"
@@ -2486,6 +2763,7 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
+              disabled={roleId === "12"}
             />
             <button
               className="filter-btn"
@@ -2542,14 +2820,23 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container row">
-          {/* <div className="col-sm-2">
-                    {totalCount != null && (
-                        <div className="total-count-container">
-                            <span className="total-count-header-table">TOTAL: </span><span className="total-count-data">{totalCount}</span>
-                        </div>
-                    )}
-                </div> */}
-          <div className="col-sm-10 d-flex justify-content-end">
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            </div>
+          )}
+
+          {/* <div */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
             <input
               type="date"
               className="from-date search"
@@ -2620,7 +2907,12 @@ function Table({
             </tr>
           </thead>
           <tbody>
-            {data === null ? "" : data}
+            {useLoader && !isReady ? (
+              <TableLoader tableHeaders={headingColumns} data={data} />
+            ) : (
+              data
+            )}
+            {/* {data === null ? "" : data} */}
             {/* {!isReady && useLoader ? 
                     <TableLoader tableHeaders={headingColumns} className={'spinners-15'}/> : data} */}
           </tbody>
@@ -2857,11 +3149,13 @@ function Table({
             value={to_date}
             onChange={setFilter}
           />
-          <select name="status_filter" onChange={setFilter}>
-            <option value="unpaid">UNPAID</option>
-            <option value="paid">PAID</option>
-            <option value="all">ALL</option>
-          </select>
+          {roleId !== "3" && (
+            <select name="status_filter" onChange={setFilter}>
+              <option value="unpaid">UNPAID</option>
+              <option value="paid">PAID</option>
+              <option value="all">ALL</option>
+            </select>
+          )}
           <button
             className="filter-btn"
             name="done"
@@ -2875,7 +3169,7 @@ function Table({
             <tr>
               {headingColumns.map((col, index) => (
                 <th key={index} className={index == 3 ? "company_name" : ""}>
-                  {index == 0 || index == 1 ? "" : col}
+                  {col}
                 </th>
               ))}
             </tr>

@@ -41,6 +41,8 @@ function AddPatient({
   setIsSenior,
   isPWD,
   setIsPWD,
+  extractionDate,
+  setExtractionDate,
 }) {
   document.body.style = "background: white;";
 
@@ -91,7 +93,7 @@ function AddPatient({
       ((isPWD && pwd_id !== "") || !isPWD)
     ) {
       return (
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-end mb-5">
           <button className="proceed-btn" onClick={() => navigation.next()}>
             PROCEED
           </button>
@@ -402,7 +404,7 @@ function AddPatient({
 
         <h3 className="form-categories-header italic">PERSONAL DETAILS</h3>
 
-        <div className="booking-form">
+        <div style={{ width: "85%", marginLeft: "5%" }}>
           <form className="needs-validation">
             <div className="row">
               <div className="col-sm-4">
@@ -855,22 +857,22 @@ function AddPatient({
               </div>
               <div className="col-sm-4">
                 <label for="last_meal" className="form-label font-large">
-                  LAST MEAL<i>(required)</i>
+                  DATE OF EXTRACTION<i>(required)</i>
                 </label>
                 <br />
                 <DateTimePicker
                   className="full-input"
-                  onChange={setLastMeal}
-                  value={lastMeal}
+                  onChange={setExtractionDate}
+                  value={extractionDate}
                 />
               </div>
-              <div className="col-sm-4">
+              {/* <div className="col-sm-4">
                 <label for="date" className="form-label font-large">
                   SINCE LAST MEAL
                 </label>
                 <br />
                 <span className="since-lastmeal">{sinceLastMeal()}</span>
-              </div>
+              </div> */}
             </div>
 
             <div>{proceed()}</div>

@@ -69,17 +69,44 @@ function UserDetail() {
            
             
             if(response.data.role_id == 1) {
-                setRole("User");
-            }
-            else if(response.data.role_id == 2) {
-                setRole("Registration Officer");
-            }
-            else if(response.data.role_id == 3) {
-                setRole("Cashier");
-            }
-            else {
-                setRole("Admin");
-            }
+              setRole("User");
+          }
+          else if(response.data.role_id == 2) {
+              setRole("Registration Officer");
+          }
+          else if(response.data.role_id == 3) {
+              setRole("Cashier");
+          }
+          else if(response.data.role_id == 4){
+              setRole("Admin");
+          }
+          else if(response.data.role_id == 5){
+              setRole("Results Releasing Officer");
+          }
+          else if(response.data.role_id == 6){
+              setRole("Purchasing Officer");
+          }
+          else if(response.data.role_id == 7){
+              setRole("Supply Officer");
+          }
+          else if(response.data.role_id == 8){
+              setRole("Accounting Officer");
+          }
+          else if(response.data.role_id == 9){
+              setRole("Customer Queue");
+          }
+          else if(response.data.role_id == 10){
+              setRole("Lab Officer");
+          }
+          else if(response.data.role_id == 11){
+              setRole("Receiving");
+          }
+          else if(response.data.role_id == 12){
+              setRole("Supervisor");
+          }
+          else{
+              setRole("User");
+          }
         }).catch(function (error) {
             console.log(error);
         });
@@ -209,7 +236,14 @@ function UserDetail() {
                            <option value="2">Registration Officer</option>
                            <option value="3">Cashier Officer</option>
                            <option value="4">Admin</option>
-                           <option value="0">Other</option>
+                           <option value="5">Results Releasing Officer</option>
+                           <option value="6">Purchasing Officer</option>
+                           <option value="7">Supply Officer</option>
+                           <option value="8">Accounting Officer</option>
+                           <option value="9">Customer Queue</option>
+                           <option value="10">Laboratory Officer</option>
+                           <option value="11">Receiving Officer</option>
+                           <option value="12">Supervisor</option>
                          </select>
                         </div>
                       </div>

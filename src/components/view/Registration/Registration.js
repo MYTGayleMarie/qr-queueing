@@ -39,6 +39,7 @@ function Registration() {
   const [redirectPay, setRedirectPay] = useState(false);
   const [redirectPrint, setRedirectPrint] = useState(false);
   const [redirectDelete, setRedirectDelete] = useState(false);
+  const [redirectEdit, setRedirectEdit] = useState(false)
   const [role, setRole] = useState('');
   const [isReady, setIsReady] = useState(false)
 
@@ -87,12 +88,14 @@ function Registration() {
 
               bookingDetails.withDiscount = booking.discount_detail;
               bookingDetails.id = booking.id;
+              bookingDetails.customer_id = booking.customer_id;
               bookingDetails.name = booking.first_name + ' ' + booking.middle_name + ' ' + booking.last_name;
               bookingDetails.bookingTime = formatBookingTime[1] + " " + formatBookingTime[2] + ", " + getTime(bookingTime);
               bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
+          
               setPatientData(oldArray => [...oldArray, bookingDetails]);
               setIsReady(true)
             // })
@@ -129,6 +132,10 @@ function Registration() {
     id = bookingId;
     setRedirectDelete(true);
   }
+  function editBooking(bookingId) {
+    id = bookingId;
+    setRedirectEdit(true);
+  }
 
   if(redirectDelete == true) {
     var link =  "/delete-booking/" + id;
@@ -137,6 +144,14 @@ function Registration() {
     )
   }
 
+  if(redirectPrint == true) {
+    var link =  "/add-payment/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+
+
   if(redirectPay == true) {
     var link =  "/add-payment/" + id;
     return (
@@ -144,8 +159,8 @@ function Registration() {
     )
   }
 
-  if(redirectPrint == true) {
-    var link =  "/print-booking/" + id;
+  if(redirectEdit == true) {
+    var link =  "/update-patient/" + id;
     return (
         <Navigate to ={link}/>
     )
@@ -161,7 +176,7 @@ function Registration() {
             type={'registration'}
             tableData={patientData}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT ID','PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
@@ -172,6 +187,7 @@ function Registration() {
             print={printPayment}
             role={role}
             userId={userId}
+            editBooking={editBooking}
             deleteBooking={deleteBooking}
             useLoader={true}
             isReady={isReady}

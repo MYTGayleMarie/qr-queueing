@@ -24,6 +24,11 @@ import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png";
 import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
 import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
+import Image9 from "../../../images/med_tech/image9.png";
+import Image10 from "../../../images/med_tech/Image10.png";
+import Image11 from "../../../images/med_tech/OSMA.png";
+import image12 from "../../../images/med_tech/image12.png";
+import image11 from "../../../images/med_tech/image11.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -32,10 +37,12 @@ const userToken = getToken();
 const userId = getUser();
 
 export default function GenerateResults({ servicesData, title, bookingId }) {
+  const approverId = servicesData[servicesData.length - 1].approver;
+
   const { id, dateFrom, dateTo } = useParams();
 
   const [loadData, setLoadData] = useState(false);
-
+  const [hasImage, setHasImage] = useState(true);
   const [labIds, setLabIds] = useState([]);
   const [packageIds, setPackageIds] = useState([]);
   const [servicesLab, setServicesLab] = useState([]);
@@ -81,6 +88,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
   const [readyBooking, setReadyBooking] = useState(false);
   const [readyResults, setReadyResults] = useState(false);
   const [labReady, setLabReady] = useState(false);
+
   var presentDate = new Date();
 
   var monthNames = [
@@ -192,7 +200,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         const data = response.data.data;
 
         const packageDetailId = selectedLab.booking_id;
+
         if (data.booking_detail_results) {
+          setReadyResults(true);
           if (selectedLab.type == "lab") {
             setLabTestData(data.booking_detail_results);
           } else {
@@ -200,7 +210,6 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               data.booking_package_details_results[packageDetailId]
             );
           }
-          setReadyResults(true);
         }
       })
       .catch((error) => {
@@ -214,10 +223,14 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     onAfterPrint: handleRedirect,
     content: () => componentRef.current,
     pageStyle: () => `
-          @page { size: letter; margin: 0.5in;}
+          @page { size: letter; margin: 0.5in;margin-bottom: 0in;}
           @media print {
             .print-break {
-              margin-top: 1rem;
+              margin: 0.5in;
+              margin-top:0.5in;
+              margin-left:0.5in;
+              margin-right:0.5in;
+              margin-bottom: 0in;
               display: block;
               page-break-before: always;
             }
@@ -253,10 +266,13 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                 response.data.data.booking_detail_results.map((val) => {
                   lab_test_results.push({ ...val });
                 });
+
                 // data.lab_test_results.push(
                 //   response.data.data.booking_detail_results[0]
                 // );
               }
+              setReadyResults(true);
+
               //old logic
               // lab_test_results.push(
               //   response.data.data?.booking_detail_results !== null
@@ -271,6 +287,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       });
     }
     setLabTestResults(lab_test_results);
+
     setLabReady(true);
   }, []);
 
@@ -310,10 +327,20 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       (service) => service.lab_test === servicesData[0].name
     );
 
-    if (services[index]?.result_approval === "approved") {
-      setIsApproved("approved");
-    } else if (services[index]?.result_approval === "disapproved") {
-      setIsApproved("disapproved");
+    if (servicesData[0].key === "thyroid_profile") {
+      var services_copy = [...services];
+      setIsApproved(
+        services_copy.filter((data) => data.result_approval === "approved")
+          .length > 0
+          ? "approved"
+          : ""
+      );
+    } else {
+      if (services[index]?.result_approval === "approved") {
+        setIsApproved("approved");
+      } else if (services[index]?.result_approval === "disapproved") {
+        setIsApproved("disapproved");
+      }
     }
   }, [readyBooking]);
 
@@ -339,7 +366,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     if (medTech === "") {
       axios({
         method: "get",
-        url: window.$link + "users/show/" + userId,
+        url: window.$link + "users/show/" + approverId,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -354,43 +381,298 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
           console.log(error);
         });
     }
-
-    if (userId === "24") {
-      setMedTechPRC("PRC LIC. NO.: 0052932");
-    } else if (userId === "25") {
-      setMedTechPRC("PRC LIC. NO.: 0094539");
-    } else if (userId === "26") {
-      setMedTechPRC("PRC LIC. NO.: 0093629");
-    } else if (userId === "23") {
-      setMedTechPRC("PRC LIC. NO.: 0092410");
-    } else if (userId === "27") {
-      setMedTechPRC("PRC LIC. NO.: 0085690");
-    } else if (userId === "28") {
-      setMedTechPRC("PRC LIC. NO.: 0052556");
-    } else if (userId === "29") {
-      setMedTechPRC("PRC LIC. NO.: 0072875");
+    if (approverId !== null) {
+      if (approverId === "24") {
+        setMedTechPRC("PRC LIC. NO.: 0052932");
+      } else if (approverId === "25") {
+        setMedTechPRC("PRC LIC. NO.: 0085690");
+      } else if (approverId === "26") {
+        setMedTechPRC("PRC LIC. NO.: 0092410");
+      } else if (approverId === "23") {
+        setMedTechPRC("PRC LIC. NO.: 0112611");
+      } else if (approverId === "27") {
+        setMedTechPRC("PRC LIC. NO.: 0109359");
+      } else if (approverId === "28") {
+        setMedTechPRC("PRC LIC. NO.: 0094539");
+      } else if (approverId === "29") {
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (approverId === "30") {
+        setMedTechPRC("PRC LIC. NO.: 0094334");
+      } else if (approverId === "45") {
+        return "PRC LIC. NO.: 0085308";
+      } else if (userId === "48") {
+        return "PRC LIC. NO.: 0109437";
+      } else {
+        // setMedTechPRC("PRC LIC. NO.: 0112611");
+        setMedTechPRC("No PRC LIC. NO.");
+      }
     } else {
-      setMedTechPRC("No PRC License Number");
+      if (userId === "24") {
+        setMedTechPRC("PRC LIC. NO.: 0052932");
+      } else if (userId === "25") {
+        setMedTechPRC("PRC LIC. NO.: 0085690");
+      } else if (userId === "26") {
+        setMedTechPRC("PRC LIC. NO.: 0092410");
+      } else if (userId === "23") {
+        setMedTechPRC("PRC LIC. NO.: 0112611");
+      } else if (userId === "27") {
+        setMedTechPRC("PRC LIC. NO.: 0109359");
+      } else if (userId === "28") {
+        setMedTechPRC("PRC LIC. NO.: 0094539");
+      } else if (userId === "29") {
+        setMedTechPRC("PRC LIC. NO.: 0093629");
+      } else if (userId === "30") {
+        setMedTechPRC("PRC LIC. NO.: 0094334");
+      } else if (userId === "45") {
+        return "PRC LIC. NO.: 0085308";
+      } else if (userId === "48") {
+        return "PRC LIC. NO.: 0109437";
+      }
+       else {
+        setMedTechPRC("No PRC LIC. NO.");
+      }
     }
   }, []);
 
   function chooseImage() {
-    if (userId === "24") {
-      return Image2;
-    } else if (userId === "25") {
-      return Image3;
-    } else if (userId === "26") {
-      return Image4;
-    } else if (userId === "23") {
-      return Image5;
-    } else if (userId === "27") {
-      return Image6;
-    } else if (userId === "28") {
-      return Image7;
-    } else if (userId === "29") {
-      return Image8;
+    if (approverId !== null) {
+      if (approverId === "23") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (approverId === "24") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image2}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (approverId === "25") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image6}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (approverId === "26") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image5}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
+      } else if (approverId === "27") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image10}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
+      } else if (approverId === "28") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image8}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (approverId === "29") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "45") {
+        setHasImage(true);
+        return (
+          <img
+            src={image11}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (approverId === "48") {
+        setHasImage(true);
+        return (
+          <img
+            src={image12}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      }else {
+        setHasImage(false);
+
+        return <div className="mt-5"></div>;
+      }
     } else {
-      return DummyImg;
+      if (userId === "23") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "24") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image2}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "25") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image6}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "26") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image5}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
+      } else if (userId === "27") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image10}
+            alt="MedTech"
+            className="mt-5"
+            width={50}
+            height={50}
+          />
+        );
+      } else if (userId === "28") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image8}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "29") {
+        setHasImage(true);
+        return (
+          <img
+            src={Image9}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "45") {
+        setHasImage(true);
+        return (
+          <img
+            src={image11}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else if (userId === "48") {
+        setHasImage(true);
+        return (
+          <img
+            src={image12}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      } else {
+        setHasImage(false);
+        return <div className="mt-5"></div>;
+      }
+      // if (userId === "24") {
+      //   return <img src={Image2} alt="MedTech" />;
+      //   // return Image2;
+      // } else if (userId === "25") {
+      //   return <img src={Image6} alt="MedTech" />;
+      //   // return Image3;
+      // } else if (userId === "26") {
+      //   return <img src={Image5} alt="MedTech" />;
+      //   // return Image4;
+      // } else if (userId === "23") {
+      //   return <img src={Image9} alt="MedTech" />;
+      //   // return Image5;
+      // } else if (userId === "27") {
+      //   return <img src={Image10} alt="MedTech" />;
+      //   // return Image6;
+      // } else if (userId === "28") {
+      //   return <img src={Image3} alt="MedTech" />;
+      //   // return Image7;
+      // } else if (userId === "29") {
+      //   return <img src={Image4} alt="MedTech" />;
+      //   // return Image8;
+      // } else if (userId === "30") {
+      //   return <img src={Image11} alt="MedTech" />;
+      //   // return Image8;
+      // } else {
+      //   setHasImage(false)
+      //   return <img src={Image9} alt="MedTech" />;
+      //   // return Image9;
+      // }
     }
   }
 
@@ -399,14 +681,21 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
       <div className="PDFFont">
         <div className="wrapper">
           <div className="box">
-            {/* {chooseMedTech()} */}
-            <img src={chooseImage()} alt="MedTech" />
+            {chooseImage()}
+            {/* <img src={medtechImage} alt="MedTech" /> */}
           </div>
           <div className="box">
-            <img src={Image1} alt="MedTech" />
+            <img
+              src={Image1}
+              alt="MedTech"
+              style={{ zIndex: "50", marginTop: "60px" }}
+            />
           </div>
         </div>
-        <div className="wrapper">
+        <div
+          className="wrapper"
+          style={{ marginTop: hasImage ? "-13px" : "-5px" }}
+        >
           <div className="box">
             <span className="tspan">{medTech}</span>
           </div>
@@ -434,6 +723,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     );
   };
 
+  console.log(labTestResults);
+  console.log(servicesData)
+
   const LaboratoryResultsTable = () => {
     return (
       <div style={{ display: "none" }} class="bg">
@@ -459,7 +751,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                   DEPARTMENT OF CLINICAL LABORATORY
                 </span>
                 <span className="addressTitle">
-                  Unit A, M Block, Marasbaras, Tacloban City | 0999 8888 6694
+                  Unit A, M Block, Marasbaras, Tacloban City | 0999-888-6694
                 </span>
               </div>
             </div>
@@ -541,28 +833,37 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
               <img src={Watermark} alt="QR DIAGNOSTICS" className="watermark" />
 
               {/* Mapping of Detail Results */}
-
-              {servicesData.map((service, serviceIndex) => (
-                <div>
-                  {/* {getResults(service.id)} */}
-                  <div className="tb mid">
-                    <div className="row bd">
-                      <div className="col">
-                        <span>
-                          <b>TEST</b>
-                        </span>
-                      </div>
-                      <div className="col">
-                        <span>
-                          <b>RESULT</b>
-                        </span>
-                      </div>
+              <div className="tb mid">
+                <div className="row bd">
+                  <div className="col">
+                    <span>
+                      <b>TEST</b>
+                    </span>
+                  </div>
+                  <div className="col">
+                    <span>
+                      <b>RESULT</b>
+                    </span>
+                  </div>
+                  {servicesData[0].category.toUpperCase() !==
+                    "CLINICAL MICROSCOPY FECALYSIS" &&
+                    servicesData[0].category.toUpperCase() !==
+                      "CLINICAL MICROSCOPY URINALYSIS" &&
+                    servicesData[0].category.toUpperCase() !== "SEROLOGY" &&
+                    servicesData[0].category.toUpperCase() !==
+                      "MICROBIOLOGY" && (
                       <div className="col">
                         <span>
                           <b>REFERENCE RANGE</b>
                         </span>
                       </div>
-                    </div>
+                    )}
+                </div>
+              </div>
+              {servicesData.map((service, serviceIndex) => (
+                <div>
+                  {/* {getResults(service.id)} */}
+                  <div className="tb mid">
                     {/* {labTestResults.map((result, resultIndex) => ( */}
                     {labTestResults.map((result, resultIndex) => {
                       return (
@@ -573,103 +874,121 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
                                 <span>{result["lab_test"].toUpperCase()}</span>
                               </div>
                               <div className="col">
-                              {result["preferred"] !== " " ? (
-                                result["preferred"] === result["result"] ? (
+                                {result["preferred"] !== " " ? (
+                                  result["preferred"] === result["result"] ? (
+                                    <span>
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  ) : (
+                                    <span class="red">
+                                      {result["result"] + " " + result["unit"]}
+                                    </span>
+                                  )
+                                ) : result["preferred_from"] !== "0.00" ||
+                                  result["preferred_to"] !== "0.00" ? (
+                                  parseFloat(result["preferred_from"]) >
+                                  parseFloat(result["result"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]) +
+                                        " " +
+                                        result["unit"] +
+                                        " (L)"}
+                                    </span>
+                                  ) : parseFloat(result["result"]) >
+                                    parseFloat(result["preferred_to"]) ? (
+                                    <span class="red">
+                                      {parseFloat(result["result"]) +
+                                        " " +
+                                        result["unit"] +
+                                        " (H)"}
+                                    </span>
+                                  ) : result["result"] === "0.00" &&
+                                    result["preferred_from"] === "0.00" &&
+                                    result["preferred_to"] === "0.00" ? null : (
+                                    <span>
+                                      {parseFloat(result["result"]) +
+                                        " " +
+                                        result["unit"]}
+                                    </span>
+                                  )
+                                ) : (
                                   <span>
                                     {result["result"] + " " + result["unit"]}
                                   </span>
-                                ) : (
-                                  <span class="red">
-                                    {result["result"] + " " + result["unit"]}
-                                  </span>
-                                )
-                              ) : result["preferred_from"] !== "0.00" ||
-                                result["preferred_to"] !== "0.00" ? (
-                                parseFloat(result["preferred_from"]) >
-                                parseFloat(result["result"]) ? (
-                                  <span class="red">
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"] +
-                                      " (L)"}
-                                  </span>
-                                ) : parseFloat(result["result"]) >
-                                  parseFloat(result["preferred_to"]) ? (
-                                  <span class="red">
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"] +
-                                      " (H)"}
-                                  </span>
-                                ) : (
-                                  result["result"] === "0.00" && result["preferred_from"] === "0.00" && result["preferred_to"] === "0.00" ? null :
-                                  <span>
-                                    {parseFloat(result["result"]).toFixed(2) +
-                                      " " +
-                                      result["unit"]}
-                                  </span>
-                                )
-                              ) : (
-                                <span>
-                                  {result["result"] + " " + result["unit"]}
-                                </span>
-                              )}
+                                )}
                               </div>
-                              <div className="col">
-                                <span>
-                                  {result["preferred"] !== " "
-                                    ? result["preferred"]
-                                    : result["preferred_from"] === "0.00" &&
-                                    result["preferred_to"] === "0.00"
-                                    ? " "
-                                    : result["preferred_from"] !== "0.00" ||
-                                      result["preferred_to"] !== "0.00"
-                                    ? result["preferred_to"] === "999.99"
-                                      ? ">=" +
-                                        parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2)
-                                      : parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2) +
-                                        "-" +
-                                        parseFloat(
-                                          result["preferred_to"]
-                                        ).toFixed(2)
-                                    : ""}
-                                </span>
-                              </div>
+                              {servicesData[0].category.toUpperCase() !==
+                                "CLINICAL MICROSCOPY FECALYSIS" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "CLINICAL MICROSCOPY URINALYSIS" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "SEROLOGY" &&
+                                servicesData[0].category.toUpperCase() !==
+                                  "MICROBIOLOGY" && (
+                                  <div className="col">
+                                    <span>
+                                      {result["preferred"] !== " "
+                                        ? result["preferred"]
+                                        : result["preferred_from"] === "0.00" &&
+                                          result["preferred_to"] === "0.00"
+                                        ? " "
+                                        : result["preferred_from"] !== "0.00" ||
+                                          result["preferred_to"] !== "0.00"
+                                        ? result["preferred_to"] === "999.99"
+                                          ? ">=" +
+                                            parseFloat(result["preferred_from"])
+                                          : parseFloat(
+                                              result["preferred_from"]
+                                            ) +
+                                            "-" +
+                                            parseFloat(result["preferred_to"])
+                                        : ""}
+                                    </span>
+                                  </div>
+                                )}
                             </div>
                           )}
                         </>
                       );
                     })}
                   </div>
-                  <hr
-                    style={{
-                      border: "2px solid black",
-                      width: "100%",
-                      marginBottom: "0px",
-                    }}
-                  />
-
-<div
-                    style={{
-                      justifyContent: "left",
-                      alignItems: "left",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span>
-                      <b>REMARKS: </b>
-                    </span>
-                    <br />
-                    <span>
-                      <div dangerouslySetInnerHTML={{ __html: remark }}></div>
-                    </span>
-                  </div>
+                  {/* {servicesData[0].category.toUpperCase() !==
+                    "THYROID PROFILE" && (
+                    <hr
+                      style={{
+                        border: "2px solid black",
+                        width: "100%",
+                        marginBottom: "0px",
+                      }}
+                    />
+                  )} */}
                 </div>
               ))}
+              {servicesData[0].category.toUpperCase() === "THYROID PROFILE" && (
+                <hr
+                  style={{
+                    border: "2px solid black",
+                    width: "100%",
+                    marginBottom: "0px",
+                  }}
+                />
+              )}
+              <div
+                className="mt-2"
+                style={{
+                  justifyContent: "left",
+                  alignItems: "left",
+                  textAlign: "left",
+                }}
+              >
+                <span>
+                  <b>REMARKS: </b>
+                </span>
+                <br />
+                <span>
+                  <div dangerouslySetInnerHTML={{ __html: remark }}></div>
+                </span>
+              </div>
               <br />
               <Signature />
             </div>

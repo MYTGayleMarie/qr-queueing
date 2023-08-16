@@ -26,7 +26,8 @@ export default function ViewHistory(){
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-
+  const [senior_id, setSeniorId] = useState("");
+  const [pwd_id, setPWDId] = useState("");
   // Patient history
   const [patientHistory, setPatientHistory] = useState([]);
   const [services, setServices] = useState("");
@@ -68,6 +69,8 @@ export default function ViewHistory(){
       setContactNo(customer.contact_no);
       setEmail(customer.email);
       setAddress(customer.address);
+      setSeniorId(customer.senior_id);
+      setPWDId(customer.pwd_id); 
 
        //patient history
        patientHistory.length=0;
@@ -175,9 +178,17 @@ export default function ViewHistory(){
                 </div>
             </div>
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                 <span className="address label">ADDRESS</span>
                 <span className="address detail">{address.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{senior_id !== null? senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{pwd_id !== null ? pwd_id.toUpperCase(): "N/A"}</span>
                 </div>
             </div>
             </div>

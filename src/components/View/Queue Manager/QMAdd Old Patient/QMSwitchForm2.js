@@ -33,11 +33,13 @@ const mdData = {};
 const steps = [{ id: "customer" }, { id: "packages" }, { id: "services" }];
 
 function QMSwitchForm2() {
+  const [pwdId, setPwdId] = useState("");
+  const [seniorId, setSeniorId] = useState("");
   const [customer, setPersonal] = useForm(personalData);
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
   const [dateOfTesting, setDOT] = useState(new Date());
-
+  const [extractionDate, setExtractionDate] = useState(new Date());
   const [packagePrice, setPackagePrice] = useState("");
   const [labPrice, setLabPrice] = useState("");
 
@@ -53,12 +55,23 @@ function QMSwitchForm2() {
   const [customerID, setCustomerID] = useState("");
 
   const [discountDetails, setDiscountDetails] = useState();
-
+  const [isSenior, setIsSenior] = useState(false);
+  const [isPWD, setIsPWD] = useState(false);
   const [service, setServices] = useForm(serviceData);
   const { step, navigation } = useStep({
     steps,
     initialStep: 0,
   });
+
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthday, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [emailadd, setEmail] = useState("");
+  const [homeaddress, setAddress] = useState("");
 
   const personalProps = {
     customer,
@@ -85,8 +98,37 @@ function QMSwitchForm2() {
     setResult,
     customerID,
     setCustomerID,
+    isSenior,
+    setIsSenior,
+    isPWD,
+    setIsPWD,
+    pwdId,
+    setPwdId,
+    seniorId,
+    setSeniorId,
+    extractionDate,
+    setExtractionDate,
+    firstName,
+    setFirstName,
+    middleName,
+    setMiddleName,
+    lastName,
+    setLastName,
+    birthday,
+    setBirthDate,
+    gender,
+    setGender,
+    age,
+    setAge,
+    contactNo,
+    setContactNo,
+    emailadd,
+    setEmail,
+    homeaddress,
+    setAddress,
   };
   const serviceProps = {
+    customer,
     service,
     packagePrice,
     labPrice,
@@ -110,6 +152,30 @@ function QMSwitchForm2() {
     setResult,
     customerID,
     setCustomerID,
+    extractionDate,
+    setExtractionDate,
+    pwdId,
+    setPwdId,
+    seniorId,
+    setSeniorId,
+    firstName,
+    setFirstName,
+    middleName,
+    setMiddleName,
+    lastName,
+    setLastName,
+    birthday,
+    setBirthDate,
+    gender,
+    setGender,
+    age,
+    setAge,
+    contactNo,
+    setContactNo,
+    emailadd,
+    setEmail,
+    homeaddress,
+    setAddress,
   };
 
   switch (step.id) {

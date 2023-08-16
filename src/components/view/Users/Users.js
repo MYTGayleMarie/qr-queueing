@@ -42,7 +42,6 @@ function Users() {
                 requester: userId,
             }
         }).then(function (response) {
-            console.log(response.data.users);
             response.data.users.map((row, index) => {
                 var userDetails = {};
 
@@ -59,13 +58,37 @@ function Users() {
                 else if(row.role_id == 3) {
                     userDetails.role = "Cashier";
                 }
-                else {
+                else if(row.role_id == 4){
                     userDetails.role = "Admin";
                 }
-
+                else if(row.role_id == 5){
+                    userDetails.role = "Results Releasing Officer";
+                }
+                else if(row.role_id == 6){
+                    userDetails.role = "Purchasing Officer";
+                }
+                else if(row.role_id == 7){
+                    userDetails.role = "Supply Officer";
+                }
+                else if(row.role_id == 8){
+                    userDetails.role = "Accounting Officer";
+                }
+                else if(row.role_id == 9){
+                    userDetails.role = "Customer Queue";
+                }
+                else if(row.role_id == 10){
+                    userDetails.role = "Lab Officer";
+                }
+                else if(row.role_id == 11){
+                    userDetails.role = "Receiving";
+                }
+                else if(row.role_id == 12){
+                    userDetails.role = "Supervisor";
+                }
+                else{
+                    userDetails.role = "User";
+                }
                 setFinalUserData(oldArray => [...oldArray, userDetails]);
-
-
             });
             setIsReady(true)
 
@@ -77,7 +100,6 @@ function Users() {
 
     if (redirect == true) {
         var link = '/user/' + id;
-        console.log(link);
         return <Navigate to={link} />;
     }
     

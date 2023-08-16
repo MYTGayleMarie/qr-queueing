@@ -50,11 +50,19 @@ function PersonalDetails({ data }) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
-            <span className="address label">ADDRESS</span>
-            <span className="address detail">{patient.address.toUpperCase()}</span>
-          </div>
-        </div>
+                <div className="col-sm-4">
+                <span className="address label">ADDRESS</span>
+                <span className="address detail">{patient.address.toUpperCase()}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">Senior ID</span>
+                <span className="address detail">{patient.senior_id !== null? patient.senior_id.toUpperCase() : "N/A"}</span>
+                </div>
+                <div className="col-sm-4">
+                <span className="address label">PWD ID</span>
+                <span className="address detail">{patient.pwd_id !== null ? patient.pwd_id.toUpperCase(): "N/A"}</span>
+                </div>
+            </div>
       </div>
     </div>
   );
