@@ -333,12 +333,12 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Queue Manager</span>
           </li>
         </NavLink>
-        <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
+        {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={"patient"} class="patient icon"></img>
             <span class="mx-2">Patient</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/cashier" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={cashierIcon} alt={"cashier"} class="cashier icon"></img>
@@ -376,7 +376,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -385,7 +385,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>

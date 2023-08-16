@@ -723,6 +723,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
     );
   };
 
+  console.log(labTestResults);
+  console.log(servicesData)
+
   const LaboratoryResultsTable = () => {
     return (
       <div style={{ display: "none" }} class="bg">

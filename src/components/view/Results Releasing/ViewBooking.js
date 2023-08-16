@@ -296,6 +296,13 @@ export default function ViewBooking() {
   const thyroid_profile = labTests.filter(
     (info) => info.key === "thyroid_profile"
   );
+
+ console.log(thyroid_profile)
+
+  const detail_thyroid_profile = services.filter(
+    (info) => info.lab_test === "TSH" || info.lab_test === "T4"|| info.lab_test === "T3" || info.lab_test === "FT3" || info.lab_test === "FT4"
+  );
+
   const tumor_markers = labTests.filter((info) => info.key === "tumor_markers");
 
   const serology = labTests.filter(
@@ -317,6 +324,7 @@ export default function ViewBooking() {
       info.test_id !== "7" &&
       info.test_id !== "130" &&
       info.test_id !== "2" &&
+      info.test_id !== "136" &&
       info.test_id !== "3"
   );
   const clinicalUrineLab = labTests.filter(
@@ -356,8 +364,10 @@ export default function ViewBooking() {
   );
   const detailpregnancyRPK = services.filter(
     (info) =>
-      info.lab_test === "Pregnancy Test(RPK Flow)"
+      info.lab_test === "Pregnancy Test (RPK Lateral Flow)"
   );
+
+  console.log(detailpregnancyRPK)
 
   /****************/
 
@@ -736,7 +746,27 @@ export default function ViewBooking() {
 
                   {/* THYROID PROFILE */}
 
-                  {thyroid_profile.length !== 0 && (
+                  {thyroid_profile.length != 0 && (
+                    <div>
+                      <div className="category label">Thryoid Profile</div>
+                      {detail_thyroid_profile[0]?.with_result === "1" ? (
+                        <GenerateResults
+                          servicesData={thyroid_profile}
+                          title={"THYROID PROFILE"}
+                          bookingId={bookingId}
+                        />
+                      ) : (
+                        <FileUpload
+                          servicesData={thyroid_profile}
+                          title={"THYROID PROFILE "}
+                          bookingId={bookingId}
+                        />
+                      )}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
+
+                  {/* {thyroid_profile.length !== 0 && (
                     <div>
                       <div className="category label">THYROID PROFILE</div>
                       <GenerateResults
@@ -746,7 +776,7 @@ export default function ViewBooking() {
                       />
                       <hr className="labtest-line mb-5" />
                     </div>
-                  )}
+                  )} */}
 
                   {/* TUMOR MARKERS */}
                   {tumor_markers.length != 0 && (

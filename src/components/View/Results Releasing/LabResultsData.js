@@ -1116,7 +1116,7 @@ const labResultsData = {
       unit: "ng / mL",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_to: 4.0,
     },
   ],
 
@@ -1127,7 +1127,7 @@ const labResultsData = {
       unit: "ng / mL",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_to: 5.0,
     },
   ],
 

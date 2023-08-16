@@ -414,7 +414,7 @@ console.log(location)
                 </label>
                 <br />
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="contactNum"
                   name="contactNum"
