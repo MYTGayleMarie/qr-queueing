@@ -7,12 +7,13 @@ import {
   formatDate,
 } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
+import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTable from "../../../utilities/Pagination";
 import TableFooter from "../../TableFooter";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import { Button, Modal } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
@@ -137,6 +138,7 @@ export default function LabOfficer() {
   const [isApproved, setIsApproved] = useState("");
   const [withResults, setWithResults] = useState(false);
 
+
   const [isReady, setIsReady] = useState(false);
   // Lab Test options
   const [labTestOptions, setLabTestOptions] = useState([]);
@@ -171,6 +173,8 @@ export default function LabOfficer() {
 
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
+
+  const navigateto = useNavigate()
 
   const [hasImage, setHasImage] = useState(true);
   function getTime(date) {
@@ -626,19 +630,22 @@ export default function LabOfficer() {
     documentTitle: fileName,
     content: () => componentRef.current,
     onAfterPrint: () => {
-      html2canvas(document.querySelector("#capture")).then(canvas => {
-      // html2canvas(componentRef.current).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        a.href = imgData;
-        a.download = 'image.png';
-        a.click();
+      refreshPage()
+      // navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      // console.log(document.querySelector("#capture"))
+      // html2canvas(document.querySelector("#capture")).then(canvas => {
+      // // html2canvas(componentRef.current).then(canvas => {
+      //   const imgData = canvas.toDataURL('image/png');
+      //   const a = document.createElement('a');
+      //   a.href = imgData;
+      //   a.download = 'image.png';
+      //   a.click();
     
           // const imgData = canvas.toDataURL('image/png');
           // const pdf = new jsPDF();
           // pdf.addImage(imgData, 'PNG', 0, 0);
           // pdf.save("download.pdf");
-      });
+      // });
   },
     // onAfterPrint: refreshPage,
     
@@ -783,7 +790,7 @@ export default function LabOfficer() {
         .then((response) => {
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
-
+       
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
               setLabTestData(data.booking_detail_results);
@@ -1275,7 +1282,8 @@ export default function LabOfficer() {
       .then(function (response) {
         toast.success("Results are Approved");
         setShowPDF(false);
-        handlePrint();
+        printHandle()
+        // handlePrint();
         // refreshPage();
       })
       .catch(function (error) {
@@ -2125,7 +2133,8 @@ export default function LabOfficer() {
 
   const handlePrint = () => {
     if (componentRef.current) {
-      printHandle();
+      navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      // printHandle();
     } else {
       console.log("Component is not rendered yet!");
     }
@@ -2495,7 +2504,7 @@ export default function LabOfficer() {
             </div>
           </div>
           <br /> <br />
-          <div className="d-flex justify-content-end mr-3">
+          <div className="d-flex justify-content-end mr-3" >
             <button className="filter-btn" name="save" onClick={handleSave}>
               Save
             </button>
@@ -2506,5 +2515,8 @@ export default function LabOfficer() {
         </div>
       </div>
     </div>
+
+    
+    
   );
 }

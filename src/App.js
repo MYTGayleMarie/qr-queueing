@@ -107,6 +107,7 @@ import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager
 import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
 import NowServing from "./components/View/NowServing/NowServing";
 import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
+import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -266,6 +267,10 @@ function App() {
           <Route
             path="/laboratory-officer/:id/:dateFrom/:dateTo"
             element={token ? <LabOfficer /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/print-lab/:bookingID/:id/:labBookId/:type"
+            element={token ? <PrintLab /> : <Navigate to="/" />}
           />
           <Route
             path="/update-patient/:id"
