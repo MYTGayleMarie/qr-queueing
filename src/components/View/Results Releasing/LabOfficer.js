@@ -433,7 +433,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -445,7 +445,7 @@ export default function LabOfficer() {
           src={Image2}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -457,7 +457,7 @@ export default function LabOfficer() {
           src={Image6}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -469,7 +469,7 @@ export default function LabOfficer() {
           src={Image5}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={50}
           height={50}
         />
@@ -481,7 +481,7 @@ export default function LabOfficer() {
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={50}
           height={50}
         />
@@ -493,7 +493,7 @@ export default function LabOfficer() {
           src={Image3}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -505,7 +505,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -517,7 +517,7 @@ export default function LabOfficer() {
           src={Image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -529,7 +529,7 @@ export default function LabOfficer() {
           src={image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -541,7 +541,7 @@ export default function LabOfficer() {
           src={image12}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
@@ -578,7 +578,7 @@ export default function LabOfficer() {
       return (
         <div
           // className="mt-5"
-          style={{ marginTop: "1.5rem" }}
+         style={{ marginTop: "0.5rem" }}
         ></div>
       );
     }
@@ -1473,7 +1473,7 @@ export default function LabOfficer() {
               height={100}
             /> */}
           </div>
-          <div className="box pt-3">
+          <div className="box pt-2">
             <img
               src={Image1}
               alt="MedTech"
