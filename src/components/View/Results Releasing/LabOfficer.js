@@ -50,6 +50,8 @@ import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
 import { setISODay } from "date-fns";
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const buttons = ["add-new-patient", "add-old-patient"];
 const userToken = getToken();
@@ -431,7 +433,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -443,7 +445,7 @@ export default function LabOfficer() {
           src={Image2}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -455,7 +457,7 @@ export default function LabOfficer() {
           src={Image6}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -467,7 +469,7 @@ export default function LabOfficer() {
           src={Image5}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={50}
           height={50}
         />
@@ -479,7 +481,7 @@ export default function LabOfficer() {
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={50}
           height={50}
         />
@@ -491,7 +493,7 @@ export default function LabOfficer() {
           src={Image3}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -503,7 +505,7 @@ export default function LabOfficer() {
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -515,7 +517,7 @@ export default function LabOfficer() {
           src={Image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -527,7 +529,7 @@ export default function LabOfficer() {
           src={image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -539,7 +541,7 @@ export default function LabOfficer() {
           src={image12}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
           width={100}
           height={50}
         />
@@ -552,7 +554,7 @@ export default function LabOfficer() {
     //       src={Image10}
     //       alt="MedTech"
     //       // className="mt-5"
-    //       style={{ marginTop: "3rem" }}
+    //       style={{ marginTop: "1.5rem" }}
     //       width={70}
     //       height={60}
     //     />
@@ -576,7 +578,7 @@ export default function LabOfficer() {
       return (
         <div
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "1.5rem" }}
         ></div>
       );
     }
@@ -622,8 +624,24 @@ export default function LabOfficer() {
   const printHandle = useReactToPrint({
     // onAfterPrint: handleRedirect,
     documentTitle: fileName,
-    onAfterPrint: refreshPage,
     content: () => componentRef.current,
+    onAfterPrint: () => {
+      html2canvas(document.querySelector("#capture")).then(canvas => {
+      // html2canvas(componentRef.current).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = imgData;
+        a.download = 'image.png';
+        a.click();
+    
+          // const imgData = canvas.toDataURL('image/png');
+          // const pdf = new jsPDF();
+          // pdf.addImage(imgData, 'PNG', 0, 0);
+          // pdf.save("download.pdf");
+      });
+  },
+    // onAfterPrint: refreshPage,
+    
     pageStyle: () => `
           @page { size: letter; margin: 0.5in;margin-bottom:0in}
           @media print {
@@ -1455,7 +1473,7 @@ export default function LabOfficer() {
               height={100}
             /> */}
           </div>
-          <div className="box pt-5">
+          <div className="box pt-3">
             <img
               src={Image1}
               alt="MedTech"
@@ -1507,7 +1525,7 @@ export default function LabOfficer() {
       <div style={{ backgroundColor: "white", width: "900px" }}>
         <div class="bg">
           <div>
-            <div ref={componentRef}>
+            <div ref={componentRef} >
               {/* Header */}
               <div style={{ position: "relative" }}>
                 <img
@@ -1652,7 +1670,76 @@ export default function LabOfficer() {
 
                 <div>
                   <br />
+                  {selectedLab.label === "Antigen Rapid Swab (Nasal)" ? 
+                  <>
                   <div className="tb mid">
+                    <div className="row bd">
+                      
+                      <div className="col">
+                        <span>
+                          <b>RESULT</b>
+                        </span>
+                      </div>
+                    
+                    </div>
+
+                    {labTestData.map((result, resultIndex) => (
+                      <>
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                          key={resultIndex}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                           
+                            
+                                
+                                  <div className="col-6">Test Performed:</div>
+                                  <div className="col-6">SARS CoV-2 Antigen Rapid Test</div>
+                                
+                                  <div className="col-6">Brand of Antigen Kit Used:</div>
+                                  <div className="col-6">STANDARD Q COVID-19 Ag</div>
+                                
+                                  <div className="col-6">Time Collected:</div>
+                                  <div className="col-6"></div>
+                                
+                                  <div className="col-6">Lot #:</div>
+                                  <div className="col-6"></div>
+                                
+                                  <div className="col-6">Expiry Date:</div>
+                                  <div className="col-6"></div>
+                               
+                                  <div className="col-6">Test Principle:</div>
+                                  <div className="col-6">Rapid Chromatographic Immunoassay</div>
+                                
+                            
+                            </div>
+                            
+                          </div>
+                         
+                          
+
+                          
+                        </div>
+                        <div className="row mt-4">
+                    <div className="col-6">
+                      <h5>TEST RESULT</h5>
+                    </div>
+                    <div className="col-6">
+                      <h5>{result["result"]}</h5>
+                    </div>
+                  </div>
+                      </>
+                    ))}
+                  </div>
+                 
+                  </>:
+                    <div className="tb mid">
                     <div className="row bd">
                       <div className="col">
                         <span>
@@ -1895,9 +1982,6 @@ export default function LabOfficer() {
                             selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
-                                {console.log("result", result["result"])}
-                                {console.log("pref from", result["preferred_from"])}
-                                {console.log("pref to", result["preferred_to"])}
                                 {/* { result["preferred_from"] != 0.0 ||
                                   result["preferred_to"] != 0.0 ? ( */}
                                 {result["result"] === "-" || (parseFloat(result["result"]) >=
@@ -2005,7 +2089,7 @@ export default function LabOfficer() {
                         </div>
                       </>
                     ))}
-                  </div>
+                  </div>}
                   <hr
                     style={{
                       border: "2px solid black",
