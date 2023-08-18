@@ -1769,6 +1769,7 @@ export default function LabOfficer() {
                         selectedLab.label !==
                           "Anti HBs/HBSab (Hepatitis B Antibody)" &&
                         selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                        selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                         selectedLab.label !==
                           "Hepatitis B Surface Antigen (HbsAg)" &&
                         selectedLab.label !== "Anti-HAV" &&
@@ -1795,6 +1796,7 @@ export default function LabOfficer() {
                         selectedLab.label !== "[P] Urinalysis" &&
                         selectedLab.label !== "Fecalysis" &&
                         selectedLab.label !== "[P] Fecalysis" &&
+                        selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                         selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         selectedLab.label !== "KOH" &&
                         selectedLab.label !==
@@ -1971,6 +1973,7 @@ export default function LabOfficer() {
                               "[P] FECALYSIS" &&
                             selectedLab.label !==
                               "Antigen Rapid Swab (Nasal)" &&
+                            selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                             selectedLab.label !== "Serum Pregnancy Test" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "H. Pylori Ag" &&
@@ -2015,6 +2018,7 @@ export default function LabOfficer() {
                             selectedLab.label !== "H. Pylori Ag" &&
                             selectedLab.label !== "Syphilis/RPR/VDRL" &&
                             selectedLab.label !== "KOH" &&
+                            selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                             selectedLab.label !==
                               "Pregnancy Test (RPK Lateral Flow)" &&
                             selectedLab.label !== "Gram Stain" &&
