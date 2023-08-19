@@ -53,6 +53,7 @@ import Teal from "../../../images/backgrounds/TealHeader.png";
 import { setISODay } from "date-fns";
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { isString } from "util";
 
 const buttons = ["add-new-patient", "add-old-patient"];
 const userToken = getToken();
@@ -1177,6 +1178,8 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Urinalysis" &&
         selectedLab.label !== "Fecalysis" &&
         selectedLab.label !== "[P] Fecalysis" &&
+        selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
         selectedLab.label !== "Gram Stain" &&
@@ -1432,6 +1435,8 @@ export default function LabOfficer() {
 
   const { from_date, to_date, done } = filteredData;
 
+
+
   function edit(itemId, itemUnit) {
     // id = itemId;
     // unit = itemUnit;
@@ -1527,6 +1532,24 @@ export default function LabOfficer() {
       </div>
     );
   };
+
+  const renderResult = (result_user, preferred_user,preferred_from_user, preferred_to_user) => { 
+    const containsLetters = /[a-zA-Z]/.test(result_user);
+    const parsedResult = parseFloat(result_user);
+    const parsedPreferredFrom = parseFloat(preferred_from_user);
+    const parsedPreferredTo = parseFloat(preferred_to_user);
+  
+    if(preferred_user === " " && containsLetters ){
+      return <span>{result_user}</span>;
+    }  else if (parsedResult < parsedPreferredFrom && parsedPreferredFrom !== 0.0) {
+      return <span className="red">{result_user + " L"}</span>;
+    } else if (parsedResult > parsedPreferredTo && parsedPreferredTo !== 0.0) {
+      return <span className="red">{result_user + " H"}</span>;
+    } else {
+      return <span>{result_user}</span>;
+    }
+  }
+  
 
   const LaboratoryResultsTable = () => {
     return (
@@ -1930,7 +1953,7 @@ export default function LabOfficer() {
                             {/* RESULTS */}
                             {result["result"] !== "" ? (
                               <>
-                                {result["preferred"] == " " ? (
+                                {/* {result["preferred"] == " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>{result["result"]}</span>
                                   ) : (
@@ -1949,8 +1972,8 @@ export default function LabOfficer() {
                                     <span class="red">
                                       {result["result"] + " (L)"}
                                     </span>
-                                  ) : result["result"] >
-                                    result["preferred_to"] ? (
+                                  ) : (result["result"] >
+                                    result["preferred_to"]) ? (
                                     <span class="red">
                                       {result["result"] + " (H)"}
                                     </span>
@@ -1959,7 +1982,8 @@ export default function LabOfficer() {
                                   )
                                 ) : (
                                   <span> {result["result"]}</span>
-                                )}
+                                )} */}
+                                {renderResult(result["result"], result["preferred"], result["preferred_from"], result["preferred_to"])}
                               </>
                             ) : (
                               ""
@@ -2314,6 +2338,7 @@ export default function LabOfficer() {
               selectedLab.label !== "Fecalysis" &&
               selectedLab.label !== "[P] Fecalysis" &&
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
+              selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "KOH" &&
               selectedLab.label !== "Gram Stain" &&
               selectedLab.label !== "HIV Screening (Anti HIV)"

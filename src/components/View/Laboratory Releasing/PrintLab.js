@@ -876,6 +876,7 @@ React.useEffect(() => {
                     state.selectedLab.label !== "Fecalysis" &&
                     state.selectedLab.label !== "[P] Fecalysis" &&
                     state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                    state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                     state.selectedLab.label !== "KOH" &&
                     state.selectedLab.label !== "H. Pylori Ag" &&
                     state.selectedLab.label !==
@@ -912,6 +913,7 @@ React.useEffect(() => {
                     state.selectedLab.label !==
                       "Anti HBs/HBSab (Hepatitis B Antibody)" &&
                     state.selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                    state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                     state.selectedLab.label !==
                       "Hepatitis B Surface Antigen (HbsAg)" &&
                     state.selectedLab.label !== "Anti-HAV" &&
@@ -1093,6 +1095,7 @@ React.useEffect(() => {
                           "HBSag (Hepatitis B Antigen)" &&
                         state.selectedLab.label !==
                           "Hepatitis B Surface Antigen (HbsAg)" &&
+                        state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                         state.selectedLab.label !== "Anti-HAV" &&
                         state.selectedLab.label !== "Anti-HCV" &&
                         state.selectedLab.label !==
@@ -1127,6 +1130,7 @@ React.useEffect(() => {
                         state.selectedLab.label !== "H. Pylori Ag" &&
                         state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
                         state.selectedLab.label !== "KOH" &&
+                        state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
                         state.selectedLab.label !==
                           "Pregnancy Test (RPK Lateral Flow)" &&
                         state.selectedLab.label !== "Gram Stain" &&
