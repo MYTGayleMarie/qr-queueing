@@ -1713,9 +1713,9 @@ export default function LabOfficer() {
                       </div>
                     
                     </div>
-
-                    {labTestData.map((result, resultIndex) => (
-                      <>
+                    {console.log(labTestData[0]?.result)}
+                    {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
                         <div
                           className="row"
                           style={{
@@ -1723,13 +1723,10 @@ export default function LabOfficer() {
                             width: "100%",
                             marginLeft: "1px",
                           }}
-                          key={resultIndex}
+                          // key={resultIndex}
                         >
                           <div className="col align-center text-center mt-1">
                             <div className="row">
-                           
-                            
-                                
                                   <div className="col-6">Test Performed:</div>
                                   <div className="col-6">SARS CoV-2 Antigen Rapid Test</div>
                                 
@@ -1737,13 +1734,13 @@ export default function LabOfficer() {
                                   <div className="col-6">STANDARD Q COVID-19 Ag</div>
                                 
                                   <div className="col-6">Time Collected:</div>
-                                  <div className="col-6"></div>
+                                  <div className="col-6">{labTestData[1]?.result}</div>
                                 
                                   <div className="col-6">Lot #:</div>
-                                  <div className="col-6"></div>
+                                  <div className="col-6">{labTestData[2]?.result}</div>
                                 
                                   <div className="col-6">Expiry Date:</div>
-                                  <div className="col-6"></div>
+                                  <div className="col-6">{labTestData[3]?.result}</div>
                                
                                   <div className="col-6">Test Principle:</div>
                                   <div className="col-6">Rapid Chromatographic Immunoassay</div>
@@ -1762,11 +1759,11 @@ export default function LabOfficer() {
                       <h5>TEST RESULT</h5>
                     </div>
                     <div className="col-6">
-                      <h5>{result["result"]}</h5>
+                      <h5>{labTestData[0]?.result}</h5>
                     </div>
                   </div>
-                      </>
-                    ))}
+                      {/* </>
+                    ))} */}
                   </div>
                  
                   </>:

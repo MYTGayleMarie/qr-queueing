@@ -381,7 +381,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "RBC",
@@ -505,7 +505,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "RBC",
@@ -588,7 +588,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 1.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Fat Globules",
@@ -658,6 +658,30 @@ const labResultsData = {
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
+    {
+      lab_test: "Time Collected",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Lot #",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Expiry Date",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    }
   ],
 
   labTestSpermAnalysis: [
