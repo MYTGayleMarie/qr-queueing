@@ -802,62 +802,59 @@ React.useEffect(() => {
                   </div>
                 
                 </div>
+                {console.log(labTestData[0]?.result)}
+                    {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                          // key={resultIndex}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                                  <div className="col-6">Test Performed:</div>
+                                  <div className="col-6">SARS CoV-2 Antigen Rapid Test</div>
+                                
+                                  <div className="col-6">Brand of Antigen Kit Used:</div>
+                                  <div className="col-6">STANDARD Q COVID-19 Ag</div>
+                                
+                                  <div className="col-6">Time Collected:</div>
+                                  <div className="col-6">{labTestData[1]?.result}</div>
+                                
+                                  <div className="col-6">Lot #:</div>
+                                  <div className="col-6">{labTestData[2]?.result}</div>
+                                
+                                  <div className="col-6">Expiry Date:</div>
+                                  <div className="col-6">{labTestData[3]?.result}</div>
+                               
+                                  <div className="col-6">Test Principle:</div>
+                                  <div className="col-6">Rapid Chromatographic Immunoassay</div>
+                                
+                            
+                            </div>
+                            
+                          </div>
+                         
+                          
 
-                {labTestData.map((result, resultIndex) => (
-                  <>
-                    <div
-                      className="row"
-                      style={{
-                        marginTop: "1px",
-                        width: "100%",
-                        marginLeft: "1px",
-                      }}
-                      key={resultIndex}
-                    >
-                      <div className="col align-center text-center mt-1">
-                        <div className="row">
-                       
-                        
-                            
-                              <div className="col-6">Test Performed:</div>
-                              <div className="col-6">SARS CoV-2 Antigen Rapid Test</div>
-                            
-                              <div className="col-6">Brand of Antigen Kit Used:</div>
-                              <div className="col-6">STANDARD Q COVID-19 Ag</div>
-                            
-                              <div className="col-6">Time Collected:</div>
-                              <div className="col-6"></div>
-                            
-                              <div className="col-6">Lot #:</div>
-                              <div className="col-6"></div>
-                            
-                              <div className="col-6">Expiry Date:</div>
-                              <div className="col-6"></div>
-                           
-                              <div className="col-6">Test Principle:</div>
-                              <div className="col-6">Rapid Chromatographic Immunoassay</div>
-                            
-                        
+                          
                         </div>
-                        
-                      </div>
-                     
-                      
-
-                      
+                        <div className="row mt-4">
+                    <div className="col-6">
+                      <h5>TEST RESULT</h5>
                     </div>
-                    <div className="row mt-4">
-                <div className="col-6">
-                  <h5>TEST RESULT</h5>
-                </div>
-                <div className="col-6">
-                  <h5>{result["result"]}</h5>
-                </div>
-              </div>
-                  </>
-                ))}
-              </div>
-             
+                    <div className="col-6">
+                      <h5>{labTestData[0]?.result}</h5>
+                    </div>
+                  </div>
+                      {/* </>
+                    ))} */}
+                  </div>
+
               </>:
                 <div className="tb mid">
                 <div className="row bd">

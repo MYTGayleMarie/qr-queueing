@@ -1713,7 +1713,7 @@ export default function LabOfficer() {
                       </div>
                     
                     </div>
-                    {console.log(labTestData[0]?.result)}
+                    {/* {console.log(labTestData[0]?.result)} */}
                     {/* {labTestData.map((result, resultIndex) => (
                       <> */}
                         <div
