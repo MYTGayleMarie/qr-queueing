@@ -218,6 +218,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
     const [middleName, setMiddleName] = useState("");
     const [lastName, setLastName] = useState("");
     const [birthday, setBirthDate] = useState("");
+    const [senior, setSenior] = useState("");
+    const [pwd, setPWD] = useState("")
     const [gender, setGender] = useState("");
     const [contactNo, setContactNo] = useState("");
     const [emailadd, setEmail] = useState("");
@@ -268,6 +270,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
+        setSenior(customer.data.senior_id);
+        setPWD(customer.data.pwd_id)
 
     }).catch(function (error) {
         console.log(error);
@@ -317,6 +321,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
                 emergency_contact_no: '',
                 relation_w_contact: '',
                 last_meal: lastMeal,
+                senior_id: senior,
+                pwd_id: pwd,
                 remarks: '',
                 updated_by: userId,
             }

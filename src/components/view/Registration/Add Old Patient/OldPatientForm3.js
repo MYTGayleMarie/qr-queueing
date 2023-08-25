@@ -294,6 +294,8 @@ function OldPatientForm3({
   const [contactNo, setContactNo] = useState("");
   const [emailadd, setEmail] = useState("");
   const [homeaddress, setAddress] = useState("");
+  const [senior, setSenior] = useState("");
+  const [pwd,setPWD] = useState("");
   const [bookingId, setBookingId] = useState("");
   const { id } = useParams();
 
@@ -340,6 +342,8 @@ function OldPatientForm3({
       setContactNo(customer.data.contact_no);
       setEmail(customer.data.email);
       setAddress(customer.data.address);
+      setSenior(customer.data.senior_id);
+      setPWD(customer.data.pwd_id);
     })
     .catch(function (error) {
       console.log(error);
@@ -383,6 +387,8 @@ function OldPatientForm3({
           gender: gender,
           address: homeaddress,
           emergency_contact: "",
+          senior_id: senior,
+          pwd_id:pwd,
           emergency_contact_no: "",
           relation_w_contact: "",
           last_meal: lastMeal,

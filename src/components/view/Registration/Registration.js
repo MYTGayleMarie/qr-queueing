@@ -20,6 +20,7 @@ const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
+var customer_id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -119,21 +120,25 @@ function Registration() {
 
   function filter() {}
 
-  function addPayment(bookingId) {
+  function addPayment(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId;
     setRedirectPay(true);
   }
 
-  function printPayment(bookingId) {
+  function printPayment(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId;
     setRedirectPrint(true);
   }
-  function deleteBooking(bookingId) {
+  function deleteBooking(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId
     setRedirectDelete(true);
   }
-  function editBooking(bookingId) {
+  function editBooking(bookingId,customerId) {
     id = bookingId;
+    customer_id = customerId
     setRedirectEdit(true);
   }
 
@@ -160,6 +165,7 @@ function Registration() {
   }
 
   if(redirectEdit == true) {
+    console.log(id)
     var link =  "/update-patient/" + id;
     return (
         <Navigate to ={link}/>
