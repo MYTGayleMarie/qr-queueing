@@ -589,7 +589,6 @@ React.useEffect(() => {
           var data = response.data.data;
       
           var packageDetailId = labBookId;
-
           if (data.booking_detail_results !== null) {
             if (type == "lab") {
               setLabTestData(data.booking_detail_results);
@@ -630,6 +629,29 @@ React.useEffect(() => {
         });
     }
   }, []);
+
+  React.useEffect(() => {
+    // setIsReady(false);
+    axios({
+      method: "get",
+      url: window.$link + "/Bookingdetails/getDetails/" + state.selectedLab.id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        setRemarks(response.data.data.booking_detail[0].remarks);
+        // setIsReady(true);
+      })
+      .catch(function (error) {
+        // setIsReady(true);
+        console.log(error);
+      });
+  }, [state.selectedLab]);
+
 
   React.useEffect(()=>{
     if(readyDetails && readyBookingDetails){
@@ -1223,6 +1245,7 @@ React.useEffect(() => {
                   justifyContent: "left",
                   alignItems: "left",
                   textAlign: "left",
+                  marginLeft: "10px"
                 }}
               >
                 <span>

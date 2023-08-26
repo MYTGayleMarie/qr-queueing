@@ -390,7 +390,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Epithelial Cells",
@@ -514,7 +514,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Epithelial Cells",

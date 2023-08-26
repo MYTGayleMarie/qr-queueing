@@ -290,6 +290,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
     setLabReady(true);
   }, []);
+  
 
   // Function to get Booking Details get Details
   React.useEffect(() => {
