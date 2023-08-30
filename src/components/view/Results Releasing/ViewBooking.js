@@ -5,7 +5,7 @@ import { getToken, getUser } from "../../../utilities/Common";
 import { useForm } from "react-hooks-helper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { RingLoader } from "react-spinners";
+import { RingLoader, BeatLoader } from "react-spinners";
 import { Navigate } from "react-router-dom";
 import uploadIcon from "../../../images/icons/upload-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -72,14 +72,21 @@ export default function ViewBooking() {
   const [age, setAge] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
+  const [sendEmail, setSendEmail] = useState("");
   const [address, setAddress] = useState("");
 
+  
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setSendEmail(value);
+  };
+  console.log(sendEmail);
   // Lab Tests
   const [services, setServices] = useState([]);
   const [packageServices, setPackageServices] = useState([]);
   const [labTests, setLabTests] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  console.log(loading);
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false);
 
@@ -298,6 +305,33 @@ export default function ViewBooking() {
   );
 
  console.log(thyroid_profile)
+ function emailTo() {
+  if (sendEmail && sendEmail.trim() !== "") { 
+    setLoading(true);
+
+    axios({
+      method: "post",
+      url: `${window.$link}booking_attachments/sendOut/${bookingId}`,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        email: sendEmail,
+      },
+    })
+      .then(function (response) {
+        setLoading(false); // Hide loading indicator
+        toast.success("Email Successfully sent!");
+      })
+      .catch(function (error) {
+        setLoading(false); // Hide loading indicator
+        toast.error("Oops! Something went wrong with the server");
+      });
+  } else {
+    toast.error("Empty or invalid Email input!");
+  }
+}
 
   const detail_thyroid_profile = services.filter(
     (info) => info.lab_test === "TSH" || info.lab_test === "T4"|| info.lab_test === "T3" || info.lab_test === "FT3" || info.lab_test === "FT4"
@@ -575,13 +609,32 @@ export default function ViewBooking() {
                       }
                     }}
                   />
-
+                  
                   <label for="mdCharge" className="booking-label">
                     READY FOR EMAIL/PICKUP
                   </label>
-                  <input className="email-input" type='text' placeholder='Email'></input>
-                  {/* <input className="pass-input" type='text' placeholder='Passcode'></input> */}
-                  <button className="send-btn" type='send'>Send Out</button>
+                  {ready ? (
+                    <div>
+                      <input
+                        className="email-input"
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        onChange={handleEmailChange}
+                      />
+                      <button className="send-btn" type="button" onClick={emailTo}>
+                        {loading ? (
+                          <BeatLoader color={"#3a023a"} loading={loading} size={10} />
+                        ) : (
+                          "Send Out"
+                        )}
+                      </button>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+
+
                 </div>
                 <div className="personal-data-cont">
                   {/* CLINICAL MICROSCOPY URINALYSIS */}
