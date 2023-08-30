@@ -2,6 +2,11 @@
   height:fit-content !important;
 }
 
+.email_screen{
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
 .pdf-upload-icon {
   margin:auto;
   opacity: 0.8;

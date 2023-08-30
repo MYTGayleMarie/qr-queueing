@@ -25,11 +25,16 @@
     position: absolute;
     width: 20%;
     padding: 6px 20px;
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 1rem;
     color:#55073A;
     margin: 3px;
-    left: 48%;
+    left: 65%;
+    box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 .pass-input{
     position: absolute;
@@ -50,14 +55,13 @@
     border-color: darkturquoise;
     font-size: 1rem;
     margin: 3px;*/
-    right: 3%; 
+    right: 5%; 
     /* flex-direction: column;
   align-items: center; */
   padding: 8px 17px;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
   border-radius: 6px;
   border: none;
-  margin: 3px;
   color: #fff;
   background: linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%);
   background-origin: border-box;

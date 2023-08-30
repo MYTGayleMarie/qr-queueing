@@ -532,6 +532,7 @@ export default function ViewBooking() {
                 <h3 className="form-categories-header italic">
                   LABORATORY TESTS
                 </h3>
+                
                 <div className="personal-data-cont">
                   <input
                     type="checkbox"
@@ -578,6 +579,9 @@ export default function ViewBooking() {
                   <label for="mdCharge" className="booking-label">
                     READY FOR EMAIL/PICKUP
                   </label>
+                  <input className="email-input" type='text' placeholder='Email'></input>
+                  {/* <input className="pass-input" type='text' placeholder='Passcode'></input> */}
+                  <button className="send-btn" type='send'>Send Out</button>
                 </div>
                 <div className="personal-data-cont">
                   {/* CLINICAL MICROSCOPY URINALYSIS */}
