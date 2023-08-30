@@ -398,8 +398,8 @@ function AddPayment() {
               encodedOn != null
             ) {
               setPrintData(true);
-              setLoadingBooking(true);
             }
+              setLoadingBooking(true);
           })
           .catch(function (error) {
             setLoadingBooking(true);
@@ -1078,9 +1078,7 @@ function AddPayment() {
           </Col>
         </Row>
         <div className="row d-flex justify-content-end mt-4">
-          {paymentStatus == "paid" &&
-            queueNumber != "" &&
-            printData == true &&
+          {printData == true &&
             printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE BOOKING
@@ -1455,7 +1453,7 @@ function AddPayment() {
             </div>
           )}
 
-          {((paymentStatus == "paid" &&
+          {/* {((paymentStatus == "paid" &&
             queueNumber != "" &&
             printData == true) ||
             discountDetail === "with_company_discount") && (
@@ -1472,7 +1470,22 @@ function AddPayment() {
                 <button className="save-btn">Loading Data...</button>
               </div>
             </div>
-          )}
+          )} */}
+
+            <div className="row">
+              {printData && (
+                <div className="col-sm-12 d-flex justify-content-end">
+                  {printButton()}
+                </div>
+              )}
+
+              {!printData && (
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <button className="save-btn">Loading Data...</button>
+                </div>
+              )}
+            </div>
+
 
           {paymentStatus != "paid" && (
             <div className="payment-cont">

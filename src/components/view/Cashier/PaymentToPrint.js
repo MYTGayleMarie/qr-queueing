@@ -605,7 +605,7 @@ export class PaymentToPrint extends React.PureComponent {
                     )} 
                     <tr>
                       <td></td>
-                      <td className="slip-label bold-slip-span">Discount Feee:</td>
+                      <td className="slip-label bold-slip-span">Discount Fee:</td>
                       <td className="slip-label bold-slip-span"> {parseFloat(this.props.discount).toFixed(2) == null ? "NONE" : parseFloat(this.props.discount).toFixed(2)}</td>
                     </tr>             
                     <tr>
