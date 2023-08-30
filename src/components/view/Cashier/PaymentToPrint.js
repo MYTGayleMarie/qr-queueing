@@ -20,7 +20,9 @@ function groupArrayOfObjects(list, key) {
 
 
 export class PaymentToPrint extends React.PureComponent {
+
     render() {
+      
         const presentDate = new Date();
         const curTime = presentDate.getHours() + ':' + presentDate.getMinutes();
         const today = presentDate.toDateString().split(' ')
@@ -491,7 +493,6 @@ export class PaymentToPrint extends React.PureComponent {
             }
           ticketsBy2.push(arr)
         }
-        // console.log(ticketsBy2)
 
         const marginTop="10px"
         const marginRight="10px"
@@ -589,16 +590,23 @@ export class PaymentToPrint extends React.PureComponent {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.labTests.map((data, index)=>
+                    {this.props.paymentDataServices.map((data, index)=>
+                      <tr className='print-table'>
+                        <td className="slip-label slip-span">{data.lab_test}</td>
+                        <td className="slip-label slip-span">1</td>
+                        <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
+                      </tr>
+                    )}  
+                    {/* {this.props.labTests.map((data, index)=>
                       <tr className='print-table'>
                         <td className="slip-label slip-span">{data.name}</td>
                         <td className="slip-label slip-span">{data.qty}</td>
                         <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
-                    )}  
+                    )}   */}
                     {this.props.packages.map((data, index)=>
                       <tr className='print-table'>
-                        <td className="slip-label slip-span">{data.name}<br/><span className="slip-span-details">{data.details}</span></td>
+                        <td className="slip-label slip-span">{data.name}<br/><span className="slip-span-details">{data.details} [P]</span></td>
                         <td className="slip-label slip-span">{data.qty}</td>
                         <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>

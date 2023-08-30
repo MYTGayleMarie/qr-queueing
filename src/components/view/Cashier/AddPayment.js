@@ -458,6 +458,7 @@ function AddPayment() {
                 }
                 serviceDetails.category = category.data.name;
                 serviceDetails.name = packageCat.lab_test;
+               
                 setLoadingBooking(true);
               })
               .catch(function (error) {
@@ -1626,6 +1627,7 @@ function AddPayment() {
           <div
             style={{ display: "none" }} // This make ComponentToPrint show   only while printing
           >
+            
             <PaymentToPrint
               ref={componentRef}
               patientId={patientId}
@@ -1640,6 +1642,7 @@ function AddPayment() {
               bookingDate={bookingDate}
               payment={paymentType}
               result={result}
+              paymentDataServices={services}
               services={printServices}
               isCompany={true}
               packages={packages}
