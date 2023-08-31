@@ -22,6 +22,10 @@
     padding:  0.5%;
 }
 
+.poItemsRow{
+    margin-bottom: 30px;
+}
+
 .po-approve-btn {
     background-color: #419ea3;
     color: white;
