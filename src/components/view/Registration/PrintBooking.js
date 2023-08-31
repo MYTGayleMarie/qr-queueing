@@ -463,6 +463,7 @@ function PrintBooking() {
             payment={payment}
             result={result}
             services={printServices}
+            paymentDataServices={services}
             encodedOn={encodedOn}
             queue={queueNumber}
             isCompany={true}

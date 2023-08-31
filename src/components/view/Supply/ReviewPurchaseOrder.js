@@ -282,7 +282,7 @@ function ReviewPurchaseOrder() {
     {console.log("hello")}
     const listItems = poItems.map((data,index) => {
         return (
-        <div className="row">
+        <div className="row poItemsRow">
             <div className="col-sm-3">
                 { parseFloat(data.qty).toFixed(2) + " " + data.unit + " " + data.item}
             </div>

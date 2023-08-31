@@ -452,6 +452,7 @@ function PrintBookingCModule() {
                         payment={payment}
                         result={result}
                         services={printServices}
+                        paymentDataServices={services}
                         encodedOn={encodedOn}
                         queue={queueNumber}
                         isCompany={true}
@@ -460,6 +461,7 @@ function PrintBookingCModule() {
                         grandTotal={grandTotal}
                         labTests={labTests}
                         packages = {packages}
+
                         setPrintReadyFinal = {setPrintReadyFinal}
                     />
             </div>

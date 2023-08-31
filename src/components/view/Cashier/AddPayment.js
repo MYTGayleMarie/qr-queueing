@@ -303,6 +303,7 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
+        console.log(booking)
         setLoadingBooking(true);
         setServices(booking.data);
       })
