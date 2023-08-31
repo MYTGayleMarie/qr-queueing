@@ -566,75 +566,82 @@ export default function ViewBooking() {
                 <h3 className="form-categories-header italic">
                   LABORATORY TESTS
                 </h3>
-                
                 <div className="personal-data-cont">
-                  <input
-                    type="checkbox"
-                    name="physical_exam"
-                    value="Ready for email/pickup"
-                    checked={ready == true}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setReady(true);
-                        axios({
-                          method: "post",
-                          url: window.$link + "bookings/markReady/" + bookingId,
-                          withCredentials: false,
-                          params: {
-                            api_key: window.$api_key,
-                            token: userToken.replace(/['"]+/g, ""),
-                            updated_by: userId,
-                            is_ready: "yes",
-                          },
-                        })
-                          .then(function (response) {})
-                          .catch((error) => {
-                            console.log(error);
-                          });
-                      } else {
-                        setReady(false);
-                        axios({
-                          method: "post",
-                          url: window.$link + "bookings/markReady/" + bookingId,
-                          withCredentials: false,
-                          params: {
-                            api_key: window.$api_key,
-                            token: userToken.replace(/['"]+/g, ""),
-                            updated_by: userId,
-                            is_ready: "no",
-                          },
-                        }).then(function (response) {
-                          console.log(response);
-                        });
-                      }
-                    }}
-                  />
-                  
-                  <label for="mdCharge" className="booking-label">
-                    READY FOR EMAIL/PICKUP
-                  </label>
-                  {ready ? (
-                    <div>
+                  <div className="row">
+                    <div className="col-6">
                       <input
-                        className="email-input"
-                        type="text"
-                        placeholder="Email"
-                        name="email"
-                        onChange={handleEmailChange}
+                        type="checkbox"
+                        name="physical_exam"
+                        value="Ready for email/pickup"
+                        checked={ready == true}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setReady(true);
+                            axios({
+                              method: "post",
+                              url: window.$link + "bookings/markReady/" + bookingId,
+                              withCredentials: false,
+                              params: {
+                                api_key: window.$api_key,
+                                token: userToken.replace(/['"]+/g, ""),
+                                updated_by: userId,
+                                is_ready: "yes",
+                              },
+                            })
+                              .then(function (response) {})
+                              .catch((error) => {
+                                console.log(error);
+                              });
+                          } else {
+                            setReady(false);
+                            axios({
+                              method: "post",
+                              url: window.$link + "bookings/markReady/" + bookingId,
+                              withCredentials: false,
+                              params: {
+                                api_key: window.$api_key,
+                                token: userToken.replace(/['"]+/g, ""),
+                                updated_by: userId,
+                                is_ready: "no",
+                              },
+                            }).then(function (response) {
+                              console.log(response);
+                            });
+                          }
+                        }}
                       />
-                      <button className="send-btn" type="button" onClick={emailTo}>
-                        {loading ? (
-                          <BeatLoader color={"#3a023a"} loading={loading} size={10} />
-                        ) : (
-                          "Send Out"
-                        )}
-                      </button>
+                      <label for="mdCharge" className="booking-label">
+                        READY FOR EMAIL/PICKUP
+                      </label>
                     </div>
-                  ) : (
-                    <div></div>
-                  )}
-
-
+                    <div className="col-6">
+                      {ready ? (
+                        <div>
+                          <input
+                            className="email-input"
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                            onChange={handleEmailChange}
+                          />
+                          <button 
+                            className="send-btn" 
+                            type="button" 
+                            onClick={emailTo}
+                          >
+                            {loading ? (
+                              <BeatLoader color={"#3a023a"} loading={loading} size={10} />
+                            ) : (
+                              "Send Out"
+                            )}
+                          </button>
+                        </div>
+                        ) : (
+                          <div></div>
+                        )
+                      }
+                    </div>
+                  </div>
                 </div>
                 <div className="personal-data-cont">
                   {/* CLINICAL MICROSCOPY URINALYSIS */}
