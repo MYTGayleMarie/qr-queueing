@@ -981,8 +981,8 @@ export default function LabOfficer() {
               labResultsData.testsToCheck.includes(data.lab_test)
                 ? {
                     label: "[P] " + data.lab_test,
-                    id: data.booking_detail_id,
-                    booking_id: data.id,
+                    id: data.id,
+                    booking_id: data.booking_detail_id,
                     type: data.type ? data.type : "package",
                     result_approval: data.result_approval,
                     approver: data.approver,
@@ -1276,14 +1276,17 @@ export default function LabOfficer() {
         var url_link = "";
         const pdfArray = new Uint8Array(pdfData);
         const pdfBlob = new Blob([pdfArray], { type: 'application/pdf' });
-        // sendEmail(pdfBlob);
+        // sendEmail(pdfBlob);1
+
+
           // Convert the pdfBlob to a base64 encoded string
         const reader = new FileReader();
-        if(selectedLab.label == "lab"){
-          url_link = 'Bookingdetails/uploadResults/'
+        if(selectedLab.type == "lab"){
+          url_link = 'Bookingdetails/uploadResults/' 
         }
         else{
           url_link = 'Bookingpackage_details/uploadResults/'
+          console.log("testtt",selectedLab.id);
         }
         reader.onloadend = function() {
           const base64String = reader.result.split(',')[1]; // Get the base64 part
@@ -1303,17 +1306,21 @@ export default function LabOfficer() {
               }
             })
           .then((response)=>{
-            // console.log(response)
+            console.log(response)
             toast.success("Uploaded successfully!");
             setTimeout(() => {
               // refreshPage();
             },2000);
           })
+          .catch(function (error) {
+            console.log("Error");
+            console.log(error);
+            toast.error("Error Approval");
+          });
         };
         reader.readAsDataURL(pdfBlob);
     });
 }
-
   const handleApproved = () => {
     var link = "";
     if (selectedLab.type === "lab") {
@@ -1323,7 +1330,7 @@ export default function LabOfficer() {
       link =
         window.$link +
         "Bookingpackage_details/updateResultApproval/" +
-        selectedLab.booking_id;
+        selectedLab.id;
     }
     axios({
       method: "post",
@@ -1339,8 +1346,8 @@ export default function LabOfficer() {
       .then(function (response) {
         toast.success("Results are Approved");
         handleSendEmail();
-        // setShowPDF(false);
-        // printHandle()
+        setShowPDF(false);
+        printHandle()
         // handlePrint();
         // refreshPage();
       })
@@ -1359,7 +1366,7 @@ export default function LabOfficer() {
       link =
         window.$link +
         "Bookingpackage_details/updateResultApproval/" +
-        selectedLab.booking_id;
+        selectedLab.id;
     }
     axios({
       method: "post",
@@ -1520,8 +1527,6 @@ export default function LabOfficer() {
   //     reference_range: reference_range,
   //   };
   // });
-
-  console.log(selectedLab)
 
   const Signature = () => {
     return (
