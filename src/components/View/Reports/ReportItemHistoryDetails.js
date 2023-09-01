@@ -19,10 +19,12 @@ const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
+var fromDate = new Date("01-06-2022")
+var formattedFromData = fromDate.toISOString().split('T')[0];
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
-  from_date: formattedPresentData,
+  from_date: formattedFromData,
   to_date: formattedPresentData,
   done: false,
 };
@@ -50,45 +52,51 @@ function ReportItemHistoryDetails() {
   const [redirectBack, setRedirectBack] = useState(false);
   
 
-     React.useEffect(() => {
-       history.length = 0;
-       axios({
-        method: 'get',
-        url: window.$link + 'items/history',
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          date_from: filteredData.from_date,
-          date_to: filteredData.to_date,
-          item_id: id,
-          unit: unit,
-          requester: userId,
-        },
-      }).then(function (response) {
-        setIsReady(true)
-        console.log(response)
-          var data = response.data.data.data;
-          data.map((value, index) => {
-            var info = {};
-            var date = new Date(value.booking_date);
-            var formattedDate = date.toDateString().split(" ");
-            var booking_date = formattedDate[1]+" "+formattedDate[2]+" "+formattedDate[3]
+  React.useEffect(() => {
+    history.length = 0;
+    axios({
+      method: 'get',
+      url: window.$link + 'items/history',
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        date_from: filteredData.from_date,
+        date_to: filteredData.to_date,
+        item_id: id,
+        unit: unit,
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        console.log(response);
+        var data = response.data.data.records;
+        data.map((value, index) => {
+          var info = {};
+          var unit = value.unit;
+          var date = new Date(value.encoded_on);
+          var formattedDate = date.toDateString().split(' ');
+          var encoded_on = formattedDate[1] + ' ' + formattedDate[2] + ' ' + formattedDate[3];
   
-            info.date = booking_date;
-            info.md = value.doctors_referal;
-            info.qty = value.referrals_count;
-            info.amount = value.total_amount;
-            setHistory(oldArray => [...oldArray, info]);
-
-            if(data.length - 1 == index) {
-              setPrintReadyFinal(true);
-              setIsReady(true)
-            }
-          });
+          info.encoded_on = encoded_on;
+          info.doc_type = value.doc_type;
+          info.in = value.inventory_in;
+          info.out = value.inventory_out;
+          info.unit = unit.toUpperCase();
+  
+          setHistory(oldArray => [...oldArray, info]);
+  
+          if (data.length - 1 === index) {
+            setPrintReadyFinal(true);
+            setIsReady(true);
+          }
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        setIsReady(false);
       });
-       
-    },[render]);
+  }, [render]);
 
   function filter() {}
 
@@ -112,7 +120,7 @@ function ReportItemHistoryDetails() {
             buttons={buttons} 
             tableName={'ITEM HISTORY DETAILS REPORT'}
             tableData={history}
-            tableHeaders={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'CURRENT']}
+            tableHeaders={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'UNIT']}
             status={printReadyFinal}
             withBack={true}
             setBack={setRedirectBack}
@@ -123,7 +131,7 @@ function ReportItemHistoryDetails() {
             type={'no-action'}
             tableData={history}
             rowsPerPage={100}
-            headingColumns={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'CURRENT']}
+            headingColumns={['ENCODED ON', 'DOC TYPE', 'IN','OUT', 'UNIT']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

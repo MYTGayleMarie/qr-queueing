@@ -1274,13 +1274,11 @@ export default function LabOfficer() {
         const pdfArray = new Uint8Array(pdfData);
         const pdfBlob = new Blob([pdfArray], { type: 'application/pdf' });
         // sendEmail(pdfBlob);
-        console.log(pdfBlob)
           // Convert the pdfBlob to a base64 encoded string
         const reader = new FileReader();
         reader.onloadend = function() {
           const base64String = reader.result.split(',')[1]; // Get the base64 part
-          console.log(base64String);
-          // sendEmail(pdfBlob);
+          const pdf = "data:application/pdf;base64," + base64String
         };
         reader.readAsDataURL(pdfBlob);
     });
