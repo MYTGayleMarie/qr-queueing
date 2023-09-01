@@ -11,3 +11,11 @@
 .ml-5 {
     margin-left: 3% !important;
 }
+
+.inventory-form{
+    margin: 2% 5% 2% 5%;
+}
+
+.inventory-row{
+    margin-bottom: 10px;
+}
