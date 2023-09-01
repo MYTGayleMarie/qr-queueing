@@ -1279,11 +1279,32 @@ export default function LabOfficer() {
         reader.onloadend = function() {
           const base64String = reader.result.split(',')[1]; // Get the base64 part
           const pdf = "data:application/pdf;base64," + base64String
+
+          const formData = new FormData();
+          formData.append("file", pdf);
+          axios({
+              method: 'post',
+              url: window.$link + 'Bookingdetails/uploadResults/' + selectedLab.id,
+              data: formData,
+              headers: { "Content-Type": "multipart/form-data" },
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ''),
+                added_by:userId
+              }
+            })
+          .then((response)=>{
+            // console.log(response)
+            toast.success("Uploaded successfully!");
+            setTimeout(() => {
+              // refreshPage();
+            },2000);
+          })
         };
         reader.readAsDataURL(pdfBlob);
     });
 }
-
 
   const handleApproved = () => {
     var link = "";
@@ -1309,8 +1330,9 @@ export default function LabOfficer() {
     })
       .then(function (response) {
         toast.success("Results are Approved");
-        setShowPDF(false);
-        printHandle()
+        handleSendEmail();
+        // setShowPDF(false);
+        // printHandle()
         // handlePrint();
         // refreshPage();
       })
@@ -2514,7 +2536,7 @@ export default function LabOfficer() {
               <button
                 className="filter-btn mb-3"
                 // onClick={() => handleApproved()}
-                onClick={() => handleSendEmail()}
+                onClick={() => handleApproved()}
                 disabled={isApproved === "approved"}
                 style={{
                   background:
