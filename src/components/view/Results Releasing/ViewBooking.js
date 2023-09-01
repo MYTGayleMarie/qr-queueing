@@ -656,56 +656,35 @@ export default function ViewBooking() {
                       </div>
                       <>
                         {urinalysisOnly.length > 0 && (
-                          <GenerateResults
+                          <FileUpload
                             servicesData={urinalysisOnly}
                             title={"CLINICAL MICROSCOPY URINALYSIS"}
                             bookingId={bookingId}
                           />
                         )}
-                        {serumPT.length > 0 &&
-                          (detailSerumPT[0]?.with_result === "1" ? (
-                            <GenerateResults
-                              servicesData={serumPT}
-                              title={"CLINICAL MICROSCOPY URINALYSIS"}
-                              bookingId={bookingId}
-                            />
-                          ) : (
+                        {serumPT.length > 0 &&(
                             <FileUpload
                               servicesData={serumPT}
                               title={"CLINICAL MICROSCOPY URINALYSIS"}
                               bookingId={bookingId}
                             />
-                          ))}
+                          )}
 
-                        {spermAnalysis.length > 0 &&
-                          (detailSperm[0]?.with_result === "1" ? (
-                            <GenerateResults
-                              servicesData={spermAnalysis}
-                              title={"CLINICAL MICROSCOPY URINALYSIS"}
-                              bookingId={bookingId}
-                            />
-                          ) : (
+                        {spermAnalysis.length > 0 &&(
                             <FileUpload
                               servicesData={spermAnalysis}
                               title={"CLINICAL MICROSCOPY URINALYSIS"}
                               bookingId={bookingId}
                             />
-                          ))}
+                          )}
 
-                        {pregnancyRPK.length > 0 &&
-                          (detailpregnancyRPK[0]?.with_result === "1" ? (
-                            <GenerateResults
-                              servicesData={pregnancyRPK}
-                              title={"CLINICAL MICROSCOPY URINALYSIS"}
-                              bookingId={bookingId}
-                            />
-                          ) : (
+                        {pregnancyRPK.length > 0 &&(
                             <FileUpload
                               servicesData={pregnancyRPK}
                               title={"CLINICAL MICROSCOPY URINALYSIS"}
                               bookingId={bookingId}
                             />
-                          ))}
+                          )}
 
                         {clinicalUrineLab.length > 0 && (
                           <FileUpload
@@ -734,19 +713,11 @@ export default function ViewBooking() {
                       <div className="category label">
                         CLINICAL MICROSCOPY FECALYSIS
                       </div>
-                      {detailFecalysis[0].with_result === "1" ? (
-                        <GenerateResults
-                          servicesData={clinicalFecalysis}
-                          title={"CLINICAL MICROSCOPY FECALYSIS"}
-                          bookingId={bookingId}
-                        />
-                      ) : (
                         <FileUpload
                           servicesData={clinicalFecalysis}
                           title={"CLINICAL MICROSCOPY FECALYSIS"}
                           bookingId={bookingId}
                         />
-                      )}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
@@ -768,21 +739,12 @@ export default function ViewBooking() {
 
                   {/* CHEMISTRY */}
                   {chemistry.length != 0 && (
-                    <div>
-                      <div className="category label">CHEMISTRY</div>
-                      {services[0].with_results === 1 ? (
-                        <GenerateResults
-                          servicesData={chemistry}
-                          title={"CHEMISTRY"}
-                          bookingId={bookingId}
-                        />
-                      ) : (
+                    <div>                 
                         <FileUpload
                           servicesData={chemistry}
                           title={"CHEMISTRY"}
                           bookingId={bookingId}
                         />
-                      )}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
@@ -791,19 +753,11 @@ export default function ViewBooking() {
                   {serology.length != 0 && (
                     <div>
                       <div className="category label">SEROLOGY</div>
-                      {detailSerology[0]?.with_result === "1" ? (
-                        <GenerateResults
-                          servicesData={serology}
-                          title={"SEROLOGY"}
-                          bookingId={bookingId}
-                        />
-                      ) : (
                         <FileUpload
                           servicesData={serology}
                           title={"SEROLOGY"}
                           bookingId={bookingId}
                         />
-                      )}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}

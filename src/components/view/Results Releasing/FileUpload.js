@@ -161,8 +161,6 @@ export default function FileUpload({servicesData, title, bookingId}){
     base64 = file;
     labIdArray = labIds;
     packageIdArray = packageIds;
-    // console.log(base64)
-
     if(labIdArray.length!=0){
       labIdArray.map((idLab, index)=>{
         // console.log("lab "+idLab)
@@ -181,7 +179,6 @@ export default function FileUpload({servicesData, title, bookingId}){
             }
           })
         .then((response)=>{
-          // console.log(response)
           toast.success("Uploaded successfully!");
           setTimeout(() => {
             // refreshPage();

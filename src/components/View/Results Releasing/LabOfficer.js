@@ -667,6 +667,8 @@ export default function LabOfficer() {
           `,
   });
 
+
+
   React.useEffect(() => {
     //for customer id
     axios({
@@ -1271,20 +1273,26 @@ export default function LabOfficer() {
         const imgData = canvas.toDataURL('image/jpeg', 0.4);
         pdf.addImage(imgData, 'PNG', 10, 10, 180, 170, '', 'FAST');
         const pdfData = pdf.output('arraybuffer');
+        var url_link = "";
         const pdfArray = new Uint8Array(pdfData);
         const pdfBlob = new Blob([pdfArray], { type: 'application/pdf' });
         // sendEmail(pdfBlob);
           // Convert the pdfBlob to a base64 encoded string
         const reader = new FileReader();
+        if(selectedLab.label == "lab"){
+          url_link = 'Bookingdetails/uploadResults/'
+        }
+        else{
+          url_link = 'Bookingpackage_details/uploadResults/'
+        }
         reader.onloadend = function() {
           const base64String = reader.result.split(',')[1]; // Get the base64 part
           const pdf = "data:application/pdf;base64," + base64String
-
           const formData = new FormData();
           formData.append("file", pdf);
           axios({
               method: 'post',
-              url: window.$link + 'Bookingdetails/uploadResults/' + selectedLab.id,
+              url: window.$link + url_link + selectedLab.id,
               data: formData,
               headers: { "Content-Type": "multipart/form-data" },
               withCredentials: false,
@@ -1512,6 +1520,8 @@ export default function LabOfficer() {
   //     reference_range: reference_range,
   //   };
   // });
+
+  console.log(selectedLab)
 
   const Signature = () => {
     return (
