@@ -121,6 +121,7 @@ export default function LabOfficer() {
   const [senior_id, setSeniorId] = useState("");
   const [pwd_id, setPWDId] = useState("");
   const componentRef = useRef();
+  const pdfRef = useRef();
 
   // Lab Tests
   const [services, setServices] = useState([]);
@@ -1259,6 +1260,32 @@ export default function LabOfficer() {
       return <Navigate to={link} />;
     }
   }
+  // FUNCTION TO SEND LETTER TO EMAIL
+  function handleSendEmail () {
+    const pdf = new jsPDF();
+    html2canvas(pdfRef.current, {
+      ignoreElements: function(element) {
+        return element.classList.contains("exclude");
+      }
+    }).then(function(canvas) {
+        const imgData = canvas.toDataURL('image/jpeg', 0.4);
+        pdf.addImage(imgData, 'PNG', 10, 10, 180, 170, '', 'FAST');
+        const pdfData = pdf.output('arraybuffer');
+        const pdfArray = new Uint8Array(pdfData);
+        const pdfBlob = new Blob([pdfArray], { type: 'application/pdf' });
+        // sendEmail(pdfBlob);
+        console.log(pdfBlob)
+          // Convert the pdfBlob to a base64 encoded string
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          const base64String = reader.result.split(',')[1]; // Get the base64 part
+          console.log(base64String);
+          // sendEmail(pdfBlob);
+        };
+        reader.readAsDataURL(pdfBlob);
+    });
+}
+
 
   const handleApproved = () => {
     var link = "";
@@ -1553,7 +1580,7 @@ export default function LabOfficer() {
 
   const LaboratoryResultsTable = () => {
     return (
-      <div style={{ backgroundColor: "white", width: "900px" }}>
+      <div style={{ backgroundColor: "white", width: "900px" }} ref={pdfRef}>
         <div class="bg">
           <div>
             <div ref={componentRef} >
@@ -2488,7 +2515,8 @@ export default function LabOfficer() {
 
               <button
                 className="filter-btn mb-3"
-                onClick={() => handleApproved()}
+                // onClick={() => handleApproved()}
+                onClick={() => handleSendEmail()}
                 disabled={isApproved === "approved"}
                 style={{
                   background:
