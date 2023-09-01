@@ -92,6 +92,7 @@ export default function ViewBooking() {
 
   //Ready for email/pickup
   const [ready, setReady] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const [withResults, setWithResults] = useState("");
 
@@ -577,6 +578,7 @@ export default function ViewBooking() {
                         onChange={(e) => {
                           if (e.target.checked) {
                             setReady(true);
+                            setChecked(true);
                             axios({
                               method: "post",
                               url: window.$link + "bookings/markReady/" + bookingId,
@@ -594,6 +596,7 @@ export default function ViewBooking() {
                               });
                           } else {
                             setReady(false);
+                            setChecked(false);
                             axios({
                               method: "post",
                               url: window.$link + "bookings/markReady/" + bookingId,
@@ -615,7 +618,7 @@ export default function ViewBooking() {
                       </label>
                     </div>
                     <div className="col-6">
-                      {ready ? (
+                      {checked ? (
                         <div>
                           <input
                             className="email-input"
