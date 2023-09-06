@@ -750,7 +750,7 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-      console.log(booking.data)
+ 
       var thyroid = booking.data.filter((data) => data.category_id === "13");
       var serology = booking.data.filter((data) => data.category_id === "12");
       var booking_wo_serology_thyroid = booking.data.filter(
@@ -777,17 +777,23 @@ export default function LabOfficer() {
         })
         .filter((option) => option !== null);
 
-      console.log(labOptions)
+      
 
       setLabOptions(labOptions);
     });
 
     if (selectedLab.id != null) {
+      let paramID = selectedLab.id
+      if(selectedLab?.type === "package"){
+        paramID = selectedLab.booking_detail_id
+      }
+      // console.log("selectedLab result",selectedLab)
+      // selectedLab.type === "package"? selectedLab.booking_detail_id:selectedLab.id
       setIsDataFetched(false);
       setIsReady(false);
       axios({
         method: "get",
-        url: window.$link + "Bookingdetails/getDetailsResult/" + selectedLab.id,
+        url: window.$link + "Bookingdetails/getDetailsResult/" + paramID,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -796,6 +802,7 @@ export default function LabOfficer() {
         },
       })
         .then((response) => {
+    
           var data = response.data.data;
           var packageDetailId = selectedLab.booking_id;
        
@@ -986,7 +993,8 @@ export default function LabOfficer() {
                 ? {
                     label: "[P] " + data.lab_test,
                     id: data.id,
-                    booking_id: data.booking_detail_id,
+                    booking_id: data.id,
+                    booking_detail_id: data.booking_detail_id,
                     type: data.type ? data.type : "package",
                     result_approval: data.result_approval,
                     approver: data.approver,
@@ -1290,7 +1298,7 @@ export default function LabOfficer() {
         }
         else{
           url_link = 'Bookingpackage_details/uploadResults/'
-          console.log("testtt",selectedLab.id);
+         
         }
         reader.onloadend = function() {
           const base64String = reader.result.split(',')[1]; // Get the base64 part
@@ -1310,7 +1318,7 @@ export default function LabOfficer() {
               }
             })
           .then((response)=>{
-            console.log(response)
+           
             toast.success("Uploaded successfully!");
             setTimeout(() => {
               // refreshPage();
@@ -1779,7 +1787,7 @@ export default function LabOfficer() {
                       </div>
                     
                     </div>
-                    {console.log(labTestData[0]?.result)}
+                    
                     {/* {labTestData.map((result, resultIndex) => (
                       <> */}
                         <div
@@ -2224,7 +2232,12 @@ export default function LabOfficer() {
 
   const handlePrint = () => {
     if (componentRef.current) {
-      navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      let paramID = selectedLab.id
+      if(selectedLab.type === "package"){
+        paramID = selectedLab.booking_detail_id
+      }
+      navigateto("/print-lab/"+id+"/"+paramID+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      // navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
       // printHandle();
     } else {
       console.log("Component is not rendered yet!");
@@ -2328,7 +2341,7 @@ export default function LabOfficer() {
                 <br />
 
                 {/* <div className="row"> */}
-                {console.log(allOptions)}
+               
                 {allOptions.map((data) => {
                   {
                   }
