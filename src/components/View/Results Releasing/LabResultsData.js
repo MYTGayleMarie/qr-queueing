@@ -11,6 +11,7 @@ const labResultsData = {
     "Dengue",
     "Syphilis/RPR/VDRL",
     "HIV Screening (Anti HIV)",
+    "Anti HCV",
     "H. Pylori Ag",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",
@@ -953,7 +954,7 @@ const labResultsData = {
       preferred_to: 0.0,
     },
     {
-      lab_test: "Anti-HCV",
+      lab_test: "Anti HCV",
       result: "-",
       unit: "",
       preferred: " ",

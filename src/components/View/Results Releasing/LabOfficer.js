@@ -301,7 +301,7 @@ export default function LabOfficer() {
       lab_test == "NS1 AG" ||
       lab_test == "IgG" ||
       lab_test == "IgM" ||
-      lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"
+      lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, Anti HCV, ANTI-HAV"
     ) {
       setLabTestOptions(labResultsData.posNegOptions2);
       setIsDropdown(true);
@@ -313,7 +313,7 @@ export default function LabOfficer() {
       lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
-      selectedLab.label == "Anti-HCV" ||
+      selectedLab.label == "Anti HCV" ||
       selectedLab.label == "Anti-HAV" ||
       selectedLab.label == "Hepatitis B Surface Antibody Test"
     ) {
@@ -322,7 +322,7 @@ export default function LabOfficer() {
       if (lab_test == "Hepatitis B Surface Antibody Test") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
-      if (lab_test == "Anti-HAV	" || lab_test == "Anti-HCV") {
+      if (lab_test == "Anti-HAV	" || lab_test == "Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
@@ -331,7 +331,7 @@ export default function LabOfficer() {
         setIsDropdown(true);
       } else if (lab_test == "Hepatitis B Surface Antibody Test") {
         setLabTestOptions(labResultsData.posNegOptions2);
-      } else if (lab_test == "Anti-HCV") {
+      } else if (lab_test == "Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
       } else if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
@@ -613,7 +613,8 @@ export default function LabOfficer() {
   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
   selectedLab.label === "Anti-HAV" ||
-  selectedLab.label === "Anti-HCV" ? (
+  selectedLab.label === "Anti HCV" ||
+  selectedLab.label === "Anti HCV" ? (
     (label_test = "Hepatitis Profile Tests")
   ) : (
     <>
@@ -749,6 +750,7 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
+      console.log(booking.data)
       var thyroid = booking.data.filter((data) => data.category_id === "13");
       var serology = booking.data.filter((data) => data.category_id === "12");
       var booking_wo_serology_thyroid = booking.data.filter(
@@ -774,6 +776,8 @@ export default function LabOfficer() {
           return null;
         })
         .filter((option) => option !== null);
+
+      console.log(labOptions)
 
       setLabOptions(labOptions);
     });
@@ -1449,7 +1453,7 @@ export default function LabOfficer() {
       setLabTestData(labResultsData.labTestHPylori);
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
-      e.label === "[P] HBSag (Hepatitis B Antigen)"
+      e.label === "[P] HBSag (Hepatitis B Antigen)" || e.label === "Anti HCV"
     ) {
       // setLabTestData(labResultsData.labTestHepatitisB);
       setLabTestData(labResultsData.labTestHepatitisA);
@@ -1673,8 +1677,8 @@ export default function LabOfficer() {
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
                               "[P] HBSAG (HEPATITIS B ANTIGEN)" ||
-                            selectedLab.label.toUpperCase() === "ANTIHAV" ||
-                            selectedLab.label.toUpperCase() === "ANTIHCV"
+                            selectedLab.label.toUpperCase() === "ANTI-HAV" ||
+                            selectedLab.label.toUpperCase() === "ANTI HCV"
                           ? "SEROLOGY"
                           : selectedLab.label.toUpperCase() === "FT4" ||
                             selectedLab.label.toUpperCase() === "FT3" ||
@@ -1855,7 +1859,7 @@ export default function LabOfficer() {
                         selectedLab.label !==
                           "Hepatitis B Surface Antigen (HbsAg)" &&
                         selectedLab.label !== "Anti-HAV" &&
-                        selectedLab.label !== "Anti-HCV" &&
+                        selectedLab.label !== "Anti HCV" &&
                         // selectedLab.label === "TSH" &&
                         // selectedLab.label === "FT3" &&
                         // selectedLab.label === "FT4" &&
@@ -1889,7 +1893,7 @@ export default function LabOfficer() {
                         selectedLab.label !== "Anti-HAV" &&
                         selectedLab.label !==
                           "Pregnancy Test (RPK Lateral Flow)" &&
-                        selectedLab.label !== "Anti-HCV" &&
+                        selectedLab.label !== "Anti HCV" &&
                         selectedLab.label !== "H. Pylori Ag" &&
                         selectedLab.label !== "Fecal Occult Blood" &&
                         selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
@@ -2068,7 +2072,7 @@ export default function LabOfficer() {
                             selectedLab.label !==
                               "Hepatitis B Surface Antigen (HbsAg)" &&
                             selectedLab.label !== "Anti-HAV" &&
-                            selectedLab.label !== "Anti-HCV" &&
+                            selectedLab.label !== "Anti HCV" &&
                             selectedLab.label !==
                               "Pregnancy Test (RPK Lateral Flow)" &&
                             selectedLab.label !== "Fecal Occult Blood" &&
@@ -2324,6 +2328,7 @@ export default function LabOfficer() {
                 <br />
 
                 {/* <div className="row"> */}
+                {console.log(allOptions)}
                 {allOptions.map((data) => {
                   {
                   }
@@ -2352,8 +2357,9 @@ export default function LabOfficer() {
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                      data.label === "Anti HAV" ||
                       data.label === "Anti-HAV" ||
-                      data.label === "Anti-HCV" ? (
+                      data.label === "Anti HCV" ? (
                         "Hepatitis Profile Tests"
                       ) : (
                         <>
