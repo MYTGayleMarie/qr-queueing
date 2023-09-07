@@ -526,17 +526,19 @@ function Table({
         </tr>
       );
     } else if (type == "report-incomplete-po") {
+
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
+            
             <td
               key={index}
               data-heading={data.key}
-              className={
-                data.val == "for approval"
-                  ? "for-approval"
-                  : data.val.replace(/\s/g, "")
-              }
+              // className={
+              //   data.val === "for approval"
+              //     ? "for-approval"
+              //     : data.val.replace(/\s/g, "")
+              // }
             >
               {data.val}
             </td>
