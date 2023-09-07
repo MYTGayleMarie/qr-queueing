@@ -247,8 +247,7 @@ function Reports() {
               requester: userId,
             },
           }).then(function (response) {
-              // console.log(response)
-              // console.log(response.data.data.sales)
+          
               var total = 0;
               response.data.data.sales.map((data,index) => {
                 if(data[0].type != "credit"){
@@ -275,7 +274,7 @@ function Reports() {
                 requester: userId,
               },
             }).then(function (response) {
-                // console.log(response);
+             
 
                 var pending = response.data.company_invoices.filter((info) => info.is_paid == "0");
                 setUnpaidInvoices(pending);
@@ -314,7 +313,7 @@ function Reports() {
             date_to: filteredData.to_date,
           },
         }).then(function (response) {
-          console.log(response)
+        
             var count = 0;
             response.data.data.data.map((data) => {
               setCredit(count += parseFloat(data.total_count));
@@ -337,38 +336,41 @@ function Reports() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ''),
         requester: userId,
-        date_from: filteredData.from_date,
-        date_to: filteredData.to_date,
+        date_from: new Date("01-01-2022"),
+        date_to: new Date(),
+        // date_from: filteredData.from_date,
+        // date_to: filteredData.to_date,
       }
     })
     .then((pos)=>{
-      const incomplete = pos.data.pos;  
+      // const incomplete = pos.data.pos;  
+      setIncompletePo(pos.data.pos)
       // Getting poItems in each pos
-      incomplete.map(async(pos, index)=>{
-        await axios({
-          method: 'post',
-          url: window.$link + 'pos/getPoItems/' + pos.id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ''),
-            requester: userId,
-          }
-          })
-          .then((poItems)=>{
-            // console.log(poItems)
-            poItems.data.map((itemDetails, index1)=>{
-            const bal = itemDetails.qty-itemDetails.received
-               //  if there is balance, we include it in table
-               if(bal>0){
-                 setIncompletePo(oldArray=>[...oldArray, pos.id])
-               }
-             })
-          })
-          .catch((error)=>{
-            console.log(error)
-          })
-      })   
+      // incomplete.map(async(pos, index)=>{
+      //   await axios({
+      //     method: 'post',
+      //     url: window.$link + 'pos/getPoItems/' + pos.id,
+      //     withCredentials: false,
+      //     params: {
+      //       api_key: window.$api_key,
+      //       token: userToken.replace(/['"]+/g, ''),
+      //       requester: userId,
+      //     }
+      //     })
+      //     .then((poItems)=>{
+      //       // console.log(poItems)
+      //       poItems.data.map((itemDetails, index1)=>{
+      //       const bal = itemDetails.qty-itemDetails.received
+      //          //  if there is balance, we include it in table
+      //          if(bal>0){
+      //            setIncompletePo(oldArray=>[...oldArray, pos.id])
+      //          }
+      //        })
+      //     })
+      //     .catch((error)=>{
+      //       console.log(error)
+      //     })
+      // })   
 
 
     })
@@ -388,9 +390,9 @@ function Reports() {
       },
     })
     .then((res)=>{
-      console.log(res)
+   
       var monthly_inventory = res.data.data.inventory_per_month
-      console.log(res.data.data.inventory_per_month)
+ 
       var monthly_inventory_price = res.data.data.inventory_price_per_month
 
       monthly_inventory.map(data=>{
