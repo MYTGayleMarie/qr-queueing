@@ -578,9 +578,10 @@ function Table({
         </tr>
       );
     } else if (type == "services-packages-2" && clickable == true) {
+     
       return (
         <tr key={row.id}>
-          {rowData.slice(0, 2).map((data, index) => (
+          {rowData.slice(0, 3).map((data, index) => (
             <td
               key={index}
               data-heading={data.key}
