@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { getToken, getUser, removeUserSession } from '../../../utilities/Common';
+import { formatDate, getToken, getUser, removeUserSession } from '../../../utilities/Common';
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import { format } from 'date-fns'
@@ -14,6 +14,7 @@ import './AddPurchaseOrder.css';
 //components
 import Header from '../../Header.js';
 import Navbar from '../../Navbar';
+import { Button, Modal } from 'antd';
 
 //variables
 const userToken = getToken();
@@ -60,6 +61,8 @@ function AddPurchaseOrder() {
 
   const [itemInfo, setItemInfo] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+
+  const [openSuccessModal, setOpenSuccessModal] = useState(false)
 
   const handleItemChange = (e,index) => {
     const {name, value} = e.target;
@@ -249,10 +252,11 @@ function AddPurchaseOrder() {
           added_by: userId,
         },
       }).then(function (response) {
-        toast.success("Successfully added PO!");
-        setTimeout(function () {
-          setRedirect(true);
-        }, 2000);
+        setOpenSuccessModal(true)
+        // toast.success("Successfully added PO!");
+        // setTimeout(function () {
+        //   setRedirect(true);
+        // }, 2000);
       }).catch(function (error) {
         console.log(error);
       });
@@ -505,6 +509,33 @@ function AddPurchaseOrder() {
           </div>
         </div>
       </div>
+      
+
+      <Modal
+        title="Purchase Order Successfully Created!"
+        centered
+
+        open={openSuccessModal}
+        onOk={() => {setOpenSuccessModal(false); setRedirect(true)}}
+        onCancel={() => {setOpenSuccessModal(false); setRedirect(true)}}
+        footer={
+          [
+            // <Button key="back" onClick={() => {setOpenSuccessModal(false); }}>
+            <Button key="back" onClick={() => {setOpenSuccessModal(false); setRedirect(true)}}>
+              Okay
+            </Button>]
+        }
+      >
+
+        <span>Purchase Date: <strong>{formatDate(info.purchase_date)}</strong></span><br/>
+        <span>Payment Date: <strong>{formatDate(info.payment_date)}</strong></span><br/>
+        <span>Supplier: <strong>{selectedSuppliers?.label}</strong></span><br/>
+        <span>Delivery Date: <strong>{formatDate(info.delivery_date)}</strong></span><br/>
+        <span>Remarks: <strong>{info.remarks}</strong></span><br/>
+        <span>Total: <strong>P {grandTotal != null ? parseFloat(grandTotal).toFixed(2) : "100,000.00"}</strong></span><br/>
+       
+       
+      </Modal>
     </div>
   );
 }
