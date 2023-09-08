@@ -523,11 +523,17 @@ function ReviewPurchaseOrder() {
                 </div>
             </div>
             <div className="row ">
-                <div className="col-sm-2">
+                {/* <div className="col-sm-2">
                         <div className='label'>DELIVERY ADDRESS</div>
                 </div>
                 <div className="col-sm-2">
                         <div className='detail'>{deliveryAddress}</div>
+                </div> */}
+                 <div className="col-sm-2">
+                        <div className='label'>REMARKS</div>
+                </div>
+                <div className="col-sm-2">
+                        <div className='detail'>{remarks}</div>
                 </div>
                 <div className="col-sm-5">
                         <span className='label'>DELIVERY DATE</span>
@@ -548,14 +554,7 @@ function ReviewPurchaseOrder() {
                         <div className='detail'>{forwarder}</div>
                 </div>
             </div> */}
-            <div className="row">
-                <div className="col-sm-2">
-                        <div className='label'>REMARKS</div>
-                </div>
-                <div className="col-sm-10">
-                        <div className='detail'>{remarks}</div>
-                </div>
-            </div>
+           
 
             {/* <h5 className="form-categories-subheader italic">INVOICES</h5>
             <Table
