@@ -200,13 +200,13 @@ if(redirect == true) {
                 <form>
                     <div className="row">
                         <div className="col-sm-12">
-                            <label for="company_name" className="form-label">COMPANY NAME <i>(required)</i></label><br />
+                            <label for="company_name" className="form-label">COMPANY NAME <span className="required">*</span></label><br />
                             <input type="text" className="form-control full" id="name" name="name" onChange={setCompany} required/><br />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-12">
-                            <label for="company_address" className="form-label">COMPANY ADDRESS <i>(required)</i></label><br />
+                            <label for="company_address" className="form-label">COMPANY ADDRESS <span className="required">*</span></label><br />
                             <input type="text" className="form-control full" id="address" name="address" onChange={setCompany}  required/><br />
                         </div>
                     </div>
@@ -222,11 +222,11 @@ if(redirect == true) {
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="contact_person" className="form-label">CONTACT PERSON <i> (required)</i></label><br />
+                            <label for="contact_person" className="form-label">CONTACT PERSON <span className="required">*</span></label><br />
                             <input type="text" className="form-control full" id="contact_person" name="contact_person" onChange={setCompany} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="contact_no" className="form-label">CONTACT NUMBER<i> (required)</i></label><br />
+                            <label for="contact_no" className="form-label">CONTACT NUMBER<span className="required">*</span></label><br />
                             <input type="number" className="form-control full" id="contact_no" name="contact_no" onChange={setCompany}  required/><br />
                         </div>
                     </div>
@@ -267,11 +267,11 @@ if(redirect == true) {
                     )}
                     <div className="row">
                         <div className="col-sm-6">
-                            <label for="discount_code" className="form-label">DISCOUNT CODE<i> (required)</i></label><br />
+                            <label for="discount_code" className="form-label">DISCOUNT CODE<span className="required">*</span></label><br />
                             <input type="text" className="form-control full" id="discount_code" name="discount_code" onChange={setDiscount} required/><br />
                         </div>
                         <div className="col-sm-6">
-                            <label for="discount_percentage" className="form-label">DISCOUNT<i> (required)</i></label><br />
+                            <label for="discount_percentage" className="form-label">DISCOUNT<span className="required">*</span></label><br />
                             <input type="text" className="form-control full" id="discount_percentage" name="discount_percentage" onChange={setDiscount}  required/><br />
                         </div>
                     </div>

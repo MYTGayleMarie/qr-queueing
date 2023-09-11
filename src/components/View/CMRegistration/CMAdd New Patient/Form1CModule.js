@@ -425,17 +425,17 @@ function Form1CModule({
             <div className="row mb-0 pb-0">
               <div className="col-sm-4">
                 <label for="fname" className="form-label font-large">
-                  FIRST NAME <i>(required)</i>
+                  FIRST NAME <span className="required">*</span>
                 </label>
               </div>
               <div className="col-sm-4">
                 <label for="fname" className="form-label font-large">
-                  MIDDLE NAME <i>(required)</i>
+                  MIDDLE NAME <span className="required">*</span>
                 </label>
               </div>
               <div className="col-sm-4">
                 <label for="lname" className="form-label font-large">
-                  LAST NAME <i>(required)</i>
+                  LAST NAME <span className="required">*</span>
                 </label>
               </div>
             </div>
@@ -478,17 +478,17 @@ function Form1CModule({
             <div className="row mb-0 pb-0">
               <div className="col-sm-4">
                 <label for="fname" className="form-label font-large">
-                  SEX <i>(required)</i>
+                  SEX <span className="required">*</span>
                 </label>
               </div>
               <div className="col-sm-4">
                 <label for="fname" className="form-label font-large">
-                  DATE OF BIRTH <i>(required)</i>
+                  DATE OF BIRTH <span className="required">*</span>
                 </label>
               </div>
               <div className="col-sm-4">
                 <label for="lname" className="form-label font-large">
-                  SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
+                  SENIOR CITIZEN ID {isSenior && <span className="required">*</span>}
                 </label>
               </div>
             </div>
@@ -534,7 +534,7 @@ function Form1CModule({
               <div className="col-sm-6"></div>
               <div className="col-sm-6">
                 <label for="fname" className="form-label font-large">
-                  PWD ID {isPWD && <i>(required)</i>}
+                  PWD ID {isPWD && <span className="required">*</span>}
                 </label>
               </div>
             </div>
@@ -575,7 +575,7 @@ function Form1CModule({
               </div>
               <div className="col-sm-6">
                 <label for="fname" className="form-label font-large">
-                  CONTACT NUMBER <i>(required)</i>
+                  CONTACT NUMBER <span className="required">*</span>
                 </label>
               </div>
             </div>
@@ -607,7 +607,7 @@ function Form1CModule({
             <div className="row">
               <div className="col-sm-12">
                 <label for="address" className="form-label font-large">
-                  ADDRESS <i>(required)</i>
+                  ADDRESS <span className="required">*</span>
                 </label>
               </div>
 

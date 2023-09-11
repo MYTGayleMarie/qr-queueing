@@ -142,7 +142,7 @@ function OldPatientForm1({
         <div className="row date-of-testing-container small-gap">
           <div className="col">
             <label for="result" className="radio-header">
-              SERVICE LOCATION
+              SERVICE LOCATION <span className="required">*</span>
             </label>
             <br />
             <select
@@ -441,7 +441,7 @@ function OldPatientForm1({
             <div className="row">
               <div className="col-sm-12 input-group-sm">
                 <span className="first-name label">
-                  REFERRAL <i>(required)</i>
+                  REFERRAL <span className="required">*</span>
                 </span>
                 <br />
 
@@ -498,7 +498,7 @@ function OldPatientForm1({
             </div>
             <div className="row">
               <div className="col-sm-6 input-group-sm">
-                <span className="radio-header">LOCATION OF SERVICE</span>
+                <span className="radio-header">LOCATION OF SERVICE <span className="required">*</span></span>
                 <br />
 
                 <div className="row">
@@ -539,7 +539,7 @@ function OldPatientForm1({
                 </div>
               </div>
               <div className="col-sm-6 input-group-sm">
-                <span className="radio-header">RESULTS</span>
+                <span className="radio-header">RESULTS <span className="required">*</span> </span>
                 <br />
 
                 <div className="row">
@@ -642,7 +642,7 @@ function OldPatientForm1({
             <div className="row mb-3">
               <div className="col-sm-6 input-group-sm">
                 <span className="first-name label">
-                  DATE OF TESTING <i>(required)</i>
+                  DATE OF TESTING <span className="required">*</span>
                 </span>
                 <br />
 
@@ -650,7 +650,7 @@ function OldPatientForm1({
               </div>
               <div className="col-sm-6 input-group-sm">
                 <span className="first-name label">
-                  DATE OF EXTRACTION <i>(required)</i>
+                  DATE OF EXTRACTION <span className="required">*</span>
                 </span>
                 <br />
 

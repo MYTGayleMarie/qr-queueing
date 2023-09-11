@@ -1,3 +1,7 @@
 .booking-label {
     margin-left: 3% !important;
 }
+
+.required{
+    color:red;
+}
