@@ -47,6 +47,48 @@ function ReportPendingPO() {
   //redirect
   const [redirect, setRedirect] = useState(false);
 
+    //async function
+    async function fetchSuppliers(tempPos){
+      await axios({
+        method: "post",
+        url: window.$link + "suppliers/getAll",
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+        
+          requester: userId,
+        },
+      }).then((supplier) => {
+      
+        let po_temp_data = [...tempPos]
+        let suppliers_list = supplier.data.suppliers
+  
+        po_temp_data.map((data,index)=>{
+      
+   var info = {};
+   let supplier_name = suppliers_list.filter(supplier=>
+    supplier.id === data.supplier_id)[0]?.name
+    var date = new Date(data.added_on);
+          var formattedDate = date.toDateString().split(" ");
+          info.id = data.id;
+          info.po_date =
+            formattedDate[1] +
+            " " +
+            formattedDate[2] +
+            " " +
+            formattedDate[3];
+          info.supplier = supplier_name;
+          info.total_amount = data.grand_total;
+      
+        setPendingPOs((oldArray) => [...oldArray, info]);
+        })
+  
+       setPrintReadyFinal(true);
+              setIsReady(true);
+      });
+    }
+    
   //ALL PENDING POS
   React.useEffect(() => {
     pendingPOs.length = 0;
@@ -63,44 +105,46 @@ function ReportPendingPO() {
       },
     })
       .then(function (response) {
+       
         var pending = response.data.pos.filter(
-          (info) => info.status == "pending"
+          (info) => info.status == "for approval"
         );
-        pending.map((data, index) => {
-          var info = {};
-          axios({
-            method: "post",
-            url: window.$link + "suppliers/show/" + data.supplier_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ""),
-              date_from: filteredData.from_date,
-              date_to: filteredData.to_date,
-              requester: userId,
-            },
-          })
-            .then(function (supplier) {
-              var date = new Date(data.added_on);
-              var formattedDate = date.toDateString().split(" ");
-              info.id = data.id;
-              info.po_date =
-                formattedDate[1] +
-                " " +
-                formattedDate[2] +
-                " " +
-                formattedDate[3];
-              info.supplier = supplier.data.name;
-              info.total_amount = data.grand_total;
-              setPendingPOs((oldArray) => [...oldArray, info]);
-            })
-            .then(function (error) {});
+        fetchSuppliers(pending)
+        // pending.map((data, index) => {
+        //   var info = {};
+        //   axios({
+        //     method: "post",
+        //     url: window.$link + "suppliers/show/" + data.supplier_id,
+        //     withCredentials: false,
+        //     params: {
+        //       api_key: window.$api_key,
+        //       token: userToken.replace(/['"]+/g, ""),
+        //       date_from: filteredData.from_date,
+        //       date_to: filteredData.to_date,
+        //       requester: userId,
+        //     },
+        //   })
+        //     .then(function (supplier) {
+        //       var date = new Date(data.added_on);
+        //       var formattedDate = date.toDateString().split(" ");
+        //       info.id = data.id;
+        //       info.po_date =
+        //         formattedDate[1] +
+        //         " " +
+        //         formattedDate[2] +
+        //         " " +
+        //         formattedDate[3];
+        //       info.supplier = supplier.data.name;
+        //       info.total_amount = data.grand_total;
+        //       setPendingPOs((oldArray) => [...oldArray, info]);
+        //     })
+        //     .then(function (error) {});
 
-          if (pending.length - 1 == index) {
-            setPrintReadyFinal(true);
-            setIsReady(true);
-          }
-        });
+        //   if (pending.length - 1 == index) {
+        //     setPrintReadyFinal(true);
+        //     setIsReady(true);
+        //   }
+        // });
       })
       .then(function (error) {
         console.log(error);
