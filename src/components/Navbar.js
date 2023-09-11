@@ -773,6 +773,48 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
   );
 }
 
+function inventoryNavbar(showNavbar, setshowNavbar) {
+  return (
+    <div
+    class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+    id="sidebar"
+  >
+    <ul class="nav flex-column text-white w-100">
+      <div class="d-flex justify-content-center">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+    
+      <li href="#" class="nav-link supply-nav">
+        <img
+          src={reportIcon}
+          alt={"supply"}
+          class="supply icon supply-icon"
+        ></img>
+        <span class="mx-2">Reports</span>
+        <ul class="sub-menu">
+          <Link to="/reports-inventory" className="sub-link">
+            <li class="sub-list">Inventory</li>
+          </Link>
+        </ul>
+        <ul class="sub-menu">
+          <Link to="/reports-item-history" className="sub-link">
+            <li class="sub-list">Item</li>
+          </Link>
+        </ul>
+        <ul class="sub-menu">
+          <Link to="/reports-incomplete-po" className="sub-link">
+            <li class="sub-list">Incomplete POs</li>
+          </Link>
+        </ul>
+      </li>
+      <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+        <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+        <span class="mx-2">Log Out</span>
+      </li>
+    </ul>
+  </div>
+  );
+}
 function receivingNavbar(showNavbar, setshowNavbar) {
   return (
     <div>
@@ -835,6 +877,28 @@ function reportSideNav() {
       <Link to="/reports-services-packages">
         <span class="mx-2 nav-item">Services and Packages</span>
       </Link>
+    </div>
+  );
+}
+function inventoryReportSideNav() {
+  return (
+    <div className="reports-show-nav">
+      
+          <Link to="/reports-inventory" className="sub-link">
+             <span class="mx-2 nav-item">Inventory</span>
+          </Link>
+       
+       
+          <Link to="/reports-item-history" className="sub-link">
+             <span class="mx-2 nav-item">Item</span>
+          </Link>
+       
+       
+          <Link to="/reports-incomplete-po" className="sub-link">
+             <span class="mx-2 nav-item">Incomplete POs</span>
+          </Link>
+       
+    
     </div>
   );
 }
@@ -1202,6 +1266,59 @@ function QueueManagerNavbarTop(
 // </div>
 //   )
 // }
+function InventoryNavbarTop(
+  showNavbar,
+  showMobileNavBar,
+  showSupply,
+  setShowSupply,
+  showReport,
+  setShowReport
+) {
+  return (
+    <div class="navbar">
+      <div class="logo-mobile">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+      <div id="nav-icon">
+        <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+      </div>
+      <div id="side-nav">
+        <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+        <div class="side-nav-content">
+          
+          <div
+            className="reports-show-nav"
+            onClick={(e) => setShowReport(!showReport)}
+          >
+            <img
+              src={reportIcon}
+              alt={"supply"}
+              class="supply icon mobile-size-icon"
+            ></img>
+            <span class="mx-2">Reports</span>
+            <span>
+              {showReport == true && caretUp()}
+              {showReport == false && caretDown()}
+            </span>
+            {showReport == true && inventoryReportSideNav()}
+          </div>
+          <a href="#" class="nav-link" onClick={removeUserSession}>
+            <img
+              src={logoutIcon}
+              alt={"logout"}
+              class="logout icon mobile-size-icon"
+            ></img>
+            <span class="mx-2 logout-text">Log Out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 function PurchasingNavbarTop(
   showNavbar,
   showMobileNavBar,
@@ -1932,6 +2049,16 @@ function Navbar() {
           showCompany,
           setShowCompany
         )}
+      {showNavbar == false &&
+        role == 13 &&
+        InventoryNavbarTop(
+          showNavbar,
+          showMobileNavBar,
+          showSupply,
+          setShowSupply,
+          showCompany,
+          setShowCompany
+        )}
       {/* {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)} */}
 
       {showNavbar == true &&
@@ -1965,6 +2092,9 @@ function Navbar() {
       {showNavbar == true &&
         role == 11 &&
         receivingNavbar(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 13 &&
+        inventoryNavbar(showNavbar, setshowNavbar)}
     </div>
   );
 }
