@@ -34,8 +34,8 @@ function ReviewPurchaseOrder() {
       //PO details
       const {id, dateFrom, dateTo, statusFilter} = useParams();
       const [redirectBack, setRedirectBack] = useState(false);
-      var poId;
       const [supplier, setSupplier] = useState("");
+      const[poId, setPOId] = useState("")
       const [purchaseDate, setPurchaseDate] = useState("");
       const [deliveryDate, setDeliveryDate] = useState("");
       const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -139,7 +139,7 @@ function ReviewPurchaseOrder() {
             }).then(function (error) {
                 console.log(error);
             })
-            console.log(response.data);
+            setPOId(response.data.id)
             setPurchaseDate(pDate.toDateString());
             setDeliveryDate(dDate.toDateString());
             setDeliveryAddress(response.data.delivery_address);
@@ -509,10 +509,14 @@ function ReviewPurchaseOrder() {
                 />
                 <ToastContainer/>
 
-            <h4 className="form-categories-header italic">PURCHASE ORDER DETAILS</h4>
+            <h4 className="form-categories-header">PURCHASE ORDER DETAILS</h4>
             
             <div className="po-details">
-            <div className="row">
+            <div className="row mb-4">
+                <div className="col-sm-2">
+                        <span className='label'>PO Number</span>
+                        <span className='detail'>{poId}</span>
+                </div>
                 <div className="col-sm-4">
                         <span className='label'>SUPPLIER</span>
                         <span className='detail'>{supplier}</span>
@@ -529,13 +533,11 @@ function ReviewPurchaseOrder() {
                 <div className="col-sm-2">
                         <div className='detail'>{deliveryAddress}</div>
                 </div> */}
-                 <div className="col-sm-2">
+                 <div className="col-sm-6">
                         <div className='label'>REMARKS</div>
-                </div>
-                <div className="col-sm-2">
                         <div className='detail'>{remarks}</div>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-6">
                         <span className='label'>DELIVERY DATE</span>
                         <span className='detail'>{deliveryDate}</span>
                 </div>
@@ -565,7 +567,7 @@ function ReviewPurchaseOrder() {
                 headingColumns={['PO NO.', 'SUPPLIER', 'PURCHASE DATE', 'TOTAL','STATUS','PAYMENT', 'ACTION']}
                 /> */}
 
-            <h5 className="form-categories-subheader italic">LIST OF PURCHASED ITEMS</h5>
+            <h5 className="form-categories-subheader">LIST OF PURCHASED ITEMS</h5>
 
                 <div className="summary-services">
                     <div className="row">
