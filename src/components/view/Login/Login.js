@@ -91,6 +91,8 @@ function Login() {
       NavigationRedirection = <Navigate to="/lab" />;
     } else if (roleId === "11") {
       NavigationRedirection = <Navigate to="/purchase-order" />;
+    }  else if (roleId === "13") {
+      NavigationRedirection = <Navigate to="/reports-inventory" />;
     } else {
       NavigationRedirection = <Navigate to="/registration" />;
     }
