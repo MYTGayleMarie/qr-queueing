@@ -133,7 +133,7 @@ export default function LabOfficer() {
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [labOptions, setLabOptions] = useState([]);
   const [labOptionsPackage, setLabOptionsPackage] = useState([]);
-  const allOptions = (labOptions || []).concat(labOptionsPackage || []);
+  const allOptions = (labOptions).concat(labOptionsPackage);
   const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
   const [testIndex, setTestIndex] = useState();
