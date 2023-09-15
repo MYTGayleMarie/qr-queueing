@@ -291,6 +291,11 @@ function purchasingNavbar(showNavbar, setShowNavbar) {
               <li class="sub-list">Services and Packages</li>
             </Link>
           </ul>
+          <ul class="sub-menu">
+            <Link to="/reports-home-services" className="sub-link">
+              <li class="sub-list">Home Service</li>
+            </Link>
+          </ul>
         </li>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -876,6 +881,9 @@ function reportSideNav() {
     <div className="reports-show-nav">
       <Link to="/reports-services-packages">
         <span class="mx-2 nav-item">Services and Packages</span>
+      </Link>
+      <Link to="/reports-home-services">
+        <span class="mx-2 nav-item">Home Service</span>
       </Link>
     </div>
   );
