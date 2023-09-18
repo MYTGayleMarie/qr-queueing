@@ -78,6 +78,7 @@ export default function MedTech() {
             ", " +
             getTime(bookingTime);
           bookingDetails.paymentStatus = booking.payment_status;
+          bookingDetails.result_type = booking.result_type;
           bookingDetails.uploadStatus =
             booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
           setPatientData((oldArray) => [...oldArray, bookingDetails]);
@@ -166,6 +167,7 @@ export default function MedTech() {
               "PATIENT NAME",
               "BOOKING DATE",
               "PAYMENT STATUS",
+              "RESULT TYPE",
               "UPLOAD STATUS",
               "ACTION",
             ]}
