@@ -36,6 +36,24 @@
     -webkit-user-select: none;
     touch-action: manipulation;
 }
+
+.result-email{
+  display: block;
+  width: 100%;
+
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
 .pass-input{
     position: absolute;
     width: 20%;
@@ -119,4 +137,18 @@
 .modal-cont{
     width: auto;
     height: 70%;
+}
+
+.send-btn-results{
+ cursor: pointer;
+  border-radius: 6px;
+  border-color: #04b4cc;
+  color: #fff;
+  background: linear-gradient(180deg, #04b4cc 0%, #04b4cc 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
