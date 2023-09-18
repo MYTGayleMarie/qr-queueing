@@ -90,7 +90,8 @@ function AddPatient({
       dateOfTesting != "" &&
       lastMeal != "" &&
       ((isSenior && senior_id !== "") || !isSenior) &&
-      ((isPWD && pwd_id !== "") || !isPWD)
+      ((isPWD && pwd_id !== "") || !isPWD) &&
+      ((serviceLocation === "home service" && location!=="" && serviceFee!=="" && serviceFee!==0)||serviceLocation==="clinic")
     ) {
       return (
         <div className="d-flex justify-content-end mb-5">
@@ -133,7 +134,7 @@ function AddPatient({
           <div className="col-sm-6">
             {location != "" && (
               <label for="result" className="radio-header font-large">
-                SERVICE FEE
+                SERVICE FEE <span className="required">*</span>
               </label>
             )}
             <br />

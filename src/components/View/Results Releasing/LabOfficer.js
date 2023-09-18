@@ -2471,7 +2471,7 @@ export default function LabOfficer() {
                         var value = e.target.value;
                         if (editingLab === "Ph") {
                           value = parseFloat(e.target.value)
-                            .toFixed(1)
+                            .toFixed(3)
                             .toString();
                         } else if (editingLab === "Specific Gravity") {
                           value = parseFloat(e.target.value)
