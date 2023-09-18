@@ -71,15 +71,19 @@ export default function ViewBooking() {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("")
+  const [sendOutDetails, setSendOutDetails] = useState({
+    email:"",remarks:""
+  })
   const [sendEmail, setSendEmail] = useState("");
   const [address, setAddress] = useState("");
 
   
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setSendEmail(value);
+  const handleSendoutChange = (e) => {
+    const {name, value} = e.target
+    setSendOutDetails({...sendOutDetails,[name]:value})
   };
+  
   console.log(sendEmail);
   // Lab Tests
   const [services, setServices] = useState([]);
@@ -307,7 +311,7 @@ export default function ViewBooking() {
 
  console.log(thyroid_profile)
  function emailTo() {
-  if (sendEmail && sendEmail.trim() !== "") { 
+  if (sendOutDetails.email && sendOutDetails.email.trim() !== "") { 
     setLoading(true);
 
     axios({
@@ -318,7 +322,8 @@ export default function ViewBooking() {
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ""),
         requester: userId,
-        email: sendEmail,
+        email: sendOutDetails.email,
+        remarks:sendOutDetails.remarks
       },
     })
       .then(function (response) {
@@ -569,7 +574,7 @@ export default function ViewBooking() {
                 </h3>
                 <div className="personal-data-cont">
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-4 ">
                       <input
                         type="checkbox"
                         name="physical_exam"
@@ -617,33 +622,34 @@ export default function ViewBooking() {
                         READY FOR EMAIL/PICKUP
                       </label>
                     </div>
-                    <div className="col-6">
+                    
                       {checked ? (
-                        <div>
-                          <input
-                            className="email-input"
-                            type="text"
-                            placeholder="Email"
-                            name="email"
-                            onChange={handleEmailChange}
-                          />
-                          <button 
-                            className="send-btn" 
-                            type="button" 
-                            onClick={emailTo}
-                          >
-                            {loading ? (
+                        <>
+                        <div className="col-3" style={{textAlign:"-webkit-right"}}>
+                        <input type="text" name="email"  placeholder="Enter Email..." className="result-email"  value={sendOutDetails.email} onChange={handleSendoutChange}/>
+                        
+                        </div>
+                        <div className="col-3" style={{textAlign:"-webkit-right"}}>
+                        <input type="text" name="remarks" placeholder="Enter Remarks..." className="result-email" value={sendOutDetails.remarks}  onChange={handleSendoutChange}/>
+                        </div>
+                        <div className="col-2">
+                        <button type="button" class="btn btn-primary btn-sm" className="send-btn-results" onClick={emailTo}> {loading ? (
                               <BeatLoader color={"#3a023a"} loading={loading} size={10} />
                             ) : (
                               "Send Out"
-                            )}
-                          </button>
+                            )}</button>
+                        
                         </div>
+                         
+                         
+                        
+                          
+                        </>
                         ) : (
-                          <div></div>
+                          <div className="col-8"></div>
                         )
                       }
-                    </div>
+                   
                   </div>
                 </div>
                 <div className="personal-data-cont">
