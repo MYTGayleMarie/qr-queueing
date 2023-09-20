@@ -2533,7 +2533,7 @@ function Table({
       </div>
     );
   } else if (type === "medtech") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done, result_type } = filteredData;
 
     return (
       <div className="table-container">
@@ -2551,10 +2551,11 @@ function Table({
           <div
             className={
               totalCount !== null && totalCount !== undefined
-                ? "col-sm-10 d-flex justify-content-end"
-                : "col-sm-12 d-flex justify-content-end mb-1"
+                ? "col-sm-10 d-flex justify-content-end mt-3"
+                : "col-sm-12 d-flex justify-content-end mb-1 mt-3"
             }
           >
+           
             <input
               type="date"
               className="from-date search"
@@ -2568,7 +2569,13 @@ function Table({
               name="to_date"
               value={to_date}
               onChange={setFilter}
-            />
+            />{" "}
+             <select name="result_type" value={result_type} onChange={setFilter}>
+            <option value="">All</option>
+            <option value="email">Email</option>
+            <option value="print with pickup">Print with Pickup</option>
+            <option value="both">Both</option>
+          </select>
             <button
               className="filter-btn"
               name="done"

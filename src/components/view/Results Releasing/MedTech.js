@@ -27,6 +27,7 @@ export default function MedTech() {
     from_date: dateFrom ? dateFrom : formattedPresentData,
     to_date: dateTo ? dateTo : formattedPresentData,
     done: false,
+    result_type:""
   });
   const [render, setRender] = useState([]);
   const [patientData, setPatientData] = useState([]);
@@ -45,6 +46,7 @@ export default function MedTech() {
 
   React.useEffect(() => {
     setIsReady(false);
+    setPatientData([])
     patientData.length = 0;
     axios({
       method: "get",
@@ -56,6 +58,7 @@ export default function MedTech() {
         requester: userId,
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
+        result_type:filteredData.result_type
       },
     })
       .then(function (response) {
@@ -78,6 +81,7 @@ export default function MedTech() {
             ", " +
             getTime(bookingTime);
           bookingDetails.paymentStatus = booking.payment_status;
+          bookingDetails.result_type = booking.result_type;
           bookingDetails.uploadStatus =
             booking.upload_status === "1" ? "INCOMPLETE" : "COMPLETE";
           setPatientData((oldArray) => [...oldArray, bookingDetails]);
@@ -166,6 +170,7 @@ export default function MedTech() {
               "PATIENT NAME",
               "BOOKING DATE",
               "PAYMENT STATUS",
+              "RESULT TYPE",
               "UPLOAD STATUS",
               "ACTION",
             ]}

@@ -24,6 +24,8 @@ const labResultsData = {
     "Antigen Rapid Swab (Nasal)", 
     "CEA",
     "VITAMIN D",
+    "Anti HAV",
+    "Hbsag Test Promo Group (15 PAX OR MORE)",
   ],
 
   urinalysisColorOptions: [
@@ -925,6 +927,25 @@ const labResultsData = {
     },
   ],
 
+  labTestHAV: [
+    {
+      lab_test: "IgG",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "IgM",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
+
   labTestHPylori: [
     {
       lab_test: "H. Pylori",
@@ -961,14 +982,14 @@ const labResultsData = {
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
-    {
-      lab_test: "Anti-HAV",
-      result: "-",
-      unit: "",
-      preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
-    },
+    // {
+    //   lab_test: "Anti-HAV",
+    //   result: "-",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
     // {
     //   lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
     //   result: "-",
@@ -1004,14 +1025,14 @@ const labResultsData = {
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
-    {
-      lab_test: "Anti-HAV",
-      result: "-",
-      unit: "",
-      preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
-    },
+    // {
+    //   lab_test: "Anti-HAV",
+    //   result: "-",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
   ],
 
   labTestThyroid: [
