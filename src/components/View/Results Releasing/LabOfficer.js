@@ -192,7 +192,7 @@ export default function LabOfficer() {
   function update(lab_test) {
     setEditingLab(lab_test);
     setIsDropdown(false);
-
+    
     // For dropdowns in Edit modal
     if (
       selectedLab.label == "Urinalysis" ||
@@ -301,11 +301,12 @@ export default function LabOfficer() {
         setIsDropdown(false);
       }
     } else if (
-      lab_test == "NS1 AG" ||
+      (lab_test == "NS1 AG" ||
       lab_test == "IgG" ||
       lab_test == "IgM" ||
-      lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, Anti HCV, ANTI-HAV"
+      lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, Anti HCV, ANTI-HAV") && selectedLab.label !=="Anti HAV"
     ) {
+     
       setLabTestOptions(labResultsData.posNegOptions2);
       setIsDropdown(true);
     } else if (lab_test == "Syphilis/RPR/VDRL" || lab_test == "H. Pylori") {
@@ -317,15 +318,15 @@ export default function LabOfficer() {
       lab_test == "HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "Anti HCV" ||
-      selectedLab.label == "Anti-HAV" ||
       selectedLab.label == "Hepatitis B Surface Antibody Test"
     ) {
+
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
       setIsDropdown(true);
       if (lab_test == "Hepatitis B Surface Antibody Test") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
-      if (lab_test == "Anti-HAV	" || lab_test == "Anti HCV") {
+      if (lab_test == "Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
@@ -337,10 +338,7 @@ export default function LabOfficer() {
       } else if (lab_test == "Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
-      } else if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
-        setLabTestOptions(labResultsData.posNegOptions2);
-        setIsDropdown(true);
-      } else {
+      }  else {
         setIsDropdown(false);
       }
     } else if (selectedLab.label == "Dengue") {
@@ -350,6 +348,11 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false);
       }
+    } else if (selectedLab.label === "Anti HAV") {
+     
+        setLabTestOptions(labResultsData.posNegTestOptions);
+        setIsDropdown(true);
+      
     } else {
       setIsDropdown(false);
     }
@@ -775,19 +778,23 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-
+    
       var thyroid = booking.data.filter((data) => data.category_id === "13");
-      var serology = booking.data.filter((data) => data.category_id === "12");
+      var serology = booking.data.filter((data) => data.category_id === "12" && data.lab_test !== "Anti HAV");
+    
+      
       var booking_wo_serology_thyroid = booking.data.filter(
-        (data) => data.category_id !== "12" && data.category_id !== "13"
+        (data) => ((data.category_id==="12" && data.lab_test==="Anti HAV") || (data.category_id !== "12")) && data.category_id !== "13"
       );
 
       if (serology.length > 0) {
         booking_wo_serology_thyroid.push(serology[0]);
       }
+
       if (thyroid.length > 0) {
         booking_wo_serology_thyroid.push(thyroid[0]);
       }
+     
       const labOptions = booking_wo_serology_thyroid
         .map((data) => {
           // Include only data in sheets
@@ -801,8 +808,9 @@ export default function LabOfficer() {
           return null;
         })
         .filter((option) => option !== null);
-
+       
       setLabOptions(labOptions);
+      
     });
 
     if (selectedLab.id != null) {
@@ -874,9 +882,13 @@ export default function LabOfficer() {
         })
         .catch((error) => {
           setIsReady(true);
-          console.log(error);
-
+          console.log("error here",error);
+          console.log("error status here",error.response.status === 404);
+         if(error?.response?.status === 404){
           handleLab(selectedLab);
+         }
+
+          // handleLab(selectedLab);
         });
     }
   }, [selectedLab]);
@@ -905,6 +917,8 @@ export default function LabOfficer() {
 
   // Modal Result and Unit edit
   React.useEffect(() => {
+  
+   if(labTestData.length>0){
     const packageDetailId = selectedLab.booking_id;
     // Store in different arrays the units, results, and lab names
     const resultsArray = labTestData.map((row) => row.result);
@@ -991,6 +1005,7 @@ export default function LabOfficer() {
           });
       }
     }
+   }
   }, [labTestData]);
 
   // Lab tests
@@ -1220,7 +1235,7 @@ export default function LabOfficer() {
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
         selectedLab.label !== "Gram Stain" &&
-        selectedLab.label !== "HIV Screening (Anti HIV)"
+        selectedLab.label !== "HIV Screening (Anti HIV)" && selectedLab.label !== "Anti HAV"
       ) {
         return {
           lab_test: result.lab_test,
@@ -1228,7 +1243,14 @@ export default function LabOfficer() {
           unit: result.unit,
           reference_range: reference_range,
         };
-      } else {
+      } else if(selectedLab.label === "Anti HAV") {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+        
+        };
+      }
+       else {
         return {
           lab_test: result.lab_test,
           result: result.result,
@@ -1421,6 +1443,7 @@ export default function LabOfficer() {
   };
 
   function handleLab(e) {
+    
     //setLabTests(e.target.value)
 
     if (selectedLab.result_approval === "approved") {
@@ -1480,10 +1503,17 @@ export default function LabOfficer() {
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
       e.label === "[P] HBSag (Hepatitis B Antigen)" ||
-      e.label === "Anti HCV"
+      e.label === "Anti HCV" 
     ) {
       // setLabTestData(labResultsData.labTestHepatitisB);
       setLabTestData(labResultsData.labTestHepatitisA);
+    } else if (
+  
+      e.label === "Anti HAV" 
+    ) {
+
+      // setLabTestData(labResultsData.labTestHepatitisB);
+      setLabTestData(labResultsData.labTestHAV);
     } else if (
       e.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       e.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)"
@@ -1709,7 +1739,7 @@ export default function LabOfficer() {
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
                               "[P] HBSAG (HEPATITIS B ANTIGEN)" ||
-                            selectedLab.label.toUpperCase() === "ANTI-HAV" ||
+                            // selectedLab.label.toUpperCase() === "ANTI-HAV" ||
                             selectedLab.label.toUpperCase() === "ANTI HCV"
                           ? "SEROLOGY"
                           : selectedLab.label.toUpperCase() === "FT4" ||
@@ -1720,7 +1750,7 @@ export default function LabOfficer() {
                           ? "THYROID PROFILE"
                           : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                           ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
-                          : selectedLab.label.toUpperCase()}
+                          : selectedLab.label === "Anti HAV" ? "CLINICAL SEROLOGY":selectedLab.label.toUpperCase()}
                       </>
                     )}
                   </span>
@@ -1865,6 +1895,64 @@ export default function LabOfficer() {
                             <h5>{labTestData[0]?.result}</h5>
                           </div>
                         </div>
+                        {/* </>
+                    ))} */}
+                      </div>
+                    </>
+                  ) :selectedLab.label === "Anti HAV"?(
+                    <>
+                    
+                      <div className="tb mid">
+                        <div className="row bd">
+                          <div className="col">
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>ANTIBODY</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                          // key={resultIndex}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4 pt-3"><h5>ANTI-HAV</h5></div>
+                              <div className="col-4">
+                            <div className="row">
+                              <div className="col-12">IgG</div>
+                              <div className="col-12">IgM</div>
+                            </div>
+                              </div>
+                              <div className="col-4">
+                            <div className="row">
+                              <div className="col-12">{labTestData[0]?.result}</div>
+                              <div className="col-12">{labTestData[1]?.result}</div>
+                            </div>
+                              </div>
+                            
+                            
+                            </div>
+                          </div>
+                        </div>
+                       
                         {/* </>
                     ))} */}
                       </div>
@@ -2397,8 +2485,7 @@ export default function LabOfficer() {
                 {/* <div className="row"> */}
 
                 {allOptions.map((data) => {
-                  {
-                  }
+                  
                   return (
                     <Button
                       className="m-2"
@@ -2424,8 +2511,6 @@ export default function LabOfficer() {
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-                      data.label === "Anti HAV" ||
-                      data.label === "Anti-HAV" ||
                       data.label === "Anti HCV" ? (
                         "Hepatitis Profile Tests"
                       ) : (
@@ -2439,6 +2524,7 @@ export default function LabOfficer() {
                             : data.label}
                         </>
                       )}
+                   
                     </Button>
                   );
                 })}
@@ -2473,9 +2559,9 @@ export default function LabOfficer() {
               selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "KOH" &&
               selectedLab.label !== "Gram Stain" &&
-              selectedLab.label !== "HIV Screening (Anti HIV)"
+              selectedLab.label !== "HIV Screening (Anti HIV)" && selectedLab.label !== "Anti HAV"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
-                : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+                : selectedLab.label === "Anti HAV"? ["LAB NAME", "RESULTS", "ACTION"]:["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
