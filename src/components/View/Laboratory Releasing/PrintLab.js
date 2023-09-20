@@ -733,7 +733,7 @@ React.useEffect(() => {
                       ? "THYROID PROFILE"
                       : state.selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                       ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
-                      : state.selectedLab.label.toUpperCase()}
+                      : state.selectedLab.label === "Anti HAV" ? "CLINICAL SEROLOGY":state.selectedLab.label.toUpperCase()}
                   </>
                 )}
               </span>
@@ -824,7 +824,7 @@ React.useEffect(() => {
                   </div>
                 
                 </div>
-                {console.log(labTestData[0]?.result)}
+               
                     {/* {labTestData.map((result, resultIndex) => (
                       <> */}
                         <div
@@ -877,7 +877,65 @@ React.useEffect(() => {
                     ))} */}
                   </div>
 
-              </>:
+              </>:state.selectedLab.label === "Anti HAV"?(
+                    <>
+                    
+                      <div className="tb mid">
+                        <div className="row bd">
+                          <div className="col">
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>ANTIBODY</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                          // key={resultIndex}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4 pt-3"><h5>ANTI-HAV</h5></div>
+                              <div className="col-4">
+                            <div className="row">
+                              <div className="col-12">IgG</div>
+                              <div className="col-12">IgM</div>
+                            </div>
+                              </div>
+                              <div className="col-4">
+                            <div className="row">
+                              <div className="col-12">{labTestData[0]?.result}</div>
+                              <div className="col-12">{labTestData[1]?.result}</div>
+                            </div>
+                              </div>
+                            
+                            
+                            </div>
+                          </div>
+                        </div>
+                       
+                        {/* </>
+                    ))} */}
+                      </div>
+                    </>
+                  ) :
                 <div className="tb mid">
                 <div className="row bd">
                   <div className="col">
