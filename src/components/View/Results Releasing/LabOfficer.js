@@ -47,6 +47,7 @@ import Image10 from "../../../images/med_tech/Image10.png";
 import Image11 from "../../../images/med_tech/OSMA.png";
 import image11 from "../../../images/med_tech/image11.png";
 import image12 from "../../../images/med_tech/image12.png";
+import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -457,7 +458,10 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0085308";
     } else if (prc_id === "48") {
       return "PRC LIC. NO.: 0109437";
-    } else {
+    }else if (prc_id === "50") {
+      return "PRC LIC. NO.: 0052556";
+    }  
+    else {
       return "No PRC No.";
     }
   }
@@ -576,6 +580,18 @@ export default function LabOfficer() {
       return (
         <img
           src={image12}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      );
+    }else if (prc_sig === "50") {
+      setHasImage(true);
+      return (
+        <img
+          src={bonjoc}
           alt="MedTech"
           // className="mt-5"
           style={{ marginTop: "0.5rem" }}
@@ -2377,7 +2393,7 @@ export default function LabOfficer() {
           "/" +
           selectedLab.booking_id +
           "/" +
-          selectedLab.type,
+          selectedLab.type +"/"+dateFrom+"/"+dateTo,
         { state: { selectedLab } }
       );
       // navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
