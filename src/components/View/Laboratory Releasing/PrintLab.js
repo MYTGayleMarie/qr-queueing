@@ -143,6 +143,7 @@ const [readyBookingDetails, setReadyBookingDetails] = useState(false)
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
             pdf.save(fileName+".pdf");
             navigateto(-1)
+          
         });
     },
       // onAfterPrint: refreshPage,
@@ -1066,7 +1067,7 @@ React.useEffect(() => {
                           ""
                         )}
                         <div className="space-between">
-                          <span>{result["lab_test"]}</span>
+                          <span>{result["lab_test"].replace("_"," ")}</span>
                         </div>
                       </div>
                       <div className="col">

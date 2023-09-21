@@ -410,6 +410,7 @@ export default function LabOfficer() {
     }
   };
 
+
   //fetch Medtech
   //fetch Medtech
   React.useEffect(() => {
@@ -2092,7 +2093,7 @@ export default function LabOfficer() {
                                 ""
                               )}
                               <div className="space-between">
-                                <span>{result["lab_test"]}</span>
+                                <span>{result["lab_test"].replace("_"," ")}</span>
                               </div>
                             </div>
                             <div className="col">
@@ -2138,7 +2139,7 @@ export default function LabOfficer() {
                                       marginLeft: "0 px",
                                     }}
                                   >
-                                    {result["test_type_2"]}
+                                    {result["test_type_2"]} 
                                   </h6>
                                 </div>
                               ) : (
