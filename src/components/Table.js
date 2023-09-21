@@ -763,7 +763,7 @@ function Table({
               <button
                 className="action-btn mb-1"
                 role="button"
-                onClick={() => link(row.customerId)}
+                onClick={() => link(row.customerId, row)}
                 style={{ width: "100px" }}
               >
                 ADD BOOKING
