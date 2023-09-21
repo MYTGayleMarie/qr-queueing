@@ -831,7 +831,6 @@ export default function LabOfficer() {
     });
 
     if (selectedLab.id != null) {
-<<<<<<< HEAD
       var url_id; 
       setIsReady(false);
       if(selectedLab.type === "package"){
@@ -839,12 +838,12 @@ export default function LabOfficer() {
       }
       else{
         url_id = selectedLab.id
-=======
-      let paramID = selectedLab.id;
-      if (selectedLab?.type === "package") {
-        paramID = selectedLab.booking_detail_id;
->>>>>>> f814ab2f1733f0ff8bc8e0fbf361b62d0d5299c1
       }
+
+      //recent merge conflict sept 21
+      // let paramID = selectedLab.id;
+      // if (selectedLab?.type === "package") {
+      //   paramID = selectedLab.booking_detail_id;
       setIsDataFetched(false);
       setIsReady(false);
       axios({
