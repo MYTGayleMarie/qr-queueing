@@ -304,7 +304,7 @@ function OldPatientForm1CModule({ customer, setPersonal, setIsService, setIsPack
              <h3 className="form-categories-header italic">BOOKING DETAILS</h3>
              <form className="needs-validation">
              <div className="row">
-                <label for="address" className="form-label">REFERRAL <i>(required)</i></label><br />
+                <label for="address" className="form-label">REFERRAL <span className="required">*</span></label><br />
                 <input type="text" className="form-control full" id="referral" name="referral" value={referral} onChange={setPersonal} required/><br />
             </div>
 
@@ -378,14 +378,14 @@ function OldPatientForm1CModule({ customer, setPersonal, setIsService, setIsPack
 
                  <div className="row date-of-testing-container large-gap">
                      <div className="col-sm-4">
-                         <label for="date" className="form-label">DATE OF TESTING<i>(required)</i></label><br />
+                         <label for="date" className="form-label">DATE OF TESTING<span className="required">*</span></label><br />
                          <DateTimePicker
                              onChange={setDOT}
                              value={dateOfTesting}
                          />
                      </div>
                      <div className="col-sm-4">
-                         <label for="last_meal" className="form-label">DATE OF EXTRACTION<i>(required)</i></label><br />
+                         <label for="last_meal" className="form-label">DATE OF EXTRACTION<span className="required">*</span></label><br />
                          <DateTimePicker
                              onChange={setLastMeal}
                              value={lastMeal}

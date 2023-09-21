@@ -656,12 +656,12 @@ function Form1CModule({
             <div className="row mb-0 pb-0">
               <div className="col-sm-4">
                 <label for="location" className="radio-header">
-                  LOCATION SERVICE
+                  LOCATION SERVICE <span className="required">*</span>
                 </label>
               </div>
               <div className="col-sm-8">
                 <label for="result" className="radio-header">
-                  RESULTS
+                  RESULTS <span className="required">*</span>
                 </label>
               </div>
             </div>

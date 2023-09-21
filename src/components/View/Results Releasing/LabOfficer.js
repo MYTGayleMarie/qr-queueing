@@ -831,17 +831,25 @@ export default function LabOfficer() {
     });
 
     if (selectedLab.id != null) {
+<<<<<<< HEAD
+      var url_id; 
+      setIsReady(false);
+      if(selectedLab.type === "package"){
+        url_id = selectedLab.booking_id
+      }
+      else{
+        url_id = selectedLab.id
+=======
       let paramID = selectedLab.id;
       if (selectedLab?.type === "package") {
         paramID = selectedLab.booking_detail_id;
+>>>>>>> f814ab2f1733f0ff8bc8e0fbf361b62d0d5299c1
       }
-      // console.log("selectedLab result",selectedLab)
-      // selectedLab.type === "package"? selectedLab.booking_detail_id:selectedLab.id
       setIsDataFetched(false);
       setIsReady(false);
       axios({
         method: "get",
-        url: window.$link + "Bookingdetails/getDetailsResult/" + paramID,
+        url: window.$link + "Bookingdetails/getDetailsResult/" + url_id,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
