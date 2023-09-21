@@ -22,6 +22,7 @@ import Image10 from "../../../images/med_tech/Image10.png";
 import Image11 from "../../../images/med_tech/OSMA.png";
 import image11 from "../../../images/med_tech/image11.png";
 import image12 from "../../../images/med_tech/image12.png";
+import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -77,7 +78,7 @@ function PrintLab() {
   const [packages, setPackages] = useState([]);
 
   //customer details
-  const { bookingID, id, labBookId, type } = useParams();
+  const { bookingID, id, labBookId, type, dateFrom, dateTo } = useParams();
   const {state} = useLocation()
 
   const [firstName, setFirstName] = useState("");
@@ -142,7 +143,11 @@ const [readyBookingDetails, setReadyBookingDetails] = useState(false)
             const pdf = new jsPDF();
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
             pdf.save(fileName+".pdf");
-            navigateto(-1)
+           var link ="/laboratory-officer/" + bookingID+"/"+dateFrom+"/"+dateTo;
+            window.open(link, "_self")
+            navigateto(link)
+           
+           
           
         });
     },
@@ -263,7 +268,10 @@ React.useEffect(() => {
       return "PRC LIC. NO.: 0085308";
     } else if (prc_id === "48") {
       return "PRC LIC. NO.: 0109437";
-    } else {
+    } else if (prc_id === "50") {
+      return "PRC LIC. NO.: 0052556";
+    }  
+    else {
       return "No PRC No.";
     }
   }
@@ -384,6 +392,18 @@ React.useEffect(() => {
       return (
         <img
           src={image12}
+          alt="MedTech"
+          // className="mt-5"
+         style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      );
+    }  else if (prc_sig === "50") {
+      setHasImage(true);
+      return (
+        <img
+          src={bonjoc}
           alt="MedTech"
           // className="mt-5"
          style={{ marginTop: "0.5rem" }}
