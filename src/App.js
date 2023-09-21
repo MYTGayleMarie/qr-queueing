@@ -238,7 +238,7 @@ function App() {
             element={token ? <QueueManager /> : <Navigate to="/" />}
           />
           <Route
-            path="/queuemanager/add-booking/:id"
+            path="/queuemanager/add-booking/:id/:queueNumber"
             element={token ? <QMSwitchForm2 /> : <Navigate to="/" />}
           />
           {/** With date filter */}
@@ -269,7 +269,7 @@ function App() {
             element={token ? <LabOfficer /> : <Navigate to="/" />}
           />
           <Route
-            path="/print-lab/:bookingID/:id/:labBookId/:type"
+            path="/print-lab/:bookingID/:id/:labBookId/:type/:dateFrom/:dateTo"
             element={token ? <PrintLab /> : <Navigate to="/" />}
           />
           <Route
