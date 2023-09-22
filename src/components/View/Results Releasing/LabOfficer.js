@@ -2249,7 +2249,7 @@ export default function LabOfficer() {
                                     parseFloat(result["preferred_from"]) &&
                                     parseFloat(result["result"]) <=
                                       parseFloat(result["preferred_to"])) ? (
-                                    <span>{result["unit"]}</span>
+                                    <span>{result["unit"]} </span>
                                   ) : (
                                     <span class="red">{result["unit"]}</span>
                                   )}
@@ -2275,6 +2275,13 @@ export default function LabOfficer() {
                               selectedLab.label !== "Gram Stain" &&
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Anti-HCV" &&
+                              selectedLab.label !==
+                                "Anti HCV" &&
+                              selectedLab.label !==
+                              "Anti HBs/HBSab (Hepatitis B Antibody)"
+                              &&
                               selectedLab.label !== "Fecal Occult Blood" &&
                               selectedLab.label !==
                                 "HIV Screening (Anti HIV)" && (

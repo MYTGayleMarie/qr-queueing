@@ -957,361 +957,377 @@ React.useEffect(() => {
                       </div>
                     </>
                   ) :
-                <div className="tb mid">
-                <div className="row bd">
-                  <div className="col">
-                    <span>
-                      <b>TEST</b>
-                    </span>
-                  </div>
-                  <div className="col">
-                    <span>
-                      <b>RESULT</b>
-                    </span>
-                  </div>
-                  {state.selectedLab.label !== "Urinalysis" &&
-                    state.selectedLab.label !== "[P] Urinalysis" &&
-                    state.selectedLab.label !== "Fecalysis" &&
-                    state.selectedLab.label !== "[P] Fecalysis" &&
-                    state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                    state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
-                    state.selectedLab.label !== "KOH" &&
-                    state.selectedLab.label !== "H. Pylori Ag" &&
-                    state.selectedLab.label !==
-                      "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                    state.selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
-                    state.selectedLab.label !==
-                      "Hepatitis B Surface Antigen (HbsAg)" &&
-                    state.selectedLab.label !== "Anti-HAV" &&
-                    state.selectedLab.label !== "Anti-HCV" &&
-                    // state.selectedLab.label === "TSH" &&
-                    // state.selectedLab.label === "FT3" &&
-                    // state.selectedLab.label === "FT4" &&
-                    // state.selectedLab.label === "T3" &&
-                    // state.selectedLab.label === "T4" &&
-                    state.selectedLab.label !== "Gram Stain" &&
-                    state.selectedLab.label !==
-                      "Pregnancy Test (RPK Lateral Flow)" &&
-                    state.selectedLab.label !== "Fecal Occult Blood" &&
-                    state.selectedLab.label !== "HIV Screening (Anti HIV)" &&
-                    state.selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                    state.selectedLab.label !== "Serum Pregnancy Test" && (
-                      <div className="col">
-                        <span>
-                          <b>UNIT</b>
-                        </span>
-                      </div>
-                    )}
-                  {state.selectedLab.label !== "Urinalysis" &&
-                    state.selectedLab.label !== "[P] Urinalysis" &&
-                    state.selectedLab.label !== "Fecalysis" &&
-                    state.selectedLab.label !== "[P] Fecalysis" &&
-                    state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                    state.selectedLab.label !== "KOH" &&
-                    state.selectedLab.label !==
-                      "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                    state.selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
-                    state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
-                    state.selectedLab.label !==
-                      "Hepatitis B Surface Antigen (HbsAg)" &&
-                    state.selectedLab.label !== "Anti-HAV" &&
-                    state.selectedLab.label !==
-                      "Pregnancy Test (RPK Lateral Flow)" &&
-                    state.selectedLab.label !== "Anti-HCV" &&
-                    state.selectedLab.label !== "H. Pylori Ag" &&
-                    state.selectedLab.label !== "Fecal Occult Blood" &&
-                    state.selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                    state.selectedLab.label !== "Serum Pregnancy Test" &&
-                    state.selectedLab.label !== "Gram Stain" &&
-                    state.selectedLab.label !== "HIV Screening (Anti HIV)" && (
-                      <div className="col">
-                        <span>
-                          <b>REFERENCE RANGE</b>
-                        </span>
-                      </div>
-                    )}
-                </div>
-
-                {labTestData.map((result, resultIndex) => (
-                  <>
-                    <div
-                      className="row"
-                      style={{
-                        marginTop: "1px",
-                        width: "100%",
-                        marginLeft: "1px",
-                      }}
-                      key={resultIndex}
-                    >
-                      <div className="col">
-                        {state.selectedLab.label !== "TSH" &&
-                        state.selectedLab.label !== "FT3" &&
-                        state.selectedLab.label !== "FT4" &&
-                        state.selectedLab.label !== "T3" &&
-                        state.selectedLab.label !== "T4" &&
-                        (resultIndex === 0 ||
-                          result["test_type"] !==
-                            labTestData[resultIndex - 1]["test_type"]) ? (
-                          <div className="space-between">
-                            <h5
-                              style={{
-                                fontStyle: "italic",
-                                marginTop: "10px",
-                              }}
-                            >
-                              <u>{result["test_type"]}</u>
-                            </h5>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {state.selectedLab.label !== "TSH" &&
-                        state.selectedLab.label !== "FT3" &&
-                        state.selectedLab.label !== "FT4" &&
-                        state.selectedLab.label !== "T3" &&
-                        state.selectedLab.label !== "T4" &&
-                        (resultIndex === 0 ||
-                          result["test_type_2"] !==
-                            labTestData[resultIndex - 1]["test_type_2"]) ? (
-                          <div className="space-between">
-                            <h6
-                              style={{
-                                fontStyle: "italic",
-                                marginTop: "10px",
-                              }}
-                            >
-                              {result["test_type_2"]}
-                            </h6>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        <div className="space-between">
-                          <span>{result["lab_test"].replace("_"," ")}</span>
-                        </div>
-                      </div>
-                      <div className="col">
-                        {/* Add Blank space for headers */}
-                        {state.selectedLab.label !== "TSH" &&
-                        state.selectedLab.label !== "FT3" &&
-                        state.selectedLab.label !== "FT4" &&
-                        state.selectedLab.label !== "T3" &&
-                        state.selectedLab.label !== "T4" &&
-                        (resultIndex === 0 ||
-                          result["test_type"] !==
-                            labTestData[resultIndex - 1]["test_type"]) ? (
-                          <div className="space-between">
-                            <h5
-                              style={{
-                                fontStyle: "italic",
-                                marginTop: "10px",
-                                color: "rgba(0, 0, 0, 0)",
-                              }}
-                            >
-                              {result["test_type"]}
-                            </h5>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {state.selectedLab.label !== "TSH" &&
-                        state.selectedLab.label !== "FT3" &&
-                        state.selectedLab.label !== "FT4" &&
-                        state.selectedLab.label !== "T3" &&
-                        state.selectedLab.label !== "T4" &&
-                        (resultIndex === 0 ||
-                          result["test_type_2"] !==
-                            labTestData[resultIndex - 1]["test_type_2"]) ? (
-                          <div className="space-between">
-                            <h6
-                              style={{
-                                fontStyle: "italic",
-                                marginTop: "10px",
-                                color: "rgba(0, 0, 0, 0)",
-                                marginLeft: "0 px",
-                              }}
-                            >
-                              {result["test_type_2"]}
-                            </h6>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        {/* RESULTS */}
-                        {result["result"] !== "" ? (
-                          <>
-                            {result["preferred"] == " " ? (
-                              result["preferred"] == result["result"] ? (
-                                <span>{result["result"]}</span>
-                              ) : (
-                                <span>{result["result"]}</span>
-                              )
-                            ) : result["preferred"] != " " ? (
-                              result["preferred"] == result["result"] ? (
-                                <span>{result["result"]}</span>
-                              ) : (
-                                <span>{result["result"]} </span>
-                              )
-                            ) : result["preferred_from"] != 0.0 ||
-                              result["preferred_to"] != 0.0 ? (
-                              parseFloat(result["preferred_from"]) >
-                              parseFloat(result["result"]) ? (
-                                <span class="red">
-                                  {result["result"] + " (L)"}
-                                </span>
-                              ) : result["result"] >
-                                result["preferred_to"] ? (
-                                <span class="red">
-                                  {result["result"] + " (H)"}
-                                </span>
-                              ) : (
-                                <span>{result["result"]}</span>
-                              )
-                            ) : (
-                              <span> {result["result"]}</span>
-                            )}
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      {state.selectedLab.label.toUpperCase() !== "URINALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !==
-                          "[P] URINALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !== "FECALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !==
-                          "[P] FECALYSIS" &&
-                        state.selectedLab.label !==
-                          "Antigen Rapid Swab (Nasal)" &&
-                        state.selectedLab.label !== "Serum Pregnancy Test" &&
-                        state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                        state.selectedLab.label !== "H. Pylori Ag" &&
-                        state.selectedLab.label !== "KOH" &&
-                        state.selectedLab.label !==
-                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        state.selectedLab.label !==
-                          "HBSag (Hepatitis B Antigen)" &&
-                        state.selectedLab.label !==
-                          "Hepatitis B Surface Antigen (HbsAg)" &&
-                        state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
-                        state.selectedLab.label !== "Anti-HAV" &&
-                        state.selectedLab.label !== "Anti-HCV" &&
-                        state.selectedLab.label !==
-                          "Pregnancy Test (RPK Lateral Flow)" &&
-                        state.selectedLab.label !== "Fecal Occult Blood" &&
-                        state.selectedLab.label !== "Gram Stain" &&
-                        state.selectedLab.label !==
-                          "HIV Screening (Anti HIV)" && (
-                          <div className="col">
-                            {/* { result["preferred_from"] != 0.0 ||
-                              result["preferred_to"] != 0.0 ? ( */}
-                            {result["result"] === "-" || (parseFloat(result["result"]) >=
-                              parseFloat(result["preferred_from"]) &&
-                            parseFloat(result["result"]) <=
-                              parseFloat(result["preferred_to"])) ? (
-                              <span>{result["unit"]}</span>
-                            ) : (
-                              <span class="red">{result["unit"]}</span>
-                            )}
-                          </div>
-                        )}
-
-                      {state.selectedLab.label.toUpperCase() !== "URINALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !==
-                          "[P] URINALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !== "FECALYSIS" &&
-                        state.selectedLab.label.toUpperCase() !==
-                          "[P] FECALYSIS" &&
-                        state.selectedLab.label !==
-                          "Antigen Rapid Swab (Nasal)" &&
-                        state.selectedLab.label !== "Serum Pregnancy Test" &&
-                        state.selectedLab.label !== "H. Pylori Ag" &&
-                        state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                        state.selectedLab.label !== "KOH" &&
-                        state.selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
-                        state.selectedLab.label !==
-                          "Pregnancy Test (RPK Lateral Flow)" &&
-                        state.selectedLab.label !== "Gram Stain" &&
-                        state.selectedLab.label !==
-                          "HBSag (Hepatitis B Antigen)" &&
-                        state.selectedLab.label !== "Fecal Occult Blood" &&
-                        state.selectedLab.label !==
-                          "HIV Screening (Anti HIV)" && (
-                          <div className="col">
-                            <span>
-                              {state.selectedLab.label !== "TSH" &&
-                              state.selectedLab.label !== "FT3" &&
-                              state.selectedLab.label !== "FT4" &&
-                              state.selectedLab.label !== "T3" &&
-                              state.selectedLab.label !== "T4" &&
-                              (resultIndex === 0 ||
-                                result["test_type"] !==
-                                  labTestData[resultIndex - 1][
-                                    "test_type"
-                                  ]) ? (
-                                <div className="space-between">
-                                  <h5
-                                    style={{
-                                      fontStyle: "italic",
-                                      marginTop: "10px",
-                                      color: "rgba(0, 0, 0, 0)",
-                                    }}
-                                  >
-                                    {result["test_type"]}
-                                  </h5>
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                              {state.selectedLab.label !== "TSH" &&
-                              state.selectedLab.label !== "FT3" &&
-                              state.selectedLab.label !== "FT4" &&
-                              state.selectedLab.label !== "T3" &&
-                              state.selectedLab.label !== "T4" &&
-                              (resultIndex === 0 ||
-                                result["test_type_2"] !==
-                                  labTestData[resultIndex - 1][
-                                    "test_type_2"
-                                  ]) ? (
-                                <div className="space-between">
-                                  <h6
-                                    style={{
-                                      fontStyle: "italic",
-                                      marginTop: "10px",
-                                      color: "rgba(0, 0, 0, 0)",
-                                    }}
-                                  >
-                                    {result["test_type_2"]}
-                                  </h6>
-                                </div>
-                              ) : (
-                                ""
-                              )}
-
-                              {result["preferred"] != " "
-                                ? result["preferred"]
-                                : result["preferred_from"] != 0.0 ||
-                                  result["preferred_to"] != 0.0
-                                ? result["preferred_to"] == 999.99
-                                  ? ">=" +
-                                    parseFloat(
-                                      result["preferred_from"]
-                                    ).toFixed(2)
-                                  : parseFloat(
-                                      result["preferred_from"]
-                                    ).toFixed(2) +
-                                    "-" +
-                                    parseFloat(
-                                      result["preferred_to"]
-                                    ).toFixed(2)
-                                : ""}
-                            </span>
-                          </div>
-                        )}
+                  <div className="tb mid">
+                  <div className="row bd">
+                    <div className="col">
+                      <span>
+                        <b>TEST</b>
+                      </span>
                     </div>
-                  </>
-                ))}
-              </div>}
+                    <div className="col">
+                      <span>
+                        <b>RESULT</b>
+                      </span>
+                    </div>
+                    {state.selectedLab.label !== "Urinalysis" &&
+                      state.selectedLab.label !== "[P] Urinalysis" &&
+                      state.selectedLab.label !== "Fecalysis" &&
+                      state.selectedLab.label !== "[P] Fecalysis" &&
+                      state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                      state.selectedLab.label !== "KOH" &&
+                      state.selectedLab.label !== "H. Pylori Ag" &&
+                      state.selectedLab.label !==
+                        "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                      state.selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                      state.selectedLab.label !==
+                        "[P] HBSag (Hepatitis B Antigen)" &&
+                      state.selectedLab.label !==
+                        "Hepatitis B Surface Antigen (HbsAg)" &&
+                      state.selectedLab.label !== "Anti-HAV" &&
+                      state.selectedLab.label !== "Anti HCV" &&
+                      // state.selectedLab.label === "TSH" &&
+                      // state.selectedLab.label === "FT3" &&
+                      // state.selectedLab.label === "FT4" &&
+                      // state.selectedLab.label === "T3" &&
+                      // state.selectedLab.label === "T4" &&
+                      state.selectedLab.label !== "Gram Stain" &&
+                      state.selectedLab.label !==
+                        "Pregnancy Test (RPK Lateral Flow)" &&
+                      state.selectedLab.label !== "Fecal Occult Blood" &&
+                      state.selectedLab.label !== "HIV Screening (Anti HIV)" &&
+                      state.selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                      state.selectedLab.label !== "Serum Pregnancy Test" && (
+                        <div className="col">
+                          <span>
+                            <b>UNIT</b>
+                          </span>
+                        </div>
+                      )}
+                    {state.selectedLab.label !== "Urinalysis" &&
+                      state.selectedLab.label !== "[P] Urinalysis" &&
+                      state.selectedLab.label !== "Fecalysis" &&
+                      state.selectedLab.label !== "[P] Fecalysis" &&
+                      state.selectedLab.label !==
+                        "[P] HBSag (Hepatitis B Antigen)" &&
+                      state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                      state.selectedLab.label !== "KOH" &&
+                      state.selectedLab.label !==
+                        "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                      state.selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                      state.selectedLab.label !==
+                        "Hepatitis B Surface Antigen (HbsAg)" &&
+                      state.selectedLab.label !== "Anti-HAV" &&
+                      state.selectedLab.label !==
+                        "Pregnancy Test (RPK Lateral Flow)" &&
+                      state.selectedLab.label !== "Anti HCV" &&
+                      state.selectedLab.label !== "H. Pylori Ag" &&
+                      state.selectedLab.label !== "Fecal Occult Blood" &&
+                      state.selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                      state.selectedLab.label !== "Serum Pregnancy Test" &&
+                      state.selectedLab.label !== "Gram Stain" &&
+                      state.selectedLab.label !== "HIV Screening (Anti HIV)" && (
+                        <div className="col">
+                          <span>
+                            <b>REFERENCE RANGE</b>
+                          </span>
+                        </div>
+                      )}
+                  </div>
+
+                  {labTestData.map((result, resultIndex) => (
+                    <>
+                      <div
+                        className="row"
+                        style={{
+                          marginTop: "1px",
+                          width: "100%",
+                          marginLeft: "1px",
+                        }}
+                        key={resultIndex}
+                      >
+                        <div className="col">
+                          {state.selectedLab.label !== "TSH" &&
+                          state.selectedLab.label !== "FT3" &&
+                          state.selectedLab.label !== "FT4" &&
+                          state.selectedLab.label !== "T3" &&
+                          state.selectedLab.label !== "T4" &&
+                          (resultIndex === 0 ||
+                            result["test_type"] !==
+                              labTestData[resultIndex - 1]["test_type"]) ? (
+                            <div className="space-between">
+                              <h5
+                                style={{
+                                  fontStyle: "italic",
+                                  marginTop: "10px",
+                                }}
+                              >
+                                <u>{result["test_type"]}</u>
+                              </h5>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {state.selectedLab.label !== "TSH" &&
+                          state.selectedLab.label !== "FT3" &&
+                          state.selectedLab.label !== "FT4" &&
+                          state.selectedLab.label !== "T3" &&
+                          state.selectedLab.label !== "T4" &&
+                          (resultIndex === 0 ||
+                            result["test_type_2"] !==
+                              labTestData[resultIndex - 1][
+                                "test_type_2"
+                              ]) ? (
+                            <div className="space-between">
+                              <h6
+                                style={{
+                                  fontStyle: "italic",
+                                  marginTop: "10px",
+                                }}
+                              >
+                                {result["test_type_2"]}
+                              </h6>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          <div className="space-between">
+                            <span>{result["lab_test"].replace("_"," ")}</span>
+                          </div>
+                        </div>
+                        <div className="col">
+                          {/* Add Blank space for headers */}
+                          {state.selectedLab.label !== "TSH" &&
+                          state.selectedLab.label !== "FT3" &&
+                          state.selectedLab.label !== "FT4" &&
+                          state.selectedLab.label !== "T3" &&
+                          state.selectedLab.label !== "T4" &&
+                          (resultIndex === 0 ||
+                            result["test_type"] !==
+                              labTestData[resultIndex - 1]["test_type"]) ? (
+                            <div className="space-between">
+                              <h5
+                                style={{
+                                  fontStyle: "italic",
+                                  marginTop: "10px",
+                                  color: "rgba(0, 0, 0, 0)",
+                                }}
+                              >
+                                {result["test_type"]}
+                              </h5>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {state.selectedLab.label !== "TSH" &&
+                          state.selectedLab.label !== "FT3" &&
+                          state.selectedLab.label !== "FT4" &&
+                          state.selectedLab.label !== "T3" &&
+                          state.selectedLab.label !== "T4" &&
+                          (resultIndex === 0 ||
+                            result["test_type_2"] !==
+                              labTestData[resultIndex - 1][
+                                "test_type_2"
+                              ]) ? (
+                            <div className="space-between">
+                              <h6
+                                style={{
+                                  fontStyle: "italic",
+                                  marginTop: "10px",
+                                  color: "rgba(0, 0, 0, 0)",
+                                  marginLeft: "0 px",
+                                }}
+                              >
+                                {result["test_type_2"]} 
+                              </h6>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {/* RESULTS */}
+                          {result["result"] !== "" ? (
+                           <>
+                           {result["preferred"] == " " ? (
+                             result["preferred"] == result["result"] ? (
+                               <span>{result["result"]}</span>
+                             ) : (
+                               <span>{result["result"]}</span>
+                             )
+                           ) : result["preferred"] != " " ? (
+                             result["preferred"] == result["result"] ? (
+                               <span>{result["result"]}</span>
+                             ) : (
+                               <span>{result["result"]} </span>
+                             )
+                           ) : result["preferred_from"] != 0.0 ||
+                             result["preferred_to"] != 0.0 ? (
+                             parseFloat(result["preferred_from"]) >
+                             parseFloat(result["result"]) ? (
+                               <span class="red">
+                                 {result["result"] + " (L)"}
+                               </span>
+                             ) : result["result"] >
+                               result["preferred_to"] ? (
+                               <span class="red">
+                                 {result["result"] + " (H)"}
+                               </span>
+                             ) : (
+                               <span>{result["result"]}</span>
+                             )
+                           ) : (
+                             <span> {result["result"]}</span>
+                           )}
+                         </>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        {state.selectedLab.label.toUpperCase() !== "URINALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !==
+                            "[P] URINALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !==
+                            "[P] FECALYSIS" &&
+                          state.selectedLab.label !==
+                            "Antigen Rapid Swab (Nasal)" &&
+                          state.selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          state.selectedLab.label !== "Serum Pregnancy Test" &&
+                          state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                          state.selectedLab.label !== "H. Pylori Ag" &&
+                          state.selectedLab.label !== "KOH" &&
+                          state.selectedLab.label !==
+                            "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          state.selectedLab.label !==
+                            "HBSag (Hepatitis B Antigen)" &&
+                          state.selectedLab.label !==
+                            "Hepatitis B Surface Antigen (HbsAg)" &&
+                          state.selectedLab.label !== "Anti-HAV" &&
+                          state.selectedLab.label !== "Anti HCV" &&
+                          state.selectedLab.label !==
+                            "Pregnancy Test (RPK Lateral Flow)" &&
+                          state.selectedLab.label !== "Fecal Occult Blood" &&
+                          state.selectedLab.label !== "Gram Stain" &&
+                          state.selectedLab.label !==
+                            "HIV Screening (Anti HIV)" && (
+                            <div className="col">
+                              {/* { result["preferred_from"] != 0.0 ||
+                              result["preferred_to"] != 0.0 ? ( */}
+                              {result["result"] === "-" ||
+                              (parseFloat(result["result"]) >=
+                                parseFloat(result["preferred_from"]) &&
+                                parseFloat(result["result"]) <=
+                                  parseFloat(result["preferred_to"])) ? (
+                                <span>{result["unit"]} </span>
+                              ) : (
+                                <span class="red">{result["unit"]}</span>
+                              )}
+                            </div>
+                          )}
+
+                        {state.selectedLab.label.toUpperCase() !== "URINALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !==
+                            "[P] URINALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                          state.selectedLab.label.toUpperCase() !==
+                            "[P] FECALYSIS" &&
+                          state.selectedLab.label !==
+                            "Antigen Rapid Swab (Nasal)" &&
+                          state.selectedLab.label !== "Serum Pregnancy Test" &&
+                          state.selectedLab.label !== "H. Pylori Ag" &&
+                          state.selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                          state.selectedLab.label !== "KOH" &&
+                          state.selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          state.selectedLab.label !==
+                            "Pregnancy Test (RPK Lateral Flow)" &&
+                          state.selectedLab.label !== "Gram Stain" &&
+                          state.selectedLab.label !==
+                            "HBSag (Hepatitis B Antigen)" &&
+                          state.selectedLab.label !==
+                            "Anti-HCV" &&
+                          state.selectedLab.label !==
+                            "Anti HCV" &&
+                          state.selectedLab.label !==
+                          "Anti HBs/HBSab (Hepatitis B Antibody)"
+                          &&
+                          state.selectedLab.label !== "Fecal Occult Blood" &&
+                          state.selectedLab.label !==
+                            "HIV Screening (Anti HIV)" && (
+                            <div className="col">
+                              <span>
+                                {state.selectedLab.label !== "TSH" &&
+                                state.selectedLab.label !== "FT3" &&
+                                state.selectedLab.label !== "FT4" &&
+                                state.selectedLab.label !== "T3" &&
+                                state.selectedLab.label !== "T4" &&
+                                (resultIndex === 0 ||
+                                  result["test_type"] !==
+                                    labTestData[resultIndex - 1][
+                                      "test_type"
+                                    ]) ? (
+                                  <div className="space-between">
+                                    <h5
+                                      style={{
+                                        fontStyle: "italic",
+                                        marginTop: "10px",
+                                        color: "rgba(0, 0, 0, 0)",
+                                      }}
+                                    >
+                                      {result["test_type"]}
+                                    </h5>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {state.selectedLab.label !== "TSH" &&
+                                state.selectedLab.label !== "FT3" &&
+                                state.selectedLab.label !== "FT4" &&
+                                state.selectedLab.label !== "T3" &&
+                                state.selectedLab.label !== "T4" &&
+                                (resultIndex === 0 ||
+                                  result["test_type_2"] !==
+                                    labTestData[resultIndex - 1][
+                                      "test_type_2"
+                                    ]) ? (
+                                  <div className="space-between">
+                                    <h6
+                                      style={{
+                                        fontStyle: "italic",
+                                        marginTop: "10px",
+                                        color: "rgba(0, 0, 0, 0)",
+                                      }}
+                                    >
+                                      {result["test_type_2"]}
+                                    </h6>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+
+                                {result["preferred"] != " "
+                                  ? result["preferred"]
+                                  : result["preferred_from"] != 0.0 ||
+                                    result["preferred_to"] != 0.0
+                                  ? result["preferred_to"] == 999.99
+                                    ? ">=" +
+                                      parseFloat(
+                                        result["preferred_from"]
+                                      ).toFixed(2)
+                                    : parseFloat(
+                                        result["preferred_from"]
+                                      ).toFixed(2) +
+                                      "-" +
+                                      parseFloat(
+                                        result["preferred_to"]
+                                      ).toFixed(2)
+                                  : ""}
+                              </span>
+                            </div>
+                          )}
+                      </div>
+                    </>
+                  ))}
+                </div>}
               <hr
                 style={{
                   border: "2px solid black",
