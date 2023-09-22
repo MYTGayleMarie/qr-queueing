@@ -314,29 +314,31 @@ export default function LabOfficer() {
       setLabTestOptions(labResultsData.posNegOptions);
       setIsDropdown(true);
     } else if (
-      lab_test == "Anti-HIV" ||
-      lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
+      lab_test == "Anti-HIV" ||  lab_test == "[P] Anti-HIV" ||
+      lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||lab_test == "[P] Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "HBSag (Hepatitis B Antigen)" ||
+      lab_test == "[P] HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
-      selectedLab.label == "Anti HCV" ||
-      selectedLab.label == "Hepatitis B Surface Antibody Test"
+      selectedLab.label == "[P] HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label == "Anti HCV" ||selectedLab.label == "[P] Anti HCV" ||
+      selectedLab.label == "Hepatitis B Surface Antibody Test" || selectedLab.label == "[P] Hepatitis B Surface Antibody Test"
     ) {
 
       setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
       setIsDropdown(true);
-      if (lab_test == "Hepatitis B Surface Antibody Test") {
+      if (lab_test == "Hepatitis B Surface Antibody Test" || lab_test == "Hepatitis B Surface Antibody Test") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
-      if (lab_test == "Anti HCV") {
+      if (lab_test == "Anti HCV" || lab_test == "[P] Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
       }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
-      if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
+      if (lab_test == "Hepatitis B Surface Antigen (HbsAg)" || "[P] Hepatitis B Surface Antigen (HbsAg)") {
         setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
         setIsDropdown(true);
-      } else if (lab_test == "Hepatitis B Surface Antibody Test") {
+      } else if (lab_test == "Hepatitis B Surface Antibody Test" || lab_test == "[P] Hepatitis B Surface Antibody Test") {
         setLabTestOptions(labResultsData.posNegOptions2);
-      } else if (lab_test == "Anti HCV") {
+      } else if (lab_test == "Anti HCV" || lab_test == "[P] Anti HCV") {
         setLabTestOptions(labResultsData.posNegOptions2);
         setIsDropdown(true);
       }  else {
@@ -659,8 +661,6 @@ export default function LabOfficer() {
   selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-  selectedLab.label === "Anti-HAV" ||
-  selectedLab.label === "Anti HCV" ||
   selectedLab.label === "Anti HCV" ? (
     (label_test = "Hepatitis Profile Tests")
   ) : (
@@ -1257,6 +1257,12 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Fecalysis" &&
         selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
         selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+        selectedLab.label !== "Anti HCV" &&
+        selectedLab.label !== "[P] Anti HCV" &&
+        selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+        selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+        selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+        selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)" &&
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
         selectedLab.label !== "Gram Stain" &&
@@ -1268,7 +1274,14 @@ export default function LabOfficer() {
           unit: result.unit,
           reference_range: reference_range,
         };
-      } else if(selectedLab.label === "Anti HAV") {
+      } else if(selectedLab.label === "Anti HAV" || selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
+          selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+          selectedLab.label === "Anti HCV" ||
+          selectedLab.label === "[P] Anti HCV" ||
+          selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+          selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+          selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+          selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)") {
         return {
           lab_test: result.lab_test,
           result: result.result,
@@ -1775,7 +1788,14 @@ export default function LabOfficer() {
                           ? "THYROID PROFILE"
                           : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                           ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
-                          : selectedLab.label === "Anti HAV" ? "CLINICAL SEROLOGY":selectedLab.label.toUpperCase()}
+                          :(selectedLab.label === "Anti HAV" || selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
+                          selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                          selectedLab.label === "Anti HCV" ||
+                          selectedLab.label === "[P] Anti HCV" ||
+                          selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                          selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                          selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                          selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? "CLINICAL SEROLOGY":selectedLab.label.toUpperCase()}
                       </>
                     )}
                   </span>
@@ -2009,8 +2029,20 @@ export default function LabOfficer() {
                             "[P] HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !==
                             "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !==
+                            "[P]Hepatitis B Surface Antigen (HbsAg)" &&
                           selectedLab.label !== "Anti-HAV" &&
+                          selectedLab.label !== "[P] Anti-HAV" &&
                           selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !== "Anti HAV" && selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)"&&
                           // selectedLab.label === "TSH" &&
                           // selectedLab.label === "FT3" &&
                           // selectedLab.label === "FT4" &&
@@ -2044,9 +2076,24 @@ export default function LabOfficer() {
                             "Hepatitis B Surface Antigen (HbsAg)" &&
                           selectedLab.label !== "Anti-HAV" &&
                           selectedLab.label !==
+                            "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "[P] Anti-HAV" &&
+                          selectedLab.label !==
                             "Pregnancy Test (RPK Lateral Flow)" &&
                           selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
                           selectedLab.label !== "H. Pylori Ag" &&
+                          selectedLab.label !== "Anti HAV" && selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)"&&
                           selectedLab.label !== "Fecal Occult Blood" &&
                           selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" &&
@@ -2237,6 +2284,14 @@ export default function LabOfficer() {
                               selectedLab.label !== "Anti HCV" &&
                               selectedLab.label !==
                                 "Pregnancy Test (RPK Lateral Flow)" &&
+                              selectedLab.label !== "Anti HAV" && selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)"&&
                               selectedLab.label !== "Fecal Occult Blood" &&
                               selectedLab.label !== "Gram Stain" &&
                               selectedLab.label !==
@@ -2272,6 +2327,14 @@ export default function LabOfficer() {
                                 "[P] HBSag (Hepatitis B Antigen)" &&
                               selectedLab.label !==
                                 "Pregnancy Test (RPK Lateral Flow)" &&
+                              selectedLab.label !== "Anti HAV" && selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)"&&
                               selectedLab.label !== "Gram Stain" &&
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
@@ -2589,11 +2652,26 @@ export default function LabOfficer() {
               selectedLab.label !== "[P] Fecalysis" &&
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
               selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+              selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+              selectedLab.label !== "Anti HCV" &&
+              selectedLab.label !== "[P] Anti HCV" &&
+              selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+              selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+              selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+              selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+              selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "KOH" &&
               selectedLab.label !== "Gram Stain" &&
               selectedLab.label !== "HIV Screening (Anti HIV)" && selectedLab.label !== "Anti HAV"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
-                : selectedLab.label === "Anti HAV"? ["LAB NAME", "RESULTS", "ACTION"]:["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+                : (selectedLab.label === "Anti HAV" || selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
+                selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                selectedLab.label === "Anti HCV" ||
+                selectedLab.label === "[P] Anti HCV" ||
+                selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? ["LAB NAME", "RESULTS", "ACTION"]:["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
