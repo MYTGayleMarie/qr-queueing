@@ -1530,6 +1530,12 @@ function RegisterNavbarTop(
             <span class="mx-2">Laboratory Releasing</span>
           </li>
         </NavLink> */}
+        <NavLink to="/services" activeClassName="active" class="link">
+            <li href="#" class="nav-link users-nav">
+              <img src={servicesIcon} alt={"users"} class="users icon"></img>
+              <span class="mx-2">Services</span>
+            </li>
+          </NavLink>
 
         <NavLink
           to="/registrationcmodule"
@@ -1542,7 +1548,7 @@ function RegisterNavbarTop(
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1551,7 +1557,7 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
@@ -1696,7 +1702,7 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Laboratory Releasing</span>
         </NavLink>
-
+{/* 
         <NavLink
           to="/registrationcmodule"
           activeClassName="active"
@@ -1708,9 +1714,14 @@ function AdminNavbarTop(
             class="cmodule icon mobile-size-icon"
           ></img>
           <span class="mx-2">Customer Module</span>
+        </NavLink> */}
+        
+        <NavLink to="/services" activeClassName="active" class="link">
+              <img src={servicesIcon} alt={"users"} class="users icon mobile-size-icon"></img>
+              <span class="mx-2">Services</span>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1721,7 +1732,7 @@ function AdminNavbarTop(
             class="cmodule icon mobile-size-icon"
           ></img>
           <span class="mx-2">Customer Module</span>
-        </NavLink>
+        </NavLink> */}
 
         <div class="side-nav-content">
           <div
