@@ -993,7 +993,7 @@ React.useEffect(() => {
                               <div className="col-4">
                                 {labTestData[0]?.result}
                               </div>
-                                  <div className="col-4">1-3 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[0]?.result)<1?"(L)":parseInt(labTestData[1]?.result)>3?"(H)":""}</span></div>
+                                  <div className="col-4">1-3 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[0]?.result)<1?"(L)":parseInt(labTestData[0]?.result)>3?"(H)":""}</span></div>
                               </div>        
                             <div className="row">
                               <div className="col-4">CLOTTING TIME</div>
