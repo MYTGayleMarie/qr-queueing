@@ -795,7 +795,6 @@ export default function LabOfficer() {
       },
     }).then((booking) => {
       setServices(booking.data);
-    
       var thyroid = booking.data.filter((data) => data.category_id === "13");
       var serology = booking.data.filter((data) => data.category_id === "12" && data.lab_test !== "Anti HAV");
     
@@ -1266,6 +1265,7 @@ export default function LabOfficer() {
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
         selectedLab.label !== "Gram Stain" &&
+        selectedLab.label !== "Clotting & Bleeding Time" &&
         selectedLab.label !== "HIV Screening (Anti HIV)" && selectedLab.label !== "Anti HAV"
       ) {
         return {
@@ -1285,6 +1285,13 @@ export default function LabOfficer() {
         return {
           lab_test: result.lab_test,
           result: result.result,
+        
+        };
+      } else if(selectedLab.label === "Clotting & Bleeding Time") {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+          reference_range: reference_range,
         
         };
       }
@@ -1588,9 +1595,11 @@ export default function LabOfficer() {
       setLabTestData(labResultsData.labTestCEA);
     } else if (e.label === "VITAMIN D" || e.label === "[P] VITAMIN D") {
       setLabTestData(labResultsData.labTestVitaminD);
+    } else if (e.label === "Clotting & Bleeding Time") {
+      setLabTestData(labResultsData.labTestClotting);
     } else {
       setLabTestData([]);
-    }
+    } 
     setIsDataFetched(true);
   }
 
@@ -1795,7 +1804,8 @@ export default function LabOfficer() {
                           selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
                           selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                           selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-                          selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? "CLINICAL SEROLOGY":selectedLab.label.toUpperCase()}
+                          selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? "CLINICAL SEROLOGY":
+                           selectedLab.label === "Clotting & Bleeding Time"? "HEMATOLOGY":selectedLab.label.toUpperCase()}
                       </>
                     )}
                   </span>
@@ -2002,7 +2012,58 @@ export default function LabOfficer() {
                     ))} */}
                       </div>
                     </>
-                  ) : (
+                  ) : selectedLab.label === "Clotting & Bleeding Time"?(
+                    <>
+                    
+                      <div className="tb mid">
+                        <div className="row bd">
+                          <div className="col">
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>REFERENCE RANGE</b>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                    
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4">BLEEDING TIME</div>
+                              <div className="col-4">
+                                {labTestData[0]?.result}
+                              </div>
+                                  <div className="col-4">1-3 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[0]?.result)<1?"(L)":parseInt(labTestData[1]?.result)>3?"(H)":""}</span></div>
+                              </div>        
+                            <div className="row">
+                              <div className="col-4">CLOTTING TIME</div>
+                              <div className="col-4">
+                                {labTestData[1]?.result}
+                              </div>
+                                  <div className="col-4">3-6 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[1]?.result)<3?"(L)":parseInt(labTestData[1]?.result)>6?"(H)":""}</span></div>
+                              </div>        
+                             
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ):(
                     <div className="tb mid">
                       <div className="row bd">
                         <div className="col">
@@ -2662,6 +2723,7 @@ export default function LabOfficer() {
               selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "KOH" &&
               selectedLab.label !== "Gram Stain" &&
+              selectedLab.label !== "Clotting & Bleeding Time" &&
               selectedLab.label !== "HIV Screening (Anti HIV)" && selectedLab.label !== "Anti HAV"
                 ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
                 : (selectedLab.label === "Anti HAV" || selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
@@ -2671,7 +2733,7 @@ export default function LabOfficer() {
                 selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
                 selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                 selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-                selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? ["LAB NAME", "RESULTS", "ACTION"]:["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+                selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)")? ["LAB NAME", "RESULTS", "ACTION"]:         selectedLab.label === "Clotting & Bleeding Time"?["LAB NAME", "RESULTS", "REFERENCE RANGE", "ACTION"]:["LAB NAME", "RESULTS", "UNIT", "ACTION"]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
