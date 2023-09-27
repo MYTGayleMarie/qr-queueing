@@ -750,7 +750,7 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: cashTax,
+            withholding_tax: cashTax,
           },
         })
           .then(function (response) {
@@ -783,13 +783,13 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: checkTax,
+            withholding_tax: checkTax,
           },
         })
           .then(function (response) {
             // console.log(response);
             toast.success("Payment Successful!");
-            refreshPage();
+           refreshPage();
           })
           .catch(function (error) {
             console.log(error);
@@ -817,7 +817,7 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: cardTax,
+            withholding_tax: cardTax,
           },
         })
           .then(function (response) {
@@ -848,7 +848,7 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: othersTax,
+            withholding_tax: othersTax,
           },
         })
           .then(function (response) {
