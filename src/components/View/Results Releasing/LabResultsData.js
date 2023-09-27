@@ -26,6 +26,7 @@ const labResultsData = {
     "VITAMIN D",
     "Anti HAV",
     "Hbsag Test Promo Group (15 PAX OR MORE)",
+    "Clotting & Bleeding Time"
   ],
 
   urinalysisColorOptions: [
@@ -321,6 +322,25 @@ const labResultsData = {
     },
   ],
 
+  labTestClotting: [
+    {
+      lab_test: "Bleeding_Time",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 1,
+      preferred_to: 3,
+    },
+    {
+      lab_test: "Clotting_Time",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 3,
+      preferred_to: 6,
+    },
+   
+  ],
   labTestUrinalysis: [
     {
       lab_test: "Color",
