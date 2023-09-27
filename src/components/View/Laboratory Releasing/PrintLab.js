@@ -754,7 +754,8 @@ React.useEffect(() => {
                       ? "THYROID PROFILE"
                       : state.selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                       ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
-                      : state.selectedLab.label === "Anti HAV" ? "CLINICAL SEROLOGY":state.selectedLab.label.toUpperCase()}
+                      : state.selectedLab.label === "Anti HAV" ? "CLINICAL SEROLOGY":  state.selectedLab.label.toUpperCase() === "CLOTTING & BLEEDING TIME"
+                      ? "HEMATOLOGY":state.selectedLab.label.toUpperCase()}
                   </>
                 )}
               </span>
@@ -956,7 +957,58 @@ React.useEffect(() => {
                     ))} */}
                       </div>
                     </>
-                  ) :
+                  ) : state.selectedLab.label === "Clotting & Bleeding Time"?(
+                    <>
+                    
+                      <div className="tb mid">
+                        <div className="row bd">
+                          <div className="col">
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>REFERENCE RANGE</b>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                    
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4">BLEEDING TIME</div>
+                              <div className="col-4">
+                                {labTestData[0]?.result}
+                              </div>
+                                  <div className="col-4">1-3 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[0]?.result)<1?"(L)":parseInt(labTestData[1]?.result)>3?"(H)":""}</span></div>
+                              </div>        
+                            <div className="row">
+                              <div className="col-4">CLOTTING TIME</div>
+                              <div className="col-4">
+                                {labTestData[1]?.result}
+                              </div>
+                                  <div className="col-4">3-6 MINUTES  <span style={{color:"red"}}>{parseInt(labTestData[1]?.result)<3?"(L)":parseInt(labTestData[1]?.result)>6?"(H)":""}</span></div>
+                              </div>        
+                             
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ):
                   <div className="tb mid">
                   <div className="row bd">
                     <div className="col">
@@ -991,6 +1043,7 @@ React.useEffect(() => {
                       // state.selectedLab.label === "T3" &&
                       // state.selectedLab.label === "T4" &&
                       state.selectedLab.label !== "Gram Stain" &&
+                      state.selectedLab.label !== "Clotting & Bleeding Time" &&
                       state.selectedLab.label !==
                         "Pregnancy Test (RPK Lateral Flow)" &&
                       state.selectedLab.label !== "Fecal Occult Blood" &&
@@ -1207,6 +1260,7 @@ React.useEffect(() => {
                             "Pregnancy Test (RPK Lateral Flow)" &&
                           state.selectedLab.label !== "Fecal Occult Blood" &&
                           state.selectedLab.label !== "Gram Stain" &&
+                          state.selectedLab.label !== "Clotting & Bleeding Time" &&
                           state.selectedLab.label !==
                             "HIV Screening (Anti HIV)" && (
                             <div className="col">
