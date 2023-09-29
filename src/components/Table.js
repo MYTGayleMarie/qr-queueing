@@ -1081,12 +1081,16 @@ function Table({
                 </div>
               ))}
             </td>
+            <td data-heading="ACCOUNT" className="account-name">
+             P{" "}{cash[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </td>
           </>
         ) : (
           <>
             <td className="account-method">Cash</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
+                       <td data-heading="ACCOUNT" className="account-name"></td>
           </>
         );
 
@@ -1107,12 +1111,16 @@ function Table({
                 </div>
               ))}
             </td>
+              <td data-heading="ACCOUNT" className="account-name">
+             P{" "}{card[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </td>
           </>
         ) : (
           <>
             <td className="account-method">Card</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
+                       <td data-heading="ACCOUNT" className="account-name"></td>
           </>
         );
 
@@ -1133,12 +1141,16 @@ function Table({
                 </div>
               ))}
             </td>
+              <td data-heading="ACCOUNT" className="account-name">
+             P{" "}{check[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </td>
           </>
         ) : (
           <>
             <td className="account-method">Check</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
+                       <td data-heading="ACCOUNT" className="account-name"></td>
           </>
         );
 
@@ -1159,12 +1171,16 @@ function Table({
                 </div>
               ))}
             </td>
+              <td data-heading="ACCOUNT" className="account-name">
+             P{" "}{others[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </td>
           </>
         ) : (
           <>
             <td className="account-method">Others</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
+                       <td data-heading="ACCOUNT" className="account-name"></td>
           </>
         );
 
@@ -1172,7 +1188,11 @@ function Table({
         credit.length > 0 ? (
           <>
             <td className="account-method">Credit</td>
-            <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name">
+               {credit.map((data, index) => (
+                <div className="account-details">{data.account}</div>
+              ))}
+            </td>
             <td data-heading="AMOUNT" className="account-name">
               {credit.map((data, index) => (
                 <div className="account-details">
@@ -1181,12 +1201,16 @@ function Table({
                 </div>
               ))}
             </td>
+              <td data-heading="ACCOUNT" className="account-name">
+             P{" "}{credit[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </td>
           </>
         ) : (
           <>
             <td className="account-method">Credit</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
+                       <td data-heading="ACCOUNT" className="account-name"></td>
           </>
         );
 
@@ -2798,6 +2822,7 @@ function Table({
                 <td className="heading-details">METHOD</td>
                 <td className="heading-details">ACCOUNT</td>
                 <td className="heading-details">AMOUNT</td>
+                <td className="heading-details">TOTAL PER TENDER</td>
               </th>
               <th>TOTAL</th>
             </tr>
