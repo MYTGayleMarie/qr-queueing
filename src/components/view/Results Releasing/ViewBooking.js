@@ -811,12 +811,18 @@ export default function ViewBooking() {
                   {/* TUMOR MARKERS */}
                   {tumor_markers.length != 0 && (
                     <div>
-                      <div className="category label">TUMOR MARKERS</div>
+                       <div className="category label">TUMOR MARKERS</div>
+                       <FileUpload
+                          servicesData={tumor_markers}
+                          title={"TUMOR MARKERS"}
+                          bookingId={bookingId}
+                        />
+                      {/* <div className="category label">TUMOR MARKERS</div>
                       <GenerateResults
                         servicesData={tumor_markers}
                         title={"TUMOR MARKERS"}
                         bookingId={bookingId}
-                      />
+                      /> */}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
@@ -825,11 +831,16 @@ export default function ViewBooking() {
                   {histopathology.length != 0 && (
                     <div>
                       <div className="category label">HISTOPATHOLOGY</div>
-                      <GenerateResults
+                       <FileUpload
+                          servicesData={histopathology}
+                          title={"HISTOPATHOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      {/* <GenerateResults
                         servicesData={histopathology}
                         title={"HISTOPATHOLOGY"}
                         bookingId={bookingId}
-                      />
+                      /> */}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
@@ -838,11 +849,16 @@ export default function ViewBooking() {
                   {microbiology.length != 0 && (
                     <div>
                       <div className="category label">MICROBIOLOGY</div>
-                      <GenerateResults
+                       <FileUpload
+                          servicesData={microbiology}
+                          title={"MICROBIOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      {/* <GenerateResults
                         servicesData={microbiology}
                         title={"MICROBIOLOGY"}
                         bookingId={bookingId}
-                      />
+                      /> */}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
