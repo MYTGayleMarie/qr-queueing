@@ -302,7 +302,6 @@ export default function FileUpload({servicesData, title, bookingId}){
     let serviceId = servicesData[0].id;
     var link = location+"/View-results/"+type+"/"+bookId+"/"+packageId+"/"+serviceId;
     window.open(link)
-    // console.log(link)
   }
 
   return(

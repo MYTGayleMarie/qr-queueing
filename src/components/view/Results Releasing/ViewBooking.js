@@ -291,7 +291,7 @@ export default function ViewBooking() {
   const ecg = labTests.filter((info) => info.key === "cardiology");
 
   /****************/
-  const hematology = labTests.filter((info) => info.key === "hematology");
+  const hematology = labTests.filter((info) => info.key === "hematology" && info.test_id !== "15");
   /****************/
 
   // previously serology
@@ -357,6 +357,10 @@ export default function ViewBooking() {
   const urinalysisOnly = labTests.filter(
     (info) =>
       info.key === "clinical_microscopy_urinalysis" && info.test_id === "1"
+  );
+  const clottingOnly = labTests.filter(
+    (info) =>
+      info.key === "hematology" && info.test_id === "15"
   );
   const clinicalUrinalysis = labTests.filter(
     (info) =>
@@ -732,7 +736,7 @@ export default function ViewBooking() {
                   )}
 
                   {/* HEMATOLOGY */}
-                  {hematology.length != 0 && (
+                  {hematology.length != 0 || clottingOnly != 0 && (
                     <div>
                       <div className="category label">HEMATOLOGY</div>
                       {hematology.length != 0 && (
@@ -742,6 +746,13 @@ export default function ViewBooking() {
                           bookingId={bookingId}
                         />
                       )}
+                      {clottingOnly.length > 0 && (
+                          <FileUpload
+                            servicesData={clottingOnly}
+                            title={"HEMATOLOGY"}
+                            bookingId={bookingId}
+                          />
+                        )}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
@@ -775,20 +786,12 @@ export default function ViewBooking() {
 
                   {thyroid_profile.length != 0 && (
                     <div>
-                      <div className="category label">Thryoid Profile</div>
-                      {detail_thyroid_profile[0]?.with_result === "1" ? (
-                        <GenerateResults
-                          servicesData={thyroid_profile}
-                          title={"THYROID PROFILE"}
-                          bookingId={bookingId}
-                        />
-                      ) : (
+                      <div className="category label">Thyroid Profile</div>
                         <FileUpload
                           servicesData={thyroid_profile}
                           title={"THYROID PROFILE "}
                           bookingId={bookingId}
                         />
-                      )}
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
