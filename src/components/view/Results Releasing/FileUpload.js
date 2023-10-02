@@ -79,6 +79,7 @@ export default function FileUpload({servicesData, title, bookingId}){
           }
         })
         .then((lab)=>{
+        
           const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
           // console.log(labDetail)
           if (labDetail[0].file){
@@ -93,7 +94,7 @@ export default function FileUpload({servicesData, title, bookingId}){
         })
         .catch((error)=>{console.log(error)})
       }
-      if(servicesData[0] .type=="package"){
+      if(servicesData[0].type=="package"){
         axios({
           method: 'post',
           url: window.$link + 'bookings/getBookingPackageDetails/' + servicesData[0].packageId,
