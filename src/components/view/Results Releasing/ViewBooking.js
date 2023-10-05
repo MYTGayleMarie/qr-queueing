@@ -293,12 +293,7 @@ export default function ViewBooking() {
 
   const ecg = labTests.filter((info) => info.key === "cardiology")
   ecg.forEach((test) => selectedTests.add(test.test_id))
-  /****************/
-  const hematology = labTests.filter(
-    (info) => info.key === "hematology" && info.test_id !== "15"
-  )
-  hematology.forEach((test) => selectedTests.add(test.test_id))
-  /****************/
+ 
 
   // previously serology
   const chemistry = labTests.filter(
@@ -381,7 +376,8 @@ export default function ViewBooking() {
   const clinicalMicroscopyIndividualsUrinalysis = labTests.filter(
     (info) =>
       info.key === "clinical_microscopy_urinalysis" &&
-      info.test_id !== "1" && info.test_id !== "2"
+      info.test_id !== "1" &&
+      info.test_id !== "2"
   )
   //add to the set
   clinicalMicroscopyIndividualsUrinalysis.forEach((test) =>
@@ -398,52 +394,29 @@ export default function ViewBooking() {
   )
   /****************/
 
+  /****************/
+  //Hematology Filter
 
-  const urinalysisOnly = labTests.filter(
+  //hematology that has the same upload buttons
+  const hematologyGroup = labTests.filter(
+    (info) => info.test_id === "8" || info.test_id === "9"
+  )
+  //add to the set
+  hematologyGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //hematology indiv lab tests
+  const hematologyIndividuals = labTests.filter(
     (info) =>
-      info.key === "clinical_microscopy_urinalysis" && info.test_id === "1"
+      info.key === "hematology" && info.test_id !== "8" && info.test_id !== "9"
   )
-  urinalysisOnly.forEach((test) => selectedTests.add(test.test_id))
+  //add to the set
+  hematologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
+  /****************/
 
-  const clottingOnly = labTests.filter(
-    (info) => info.key === "hematology" && info.test_id === "15"
-  )
-  clottingOnly.forEach((test) => selectedTests.add(test.test_id))
 
-  const clinicalUrinalysis = labTests.filter(
-    (info) =>
-      info.key === "clinical_microscopy_urinalysis" &&
-      info.test_id !== "7" &&
-      info.test_id !== "130" &&
-      info.test_id !== "2" &&
-      info.test_id !== "136" &&
-      info.test_id !== "3"
-  )
-  clinicalUrinalysis.forEach((test) => selectedTests.add(test.test_id))
 
-  const clinicalUrineLab = labTests.filter(
-    (info) =>
-      info.key === "clinical_microscopy_urinalysis" &&
-      info.test_id !== "7" &&
-      info.test_id !== "130" &&
-      info.test_id !== "136" &&
-      info.test_id !== "1"
-  )
-  clinicalUrineLab.forEach((test) => selectedTests.add(test.test_id))
-
-  const spermAnalysis = labTests.filter((info) => info.test_id === "7")
-  spermAnalysis.forEach((test) => selectedTests.add(test.test_id))
-
-  const serumPT = labTests.filter((info) => info.test_id === "130")
-  serumPT.forEach((test) => selectedTests.add(test.test_id))
-
-  const pregnancyRPK = labTests.filter((info) => info.test_id === "136")
-  pregnancyRPK.forEach((test) => selectedTests.add(test.test_id))
-
-  const detailpregnancyRPK = services.filter(
-    (info) => info.lab_test === "Pregnancy Test (RPK Lateral Flow)"
-  )
-  detailpregnancyRPK.forEach((test) => selectedTests.add(test.test_id))
+ 
+  
 
   /****************/
 
@@ -719,7 +692,6 @@ export default function ViewBooking() {
                   </div>
                 </div>
                 <div className="personal-data-cont">
-
                   {/* CLINICAL MICROSCOPY */}
                   <div className="category label">CLINICAL MICROSCOPY</div>
                   <FileUpload
@@ -744,40 +716,20 @@ export default function ViewBooking() {
                   <hr className="labtest-line mb-5" />
 
                   {/* HEMATOLOGY */}
-
-                  {(hematology.length !== 0 || clottingOnly.length !== 0) && (
-                    <div>
-                      <div className="category label">HEMATOLOGY</div>
-                      {hematology.length !== 0 &&
-                        hematology.map((data) => (
-                          <FileUpload
-                            servicesData={[data]} // passing individual data item
-                            title={"HEMATOLOGY"}
-                            bookingId={bookingId}
-                          />
-                        ))}
-                      {/* {hematology.length !== 0 && 
-       hematology.map(data=>
-       {
-        return (  <FileUpload
-        servicesData={[{...hematology}]}
-        title={"HEMATOLOGY"}
-        bookingId={bookingId}
-      />    )
-       }               
-        )
-     
-    } */}
-                      {clottingOnly.length > 0 && (
-                        <FileUpload
-                          servicesData={clottingOnly}
-                          title={"HEMATOLOGY"}
-                          bookingId={bookingId}
-                        />
-                      )}
-                      <hr className="labtest-line mb-5" />
-                    </div>
-                  )}
+                  <div className="category label">HEMATOLOGY</div>
+                  <FileUpload
+                    servicesData={hematologyGroup}
+                    title={"HEMATOLOGY"}
+                    bookingId={bookingId}
+                  />
+                  {hematologyIndividuals.map((data) => (
+                    <FileUpload
+                      servicesData={[data]}
+                      title={"HEMATOLOGY"}
+                      bookingId={bookingId}
+                    />
+                  ))}
+                  <hr className="labtest-line mb-5" />
 
                   {/* CHEMISTRY */}
                   {chemistry.length > 0 && (
@@ -792,6 +744,7 @@ export default function ViewBooking() {
                       <hr className="labtest-line mb-5" />
                     </div>
                   )}
+
 
                   {/* SEROLOGY */}
                   {serology.length > 0 && (
