@@ -512,9 +512,18 @@ export default function ViewBooking() {
   hepatitisIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
-  console.log("lab tests", labTests)
-
   /****************/
+  //Histopathology Filter
+
+  //histopathology that has the same upload buttons
+  const histopathologyGroup = labTests.filter(
+    (info) => info.key === "histopathology"
+  )
+  //add to the set
+  histopathologyGroup.forEach((test) => selectedTests.add(test.test_id))
+  /****************/
+
+  console.log("lab tests", labTests)
 
   /****************/
 
@@ -1024,19 +1033,20 @@ export default function ViewBooking() {
                   )}
 
                   {/* HISTOPATHOLOGY */}
-                  {histopathology.length > 0 && (
-                    <div>
+                  {histopathologyGroup.length > 0 && (
+                    <>
                       <div className="category label">HISTOPATHOLOGY</div>
-                      {histopathology.map((data) => (
-                        <FileUpload
-                          servicesData={[data]} // passing individual data item
-                          title={"HISTOPATHOLOGY"}
-                          bookingId={bookingId}
-                        />
-                      ))}
+
+                      <FileUpload
+                        servicesData={histopathologyGroup}
+                        title={"HISTOPATHOLOGY"}
+                        bookingId={bookingId}
+                      />
+
                       <hr className="labtest-line mb-5" />
-                    </div>
+                    </>
                   )}
+
 
                   {/* MICROBIOLOGY */}
                   {microbiology.length > 0 && (
