@@ -487,6 +487,13 @@ export default function ViewBooking() {
   )
   //add to the set
   tumorIndividuals.forEach((test) => selectedTests.add(test.test_id))
+
+  //immunulogy
+  const immunologyIndividuals = labTests.filter(
+    (info) => info.key === "immunology"
+  )
+  //add to the set
+  immunologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -919,9 +926,22 @@ export default function ViewBooking() {
                   {/* SEROLOGY */}
                   {(coaguationGroup.length > 0 ||
                     thyroidGroup.length > 0 ||
-                    tumorIndividuals.length > 0) && (
+                    tumorIndividuals.length > 0 ||
+                    immunologyIndividuals.length > 0) && (
                     <>
                       <div className="category label">SEROLOGY</div>
+                      {immunologyIndividuals.length > 0 && (
+                        <>
+                          <div className="category label mt-3">Immunology</div>
+                          {immunologyIndividuals.map((data) => (
+                            <FileUpload
+                              servicesData={[data]}
+                              title={"IMMUNOLOGY"}
+                              bookingId={bookingId}
+                            />
+                          ))}
+                        </>
+                      )}
                       {coaguationGroup.length > 0 && (
                         <>
                           <div className="category label mt-3">
@@ -954,7 +974,7 @@ export default function ViewBooking() {
                           {tumorIndividuals.map((data) => (
                             <FileUpload
                               servicesData={[data]}
-                              title={"COAGUATION"}
+                              title={"TUMOR MARKERS"}
                               bookingId={bookingId}
                             />
                           ))}
