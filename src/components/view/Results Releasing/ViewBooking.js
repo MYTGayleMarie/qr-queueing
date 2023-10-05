@@ -494,6 +494,22 @@ export default function ViewBooking() {
   )
   //add to the set
   immunologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
+
+  //hepatitis
+  const hepatitisGroup = labTests.filter(
+    (info) => info.test_id === "51" || info.test_id === "52"
+  )
+  //add to the set
+  hepatitisGroup.forEach((test) => selectedTests.add(test.test_id))
+  //hepatitis individuals
+  const hepatitisIndividuals = labTests.filter(
+    (info) =>
+      info.key === "hepatitis_profile_screening" &&
+      info.test_id !== "51" &&
+      info.test_id !== "52"
+  )
+  //add to the set
+  hepatitisIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -927,9 +943,31 @@ export default function ViewBooking() {
                   {(coaguationGroup.length > 0 ||
                     thyroidGroup.length > 0 ||
                     tumorIndividuals.length > 0 ||
-                    immunologyIndividuals.length > 0) && (
+                    immunologyIndividuals.length > 0 ||
+                    hepatitisGroup.length > 0 ||
+                    hepatitisIndividuals.length > 0) && (
                     <>
                       <div className="category label">SEROLOGY</div>
+                      {(hepatitisGroup.length > 0 ||
+                        hepatitisIndividuals.length > 0) && (
+                        <>
+                          <div className="category label mt-3">
+                            Hepatitis Profile Screening
+                          </div>
+                          <FileUpload
+                            servicesData={hepatitisGroup}
+                            title={"HEPATITIS"}
+                            bookingId={bookingId}
+                          />
+                          {hepatitisIndividuals.map((data) => (
+                            <FileUpload
+                              servicesData={[data]}
+                              title={"HEPATITIS"}
+                              bookingId={bookingId}
+                            />
+                          ))}
+                        </>
+                      )}
                       {immunologyIndividuals.length > 0 && (
                         <>
                           <div className="category label mt-3">Immunology</div>
@@ -983,65 +1021,6 @@ export default function ViewBooking() {
 
                       <hr className="labtest-line mb-5" />
                     </>
-                  )}
-
-                  <hr className="labtest-line mb-5" />
-
-                  {/* SEROLOGY */}
-                  {serology.length > 0 && (
-                    <div>
-                      <div className="category label">SEROLOGY</div>
-                      {serology.map((data) => (
-                        <FileUpload
-                          servicesData={[data]} // passing individual data item
-                          title={"SEROLOGY"}
-                          bookingId={bookingId}
-                        />
-                      ))}
-                      <hr className="labtest-line mb-5" />
-                    </div>
-                  )}
-
-                  {/* THYROID PROFILE */}
-                  {thyroid_profile.length > 0 && (
-                    <div>
-                      <div className="category label">Thyroid Profile</div>
-                      {thyroid_profile.map((data) => (
-                        <FileUpload
-                          servicesData={[data]} // passing individual data item
-                          title={"THYROID PROFILE"}
-                          bookingId={bookingId}
-                        />
-                      ))}
-                      <hr className="labtest-line mb-5" />
-                    </div>
-                  )}
-
-                  {/* {thyroid_profile.length !== 0 && (
-                    <div>
-                      <div className="category label">THYROID PROFILE</div>
-                      <GenerateResults
-                        servicesData={thyroid_profile}
-                        title={"THYROID PROFILE"}
-                        bookingId={bookingId}
-                      />
-                      <hr className="labtest-line mb-5" />
-                    </div>
-                  )} */}
-
-                  {/* TUMOR MARKERS */}
-                  {tumor_markers.length > 0 && (
-                    <div>
-                      <div className="category label">TUMOR MARKERS</div>
-                      {tumor_markers.map((data) => (
-                        <FileUpload
-                          servicesData={[data]} // passing individual data item
-                          title={"TUMOR MARKERS"}
-                          bookingId={bookingId}
-                        />
-                      ))}
-                      <hr className="labtest-line mb-5" />
-                    </div>
                   )}
 
                   {/* HISTOPATHOLOGY */}
