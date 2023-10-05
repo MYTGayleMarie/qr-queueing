@@ -84,13 +84,12 @@ export default function ViewBooking() {
     setSendOutDetails({ ...sendOutDetails, [name]: value })
   }
 
-
   // Lab Tests
   const [services, setServices] = useState([])
   const [packageServices, setPackageServices] = useState([])
   const [labTests, setLabTests] = useState([])
   const [loading, setLoading] = useState(false)
- 
+
   //Redirect
   const [redirectBack, setRedirectBack] = useState(false)
 
@@ -319,7 +318,6 @@ export default function ViewBooking() {
   )
   thyroid_profile.forEach((test) => selectedTests.add(test.test_id))
 
-
   function emailTo() {
     if (sendOutDetails.email && sendOutDetails.email.trim() !== "") {
       setLoading(true)
@@ -370,6 +368,36 @@ export default function ViewBooking() {
   serology.forEach((test) => selectedTests.add(test.test_id))
 
   /****************/
+  //Clinical Microscopy Filter
+
+  //clinical microscopy that has the same upload buttons
+  const clinicalMicroscopyGroup = labTests.filter(
+    (info) => info.test_id === "1" || info.test_id === "2"
+  )
+  //add to the set
+  clinicalMicroscopyGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //clinical microscopy indiv lab tests - urinalysis
+  const clinicalMicroscopyIndividualsUrinalysis = labTests.filter(
+    (info) =>
+      info.key === "clinical_microscopy_urinalysis" &&
+      info.test_id !== "1" && info.test_id !== "2"
+  )
+  //add to the set
+  clinicalMicroscopyIndividualsUrinalysis.forEach((test) =>
+    selectedTests.add(test.test_id)
+  )
+
+  //clinical microscopy indiv lab tests - fecalysis
+  const clinicalMicroscopyIndividualsFecalysis = labTests.filter(
+    (info) => info.key === "clinical_microscopy_fecalysis"
+  )
+  //add to the set
+  clinicalMicroscopyIndividualsFecalysis.forEach((test) =>
+    selectedTests.add(test.test_id)
+  )
+  /****************/
+
 
   const urinalysisOnly = labTests.filter(
     (info) =>
@@ -403,32 +431,11 @@ export default function ViewBooking() {
   )
   clinicalUrineLab.forEach((test) => selectedTests.add(test.test_id))
 
-  const detailUrinalysis = services.filter(
-    (info) => info.lab_test === "Urinalysis"
-  )
-
-  const detailSerology = services.filter(
-    (info) =>
-      info.lab_test === "Syphilis/RPR/VDRL" ||
-      info.lab_test === "HBSag (Hepatitis B Antigen)" ||
-      info.lab_test === "Anti-HAV" ||
-      info.lab_test === "Anti-HCV" ||
-      info.lab_test === "Hepatitis B Surface Antibody Test"
-  )
-
   const spermAnalysis = labTests.filter((info) => info.test_id === "7")
   spermAnalysis.forEach((test) => selectedTests.add(test.test_id))
 
-  const detailSperm = services.filter(
-    (info) => info.lab_test === "Sperm Analysis"
-  )
-
   const serumPT = labTests.filter((info) => info.test_id === "130")
   serumPT.forEach((test) => selectedTests.add(test.test_id))
-
-  const detailSerumPT = services.filter(
-    (info) => info.lab_test === "Serum Pregnancy Test"
-  )
 
   const pregnancyRPK = labTests.filter((info) => info.test_id === "136")
   pregnancyRPK.forEach((test) => selectedTests.add(test.test_id))
@@ -438,20 +445,7 @@ export default function ViewBooking() {
   )
   detailpregnancyRPK.forEach((test) => selectedTests.add(test.test_id))
 
-
-
   /****************/
-
-  const clinicalFecalysis = labTests.filter(
-    (info) => info.key === "clinical_microscopy_fecalysis"
-  )
-  clinicalFecalysis.forEach((test) => selectedTests.add(test.test_id))
-
-  const detailFecalysis = services.filter(
-    (info) => info.lab_test === "Fecalysis"
-  )
-
-  // const fecalysis = labTests.filter((info)=>info.test_id==="4")
 
   /****************/
 
@@ -471,12 +465,6 @@ export default function ViewBooking() {
   const unselectedTestsIDs = labTests.filter(
     (test) => !selectedTests.has(test.test_id)
   )
-
-  // console.log("labTests", labTests)
-  // console.log("clotting", clottingOnly)
-  // console.log("hematology", hematology)
-  // console.log("selectedTests", selectedTests)
-  // console.log("unselectedTests", unselectedTestsIDs)
 
   // const {id} = useParams();
   const [data, setData] = useState([])
@@ -731,121 +719,44 @@ export default function ViewBooking() {
                   </div>
                 </div>
                 <div className="personal-data-cont">
-                  {/* CLINICAL MICROSCOPY URINALYSIS */}
-                  {(clinicalUrinalysis.length !== 0 ||
-                    spermAnalysis.length !== 0 ||
-                    urinalysisOnly.length !== 0 ||
-                    serumPT.length !== 0 ||
-                    clinicalUrineLab.length !== 0 ||
-                    pregnancyRPK.length !== 0) && (
-                    <div>
-                      <div className="category label">
-                        CLINICAL MICROSCOPY URINALYSIS
-                      </div>
-                      <>
-                      {
-                         urinalysisOnly.length > 0 && 
-  urinalysisOnly.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY URINALYSIS"}
-      bookingId={bookingId}
-    />
-  )
-                      }
-                        {
-                         serumPT.length > 0 && 
-  serumPT.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY URINALYSIS"}
-      bookingId={bookingId}
-    />
-  )
-                      }
-                       
-                       {
-                         spermAnalysis.length > 0 && 
-  spermAnalysis.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY URINALYSIS"}
-      bookingId={bookingId}
-    />
-  )
-                      }
 
-                       {
-                         pregnancyRPK.length > 0 && 
-  pregnancyRPK.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY URINALYSIS"}
-      bookingId={bookingId}
-    />
-  )
-                      }
-
-                         {
-                         clinicalUrineLab.length > 0 && 
-  clinicalUrineLab.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY URINALYSIS"}
-      bookingId={bookingId}
-    />
-  )
-                      }
-
-                      
-                        {/* 
-              {(clinicalUrinalysis.length !== 0) &&
-                (services?.with_result === "0") &&
-                <FileUpload 
-                servicesData={clinicalUrinalysis}
-                title={"CLINICAL MICROSCOPY URINALYSIS"}
-                bookingId = {bookingId}
-                />
-              } */}
-                      </>
-                      <hr className="labtest-line mb-5" />
-                    </div>
-                  )}
-
-                  {/* CLINICAL URINALYSIS FECALYSIS */}
-                  {clinicalFecalysis.length > 0 && <div className="category label">
-                        CLINICAL MICROSCOPY FECALYSIS
-                      </div>}
-                    {
-                         clinicalFecalysis.length > 0 && 
-                         
-  clinicalFecalysis.map((data,index) => 
-    <> 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CLINICAL MICROSCOPY FECALYSIS"}
-      bookingId={bookingId}
-    />{index === clinicalFecalysis.length -1 && <hr className="labtest-line mb-5" />}</>
-  )
-                      }
-                 
+                  {/* CLINICAL MICROSCOPY */}
+                  <div className="category label">CLINICAL MICROSCOPY</div>
+                  <FileUpload
+                    servicesData={clinicalMicroscopyGroup}
+                    title={"CLINICAL MICROSCOPY"}
+                    bookingId={bookingId}
+                  />
+                  {clinicalMicroscopyIndividualsUrinalysis.map((data) => (
+                    <FileUpload
+                      servicesData={[data]}
+                      title={"CLINICAL MICROSCOPY"}
+                      bookingId={bookingId}
+                    />
+                  ))}
+                  {clinicalMicroscopyIndividualsFecalysis.map((data) => (
+                    <FileUpload
+                      servicesData={[data]}
+                      title={"CLINICAL MICROSCOPY"}
+                      bookingId={bookingId}
+                    />
+                  ))}
+                  <hr className="labtest-line mb-5" />
 
                   {/* HEMATOLOGY */}
-           
-                { (hematology.length !== 0 || clottingOnly.length !== 0) && (
-  <div>
-    <div className="category label">HEMATOLOGY</div>
-    {
-  hematology.length !== 0 && 
-  hematology.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"HEMATOLOGY"}
-      bookingId={bookingId}
-    />
-  )
-}
-    {/* {hematology.length !== 0 && 
+
+                  {(hematology.length !== 0 || clottingOnly.length !== 0) && (
+                    <div>
+                      <div className="category label">HEMATOLOGY</div>
+                      {hematology.length !== 0 &&
+                        hematology.map((data) => (
+                          <FileUpload
+                            servicesData={[data]} // passing individual data item
+                            title={"HEMATOLOGY"}
+                            bookingId={bookingId}
+                          />
+                        ))}
+                      {/* {hematology.length !== 0 && 
        hematology.map(data=>
        {
         return (  <FileUpload
@@ -857,67 +768,60 @@ export default function ViewBooking() {
         )
      
     } */}
-    {clottingOnly.length > 0 && (
-      <FileUpload
-        servicesData={clottingOnly}
-        title={"HEMATOLOGY"}
-        bookingId={bookingId}
-      />
-    )}
-    <hr className="labtest-line mb-5" />
-  </div>
-)}
-
+                      {clottingOnly.length > 0 && (
+                        <FileUpload
+                          servicesData={clottingOnly}
+                          title={"HEMATOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      )}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* CHEMISTRY */}
-                            {
-                         chemistry.length > 0 && 
-                         <div>
-  {chemistry.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"CHEMISTRY"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                
+                  {chemistry.length > 0 && (
+                    <div>
+                      {chemistry.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"CHEMISTRY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* SEROLOGY */}
-                           {
-                         serology.length > 0 && 
-                         <div>
-                          <div className="category label">SEROLOGY</div>
-  {serology.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"SEROLOGY"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                
+                  {serology.length > 0 && (
+                    <div>
+                      <div className="category label">SEROLOGY</div>
+                      {serology.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"SEROLOGY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* THYROID PROFILE */}
-  {
-                         thyroid_profile.length > 0 && 
-                         <div>
-                          <div className="category label">Thyroid Profile</div>
-  {thyroid_profile.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"THYROID PROFILE"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                  
+                  {thyroid_profile.length > 0 && (
+                    <div>
+                      <div className="category label">Thyroid Profile</div>
+                      {thyroid_profile.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"THYROID PROFILE"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* {thyroid_profile.length !== 0 && (
                     <div>
@@ -932,106 +836,94 @@ export default function ViewBooking() {
                   )} */}
 
                   {/* TUMOR MARKERS */}
-                    {
-                         tumor_markers.length > 0 && 
-                         <div>
-                          <div className="category label">TUMOR MARKERS</div>
-  {tumor_markers.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"TUMOR MARKERS"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                 
+                  {tumor_markers.length > 0 && (
+                    <div>
+                      <div className="category label">TUMOR MARKERS</div>
+                      {tumor_markers.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"TUMOR MARKERS"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
+
                   {/* HISTOPATHOLOGY */}
-                    {
-                         histopathology.length > 0 && 
-                         <div>
-                          <div className="category label">HISTOPATHOLOGY</div>
-  {histopathology.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"HISTOPATHOLOGY"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                 
+                  {histopathology.length > 0 && (
+                    <div>
+                      <div className="category label">HISTOPATHOLOGY</div>
+                      {histopathology.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"HISTOPATHOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* MICROBIOLOGY */}
-                    {
-                         microbiology.length > 0 && 
-                         <div>
-                          <div className="category label">MICROBIOLOGY</div>
-  {microbiology.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"MICROBIOLOGY"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                 
+                  {microbiology.length > 0 && (
+                    <div>
+                      <div className="category label">MICROBIOLOGY</div>
+                      {microbiology.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"MICROBIOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* XRAY RADIOLOGY */}
-                    {
-                         xray.length > 0 && 
-                         <div>
-                          <div className="category label">XRAY</div>
-  {xray.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"XRAY"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                
+                  {xray.length > 0 && (
+                    <div>
+                      <div className="category label">XRAY</div>
+                      {xray.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"XRAY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* CARDIOLOGY */}
-                    {
-                         ecg.length > 0 && 
-                         <div>
-                          <div className="category label">ECG</div>
-  {ecg.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"ECG"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-               
+                  {ecg.length > 0 && (
+                    <div>
+                      <div className="category label">ECG</div>
+                      {ecg.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"ECG"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {/* ULTRASOUND */}
-                    {
-                         ultrasound.length > 0 && 
-                         <div>
-                          <div className="category label">ULTRASOUND</div>
-  {ultrasound.map(data => 
-    <FileUpload
-      servicesData={[data]}  // passing individual data item
-      title={"ULTRASOUND"}
-      bookingId={bookingId}
-    />
-  )}
-  <hr className="labtest-line mb-5" />
-  </div>
-                      }
-                  
-                 
+                  {ultrasound.length > 0 && (
+                    <div>
+                      <div className="category label">ULTRASOUND</div>
+                      {ultrasound.map((data) => (
+                        <FileUpload
+                          servicesData={[data]} // passing individual data item
+                          title={"ULTRASOUND"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </div>
+                  )}
 
                   {unselectedTestsIDs.map((data) => {
                     return (
