@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import useTable from "../utilities/Pagination";
-import TableFooter from "./TableFooter";
-import { Link, NavLink } from "react-router-dom";
-import { RingLoader } from "react-spinners";
-import TableLoader from "./TableLoader";
-import TableLoader1 from "./TableLoader1";
-import TableLoader2 from "./TableLoader2";
-import TableLoader3 from "./TableLoader3";
-import TableLoader4 from "./TableLoader4";
-import TableLoader5 from "./TableLoader5";
-import TableLoader6 from "./TableLoader6";
-import TableLoader7 from "./TableLoader7";
+import React, { useState } from "react"
+import PropTypes from "prop-types"
+import useTable from "../utilities/Pagination"
+import TableFooter from "./TableFooter"
+import { Link, NavLink } from "react-router-dom"
+import { RingLoader } from "react-spinners"
+import TableLoader from "./TableLoader"
+import TableLoader1 from "./TableLoader1"
+import TableLoader2 from "./TableLoader2"
+import TableLoader3 from "./TableLoader3"
+import TableLoader4 from "./TableLoader4"
+import TableLoader5 from "./TableLoader5"
+import TableLoader6 from "./TableLoader6"
+import TableLoader7 from "./TableLoader7"
 
 //css
-import "./Table.scss";
-import { useNavigate } from "react-router-dom";
-import TableLoader8 from "./TableLoader8";
+import "./Table.scss"
+import { useNavigate } from "react-router-dom"
+import TableLoader8 from "./TableLoader8"
 import {
   formatDate,
   formatPrice,
   getRole,
   getRoleId,
-} from "../utilities/Common";
+} from "../utilities/Common"
 
 function Table({
   clickable,
@@ -68,34 +68,34 @@ function Table({
   selectedRowExtraction,
   queueAttender,
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   //PAGINATION
-  const [roleId, setRoleId] = useState(getRoleId().replace(/^"(.*)"$/, "$1"));
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(1);
-  const { slice, range } = useTable(tableData, page, rowsPerPage, type);
-  const [loading, setLoading] = useState(true);
+  const [roleId, setRoleId] = useState(getRoleId().replace(/^"(.*)"$/, "$1"))
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [page, setPage] = useState(1)
+  const { slice, range } = useTable(tableData, page, rowsPerPage, type)
+  const [loading, setLoading] = useState(true)
 
-  let tableClass = "table-container__table";
+  let tableClass = "table-container__table"
 
   if (breakOn === "small") {
-    tableClass += " table-container__table--break-sm";
+    tableClass += " table-container__table--break-sm"
   } else if (breakOn === "medium") {
-    tableClass += " table-container_table--break-md";
+    tableClass += " table-container_table--break-md"
   } else if (breakOn === "large") {
-    tableClass += " table-container_table--break-lg";
+    tableClass += " table-container_table--break-lg"
   }
 
   const data = slice.map((row, index) => {
-    let rowData = [];
-    let i = 0;
+    let rowData = []
+    let i = 0
 
     for (const key in row) {
       rowData.push({
         key: headingColumns[i],
         val: row[key],
-      });
-      i++;
+      })
+      i++
     }
     if (type === "companies-review" && clickable == false) {
       return (
@@ -110,7 +110,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "transaction") {
       return (
         <tr key={row.id}>
@@ -124,7 +124,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "discount-detail") {
       return (
         <tr key={row.id}>
@@ -138,7 +138,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (clickable == false) {
       return (
         <tr key={row.id}>
@@ -148,7 +148,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "registration") {
       return (
         <tr key={row.id}>
@@ -237,7 +237,7 @@ function Table({
             </td>
           )}
         </tr>
-      );
+      )
     } else if (type === "medtech") {
       return (
         <tr key={row.id}>
@@ -256,7 +256,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "extraction") {
       return (
         <tr
@@ -283,13 +283,13 @@ function Table({
         //     </td>
         //   ))}
         // </tr>
-      );
+      )
     } else if (type === "extraction-details") {
       return (
         <tr key={row}>
           <td>{row}</td>
         </tr>
-      );
+      )
     } else if (type === "aging") {
       return (
         <tr key={row.id}>
@@ -376,7 +376,7 @@ function Table({
             {formatPrice(row.balance)}
           </td>
         </tr>
-      );
+      )
     } else if (type === "aging-by-company") {
       return (
         <tr key={row.id}>
@@ -430,7 +430,7 @@ function Table({
             {formatPrice(row.balance)}
           </td>
         </tr>
-      );
+      )
     } else if (type === "report-inventory") {
       return (
         <tr key={row.id}>
@@ -449,7 +449,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "report-expense") {
       return (
         <tr key={row.id}>
@@ -459,7 +459,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "report-annual") {
       return (
         <tr key={row.id}>
@@ -469,7 +469,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "services") {
       return (
         <tr key={row.id}>
@@ -493,7 +493,7 @@ function Table({
             <br />
           </td>
         </tr>
-      );
+      )
     } else if (
       (type == "purchase-order" && clickable == true) ||
       (type == "release" && clickable == true) ||
@@ -524,13 +524,11 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type == "report-incomplete-po") {
-
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
-            
             <td
               key={index}
               data-heading={data.key}
@@ -553,7 +551,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type == "receives" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -576,9 +574,8 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type == "services-packages-2" && clickable == true) {
-     
       return (
         <tr key={row.id}>
           {rowData.slice(0, 3).map((data, index) => (
@@ -600,7 +597,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "companies-discount" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -625,7 +622,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "credits" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -648,7 +645,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "mds" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -674,7 +671,7 @@ function Table({
             </select>
           </td>
         </tr>
-      );
+      )
     } else if (type === "med-tech" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -697,7 +694,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "queue" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -780,7 +777,7 @@ function Table({
             </div>
           </td>
         </tr>
-      );
+      )
     } else if (type === "items" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -799,7 +796,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "items-history" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -818,7 +815,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "suppliers" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -837,7 +834,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "receive-items-manager" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -856,7 +853,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "search-patient" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -882,7 +879,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "search-patient-queue" && clickable == true) {
       return (
         <tr key={row.id}>
@@ -908,7 +905,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (
       type === "payment-invoices" ||
       type === "payment-invoices-print"
@@ -929,7 +926,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "add-invoice") {
       return (
         <tr key={row.id}>
@@ -945,7 +942,7 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     } else if (type === "companies") {
       return (
         <tr key={row.id}>
@@ -968,7 +965,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "company-invoices") {
       return (
         <tr key={row.id}>
@@ -981,7 +978,7 @@ function Table({
                   {data}
                   <br />
                 </>
-              );
+              )
             })}
           </td>
           <td>
@@ -991,7 +988,7 @@ function Table({
                   P {data}
                   <br />
                 </>
-              );
+              )
             })}
           </td>
           <td>{row.payment_status}</td>
@@ -1001,7 +998,7 @@ function Table({
               data-heading={data.key}
               className={index == 3 ? "company_name" : data.val}
             >
-              {console.log(index)}
+           
               {index == 0 || index == 1 ? "" : data.val}
             </td>
           ))} */}
@@ -1009,15 +1006,13 @@ function Table({
             <button
               class="action-btn"
               role="button"
-              onClick={() =>
-                link(row.invoice_id, row.company_id)
-              }
+              onClick={() => link(row.invoice_id, row.company_id)}
             >
               {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "discount") {
       return (
         <tr key={row.id}>
@@ -1041,7 +1036,7 @@ function Table({
             </button>
           </td>
         </tr>
-      );
+      )
     } else if (type === "send-out-results") {
       return (
         <tr key={row.id}>
@@ -1056,13 +1051,13 @@ function Table({
             </a>
           </td>
         </tr>
-      );
+      )
     } else if (type === "sales") {
-      var card = row.filter((info) => info.method == "card");
-      var check = row.filter((info) => info.method == "check");
-      var others = row.filter((info) => info.method == "others");
-      var cash = row.filter((info) => info.method == "cash");
-      var credit = row.filter((info) => info.method == "credit");
+      var card = row.filter((info) => info.method == "card")
+      var check = row.filter((info) => info.method == "check")
+      var others = row.filter((info) => info.method == "others")
+      var cash = row.filter((info) => info.method == "cash")
+      var credit = row.filter((info) => info.method == "credit")
 
       var cashItems =
         cash.length > 0 ? (
@@ -1082,7 +1077,10 @@ function Table({
               ))}
             </td>
             <td data-heading="ACCOUNT" className="account-name">
-             P{" "}{cash[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              P{" "}
+              {cash[0].tender_total
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </td>
           </>
         ) : (
@@ -1090,9 +1088,9 @@ function Table({
             <td className="account-method">Cash</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
-                       <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name"></td>
           </>
-        );
+        )
 
       var cardItems =
         card.length > 0 ? (
@@ -1111,8 +1109,11 @@ function Table({
                 </div>
               ))}
             </td>
-              <td data-heading="ACCOUNT" className="account-name">
-             P{" "}{card[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <td data-heading="ACCOUNT" className="account-name">
+              P{" "}
+              {card[0].tender_total
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </td>
           </>
         ) : (
@@ -1120,9 +1121,9 @@ function Table({
             <td className="account-method">Card</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
-                       <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name"></td>
           </>
-        );
+        )
 
       var checkItems =
         check.length > 0 ? (
@@ -1141,8 +1142,11 @@ function Table({
                 </div>
               ))}
             </td>
-              <td data-heading="ACCOUNT" className="account-name">
-             P{" "}{check[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <td data-heading="ACCOUNT" className="account-name">
+              P{" "}
+              {check[0].tender_total
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </td>
           </>
         ) : (
@@ -1150,9 +1154,9 @@ function Table({
             <td className="account-method">Check</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
-                       <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name"></td>
           </>
-        );
+        )
 
       var othersItems =
         others.length > 0 ? (
@@ -1171,8 +1175,11 @@ function Table({
                 </div>
               ))}
             </td>
-              <td data-heading="ACCOUNT" className="account-name">
-             P{" "}{others[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <td data-heading="ACCOUNT" className="account-name">
+              P{" "}
+              {others[0].tender_total
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </td>
           </>
         ) : (
@@ -1180,16 +1187,16 @@ function Table({
             <td className="account-method">Others</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
-                       <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name"></td>
           </>
-        );
+        )
 
       var creditItems =
         credit.length > 0 ? (
           <>
             <td className="account-method">Credit</td>
             <td data-heading="ACCOUNT" className="account-name">
-               {credit.map((data, index) => (
+              {credit.map((data, index) => (
                 <div className="account-details">{data.account}</div>
               ))}
             </td>
@@ -1201,8 +1208,11 @@ function Table({
                 </div>
               ))}
             </td>
-              <td data-heading="ACCOUNT" className="account-name">
-             P{" "}{credit[0].tender_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <td data-heading="ACCOUNT" className="account-name">
+              P{" "}
+              {credit[0].tender_total
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </td>
           </>
         ) : (
@@ -1210,9 +1220,9 @@ function Table({
             <td className="account-method">Credit</td>
             <td data-heading="ACCOUNT" className="account-name"></td>
             <td data-heading="AMOUNT" className="account-name"></td>
-                       <td data-heading="ACCOUNT" className="account-name"></td>
+            <td data-heading="ACCOUNT" className="account-name"></td>
           </>
-        );
+        )
 
       const rowElements = (
         <tr key={row.id} className="sales-row">
@@ -1239,8 +1249,8 @@ function Table({
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
           </td>
         </tr>
-      );
-      return rowElements;
+      )
+      return rowElements
       // return <tr></tr>
     } else if (type === "md-referrals") {
       var data =
@@ -1286,7 +1296,7 @@ function Table({
               ))}
             </td>
           </>
-        );
+        )
 
       const rowElements = (
         <tr key={row.id} className="sales-row">
@@ -1302,8 +1312,8 @@ function Table({
             P {row[0].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </td>
         </tr>
-      );
-      return rowElements;
+      )
+      return rowElements
     } else if (type === "receive-incomplete-po-items") {
       return (
         <tr key={row.id}>
@@ -1335,12 +1345,12 @@ function Table({
               name="received"
               value={row.received}
               onChange={(e) => {
-                receiveData(e, index);
+                receiveData(e, index)
               }}
             />
           </td>
         </tr>
-      );
+      )
     } else {
       return (
         <tr key={row.id} onClick={() => link(row.id)}>
@@ -1355,13 +1365,13 @@ function Table({
             </td>
           ))}
         </tr>
-      );
+      )
     }
-  });
+  })
 
   //table structure
   if (type === "no-action") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -1439,11 +1449,11 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   }
 
   if (type === "release") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -1517,9 +1527,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "mds") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -1596,9 +1606,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "credits") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -1675,10 +1685,10 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   }
   if (type === "transaction") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done, payment_status } = filteredData
 
     return (
       <div className="table-container">
@@ -1700,6 +1710,14 @@ function Table({
                 : "col-sm-12 d-flex justify-content-end mb-1"
             }
           >
+            <select name="payment_status" onChange={setFilter} style={{marginRight:"15px"}}>
+              <option value="all" selected>
+                ALL
+              </option>
+              <option value="paid">PAID</option>
+              <option value="unpaid">UNPAID</option>
+            </select>
+            
             <input
               type="date"
               className="from-date search"
@@ -1755,9 +1773,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "services-packages-2") {
-    const { from_date, to_date, status } = filteredData;
+    const { from_date, to_date, status } = filteredData
 
     return (
       <div className="table-container">
@@ -1842,7 +1860,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "reports-services-packages") {
     return (
       <div className="table-container">
@@ -1866,9 +1884,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "receives") {
-    const { from_date, to_date, status } = filteredData;
+    const { from_date, to_date, status } = filteredData
 
     return (
       <div className="table-container">
@@ -1947,7 +1965,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "receive-items-manager") {
     return (
       <div>
@@ -1987,9 +2005,9 @@ function Table({
           />
         </div>
       </div>
-    );
+    )
   } else if (type === "report-inventory") {
-    const { from_date, to_date, status } = filteredData;
+    const { from_date, to_date, status } = filteredData
 
     return (
       <div className="table-container">
@@ -2060,9 +2078,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "purchase-order") {
-    const { from_date, to_date, status } = filteredData;
+    const { from_date, to_date, status } = filteredData
 
     return (
       <div className="table-container">
@@ -2140,9 +2158,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "report-expense") {
-    const { from_date, to_date, status } = filteredData;
+    const { from_date, to_date, status } = filteredData
 
     return (
       <div className="table-container">
@@ -2203,12 +2221,12 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "report-annual") {
-    const { year } = filteredData;
-    var min = 2022;
-    var max = new Date().getFullYear();
-    const yearRange = [...Array(max - min + 1).keys()].map((x) => x + min);
+    const { year } = filteredData
+    var min = 2022
+    var max = new Date().getFullYear()
+    const yearRange = [...Array(max - min + 1).keys()].map((x) => x + min)
     return (
       <div className="table-container">
         <div className="search-table-container row">
@@ -2219,7 +2237,7 @@ function Table({
               disabled={roleId === "12"}
             >
               {yearRange.map((data) => {
-                return <option value={data}>{data}</option>;
+                return <option value={data}>{data}</option>
               })}
             </select>
             <button
@@ -2261,9 +2279,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "home-service-booking") {
-    const { from_date, to_date, service_location, done } = filteredData;
+    const { from_date, to_date, service_location, done } = filteredData
 
     return (
       <div className="table-container">
@@ -2331,9 +2349,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "report-incomplete-po") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -2394,7 +2412,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (
     type === "search-patient" ||
     type == "purchase-order-invoice" ||
@@ -2425,7 +2443,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "patient-history") {
     return (
       <div className="table-container">
@@ -2449,9 +2467,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "discount-detail") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -2480,9 +2498,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "registration") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -2555,9 +2573,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "medtech") {
-    const { from_date, to_date, done, result_type } = filteredData;
+    const { from_date, to_date, done, result_type } = filteredData
 
     return (
       <div className="table-container">
@@ -2579,7 +2597,6 @@ function Table({
                 : "col-sm-12 d-flex justify-content-end mb-1 mt-3"
             }
           >
-           
             <input
               type="date"
               className="from-date search"
@@ -2594,12 +2611,12 @@ function Table({
               value={to_date}
               onChange={setFilter}
             />{" "}
-             <select name="result_type" value={result_type} onChange={setFilter}>
-            <option value="">All</option>
-            <option value="email">Email</option>
-            <option value="print with pickup">Print with Pickup</option>
-            <option value="both">Both</option>
-          </select>
+            <select name="result_type" value={result_type} onChange={setFilter}>
+              <option value="">All</option>
+              <option value="email">Email</option>
+              <option value="print with pickup">Print with Pickup</option>
+              <option value="both">Both</option>
+            </select>
             <button
               className="filter-btn"
               name="done"
@@ -2637,14 +2654,14 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (
     type === "aging" ||
     type === "aging-by-company" ||
     type === "extraction" ||
     type === "extraction-details"
   ) {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
 
     return (
       <div className="table-container">
@@ -2712,7 +2729,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "services") {
     return (
       <div className="table-container">
@@ -2756,11 +2773,11 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   }
 
   if (type === "sales") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
     return (
       <div className="table-container">
         <div className="search-table-container row">
@@ -2848,10 +2865,10 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   }
   if (type === "md-referrals") {
-    const { from_date, to_date, done } = filteredData;
+    const { from_date, to_date, done } = filteredData
     return (
       <div className="table-container">
         <div className="search-table-container row">
@@ -2921,7 +2938,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (
     type === "companies-review" ||
     type === "suppliers" ||
@@ -2962,7 +2979,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "cashier") {
     return (
       <div className="table-container">
@@ -2996,7 +3013,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "users") {
     return (
       <div className="table-container">
@@ -3030,7 +3047,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "items" || type === "items-history") {
     return (
       <div className="table-container">
@@ -3061,7 +3078,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "discount") {
     return (
       <div className="table-container">
@@ -3107,7 +3124,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "companies") {
     return (
       <div className="table-container">
@@ -3140,7 +3157,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "send-out-results") {
     return (
       <div className="table-container">
@@ -3164,9 +3181,9 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "company-invoices") {
-    const { from_date, to_date, status_filter, done } = filteredData;
+    const { from_date, to_date, status_filter, done } = filteredData
     return (
       <div className="table-container">
         <div className="search-table-container d-flex justify-content-end">
@@ -3227,7 +3244,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "companies-discount") {
     return (
       <div className="table-container">
@@ -3260,7 +3277,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "payment-invoices") {
     return (
       <div className="table-container">
@@ -3284,7 +3301,7 @@ function Table({
           footerClass={givenClass}
         />
       </div>
-    );
+    )
   } else if (type === "payment-invoices-print") {
     return (
       <div className="table-container">
@@ -3301,7 +3318,7 @@ function Table({
           <tbody>{data}</tbody>
         </table>
       </div>
-    );
+    )
   } else if (type === "report") {
     return (
       <div className="report-table-container">
@@ -3336,7 +3353,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "search-patient" || type === "search-patient-queue") {
     return (
       <div className="table-container">
@@ -3363,7 +3380,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "incomplete-po-items") {
     return (
       <div className="table-container">
@@ -3387,7 +3404,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   } else if (type === "receive-incomplete-po-items") {
     return (
       <div className="table-container">
@@ -3411,7 +3428,7 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    );
+    )
   }
 }
 
@@ -3420,6 +3437,6 @@ Table.propTypes = {
   headingColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
   breakOn: PropTypes.oneOf(["small", "medium", "large"]),
-};
+}
 
-export default Table;
+export default Table
