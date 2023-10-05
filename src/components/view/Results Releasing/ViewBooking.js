@@ -294,24 +294,6 @@ export default function ViewBooking() {
   const ecg = labTests.filter((info) => info.key === "cardiology")
   ecg.forEach((test) => selectedTests.add(test.test_id))
 
-  // previously serology
-  const chemistry = labTests.filter(
-    (info) =>
-      info.key === "chemistry" ||
-      info.key === "Electrolytes" ||
-      info.key === "lipid_profile" ||
-      info.key === "glucose_tests" ||
-      info.key === "liver_function_tests" ||
-      info.key === "kidney_function_tests" ||
-      info.key === "pancreatic_test"
-  )
-  chemistry.forEach((test) => selectedTests.add(test.test_id))
-
-  const thyroid_profile = labTests.filter(
-    (info) => info.key === "thyroid_profile"
-  )
-  thyroid_profile.forEach((test) => selectedTests.add(test.test_id))
-
   function emailTo() {
     if (sendOutDetails.email && sendOutDetails.email.trim() !== "") {
       setLoading(true)
@@ -341,25 +323,6 @@ export default function ViewBooking() {
     }
   }
 
-  const detail_thyroid_profile = services.filter(
-    (info) =>
-      info.lab_test === "TSH" ||
-      info.lab_test === "T4" ||
-      info.lab_test === "T3" ||
-      info.lab_test === "FT3" ||
-      info.lab_test === "FT4"
-  )
-
-  const tumor_markers = labTests.filter((info) => info.key === "tumor_markers")
-  tumor_markers.forEach((test) => selectedTests.add(test.test_id))
-  const serology = labTests.filter(
-    (info) =>
-      (info.key === "serology" ||
-        info.key === "immunology" ||
-        info.key === "hepatitis_profile_screening") &&
-      info.name !== "Anti HAV"
-  )
-  serology.forEach((test) => selectedTests.add(test.test_id))
 
   /****************/
   //Clinical Microscopy Filter
@@ -523,6 +486,17 @@ export default function ViewBooking() {
   histopathologyGroup.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
+  /****************/
+  //Microbiology Filter
+
+  //histopathology that has the same upload buttons
+  const microbiologyIndividual = labTests.filter(
+    (info) => info.key === "microbiology"
+  )
+  //add to the set
+  microbiologyIndividual.forEach((test) => selectedTests.add(test.test_id))
+  /****************/
+
   console.log("lab tests", labTests)
 
   /****************/
@@ -530,15 +504,6 @@ export default function ViewBooking() {
   const ultrasound = labTests.filter((info) => info.key === "ultrasound")
   ultrasound.forEach((test) => selectedTests.add(test.test_id))
   /****************/
-
-  // Previously others
-  const histopathology = labTests.filter(
-    (info) => info.key === "histopathology"
-  )
-  histopathology.forEach((test) => selectedTests.add(test.test_id))
-
-  const microbiology = labTests.filter((info) => info.key === "microbiology")
-  microbiology.forEach((test) => selectedTests.add(test.test_id))
 
   const unselectedTestsIDs = labTests.filter(
     (test) => !selectedTests.has(test.test_id)
@@ -1047,20 +1012,21 @@ export default function ViewBooking() {
                     </>
                   )}
 
-
                   {/* MICROBIOLOGY */}
-                  {microbiology.length > 0 && (
-                    <div>
+                  {microbiologyIndividual.length > 0 && (
+                    <>
                       <div className="category label">MICROBIOLOGY</div>
-                      {microbiology.map((data) => (
+
+                      {microbiologyIndividual.map((data) => (
                         <FileUpload
-                          servicesData={[data]} // passing individual data item
+                          servicesData={[data]}
                           title={"MICROBIOLOGY"}
                           bookingId={bookingId}
                         />
                       ))}
+
                       <hr className="labtest-line mb-5" />
-                    </div>
+                    </>
                   )}
 
                   {/* XRAY RADIOLOGY */}
@@ -1108,18 +1074,22 @@ export default function ViewBooking() {
                     </div>
                   )}
 
-                  {unselectedTestsIDs.map((data) => {
-                    return (
-                      <div>
-                        <FileUpload
-                          servicesData={[{ ...data }]}
-                          title={data.name}
-                          bookingId={bookingId}
-                        />
-                        <hr className="labtest-line mb-5" />
-                      </div>
-                    )
-                  })}
+                  {/*OTHERS or UNGROUPED */}
+                  {unselectedTestsIDs.length > 0 && (
+                    <>
+                      <div className="category label mt-3">OTHERS</div>
+                      {unselectedTestsIDs.map((data) => (
+                        <div>
+                          <FileUpload
+                            servicesData={[data]}
+                            title={data.name}
+                            bookingId={bookingId}
+                          />
+                      
+                        </div>
+                      ))}
+                    </>
+                  )}
 
                   {/* OTHERS */}
                   {/* {others.length != 0 && (
