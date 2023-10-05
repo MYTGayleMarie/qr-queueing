@@ -440,6 +440,20 @@ export default function ViewBooking() {
   )
   //add to the set
   kidneyGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //glucose tests
+  const glucoseGroup = labTests.filter((info) => info.key === "glucose_tests")
+  //add to the set
+  glucoseGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //electrolytes tests
+  const electrolytesGroup = labTests.filter(
+    (info) =>
+      info.key === "Electrolytes" ||
+      (info.key === "chemistry" && info.test_id !== "156")
+  )
+  //add to the set
+  electrolytesGroup.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -776,9 +790,23 @@ export default function ViewBooking() {
                   {(liverGroup.length > 0 ||
                     pancreaticGroup.length > 0 ||
                     lipidGroup.length > 0 ||
-                    kidneyGroup.length > 0) && (
+                    kidneyGroup.length > 0 ||
+                    glucoseGroup.length > 0 ||
+                    electrolytesGroup.length > 0) && (
                     <>
                       <div className="category label">CHEMISTRY</div>
+                      {electrolytesGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Electrolytes (NaKCl)
+                          </div>
+                          <FileUpload
+                            servicesData={electrolytesGroup}
+                            title={"Kidney Function Tests"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
 
                       {liverGroup.length > 0 && (
                         <>
@@ -826,6 +854,19 @@ export default function ViewBooking() {
                           </div>
                           <FileUpload
                             servicesData={kidneyGroup}
+                            title={"Kidney Function Tests"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+
+                      {glucoseGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Glucose Tests
+                          </div>
+                          <FileUpload
+                            servicesData={glucoseGroup}
                             title={"Kidney Function Tests"}
                             bookingId={bookingId}
                           />
