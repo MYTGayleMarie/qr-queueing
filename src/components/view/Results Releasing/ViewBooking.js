@@ -430,11 +430,16 @@ export default function ViewBooking() {
   pancreaticGroup.forEach((test) => selectedTests.add(test.test_id))
 
   //lipid profile tests
-  const lipidGroup = labTests.filter(
-    (info) => info.key === "lipid_profile"
-  )
+  const lipidGroup = labTests.filter((info) => info.key === "lipid_profile")
   //add to the set
   lipidGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //kidney function tests
+  const kidneyGroup = labTests.filter(
+    (info) => info.key === "kidney_function_tests"
+  )
+  //add to the set
+  kidneyGroup.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -768,7 +773,10 @@ export default function ViewBooking() {
                   )}
 
                   {/* CHEMISTRY */}
-                  {(liverGroup.length > 0 || pancreaticGroup.length > 0 || lipidGroup.length > 0) && (
+                  {(liverGroup.length > 0 ||
+                    pancreaticGroup.length > 0 ||
+                    lipidGroup.length > 0 ||
+                    kidneyGroup.length > 0) && (
                     <>
                       <div className="category label">CHEMISTRY</div>
 
@@ -784,10 +792,12 @@ export default function ViewBooking() {
                           />
                         </>
                       )}
-                     
+
                       {pancreaticGroup.length > 0 && (
                         <>
-                          <div className="category label mt-3">Pancreatic Test</div>
+                          <div className="category label mt-3">
+                            Pancreatic Test
+                          </div>
                           <FileUpload
                             servicesData={pancreaticGroup}
                             title={"Liver Function Tests"}
@@ -798,10 +808,25 @@ export default function ViewBooking() {
 
                       {lipidGroup.length > 0 && (
                         <>
-                          <div className="category label mt-3">Lipid Profile</div>
+                          <div className="category label mt-3">
+                            Lipid Profile
+                          </div>
                           <FileUpload
                             servicesData={lipidGroup}
-                            title={"Liver Function Tests"}
+                            title={"Lipid Profile"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+
+                      {kidneyGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Kidney Function Tests
+                          </div>
+                          <FileUpload
+                            servicesData={kidneyGroup}
+                            title={"Kidney Function Tests"}
                             bookingId={bookingId}
                           />
                         </>
