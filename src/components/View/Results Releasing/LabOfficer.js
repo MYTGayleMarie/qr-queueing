@@ -3103,7 +3103,7 @@ export default function LabOfficer() {
                       type="text"
                       className="results-input"
                       defaultValue={result}
-                      maxLength={editingLab === "Ph" ? 3 : 6}
+                      maxLength={editingLab === "Ph" ? 3 : 100}
                       onChange={(e) => {
                         var value = e.target.value
                         if (editingLab === "Ph") {
