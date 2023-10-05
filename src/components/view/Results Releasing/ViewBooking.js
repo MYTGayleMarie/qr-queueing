@@ -480,6 +480,13 @@ export default function ViewBooking() {
   const thyroidGroup = labTests.filter((info) => info.key === "thyroid_profile")
   //add to the set
   thyroidGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //tumor markers
+  const tumorIndividuals = labTests.filter(
+    (info) => info.key === "tumor_markers"
+  )
+  //add to the set
+  tumorIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -910,7 +917,9 @@ export default function ViewBooking() {
                   )}
 
                   {/* SEROLOGY */}
-                  {(coaguationGroup.length > 0 || thyroidGroup.length > 0) && (
+                  {(coaguationGroup.length > 0 ||
+                    thyroidGroup.length > 0 ||
+                    tumorIndividuals.length > 0) && (
                     <>
                       <div className="category label">SEROLOGY</div>
                       {coaguationGroup.length > 0 && (
@@ -935,6 +944,20 @@ export default function ViewBooking() {
                             title={"COAGUATION"}
                             bookingId={bookingId}
                           />
+                        </>
+                      )}
+                      {tumorIndividuals.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Tumor Markers
+                          </div>
+                          {tumorIndividuals.map((data) => (
+                            <FileUpload
+                              servicesData={[data]}
+                              title={"COAGUATION"}
+                              bookingId={bookingId}
+                            />
+                          ))}
                         </>
                       )}
 
