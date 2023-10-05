@@ -442,9 +442,13 @@ export default function ViewBooking() {
   kidneyGroup.forEach((test) => selectedTests.add(test.test_id))
 
   //glucose tests
-  const glucoseGroup = labTests.filter((info) => info.key === "glucose_tests")
+  const glucoseGroup = labTests.filter((info) => info.key === "glucose_tests" && info.test_id !== "27")
   //add to the set
   glucoseGroup.forEach((test) => selectedTests.add(test.test_id))
+  //glucose individual tests
+  const glucoseIndividual = labTests.filter((info) => info.test_id === "27")
+  //add to the set
+  glucoseIndividual.forEach((test) => selectedTests.add(test.test_id))
 
   //electrolytes tests
   const electrolytesGroup = labTests.filter(
@@ -792,6 +796,7 @@ export default function ViewBooking() {
                     lipidGroup.length > 0 ||
                     kidneyGroup.length > 0 ||
                     glucoseGroup.length > 0 ||
+                    glucoseIndividual.length > 0 ||
                     electrolytesGroup.length > 0) && (
                     <>
                       <div className="category label">CHEMISTRY</div>
@@ -867,11 +872,17 @@ export default function ViewBooking() {
                           </div>
                           <FileUpload
                             servicesData={glucoseGroup}
-                            title={"Kidney Function Tests"}
+                            title={"Glucose Tests"}
                             bookingId={bookingId}
                           />
                         </>
                       )}
+                       {glucoseIndividual.map(data=>
+                        <FileUpload
+                            servicesData={[data]}
+                            title={"Glucose Tests"}
+                            bookingId={bookingId}
+                          />)}
                     </>
                   )}
 
