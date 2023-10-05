@@ -293,7 +293,6 @@ export default function ViewBooking() {
 
   const ecg = labTests.filter((info) => info.key === "cardiology")
   ecg.forEach((test) => selectedTests.add(test.test_id))
- 
 
   // previously serology
   const chemistry = labTests.filter(
@@ -413,10 +412,32 @@ export default function ViewBooking() {
   hematologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
+  /****************/
+  //Chemistry Filter
 
+  //liver function tests
+  const liverGroup = labTests.filter(
+    (info) => info.key === "liver_function_tests" || info.test_id === "156"
+  )
+  //add to the set
+  liverGroup.forEach((test) => selectedTests.add(test.test_id))
 
- 
-  
+  //pancreatic test
+  const pancreaticGroup = labTests.filter(
+    (info) => info.key === "pancreatic_test"
+  )
+  //add to the set
+  pancreaticGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //lipid profile tests
+  const lipidGroup = labTests.filter(
+    (info) => info.key === "lipid_profile"
+  )
+  //add to the set
+  lipidGroup.forEach((test) => selectedTests.add(test.test_id))
+  /****************/
+
+  console.log("lab tests", labTests)
 
   /****************/
 
@@ -693,58 +714,102 @@ export default function ViewBooking() {
                 </div>
                 <div className="personal-data-cont">
                   {/* CLINICAL MICROSCOPY */}
-                  <div className="category label">CLINICAL MICROSCOPY</div>
-                  <FileUpload
-                    servicesData={clinicalMicroscopyGroup}
-                    title={"CLINICAL MICROSCOPY"}
-                    bookingId={bookingId}
-                  />
-                  {clinicalMicroscopyIndividualsUrinalysis.map((data) => (
-                    <FileUpload
-                      servicesData={[data]}
-                      title={"CLINICAL MICROSCOPY"}
-                      bookingId={bookingId}
-                    />
-                  ))}
-                  {clinicalMicroscopyIndividualsFecalysis.map((data) => (
-                    <FileUpload
-                      servicesData={[data]}
-                      title={"CLINICAL MICROSCOPY"}
-                      bookingId={bookingId}
-                    />
-                  ))}
-                  <hr className="labtest-line mb-5" />
-
-                  {/* HEMATOLOGY */}
-                  <div className="category label">HEMATOLOGY</div>
-                  <FileUpload
-                    servicesData={hematologyGroup}
-                    title={"HEMATOLOGY"}
-                    bookingId={bookingId}
-                  />
-                  {hematologyIndividuals.map((data) => (
-                    <FileUpload
-                      servicesData={[data]}
-                      title={"HEMATOLOGY"}
-                      bookingId={bookingId}
-                    />
-                  ))}
-                  <hr className="labtest-line mb-5" />
-
-                  {/* CHEMISTRY */}
-                  {chemistry.length > 0 && (
-                    <div>
-                      {chemistry.map((data) => (
+                  {(clinicalMicroscopyGroup.length > 0 ||
+                    clinicalMicroscopyIndividualsFecalysis.length > 0 ||
+                    clinicalMicroscopyIndividualsUrinalysis.length > 0) && (
+                    <>
+                      <div className="category label">CLINICAL MICROSCOPY</div>
+                      {clinicalMicroscopyGroup.length > 0 && (
                         <FileUpload
-                          servicesData={[data]} // passing individual data item
-                          title={"CHEMISTRY"}
+                          servicesData={clinicalMicroscopyGroup}
+                          title={"CLINICAL MICROSCOPY"}
+                          bookingId={bookingId}
+                        />
+                      )}
+                      {clinicalMicroscopyIndividualsUrinalysis.map((data) => (
+                        <FileUpload
+                          servicesData={[data]}
+                          title={"CLINICAL MICROSCOPY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      {clinicalMicroscopyIndividualsFecalysis.map((data) => (
+                        <FileUpload
+                          servicesData={[data]}
+                          title={"CLINICAL MICROSCOPY"}
                           bookingId={bookingId}
                         />
                       ))}
                       <hr className="labtest-line mb-5" />
-                    </div>
+                    </>
                   )}
 
+                  {/* HEMATOLOGY */}
+                  {(hematologyGroup.length > 0 ||
+                    hematologyIndividuals.length) > 0 && (
+                    <>
+                      <div className="category label">HEMATOLOGY</div>
+                      {hematologyGroup.length > 0 && (
+                        <FileUpload
+                          servicesData={hematologyGroup}
+                          title={"HEMATOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      )}
+                      {hematologyIndividuals.map((data) => (
+                        <FileUpload
+                          servicesData={[data]}
+                          title={"HEMATOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                      <hr className="labtest-line mb-5" />
+                    </>
+                  )}
+
+                  {/* CHEMISTRY */}
+                  {(liverGroup.length > 0 || pancreaticGroup.length > 0 || lipidGroup.length > 0) && (
+                    <>
+                      <div className="category label">CHEMISTRY</div>
+
+                      {liverGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Liver Function Tests
+                          </div>
+                          <FileUpload
+                            servicesData={liverGroup}
+                            title={"Liver Function Tests"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+                     
+                      {pancreaticGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">Pancreatic Test</div>
+                          <FileUpload
+                            servicesData={pancreaticGroup}
+                            title={"Liver Function Tests"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+
+                      {lipidGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">Lipid Profile</div>
+                          <FileUpload
+                            servicesData={lipidGroup}
+                            title={"Liver Function Tests"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+
+                  <hr className="labtest-line mb-5" />
 
                   {/* SEROLOGY */}
                   {serology.length > 0 && (
