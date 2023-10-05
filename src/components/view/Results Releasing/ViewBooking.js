@@ -406,7 +406,11 @@ export default function ViewBooking() {
   //hematology indiv lab tests
   const hematologyIndividuals = labTests.filter(
     (info) =>
-      info.key === "hematology" && info.test_id !== "8" && info.test_id !== "9"
+      info.key === "hematology" &&
+      info.test_id !== "8" &&
+      info.test_id !== "9" &&
+      info.test_id !== "158" &&
+      info.test_id !== "159"
   )
   //add to the set
   hematologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
@@ -442,7 +446,9 @@ export default function ViewBooking() {
   kidneyGroup.forEach((test) => selectedTests.add(test.test_id))
 
   //glucose tests
-  const glucoseGroup = labTests.filter((info) => info.key === "glucose_tests" && info.test_id !== "27")
+  const glucoseGroup = labTests.filter(
+    (info) => info.key === "glucose_tests" && info.test_id !== "27"
+  )
   //add to the set
   glucoseGroup.forEach((test) => selectedTests.add(test.test_id))
   //glucose individual tests
@@ -458,6 +464,22 @@ export default function ViewBooking() {
   )
   //add to the set
   electrolytesGroup.forEach((test) => selectedTests.add(test.test_id))
+  /****************/
+
+  /****************/
+  //Serology Filter
+
+  //coaguation studies
+  const coaguationGroup = labTests.filter(
+    (info) => info.test_id === "158" || info.test_id === "159"
+  )
+  //add to the set
+  coaguationGroup.forEach((test) => selectedTests.add(test.test_id))
+
+  //thyroid profile
+  const thyroidGroup = labTests.filter((info) => info.key === "thyroid_profile")
+  //add to the set
+  thyroidGroup.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
   console.log("lab tests", labTests)
@@ -769,7 +791,7 @@ export default function ViewBooking() {
 
                   {/* HEMATOLOGY */}
                   {(hematologyGroup.length > 0 ||
-                    hematologyIndividuals.length) > 0 && (
+                    hematologyIndividuals.length > 0) && (
                     <>
                       <div className="category label">HEMATOLOGY</div>
                       {hematologyGroup.length > 0 && (
@@ -877,12 +899,46 @@ export default function ViewBooking() {
                           />
                         </>
                       )}
-                       {glucoseIndividual.map(data=>
+                      {glucoseIndividual.map((data) => (
                         <FileUpload
-                            servicesData={[data]}
-                            title={"Glucose Tests"}
+                          servicesData={[data]}
+                          title={"Glucose Tests"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+                    </>
+                  )}
+
+                  {/* SEROLOGY */}
+                  {(coaguationGroup.length > 0 || thyroidGroup.length > 0) && (
+                    <>
+                      <div className="category label">SEROLOGY</div>
+                      {coaguationGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Coaguation Studies
+                          </div>
+                          <FileUpload
+                            servicesData={coaguationGroup}
+                            title={"COAGUATION"}
                             bookingId={bookingId}
-                          />)}
+                          />
+                        </>
+                      )}
+                      {thyroidGroup.length > 0 && (
+                        <>
+                          <div className="category label mt-3">
+                            Thyroid Profile
+                          </div>
+                          <FileUpload
+                            servicesData={thyroidGroup}
+                            title={"COAGUATION"}
+                            bookingId={bookingId}
+                          />
+                        </>
+                      )}
+
+                      <hr className="labtest-line mb-5" />
                     </>
                   )}
 
