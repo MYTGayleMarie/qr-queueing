@@ -28,6 +28,7 @@ const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
   done: false,
+  payment_status:""
 };
 
 
@@ -54,13 +55,14 @@ function ReportTransaction() {
         requester: userId,
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
+        payment_status:filteredData.payment_status
       },
     })
       .then(function (response) {
-        console.log(response.data.data.bookings)
+      
         setIsReady(false)
         var bookingDetailsResponse = response.data.data.booking_details
-        console.log(bookingDetailsResponse)
+        
         response.data.data.bookings.map((booking, index) => {
           
             
@@ -82,7 +84,7 @@ function ReportTransaction() {
                   if(bookingDetailsResponse[booking.id] != null){
                     var finalArray = bookingDetailsResponse[booking.id];
                   }
-                  console.log(finalArray)
+                  
 
 
                   finalArray.map((test,index) => {
