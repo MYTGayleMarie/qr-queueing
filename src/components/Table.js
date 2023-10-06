@@ -126,7 +126,6 @@ function Table({
         </tr>
       )
     } else if (type === "releasing-items") {
-      console.log("row", rowData)
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -140,8 +139,7 @@ function Table({
           ))}
         </tr>
       )
-    } 
-    else if (type === "discount-detail") {
+    } else if (type === "discount-detail") {
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -1726,14 +1724,18 @@ function Table({
                 : "col-sm-12 d-flex justify-content-end mb-1"
             }
           >
-            <select name="payment_status" onChange={setFilter} style={{marginRight:"15px"}}>
+            <select
+              name="payment_status"
+              onChange={setFilter}
+              style={{ marginRight: "15px" }}
+            >
               <option value="all" selected>
                 ALL
               </option>
               <option value="paid">PAID</option>
               <option value="unpaid">UNPAID</option>
             </select>
-            
+
             <input
               type="date"
               className="from-date search"
@@ -1813,8 +1815,6 @@ function Table({
                 : "col-sm-12 d-flex justify-content-end mb-1"
             }
           >
-           
-            
             <input
               type="date"
               className="from-date search"
@@ -1870,8 +1870,8 @@ function Table({
           rowsPerPage={rowsPerPage}
         />
       </div>
-    )}
-   else if (type === "services-packages-2") {
+    )
+  } else if (type === "services-packages-2") {
     const { from_date, to_date, status } = filteredData
 
     return (
