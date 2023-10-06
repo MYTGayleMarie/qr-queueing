@@ -125,7 +125,23 @@ function Table({
           ))}
         </tr>
       )
-    } else if (type === "discount-detail") {
+    } else if (type === "releasing-items") {
+      console.log("row", rowData)
+      return (
+        <tr key={row.id}>
+          {rowData.map((data, index) => (
+            <td
+              key={index}
+              data-heading={data.key}
+              style={{ fontSize: "0.8rem" }}
+            >
+              {data.val}
+            </td>
+          ))}
+        </tr>
+      )
+    } 
+    else if (type === "discount-detail") {
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -1774,7 +1790,88 @@ function Table({
         />
       </div>
     )
-  } else if (type === "services-packages-2") {
+  } else if (type === "releasing-items") {
+    const { from_date, to_date } = filteredData
+
+    return (
+      <div className="table-container">
+        <div className="search-table-container row">
+          {/* <div className="col-sm-2"> */}
+          {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            </div>
+          )}
+          {/* </div> */}
+          <div
+            className={
+              totalCount !== null && totalCount !== undefined
+                ? "col-sm-10 d-flex justify-content-end"
+                : "col-sm-12 d-flex justify-content-end mb-1"
+            }
+          >
+           
+            
+            <input
+              type="date"
+              className="from-date search"
+              name="from_date"
+              value={from_date}
+              onChange={setFilter}
+              disabled={roleId === "12"}
+            />
+            <input
+              type="date"
+              className="to-date search"
+              name="to_date"
+              value={to_date}
+              onChange={setFilter}
+              disabled={roleId === "12"}
+            />
+            <button
+              className="filter-btn"
+              name="done"
+              onClick={setRender != null ? (e) => setRender(!render) : ""}
+              disabled={roleId === "12"}
+            >
+              FILTER
+            </button>
+          </div>
+        </div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {!isReady && useLoader ? (
+              <TableLoader
+                tableHeaders={headingColumns}
+                className={"spinners-4"}
+              />
+            ) : (
+              data
+            )}
+          </tbody>
+        </table>
+        <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    )}
+   else if (type === "services-packages-2") {
     const { from_date, to_date, status } = filteredData
 
     return (
