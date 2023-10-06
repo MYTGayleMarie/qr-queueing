@@ -6,7 +6,7 @@
   width: 80% !important;
   font-weight: bolder !important;
   box-shadow: 1px 3px 8px #888888 !important;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .outlined-button-report {
@@ -110,8 +110,8 @@
   }
 
   .button-report {
-    margin-top: 2%;
-    margin-bottom: 1rem;
+    margin-top: 1%;
+    margin-bottom: 0.5rem;
     width: 90% !important;
   }
 

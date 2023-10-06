@@ -538,6 +538,7 @@ function Reports() {
                 <ButtonReport title={"ANNUAL REPORT"} link={"/reports-annual"} className="mt-2"/>
                 <ButtonReport title={"EXPENSE REPORT"} link={"/reports-expense"} />
                 <ButtonReport title={"INVENTORY REPORT"} link={"/reports-inventory"} />
+                <ButtonReport title={"RELEASING ITEMS REPORT"} link={"/reports-releasing-item"} />
               </Col>
             </Row>
             <Row>

@@ -108,6 +108,7 @@ import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
 import NowServing from "./components/View/NowServing/NowServing";
 import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
 import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
+import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -484,6 +485,10 @@ function App() {
           <Route
             path="/reports-transaction"
             element={token ? <ReportTransaction /> : <Navigate to="/" />}
+          />
+           <Route
+            path="/reports-releasing-item"
+            element={token ? <ReportsReleasingItem /> : <Navigate to="/" />}
           />
           <Route
             path="/reports-services-packages"
