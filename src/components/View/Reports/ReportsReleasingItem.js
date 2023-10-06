@@ -52,10 +52,10 @@ function ReportsReleasingItem() {
       },
     })
       .then(function (response) {
-        console.log("response", response.data.data)
+        
         setIsReady(false)
         response.data.data.releasing_items.map((booking, index) => {
-            console.log("release item indiv", booking)
+           
           var releaseDate = new Date(booking.release_date)
           var formattedreleaseDate = releaseDate.toDateString().split(" ")
 
@@ -93,7 +93,7 @@ function ReportsReleasingItem() {
             type="thick"
             title="RELEASING ITEMS REPORT"
             buttons={buttons}
-            tableName={"releasing-items"}
+            tableName={"RELEASING ITEMS REPORT"}
             tableData={patientData}
             tableHeaders={[
               "ITEM NAME",
