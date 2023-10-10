@@ -674,29 +674,49 @@ function AddPayment() {
   }
 
   function addService() {
+    let packagePayload = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ""),
+      type: test[0].type,
+      package_tests: test.map((data) => {
+        return data.labTestId
+      }),
+      package_prices: test.map((data) => {
+        return data.price
+      }),
+      status: "PENDING",
+      package_extracted_dates: [],
+      package_test_starts: [],
+      package_test_finishes: [],
+      package_result_dates: [],
+      package_file_results: [],
+      added_by: userId,
+    }
+    let labPayload = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ""),
+      type: test[0].type,
+      lab_tests: test.map((data) => {
+        return data.labTestId
+      }),
+      lab_prices: test.map((data) => {
+        return data.price
+      }),
+      status: "PENDING",
+      lab_extracted_dates: [],
+      lab_test_starts: [],
+      lab_test_finishes: [],
+      lab_result_dates: [],
+      lab_file_results: [],
+      added_by: userId,
+    }
+
     if (test.length > 0) {
       axios({
         method: "post",
         url: window.$link + "Bookingdetails/add/" + id,
         withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          type: test[0].type,
-          lab_tests: test.map((data) => {
-            return data.labTestId
-          }),
-          lab_prices: test.map((data) => {
-            return data.price
-          }),
-          status: "PENDING",
-          lab_extracted_dates: [],
-          lab_test_starts: [],
-          lab_test_finishes: [],
-          lab_result_dates: [],
-          lab_file_results: [],
-          added_by: userId,
-        },
+        params: test[0].type === "lab" ? labPayload : packagePayload,
       })
         .then(function (booking) {
           toast.success(booking.data.message.success)
