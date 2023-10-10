@@ -10,7 +10,7 @@ import { Navigate } from "react-router-dom"
 import { useReactToPrint } from "react-to-print"
 import { PaymentToPrint } from "./PaymentToPrint"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Select from "react-select";
+import Select from "react-select"
 
 //css
 import "./AddPayment.css"
@@ -165,7 +165,6 @@ function AddPayment() {
   var amount = 0
 
   React.useEffect(() => {
-    console.log("ue 1")
     var totalAmount
     var discount
     var customer
@@ -249,7 +248,6 @@ function AddPayment() {
   }, [])
 
   React.useEffect(() => {
-    console.log("ue 2")
     var presentDate = new Date()
     var formattedPresentData = presentDate.toISOString().split("T")[0]
     queue.length = 0
@@ -282,7 +280,6 @@ function AddPayment() {
   }, [])
 
   React.useEffect(() => {
-    console.log("ue 3")
     queue.map((data, index) => {
       if (data.id == id) {
         setQueueNumber(data.queue.toString())
@@ -295,7 +292,6 @@ function AddPayment() {
   }, [queue])
 
   React.useEffect(() => {
-    console.log("ue 4")
     services.length = 0
     axios({
       method: "post",
@@ -308,7 +304,6 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
-        console.log(booking)
         setLoadingBooking(true)
         setServices(booking.data)
       })
@@ -319,7 +314,6 @@ function AddPayment() {
   }, [])
 
   React.useEffect(() => {
-    console.log("ue 5")
     printServices.length = 0
     services.map((info, index1) => {
       if (info.category_id == null) {
@@ -417,7 +411,6 @@ function AddPayment() {
   }, [services])
 
   React.useEffect(() => {
-    console.log("ue 6")
     printServices.length = 0
     labTests.length = 0
     packages.length = 0
@@ -510,7 +503,6 @@ function AddPayment() {
     })
   }, [services])
 
-  console.log("test", test)
   function removeService() {
     axios({
       method: "post",
@@ -609,34 +601,38 @@ function AddPayment() {
         console.log(error)
       })
   }, [])
+
+  /* set test options to lab services array */
   function showAvailableLab() {
-    // const labServices = getAllLabServices();
-    const orderedServices = labOptions.sort(function (a, b) {
+    const orderedServices = []
+    labOptions.sort(function (a, b) {
       var textA = a.name.toUpperCase()
       var textB = b.name.toUpperCase()
       return textA < textB ? -1 : textA > textB ? 1 : 0
     })
+    labOptions.map((data) => {
+      orderedServices.push({
+        ...data,
+        label: data.name,
+        value: data.labTestId + "_" + data.price + "_" + data.type,
+      })
+    })
 
     return (
-      <div>
-        <label for="input-label">TEST:</label>
-        <select
-          className="input-select"
-          id="test"
-          name="test"
-          onChange={(e) => setTest(e.target.value)}
-        >
-          <option value="" selected disabled hidden>
-            CHOOSE CLINICAL SERVICE
-          </option>
-          {orderedServices.map((option, index) => (
-            <option
-              value={option.labTestId + "_" + option.price + "_" + option.type}
-            >
-              {option.name}
-            </option>
-          ))}
-        </select>
+      <div className="row">
+        <div className="col-2">
+          <label for="input-label">TEST:</label>
+        </div>
+        <div className="col-6">
+          <Select
+            onChange={setTest}
+            options={orderedServices}
+            className="input-multi"
+            isMulti={true}
+            isSearchable={true}
+            placeholder={"Choose Package..."}
+          />
+        </div>
       </div>
     )
   }
@@ -649,46 +645,36 @@ function AddPayment() {
       var textB = b.name.toUpperCase()
       return textA < textB ? -1 : textA > textB ? 1 : 0
     })
-    packageOptions.map(data=>{
-      orderedServices.push({...data, label:data.name, value:data.labTestId + "_" + data.price + "_" + data.type})
+    packageOptions.map((data) => {
+      orderedServices.push({
+        ...data,
+        label: data.name,
+        value: data.labTestId + "_" + data.price + "_" + data.type,
+      })
     })
 
     return (
       <div className="row">
-          
         <div className="col-2">
           <label for="input-label">TEST:</label>
         </div>
-        
+
         <div className="col-6">
-            <Select
-                onChange={(e)=>setTest(e.value)}
-                options={orderedServices}
-                className="input-multi"
-                // isMulti={true}
-                isSearchable={true}
-                placeholder={"Choose Package..."}
-              />
-         
+          <Select
+            onChange={(e) => setTest([e])}
+            options={orderedServices}
+            className="input-multi"
+            // isMulti={true}
+            isSearchable={true}
+            placeholder={"Choose Package..."}
+          />
         </div>
       </div>
     )
   }
 
   function addService() {
-    const key = test.split("_")
-    const testId = key[0]
-    const price = key[1]
-    const type = key[2]
-
-    var extractedDates = []
-    var testStarts = []
-    var testFinishes = []
-    var resultDates = []
-    var fileResults = []
-    console.log("entered add service", type)
-    if (type == "lab") {
-      console.log("this is lab")
+    if (test.length > 0) {
       axios({
         method: "post",
         url: window.$link + "Bookingdetails/add/" + id,
@@ -696,9 +682,13 @@ function AddPayment() {
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ""),
-          type: type,
-          lab_tests: [testId],
-          lab_prices: [price],
+          type: test[0].type,
+          lab_tests: test.map((data) => {
+            return data.labTestId
+          }),
+          lab_prices: test.map((data) => {
+            return data.price
+          }),
           status: "PENDING",
           lab_extracted_dates: [],
           lab_test_starts: [],
@@ -709,44 +699,20 @@ function AddPayment() {
         },
       })
         .then(function (booking) {
-          console.log("booking", booking)
+          toast.success(booking.data.message.success)
+          setTimeout(() => {
+            refreshPage()
+          }, 2000)
         })
         .catch(function (error) {
           console.log("error lab", error)
         })
-    } else if (type == "package") {
-      console.log("package")
-      axios({
-        method: "post",
-        url: window.$link + "Bookingdetails/add/" + id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          type: type,
-          package_tests: [testId],
-          package_prices: [price],
-          status: "PENDING",
-          package_extracted_dates: [],
-          package_test_starts: [],
-          package_test_finishes: [],
-          package_result_dates: [],
-          package_file_results: [],
-          added_by: userId,
-        },
-      })
-        .then(function (booking) {
-          console.log("booking", booking)
-          // console.log(booking);
-        })
-        .catch(function (error) {
-          console.log("error", error)
-        })
+    } else {
+      toast.error("Please select a test.")
     }
   }
 
   function submit(e) {
-    console.log("submit")
     e.preventDefault()
     if (click === false) {
       setClick(true)
@@ -1632,12 +1598,18 @@ function AddPayment() {
         </form>
       </Modal>
 
-      <Modal show={show} onHide={handleClose} size="xl">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        centered
+        backdrop="static"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="w-100 add-test-header">ADD TESTS</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row">
+          <div className="row mb-2">
             <div className="col-2">
               <label for="input-label">SERVICE:</label>
             </div>
