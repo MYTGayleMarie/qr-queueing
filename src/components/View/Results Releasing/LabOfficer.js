@@ -2668,6 +2668,17 @@ export default function LabOfficer() {
                               selectedLab.label !==
                                 "HIV Screening (Anti HIV)" && (
                                 <div className="col">
+                                  <div className="space-between">
+                                    <h6
+                                      style={{
+                                        fontStyle: "italic",
+                                        marginTop: "10px",
+                                        color: "rgba(0, 0, 0, 0)",
+                                        marginLeft: "0 px",
+                                      }}
+                                    ></h6>
+                                  </div>
+
                                   {/* { result["preferred_from"] != 0.0 ||
                                   result["preferred_to"] != 0.0 ? ( */}
                                   {result["result"] === "-" ||
@@ -2677,7 +2688,7 @@ export default function LabOfficer() {
                                       parseFloat(result["preferred_to"])) ? (
                                     <span>{result["unit"]} </span>
                                   ) : (
-                                    <span >{result["unit"]}</span>
+                                    <span>{result["unit"]}</span>
                                   )}
                                 </div>
                               )}

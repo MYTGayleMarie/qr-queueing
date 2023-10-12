@@ -1272,12 +1272,21 @@ function PrintLab() {
                               "Pregnancy Test (RPK Lateral Flow)" &&
                             state.selectedLab.label !== "Fecal Occult Blood" &&
                             state.selectedLab.label !== "Gram Stain" &&
-                    
                             state.selectedLab.label !==
                               "Clotting & Bleeding Time" &&
                             state.selectedLab.label !==
                               "HIV Screening (Anti HIV)" && (
                               <div className="col">
+                                <div className="space-between">
+                                  <h6
+                                    style={{
+                                      fontStyle: "italic",
+                                      marginTop: "10px",
+                                      color: "rgba(0, 0, 0, 0)",
+                                      marginLeft: "0 px",
+                                    }}
+                                  ></h6>
+                                </div>
                                 {/* { result["preferred_from"] != 0.0 ||
                               result["preferred_to"] != 0.0 ? ( */}
                                 {result["result"] === "-" ||
@@ -1285,9 +1294,13 @@ function PrintLab() {
                                   parseFloat(result["preferred_from"]) &&
                                   parseFloat(result["result"]) <=
                                     parseFloat(result["preferred_to"])) ? (
-                                  <span>{result["unit"]} </span>
+                                  <span style={{ marginTop: "10px" }}>
+                                    {result["unit"]}{" "}
+                                  </span>
                                 ) : (
-                                  <span>{result["unit"]}</span>
+                                  <span style={{ marginTop: "10px" }}>
+                                    {result["unit"]}
+                                  </span>
                                 )}
                               </div>
                             )}
