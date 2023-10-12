@@ -1671,33 +1671,33 @@ export default function LabOfficer() {
         selectedLab.id
     }
 
-      if (
+    if (
       selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
       selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
       selectedLab.label === "Anti HCV"
     ) {
       serologyGroup.map((data) => {
-           axios({
-      method: "post",
-      url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        updated_by: userId,
-        result_approval: "disapproved",
-      },
-    })
-      .then(function (response) {
-        toast.success("Results are Disapproved")
-        setShowPDF(false)
-        refreshPage()
-      })
-      .catch(function (error) {
-        console.log(error)
-        toast.error("Error Approval")
-      })
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "disapproved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Disapproved")
+            setShowPDF(false)
+            refreshPage()
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
       })
     } else if (
       selectedLab.label === "T4" ||
@@ -1707,50 +1707,49 @@ export default function LabOfficer() {
       selectedLab.label === "TSH"
     ) {
       thyroidGroup.map((data) => {
-          axios({
-      method: "post",
-      url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        updated_by: userId,
-        result_approval: "disapproved",
-      },
-    })
-      .then(function (response) {
-        toast.success("Results are Disapproved")
-        setShowPDF(false)
-        refreshPage()
-      })
-      .catch(function (error) {
-        console.log(error)
-        toast.error("Error Approval")
-      })
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "disapproved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Disapproved")
+            setShowPDF(false)
+            refreshPage()
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
       })
     } else {
-          axios({
-      method: "post",
-      url: link,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        updated_by: userId,
-        result_approval: "disapproved",
-      },
-    })
-      .then(function (response) {
-        toast.success("Results are Disapproved")
-        setShowPDF(false)
-        refreshPage()
+      axios({
+        method: "post",
+        url: link,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+          updated_by: userId,
+          result_approval: "disapproved",
+        },
       })
-      .catch(function (error) {
-        console.log(error)
-        toast.error("Error Approval")
-      })
+        .then(function (response) {
+          toast.success("Results are Disapproved")
+          setShowPDF(false)
+          refreshPage()
+        })
+        .catch(function (error) {
+          console.log(error)
+          toast.error("Error Approval")
+        })
     }
-
   }
 
   function handleLab(e) {
@@ -2041,7 +2040,8 @@ export default function LabOfficer() {
                         selectedLab.label.toUpperCase() === "URINALYSIS" ||
                         selectedLab.label.toUpperCase() === "[P] URINALYSIS"
                           ? "CLINICAL MICROSCOPY - URINALYSIS"
-                          : selectedLab.label.toUpperCase() === "FECALYSIS"
+                          : selectedLab.label.toUpperCase() === "FECALYSIS" ||
+                            selectedLab.label.toUpperCase() === "[P] FECALYSIS"
                           ? "CLINICAL MICROSCOPY - FECALYSIS"
                           : selectedLab.label.toUpperCase() ===
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
