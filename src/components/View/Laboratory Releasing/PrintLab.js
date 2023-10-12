@@ -1272,7 +1272,7 @@ function PrintLab() {
                               "Pregnancy Test (RPK Lateral Flow)" &&
                             state.selectedLab.label !== "Fecal Occult Blood" &&
                             state.selectedLab.label !== "Gram Stain" &&
-                            state.selectedLab.label !== "CEA" &&
+                    
                             state.selectedLab.label !==
                               "Clotting & Bleeding Time" &&
                             state.selectedLab.label !==
