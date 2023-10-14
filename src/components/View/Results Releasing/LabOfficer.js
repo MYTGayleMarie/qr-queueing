@@ -37,7 +37,7 @@ import Logo from "../../../images/logo.png"
 import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png"
 import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png"
 import Image3 from "../../../images/med_tech/DEVIO_ANECA.png"
-// import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
+import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
 import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png"
 import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png"
 // import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
@@ -555,7 +555,7 @@ export default function LabOfficer() {
       setHasImage(true)
       return (
         <img
-          src={Image9}
+          src={Image4}
           alt="MedTech"
           // className="mt-5"
           style={{ marginTop: "0.5rem" }}
