@@ -329,7 +329,7 @@ export default function ViewBooking() {
 
   //clinical microscopy that has the same upload buttons
   const clinicalMicroscopyGroup = labTests.filter(
-    (info) => info.test_id === "1" || info.test_id === "2"
+    (info) => info.test_id === "1"
   )
   //add to the set
   clinicalMicroscopyGroup.forEach((test) => selectedTests.add(test.test_id))
@@ -338,8 +338,7 @@ export default function ViewBooking() {
   const clinicalMicroscopyIndividualsUrinalysis = labTests.filter(
     (info) =>
       info.key === "clinical_microscopy_urinalysis" &&
-      info.test_id !== "1" &&
-      info.test_id !== "2"
+      info.test_id !== "1"
   )
   //add to the set
   clinicalMicroscopyIndividualsUrinalysis.forEach((test) =>
