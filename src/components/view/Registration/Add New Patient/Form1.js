@@ -89,8 +89,8 @@ function AddPatient({
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
-      ((isSenior && senior_id !== "") || !isSenior) &&
-      ((isPWD && pwd_id !== "") || !isPWD) &&
+      ((isSenior && !(/^$|\s+/.test(senior_id))) || !isSenior) &&
+      ((isPWD && !(/^$|\s+/.test(pwd_id))) || !isPWD) &&
       ((serviceLocation === "home service" && location!=="" && serviceFee!=="" && serviceFee!==0)||serviceLocation==="clinic")
     ) {
       return (
@@ -491,12 +491,14 @@ function AddPatient({
                 <label for="senior_id" className="form-label font-large">
                   SENIOR CITIZEN ID {isSenior && <span className="required">*</span>}
                 </label>
+                
 
                 <input
                   type="text"
                   id="senior_id"
                   name="senior_id"
                   className="full-input"
+                  placeholder="ID Should not contain any spaces..."
                   value={!isSenior ? "" : senior_id}
                   onChange={setPersonal}
                   disabled={!isSenior}
@@ -534,6 +536,7 @@ function AddPatient({
                   id="pwd_id"
                   name="pwd_id"
                   className="full-input"
+                   placeholder="ID Should not contain any spaces..."
                   value={!isPWD ? "" : pwd_id}
                   disabled={!isPWD}
                   onChange={setPersonal}

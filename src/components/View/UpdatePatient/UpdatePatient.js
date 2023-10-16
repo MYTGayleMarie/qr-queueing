@@ -105,7 +105,9 @@ function UpdatePatient() {
       patientDetails.sex != "" &&
       patientDetails.birthDate != "" &&
       patientDetails.contactNum != "" &&
-      patientDetails.address != ""
+      patientDetails.address != "" &&
+      ((isSenior && !(/^$|\s+/.test(seniorId))) || !isSenior) &&
+      ((isPWD && !(/^$|\s+/.test(pwdId))) || !isPWD)
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -150,8 +152,8 @@ function UpdatePatient() {
           address: customer.data.address,
         });
 
-        setSeniorId(customer.senior_id);
-        setPwdId(customer.pwd_id);
+        setSeniorId(customer.data.senior_id);
+        setPwdId(customer.data.pwd_id);
       })
       .catch(function (error) {
         console.log(error);
@@ -206,6 +208,12 @@ function UpdatePatient() {
   function handleDetailChange(e) {
     const { name, value } = e.target;
     setPatientDetails({ ...patientDetails, [name]: value });
+    if(name==="seniorId"){
+      setSeniorId(value)
+    }
+    if(name==="pwdId"){
+      setPwdId(value)
+    }
   }
 
   // auto suggest address
@@ -401,6 +409,8 @@ function UpdatePatient() {
                       id="senior_id"
                       name="seniorId"
                       className="full-input"
+                      placeholder="ID Should not contain any spaces..."
+
                       value={!isSenior ? "" : seniorId}
                       onChange={handleDetailChange}
                       disabled={!isSenior}
@@ -424,6 +434,7 @@ function UpdatePatient() {
                       name="is_pwd"
                       value="isPWD"
                       id="mdCharge"
+                   
                       checked={isPWD}
                       onChange={(e) => setIsPWD(e.target.checked)}
                     />
@@ -437,6 +448,7 @@ function UpdatePatient() {
                       type="text"
                       id="pwd_id"
                       name="pwdId"
+                         placeholder="ID Should not contain any spaces..."
                       className="full-input"
                       value={!isPWD ? "" : pwdId}
                       disabled={!isPWD}
