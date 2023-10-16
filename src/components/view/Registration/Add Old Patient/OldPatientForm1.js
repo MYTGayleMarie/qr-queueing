@@ -119,16 +119,17 @@ function OldPatientForm1({
   }, [])
 
   React.useEffect(() => {
-    const birthDate2 = new Date(birthDate)
+    
+    const birthDate2 = new Date(birthday)
     if (
-      birthDate &&
+      birthday &&
       new Date().getFullYear() - birthDate2.getFullYear() >= 60
     ) {
       setIsSenior(true)
     } else {
       setIsSenior(false)
     }
-  })
+  }, )
   React.useEffect(() => {
     if (isPWD === false) {
       setPwdId("")
