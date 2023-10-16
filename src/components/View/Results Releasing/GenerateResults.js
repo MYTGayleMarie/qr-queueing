@@ -513,7 +513,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setHasImage(true);
         return (
           <img
-            src={Image9}
+            src={Image4}
             alt="MedTech"
             className="mt-5"
             width={100}
@@ -618,7 +618,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setHasImage(true);
         return (
           <img
-            src={Image9}
+            src={Image4}
             alt="MedTech"
             className="mt-5"
             width={100}
