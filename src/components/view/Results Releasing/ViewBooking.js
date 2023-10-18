@@ -78,6 +78,7 @@ export default function ViewBooking() {
   })
   const [sendEmail, setSendEmail] = useState("")
   const [address, setAddress] = useState("")
+  const [categoriesList, setCategoriesList] = useState([])
 
   const handleSendoutChange = (e) => {
     const { name, value } = e.target
@@ -190,6 +191,26 @@ export default function ViewBooking() {
     getUploads(data)
   }, [])
 
+  React.useEffect(() => {
+    axios({
+      method: "post",
+      url: window.$link + "categories/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then((category) => {
+       
+        setCategoriesList(category.data.categories)
+      })
+      .catch((error) => {
+        // console.log(error)
+      })
+  }, [])
+
   // Lab tests
   React.useEffect(() => {
     labTests.length = 0
@@ -245,39 +266,26 @@ export default function ViewBooking() {
       }
       // if service is lab test
       else {
-        axios({
-          method: "post",
-          url: window.$link + "categories/show/" + info.category_id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        })
-          .then((category) => {
-            var serviceDetails = {}
-            if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes"
-            } else {
-              serviceDetails.key = category.data.name
-                .replace(/\s+/g, "_")
-                .toLowerCase()
-            }
+        var serviceDetails = {}
+       
+        let category = categoriesList.filter(
+          (data) => data.id === info.category_id
+        )[0]
+        if (category.name == "Electrolytes (NaKCl,iCA)") {
+          serviceDetails.key = "Electrolytes"
+        } else {
+          serviceDetails.key = category.name.replace(/\s+/g, "_").toLowerCase()
+        }
 
-            serviceDetails.category = category.data.name
-            serviceDetails.name = info.lab_test
-            serviceDetails.type = "lab"
-            serviceDetails.packageId = "0"
-            serviceDetails.id = info.id
-            serviceDetails.test_id = info.test_id
-            serviceDetails.md = info.md
-            serviceDetails.approver = info.approved_by
-            setLabTests((oldArray) => [...oldArray, serviceDetails])
-          })
-          .catch((error) => {
-            // console.log(error)
-          })
+        serviceDetails.category = category.name
+        serviceDetails.name = info.lab_test
+        serviceDetails.type = "lab"
+        serviceDetails.packageId = "0"
+        serviceDetails.id = info.id
+        serviceDetails.test_id = info.test_id
+        serviceDetails.md = info.md
+        serviceDetails.approver = info.approved_by
+        setLabTests((oldArray) => [...oldArray, serviceDetails])
       }
     })
   }, [services])
@@ -323,7 +331,6 @@ export default function ViewBooking() {
     }
   }
 
-
   /****************/
   //Clinical Microscopy Filter
 
@@ -337,8 +344,7 @@ export default function ViewBooking() {
   //clinical microscopy indiv lab tests - urinalysis
   const clinicalMicroscopyIndividualsUrinalysis = labTests.filter(
     (info) =>
-      info.key === "clinical_microscopy_urinalysis" &&
-      info.test_id !== "1"
+      info.key === "clinical_microscopy_urinalysis" && info.test_id !== "1"
   )
   //add to the set
   clinicalMicroscopyIndividualsUrinalysis.forEach((test) =>
@@ -496,7 +502,7 @@ export default function ViewBooking() {
   microbiologyIndividual.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
-  console.log("lab tests", labTests)
+ 
 
   /****************/
 
@@ -1084,7 +1090,6 @@ export default function ViewBooking() {
                             title={data.name}
                             bookingId={bookingId}
                           />
-                      
                         </div>
                       ))}
                     </>
