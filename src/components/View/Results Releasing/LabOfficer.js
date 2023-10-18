@@ -1030,10 +1030,6 @@ export default function LabOfficer() {
                             ? "Thyroid Profile Tests"
  */
       if (selectedLab.id != null) {
-        console.log(serologyGroup)
-
-        console.log("serology", serologyGroup)
-        console.log("selectedLab", selectedLab)
 
         if (selectedLab.type == "lab") {
           if (
@@ -3025,6 +3021,7 @@ export default function LabOfficer() {
               </div>
             </div>
           </div>
+
           <Table
             type={"med-tech"}
             clickable={true}
@@ -3054,7 +3051,7 @@ export default function LabOfficer() {
               selectedLab.label !== "Clotting & Bleeding Time" &&
               selectedLab.label !== "HIV Screening (Anti HIV)" &&
               selectedLab.label !== "Anti HAV"
-                ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
+                ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", isApproved !== "approved" && "ACTION"]
                 : selectedLab.label === "Anti HAV" ||
                   selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
                   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
@@ -3067,10 +3064,10 @@ export default function LabOfficer() {
                   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                   selectedLab.label ===
                     "[P] Hepatitis B Surface Antigen (HbsAg)"
-                ? ["LAB NAME", "RESULTS", "ACTION"]
+                ? ["LAB NAME", "RESULTS", isApproved !== "approved" &&"ACTION"]
                 : selectedLab.label === "Clotting & Bleeding Time"
-                ? ["LAB NAME", "RESULTS", "REFERENCE RANGE", "ACTION"]
-                : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+                ? ["LAB NAME", "RESULTS", "REFERENCE RANGE", isApproved !== "approved" && "ACTION"]
+                : ["LAB NAME", "RESULTS", "UNIT", isApproved !== "approved" && "ACTION"]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
@@ -3083,6 +3080,7 @@ export default function LabOfficer() {
             userId={userId}
             useLoader={true}
             isReady={isReady}
+            isLabApproved={isApproved}
           />
 
           <Modal show={show} onHide={handleClose} animation={false} centered>

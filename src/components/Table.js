@@ -67,6 +67,7 @@ function Table({
   onExtractionClick,
   selectedRowExtraction,
   queueAttender,
+  isLabApproved = "",
 }) {
   const navigate = useNavigate()
   //PAGINATION
@@ -698,15 +699,17 @@ function Table({
               {data.val === null ? "" : data.val}
             </td>
           ))}
-          <td>
-            <button
-              class="action-btn"
-              role="button"
-              onClick={() => link(row.lab_test, row.Results, row.Value)}
-            >
-              EDIT
-            </button>
-          </td>
+          {isLabApproved !== "approved" && (
+            <td>
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.lab_test, row.Results, row.Value)}
+              >
+                EDIT
+              </button>
+            </td>
+          )}
         </tr>
       )
     } else if (type === "queue" && clickable == true) {
@@ -3050,9 +3053,11 @@ function Table({
         <table className={tableClass}>
           <thead>
             <tr>
-              {headingColumns.map((col, index) => (
-                <th key={index}>{col}</th>
-              ))}
+              {headingColumns.map((col, index) => {
+                if (col !== false) {
+                  return <th key={index}>{col}</th>
+                }
+              })}
             </tr>
           </thead>
           <tbody>
