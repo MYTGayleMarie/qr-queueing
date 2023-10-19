@@ -1,44 +1,44 @@
-import React, { Fragment, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import axios from "axios"
-import { getToken, getUser } from "../../../utilities/Common"
-import { useForm } from "react-hooks-helper"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { RingLoader, BeatLoader } from "react-spinners"
-import { Navigate } from "react-router-dom"
-import uploadIcon from "../../../images/icons/upload-icon.png"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import pdfIcon from "../../../images/icons/pdf-icon.png"
-import FileUpload from "./FileUpload"
-import GenerateResults from "./GenerateResults"
-import MultipleUpload from "./MultipleUpload"
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { getToken, getUser } from "../../../utilities/Common";
+import { useForm } from "react-hooks-helper";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RingLoader, BeatLoader } from "react-spinners";
+import { Navigate } from "react-router-dom";
+import uploadIcon from "../../../images/icons/upload-icon.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import pdfIcon from "../../../images/icons/pdf-icon.png";
+import FileUpload from "./FileUpload";
+import GenerateResults from "./GenerateResults";
+import MultipleUpload from "./MultipleUpload";
 // import Browser from 'browser';
 
 //css
-import "../Imaging/Imaging.css"
-import "./MedTech.css"
+import "../Imaging/Imaging.css";
+import "./MedTech.css";
 //components
-import Searchbar from "../../Searchbar.js"
-import Header from "../../Header.js"
-import Navbar from "../../Navbar"
-import Table from "../../Table.js"
-import { compileAsync } from "sass"
-import { File } from "buffer"
+import Searchbar from "../../Searchbar.js";
+import Header from "../../Header.js";
+import Navbar from "../../Navbar";
+import Table from "../../Table.js";
+import { compileAsync } from "sass";
+import { File } from "buffer";
 
 //variables
-var servId = ""
-var bookId = ""
-var type = ""
-const userToken = getToken()
-const userId = getUser()
-var presentDate = new Date()
-var formattedPresentData = presentDate.toISOString().split("T")[0]
+var servId = "";
+var bookId = "";
+var type = "";
+const userToken = getToken();
+const userId = getUser();
+var presentDate = new Date();
+var formattedPresentData = presentDate.toISOString().split("T")[0];
 
 const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
-}
+};
 
 const sendOutResults = [
   {
@@ -51,54 +51,54 @@ const sendOutResults = [
     file_name: "Result 2",
     date: "July 18, 2022",
   },
-]
+];
 
 export default function ViewBooking() {
-  document.body.style = "background: white;"
+  document.body.style = "background: white;";
 
-  const { id, dateFrom, dateTo } = useParams()
+  const { id, dateFrom, dateTo } = useParams();
 
   // search bar
-  const [bookingId, setBookingId] = useState(id)
-  const [search, setSearch] = useState(false)
-  const [show, setShow] = useState(false)
+  const [bookingId, setBookingId] = useState(id);
+  const [search, setSearch] = useState(false);
+  const [show, setShow] = useState(false);
 
   // Patient details
-  const [firstName, setFirstName] = useState("")
-  const [middleName, setMiddleName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [birthDate, setBirthDate] = useState("")
-  const [gender, setGender] = useState("")
-  const [age, setAge] = useState("")
-  const [contactNo, setContactNo] = useState("")
-  const [email, setEmail] = useState("")
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [email, setEmail] = useState("");
   const [sendOutDetails, setSendOutDetails] = useState({
     email: "",
     remarks: "",
-  })
-  const [sendEmail, setSendEmail] = useState("")
-  const [address, setAddress] = useState("")
-  const [categoriesList, setCategoriesList] = useState([])
+  });
+  const [sendEmail, setSendEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [categoriesList, setCategoriesList] = useState([]);
 
   const handleSendoutChange = (e) => {
-    const { name, value } = e.target
-    setSendOutDetails({ ...sendOutDetails, [name]: value })
-  }
+    const { name, value } = e.target;
+    setSendOutDetails({ ...sendOutDetails, [name]: value });
+  };
 
   // Lab Tests
-  const [services, setServices] = useState([])
-  const [packageServices, setPackageServices] = useState([])
-  const [labTests, setLabTests] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [services, setServices] = useState([]);
+  const [packageServices, setPackageServices] = useState([]);
+  const [labTests, setLabTests] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   //Redirect
-  const [redirectBack, setRedirectBack] = useState(false)
+  const [redirectBack, setRedirectBack] = useState(false);
 
   //Ready for email/pickup
-  const [ready, setReady] = useState(false)
-  const [checked, setChecked] = useState(false)
+  const [ready, setReady] = useState(false);
+  const [checked, setChecked] = useState(false);
 
-  const [withResults, setWithResults] = useState("")
+  const [withResults, setWithResults] = useState("");
 
   // Get booking details by searched booking id
   React.useEffect(() => {
@@ -113,7 +113,7 @@ export default function ViewBooking() {
       },
     })
       .then((response) => {
-        const customerId = response.data.data.booking.customer_id
+        const customerId = response.data.data.booking.customer_id;
         axios({
           method: "post",
           url: window.$link + "customers/show/" + customerId,
@@ -125,34 +125,34 @@ export default function ViewBooking() {
           },
         })
           .then((response) => {
-            setLoading(false)
-            setFirstName(response.data.first_name)
-            setMiddleName(response.data.middle_name)
-            setLastName(response.data.last_name)
+            setLoading(false);
+            setFirstName(response.data.first_name);
+            setMiddleName(response.data.middle_name);
+            setLastName(response.data.last_name);
 
-            var birthDate = new Date(response.data.birthdate)
-            setBirthDate(birthDate.toDateString())
+            var birthDate = new Date(response.data.birthdate);
+            setBirthDate(birthDate.toDateString());
 
-            setGender(response.data.gender)
+            setGender(response.data.gender);
 
-            var presentDate = new Date()
-            var age = presentDate.getFullYear() - birthDate.getFullYear()
-            var m = presentDate.getMonth() - birthDate.getMonth()
+            var presentDate = new Date();
+            var age = presentDate.getFullYear() - birthDate.getFullYear();
+            var m = presentDate.getMonth() - birthDate.getMonth();
             if (
               m < 0 ||
               (m === 0 && presentDate.getDate() < birthDate.getDate())
             ) {
-              age--
+              age--;
             }
-            setAge(age)
+            setAge(age);
 
-            setContactNo(response.data.contact_no)
-            setEmail(response.data.email)
-            setAddress(response.data.address)
+            setContactNo(response.data.contact_no);
+            setEmail(response.data.email);
+            setAddress(response.data.address);
           })
-          .catch((error) => {})
+          .catch((error) => {});
       })
-      .catch((error) => {})
+      .catch((error) => {});
 
     // Get booking details by booking id
     axios({
@@ -166,9 +166,9 @@ export default function ViewBooking() {
       },
     })
       .then((booking) => {
-        setServices(booking.data)
+        setServices(booking.data);
       })
-      .catch((error) => {})
+      .catch((error) => {});
 
     // Get booking details by booking id from packages
     axios({
@@ -182,14 +182,14 @@ export default function ViewBooking() {
       },
     })
       .then((booking) => {
-        setPackageServices(booking.data)
+        setPackageServices(booking.data);
       })
-      .catch((error) => {})
-  }, [])
+      .catch((error) => {});
+  }, []);
 
   React.useEffect(() => {
-    getUploads(data)
-  }, [])
+    getUploads(data);
+  }, []);
 
   React.useEffect(() => {
     axios({
@@ -203,17 +203,16 @@ export default function ViewBooking() {
       },
     })
       .then((category) => {
-       
-        setCategoriesList(category.data.categories)
+        setCategoriesList(category.data.categories);
       })
       .catch((error) => {
         // console.log(error)
-      })
-  }, [])
+      });
+  }, []);
 
   // Lab tests
   React.useEffect(() => {
-    labTests.length = 0
+    labTests.length = 0;
     services.map((info, index1) => {
       // if service is package
       if (info.category_id == null) {
@@ -229,7 +228,7 @@ export default function ViewBooking() {
         })
           .then((response) => {
             response.data.map((packageCat, index2) => {
-              var serviceDetails = {}
+              var serviceDetails = {};
               axios({
                 method: "post",
                 url: window.$link + "categories/show/" + packageCat.category_id,
@@ -240,71 +239,71 @@ export default function ViewBooking() {
                   requester: userId,
                 },
               }).then((category) => {
-                if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes"
+                if (category.data.name === "Electrolytes (NaKCl,iCA)") {
+                  serviceDetails.key = "Electrolytes";
                 } else {
                   serviceDetails.key = category.data.name
                     .replace(/\s+/g, "_")
-                    .toLowerCase()
+                    .toLowerCase();
                 }
 
-                serviceDetails.category = category.data.name
-                serviceDetails.name = packageCat.lab_test
-                serviceDetails.type = "package"
-                serviceDetails.id = packageCat.id
-                serviceDetails.test_id = packageCat.test_id
-                serviceDetails.packageId = info.id
-                serviceDetails.approver = info.approved_by
+                serviceDetails.category = category.data.name;
+                serviceDetails.name = packageCat.lab_test;
+                serviceDetails.type = "package";
+                serviceDetails.id = packageCat.id;
+                serviceDetails.test_id = packageCat.test_id;
+                serviceDetails.packageId = info.id;
+                serviceDetails.approver = info.approved_by;
                 // serviceDetails.md =
-                setLabTests((oldArray) => [...oldArray, serviceDetails])
-              })
-            })
+                setLabTests((oldArray) => [...oldArray, serviceDetails]);
+              });
+            });
           })
           .catch((error) => {
             // console.log(error)
-          })
+          });
       }
       // if service is lab test
       else {
-        var serviceDetails = {}
-       
+        var serviceDetails = {};
+
         let category = categoriesList.filter(
           (data) => data.id === info.category_id
-        )[0]
+        )[0];
         if (category.name == "Electrolytes (NaKCl,iCA)") {
-          serviceDetails.key = "Electrolytes"
+          serviceDetails.key = "Electrolytes";
         } else {
-          serviceDetails.key = category.name.replace(/\s+/g, "_").toLowerCase()
+          serviceDetails.key = category.name.replace(/\s+/g, "_").toLowerCase();
         }
 
-        serviceDetails.category = category.name
-        serviceDetails.name = info.lab_test
-        serviceDetails.type = "lab"
-        serviceDetails.packageId = "0"
-        serviceDetails.id = info.id
-        serviceDetails.test_id = info.test_id
-        serviceDetails.md = info.md
-        serviceDetails.approver = info.approved_by
-        setLabTests((oldArray) => [...oldArray, serviceDetails])
+        serviceDetails.category = category.name;
+        serviceDetails.name = info.lab_test;
+        serviceDetails.type = "lab";
+        serviceDetails.packageId = "0";
+        serviceDetails.id = info.id;
+        serviceDetails.test_id = info.test_id;
+        serviceDetails.md = info.md;
+        serviceDetails.approver = info.approved_by;
+        setLabTests((oldArray) => [...oldArray, serviceDetails]);
       }
-    })
-  }, [services])
+    });
+  }, [services]);
 
   // Categorize lab test
 
-  const selectedTests = new Set()
+  const selectedTests = new Set();
 
   const xray = labTests.filter(
     (info) => info.key === "xray" || info.key === "radiology"
-  )
-  xray.forEach((test) => selectedTests.add(test.test_id))
+  );
+  xray.forEach((test) => selectedTests.add(test.test_id));
 
-  const ecg = labTests.filter((info) => info.key === "cardiology")
-  ecg.forEach((test) => selectedTests.add(test.test_id))
+  const ecg = labTests.filter((info) => info.key === "cardiology");
+  ecg.forEach((test) => selectedTests.add(test.test_id));
 
   function emailTo() {
     if (sendOutDetails.email && sendOutDetails.email.trim() !== "") {
-      setLoading(true)
+      setLoading(true);
 
       axios({
         method: "post",
@@ -319,15 +318,15 @@ export default function ViewBooking() {
         },
       })
         .then(function (response) {
-          setLoading(false) // Hide loading indicator
-          toast.success("Email Successfully sent!")
+          setLoading(false); // Hide loading indicator
+          toast.success("Email Successfully sent!");
         })
         .catch(function (error) {
-          setLoading(false) // Hide loading indicator
-          toast.error("Oops! Something went wrong with the server")
-        })
+          setLoading(false); // Hide loading indicator
+          toast.error("Oops! Something went wrong with the server");
+        });
     } else {
-      toast.error("Empty or invalid Email input!")
+      toast.error("Empty or invalid Email input!");
     }
   }
 
@@ -337,28 +336,28 @@ export default function ViewBooking() {
   //clinical microscopy that has the same upload buttons
   const clinicalMicroscopyGroup = labTests.filter(
     (info) => info.test_id === "1"
-  )
+  );
   //add to the set
-  clinicalMicroscopyGroup.forEach((test) => selectedTests.add(test.test_id))
+  clinicalMicroscopyGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //clinical microscopy indiv lab tests - urinalysis
   const clinicalMicroscopyIndividualsUrinalysis = labTests.filter(
     (info) =>
       info.key === "clinical_microscopy_urinalysis" && info.test_id !== "1"
-  )
+  );
   //add to the set
   clinicalMicroscopyIndividualsUrinalysis.forEach((test) =>
     selectedTests.add(test.test_id)
-  )
+  );
 
   //clinical microscopy indiv lab tests - fecalysis
   const clinicalMicroscopyIndividualsFecalysis = labTests.filter(
     (info) => info.key === "clinical_microscopy_fecalysis"
-  )
+  );
   //add to the set
   clinicalMicroscopyIndividualsFecalysis.forEach((test) =>
     selectedTests.add(test.test_id)
-  )
+  );
   /****************/
 
   /****************/
@@ -367,9 +366,9 @@ export default function ViewBooking() {
   //hematology that has the same upload buttons
   const hematologyGroup = labTests.filter(
     (info) => info.test_id === "8" || info.test_id === "9"
-  )
+  );
   //add to the set
-  hematologyGroup.forEach((test) => selectedTests.add(test.test_id))
+  hematologyGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //hematology indiv lab tests
   const hematologyIndividuals = labTests.filter(
@@ -379,9 +378,9 @@ export default function ViewBooking() {
       info.test_id !== "9" &&
       info.test_id !== "158" &&
       info.test_id !== "159"
-  )
+  );
   //add to the set
-  hematologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
+  hematologyIndividuals.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
   /****************/
@@ -390,48 +389,48 @@ export default function ViewBooking() {
   //liver function tests
   const liverGroup = labTests.filter(
     (info) => info.key === "liver_function_tests" || info.test_id === "156"
-  )
+  );
   //add to the set
-  liverGroup.forEach((test) => selectedTests.add(test.test_id))
+  liverGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //pancreatic test
   const pancreaticGroup = labTests.filter(
     (info) => info.key === "pancreatic_test"
-  )
+  );
   //add to the set
-  pancreaticGroup.forEach((test) => selectedTests.add(test.test_id))
+  pancreaticGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //lipid profile tests
-  const lipidGroup = labTests.filter((info) => info.key === "lipid_profile")
+  const lipidGroup = labTests.filter((info) => info.key === "lipid_profile");
   //add to the set
-  lipidGroup.forEach((test) => selectedTests.add(test.test_id))
+  lipidGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //kidney function tests
   const kidneyGroup = labTests.filter(
     (info) => info.key === "kidney_function_tests"
-  )
+  );
   //add to the set
-  kidneyGroup.forEach((test) => selectedTests.add(test.test_id))
+  kidneyGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //glucose tests
   const glucoseGroup = labTests.filter(
     (info) => info.key === "glucose_tests" && info.test_id !== "27"
-  )
+  );
   //add to the set
-  glucoseGroup.forEach((test) => selectedTests.add(test.test_id))
+  glucoseGroup.forEach((test) => selectedTests.add(test.test_id));
   //glucose individual tests
-  const glucoseIndividual = labTests.filter((info) => info.test_id === "27")
+  const glucoseIndividual = labTests.filter((info) => info.test_id === "27");
   //add to the set
-  glucoseIndividual.forEach((test) => selectedTests.add(test.test_id))
+  glucoseIndividual.forEach((test) => selectedTests.add(test.test_id));
 
   //electrolytes tests
   const electrolytesGroup = labTests.filter(
     (info) =>
       info.key === "Electrolytes" ||
       (info.key === "chemistry" && info.test_id !== "156")
-  )
+  );
   //add to the set
-  electrolytesGroup.forEach((test) => selectedTests.add(test.test_id))
+  electrolytesGroup.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
   /****************/
@@ -440,44 +439,46 @@ export default function ViewBooking() {
   //coaguation studies
   const coaguationGroup = labTests.filter(
     (info) => info.test_id === "158" || info.test_id === "159"
-  )
+  );
   //add to the set
-  coaguationGroup.forEach((test) => selectedTests.add(test.test_id))
+  coaguationGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //thyroid profile
-  const thyroidGroup = labTests.filter((info) => info.key === "thyroid_profile")
+  const thyroidGroup = labTests.filter(
+    (info) => info.key === "thyroid_profile"
+  );
   //add to the set
-  thyroidGroup.forEach((test) => selectedTests.add(test.test_id))
+  thyroidGroup.forEach((test) => selectedTests.add(test.test_id));
 
   //tumor markers
   const tumorIndividuals = labTests.filter(
     (info) => info.key === "tumor_markers"
-  )
+  );
   //add to the set
-  tumorIndividuals.forEach((test) => selectedTests.add(test.test_id))
+  tumorIndividuals.forEach((test) => selectedTests.add(test.test_id));
 
   //immunulogy
   const immunologyIndividuals = labTests.filter(
     (info) => info.key === "immunology"
-  )
+  );
   //add to the set
-  immunologyIndividuals.forEach((test) => selectedTests.add(test.test_id))
+  immunologyIndividuals.forEach((test) => selectedTests.add(test.test_id));
 
   //hepatitis
   const hepatitisGroup = labTests.filter(
     (info) => info.test_id === "51" || info.test_id === "52"
-  )
+  );
   //add to the set
-  hepatitisGroup.forEach((test) => selectedTests.add(test.test_id))
+  hepatitisGroup.forEach((test) => selectedTests.add(test.test_id));
   //hepatitis individuals
   const hepatitisIndividuals = labTests.filter(
     (info) =>
       info.key === "hepatitis_profile_screening" &&
       info.test_id !== "51" &&
       info.test_id !== "52"
-  )
+  );
   //add to the set
-  hepatitisIndividuals.forEach((test) => selectedTests.add(test.test_id))
+  hepatitisIndividuals.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
   /****************/
@@ -486,9 +487,9 @@ export default function ViewBooking() {
   //histopathology that has the same upload buttons
   const histopathologyGroup = labTests.filter(
     (info) => info.key === "histopathology"
-  )
+  );
   //add to the set
-  histopathologyGroup.forEach((test) => selectedTests.add(test.test_id))
+  histopathologyGroup.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
   /****************/
@@ -497,35 +498,33 @@ export default function ViewBooking() {
   //histopathology that has the same upload buttons
   const microbiologyIndividual = labTests.filter(
     (info) => info.key === "microbiology"
-  )
+  );
   //add to the set
-  microbiologyIndividual.forEach((test) => selectedTests.add(test.test_id))
+  microbiologyIndividual.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
- 
-
   /****************/
 
-  const ultrasound = labTests.filter((info) => info.key === "ultrasound")
-  ultrasound.forEach((test) => selectedTests.add(test.test_id))
+  const ultrasound = labTests.filter((info) => info.key === "ultrasound");
+  ultrasound.forEach((test) => selectedTests.add(test.test_id));
   /****************/
 
   const unselectedTestsIDs = labTests.filter(
     (test) => !selectedTests.has(test.test_id)
-  )
+  );
 
   // const {id} = useParams();
-  const [data, setData] = useState([])
-  const [render, setRender] = useState("")
+  const [data, setData] = useState([]);
+  const [render, setRender] = useState("");
 
   // const others = labTests.filter(
   //   (info) => info.key === "other_tests" || info.key === "covid_rapid_tests"
   // );
 
-  const [uploadsData, setUploadsData] = useState([])
-  const [download, setDOwnload] = useState("")
-  const [rows, setRows] = useState([])
-  const [showConfirm, setShowConfirm] = React.useState(false)
+  const [uploadsData, setUploadsData] = useState([]);
+  const [download, setDOwnload] = useState("");
+  const [rows, setRows] = useState([]);
+  const [showConfirm, setShowConfirm] = React.useState(false);
 
   // Get Multiple Uploads
   async function getUploads() {
@@ -541,31 +540,31 @@ export default function ViewBooking() {
         },
       })
         .then(function (response) {
-          setData(response.data.message.booking_attachments)
+          setData(response.data.message.booking_attachments);
         })
         .catch(function (error) {
-          setData(error)
-        })
+          setData(error);
+        });
     }
   }
 
   //Delete Multiple Uploads
-  const [items, setItems] = useState([{ file_name: "" }])
+  const [items, setItems] = useState([{ file_name: "" }]);
 
   function handleRemoveItem(id) {
-    const rowId = id
-    const newItemList = [...items]
-    newItemList.splice(rowId, 1)
-    setItems(newItemList)
+    const rowId = id;
+    const newItemList = [...items];
+    newItemList.splice(rowId, 1);
+    setItems(newItemList);
   }
 
   if (redirectBack === true) {
     if (dateFrom !== undefined && dateTo !== undefined) {
-      var link = "/medtech/" + dateFrom + "/" + dateTo
-      return <Navigate to={link} />
+      var link = "/medtech/" + dateFrom + "/" + dateTo;
+      return <Navigate to={link} />;
     } else {
-      var link = "/medtech"
-      return <Navigate to={link} />
+      var link = "/medtech";
+      return <Navigate to={link} />;
     }
   }
 
@@ -666,8 +665,8 @@ export default function ViewBooking() {
                         checked={ready == true}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setReady(true)
-                            setChecked(true)
+                            setReady(true);
+                            setChecked(true);
                             axios({
                               method: "post",
                               url:
@@ -684,11 +683,11 @@ export default function ViewBooking() {
                             })
                               .then(function (response) {})
                               .catch((error) => {
-                                console.log(error)
-                              })
+                                console.log(error);
+                              });
                           } else {
-                            setReady(false)
-                            setChecked(false)
+                            setReady(false);
+                            setChecked(false);
                             axios({
                               method: "post",
                               url:
@@ -703,8 +702,8 @@ export default function ViewBooking() {
                                 is_ready: "no",
                               },
                             }).then(function (response) {
-                              console.log(response)
-                            })
+                              console.log(response);
+                            });
                           }
                         }}
                       />
@@ -1147,5 +1146,5 @@ export default function ViewBooking() {
         </Fragment>
       </div>
     </div>
-  )
+  );
 }
