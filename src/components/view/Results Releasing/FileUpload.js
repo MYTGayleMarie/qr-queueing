@@ -62,65 +62,76 @@ export default function FileUpload({ servicesData, title, bookingId }) {
     });
   }, [servicesPackage]);
 
+  // ! THIS IS CAUSING API REQUEST LOOP, NEED TO OPTIMIZE
   // Checking if lab has results already
-  // React.useEffect(()=>{
-  //   if(servicesData[0] != null){
-  //     if(servicesData[0].type=="lab"){
-  //       axios({
-  //         method: 'post',
-  //         url: window.$link + 'bookings/getBookingDetails/' + bookingId,
-  //         withCredentials: false,
-  //         params: {
-  //             api_key: window.$api_key,
-  //             token: userToken.replace(/['"]+/g, ''),
-  //             requester: userId,
-  //         }
-  //       })
-  //       .then((lab)=>{
-
-  //         const labDetail = lab.data.filter((details)=>details.id==servicesData[0].id)
-  //         // console.log(labDetail)
-  //         if (labDetail[0].file){
-  //           setWithResults(true)
-  //         }
-  //         // Check if there is md already
-  //         if (labDetail[0].md){
-  //           setWithMD(true)
-  //           setMDReadOnly(true)
-  //           setDoctorName(labDetail[0].md)
-  //         }
-  //       })
-  //       .catch((error)=>{console.log(error)})
-  //     }
-  //     if(servicesData[0].type=="package"){
-  //       axios({
-  //         method: 'post',
-  //         url: window.$link + 'bookings/getBookingPackageDetails/' + servicesData[0].packageId,
-  //         withCredentials: false,
-  //         params: {
-  //             api_key: window.$api_key,
-  //             token: userToken.replace(/['"]+/g, ''),
-  //             requester: userId,
-  //         }
-  //       })
-  //       .then((packages)=>{
-  //         // console.log(packages)
-  //         const packageDetail = packages.data.filter((details)=>details.id==servicesData[0].id)
-  //         // console.log(packageDetail)
-  //         // check if naa nay result
-  //         if (packageDetail[0].file){
-  //           setWithResults(true)
-  //         }
-  //         if (packageDetail[0].md){
-  //           setWithMD(true)
-  //           setMDReadOnly(true)
-  //           setDoctorName(packageDetail[0].md)
-  //         }
-  //       })
-  //       .catch((error)=>{console.log(error)})
-  //     }
-  //   }
-  // },[upload])
+  React.useEffect(() => {
+    if (servicesData[0] != null) {
+      if (servicesData[0].type == "lab") {
+        axios({
+          method: "post",
+          url: window.$link + "bookings/getBookingDetails/" + bookingId,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            requester: userId,
+          },
+        })
+          .then((lab) => {
+            const labDetail = lab.data.filter(
+              (details) => details.id == servicesData[0].id
+            );
+            // console.log(labDetail)
+            if (labDetail[0].file) {
+              setWithResults(true);
+            }
+            // Check if there is md already
+            if (labDetail[0].md) {
+              setWithMD(true);
+              setMDReadOnly(true);
+              setDoctorName(labDetail[0].md);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      if (servicesData[0].type == "package") {
+        axios({
+          method: "post",
+          url:
+            window.$link +
+            "bookings/getBookingPackageDetails/" +
+            servicesData[0].packageId,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            requester: userId,
+          },
+        })
+          .then((packages) => {
+            // console.log(packages)
+            const packageDetail = packages.data.filter(
+              (details) => details.id == servicesData[0].id
+            );
+            // console.log(packageDetail)
+            // check if naa nay result
+            if (packageDetail[0].file) {
+              setWithResults(true);
+            }
+            if (packageDetail[0].md) {
+              setWithMD(true);
+              setMDReadOnly(true);
+              setDoctorName(packageDetail[0].md);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  }, [upload]);
 
   // Convert file to base 64
   function convertToBase64(e) {
@@ -152,6 +163,12 @@ export default function FileUpload({ servicesData, title, bookingId }) {
   // handle drag events
   const onButtonClick = () => {
     inputRef.current.click();
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    // setSelectedFile(file);
   };
 
   // Function submit base 64
@@ -219,6 +236,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
           });
       });
     }
+    // window.location.reload();
   }
 
   // Handle View results button click
@@ -318,6 +336,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
             {servicesData.map((info, index) => (
               <div className={"details" + info.id}>{info.name}</div>
             ))}
+            {console.log("servicesData", servicesData)}
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
@@ -330,6 +349,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
                 accept="application/pdf"
                 className="input-file-upload"
                 onChange={(e) => convertToBase64(e)}
+                // onChange={handleFileUpload}
               />
 
               {/* File Upload Button */}
@@ -353,7 +373,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
                     />
                   </button>
                   <button className="submit-btn" onClick={submitPdf}>
-                    SAVE
+                    Save
                   </button>
                 </div>
               )}
@@ -364,7 +384,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
                   className="upload-res-btn blue"
                   onClick={handleViewResults}
                 >
-                  VIEW RESULTS
+                  View Results
                 </button>
               )}
             </div>
