@@ -158,72 +158,131 @@ export default function FileUpload({servicesData, title, bookingId}){
   };
 
   // Function submit base 64
-  function submitPdf(base64, labIdArray, packageIdArray){
-    base64 = file;
-    labIdArray = labIds;
-    packageIdArray = packageIds;
-    if(labIdArray.length!=0){
-      labIdArray.map((idLab, index)=>{
-        // console.log("lab "+idLab)
-        const formData = new FormData();
-        formData.append("file", base64);
-        axios({
-            method: 'post',
-            url: window.$link + 'Bookingdetails/uploadResults/' + idLab,
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ''),
-              added_by:userId
-            }
-          })
-        .then((response)=>{
-          toast.success("Uploaded successfully!");
-          setTimeout(() => {
-            // refreshPage();
-            setUpload(old=>!old)
-          },2000);
-        })
-        .catch((error)=>{console.log(error)})
+  function submitPdf(base64, labIdArray, packageIdArray) {
+    console.log("submit pdf")
+  base64 = file;
+  labIdArray = labIds;
+  packageIdArray = packageIds;
 
-      })
-    }
-    if(packageIdArray.length!=0) {
-      packageIdArray.map((idPackage, index)=>{
-        // console.log(base64)
-        const formData = new FormData();
-        formData.append("file", base64);
-        axios({
-        method: 'post',
-        url: window.$link + 'Bookingpackage_details/uploadResults/' + idPackage,
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          added_by:userId
-        }
-      })
-      .then((response)=>{
-        // console.log(response)
-        toast.success("Uploaded successfully!");
-        setTimeout(() => {
-          // refreshPage();
-          setUpload(old=>!old)
+  const source = axios.CancelToken.source();
 
-        },2000);
-      })
-      .catch((error)=>{
-        // console.log(error)
-      })
+  setTimeout(() => {
+    source.cancel('API request cancelled due to timeout');
+    toast.error("API request cancelled due to timeout. Please compress the file and try again.")
+       setTimeout(() => {
+      window.location.reload(); // Refresh the page after the toast message has shown
+    }, 2000); 
+  }, 5000); // Adjust the time (in ms) as per your requirement
+
+  const makeRequest = (url, id) => {
+    const formData = new FormData();
+    formData.append("file", base64);
+    axios({
+      method: 'post',
+      url: window.$link + url + id,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: false,
+      cancelToken: source.token, // Attaching cancel token
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        added_by: userId
+      }
     })
-    }     
+    .then((response) => {
+      toast.success("Uploaded successfully!");
+      setTimeout(() => {
+        setUpload(old => !old);
+      }, 2000);
+    })
+    .catch((error) => {
+      if (axios.isCancel(error)) {
+        console.log('Request cancelled', error.message);
+      } else {
+        console.log(error);
+      }
+    });
+  };
+
+  if (labIdArray.length !== 0) {
+    labIdArray.map(idLab => {
+      makeRequest('Bookingdetails/uploadResults/', idLab);
+    });
+  }
+
+  if (packageIdArray.length !== 0) {
+    packageIdArray.map(idPackage => {
+      makeRequest('Bookingpackage_details/uploadResults/', idPackage);
+    });
+  }
+}
+  // function submitPdf(base64, labIdArray, packageIdArray){
+  //   base64 = file;
+  //   labIdArray = labIds;
+  //   packageIdArray = packageIds;
+  //   if(labIdArray.length!=0){
+  //     labIdArray.map((idLab, index)=>{
+  //       // console.log("lab "+idLab)
+  //       const formData = new FormData();
+  //       formData.append("file", base64);
+  //       axios({
+  //           method: 'post',
+  //           url: window.$link + 'Bookingdetails/uploadResults/' + idLab,
+  //           data: formData,
+  //           headers: { "Content-Type": "multipart/form-data" },
+  //           withCredentials: false,
+  //           params: {
+  //             api_key: window.$api_key,
+  //             token: userToken.replace(/['"]+/g, ''),
+  //             added_by:userId
+  //           }
+  //         })
+  //       .then((response)=>{
+  //         toast.success("Uploaded successfully!");
+  //         setTimeout(() => {
+  //           // refreshPage();
+  //           setUpload(old=>!old)
+  //         },2000);
+  //       })
+  //       .catch((error)=>{console.log(error)})
+
+  //     })
+  //   }
+  //   if(packageIdArray.length!=0) {
+  //     packageIdArray.map((idPackage, index)=>{
+  //       // console.log(base64)
+  //       const formData = new FormData();
+  //       formData.append("file", base64);
+  //       axios({
+  //       method: 'post',
+  //       url: window.$link + 'Bookingpackage_details/uploadResults/' + idPackage,
+  //       data: formData,
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //       withCredentials: false,
+  //       params: {
+  //         api_key: window.$api_key,
+  //         token: userToken.replace(/['"]+/g, ''),
+  //         added_by:userId
+  //       }
+  //     })
+  //     .then((response)=>{
+  //       // console.log(response)
+  //       toast.success("Uploaded successfully!");
+  //       setTimeout(() => {
+  //         // refreshPage();
+  //         setUpload(old=>!old)
+
+  //       },2000);
+  //     })
+  //     .catch((error)=>{
+  //       // console.log(error)
+  //     })
+  //   })
+  //   }     
       
 
-  }
+  // }
 
   // Handle View results button click
   function handleViewResults(){

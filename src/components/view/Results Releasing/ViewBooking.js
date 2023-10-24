@@ -11,7 +11,6 @@ import uploadIcon from "../../../images/icons/upload-icon.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import pdfIcon from "../../../images/icons/pdf-icon.png"
 import FileUpload from "./FileUpload"
-import GenerateResults from "./GenerateResults"
 import MultipleUpload from "./MultipleUpload"
 // import Browser from 'browser';
 
