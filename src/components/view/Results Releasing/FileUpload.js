@@ -400,8 +400,22 @@ export default function FileUpload({ servicesData, title, bookingId }) {
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
-            <div>
-              <input
+            <div className="row justify-content-center">
+               {/* View File Button */}
+              {withResults && (
+               <div className="col-12 text-center">
+                 <button
+                  className="upload-res-btn blue"
+                  onClick={handleViewResults}
+                >
+                  View Results
+                </button>
+                <br/>
+                <br/>
+               </div>
+              )}
+             <div className="col-12 text-center">
+               <input
                 ref={inputRef}
                 type="file"
                 id="pdftobase64"
@@ -413,14 +427,14 @@ export default function FileUpload({ servicesData, title, bookingId }) {
               />
 
               {/* File Upload Button */}
-              {fileLength == 0 && withResults == false && (
+              {fileLength == 0 && (
                 <button className="upload-res-btn" onClick={onButtonClick}>
                   Upload Results
                 </button>
               )}
 
               {/* File Name and Delete Button */}
-              {fileLength != 0 && withResults == false && (
+              {fileLength != 0 && (
                 <div className="file-upload-remove">
                   <img src={pdfIcon} alt="pdf" className="pdf-icon" />
                   <p className="file-name">{fileName}</p>
@@ -438,15 +452,8 @@ export default function FileUpload({ servicesData, title, bookingId }) {
                 </div>
               )}
 
-              {/* View File Button */}
-              {withResults && (
-                <button
-                  className="upload-res-btn blue"
-                  onClick={handleViewResults}
-                >
-                  View Results
-                </button>
-              )}
+             </div>
+             
             </div>
             <br />
 
