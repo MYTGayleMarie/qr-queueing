@@ -37,7 +37,7 @@ import Logo from "../../../images/logo.png"
 import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png"
 import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png"
 import Image3 from "../../../images/med_tech/DEVIO_ANECA.png"
-import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
+import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png"
 import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png"
 import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png"
 // import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
@@ -48,6 +48,7 @@ import Image11 from "../../../images/med_tech/OSMA.png"
 import image11 from "../../../images/med_tech/image11.png"
 import image12 from "../../../images/med_tech/image12.png"
 import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
+import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
 import DummyImg from "../../../images/med_tech/dummy.png"
 import Watermark from "../../../images/Watermark.png"
 import Teal from "../../../images/backgrounds/TealHeader.png"
@@ -473,6 +474,8 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0109437"
     } else if (prc_id === "50") {
       return "PRC LIC. NO.: 0052556"
+    } else if (prc_id === "53") {
+      return "PRC LIC. NO.: 0115984"
     } else {
       return "No PRC No."
     }
@@ -604,6 +607,18 @@ export default function LabOfficer() {
       return (
         <img
           src={bonjoc}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      )
+    } else if (prc_sig === "53") {
+      setHasImage(true)
+      return (
+        <img
+          src={jillian}
           alt="MedTech"
           // className="mt-5"
           style={{ marginTop: "0.5rem" }}
@@ -1030,7 +1045,6 @@ export default function LabOfficer() {
                             ? "Thyroid Profile Tests"
  */
       if (selectedLab.id != null) {
-
         if (selectedLab.type == "lab") {
           if (
             selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
@@ -3051,7 +3065,13 @@ export default function LabOfficer() {
               selectedLab.label !== "Clotting & Bleeding Time" &&
               selectedLab.label !== "HIV Screening (Anti HIV)" &&
               selectedLab.label !== "Anti HAV"
-                ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", isApproved !== "approved" && "ACTION"]
+                ? [
+                    "LAB NAME",
+                    "RESULTS",
+                    "UNIT",
+                    "REFERENCE RANGE",
+                    isApproved !== "approved" && "ACTION",
+                  ]
                 : selectedLab.label === "Anti HAV" ||
                   selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
                   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
@@ -3064,10 +3084,20 @@ export default function LabOfficer() {
                   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                   selectedLab.label ===
                     "[P] Hepatitis B Surface Antigen (HbsAg)"
-                ? ["LAB NAME", "RESULTS", isApproved !== "approved" &&"ACTION"]
+                ? ["LAB NAME", "RESULTS", isApproved !== "approved" && "ACTION"]
                 : selectedLab.label === "Clotting & Bleeding Time"
-                ? ["LAB NAME", "RESULTS", "REFERENCE RANGE", isApproved !== "approved" && "ACTION"]
-                : ["LAB NAME", "RESULTS", "UNIT", isApproved !== "approved" && "ACTION"]
+                ? [
+                    "LAB NAME",
+                    "RESULTS",
+                    "REFERENCE RANGE",
+                    isApproved !== "approved" && "ACTION",
+                  ]
+                : [
+                    "LAB NAME",
+                    "RESULTS",
+                    "UNIT",
+                    isApproved !== "approved" && "ACTION",
+                  ]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
