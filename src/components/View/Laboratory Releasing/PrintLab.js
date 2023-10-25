@@ -23,6 +23,7 @@ import Image11 from "../../../images/med_tech/OSMA.png"
 import image11 from "../../../images/med_tech/image11.png"
 import image12 from "../../../images/med_tech/image12.png"
 import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
+import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
 import DummyImg from "../../../images/med_tech/dummy.png"
 import Watermark from "../../../images/Watermark.png"
 import Teal from "../../../images/backgrounds/TealHeader.png"
@@ -265,6 +266,8 @@ function PrintLab() {
       return "PRC LIC. NO.: 0109437"
     } else if (prc_id === "50") {
       return "PRC LIC. NO.: 0052556"
+    } else if (prc_id === "53") {
+      return "PRC LIC. NO.: 0115984"
     } else {
       return "No PRC No."
     }
@@ -396,6 +399,18 @@ function PrintLab() {
       return (
         <img
           src={bonjoc}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      )
+    } else if (prc_sig === "53") {
+      setHasImage(true)
+      return (
+        <img
+          src={jillian}
           alt="MedTech"
           // className="mt-5"
           style={{ marginTop: "0.5rem" }}
