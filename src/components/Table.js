@@ -50,6 +50,7 @@ function Table({
   handleOnChange,
   deleteBooking,
   editBooking,
+  editPatient,
   deleteCustomer,
   userId,
   editAction,
@@ -186,13 +187,20 @@ function Table({
                 >
                   ADD PAYMENT
                 </button>
+                   <button
+                      class="action-btn"
+                      role="button"
+                      onClick={() => editBooking(row.id, row.customer_id)}
+                    >
+                      UPDATE BOOKING
+                    </button>
                 {(userId == 10 || userId == 18) && (
                   <>
                     <br />
                     <button
                       class="action-btn"
                       role="button"
-                      onClick={() => editBooking(row.customer_id)}
+                      onClick={() => editPatient(row.customer_id)}
                     >
                       UPDATE PATIENT
                     </button>
