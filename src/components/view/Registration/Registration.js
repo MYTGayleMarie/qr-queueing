@@ -41,6 +41,7 @@ function Registration() {
   const [redirectPrint, setRedirectPrint] = useState(false);
   const [redirectDelete, setRedirectDelete] = useState(false);
   const [redirectEdit, setRedirectEdit] = useState(false)
+  const [redirectEditBooking, setRedirectEditBooking] = useState(false)
   const [role, setRole] = useState('');
   const [isReady, setIsReady] = useState(false)
 
@@ -139,17 +140,22 @@ function Registration() {
   function editBooking(bookingId,customerId) {
     id = bookingId;
     customer_id = customerId
+    setRedirectEditBooking(true);
+  }
+  function editPatient(customerId) {
+    // id = bookingId;
+    customer_id = customerId
     setRedirectEdit(true);
   }
 
-  if(redirectDelete == true) {
+  if(redirectDelete === true) {
     var link =  "/delete-booking/" + id;
     return (
         <Navigate to ={link}/>
     )
   }
 
-  if(redirectPrint == true) {
+  if(redirectPrint === true) {
     var link =  "/add-payment/" + id;
     return (
         <Navigate to ={link}/>
@@ -157,16 +163,23 @@ function Registration() {
   }
 
 
-  if(redirectPay == true) {
+  if(redirectPay === true) {
     var link =  "/add-payment/" + id;
     return (
         <Navigate to ={link}/>
     )
   }
 
-  if(redirectEdit == true) {
+  if(redirectEdit === true) {
     console.log(id)
     var link =  "/update-patient/" + id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
+  if(redirectEditBooking === true) {
+    console.log(id)
+    var link =  "/edit-booking/" +customer_id+"/"+ id;
     return (
         <Navigate to ={link}/>
     )
@@ -194,6 +207,7 @@ function Registration() {
             role={role}
             userId={userId}
             editBooking={editBooking}
+            editPatient={editPatient}
             deleteBooking={deleteBooking}
             useLoader={true}
             isReady={isReady}
