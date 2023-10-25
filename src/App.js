@@ -109,6 +109,8 @@ import NowServing from "./components/View/NowServing/NowServing";
 import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
 import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
 import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem";
+import EditPatientSwitch from "./components/View/EditPatient/QMAdd Old Patient/EditPatientSwitch";
+import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -241,6 +243,10 @@ function App() {
           <Route
             path="/queuemanager/add-booking/:id/:queueNumber"
             element={token ? <QMSwitchForm2 /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/edit-booking/:id/:bookingID"
+            element={token ? <EditBookingSwitch /> : <Navigate to="/" />}
           />
           {/** With date filter */}
           <Route
