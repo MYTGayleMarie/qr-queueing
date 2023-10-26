@@ -187,13 +187,13 @@ function Table({
                 >
                   ADD PAYMENT
                 </button>
-                   <button
-                      class="action-btn"
-                      role="button"
-                      onClick={() => editBooking(row.id, row.customer_id)}
-                    >
-                      UPDATE BOOKING
-                    </button>
+                {/* <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() => editBooking(row.id, row.customer_id)}
+                >
+                  UPDATE BOOKING
+                </button> */}
                 {(userId == 10 || userId == 18) && (
                   <>
                     <br />
