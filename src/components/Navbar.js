@@ -332,12 +332,12 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={"queue"} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={"patient"} class="patient icon"></img>
@@ -370,7 +370,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -379,7 +379,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink
           to="/registrationcmodule"
@@ -436,12 +436,12 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={"queue"} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
@@ -474,7 +474,7 @@ function registrationNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -483,7 +483,7 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
@@ -536,12 +536,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Patient</span>
             </li>
           </NavLink>
-          <NavLink to="/queuemanager" activeClassName="active" class="link">
+          {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img src={queueIcon} alt={"queue"} class="queue icon"></img>
               <span class="mx-2">Queue Manager</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
 
           <li href="#" class="nav-link cashier-nav">
@@ -592,7 +592,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink> */}
 
-          <NavLink
+          {/* <NavLink
             to="/registrationcmodule"
             activeClassName="active"
             class="link"
@@ -601,7 +601,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
               <span class="mx-2">Customer Module</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/aging-report" activeClassName="active" class="link">
             <li href="/aging-report" class="nav-link imaging-nav">
               <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
@@ -1496,14 +1496,14 @@ function RegisterNavbarTop(
           <span class="mx-2">Patient</span>
         </NavLink>
 
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
             alt={"queue"}
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
@@ -1537,7 +1537,7 @@ function RegisterNavbarTop(
             </li>
           </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1546,7 +1546,7 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink
           to="/registrationcmodule"
@@ -1651,7 +1651,7 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Patient</span>
         </NavLink>
-
+{/* 
         <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
@@ -1659,7 +1659,7 @@ function AdminNavbarTop(
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
         <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <img
