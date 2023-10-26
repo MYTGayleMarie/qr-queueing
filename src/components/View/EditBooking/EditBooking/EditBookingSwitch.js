@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm, useStep } from "react-hooks-helper"
 import EditBookingForm1 from "./EditBookingForm1"
 import EditBookingForm2 from "./EditBookingForm2"
 import EditBookingForm3 from "./EditBookingForm3"
+import axios from "axios"
+import { getToken, getUser } from "../../../../utilities/Common"
+import { useParams } from "react-router-dom"
 
 const personalData = {
   fname: "",
@@ -28,6 +31,11 @@ const mdData = {}
 const steps = [{ id: "customer" }, { id: "packages" }, { id: "services" }]
 
 function EditBookingSwitch() {
+  const { bookingID } = useParams()
+
+  const userToken = getToken()
+  const userId = getUser()
+
   const [pwdId, setPwdId] = useState("")
   const [seniorId, setSeniorId] = useState("")
   const [customer, setPersonal] = useForm(personalData)
@@ -172,6 +180,45 @@ function EditBookingSwitch() {
     homeaddress,
     setAddress,
   }
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: window.$link + "bookings/getDetails/" + bookingID,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (booking) {
+        if (booking.data.data) {
+        
+          let details = booking.data.data.booking_details
+          details.map((data) => {
+            if (data.type === "package") {
+              serviceData[
+                `${data.package.replace(/[2)}{(.,&-\s/]/g, "")}${
+                  data.test_id
+                }_package`
+              ] = true
+            }
+            if (data.type === "lab") {
+              serviceData[
+                `${data.lab_test.replace(/[2)}{(.,&-\s/]/g, "")}_${
+                  data.category_id
+                }`
+              ] = true
+            }
+          })
+        
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, [])
 
   switch (step.id) {
     case "customer":

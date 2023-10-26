@@ -109,7 +109,7 @@ import NowServing from "./components/View/NowServing/NowServing";
 import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
 import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
 import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem";
-import EditPatientSwitch from "./components/View/EditPatient/QMAdd Old Patient/EditPatientSwitch";
+
 import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
 
 function App() {
