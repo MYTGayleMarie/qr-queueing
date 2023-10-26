@@ -109,14 +109,9 @@ function EditBookingForm3({
     lastmeal,
     homeServiceFee,
   } = customer
-  const { queueNumber } = useParams()
-  console.log("queue Num", queueNumber)
+
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([])
-
-  async function queueAttender(status) {
-    const response = await changeStatus(queueNumber, status)
-  }
 
   React.useEffect(() => {
     axios({
@@ -158,45 +153,53 @@ function EditBookingForm3({
   }, [])
 
   // // Lab Tests Categories
+ 
   const clinicalMicroscopy = allLabServices.filter(
-    (item) => item.categoryId === 1
+    (item) => item.categoryId === "1"
   )
   const clinicalUrinalysis = allLabServices.filter(
-    (item) => item.categoryId === 23
+    (item) => item.categoryId === "23"
   )
+
   const clinicalFecalysis = allLabServices.filter(
-    (item) => item.categoryId === 24
+    (item) => item.categoryId === "24"
   )
-  const hematology = allLabServices.filter((item) => item.categoryId === 2)
+  const hematology = allLabServices.filter((item) => item.categoryId === "2")
   const electrolytes = allLabServices.filter(
-    (item) => item.categoryId === 3 || item.categoryId === 4
+    (item) => item.categoryId === "3" || item.categoryId === "4"
   )
-  const glucoseTests = allLabServices.filter((item) => item.categoryId === 5)
+  const glucoseTests = allLabServices.filter((item) => item.categoryId === "5")
   const kidneyFunctionTests = allLabServices.filter(
-    (item) => item.categoryId === 6
+    (item) => item.categoryId === "6"
   )
-  const lipidProfile = allLabServices.filter((item) => item.categoryId === 7)
-  const pancreaticTests = allLabServices.filter((item) => item.categoryId === 8)
+  const lipidProfile = allLabServices.filter((item) => item.categoryId === "7")
+  const pancreaticTests = allLabServices.filter(
+    (item) => item.categoryId === "8"
+  )
   const liverFunctionTests = allLabServices.filter(
-    (item) => item.categoryId === 9
+    (item) => item.categoryId === "9"
   )
-  const immunology = allLabServices.filter((item) => item.categoryId === 11)
+  const immunology = allLabServices.filter((item) => item.categoryId === "11")
   const hepatitisProfileScreening = allLabServices.filter(
-    (item) => item.categoryId === 12
+    (item) => item.categoryId === "12"
   )
-  const thyroidProfile = allLabServices.filter((item) => item.categoryId === 13)
-  const tumorMarkers = allLabServices.filter((item) => item.categoryId === 14)
-  const histopathology = allLabServices.filter((item) => item.categoryId === 15)
+  const thyroidProfile = allLabServices.filter(
+    (item) => item.categoryId === "13"
+  )
+  const tumorMarkers = allLabServices.filter((item) => item.categoryId === "14")
+  const histopathology = allLabServices.filter(
+    (item) => item.categoryId === "15"
+  )
   const COVIDRapidTests = allLabServices.filter(
-    (item) => item.categoryId === 16
+    (item) => item.categoryId === "16"
   )
-  const microbiology = allLabServices.filter((item) => item.categoryId === 17)
-  const xray = allLabServices.filter((item) => item.categoryId === 18)
-  const cardiology = allLabServices.filter((item) => item.categoryId === 19)
+  const microbiology = allLabServices.filter((item) => item.categoryId === "17")
+  const xray = allLabServices.filter((item) => item.categoryId === "18")
+  const cardiology = allLabServices.filter((item) => item.categoryId === "19")
   const medicalCertificate = allLabServices.filter(
-    (item) => item.categoryId === 20
+    (item) => item.categoryId === "20"
   )
-  const ultrasound = allLabServices.filter((item) => item.categoryId === 21)
+  const ultrasound = allLabServices.filter((item) => item.categoryId === "21")
   const promo = allLabServices.filter(
     (item) =>
       item.labTestId === 119 ||
@@ -204,7 +207,7 @@ function EditBookingForm3({
       item.labTestId === 121 ||
       item.labTestId === 117
   )
-  const otherTests = allLabServices.filter((item) => item.categoryId === 22)
+  const otherTests = allLabServices.filter((item) => item.categoryId === "22")
 
   //get all packages
   const [allPackages, setAllPackages] = useState([])
@@ -298,8 +301,8 @@ function EditBookingForm3({
   //states
   const [discountCode, setDiscountCode] = useState("")
 
-  const [bookingId, setBookingId] = useState("")
-  const { id } = useParams()
+  // const [bookingId, setBookingId] = useState("")
+  const { id, bookingID } = useParams()
 
   //Redirection
   const [redirect, setRedirect] = useState(false)
@@ -340,160 +343,110 @@ function EditBookingForm3({
 
     if (isClicked === false) {
       setClicked(true)
+
+      var packageId = []
+      var packagePrices = []
+      var testId = []
+      var labPrices = []
+      var location_value = ""
+
+      services.map((data, index) => {
+        if (data.type == "lab") {
+          testId.push(data.labTestId)
+          labPrices.push(data.price)
+        } else if (data.type == "package") {
+          packageId.push(data.labTestId)
+          packagePrices.push(data.price)
+        }
+      })
+
+      var prices = labPrices.concat(packagePrices)
+
+      var extractedDates = []
+      var testStarts = []
+      var testFinishes = []
+      var resultDates = []
+      var fileResults = []
+      var finalMdCharge = []
+
+      if (mdCharge.physical_exam == true) {
+        finalMdCharge.push("physical exam")
+      }
+      if (mdCharge.medical_certificate == true) {
+        finalMdCharge.push("medical certificate")
+      }
+
+      // if(location === "3"){
+      //   location_value = "Company"
+      // }
+      // if(location === "0" || location === "1" || location === "2"){
+      //   location_value = "Home Service"
+      // }
+      // if(location === "4"){
+      //   location_value = "Mobile Charge"
+      // }
+
       axios({
         method: "post",
-        url: window.$link + "customers/update/" + id,
+        url: window.$link + "bookings/update/" + bookingID,
         withCredentials: false,
         params: {
           token: userToken.replace(/['"]+/g, ""),
           api_key: window.$api_key,
-          first_name: firstName,
-          last_name: lastName,
-          middle_name: middleName,
-          suffix: "",
-          birthdate: birthday,
-          contact_no: contactNo,
-          email: emailadd,
-          gender: gender,
-          address: homeaddress,
-          emergency_contact: "",
-          emergency_contact_no: "",
-          relation_w_contact: "",
-          last_meal: lastMeal,
-          extraction_date: extractionDate,
+          customer: id,
+          discount_id: customer.discountId,
+          booking_time: dateOfTesting,
+          company_contract_id: "",
+          doctors_referal: customer.referral,
+          type: location,
+          result: result,
+          total_amount: totalPrice,
+          discount_reference_no: customer.discountDetail,
+          home_service_fee: serviceFee,
+          status: "pending",
+          reference_code: "",
+          md_charge: finalMdCharge,
           remarks: "",
-          senior_id: seniorId,
-          pwd_id: pwdId,
           updated_by: userId,
+          booking_id: bookingID,
+
+          service_location: location_value,
+
+          grand_total: totalPrice,
+
+          payment_type: "PENDING",
+          lab_tests: testId,
+          package_tests: packageId,
+          lab_prices: labPrices,
+          package_prices: packagePrices,
+          // status: "pending",
+          lab_extracted_dates: extractedDates,
+          lab_test_starts: testStarts,
+          lab_test_finishes: testFinishes,
+          lab_result_dates: resultDates,
+          lab_file_result: fileResults,
+          package_extracted_dates: extractedDates,
+          package_test_starts: testStarts,
+          package_test_finishes: testFinishes,
+          package_result_dates: resultDates,
+          package_file_result: fileResults,
         },
-      }).then(function (response) {
-        toast.success(response.data.message.success)
-        var packageId = []
-        var packagePrices = []
-        var testId = []
-        var labPrices = []
-        var queueNumber = ""
-
-        services.map((data, index) => {
-          if (data.type === "lab") {
-            testId.push(data.labTestId)
-            labPrices.push(data.price)
-          } else if (data.type === "package") {
-            packageId.push(data.labTestId)
-            packagePrices.push(data.price)
-          }
-        })
-
-        var extractedDates = []
-        var testStarts = []
-        var testFinishes = []
-        var resultDates = []
-        var fileResults = []
-        var finalMdCharge = []
-        var location_value = ""
-
-        if (mdCharge.physical_exam === true) {
-          finalMdCharge.push("physical exam")
-        }
-        if (mdCharge.medical_certificate === true) {
-          finalMdCharge.push("medical certificate")
-        }
-
-        if (location === "3") {
-          location_value = "Company"
-        }
-        if (location === "0" || location === "1" || location === "2") {
-          location_value = "Home Service"
-        }
-        if (location === "4") {
-          location_value = "Mobile Charge"
-        }
-
-        axios({
-          method: "get",
-          url: window.$link + "customers/queue",
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-            //customer_id: response.data.data.customer_id,
-          },
-        })
-          .then(function (queue) {
-            queue.data.queues.map((data) => {
-              if (customerID === data.customer_id) {
-                queueNumber = data.queue_no
-              }
-            })
-
-            return axios({
-              method: "post",
-              url: window.$link + "bookings/create",
-              withCredentials: false,
-              params: {
-                token: userToken,
-                api_key: window.$api_key,
-                // customer: customerId,
-                discount_id: customer.discountId,
-                booking_time: dateOfTesting,
-                company_contract_id: "",
-                doctors_referal: customer.referral,
-                type: location,
-                result: result,
-                total_amount: totalPrice,
-                discount_reference_no: customer.discountDetail,
-                home_service_fee: serviceFee,
-                service_location: location_value,
-                md_charge: finalMdCharge,
-                grand_total: totalPrice,
-                status: "pending",
-                reference_code: "",
-                payment_type: "PENDING",
-                lab_tests: testId,
-                package_tests: packageId,
-                lab_prices: labPrices,
-                package_prices: packagePrices,
-                status: "pending",
-                lab_extracted_dates: extractedDates,
-                lab_test_starts: testStarts,
-                lab_test_finishes: testFinishes,
-                lab_result_dates: resultDates,
-                lab_file_result: fileResults,
-                package_extracted_dates: extractedDates,
-                package_test_starts: testStarts,
-                package_test_finishes: testFinishes,
-                package_result_dates: resultDates,
-                package_file_result: fileResults,
-                remarks: "",
-                added_by: userId,
-                queue_no: queueNumber,
-                customer: customerID,
-              },
-            })
-          })
-          .then(function (response) {
-            queueAttender("attending")
-            setBookingId(response.data.data.booking_id)
-            toast.success(response.data.message.success)
-
-            if (isCompany === false) {
-              setTimeout(function () {
-                setRedirect(true)
-              }, 2000)
-            } else {
-              setPrint(true)
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            //error
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-        handleClose()
       })
+        .then(function (response) {
+          toast.success(response.data.message.success)
+          setRedirect(true)
+          // if (isCompany === false) {
+          //   setTimeout(function () {
+          //     setRedirect(true)
+          //   }, 2000)
+          // } else {
+          //   setPrint(true)
+          // }
+        })
+        .catch(function (error) {
+          console.log(error)
+          //error
+        })
     }
   }
 
@@ -709,11 +662,11 @@ function EditBookingForm3({
   }
 
   if (print === true) {
-    return <Navigate to={"/print-booking/" + bookingId} />
+    return <Navigate to={"/print-booking/" + bookingID} />
   }
 
   if (redirect === true) {
-    return <Navigate to={"/add-payment/" + bookingId} />
+    return <Navigate to={"/add-payment/" + bookingID} />
   }
 
   return (
@@ -740,6 +693,7 @@ function EditBookingForm3({
                 formData={service}
                 setForm={setServices}
                 /> */}
+           
               <ServiceItems
                 category="CLINICAL MICROSCOPY URINALYSIS"
                 items={clinicalUrinalysis}
@@ -924,7 +878,7 @@ function EditBookingForm3({
             <div className="col d-flex justify-content-end">
               {isCompany === false &&
                 discount !== "" &&
-                discountDetails.length === 0 && (
+                discountDetails?.length === 0 && (
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
@@ -938,7 +892,7 @@ function EditBookingForm3({
                 )}
               {isCompany === false &&
                 discount !== "" &&
-                discountDetails.length !== 0 && (
+                discountDetails?.length !== 0 && (
                   <span className="total-price">
                     <b>
                       DISCOUNT{" "}
