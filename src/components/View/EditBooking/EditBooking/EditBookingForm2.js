@@ -479,6 +479,7 @@ function EditBookingForm2({
                   </button>
                 </div>
               </div>
+            
               <ServiceItems
                 category="All Packages"
                 items={allPackages}
@@ -486,6 +487,7 @@ function EditBookingForm2({
                 setForm={setServices}
               />
             </div>
+        
 
             <div className="row summary-text">
               <h3 className="form-categories-header italic medium-text ">
