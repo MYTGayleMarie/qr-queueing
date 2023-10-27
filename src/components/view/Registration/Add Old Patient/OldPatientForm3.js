@@ -178,6 +178,7 @@ function OldPatientForm3({
     (item) => item.categoryId == 12
   )
   const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13)
+  const coaguation = allLabServices.filter((item) => item.categoryId == 25)
   const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14)
   const histopathology = allLabServices.filter((item) => item.categoryId == 15)
   const COVIDRapidTests = allLabServices.filter((item) => item.categoryId == 16)
@@ -657,6 +658,10 @@ function OldPatientForm3({
         getDetails(clinicalFecalysis, data[0])
         checkedServicesDetails.push(itemDetails)
         break
+        case 25:
+        getDetails(coaguation, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
     }
   })
 
@@ -795,6 +800,13 @@ function OldPatientForm3({
               <ServiceItems
                 category="HEMATOLOGY"
                 items={hematology}
+                formData={service}
+                setForm={setServices}
+              />
+
+              <ServiceItems
+                category="COAGUATION"
+                items={coaguation}
                 formData={service}
                 setForm={setServices}
               />

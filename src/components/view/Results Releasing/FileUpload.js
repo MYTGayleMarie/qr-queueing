@@ -183,7 +183,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
     setTimeout(() => {
       source.cancel("API request cancelled due to timeout")
       toast.error(
-        "API request cancelled due to timeout. Please compress the file and try again."
+        "Reuquest cancelled due to timeout. Please compress the file and try again."
       )
       setTimeout(() => {
         window.location.reload() // Refresh the page after the toast message has shown

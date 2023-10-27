@@ -172,6 +172,7 @@ function Form2({
     (item) => item.categoryId == 24
   );
   const hematology = allLabServices.filter((item) => item.categoryId == 2);
+  const coaguation = allLabServices.filter((item) => item.categoryId == 25);
   const electrolytes = allLabServices.filter(
     (item) => item.categoryId == 3 || item.categoryId == 4
   );
@@ -629,6 +630,11 @@ function Form2({
         getDetails(clinicalFecalysis, data[0]);
         checkedServicesDetails.push(itemDetails);
         break;
+
+        case 25:
+          getDetails(coaguation, data[0]);
+          checkedServicesDetails.push(itemDetails);
+          break;
     }
   });
 
@@ -767,6 +773,13 @@ function Form2({
                 formData={service}
                 setForm={setServices}
               />
+              <ServiceItems
+                category="COAGUATION"
+                items={coaguation}
+                formData={service}
+                setForm={setServices}
+              />
+
 
               <ServiceItems
                 category="ELECTROLYTES"

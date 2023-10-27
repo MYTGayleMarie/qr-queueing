@@ -156,6 +156,7 @@ function Form3CModule({ service, customer, location, packagePrice, labPrice,  se
     const tumorMarkers = allLabServices.filter(item=>item.categoryId == 14) 
     const histopathology = allLabServices.filter(item=>item.categoryId == 15) 
     const COVIDRapidTests = allLabServices.filter(item=>item.categoryId == 16) 
+    const coaguation = allLabServices.filter(item=>item.categoryId == 25) 
     const microbiology = allLabServices.filter(item=>item.categoryId == 17) 
     const xray = allLabServices.filter(item=>item.categoryId == 18) 
     const cardiology = allLabServices.filter(item=>item.categoryId == 19) 
@@ -572,6 +573,10 @@ function Form3CModule({ service, customer, location, packagePrice, labPrice,  se
           getDetails(clinicalFecalysis, data[0]);
           checkedServicesDetails.push(itemDetails);
       break;
+      case 25:
+          getDetails(coaguation, data[0]);
+          checkedServicesDetails.push(itemDetails);
+      break;
     }
   });
 
@@ -698,6 +703,8 @@ totalPrice += parseFloat(data.price);
               />
 
               <ServiceItems category="HEMATOLOGY" items={hematology} formData={service} setForm={setServices} />
+              
+              <ServiceItems category="COAGUATION" items={coaguation} formData={service} setForm={setServices} />
 
               <ServiceItems category="ELECTROLYTES" items={electrolytes} formData={service} setForm={setServices} />
 

@@ -13,12 +13,12 @@ import {
 
 //GLOBAL VARIABLES
 // window.$link= "https://blue.qrdiagnosticsph.com/";
-window.$link = "https://blue-dev.qrdiagnosticsph.com/";
+window.$link = "https://blue.qrdiagnosticsph.com/";
 // window.$link = "https://blue.qrdiagnosticsph.com/";
 // blue-dev.qrdiagnosticsph.com/
 // https://blue.qrdiagnosticsph.com/"
-// window.$api_key = "84366d00-3deb-4066-abca-3fb7adf80166";
-window.$api_key = "Y5QubbhTOb";
+window.$api_key = "84366d00-3deb-4066-abca-3fb7adf80166";
+// window.$api_key = "Y5QubbhTOb";
 window.$userId = getUser();
 window.$roleId = getRoleId();
 window.$userToken = getToken();
