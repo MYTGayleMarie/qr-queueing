@@ -239,7 +239,7 @@ function Table({
                   <button
                     class="action-btn"
                     role="button"
-                    onClick={() => editBooking(row.customer_id)}
+                    onClick={() => editPatient(row.customer_id)}
                   >
                     UPDATE PATIENT
                   </button>
