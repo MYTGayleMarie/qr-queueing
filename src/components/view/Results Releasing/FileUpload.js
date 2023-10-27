@@ -1,7 +1,13 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Navigate } from "react-router-dom"
-import { getToken, getUser, refreshPage } from "../../../utilities/Common"
+import {
+  getRole,
+  getRoleId,
+  getToken,
+  getUser,
+  refreshPage,
+} from "../../../utilities/Common"
 import pdfIcon from "../../../images/icons/pdf-icon.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { toast, ToastContainer } from "react-toastify"
@@ -13,7 +19,7 @@ import "./MedTech.css"
 const userToken = getToken()
 const userId = getUser()
 
-export default function FileUpload({ servicesData, title, bookingId }) {
+export default function FileUpload({ userRole, servicesData, title, bookingId }) {
   const inputRef = React.useRef(null)
   const [labIds, setLabIds] = useState([])
   const [packageIds, setPackageIds] = useState([])
@@ -22,6 +28,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
   const [withResults, setWithResults] = useState(false)
   const [redirectPdf, setRedirectPdf] = useState(false)
   const [upload, setUpload] = useState(false)
+
 
   // md
   const [doctorName, setDoctorName] = useState("")
@@ -81,7 +88,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
             const labDetail = lab.data.filter(
               (details) => details.id == servicesData[0].id
             )
-            // console.log(labDetail)
+            
             if (labDetail[0].file) {
               setWithResults(true)
             }
@@ -111,11 +118,11 @@ export default function FileUpload({ servicesData, title, bookingId }) {
           },
         })
           .then((packages) => {
-            // console.log(packages)
+            
             const packageDetail = packages.data.filter(
               (details) => details.id == servicesData[0].id
             )
-            // console.log(packageDetail)
+           
             // check if naa nay result
             if (packageDetail[0].file) {
               setWithResults(true)
@@ -135,6 +142,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
 
   // Convert file to base 64
   function convertToBase64(e) {
+   
     //read file
     // var selectedFile=document.getElementById("pdftobase64").files
     var selectedFile = e.target.files
@@ -173,7 +181,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
 
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray) {
-    console.log("submit pdf")
+    
     base64 = file
     labIdArray = labIds
     packageIdArray = packageIds
@@ -306,7 +314,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
   // Handle md
   function submitMD() {
     servicesData.map(async (data, index) => {
-      // console.log(data)
+      
       if (data.type === "lab") {
         await axios({
           method: "post",
@@ -363,7 +371,7 @@ export default function FileUpload({ servicesData, title, bookingId }) {
   function editMD() {
     setMDReadOnly(false)
     setShowEdit(true)
-    // console.log("Edit" + doctorName)
+   
   }
 
   // Redirect to View pdf results
@@ -394,66 +402,124 @@ export default function FileUpload({ servicesData, title, bookingId }) {
           <div className="col-sm-4">
             {/* <div className="category label">{title}</div> */}
             {servicesData.map((info, index) => (
-              <div className={"details" + info.id}>{info.name}</div>
+              <div className={"details" + info.id}>
+                {info.name}
+              </div>
             ))}
-            {console.log("servicesData", servicesData)}
+          
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
             <div className="row justify-content-center">
-               {/* View File Button */}
+              {/* View File Button */}
               {withResults && (
-               <div className="col-12 text-center">
-                 <button
-                  className="upload-res-btn blue"
-                  onClick={handleViewResults}
-                >
-                  View Results
-                </button>
-                <br/>
-                <br/>
-               </div>
-              )}
-             <div className="col-12 text-center">
-               <input
-                ref={inputRef}
-                type="file"
-                id="pdftobase64"
-                name="pdftobase64"
-                accept="application/pdf"
-                className="input-file-upload"
-                onChange={(e) => convertToBase64(e)}
-                // onChange={handleFileUpload}
-              />
-
-              {/* File Upload Button */}
-              {fileLength == 0 && (
-                <button className="upload-res-btn" onClick={onButtonClick}>
-                  Upload Results
-                </button>
-              )}
-
-              {/* File Name and Delete Button */}
-              {fileLength != 0 && (
-                <div className="file-upload-remove">
-                  <img src={pdfIcon} alt="pdf" className="pdf-icon" />
-                  <p className="file-name">{fileName}</p>
-                  <button className="delete-btn" onClick={removeFile}>
-                    <FontAwesomeIcon
-                      icon={"minus-square"}
-                      alt={"minus"}
-                      aria-hidden="true"
-                      className="delete-icon"
-                    />
+                <div className="col-12 text-center">
+                  <button
+                    className="upload-res-btn blue"
+                    onClick={handleViewResults}
+                  >
+                    View Results
                   </button>
-                  <button className="submit-btn" onClick={submitPdf}>
-                    Save
-                  </button>
+                  <br />
+                  <br />
                 </div>
               )}
+              <div className="col-12 text-center">
+                <input
+                  ref={inputRef}
+                  type="file"
+                  id="pdftobase64"
+                  name="pdftobase64"
+                  accept="application/pdf"
+                  className="input-file-upload"
+                  onChange={(e) => convertToBase64(e)}
+                  // onChange={handleFileUpload}
+                />
 
-             </div>
-             
+                {/* File Upload Button */}
+                {fileLength == 0 && withResults === false && (
+                  <button className="upload-res-btn" onClick={onButtonClick}>
+                    Upload Results
+                  </button>
+                )}
+
+                {/* File Name and Delete Button */}
+                {fileLength !== 0 && withResults === false && (
+                  <div className="file-upload-remove">
+                    <img src={pdfIcon} alt="pdf" className="pdf-icon" />
+                    <p className="file-name">{fileName}</p>
+                    <button className="delete-btn" onClick={removeFile}>
+                      <FontAwesomeIcon
+                        icon={"minus-square"}
+                        alt={"minus"}
+                        aria-hidden="true"
+                        className="delete-icon"
+                      />
+                    </button>
+                    <button className="submit-btn" onClick={submitPdf}>
+                      Save
+                    </button>
+                  </div>
+                )}
+      
+                {/* File Upload Button */}
+
+                {fileLength === 0 &&
+                  withResults &&
+                  (userRole === "3" || userRole === "5") &&
+                  servicesData[0].emailed_by === null && (
+                    <button className="upload-res-btn" onClick={onButtonClick} style={{backgroundColor:"#bfbc4b", borderColor:"#bfbc4b"}}>
+                      Change Results
+                    </button>
+                  )}
+
+                {/* File Name and Delete Button */}
+                {fileLength !== 0 &&
+                  withResults &&
+                  (userRole === "3" || userRole === "5") &&
+                  servicesData[0].emailed_by === null && (
+                    <div className="file-upload-remove">
+                      <img src={pdfIcon} alt="pdf" className="pdf-icon" />
+                      <p className="file-name">{fileName}</p>
+                      <button className="delete-btn" onClick={removeFile}>
+                        <FontAwesomeIcon
+                          icon={"minus-square"}
+                          alt={"minus"}
+                          aria-hidden="true"
+                          className="delete-icon"
+                        />
+                      </button>
+                      <button className="submit-btn" onClick={submitPdf}>
+                        Save
+                      </button>
+                    </div>
+                  )}
+                  
+                {fileLength === 0 && withResults && userRole === "4" && (
+                  <button className="upload-res-btn" onClick={onButtonClick} style={{backgroundColor:"#bfbc4b", borderColor:"#bfbc4b"}}>
+                    Change Results
+                  </button>
+                )}
+
+                {/* File Name and Delete Button */}
+                {fileLength !== 0 && withResults && userRole === "4" && (
+                  <div className="file-upload-remove">
+                    <img src={pdfIcon} alt="pdf" className="pdf-icon" />
+                    <p className="file-name">{fileName}</p>
+                    <button className="delete-btn" onClick={removeFile}>
+                      <FontAwesomeIcon
+                        icon={"minus-square"}
+                        alt={"minus"}
+                        aria-hidden="true"
+                        className="delete-icon"
+                      />
+                    </button>
+                    <button className="submit-btn" onClick={submitPdf}>
+                      Save
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
             <br />
 
