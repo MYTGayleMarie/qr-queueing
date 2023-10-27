@@ -137,11 +137,11 @@ function Registration() {
     customer_id = customerId
     setRedirectDelete(true);
   }
-  function editBooking(bookingId,customerId) {
-    id = bookingId;
-    customer_id = customerId
-    setRedirectEditBooking(true);
-  }
+  // function editBooking(bookingId,customerId) {
+  //   id = bookingId;
+  //   customer_id = customerId
+  //   setRedirectEditBooking(true);
+  // }
   function editPatient(customerId) {
     // id = bookingId;
     customer_id = customerId
@@ -177,13 +177,13 @@ function Registration() {
         <Navigate to ={link}/>
     )
   }
-  if(redirectEditBooking === true) {
-    console.log(id)
-    var link =  "/edit-booking/" +customer_id+"/"+ id;
-    return (
-        <Navigate to ={link}/>
-    )
-  }
+  // if(redirectEditBooking === true) {
+  //   console.log(id)
+  //   var link =  "/edit-booking/" +customer_id+"/"+ id;
+  //   return (
+  //       <Navigate to ={link}/>
+  //   )
+  // }
 
    return (
     <div>
@@ -206,7 +206,7 @@ function Registration() {
             print={printPayment}
             role={role}
             userId={userId}
-            editBooking={editBooking}
+            // editBooking={editBooking}
             editPatient={editPatient}
             deleteBooking={deleteBooking}
             useLoader={true}

@@ -464,14 +464,14 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
       
                 {/* File Upload Button */}
 
-                {fileLength === 0 &&
+                {/* {fileLength === 0 &&
                   withResults &&
                   (userRole === "3" || userRole === "5") &&
                   servicesData[0].emailed_by === null && (
                     <button className="upload-res-btn" onClick={onButtonClick} style={{backgroundColor:"#bfbc4b", borderColor:"#bfbc4b"}}>
                       Change Results
                     </button>
-                  )}
+                  )} */}
 
                 {/* File Name and Delete Button */}
                 {fileLength !== 0 &&
@@ -495,11 +495,11 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
                     </div>
                   )}
                   
-                {fileLength === 0 && withResults && userRole === "4" && (
+                {/* {fileLength === 0 && withResults && userRole === "4" && (
                   <button className="upload-res-btn" onClick={onButtonClick} style={{backgroundColor:"#bfbc4b", borderColor:"#bfbc4b"}}>
                     Change Results
                   </button>
-                )}
+                )} */}
 
                 {/* File Name and Delete Button */}
                 {fileLength !== 0 && withResults && userRole === "4" && (
