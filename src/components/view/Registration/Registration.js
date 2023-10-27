@@ -172,7 +172,7 @@ function Registration() {
 
   if(redirectEdit === true) {
     console.log(id)
-    var link =  "/update-patient/" + id;
+    var link =  "/update-patient/" + customer_id;
     return (
         <Navigate to ={link}/>
     )
