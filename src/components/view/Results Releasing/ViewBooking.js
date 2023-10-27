@@ -166,7 +166,6 @@ export default function ViewBooking() {
       },
     })
       .then((booking) => {
-        console.log("booking data", booking.data)
         setServices(booking.data)
       })
       .catch((error) => {})
@@ -775,7 +774,7 @@ export default function ViewBooking() {
                       <div className="category label">CLINICAL MICROSCOPY</div>
                       {clinicalMicroscopyGroup.length > 0 && (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={clinicalMicroscopyGroup}
                           title={"CLINICAL MICROSCOPY"}
                           bookingId={bookingId}
@@ -783,7 +782,7 @@ export default function ViewBooking() {
                       )}
                       {clinicalMicroscopyIndividualsUrinalysis.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]}
                           title={"CLINICAL MICROSCOPY"}
                           bookingId={bookingId}
@@ -791,7 +790,7 @@ export default function ViewBooking() {
                       ))}
                       {clinicalMicroscopyIndividualsFecalysis.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]}
                           title={"CLINICAL MICROSCOPY"}
                           bookingId={bookingId}
@@ -808,7 +807,7 @@ export default function ViewBooking() {
                       <div className="category label">HEMATOLOGY</div>
                       {hematologyGroup.length > 0 && (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={hematologyGroup}
                           title={"HEMATOLOGY"}
                           bookingId={bookingId}
@@ -816,7 +815,7 @@ export default function ViewBooking() {
                       )}
                       {hematologyIndividuals.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]}
                           title={"HEMATOLOGY"}
                           bookingId={bookingId}
@@ -836,7 +835,21 @@ export default function ViewBooking() {
                     electrolytesGroup.length > 0) && (
                     <>
                       <div className="category label">CHEMISTRY</div>
-                      {electrolytesGroup.length > 0 && (
+                      <FileUpload
+                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                        servicesData={[
+                          ...electrolytesGroup,
+                          ...liverGroup,
+                          ...pancreaticGroup,
+                          ...lipidGroup,
+                          ...kidneyGroup,
+                          ...glucoseGroup,
+                          ...glucoseIndividual,
+                        ]}
+                        title={"Chemistry"}
+                        bookingId={bookingId}
+                      />
+                      {/* {electrolytesGroup.length > 0 && (
                         <>
                           <div className="category label mt-3">
                             Electrolytes (NaKCl)
@@ -926,7 +939,7 @@ export default function ViewBooking() {
                           title={"Glucose Tests"}
                           bookingId={bookingId}
                         />
-                      ))}
+                      ))} */}
                     </>
                   )}
 
@@ -946,14 +959,14 @@ export default function ViewBooking() {
                             Hepatitis Profile Screening
                           </div>
                           <FileUpload
-                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                             servicesData={hepatitisGroup}
                             title={"HEPATITIS"}
                             bookingId={bookingId}
                           />
                           {hepatitisIndividuals.map((data) => (
                             <FileUpload
-                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                              userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                               servicesData={[data]}
                               title={"HEPATITIS"}
                               bookingId={bookingId}
@@ -966,7 +979,7 @@ export default function ViewBooking() {
                           <div className="category label mt-3">Immunology</div>
                           {immunologyIndividuals.map((data) => (
                             <FileUpload
-                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                              userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                               servicesData={[data]}
                               title={"IMMUNOLOGY"}
                               bookingId={bookingId}
@@ -980,7 +993,7 @@ export default function ViewBooking() {
                             Coaguation Studies
                           </div>
                           <FileUpload
-                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                             servicesData={coaguationGroup}
                             title={"COAGUATION"}
                             bookingId={bookingId}
@@ -993,7 +1006,7 @@ export default function ViewBooking() {
                             Thyroid Profile
                           </div>
                           <FileUpload
-                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                             servicesData={thyroidGroup}
                             title={"COAGUATION"}
                             bookingId={bookingId}
@@ -1007,7 +1020,7 @@ export default function ViewBooking() {
                           </div>
                           {tumorIndividuals.map((data) => (
                             <FileUpload
-                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                              userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                               servicesData={[data]}
                               title={"TUMOR MARKERS"}
                               bookingId={bookingId}
@@ -1026,7 +1039,7 @@ export default function ViewBooking() {
                       <div className="category label">HISTOPATHOLOGY</div>
 
                       <FileUpload
-                      userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                         servicesData={histopathologyGroup}
                         title={"HISTOPATHOLOGY"}
                         bookingId={bookingId}
@@ -1043,7 +1056,7 @@ export default function ViewBooking() {
 
                       {microbiologyIndividual.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]}
                           title={"MICROBIOLOGY"}
                           bookingId={bookingId}
@@ -1060,7 +1073,7 @@ export default function ViewBooking() {
                       <div className="category label">XRAY</div>
                       {xray.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]} // passing individual data item
                           title={"XRAY"}
                           bookingId={bookingId}
@@ -1076,7 +1089,7 @@ export default function ViewBooking() {
                       <div className="category label">ECG</div>
                       {ecg.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]} // passing individual data item
                           title={"ECG"}
                           bookingId={bookingId}
@@ -1092,7 +1105,7 @@ export default function ViewBooking() {
                       <div className="category label">ULTRASOUND</div>
                       {ultrasound.map((data) => (
                         <FileUpload
-                        userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]} // passing individual data item
                           title={"ULTRASOUND"}
                           bookingId={bookingId}
@@ -1109,7 +1122,7 @@ export default function ViewBooking() {
                       {unselectedTestsIDs.map((data) => (
                         <div>
                           <FileUpload
-                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                             servicesData={[data]}
                             title={data.name}
                             bookingId={bookingId}
