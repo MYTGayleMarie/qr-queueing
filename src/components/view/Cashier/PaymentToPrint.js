@@ -109,6 +109,33 @@ export class PaymentToPrint extends React.PureComponent {
                     </tr>
         });
 
+      //   const services_Coaguation = Object.keys(groupedServices).map(function(key) {
+      //     var category_name = key.replace(/_/g, " ").toUpperCase();
+      //     var category_services = "";
+
+      //     groupedServices[key].map((info, index) => {
+      //         if(groupedServices[key].length - 1 == index) {
+      //             category_services += info.name; 
+      //         }
+      //         else {
+      //             category_services += info.name + ", ";
+      //         }
+      //     });
+
+      //     if(category_name !== "Coaguation Studies") {
+      //         return ""
+      //     }
+      
+      //     return  <tr className='print-table-double'>
+      //                 {category_name == "Coaguation" &&
+      //                   <>
+      //                      <td><span className="data">{category_services}</span></td>
+      //                   </>
+      //                 }
+      //             </tr>
+      // });
+
+
         const services_Serology = Object.keys(groupedServices).map(function(key) {
             
             var category_name = key.replace(/_/g, " ").toUpperCase();
@@ -124,6 +151,7 @@ export class PaymentToPrint extends React.PureComponent {
             });
 
             if(category_name !== "SEROLOGY" &&
+               category_name !== "COAGUATION STUDIES" &&
                category_name !== "IMMUNOLOGY" &&
                category_name !== "THYROID PROFILE" &&
                category_name !== "TUMOR MARKERS" &&
@@ -192,6 +220,11 @@ export class PaymentToPrint extends React.PureComponent {
                           </>
                         }
                         {category_name == "KIDNEY FUNCTION TESTS" &&
+                          <>
+                             <td><span className="data">{category_services}</span></td>
+                          </>
+                        }
+                        {category_name == "COAGUATION STUDIES" &&
                           <>
                              <td><span className="data">{category_services}</span></td>
                           </>
@@ -441,6 +474,10 @@ export class PaymentToPrint extends React.PureComponent {
                 name: 'HEMO-BTY',
                 services: services_Hematology
             },
+          //   {
+          //     name: 'COAGUATION',
+          //     services: services_Coaguation
+          // },
             {
                 name: 'CHEM-SERO',
                 services: services_Serology
