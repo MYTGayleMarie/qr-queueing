@@ -13,6 +13,7 @@ import "./AddItems.css"
 //components
 import Header from "../../Header.js"
 import Navbar from "../../Navbar"
+import { refreshPage } from "../Results Releasing/LabOfficer"
 
 //variables
 const userToken = getToken()
@@ -61,18 +62,16 @@ function AddItems() {
     console.log(items)
   }
   const handleSelectedItemChange = (e, index) => {
-   console.log("sleected", e)
+    console.log("sleected", e)
     const list = [...items]
     list[index]["item"] = e.value
 
-   
-      itemInfo.map((data, i) => {
-        if (data.id == e.value) {
-          list[index]["cost"] = e.cost
-          list[index]["unit"] = e.unit
-        }
-      })
-    
+    itemInfo.map((data, i) => {
+      if (data.id == e.value) {
+        list[index]["cost"] = e.cost
+        list[index]["unit"] = e.unit
+      }
+    })
 
     setItems(list)
     console.log(items)
@@ -98,9 +97,9 @@ function AddItems() {
 
   //API get items
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     console.log(selectedItem)
-  },[selectedItem])
+  }, [selectedItem])
   React.useEffect(() => {
     axios({
       method: "post",
@@ -169,24 +168,33 @@ function AddItems() {
         },
       })
         .then(function (response) {
-          if(response.data.status === 400){
-Object.values(response.data.message[0]).map(data=>
-  toast.error(data))
-          
-          }
-          if(response.data.status === 200 || response.data.status === 201){
-          toast.success("Successfully added releasing items!")
-            setTimeout(function () {
-            setRedirect(true)
-          }, 2000)
-          }
-          console.log("response",response)
-          console.log("response 2",Object.values(response.data.message[0]))
+          alert("entered 170")
 
-        
+          if (response.data.status === 200 || response.data.status === 201) {
+            toast.success("Successfully added releasing items!")
+            setTimeout(function () {
+              setRedirect(true)
+            }, 2000)
+          }
+          console.log("response", response)
+          console.log("response 2", Object.values(response.data.message[0]))
         })
-        .then(function (error) {
-          console.log("error",error)
+        .catch(function (error) {
+          console.log("error", error?.response)
+          if (error.response.data.status === 400) {
+            console.log("400", error.response.data)
+            Object.values(error.response.data.message[0]).map((data) =>
+              toast.error(data)
+            )
+            setTimeout(() => {
+              refreshPage()
+            }, 2000)
+          } else {
+            toast.error(error?.response.data.message)
+            setTimeout(() => {
+              refreshPage()
+            }, 2000)
+          }
         })
     }
   }
@@ -225,7 +233,7 @@ Object.values(response.data.message[0]).map(data=>
           <Select
             isSearchable
             defaultValue={selectedItem}
-            onChange={(e)=>handleSelectedItemChange(e,index)}
+            onChange={(e) => handleSelectedItemChange(e, index)}
             options={itemInfo}
           />
         </td>
@@ -243,7 +251,7 @@ Object.values(response.data.message[0]).map(data=>
   return (
     <div>
       <Navbar />
-      <div style={{marginLeft:"230px"}}>
+      <div style={{ marginLeft: "230px" }}>
         <Header type="thin" title="ADD ITEMS" />
         <ToastContainer />
         <h4 className="po-header">ITEM DETAILS</h4>
@@ -270,12 +278,12 @@ Object.values(response.data.message[0]).map(data=>
               </div>
               <div className="col-sm-7">
                 <select
-                name="requisitioner"
+                  name="requisitioner"
                   class="form-select form-select-sm"
                   aria-label="Small select example"
                   onChange={setInfo}
-
                 >
+                  <option value="">Select</option>
                   <option value="Admin">Admin</option>
                   <option value="Laboratory">Laboratory</option>
                   <option value="Reception">Reception</option>
@@ -302,10 +310,9 @@ Object.values(response.data.message[0]).map(data=>
               </div>
             </div>
           </div>
-      
         </form>
         {/************************ */}
-        <div  style={{zIndex:"2"}}>
+        <div style={{ zIndex: "2" }}>
           <div className="table-container-items">
             <div className="search-table-container d-flex justify-content-end">
               {" "}
@@ -325,17 +332,15 @@ Object.values(response.data.message[0]).map(data=>
               <button className="add-items-btn" onClick={addItems}>
                 ADD ITEM
               </button>
-               {items.length !== 1 && (
-            <button className="delete-items-btn" onClick={removeItems}>
-              REMOVE ITEM
-            </button>
-          )}
+              {items.length !== 1 && (
+                <button className="delete-items-btn" onClick={removeItems}>
+                  REMOVE ITEM
+                </button>
+              )}
             </div>
           </div>
         </div>
         <div className="row d-flex justify-content-end">
-        
-         
           <button className="save-items-btn" onClick={(e) => submit(e)}>
             SAVE
           </button>
@@ -346,4 +351,3 @@ Object.values(response.data.message[0]).map(data=>
 }
 
 export default AddItems
-
