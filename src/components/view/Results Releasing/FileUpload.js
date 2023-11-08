@@ -15,12 +15,20 @@ import "react-toastify/dist/ReactToastify.css"
 
 import "./FileUpload.css"
 import "./MedTech.css"
+import { Button, Modal } from "react-bootstrap"
+import jsPDF from "jspdf"
 
 const userToken = getToken()
 const userId = getUser()
 
-export default function FileUpload({ userRole, servicesData, title, bookingId }) {
+export default function FileUpload({
+  userRole,
+  servicesData,
+  title,
+  bookingId,
+}) {
   const inputRef = React.useRef(null)
+
   const [labIds, setLabIds] = useState([])
   const [packageIds, setPackageIds] = useState([])
   const [servicesLab, setServicesLab] = useState([])
@@ -28,7 +36,6 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
   const [withResults, setWithResults] = useState(false)
   const [redirectPdf, setRedirectPdf] = useState(false)
   const [upload, setUpload] = useState(false)
-
 
   // md
   const [doctorName, setDoctorName] = useState("")
@@ -46,6 +53,12 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
   const [MDSuggestions, setMDSuggestions] = useState([])
   const [allMD, setAllMD] = useState([])
   const [renderMDSuggest, setRenderMDSuggest] = useState(true)
+
+  const [showXrayUpload, setShowXrayUpload] = useState(false)
+  const [images, setImages] = useState([])
+  const handleClose = () => {
+    setShowXrayUpload(false)
+  }
 
   // Categorizing services into lab and packages
   React.useEffect(() => {
@@ -88,7 +101,7 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
             const labDetail = lab.data.filter(
               (details) => details.id == servicesData[0].id
             )
-            
+
             if (labDetail[0].file) {
               setWithResults(true)
             }
@@ -118,11 +131,10 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
           },
         })
           .then((packages) => {
-            
             const packageDetail = packages.data.filter(
               (details) => details.id == servicesData[0].id
             )
-           
+
             // check if naa nay result
             if (packageDetail[0].file) {
               setWithResults(true)
@@ -142,25 +154,51 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
 
   // Convert file to base 64
   function convertToBase64(e) {
-   
     //read file
     // var selectedFile=document.getElementById("pdftobase64").files
-    var selectedFile = e.target.files
+    var selectedFile = title==="XRAY"?e:e.target.files
     // Check if file is empty
+console.log("length", selectedFile.length)
+console.log("selectedFile", selectedFile)
 
-    if (selectedFile.length > 0) {
+    if (selectedFile.length > 0 || title === "XRAY") {
       setFileLength(selectedFile.length)
       // select first file from list
-      setFileName(selectedFile[0].name)
-      var fileToLoad = selectedFile[0]
+      setFileName(title==="XRAY"?selectedFile.name:selectedFile[0].name)
+      var fileToLoad = title==="XRAY"?selectedFile:selectedFile[0]
       var fileReader = new FileReader()
       var base64
       fileReader.onload = function (fileLoadedEvent) {
         base64 = fileLoadedEvent.target.result
+        console.log("fileLoaded", fileLoadedEvent.target.result)
         setFile(base64)
       }
+      console.log("base64",base64)
       fileReader.readAsDataURL(fileToLoad)
+      console.log("fileReader", fileReader)
+      if(title==="XRAY"){
+        handleClose()
+      }
     }
+  }
+
+  // Function to handle file selection
+  const handleFileChange = (event, index) => {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const imageUrl = e.target.result
+        setImages((prevImages) => {
+          const newImages = [...prevImages]
+          newImages[index] = imageUrl
+          return newImages
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+
+    console.log("images", images)
   }
 
   function removeFile() {
@@ -170,7 +208,11 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
   }
   // handle drag events
   const onButtonClick = () => {
-    inputRef.current.click()
+    if (title === "XRAY") {
+      setShowXrayUpload(true)
+    } else {
+      inputRef.current.click()
+    }
   }
 
   const handleFileUpload = (e) => {
@@ -179,13 +221,50 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
     // setSelectedFile(file);
   }
 
+  // Function to generate and download the PDF
+  const generatePDF = () => {
+    const pdf = new jsPDF()
+
+    const addImageToPDF = (imgData, idx) => {
+      return new Promise((resolve, reject) => {
+        let img = new Image()
+        img.onload = () => {
+          const imgWidth = 180
+          const imgHeight = (img.height * imgWidth) / img.width
+          const margin = 15
+          if (idx !== 0) {
+            pdf.addPage()
+          }
+          pdf.addImage(imgData, "JPEG", margin, 40, imgWidth, imgHeight)
+          resolve()
+        }
+        img.onerror = reject
+        img.src = imgData
+      })
+    }
+
+    Promise.all(images.map(addImageToPDF))
+      .then(() => {
+           // Instead of saving the file, you convert it to a Blob
+      const pdfBlob = pdf.output('blob');
+      const pdfFile = new File([pdfBlob], "combined_images.pdf", { type: 'application/pdf' });
+      console.log("pdf", pdfFile);
+      convertToBase64(pdfFile)
+      })
+
+      .catch((error) => {
+        console.error("Error loading images:", error)
+      })
+  }
+
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray) {
-    
+
     base64 = file
     labIdArray = labIds
     packageIdArray = packageIds
 
+    console.log("base64",base64)
     const source = axios.CancelToken.source()
 
     setTimeout(() => {
@@ -217,7 +296,11 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
         .then((response) => {
           toast.success("Uploaded successfully!")
           setTimeout(() => {
+
             setUpload((old) => !old)
+      //        setTimeout(() => {
+      //   window.location.reload() // Refresh the page after the toast message has shown
+      // }, 2000)
           }, 2000)
         })
         .catch((error) => {
@@ -314,7 +397,6 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
   // Handle md
   function submitMD() {
     servicesData.map(async (data, index) => {
-      
       if (data.type === "lab") {
         await axios({
           method: "post",
@@ -371,7 +453,6 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
   function editMD() {
     setMDReadOnly(false)
     setShowEdit(true)
-   
   }
 
   // Redirect to View pdf results
@@ -402,11 +483,8 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
           <div className="col-sm-4">
             {/* <div className="category label">{title}</div> */}
             {servicesData.map((info, index) => (
-              <div className={"details" + info.id}>
-                {info.name}
-              </div>
+              <div className={"details" + info.id}>{info.name}</div>
             ))}
-          
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
@@ -461,7 +539,7 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
                     </button>
                   </div>
                 )}
-      
+
                 {/* File Upload Button */}
 
                 {/* {fileLength === 0 &&
@@ -494,7 +572,7 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
                       </button>
                     </div>
                   )}
-                  
+
                 {/* {fileLength === 0 && withResults && userRole === "4" && (
                   <button className="upload-res-btn" onClick={onButtonClick} style={{backgroundColor:"#bfbc4b", borderColor:"#bfbc4b"}}>
                     Change Results
@@ -574,6 +652,69 @@ export default function FileUpload({ userRole, servicesData, title, bookingId })
           </div>
         </div>
       </div>
+      <Modal
+        show={showXrayUpload}
+        onHide={handleClose}
+        centered
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Upload XRAY Result Files</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            <div className="col-3">
+              <label>Image 1</label>
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                id="pdftobase64"
+                name="pdftobase64"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, 0)}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <label>Image 2</label>
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                id="pdftobase64"
+                name="pdftobase64"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, 1)}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <label>Image 3</label>
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                id="pdftobase64"
+                name="pdftobase64"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, 2)}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={generatePDF}>Generate PDF</button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {/* <button className="upload-res-btn" onClick={onButtonClick}>UPLOAD FILE</button> */}
 
       {/* <div>
