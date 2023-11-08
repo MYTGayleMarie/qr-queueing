@@ -62,26 +62,17 @@ function ReportInventory() {
         requester: userId,
       },
     }).then(function (response) {
-      console.log(response);
+      console.log("hello");
 
       if (filteredData.status === "for approval") {
         response.data.inventory_counts
           .filter((data) => data.status === "pending")
           .map((data, index1) => {
-            axios({
-              method: "post",
-              url: window.$link + "users/show/" + data.added_by,
-              withCredentials: false,
-              params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ""),
-                requester: userId,
-              },
-            }).then(function (user) {
+             console.log(data)
               var info = {};
               info.date = formatDate(data.count_date);
               info.id = data.id;
-              info.requester = user.data.name;
+              info.requester = data.encoded_by;
               console.log(info);
               setInventories((oldArray) => [...oldArray, info]);
 
@@ -89,25 +80,14 @@ function ReportInventory() {
                 setPrintReadyFinal(true);
               }
             });
-          });
       } else {
         response.data.inventory_counts
           .filter((data) => data.status === filteredData.status)
           .map((data, index1) => {
-            axios({
-              method: "post",
-              url: window.$link + "users/show/" + data.added_by,
-              withCredentials: false,
-              params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ""),
-                requester: userId,
-              },
-            }).then(function (user) {
               var info = {};
               info.date = formatDate(data.count_date);
               info.id = data.id;
-              info.requester = user.data.name;
+              info.requester = data.encoded_by;
               console.log(info);
               setInventories((oldArray) => [...oldArray, info]);
 
@@ -116,7 +96,6 @@ function ReportInventory() {
                 setIsReady(true);
               }
             });
-          });
       }
     });
     //sentprintreadyfinal
@@ -126,6 +105,8 @@ function ReportInventory() {
     id = inventoryId;
     setRedirect(true);
   }
+
+  console.log(filteredData)
 
   if (redirect == true) {
     var link =

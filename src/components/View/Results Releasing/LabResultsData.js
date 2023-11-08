@@ -889,7 +889,7 @@ const labResultsData = {
 
   labTestKOH: [
     {
-      lab_test: "KOH, Nail Scrapping, Conjunctival Scrapping",
+      lab_test: "KOH, Nail Scraping, Conjunctival Scrapping",
       result: "-",
       unit: "",
       preferred: " ",
@@ -1203,8 +1203,8 @@ const labResultsData = {
       result: "-",
       unit: "ng / mL",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 30.0,
+      preferred_to: 100.0,
     },
   ],
 };
