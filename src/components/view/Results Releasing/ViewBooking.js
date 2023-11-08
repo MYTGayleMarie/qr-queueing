@@ -25,6 +25,7 @@ import Navbar from "../../Navbar"
 import Table from "../../Table.js"
 import { compileAsync } from "sass"
 import { File } from "buffer"
+import { Button, Modal } from "react-bootstrap"
 
 //variables
 var servId = ""
@@ -246,7 +247,7 @@ export default function ViewBooking() {
                     .replace(/\s+/g, "_")
                     .toLowerCase()
                 }
-
+                serviceDetails.category_id = info.category_id
                 serviceDetails.category = category.data.name
                 serviceDetails.name = packageCat.lab_test
                 serviceDetails.type = "package"
@@ -255,6 +256,7 @@ export default function ViewBooking() {
                 serviceDetails.packageId = info.id
                 serviceDetails.approver = info.approved_by
                 serviceDetails.emailed_by = info.emailed_by
+
                 // serviceDetails.md =
                 setLabTests((oldArray) => [...oldArray, serviceDetails])
               })
@@ -276,7 +278,7 @@ export default function ViewBooking() {
         } else {
           serviceDetails.key = category?.name.replace(/\s+/g, "_").toLowerCase()
         }
-
+        serviceDetails.category_id = info.category_id
         serviceDetails.category = category?.name
         serviceDetails.name = info.lab_test
         serviceDetails.type = "lab"
@@ -294,9 +296,11 @@ export default function ViewBooking() {
   // Categorize lab test
 
   const selectedTests = new Set()
-
   const xray = labTests.filter(
-    (info) => info.key === "xray" || info.key === "radiology"
+    (info) =>
+      info.category_id === "18" ||
+      info.key === "xray" ||
+      info.key === "radiology"
   )
   xray.forEach((test) => selectedTests.add(test.test_id))
 
@@ -322,6 +326,7 @@ export default function ViewBooking() {
         .then(function (response) {
           setLoading(false) // Hide loading indicator
           toast.success("Email Successfully sent!")
+         
         })
         .catch(function (error) {
           setLoading(false) // Hide loading indicator
