@@ -156,16 +156,16 @@ export default function FileUpload({
   function convertToBase64(e) {
     //read file
     // var selectedFile=document.getElementById("pdftobase64").files
-    var selectedFile = title==="XRAY"?e:e.target.files
+    var selectedFile = title === "XRAY" ? e : e.target.files
     // Check if file is empty
-console.log("length", selectedFile.length)
-console.log("selectedFile", selectedFile)
+    console.log("length", selectedFile.length)
+    console.log("selectedFile", selectedFile)
 
     if (selectedFile.length > 0 || title === "XRAY") {
       setFileLength(selectedFile.length)
       // select first file from list
-      setFileName(title==="XRAY"?selectedFile.name:selectedFile[0].name)
-      var fileToLoad = title==="XRAY"?selectedFile:selectedFile[0]
+      setFileName(title === "XRAY" ? selectedFile.name : selectedFile[0].name)
+      var fileToLoad = title === "XRAY" ? selectedFile : selectedFile[0]
       var fileReader = new FileReader()
       var base64
       fileReader.onload = function (fileLoadedEvent) {
@@ -173,10 +173,10 @@ console.log("selectedFile", selectedFile)
         console.log("fileLoaded", fileLoadedEvent.target.result)
         setFile(base64)
       }
-      console.log("base64",base64)
+      console.log("base64", base64)
       fileReader.readAsDataURL(fileToLoad)
       console.log("fileReader", fileReader)
-      if(title==="XRAY"){
+      if (title === "XRAY") {
         handleClose()
       }
     }
@@ -245,11 +245,13 @@ console.log("selectedFile", selectedFile)
 
     Promise.all(images.map(addImageToPDF))
       .then(() => {
-           // Instead of saving the file, you convert it to a Blob
-      const pdfBlob = pdf.output('blob');
-      const pdfFile = new File([pdfBlob], "combined_images.pdf", { type: 'application/pdf' });
-      console.log("pdf", pdfFile);
-      convertToBase64(pdfFile)
+        // Instead of saving the file, you convert it to a Blob
+        const pdfBlob = pdf.output("blob")
+        const pdfFile = new File([pdfBlob], "combined_images.pdf", {
+          type: "application/pdf",
+        })
+        console.log("pdf", pdfFile)
+        convertToBase64(pdfFile)
       })
 
       .catch((error) => {
@@ -259,12 +261,11 @@ console.log("selectedFile", selectedFile)
 
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray) {
-
     base64 = file
     labIdArray = labIds
     packageIdArray = packageIds
 
-    console.log("base64",base64)
+    console.log("base64", base64)
     const source = axios.CancelToken.source()
 
     setTimeout(() => {
@@ -296,11 +297,10 @@ console.log("selectedFile", selectedFile)
         .then((response) => {
           toast.success("Uploaded successfully!")
           setTimeout(() => {
-
             setUpload((old) => !old)
-      //        setTimeout(() => {
-      //   window.location.reload() // Refresh the page after the toast message has shown
-      // }, 2000)
+            //        setTimeout(() => {
+            //   window.location.reload() // Refresh the page after the toast message has shown
+            // }, 2000)
           }, 2000)
         })
         .catch((error) => {
@@ -706,12 +706,11 @@ console.log("selectedFile", selectedFile)
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={generatePDF}>Generate PDF</button>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={generatePDF}>
+            Generate PDF
           </Button>
         </Modal.Footer>
       </Modal>
