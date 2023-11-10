@@ -268,15 +268,26 @@ export default function FileUpload({
     console.log("base64", base64)
     const source = axios.CancelToken.source()
 
+    // setTimeout(() => {
+    //   source.cancel("API request cancelled due to timeout")
+    //   toast.error(
+    //     "Reuquest cancelled due to timeout. Please compress the file and try again."
+    //   )
+    //   setTimeout(() => {
+    //     window.location.reload() // Refresh the page after the toast message has shown
+    //   }, 2000)
+    // }, 5000) // Adjust the time (in ms) as per your requirement
+
+     const timeoutId = setTimeout(() => {
+    source.cancel("API request cancelled due to timeout");
+    toast.error(
+      "Request cancelled due to timeout. Please compress the file and try again."
+    );
+    // Refresh the page after the toast message has shown
     setTimeout(() => {
-      source.cancel("API request cancelled due to timeout")
-      toast.error(
-        "Reuquest cancelled due to timeout. Please compress the file and try again."
-      )
-      setTimeout(() => {
-        window.location.reload() // Refresh the page after the toast message has shown
-      }, 2000)
-    }, 5000) // Adjust the time (in ms) as per your requirement
+      window.location.reload();
+    }, 2000);
+  }, 5000);
 
     const makeRequest = (url, id) => {
       const formData = new FormData()
@@ -295,6 +306,7 @@ export default function FileUpload({
         },
       })
         .then((response) => {
+           clearTimeout(timeoutId);
           toast.success("Uploaded successfully!")
           setTimeout(() => {
             setUpload((old) => !old)
