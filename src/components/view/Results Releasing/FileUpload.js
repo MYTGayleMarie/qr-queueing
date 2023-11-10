@@ -310,6 +310,7 @@ export default function FileUpload({
           toast.success("Uploaded successfully!")
           setTimeout(() => {
             setUpload((old) => !old)
+            window.location.reload()
             //        setTimeout(() => {
             //   window.location.reload() // Refresh the page after the toast message has shown
             // }, 2000)
@@ -643,7 +644,7 @@ export default function FileUpload({
                 </div>
               )}
 
-            {showEdit && (title === "XRAY-ECG" || title === "ULTRASOUND") && (
+            {showEdit && (title===  "XRAY" || title === "XRAY-ECG" || title === "ULTRASOUND") && (
               <div className="md-row">
                 <h3 className="md-label label">MD: </h3>
                 <input
