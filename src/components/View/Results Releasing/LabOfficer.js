@@ -244,7 +244,7 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false)
       }
-    } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)") {
+    } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)" || selectedLab.label == "[P] Antigen Rapid Swab (Nasal)") {
       if (lab_test === "COVID Antigen Rapid Test") {
         setLabTestOptions(labResultsData.posNegTestOptions)
         setIsDropdown(true)
@@ -1792,7 +1792,7 @@ export default function LabOfficer() {
       e.label === "[P] Serum Pregnancy Test"
     ) {
       setLabTestData(labResultsData.labTestSerumPregnancyTest)
-    } else if (e.label === "Antigen Rapid Swab (Nasal)") {
+    } else if (e.label === "Antigen Rapid Swab (Nasal)" || e.label=== "[P] Antigen Rapid Swab (Nasal)") {
       setLabTestData(labResultsData.labTestCovidAntigenTest)
     } else if (
       e.label === "Sperm Analysis" ||
@@ -2086,6 +2086,8 @@ export default function LabOfficer() {
                           ? "CLINICAL SEROLOGY"
                           : selectedLab.label === "Clotting & Bleeding Time"
                           ? "HEMATOLOGY"
+                          : selectedLab.label === "Antigen Rapid Swab (Nasal)" || selectedLab.label === "[P] Antigen Rapid Swab (Nasal)"
+                          ? "ANTIGEN RAPID SWAB NASAL"
                           : selectedLab.label.toUpperCase()}
                       </>
                     )}
@@ -2165,7 +2167,7 @@ export default function LabOfficer() {
 
                 <div>
                   <br />
-                  {selectedLab.label === "Antigen Rapid Swab (Nasal)" ? (
+                  {(selectedLab.label === "Antigen Rapid Swab (Nasal)" ||  selectedLab.label === "[P] Antigen Rapid Swab (Nasal)")? (
                     <>
                       <div className="tb mid">
                         <div className="row bd">
@@ -2419,6 +2421,7 @@ export default function LabOfficer() {
                           selectedLab.label !== "Fecal Occult Blood" &&
                           selectedLab.label !== "HIV Screening (Anti HIV)" &&
                           selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !== "[P] Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" && (
                             <div className="col">
                               <span>
@@ -2468,6 +2471,7 @@ export default function LabOfficer() {
                             "[P] Hepatitis B Surface Antigen (HbsAg)" &&
                           selectedLab.label !== "Fecal Occult Blood" &&
                           selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !== "[P] Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" &&
                           selectedLab.label !== "Gram Stain" &&
                           selectedLab.label !== "HIV Screening (Anti HIV)" && (
@@ -2643,6 +2647,8 @@ export default function LabOfficer() {
                               selectedLab.label !==
                                 "Antigen Rapid Swab (Nasal)" &&
                               selectedLab.label !==
+                                "[P] Antigen Rapid Swab (Nasal)" &&
+                              selectedLab.label !==
                                 "[P] HBSag (Hepatitis B Antigen)" &&
                               selectedLab.label !== "Serum Pregnancy Test" &&
                               selectedLab.label !== "Syphilis/RPR/VDRL" &&
@@ -2711,6 +2717,8 @@ export default function LabOfficer() {
                                 "[P] FECALYSIS" &&
                               selectedLab.label !==
                                 "Antigen Rapid Swab (Nasal)" &&
+                               selectedLab.label !==
+                                "[P] Antigen Rapid Swab (Nasal)" &&
                               selectedLab.label !== "Serum Pregnancy Test" &&
                               selectedLab.label !== "H. Pylori Ag" &&
                               selectedLab.label !== "Syphilis/RPR/VDRL" &&

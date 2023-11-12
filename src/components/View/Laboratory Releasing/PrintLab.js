@@ -758,6 +758,10 @@ function PrintLab() {
                         : state.selectedLab.label.toUpperCase() ===
                           "CLOTTING & BLEEDING TIME"
                         ? "HEMATOLOGY"
+                        : state.selectedLab.label.toUpperCase() ===
+                        "ANTIGEN RAPID SWAB (NASAL)" || state.selectedLab.label.toUpperCase() ===
+                        "[P] ANTIGEN RAPID SWAB (NASAL)"
+                      ? "ANTIGEN RAPID SWAB (NASAL)"
                         : state.selectedLab.label.toUpperCase()}
                     </>
                   )}
@@ -833,7 +837,7 @@ function PrintLab() {
 
               <div>
                 <br />
-                {state.selectedLab.label === "Antigen Rapid Swab (Nasal)" ? (
+                {(state.selectedLab.label === "Antigen Rapid Swab (Nasal)" || state.selectedLab.label === "[P] Antigen Rapid Swab (Nasal)") ?  (
                   <>
                     <div className="tb mid">
                       <div className="row bd">
@@ -1072,6 +1076,8 @@ function PrintLab() {
                           "HIV Screening (Anti HIV)" &&
                         state.selectedLab.label !==
                           "Antigen Rapid Swab (Nasal)" &&
+                        state.selectedLab.label !==
+                          "[P] Antigen Rapid Swab (Nasal)" &&
                         state.selectedLab.label !== "Serum Pregnancy Test" && (
                           <div className="col">
                             <span>
@@ -1101,6 +1107,8 @@ function PrintLab() {
                         state.selectedLab.label !== "Fecal Occult Blood" &&
                         state.selectedLab.label !==
                           "Antigen Rapid Swab (Nasal)" &&
+                        state.selectedLab.label !==
+                          "[P] Antigen Rapid Swab (Nasal)" &&
                         state.selectedLab.label !== "Serum Pregnancy Test" &&
                         state.selectedLab.label !== "Gram Stain" &&
                         state.selectedLab.label !==
@@ -1269,6 +1277,8 @@ function PrintLab() {
                             state.selectedLab.label !==
                               "Antigen Rapid Swab (Nasal)" &&
                             state.selectedLab.label !==
+                              "[P] Antigen Rapid Swab (Nasal)" &&
+                            state.selectedLab.label !==
                               "[P] HBSag (Hepatitis B Antigen)" &&
                             state.selectedLab.label !==
                               "Serum Pregnancy Test" &&
@@ -1330,6 +1340,8 @@ function PrintLab() {
                               "[P] FECALYSIS" &&
                             state.selectedLab.label !==
                               "Antigen Rapid Swab (Nasal)" &&
+                              state.selectedLab.label !==
+                              "[P] Antigen Rapid Swab (Nasal)" &&
                             state.selectedLab.label !==
                               "Serum Pregnancy Test" &&
                             state.selectedLab.label !== "H. Pylori Ag" &&
