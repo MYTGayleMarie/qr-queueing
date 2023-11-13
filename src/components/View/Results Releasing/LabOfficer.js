@@ -1356,7 +1356,7 @@ export default function LabOfficer() {
           lab_test: result.lab_test,
           result: result.result,
           unit: result.unit,
-          reference_range: reference_range,
+          reference_range: reference_range ,
         }
       } else if (
         selectedLab.label === "Anti HAV" ||
@@ -1377,7 +1377,7 @@ export default function LabOfficer() {
         return {
           lab_test: result.lab_test,
           result: result.result,
-          reference_range: reference_range,
+          reference_range: reference_range + " MINUTES",
         }
       } else {
         return {
