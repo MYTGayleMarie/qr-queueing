@@ -111,6 +111,7 @@ import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
 import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem";
 
 import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
+import ViewImg from "./components/View/Results Releasing/ViewImg";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -270,6 +271,10 @@ function App() {
           <Route
             path="/View-results/:type/:bookingId/:packageId/:serviceId"
             element={token ? <ViewPdf /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/View-results/xray/:type/:bookingId/:packageId/:serviceId"
+            element={token ? <ViewImg /> : <Navigate to="/" />}
           />
           <Route
             path="/laboratory-officer/:id/:dateFrom/:dateTo"
