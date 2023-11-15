@@ -547,6 +547,7 @@ export default function FileUpload({
       "/" +
       serviceId
     window.open(link)
+    setRedirectPdf(false)
   }
   // Redirect to View pdf results
   if (redirectImage == true) {
@@ -566,6 +567,7 @@ export default function FileUpload({
       "/" +
       serviceId
     window.open(link)
+    setRedirectImage(false)
   }
 
   return (
