@@ -192,7 +192,6 @@ export default function FileUpload({
     var selectedFile = e.target.files
     // Check if file is empty
 
-
     if (selectedFile.length > 0) {
       setFileLength(selectedFile.length)
       // select first file from list
@@ -202,36 +201,36 @@ export default function FileUpload({
       var base64
       fileReader.onload = function (fileLoadedEvent) {
         base64 = fileLoadedEvent.target.result
-      
+
         setFile(base64)
       }
-      
+
       fileReader.readAsDataURL(fileToLoad)
-     
     }
   }
   function convertToBase64Image(e) {
-    var selectedFile = e.target.files
+    console.log()
+    var selectedFile = e
     // Check if file is empty
-   
 
-    if (selectedFile.length > 0) {
+    if (title === "XRAY") {
       setImageLength(selectedFile.length)
       // select first file from list
-      setImageName(selectedFile[0].name)
-      var fileToLoad = selectedFile[0]
+      setImageName(selectedFile.name)
+      var fileToLoad = selectedFile
       var fileReader = new FileReader()
       var base64
       fileReader.onload = function (fileLoadedEvent) {
         base64 = fileLoadedEvent.target.result
-     
+
         setImage(base64)
       }
-     
-      fileReader.readAsDataURL(fileToLoad)
 
+      fileReader.readAsDataURL(fileToLoad)
+      handleClose()
     }
   }
+  console.log(image)
 
   // Function to handle file selection
   const handleFileChange = (event, index) => {
@@ -248,8 +247,6 @@ export default function FileUpload({
       }
       reader.readAsDataURL(file)
     }
-
-
   }
 
   function removeFile() {
@@ -302,13 +299,14 @@ export default function FileUpload({
 
     Promise.all(images.map(addImageToPDF))
       .then(() => {
+      
         // Instead of saving the file, you convert it to a Blob
         const pdfBlob = pdf.output("blob")
         const pdfFile = new File([pdfBlob], "combined_images.pdf", {
           type: "application/pdf",
         })
-   
-        convertToBase64(pdfFile)
+
+        convertToBase64Image(pdfFile)
       })
 
       .catch((error) => {
@@ -322,18 +320,7 @@ export default function FileUpload({
     labIdArray = labIds
     packageIdArray = packageIds
 
-    
     const source = axios.CancelToken.source()
-
-    // setTimeout(() => {
-    //   source.cancel("API request cancelled due to timeout")
-    //   toast.error(
-    //     "Reuquest cancelled due to timeout. Please compress the file and try again."
-    //   )
-    //   setTimeout(() => {
-    //     window.location.reload() // Refresh the page after the toast message has shown
-    //   }, 2000)
-    // }, 5000) // Adjust the time (in ms) as per your requirement
 
     const timeoutId = setTimeout(() => {
       source.cancel("API request cancelled due to timeout")
@@ -594,13 +581,14 @@ export default function FileUpload({
                     View Results
                   </button>
                   <br />
-                 {title === "XRAY" &&
-                   <button
-                    className="upload-res-btn blue mt-2"
-                    onClick={handleViewResultsImage}
-                  >
-                    View Results (Image)
-                  </button>}
+                  {title === "XRAY" && (
+                    <button
+                      className="upload-res-btn blue mt-2"
+                      onClick={handleViewResultsImage}
+                    >
+                      View Results (File 2)
+                    </button>
+                  )}
                   <br />
                 </div>
               )}
@@ -626,11 +614,18 @@ export default function FileUpload({
                 {/* File Name and Delete Button */}
                 {fileLength !== 0 && withResults === false && (
                   <div className="file-upload-remove">
+                    <img
+                      src={pdfIcon}
+                      alt="pdf"
+                      className="mt-3"
+                      width={25}
+                      height={25}
+                    />
+                    <p className="mt-3" style={{ paddingLeft: "2px" }}>
+                      {" "}
+                      {fileName}
+                    </p>
                     
-                   
-                        <img src={pdfIcon} alt="pdf" className="mt-3" width={25} height={25} />
-                        <p className="mt-3" style={{paddingLeft:"2px"}}> {fileName}</p>
-{/* 
                         <button className="delete-btn" onClick={removeFile}>
                           <FontAwesomeIcon
                             icon={"minus-square"}
@@ -638,34 +633,38 @@ export default function FileUpload({
                             aria-hidden="true"
                             className="delete-icon"
                           />
-                        </button> */}
-                      
-                      {imageName !== "" && (
-                        <Fragment>
-                          <p className="mt-3">, </p>
-                          <img src={imgIcon} alt="pdf" className="mt-3" width={25} height={25} />{" "}
-                          <p className="mt-3" style={{paddingLeft:"2px"}}>
-                            {/* <p className="file-name"> */} {" "}{ imageName}
-                          </p>
+                        </button>
 
-                          <button
-                            className="delete-btn"
-                            onClick={removeFileImage}
-                          >
-                            <FontAwesomeIcon
-                              icon={"minus-square"}
-                              alt={"minus"}
-                              aria-hidden="true"
-                              className="delete-icon"
-                            />
-                          </button>
-                        </Fragment>
-                      )}
-                   
-                      <button className="submit-btn" onClick={submitPdf}>
-                        Save
-                      </button>
-                    
+                    {imageName !== "" && (
+                      <Fragment>
+                        <p className="mt-3">, </p>
+                        <img
+                          src={pdfIcon}
+                          alt="pdf"
+                          className="mt-3"
+                          width={25}
+                          height={25}
+                        />{" "}
+                        <p className="mt-3" style={{ paddingLeft: "2px" }}>
+                          {/* <p className="file-name"> */} {imageName}
+                        </p>
+                        <button
+                          className="delete-btn"
+                          onClick={removeFileImage}
+                        >
+                          <FontAwesomeIcon
+                            icon={"minus-square"}
+                            alt={"minus"}
+                            aria-hidden="true"
+                            className="delete-icon"
+                          />
+                        </button>
+                      </Fragment>
+                    )}
+
+                    <button className="submit-btn" onClick={submitPdf}>
+                      Save
+                    </button>
                   </div>
                 )}
 
@@ -808,9 +807,9 @@ export default function FileUpload({
               />
             </div>
           </div>
-          <div className="row">
+          <div className="row mt-2">
             <div className="col-3">
-              <label>Image</label>
+              <label>Image 1</label>
             </div>
             <div className="col">
               <input
@@ -818,16 +817,46 @@ export default function FileUpload({
                 id="pdftobase64"
                 name="pdftobase64"
                 accept="image/*"
-                onChange={convertToBase64Image}
+                onChange={(e) => handleFileChange(e, 0)}
               />
             </div>
           </div>
+          <div className="row">
+            <div className="col-3">
+              <label>Image 2</label>
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                id="pdftobase64"
+                name="pdftobase64"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, 1)}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <label>Image 3</label>
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                id="pdftobase64"
+                name="pdftobase64"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, 2)}
+              />
+            </div>
+          </div>
+
+          
         </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="secondary" onClick={handleClose}>
             Close
           </Button> */}
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={generatePDF}>
             Done
           </Button>
         </Modal.Footer>
