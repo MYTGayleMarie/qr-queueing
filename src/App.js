@@ -112,6 +112,8 @@ import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem
 
 import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
 import ViewImg from "./components/View/Results Releasing/ViewImg";
+import XrayManager from "./components/View/XRAY/Manager";
+import ECGManager from "./components/View/ECG/Manager";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -659,6 +661,15 @@ function App() {
           <Route
             path="/extraction"
             element={token ? <ExtractionManager /> : <Navigate to="/" />}
+          />
+          {/* XRAY Module */}
+          <Route
+            path="/xray"
+            element={token ? <XrayManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/ecg"
+            element={token ? <ECGManager /> : <Navigate to="/" />}
           />
           {/* Now Serving */}
           <Route
