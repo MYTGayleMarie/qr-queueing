@@ -313,6 +313,60 @@ function Table({
           <td>{row}</td>
         </tr>
       )
+    } else if (type === "xray") {
+      return (
+        <tr
+          key={row.booking_id}
+          onClick={() => onExtractionClick(row)}
+          style={{ cursor: "pointer" }}
+          className={
+            selectedRowExtraction !== {} &&
+            selectedRowExtraction.booking_id === row.booking_id
+              ? "selected-extraction"
+              : ""
+          }
+        >
+          <td>{row.booking_id}</td>
+          <td>
+            {row.first_name} {row.middle_name} {row.last_name}
+          </td>
+          <td>{formatDate(new Date(row.extraction_date))}</td>
+        </tr>
+        // <tr key={row.id}>
+        //   {rowData.map((data, index) => (
+        //     <td key={index} data-heading={data.key} className={data.val}>
+        //       {data.val}
+        //     </td>
+        //   ))}
+        // </tr>
+      )
+    } else if (type === "ecg") {
+      return (
+        <tr
+          key={row.booking_id}
+          onClick={() => onExtractionClick(row)}
+          style={{ cursor: "pointer" }}
+          className={
+            selectedRowExtraction !== {} &&
+            selectedRowExtraction.booking_id === row.booking_id
+              ? "selected-extraction"
+              : ""
+          }
+        >
+          <td>{row.booking_id}</td>
+          <td>
+            {row.first_name} {row.middle_name} {row.last_name}
+          </td>
+          <td>{formatDate(new Date(row.extraction_date))}</td>
+        </tr>
+        // <tr key={row.id}>
+        //   {rowData.map((data, index) => (
+        //     <td key={index} data-heading={data.key} className={data.val}>
+        //       {data.val}
+        //     </td>
+        //   ))}
+        // </tr>
+      )
     } else if (type === "aging") {
       return (
         <tr key={row.id}>
@@ -2767,6 +2821,8 @@ function Table({
     type === "aging" ||
     type === "aging-by-company" ||
     type === "extraction" ||
+    type === "xray" ||
+    type === "ecg" ||
     type === "extraction-details"
   ) {
     const { from_date, to_date, done } = filteredData
