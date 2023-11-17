@@ -244,7 +244,10 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false)
       }
-    } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)" || selectedLab.label == "[P] Antigen Rapid Swab (Nasal)") {
+    } else if (
+      selectedLab.label == "Antigen Rapid Swab (Nasal)" ||
+      selectedLab.label == "[P] Antigen Rapid Swab (Nasal)"
+    ) {
       if (lab_test === "COVID Antigen Rapid Test") {
         setLabTestOptions(labResultsData.posNegTestOptions)
         setIsDropdown(true)
@@ -846,10 +849,12 @@ export default function LabOfficer() {
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
+            console.log("lab test", data)
             return {
               label: data.lab_test,
               id: data.id,
               type: data.type,
+              extracted_on: data.extracted_on,
             }
           }
           return null
@@ -1356,7 +1361,7 @@ export default function LabOfficer() {
           lab_test: result.lab_test,
           result: result.result,
           unit: result.unit,
-          reference_range: reference_range ,
+          reference_range: reference_range,
         }
       } else if (
         selectedLab.label === "Anti HAV" ||
@@ -1792,7 +1797,10 @@ export default function LabOfficer() {
       e.label === "[P] Serum Pregnancy Test"
     ) {
       setLabTestData(labResultsData.labTestSerumPregnancyTest)
-    } else if (e.label === "Antigen Rapid Swab (Nasal)" || e.label=== "[P] Antigen Rapid Swab (Nasal)") {
+    } else if (
+      e.label === "Antigen Rapid Swab (Nasal)" ||
+      e.label === "[P] Antigen Rapid Swab (Nasal)"
+    ) {
       setLabTestData(labResultsData.labTestCovidAntigenTest)
     } else if (
       e.label === "Sperm Analysis" ||
@@ -2086,7 +2094,10 @@ export default function LabOfficer() {
                           ? "CLINICAL SEROLOGY"
                           : selectedLab.label === "Clotting & Bleeding Time"
                           ? "HEMATOLOGY"
-                          : selectedLab.label === "Antigen Rapid Swab (Nasal)" || selectedLab.label === "[P] Antigen Rapid Swab (Nasal)"
+                          : selectedLab.label ===
+                              "Antigen Rapid Swab (Nasal)" ||
+                            selectedLab.label ===
+                              "[P] Antigen Rapid Swab (Nasal)"
                           ? "ANTIGEN RAPID SWAB NASAL"
                           : selectedLab.label.toUpperCase()}
                       </>
@@ -2167,7 +2178,8 @@ export default function LabOfficer() {
 
                 <div>
                   <br />
-                  {(selectedLab.label === "Antigen Rapid Swab (Nasal)" ||  selectedLab.label === "[P] Antigen Rapid Swab (Nasal)")? (
+                  {selectedLab.label === "Antigen Rapid Swab (Nasal)" ||
+                  selectedLab.label === "[P] Antigen Rapid Swab (Nasal)" ? (
                     <>
                       <div className="tb mid">
                         <div className="row bd">
@@ -2421,7 +2433,8 @@ export default function LabOfficer() {
                           selectedLab.label !== "Fecal Occult Blood" &&
                           selectedLab.label !== "HIV Screening (Anti HIV)" &&
                           selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                          selectedLab.label !== "[P] Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !==
+                            "[P] Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" && (
                             <div className="col">
                               <span>
@@ -2471,7 +2484,8 @@ export default function LabOfficer() {
                             "[P] Hepatitis B Surface Antigen (HbsAg)" &&
                           selectedLab.label !== "Fecal Occult Blood" &&
                           selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                          selectedLab.label !== "[P] Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !==
+                            "[P] Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" &&
                           selectedLab.label !== "Gram Stain" &&
                           selectedLab.label !== "HIV Screening (Anti HIV)" && (
@@ -2717,7 +2731,7 @@ export default function LabOfficer() {
                                 "[P] FECALYSIS" &&
                               selectedLab.label !==
                                 "Antigen Rapid Swab (Nasal)" &&
-                               selectedLab.label !==
+                              selectedLab.label !==
                                 "[P] Antigen Rapid Swab (Nasal)" &&
                               selectedLab.label !== "Serum Pregnancy Test" &&
                               selectedLab.label !== "H. Pylori Ag" &&
@@ -2986,8 +3000,9 @@ export default function LabOfficer() {
                 <br />
 
                 {/* <div className="row"> */}
-
+              
                 {allOptions.map((data) => {
+                  {console.log("data extracted", data,   data.extracted_on === null)}
                   return (
                     <Button
                       className="m-2"
@@ -3003,9 +3018,10 @@ export default function LabOfficer() {
                       }}
                       size="sm"
                       disabled={
-                        !isDataFetched &&
+                        (!isDataFetched &&
                         !selectedLab.label !== data.label &&
-                        selectedLab.label !== ""
+                        selectedLab.label !== "") ||
+                        data.extracted_on === null
                       }
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
