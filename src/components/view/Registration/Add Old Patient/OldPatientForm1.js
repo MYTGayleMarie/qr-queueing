@@ -517,14 +517,7 @@ function OldPatientForm1({
                   {listOfDiscount}
                 </select>
               </div>
-              <div className="col-sm-6 input-group-sm">
-                <span className="first-name label">DISCOUNT REMARKS</span>
-                <br />
-
-                <span className="remarks ">
-                  {companyRemarks != "" && companyRemarks}
-                </span>
-              </div>
+             
             </div>
             {discountId === "7" && (
               <div className="row">
