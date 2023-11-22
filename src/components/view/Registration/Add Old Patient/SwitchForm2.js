@@ -63,6 +63,14 @@ function SwitchForm2() {
     initialStep: 0,
   })
 
+  const [hmoDetails, setHmoDetails] = useState({
+    is_hmo: "no",
+    hmo_id: "",
+    hmo_code: "",
+    pricelist: "",
+    discount_id:""
+  })
+
   const personalProps = {
     customer,
     setPersonal,
@@ -94,6 +102,8 @@ function SwitchForm2() {
     setPwdId,
     seniorId,
     setSeniorId,
+    hmoDetails,
+    setHmoDetails,
   }
   const serviceProps = {
     service,
@@ -123,6 +133,8 @@ function SwitchForm2() {
     setPwdId,
     seniorId,
     setSeniorId,
+    hmoDetails,
+    setHmoDetails,
   }
 
   switch (step.id) {

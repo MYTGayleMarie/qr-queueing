@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import DateTimePicker from "react-datetime-picker"
 import { getToken, getUser, refreshPage } from "../../../../utilities/Common"
 import axios from "axios"
-
+import Select from "react-select"
 //components
 import Header from "../../../Header.js"
 import Navbar from "../../../Navbar"
@@ -45,6 +45,8 @@ function OldPatientForm1({
   setPwdId,
   seniorId,
   setSeniorId,
+  hmoDetails,
+  setHmoDetails,
 }) {
   document.body.style = "background: white;"
   //customer details
@@ -119,17 +121,13 @@ function OldPatientForm1({
   }, [])
 
   React.useEffect(() => {
-    
     const birthDate2 = new Date(birthday)
-    if (
-      birthday &&
-      new Date().getFullYear() - birthDate2.getFullYear() >= 60
-    ) {
+    if (birthday && new Date().getFullYear() - birthDate2.getFullYear() >= 60) {
       setIsSenior(true)
     } else {
       setIsSenior(false)
     }
-  }, )
+  })
   React.useEffect(() => {
     if (isPWD === false) {
       setPwdId("")
@@ -179,6 +177,17 @@ function OldPatientForm1({
         return <></>
       }
     }
+  }
+
+  //event handler for hmo radio buttons
+  function handleRadioChange(e) {
+    const { name, value } = e.target
+
+    setHmoDetails({ ...hmoDetails, [name]: value })
+  }
+  //event handler for hmo select buttons
+  function handleSelectChange(e, name) {
+    setHmoDetails({ ...hmoDetails, [name]: e.value })
   }
 
   function homeServiceFeeDisplay() {
@@ -298,7 +307,15 @@ function OldPatientForm1({
       },
     })
       .then(function (response) {
-        setDiscountList(response.data.discounts)
+        let discount_list = []
+        response.data.discounts.map((data) => {
+          discount_list.push({
+            ...data,
+            label: `${data.description} (${data.discount_code})`,
+            value: data.id,
+          })
+        })
+        setDiscountList(discount_list)
       })
       .catch(function (error) {
         console.log(error)
@@ -489,7 +506,6 @@ function OldPatientForm1({
                   REFERRAL <span className="required">*</span>
                 </span>
                 <br />
-
                 <input
                   type="text"
                   className="form-control full input-group"
@@ -502,75 +518,204 @@ function OldPatientForm1({
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-6 input-group-sm">
-                <span className="first-name label">DISCOUNT CODE</span>
+              <div className="col-sm-12 input-group-sm">
+                <span className="first-name label">
+                  Is this an HMO Patient? <span className="required">*</span>
+                </span>
                 <br />
 
-                <select
-                  className="select-input full form-select form-select-sm"
-                  id="discount_code"
-                  name="discountId"
-                  value={discountId}
-                  onChange={setPersonal}
-                >
-                  <option value="">None</option>
-                  {listOfDiscount}
-                </select>
-              </div>
-             
-            </div>
-            {discountId === "7" && (
-              <div className="row">
-                <div className="col-sm-6 input-group-sm">
+                <div class="form-check form-check-inline">
                   <input
-                    type="checkbox"
-                    name="is_pwd"
-                    value="isPWD"
-                    id="mdCharge"
-                    checked={isPWD}
-                    onChange={(e) => setIsPWD(e.target.checked)}
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoYes"
+                    value="yes"
+                    checked={hmoDetails.is_hmo === "yes"}
+                    onChange={handleRadioChange}
                   />
-                  <label for="mdCharge" className="booking-label">
-                    Person With Disabilities
+                  <label class="form-check-label" for="hmoYes">
+                    YES
                   </label>
-                  <br />
-                  <span className="first-name label">
-                    PWD ID <span className="required">*</span>
-                  </span>
-                  <input
-                    type="text"
-                    id="pwd_id"
-                    name="pwdId"
-                    placeholder="ID Should not contain any spaces..."
-                    className="full-input"
-                    value={!isPWD ? "" : pwdId}
-                    disabled={!isPWD}
-                    onChange={(e) => setPwdId(e.target.value)}
-                    required
-                    style={{ background: !isPWD ? "whitesmoke" : "" }}
-                  />
                 </div>
-                <div className="col-sm-5 input-group-sm">
-                  <br />
-                  <span className="first-name label">
-                    SENIOR CITIZEN ID <span className="required">*</span>
-                  </span>
-
+                <div class="form-check form-check-inline">
                   <input
-                    type="text"
-                    id="senior_id"
-                    name="seniorId"
-                    className="full-input"
-                    placeholder="ID Should not contain any spaces..."
-                    value={!isSenior ? "" : seniorId}
-                    onChange={(e) => setSeniorId(e.target.value)}
-                    disabled={!isSenior}
-                    style={{ background: !isSenior ? "whitesmoke" : "" }}
-                    required
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoNo"
+                    value="no"
+                    checked={hmoDetails.is_hmo === "no"}
+                    onChange={handleRadioChange}
                   />
+                  <label class="form-check-label" for="hmoNo">
+                    NO
+                  </label>
+                </div>
+              </div>
+              {hmoDetails.is_hmo === "yes" && (
+                <>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                        onChange={(e)=>handleSelectChange(e, "hmo_id")}
+                      isClearable={true}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={[]}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO Discount <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                        onChange={(e)=>handleSelectChange(e, "hmo_code")}
+                      isClearable={true}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={[]}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Price <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceCash"
+                        value="cash"
+                        checked={hmoDetails.pricelist === "cash"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceCash">
+                        CASH
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceHMO"
+                        value="hmo"
+                        checked={hmoDetails.pricelist === "hmo"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceHMO">
+                        HMO
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Discount Code <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      id="discount_code"
+                      onChange={(e) => handleSelectChange(e, "discount_id")}
+                      isClearable={true}
+                      isRtl={false}
+                      isSearchable={true}
+                      options={discountList.filter((data) => data.id === "7")}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+            {hmoDetails.is_hmo === "no" && (
+              <div className="row">
+                <div className="col-sm-12 input-group-sm">
+                  <span className="first-name label">DISCOUNT CODE</span>
+                  <br />
+
+                  <select
+                    className="select-input full form-select form-select-sm"
+                    id="discount_code"
+                    name="discountId"
+                    value={discountId}
+                    onChange={setPersonal}
+                  >
+                    <option value="">None</option>
+                    {listOfDiscount}
+                  </select>
                 </div>
               </div>
             )}
+            {discountId === "7" ||
+              (hmoDetails.discount_id === "7" && (
+                <div className="row">
+                  <div className="col-sm-6 input-group-sm">
+                    <input
+                      type="checkbox"
+                      name="is_pwd"
+                      value="isPWD"
+                      id="mdCharge"
+                      checked={isPWD}
+                      onChange={(e) => setIsPWD(e.target.checked)}
+                    />
+                    <label for="mdCharge" className="booking-label">
+                      Person With Disabilities
+                    </label>
+                    <br />
+                    <span className="first-name label">
+                      PWD ID <span className="required">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      id="pwd_id"
+                      name="pwdId"
+                      placeholder="ID Should not contain any spaces..."
+                      className="full-input"
+                      value={!isPWD ? "" : pwdId}
+                      disabled={!isPWD}
+                      onChange={(e) => setPwdId(e.target.value)}
+                      required
+                      style={{ background: !isPWD ? "whitesmoke" : "" }}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm">
+                    <br />
+                    <span className="first-name label">
+                      SENIOR CITIZEN ID <span className="required">*</span>
+                    </span>
+
+                    <input
+                      type="text"
+                      id="senior_id"
+                      name="seniorId"
+                      className="full-input"
+                      placeholder="ID Should not contain any spaces..."
+                      value={!isSenior ? "" : seniorId}
+                      onChange={(e) => setSeniorId(e.target.value)}
+                      disabled={!isSenior}
+                      style={{ background: !isSenior ? "whitesmoke" : "" }}
+                      required
+                    />
+                  </div>
+                </div>
+              ))}
             <div className="row">
               <div className="col-sm-12 input-group-sm">
                 <span className="first-name label">DISCOUNT DETAIL</span>
