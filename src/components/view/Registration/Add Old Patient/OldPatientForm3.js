@@ -37,6 +37,7 @@ import {
   getUltrasound,
   getPromo,
   getOtherTests,
+  hmo,
 } from "../../../../services/services"
 import { ConsoleView } from "react-device-detect"
 
@@ -108,6 +109,12 @@ function OldPatientForm3({
   setPwdId,
   seniorId,
   setSeniorId,
+  hmoDetails,
+  setHmoDetails,
+  setHmoCompanies,
+  hmoCompanies,
+  hmoDiscounts,
+  setHmoDiscounts,
 }) {
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([])
@@ -123,6 +130,7 @@ function OldPatientForm3({
       },
     })
       .then((response) => {
+        console.log("hmo", hmoDetails)
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
           .sort((x, y) => x.id - y.id)
@@ -140,7 +148,8 @@ function OldPatientForm3({
           testDetails.name = test.name
           testDetails.categoryId = test.category_id
           testDetails.labTestId = test.id
-          testDetails.price = test.price
+          testDetails.price =
+            hmoDetails.pricelist === "hmo" ? test.hmo_price : test.price
           testDetails.type = "lab"
           setAllLabServices((oldArray) => [...oldArray, testDetails]) // append each item to services
         })
@@ -658,7 +667,7 @@ function OldPatientForm3({
         getDetails(clinicalFecalysis, data[0])
         checkedServicesDetails.push(itemDetails)
         break
-        case 25:
+      case 25:
         getDetails(coaguation, data[0])
         checkedServicesDetails.push(itemDetails)
         break
