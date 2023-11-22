@@ -47,6 +47,10 @@ function OldPatientForm1({
   setSeniorId,
   hmoDetails,
   setHmoDetails,
+  setHmoCompanies,
+  hmoCompanies,
+  hmoDiscounts,
+  setHmoDiscounts,
 }) {
   document.body.style = "background: white;"
   //customer details
@@ -85,6 +89,35 @@ function OldPatientForm1({
     lastmeal,
     homeServiceFee,
   } = customer
+
+  //get all companies with HMO
+  async function fetchHMOCompanies() {
+    axios({
+      method: "post",
+      url: window.$link + "companies/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        let hmos_filter = response.data.companys.filter(
+          (data) => data.is_hmo === "1"
+        )
+        let hmo_list = []
+        hmos_filter.map((data) =>
+          hmo_list.push({ ...data, label: data.name, value: data.id })
+        )
+        setHmoCompanies(hmo_list)
+
+        console.log("hmo response", response.data.companys)
+      })
+      .catch(function (error) {
+        console.log("error", error)
+      })
+  }
   useEffect(() => {
     axios({
       method: "post",
@@ -184,6 +217,10 @@ function OldPatientForm1({
     const { name, value } = e.target
 
     setHmoDetails({ ...hmoDetails, [name]: value })
+
+    if (name === "is_hmo" && value === "yes") {
+      fetchHMOCompanies()
+    }
   }
   //event handler for hmo select buttons
   function handleSelectChange(e, name) {
@@ -564,12 +601,12 @@ function OldPatientForm1({
                     <Select
                       className="basic-single"
                       classNamePrefix="select"
-                        onChange={(e)=>handleSelectChange(e, "hmo_id")}
+                      onChange={(e) => handleSelectChange(e, "hmo_id")}
                       isClearable={true}
                       isRtl={false}
                       isSearchable={true}
                       name="hmo"
-                      options={[]}
+                      options={hmoCompanies}
                     />
                   </div>
                   <div className="col-sm-5 input-group-sm mt-2">
@@ -581,12 +618,12 @@ function OldPatientForm1({
                     <Select
                       className="basic-single"
                       classNamePrefix="select"
-                        onChange={(e)=>handleSelectChange(e, "hmo_code")}
+                      onChange={(e) => handleSelectChange(e, "hmo_code")}
                       isClearable={true}
                       isRtl={false}
                       isSearchable={true}
                       name="hmo"
-                      options={[]}
+                      options={hmoDiscounts}
                     />
                   </div>
                   <div className="col-sm-5 input-group-sm mt-3">

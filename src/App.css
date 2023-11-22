@@ -1,3 +1,7 @@
+:root{
+  --blue-brand: #419ea3;
+}
+
 .App {
   text-align: center;
   overflow-x: hidden !important;

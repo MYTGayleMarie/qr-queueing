@@ -68,8 +68,10 @@ function SwitchForm2() {
     hmo_id: "",
     hmo_code: "",
     pricelist: "",
-    discount_id:""
+    discount_id: "",
   })
+  const [hmoCompanies, setHmoCompanies] = useState([])
+  const [hmoDiscounts, setHmoDiscounts] = useState([])
 
   const personalProps = {
     customer,
@@ -104,6 +106,10 @@ function SwitchForm2() {
     setSeniorId,
     hmoDetails,
     setHmoDetails,
+    hmoCompanies,
+    setHmoCompanies,
+    hmoDiscounts,
+    setHmoDiscounts,
   }
   const serviceProps = {
     service,
@@ -135,6 +141,10 @@ function SwitchForm2() {
     setSeniorId,
     hmoDetails,
     setHmoDetails,
+    hmoDiscounts,
+    setHmoDiscounts,
+    hmoCompanies,
+    setHmoCompanies,
   }
 
   switch (step.id) {
