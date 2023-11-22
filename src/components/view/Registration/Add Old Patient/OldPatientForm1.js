@@ -111,13 +111,41 @@ function OldPatientForm1({
           hmo_list.push({ ...data, label: data.name, value: data.id })
         )
         setHmoCompanies(hmo_list)
-
-        console.log("hmo response", response.data.companys)
       })
       .catch(function (error) {
         console.log("error", error)
       })
   }
+
+  //get all companies with HMO
+  async function fetchHMODiscounts() {
+    axios({
+      method: "post",
+      url: window.$link + "discounts/hmo",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        company_id: hmoDetails.hmo_id,
+      },
+    })
+      .then(function (response) {
+        let hmo_discounts = []
+        response.data.map((data) =>
+          hmo_discounts.push({
+            ...data,
+            label: data.description,
+            value: data.id,
+          })
+        )
+        setHmoDiscounts(hmo_discounts)
+      })
+      .catch(function (error) {
+        console.log("error", error)
+      })
+  }
+
   useEffect(() => {
     axios({
       method: "post",
@@ -185,7 +213,16 @@ function OldPatientForm1({
         return (
           <div className="row d-flex justify-content-end mb-3">
             <div className="col-6 align-right text-right">
-              <button className="proceed-btn" onClick={() => navigation.next()}>
+              <button
+                className="proceed-btn"
+                onClick={() => {
+                  if (hmoDetails.is_hmo === "no") {
+                    navigation.next()
+                  } else {
+                    navigation.go("services")
+                  }
+                }}
+              >
                 PROCEED
               </button>
             </div>
@@ -225,6 +262,10 @@ function OldPatientForm1({
   //event handler for hmo select buttons
   function handleSelectChange(e, name) {
     setHmoDetails({ ...hmoDetails, [name]: e.value })
+
+    if (name === "hmo_id") {
+      fetchHMODiscounts(e.value)
+    }
   }
 
   function homeServiceFeeDisplay() {
