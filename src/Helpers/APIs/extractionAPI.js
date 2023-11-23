@@ -8,7 +8,7 @@ export const getExtractionPatients = async () => {
     params.append("api_key", window.$api_key);
     params.append("token", getToken().replace(/['"]+/g, ""));
     const response = await postAPICall(
-      window.$link + "bookings/extractionManager",
+      window.$link + "bookings/labExtraction",
 
       {
         requester: getUser(),
