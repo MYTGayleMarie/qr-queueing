@@ -490,6 +490,7 @@ function OldPatientForm3({
             remarks: "",
             added_by: userId,
             extraction_date: extractionDate,
+            ...hmoDetails
           },
         })
           .then(function (response) {
