@@ -11,6 +11,7 @@ import {
 } from "../../../utilities/Common"
 import {
   getExtractionPatients,
+  getXRAYExtractionPatients,
   updateExtractionPatient,
   updateExtractionPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI"
@@ -53,7 +54,7 @@ function XrayManager() {
     }
   }
   async function fetchRecords() {
-    const response = await getExtractionPatients()
+    const response = await getXRAYExtractionPatients()
     if (response.data) {
       setRecords(response.data.bookings)
       setIsReady(true)
