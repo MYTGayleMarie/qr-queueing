@@ -448,6 +448,8 @@ function OldPatientForm3({
           location_value = "Mobile Charge"
         }
 
+        let hmo_details = hmoDetails.is_hmo === "yes"? {...hmoDetails}:{}
+
         axios({
           method: "post",
           url: window.$link + "bookings/create",
@@ -490,7 +492,7 @@ function OldPatientForm3({
             remarks: "",
             added_by: userId,
             extraction_date: extractionDate,
-            ...hmoDetails
+            ...hmo_details
           },
         })
           .then(function (response) {
