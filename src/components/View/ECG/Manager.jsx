@@ -11,6 +11,7 @@ import {
 } from "../../../utilities/Common"
 import {
   getExtractionPatients,
+  getLabExtractionPatients,
   updateExtractionPatient,
   updateExtractionPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI"
@@ -53,7 +54,7 @@ function ECGManager() {
     }
   }
   async function fetchRecords() {
-    const response = await getExtractionPatients()
+    const response = await getLabExtractionPatients()
     if (response.data) {
       setRecords(response.data.bookings)
       setIsReady(true)
