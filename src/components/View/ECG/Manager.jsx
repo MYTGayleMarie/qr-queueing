@@ -12,6 +12,7 @@ import {
 import {
   getExtractionPatients,
   getLabExtractionPatients,
+  updateExtractionLabPatientBulk,
   updateExtractionPatient,
   updateExtractionPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI"
@@ -47,7 +48,7 @@ function ECGManager() {
   }
 
   async function handleUpdateBooking() {
-    const response = await updateExtractionPatientBulk(selectedRow)
+    const response = await updateExtractionLabPatientBulk(selectedRow)
     if (response.data) {
       toast.success(response.data.message.success.toUpperCase())
       refreshPage()

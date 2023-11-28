@@ -14,6 +14,7 @@ import {
   getXRAYExtractionPatients,
   updateExtractionPatient,
   updateExtractionPatientBulk,
+  updateExtractionXRAYPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI"
 import { Button, ListGroup } from "react-bootstrap"
 const buttons = []
@@ -47,10 +48,10 @@ function XrayManager() {
   }
 
   async function handleUpdateBooking() {
-    const response = await updateExtractionPatientBulk(selectedRow)
+    const response = await updateExtractionXRAYPatientBulk(selectedRow)
     if (response.data) {
       toast.success(response.data.message.success.toUpperCase())
-      refreshPage()
+      // refreshPage()
     }
   }
   async function fetchRecords() {
