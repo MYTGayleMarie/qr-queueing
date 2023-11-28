@@ -770,10 +770,10 @@ function PrintLab() {
               <div className="laboratory-space"></div>
               <div class="tb">
                 <div class="row">
-                  <div class="col details_title">
+                  <div class="col-2 details_title">
                     <span>NAME :</span>
                   </div>
-                  <div class="col">
+                  <div class="col-3">
                     <span>
                       {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
                       {middleName.toUpperCase()}
@@ -790,10 +790,10 @@ function PrintLab() {
                   </div>
                 </div>
                 <div class="row" style={{ marginTop: "2px" }}>
-                  <div class="col details_title">
+                  <div class="col-2 details_title">
                     <span>AGE :</span>
                   </div>
-                  <div class="col">
+                  <div class="col-3">
                     <span>{age}</span>
                   </div>
                   <div class="col details_title">
@@ -804,10 +804,10 @@ function PrintLab() {
                   </div>
                 </div>
                 <div class="row" style={{ marginTop: "2px" }}>
-                  <div class="col details_title">
+                  <div class="col-2 details_title">
                     <span>GENDER :</span>
                   </div>
-                  <div class="col">
+                  <div class="col-3">
                     <span>{gender.toUpperCase()}</span>
                   </div>
                   <div class="col details_title">
@@ -818,10 +818,10 @@ function PrintLab() {
                   </div>
                 </div>
                 <div class="row" style={{ marginTop: "2px" }}>
-                  <div class="col details_title">
+                  <div class="col-2 details_title">
                     <span>PATIENT ID :</span>
                   </div>
-                  <div class="col">
+                  <div class="col-3">
                     <span>{id}</span>
                   </div>
                   <div class="col details_title">
