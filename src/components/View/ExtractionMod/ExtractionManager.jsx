@@ -1,69 +1,74 @@
-import React, { useState, useEffect, Fragment } from "react";
-import Navbar from "../../Navbar";
-import Header from "../../Header";
-import Table from "../../Table.js";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect, Fragment } from "react"
+import Navbar from "../../Navbar"
+import Header from "../../Header"
+import Table from "../../Table.js"
+import { ToastContainer, toast } from "react-toastify"
 import {
   getRoleId,
   getToken,
   getUser,
   refreshPage,
-} from "../../../utilities/Common";
+} from "../../../utilities/Common"
 import {
   getExtractionPatients,
   updateExtractionPatient,
   updateExtractionPatientBulk,
-} from "../../../Helpers/APIs/extractionAPI";
-import "./ExtractionManager.css";
-import { Button, ListGroup } from "react-bootstrap";
-const buttons = [];
-const patientData = "";
-const userToken = getToken();
-const userId = getUser();
-var id = "";
+} from "../../../Helpers/APIs/extractionAPI"
+import "./ExtractionManager.css"
+import { Button, ListGroup } from "react-bootstrap"
+const buttons = []
+const patientData = ""
+const userToken = getToken()
+const userId = getUser()
+var id = ""
 
 function ExtractionManager() {
   const [filteredData, setFilter] = useState({
     from_date: "",
     to_date: "",
     done: false,
-  });
-  const [render, setRender] = useState([]);
-  const [renderDetails, setRenderDetails] = useState([]);
-  const [role, setRole] = useState("");
-  const [records, setRecords] = useState([]);
-  const [selectedRow, setSelectedRow] = useState({});
-  const [recordsDetails, setRecordsDetails] = useState([]);
-  const [labIds, setLabIds] = useState([]);
-  const [isReady, setIsReady] = useState(false);
+  })
+  const [render, setRender] = useState([])
+  const [renderDetails, setRenderDetails] = useState([])
+  const [role, setRole] = useState("")
+  const [records, setRecords] = useState([])
+  const [selectedRow, setSelectedRow] = useState({})
+  const [recordsDetails, setRecordsDetails] = useState([])
+  const [labIds, setLabIds] = useState([])
+  const [isReady, setIsReady] = useState(false)
 
   function handleExtractionClick(row) {
-    var lab_tests = row.lab_test.split("|");
+    var lab_tests = row.lab_test.split("|")
     // var lab_tests_id = row.booking_detail_id.split("|");
 
-    setSelectedRow({ ...row, lab_tests: lab_tests });
-    setRecordsDetails(lab_tests);
+    setSelectedRow({ ...row, lab_tests: lab_tests })
+    setRecordsDetails(lab_tests)
     // setLabIds(lab_tests_id);
   }
 
   async function handleUpdateBooking() {
-    const response = await updateExtractionPatientBulk(selectedRow);
+    const response = await updateExtractionPatientBulk(selectedRow)
     if (response.data) {
-      toast.success(response.data.message.success.toUpperCase());
-      refreshPage();
+      toast.success(response.data.message.success.toUpperCase())
+      refreshPage()
+    } else {
+      toast.error("Something went wrong. Please try again")
+      setTimeout(() => {
+        refreshPage()
+      }, 2000)
     }
   }
   async function fetchRecords() {
-    const response = await getExtractionPatients();
+    const response = await getExtractionPatients()
     if (response.data) {
-      setRecords(response.data.bookings);
-      setIsReady(true);
+      setRecords(response.data.bookings)
+      setIsReady(true)
     }
   }
   useEffect(() => {
-    fetchRecords();
-    setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
-  }, []);
+    fetchRecords()
+    setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
+  }, [])
   return (
     <div>
       <Navbar />
@@ -110,7 +115,7 @@ function ExtractionManager() {
                           <div className="col">{data}</div>
                         </div>
                       </ListGroup.Item>
-                    );
+                    )
                   })}
                 </ListGroup>
                 {recordsDetails.length > 0 ? (
@@ -160,7 +165,7 @@ function ExtractionManager() {
         </Fragment>
       </div>
     </div>
-  );
+  )
 }
 
-export default ExtractionManager;
+export default ExtractionManager

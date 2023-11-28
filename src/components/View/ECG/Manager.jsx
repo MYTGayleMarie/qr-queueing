@@ -52,6 +52,11 @@ function ECGManager() {
     if (response.data) {
       toast.success(response.data.message.success.toUpperCase())
       refreshPage()
+    } else {
+      toast.error("Something went wrong. Please try again")
+      setTimeout(() => {
+        refreshPage()
+      }, 2000)
     }
   }
   async function fetchRecords() {
