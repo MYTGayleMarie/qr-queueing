@@ -1989,18 +1989,27 @@ export default function LabOfficer() {
     const parsedResult = parseFloat(result_user)
     const parsedPreferredFrom = parseFloat(preferred_from_user)
     const parsedPreferredTo = parseFloat(preferred_to_user)
-
-    if (preferred_user === " " && containsLetters) {
-      return <span>{result_user}</span>
-    } else if (
-      parsedResult < parsedPreferredFrom &&
-      parsedPreferredFrom !== 0.0
+    if (
+      selectedLab.label.toUpperCase() === "FECALYSIS" ||
+      selectedLab.label.toUpperCase() === "[P] FECALYSIS"
     ) {
-      return <span className="red">{result_user + " L"}</span>
-    } else if (parsedResult > parsedPreferredTo && parsedPreferredTo !== 0.0) {
-      return <span className="red">{result_user + " H"}</span>
-    } else {
       return <span>{result_user}</span>
+    } else {
+      if (preferred_user === " " && containsLetters) {
+        return <span>{result_user}</span>
+      } else if (
+        parsedResult < parsedPreferredFrom &&
+        parsedPreferredFrom !== 0.0
+      ) {
+        return <span className="red">{result_user + " L"}</span>
+      } else if (
+        parsedResult > parsedPreferredTo &&
+        parsedPreferredTo !== 0.0
+      ) {
+        return <span className="red">{result_user + " H"}</span>
+      } else {
+        return <span>{result_user}</span>
+      }
     }
   }
 
@@ -3000,9 +3009,15 @@ export default function LabOfficer() {
                 <br />
 
                 {/* <div className="row"> */}
-              
+
                 {allOptions.map((data) => {
-                  {console.log("data extracted", data,   data.extracted_on === null)}
+                  {
+                    console.log(
+                      "data extracted",
+                      data,
+                      data.extracted_on === null
+                    )
+                  }
                   return (
                     <Button
                       className="m-2"
@@ -3018,10 +3033,10 @@ export default function LabOfficer() {
                       }}
                       size="sm"
                       disabled={
-                        (!isDataFetched &&
+                        !isDataFetched &&
                         !selectedLab.label !== data.label &&
-                        selectedLab.label !== "") ||
-                        data.extracted_on === null
+                        selectedLab.label !== ""
+                        || data.extracted_on === null
                       }
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
