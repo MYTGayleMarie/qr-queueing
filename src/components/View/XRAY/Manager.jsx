@@ -51,7 +51,7 @@ function XrayManager() {
     const response = await updateExtractionXRAYPatientBulk(selectedRow)
     if (response.data) {
       toast.success(response.data.message.success.toUpperCase())
-      // refreshPage()
+      refreshPage()
     }
   }
   async function fetchRecords() {
