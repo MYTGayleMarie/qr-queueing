@@ -3011,13 +3011,7 @@ export default function LabOfficer() {
                 {/* <div className="row"> */}
 
                 {allOptions.map((data) => {
-                  {
-                    console.log(
-                      "data extracted",
-                      data,
-                      data.extracted_on === null
-                    )
-                  }
+                
                   return (
                     <Button
                       className="m-2"
@@ -3036,7 +3030,7 @@ export default function LabOfficer() {
                         !isDataFetched &&
                         !selectedLab.label !== data.label &&
                         selectedLab.label !== ""
-                        || data.extracted_on === null
+                        // || data.extracted_on === null
                       }
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
