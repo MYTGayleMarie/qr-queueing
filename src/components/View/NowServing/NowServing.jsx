@@ -56,7 +56,7 @@ export default function NowServing() {
     if (response.data) {
       let data = response.data.now_serving
       setRecords(response.data.now_serving)
-      setInitialList(data.filter((val) => val.serving_type === null))
+      // setInitialList(data.filter((val) => val.serving_type === "2d echo"))
       setECGList(data.filter((val) => val.serving_type === "ecg"))
       setXRAYList(data.filter((val) => val.serving_type === "xray"))
     } else {
@@ -102,87 +102,60 @@ export default function NowServing() {
 
   return (
     <div>
-      {/* <Navbar /> */}
       <div className="">
         <Fragment>
-          {/* <Header
-            type="thick"
-            title=""
-            buttons={buttons}
-            tableData={patientData}
-          /> */}
+          <div className="row justify-content-center mt-3">
+            <div className="col-12 text-center align-center now-serving">
+              NOW SERVING
+            </div>
+          </div>
           <div className="row justify-content-center mt-5">
-            {records.length > 0 ? (
-              <>
-                {initialList.length > 0 && (
-                  <div className="col">
-                    <div className="row justify-content-center">
-                      <div className="col-12 text-center align-center queue-attendee">
-                        EXTRACTION
-                        <br /> NOW SERVING
-                      </div>
-                      <div className="col-12 text-center align-center queue-no mt-5">
-                        {initialList[0].booking_id}
-                      </div>
-                      {/* <div className="col-12 text-center align-center queue-patient">
-                        {initialList[0].first_name?.toUpperCase()}{" "}
-                        {initialList[0].middle_name?.toUpperCase()}{" "}
-                        {initialList[0].last_name?.toUpperCase()}
-                      </div>
-                      <div className="col-12 text-center align-center queue-attendee">
-                        Attended By: {initialList[0].served_by?.toUpperCase()}
-                      </div> */}
-                    </div>
+            <div className="col">
+              <div className="row justify-content-center">
+                <div className="col-12 text-center align-center queue-attendee">
+                  XRAY
+                </div>
+                <div className="col-12 text-center align-center mt-2 p-5">
+                  <div className="queue-div">
+                    <span className="queue-no">{XRAYList[0]?.id}</span>
+                    <br />
+                    <span className="booking-no">
+                      {XRAYList[0]?.booking_id}
+                    </span>
                   </div>
-                )}
-                {ECGList.length > 0 && (
-                  <div className="col">
-                    <div className="row justify-content-center">
-                      <div className="col-12 text-center align-center queue-attendee">
-                        ECG <br />
-                        NOW SERVING
-                      </div>
-                      <div className="col-12 text-center align-center queue-no mt-5">
-                        {ECGList[0].booking_id}
-                      </div>
-                      {/* <div className="col-12 text-center align-center queue-patient">
-                        {ECGList[0].first_name?.toUpperCase()}{" "}
-                        {ECGList[0].middle_name?.toUpperCase()}{" "}
-                        {ECGList[0].last_name?.toUpperCase()}
-                      </div>
-                      <div className="col-12 text-center align-center queue-attendee">
-                        Attended By: {ECGList[0].served_by?.toUpperCase()}
-                      </div> */}
-                    </div>
-                  </div>
-                )}
-                {XRAYList.length > 0 && (
-                  <div className="col">
-                    <div className="row justify-content-center">
-                      <div className="col-12 text-center align-center queue-attendee">
-                        XRAY
-                        <br /> NOW SERVING
-                      </div>
-                      <div className="col-12 text-center align-center queue-no mt-5">
-                        {XRAYList[0].booking_id}
-                      </div>
-                      {/* <div className="col-12 text-center align-center queue-patient">
-                        {XRAYList[0].first_name?.toUpperCase()}{" "}
-                        {XRAYList[0].middle_name?.toUpperCase()}{" "}
-                        {XRAYList[0].last_name?.toUpperCase()}
-                      </div>
-                      <div className="col-12 text-center align-center queue-attendee">
-                        Attended By: {XRAYList[0].served_by?.toUpperCase()}
-                      </div> */}
-                    </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="row justify-content-center queue-attendee mt-5">
-                NOTHING IN QUEUE.
+                </div>
               </div>
-            )}
+            </div>
+            <div className="col">
+              <div className="row justify-content-center">
+                <div className="col-12 text-center align-center queue-attendee">
+                  ECG
+                </div>
+                <div className="col-12 text-center align-center mt-2 p-5">
+                  <div className="queue-div">
+                    <span className="queue-no">{ECGList[0]?.id}</span>
+                    <br />
+                    <span className="booking-no">{ECGList[0]?.booking_id}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col">
+              <div className="row justify-content-center">
+                <div className="col-12 text-center align-center queue-attendee">
+                  2D ECHO
+                </div>
+                <div className="col-12 text-center align-center mt-2 p-5">
+                  <div className="queue-div">
+                    <span className="queue-no">{initialList[0]?.id}</span>
+                    <br />
+                    <span className="booking-no">
+                      {initialList[0]?.booking_id}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Fragment>
       </div>
