@@ -1,7 +1,12 @@
 .queue-no {
   font-size: 15vh !important;
   font-weight: bolder;
-  color: rgb(65, 158, 163);
+  color: rgb(206, 48, 31);
+}
+.booking-no {
+  font-size: 10vh !important;
+  font-weight: bolder;
+    color: rgb(206, 48, 31);
 }
 .queue-patient {
   font-size: 5vh;
@@ -11,5 +16,15 @@
 .queue-attendee {
   font-size: 5vh;
   font-weight: bold;
-  color: rgb(191, 188, 75);
+  color: var(--blue-brand)
+}
+.now-serving {
+  font-size: 6vh;
+  font-weight: bold;
+  color: var(--yellow-brand);
+}
+
+.queue-div{
+  background:  rgb(222, 222, 222);
+  border-radius: 10px;
 }
