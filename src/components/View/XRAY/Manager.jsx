@@ -71,7 +71,7 @@ function XRAYManager() {
         <Fragment>
           <Header
             type="thick"
-            title="EXTRACTION MANAGER (ECG)"
+            title="EXTRACTION MANAGER (XRAY)"
             buttons={buttons}
             tableData={patientData}
           />
