@@ -21,6 +21,25 @@ export const changeStatus = async (queue_id, status) => {
   }
 };
 
+export const generateExtractionQueue = async (data) => {
+  try {
+    const response = await postAPICall(
+      window.$link + "customers/generateQueue",
+
+      {
+        requester: getUser(),
+        api_key: window.$api_key,
+        token: getToken().replace(/['"]+/g, ""),
+        ...data
+      }
+    );
+
+    return { data: response.data };
+  } catch (error) {
+    return { error: error.response };
+  }
+};
+
 export const fetchServing = async () => {
   try {
     const response = await postAPICall(
@@ -38,3 +57,5 @@ export const fetchServing = async () => {
     return { error: error.response };
   }
 };
+
+
