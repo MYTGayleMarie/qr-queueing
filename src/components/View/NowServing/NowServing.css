@@ -1,6 +1,6 @@
 .queue-no {
-  font-size: 30vh;
-  font-weight: bold;
+  font-size: 15vh !important;
+  font-weight: bolder;
   color: rgb(65, 158, 163);
 }
 .queue-patient {
