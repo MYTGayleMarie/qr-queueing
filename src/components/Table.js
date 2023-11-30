@@ -284,7 +284,6 @@ function Table({
       return (
         <tr
           key={row.booking_id}
-          onClick={() => onExtractionClick(row)}
           style={{ cursor: "pointer" }}
           className={
             selectedRowExtraction !== {} &&
@@ -298,6 +297,14 @@ function Table({
             {row.first_name} {row.middle_name} {row.last_name}
           </td>
           <td>{formatDate(new Date(row.extraction_date))}</td>
+          <td>
+            <button
+              className="serve-now-btn p-1"
+              onClick={() => onExtractionClick(row)}
+            >
+              SERVE NOW
+            </button>
+          </td>
         </tr>
         // <tr key={row.id}>
         //   {rowData.map((data, index) => (
@@ -317,7 +324,6 @@ function Table({
       return (
         <tr
           key={row.booking_id}
-          onClick={() => onExtractionClick(row)}
           style={{ cursor: "pointer" }}
           className={
             selectedRowExtraction !== {} &&
@@ -331,6 +337,14 @@ function Table({
             {row.first_name} {row.middle_name} {row.last_name}
           </td>
           <td>{formatDate(new Date(row.extraction_date))}</td>
+          <td>
+            <button
+              className="serve-now-btn p-1"
+              onClick={() => onExtractionClick(row)}
+            >
+              SERVE NOW
+            </button>
+          </td>
         </tr>
         // <tr key={row.id}>
         //   {rowData.map((data, index) => (
@@ -344,7 +358,6 @@ function Table({
       return (
         <tr
           key={row.booking_id}
-          onClick={() => onExtractionClick(row)}
           style={{ cursor: "pointer" }}
           className={
             selectedRowExtraction !== {} &&
@@ -358,6 +371,14 @@ function Table({
             {row.first_name} {row.middle_name} {row.last_name}
           </td>
           <td>{formatDate(new Date(row.extraction_date))}</td>
+          <td>
+            <button
+              className="serve-now-btn p-1"
+              onClick={() => onExtractionClick(row)}
+            >
+              SERVE NOW
+            </button>
+          </td>
         </tr>
         // <tr key={row.id}>
         //   {rowData.map((data, index) => (
