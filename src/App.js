@@ -113,7 +113,10 @@ import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem
 import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
 import ViewImg from "./components/View/Results Releasing/ViewImg";
 import XrayManager from "./components/View/XRAY/Manager";
-import ECGManager from "./components/View/ECG/Manager";
+import ExtractionUpdate from "./components/View/ExtractionMod/ExtractionUpdate.jsx";
+import ECGManager from "./components/View/ECG/ECGManager.jsx";
+import ECGExtractionUpdate from "./components/View/ECG/ECGExtractionUpdate.jsx";
+import XRAYExtractionUpdate from "./components/View/XRAY/XRAYExtractionUpdate.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -662,14 +665,26 @@ function App() {
             path="/extraction"
             element={token ? <ExtractionManager /> : <Navigate to="/" />}
           />
-          {/* XRAY Module */}
+          <Route
+            path="/extraction/:bookingId/:queueId"
+            element={token ? <ExtractionUpdate /> : <Navigate to="/" />}
+          />
+      
           <Route
             path="/xray"
             element={token ? <XrayManager /> : <Navigate to="/" />}
           />
           <Route
+            path="/xray/:bookingId/:queueId"
+            element={token ? <XRAYExtractionUpdate /> : <Navigate to="/" />}
+          />
+          <Route
             path="/ecg"
             element={token ? <ECGManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/ecg/:bookingId/:queueId"
+            element={token ? <ECGExtractionUpdate /> : <Navigate to="/" />}
           />
           {/* Now Serving */}
           <Route
