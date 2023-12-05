@@ -2415,6 +2415,7 @@ function Table({
         <div className="search-table-container row">
           <div className="col-sm-12 d-flex justify-content-end">
             <select
+            name="year"
               value={year}
               onChange={setFilter}
               disabled={roleId === "12"}
