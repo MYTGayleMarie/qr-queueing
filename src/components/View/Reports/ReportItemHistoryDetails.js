@@ -19,12 +19,12 @@ const buttons = ['export-excel', 'export-pdf'];
 const userToken = getToken();
 const userId = getUser();
 var presentDate = new Date();
-var fromDate = new Date("01-06-2022")
-var formattedFromData = fromDate.toISOString().split('T')[0];
+var fromDate = new Date()
+var formattedFromData = fromDate?.toISOString()?.split('T')[0];
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
 const filterData = {
-  from_date: formattedFromData,
+  from_date: fromDate,
   to_date: formattedPresentData,
   done: false,
 };
