@@ -118,7 +118,7 @@ function OldPatientForm1({
   }
 
   //get all companies with HMO
-  async function fetchHMODiscounts() {
+  async function fetchHMODiscounts(id) {
     axios({
       method: "post",
       url: window.$link + "discounts/hmo",
@@ -127,21 +127,23 @@ function OldPatientForm1({
         api_key: window.$api_key,
         token: userToken.replace(/['"]+/g, ""),
         requester: userId,
-        company_id: hmoDetails.hmo_id,
+        company_id: id,
       },
     })
       .then(function (response) {
+        setHmoDiscounts([])
         let hmo_discounts = []
         response.data.map((data) =>
           hmo_discounts.push({
             ...data,
-            label: data.description,
+            label: data.discount_code,
             value: data.id,
           })
         )
         setHmoDiscounts(hmo_discounts)
       })
       .catch(function (error) {
+        setHmoDiscounts([])
         console.log("error", error)
       })
   }
@@ -261,10 +263,10 @@ function OldPatientForm1({
   }
   //event handler for hmo select buttons
   function handleSelectChange(e, name) {
-    setHmoDetails({ ...hmoDetails, [name]: e.value })
+    setHmoDetails({ ...hmoDetails, [name]: e.id })
 
     if (name === "hmo_id") {
-      fetchHMODiscounts(e.value)
+      fetchHMODiscounts(e.id)
     }
   }
 
@@ -643,7 +645,7 @@ function OldPatientForm1({
                       className="basic-single"
                       classNamePrefix="select"
                       onChange={(e) => handleSelectChange(e, "hmo_id")}
-                      isClearable={true}
+                      isClearable={false}
                       isRtl={false}
                       isSearchable={true}
                       name="hmo"
@@ -660,7 +662,7 @@ function OldPatientForm1({
                       className="basic-single"
                       classNamePrefix="select"
                       onChange={(e) => handleSelectChange(e, "hmo_code")}
-                      isClearable={true}
+                      isClearable={false}
                       isRtl={false}
                       isSearchable={true}
                       name="hmo"
@@ -713,7 +715,7 @@ function OldPatientForm1({
                       classNamePrefix="select"
                       id="discount_code"
                       onChange={(e) => handleSelectChange(e, "discount_id")}
-                      isClearable={true}
+                      isClearable={false}
                       isRtl={false}
                       isSearchable={true}
                       options={discountList.filter((data) => data.id === "7")}
