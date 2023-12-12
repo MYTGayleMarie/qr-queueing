@@ -33,6 +33,7 @@ const steps = [{ id: "customer" }, { id: "packages" }, { id: "services" }];
 
 function SwitchForm() {
   const [customer, setPersonal] = useForm(personalData);
+  const {setValue} = useForm(personalData)
   const [lastMeal, setLastMeal] = useState(new Date());
   const [isCompany, setIsCompany] = useState(false);
   const [dateOfTesting, setDOT] = useState(new Date());
@@ -51,6 +52,15 @@ function SwitchForm() {
   const [discountDetails, setDiscountDetails] = useState();
   const [isSenior, setIsSenior] = useState(false);
   const [isPWD, setIsPWD] = useState(false);
+ const [hmoDetails, setHmoDetails] = useState({
+    is_hmo: "no",
+    hmo_id: "",
+    hmo_code: "",
+    pricelist: "",
+    discount_id: "",
+  })
+  const [hmoCompanies, setHmoCompanies] = useState([])
+  const [hmoDiscounts, setHmoDiscounts] = useState([])
 
   const [service, setServices] = useForm(serviceData);
   const { step, navigation } = useStep({
@@ -85,6 +95,13 @@ function SwitchForm() {
     setIsPWD,
     extractionDate,
     setExtractionDate,
+     hmoDetails,
+    setHmoDetails,
+    hmoCompanies,
+    setHmoCompanies,
+    hmoDiscounts,
+    setHmoDiscounts,
+    setValue
   };
   const serviceProps = {
     service,
@@ -108,6 +125,12 @@ function SwitchForm() {
     discountDetails,
     extractionDate,
     setExtractionDate,
+     hmoDetails,
+    setHmoDetails,
+    hmoCompanies,
+    setHmoCompanies,
+    hmoDiscounts,
+    setHmoDiscounts,
   };
 
   switch (step.id) {

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import axios from "axios";
-import DateTimePicker from "react-datetime-picker";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
-
+import React, { useState } from "react"
+import axios from "axios"
+import DateTimePicker from "react-datetime-picker"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common"
+import Select from "react-select"
 //css
-import "./Form1.css";
+import "./Form1.css"
 
 //components
-import Header from "../../../Header.js";
-import Navbar from "../../../Navbar";
+import Header from "../../../Header.js"
+import Navbar from "../../../Navbar"
 
 //VARIABLES
-const userToken = getToken();
-const userId = getUser();
+const userToken = getToken()
+const userId = getUser()
 
 function AddPatient({
   customer,
@@ -43,8 +43,14 @@ function AddPatient({
   setIsPWD,
   extractionDate,
   setExtractionDate,
+  hmoDetails,
+  setHmoDetails,
+  setHmoCompanies,
+  hmoCompanies,
+  hmoDiscounts,
+  setHmoDiscounts,
 }) {
-  document.body.style = "background: white;";
+  document.body.style = "background: white;"
 
   const {
     fname,
@@ -64,17 +70,17 @@ function AddPatient({
     lastmeal,
     pwd_id,
     senior_id,
-  } = customer;
-  const [activation, setActive] = useState(false);
-  const [discountList, setDiscountList] = useState([]);
-  const [companyId, setCompanyId] = useState("");
-  const [companyRemarks, setCompanyRemarks] = useState("");
+  } = customer
+  const [activation, setActive] = useState(false)
+  const [discountList, setDiscountList] = useState([])
+  const [companyId, setCompanyId] = useState("")
+  const [companyRemarks, setCompanyRemarks] = useState("")
 
-  const [people, setPeople] = useState(0);
-  const [km, setKm] = useState(0);
+  const [people, setPeople] = useState(0)
+  const [km, setKm] = useState(0)
 
   function turnActive() {
-    setActive(true);
+    setActive(true)
   }
 
   function proceed() {
@@ -89,17 +95,31 @@ function AddPatient({
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
-      ((isSenior && !(/^$|\s+/.test(senior_id))) || !isSenior) &&
-      ((isPWD && !(/^$|\s+/.test(pwd_id))) || !isPWD) &&
-      ((serviceLocation === "home service" && location!=="" && serviceFee!=="" && serviceFee!==0)||serviceLocation==="clinic")
+      ((isSenior && !/^$|\s+/.test(senior_id) && discountId!=="") || !isSenior) &&
+      ((isPWD && !/^$|\s+/.test(pwd_id)  && discountId!=="") || !isPWD) &&
+      ((serviceLocation === "home service" &&
+        location !== "" &&
+        serviceFee !== "" &&
+        serviceFee !== 0) ||
+        serviceLocation === "clinic")
     ) {
       return (
         <div className="d-flex justify-content-end mb-5">
-          <button className="proceed-btn" onClick={() => navigation.next()}>
+          <button
+            className="proceed-btn"
+            onClick={() => {
+               navigation.next()
+              // if (hmoDetails.is_hmo === "no") {
+              //   navigation.next()
+              // } else {
+              //   navigation.go("services")
+              // }
+            }}
+          >
             PROCEED
           </button>
         </div>
-      );
+      )
     } else {
       // console.log('Incomplete');
     }
@@ -205,10 +225,87 @@ function AddPatient({
             )}
           </div>
         </div>
-      );
+      )
     } else {
       // console.log('Error. No home service fee');
     }
+  }
+
+  //event handler for hmo radio buttons
+  function handleRadioChange(e) {
+    const { name, value } = e.target
+
+    setHmoDetails({ ...hmoDetails, [name]: value })
+
+    if (name === "is_hmo" && value === "yes") {
+      fetchHMOCompanies()
+    }
+  }
+  //event handler for hmo select buttons
+  function handleSelectChange(e, name) {
+    setHmoDetails({ ...hmoDetails, [name]: e.id })
+
+    if (name === "hmo_id") {
+      fetchHMODiscounts(e.id)
+    }
+  }
+
+  //get all companies with HMO
+  async function fetchHMOCompanies() {
+    axios({
+      method: "post",
+      url: window.$link + "companies/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        let hmos_filter = response.data.companys.filter(
+          (data) => data.is_hmo === "1"
+        )
+        let hmo_list = []
+        hmos_filter.map((data) =>
+          hmo_list.push({ ...data, label: data.name, value: data.id })
+        )
+        setHmoCompanies(hmo_list)
+      })
+      .catch(function (error) {
+        console.log("error", error)
+      })
+  }
+
+  //get all companies with HMO
+  async function fetchHMODiscounts(id) {
+    axios({
+      method: "post",
+      url: window.$link + "discounts/hmo",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        company_id: id,
+      },
+    })
+      .then(function (response) {
+        setHmoDiscounts([])
+        let hmo_discounts = []
+        response.data.map((data) =>
+          hmo_discounts.push({
+            ...data,
+            label: data.discount_code,
+            value: data.id,
+          })
+        )
+        setHmoDiscounts(hmo_discounts)
+      })
+      .catch(function (error) {
+        setHmoDiscounts([])
+        console.log("error", error)
+      })
   }
 
   React.useEffect(() => {
@@ -223,12 +320,12 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setDiscountList(response.data.discounts);
+        setDiscountList(response.data.discounts)
       })
       .catch(function (error) {
         // console.log(error);
-      });
-  }, []);
+      })
+  }, [])
 
   React.useEffect(() => {
     axios({
@@ -242,23 +339,23 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setCompanyId(response.data.data.discount.company_id);
-        setDiscount(response.data.data.discount.percentage);
-        setDiscountDetails(response.data.data.discount_details);
+        setCompanyId(response.data.data.discount.company_id)
+        setDiscount(response.data.data.discount.percentage)
+        setDiscountDetails(response.data.data.discount_details)
         if (response.data.is_package == "1") {
-          setIsPackage("1");
+          setIsPackage("1")
         }
         if (response.data.is_service == "1") {
-          setIsService("1");
+          setIsService("1")
         }
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, [discountId]);
+        console.log(error)
+      })
+  }, [discountId])
 
   React.useEffect(() => {
-    setCompanyRemarks("");
+    setCompanyRemarks("")
     axios({
       method: "post",
       url: window.$link + "companies/show/" + companyId,
@@ -270,18 +367,18 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setCompanyRemarks(response.data.remarks);
-        setIsCompany(true);
+        setCompanyRemarks(response.data.remarks)
+        setIsCompany(true)
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, [companyId]);
+        console.log(error)
+      })
+  }, [companyId])
 
   // auto suggest address
-  const [suggestions, setSuggestions] = useState([]);
-  const [allAddress, setAllAddress] = useState([]);
-  const [renderSuggest, setRenderSuggest] = useState(true);
+  const [suggestions, setSuggestions] = useState([])
+  const [allAddress, setAllAddress] = useState([])
+  const [renderSuggest, setRenderSuggest] = useState(true)
   React.useEffect(() => {
     axios({
       method: "post",
@@ -294,28 +391,28 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setAllAddress(response.data);
+        setAllAddress(response.data)
       })
       .catch(function (error) {
-        setAllAddress([]);
-        console.log(error);
-      });
-  }, []);
+        setAllAddress([])
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
     if (address !== "" && allAddress.length > 0) {
-      let searchWord = new RegExp(address.toLowerCase()); // create regex for input address
+      let searchWord = new RegExp(address.toLowerCase()) // create regex for input address
       let filteredAddress = allAddress.filter((info) =>
         searchWord.test(info.toLowerCase())
-      ); // test if there is a match
-      setSuggestions(filteredAddress); // set all matches to suggestions
+      ) // test if there is a match
+      setSuggestions(filteredAddress) // set all matches to suggestions
     }
-  }, [address]);
+  }, [address])
 
   // auto suggest address
-  const [MDSuggestions, setMDSuggestions] = useState([]);
-  const [allMD, setAllMD] = useState([]);
-  const [renderMDSuggest, setRenderMDSuggest] = useState(true);
+  const [MDSuggestions, setMDSuggestions] = useState([])
+  const [allMD, setAllMD] = useState([])
+  const [renderMDSuggest, setRenderMDSuggest] = useState(true)
   React.useEffect(() => {
     axios({
       method: "post",
@@ -328,73 +425,73 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setAllMD(response.data);
+        setAllMD(response.data)
       })
       .catch(function (error) {
-        setAllAddress([]);
-        console.log(error);
-      });
-  }, []);
+        setAllAddress([])
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
     if (referral !== "" && setAllMD.length > 0) {
-      let searchWord = new RegExp(referral.toLowerCase()); // create regex for input address
+      let searchWord = new RegExp(referral.toLowerCase()) // create regex for input address
       let filteredMD = allMD.filter((info) =>
         searchWord.test(info.toLowerCase())
-      ); // test if there is a match
-      setMDSuggestions(filteredMD); // set all matches to suggestions
+      ) // test if there is a match
+      setMDSuggestions(filteredMD) // set all matches to suggestions
     }
-  }, [referral]);
+  }, [referral])
 
   React.useEffect(() => {
-    const birthDate = new Date(customer.birthDate);
+    const birthDate = new Date(customer.birthDate)
     if (
       customer.birthDate &&
       new Date().getFullYear() - birthDate.getFullYear() >= 60
     ) {
-      setIsSenior(true);
+      setIsSenior(true)
     } else {
-      setIsSenior(false);
+      setIsSenior(false)
     }
-  });
+  })
 
   const listOfDiscount = discountList.map((row, index) => {
     return (
       <option key={index} value={row.id}>
         {row.description + " (" + row.discount_code + ")"}
       </option>
-    );
-  });
+    )
+  })
 
   function sinceLastMeal() {
-    var presentDate = new Date();
-    let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
+    var presentDate = new Date()
+    let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000
 
     //calculate days
-    const days = Math.floor(diffInMilliSeconds / 86400);
-    diffInMilliSeconds -= days * 86400;
+    const days = Math.floor(diffInMilliSeconds / 86400)
+    diffInMilliSeconds -= days * 86400
 
     // calculate hours
-    const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-    diffInMilliSeconds -= hours * 3600;
+    const hours = Math.floor(diffInMilliSeconds / 3600) % 24
+    diffInMilliSeconds -= hours * 3600
 
     // calculate minutes
-    const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-    diffInMilliSeconds -= minutes * 60;
+    const minutes = Math.floor(diffInMilliSeconds / 60) % 60
+    diffInMilliSeconds -= minutes * 60
 
-    let difference = "";
+    let difference = ""
     if (days > 0) {
-      difference += days === 1 ? `${days} day, ` : `${days} days, `;
+      difference += days === 1 ? `${days} day, ` : `${days} days, `
     }
 
     difference +=
-      hours === 0 || hours === 1 ? `${hours} hour, ` : `${hours} hours, `;
+      hours === 0 || hours === 1 ? `${hours} hour, ` : `${hours} hours, `
 
     difference +=
       minutes === 0 || hours === 1
         ? `${minutes} minutes ago`
-        : `${minutes} minutes ago`;
-    return difference;
+        : `${minutes} minutes ago`
+    return difference
   }
 
   return (
@@ -489,9 +586,9 @@ function AddPatient({
               </div>
               <div className="col-sm-4">
                 <label for="senior_id" className="form-label font-large">
-                  SENIOR CITIZEN ID {isSenior && <span className="required">*</span>}
+                  SENIOR CITIZEN ID{" "}
+                  {isSenior && <span className="required">*</span>}
                 </label>
-                
 
                 <input
                   type="text"
@@ -520,7 +617,9 @@ function AddPatient({
                     value="isPWD"
                     id="mdCharge"
                     checked={isPWD}
-                    onChange={(e) => setIsPWD(e.target.checked)}
+                    onChange={(e) => {
+                      setIsPWD(e.target.checked)
+                    }}
                   />
                   <label for="mdCharge" className="booking-label font-large">
                     Person With Disabilities
@@ -536,7 +635,7 @@ function AddPatient({
                   id="pwd_id"
                   name="pwd_id"
                   className="full-input"
-                   placeholder="ID Should not contain any spaces..."
+                  placeholder="ID Should not contain any spaces..."
                   value={!isPWD ? "" : pwd_id}
                   disabled={!isPWD}
                   onChange={setPersonal}
@@ -591,17 +690,18 @@ function AddPatient({
                   value={referral}
                   onChange={setPersonal}
                   onFocus={() => {
-                    setRenderMDSuggest(true);
+                    setRenderMDSuggest(true)
                   }}
                   onBlur={() => {
                     setTimeout(() => {
-                      setRenderMDSuggest(false);
-                    }, 200);
+                      setRenderMDSuggest(false)
+                    }, 200)
                   }}
                 />
                 <br />
               </div>
             </div>
+
             <div className="row">
               <div className="col-sm-12">
                 <label for="address" className="form-label font-large">
@@ -616,12 +716,12 @@ function AddPatient({
                   value={address}
                   onChange={setPersonal}
                   onFocus={() => {
-                    setRenderSuggest(true);
+                    setRenderSuggest(true)
                   }}
                   onBlur={() => {
                     setTimeout(() => {
-                      setRenderSuggest(false);
-                    }, 200);
+                      setRenderSuggest(false)
+                    }, 200)
                   }}
                   required
                 />
@@ -637,8 +737,8 @@ function AddPatient({
                       name="address"
                       value={data}
                       onClick={(e) => {
-                        setPersonal(e);
-                        setRenderSuggest(false);
+                        setPersonal(e)
+                        setRenderSuggest(false)
                       }}
                     >
                       {data}
@@ -659,8 +759,8 @@ function AddPatient({
                       name="referral"
                       value={data}
                       onClick={(e) => {
-                        setPersonal(e);
-                        setRenderMDSuggest(false);
+                        setPersonal(e)
+                        setRenderMDSuggest(false)
                       }}
                     >
                       {data}
@@ -670,42 +770,171 @@ function AddPatient({
                 ))}
               </div>
             )}
-            <div className="row mt-4">
-              <div className="col-sm-6">
-                <label for="address" className="form-label font-large">
-                  DISCOUNT CODE
-                </label>
+            <div className="row mt-3">
+              <div className="col-sm-12 input-group-sm">
+                <span className="first-name label">
+                  Is this an HMO Patient? <span className="required">*</span>
+                </span>
                 <br />
-                <select
-                  className="form-select"
-                  id="discount_code"
-                  name="discountId"
-                  value={discountId}
-                  onChange={setPersonal}
-                >
-                  <option value="" selected>
-                    None
-                  </option>
-                  {listOfDiscount}
-                </select>
-                <br />
+
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoYes"
+                    value="yes"
+                    checked={hmoDetails.is_hmo === "yes"}
+                    onChange={handleRadioChange}
+                  />
+                  <label class="form-check-label" for="hmoYes">
+                    YES
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoNo"
+                    value="no"
+                    checked={hmoDetails.is_hmo === "no"}
+                    onChange={handleRadioChange}
+                  />
+                  <label class="form-check-label" for="hmoNo">
+                    NO
+                  </label>
+                </div>
               </div>
-              <div className="col-sm-6">
-                <label for="address" className="form-label font-large">
-                  DISCOUNT DETAIL
-                </label>
-                <br />
-                <input
-                  type="text"
-                  className="full-input"
-                  id="discount_detail"
-                  name="discountDetail"
-                  value={discountDetail}
-                  onChange={setPersonal}
-                />
-                <br />
-              </div>
+              {hmoDetails.is_hmo === "yes" && (
+                <>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      onChange={(e) => handleSelectChange(e, "hmo_id")}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={hmoCompanies}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO Discount <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      onChange={(e) => handleSelectChange(e, "hmo_code")}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={hmoDiscounts}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Price <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceCash"
+                        value="cash"
+                        checked={hmoDetails.pricelist === "cash"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceCash">
+                        CASH
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceHMO"
+                        value="hmo"
+                        checked={hmoDetails.pricelist === "hmo"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceHMO">
+                        HMO
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Discount Code <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      id="discount_code"
+                      onChange={(e) => handleSelectChange(e, "discount_id")}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      options={discountList.filter((data) => data.id === "7")}
+                    />
+                  </div>
+                </>
+              )}
             </div>
+            {hmoDetails.is_hmo === "no" && (
+              <div className="row mt-4">
+                <div className="col-sm-6">
+                  <label for="address" className="form-label font-large">
+                    DISCOUNT CODE
+                  </label>
+                  <br />
+                  <select
+                    className="form-select"
+                    id="discount_code"
+                    name="discountId"
+                    value={discountId}
+                    onChange={setPersonal}
+                  >
+                    <option value="" selected>
+                      None
+                    </option>
+                    {listOfDiscount}
+                  </select>
+                  <br />
+                </div>
+                <div className="col-sm-6">
+                  <label for="address" className="form-label font-large">
+                    DISCOUNT DETAIL
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    className="full-input"
+                    id="discount_detail"
+                    name="discountDetail"
+                    value={discountDetail}
+                    onChange={setPersonal}
+                  />
+                  <br />
+                </div>
+              </div>
+            )}
             <div className="row small-gap">
               <div className="col-sm-6">
                 <label className="radio-header font-large">
@@ -885,7 +1114,7 @@ function AddPatient({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddPatient;
+export default AddPatient

@@ -117,6 +117,12 @@ function Form2({
   discountDetails,
   extractionDate,
   setExtractionDate,
+    hmoDetails,
+  setHmoDetails,
+  setHmoCompanies,
+  hmoCompanies,
+  hmoDiscounts,
+  setHmoDiscounts,
 }) {
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([]);
@@ -151,7 +157,7 @@ function Form2({
           testDetails.name = test.name;
           testDetails.categoryId = test.category_id;
           testDetails.labTestId = test.id;
-          testDetails.price = test.price;
+          testDetails.price = hmoDetails.pricelist === "hmo" ? test.hmo_price : test.price;
           testDetails.type = "lab";
           setAllLabServices((oldArray) => [...oldArray, testDetails]); // append each item to services
         });
@@ -415,6 +421,8 @@ function Form2({
           location_value = "Mobile Charge";
         }
 
+         let hmo_details = hmoDetails.is_hmo === "yes"? {...hmoDetails}:{}
+
         axios({
           method: "post",
           url: window.$link + "bookings/create",
@@ -456,6 +464,7 @@ function Form2({
             remarks: "",
             added_by: userId,
             extraction_date: extractionDate,
+            ...hmo_details
           },
         }).then(function (response) {
           // console.log(response);

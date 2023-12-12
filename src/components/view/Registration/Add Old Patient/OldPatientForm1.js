@@ -218,11 +218,12 @@ function OldPatientForm1({
               <button
                 className="proceed-btn"
                 onClick={() => {
-                  if (hmoDetails.is_hmo === "no") {
-                    navigation.next()
-                  } else {
-                    navigation.go("services")
-                  }
+                   navigation.next()
+                  // if (hmoDetails.is_hmo === "no") {
+                  //   navigation.next()
+                  // } else {
+                  //   navigation.go("services")
+                  // }
                 }}
               >
                 PROCEED

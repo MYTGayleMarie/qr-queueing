@@ -166,6 +166,7 @@ function Table({
         </tr>
       )
     } else if (type === "registration") {
+      console.log("rowdata", rowData)
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -174,55 +175,59 @@ function Table({
               data-heading={data.key}
               className={data.val.replace(/\s/g, "")}
             >
-              {totalCount == null && index == 0 ? "" : data.val}
+              {totalCount == null && (index == 0 || index == 1) ? "" : data.val}
             </td>
           ))}
-          {rowData[6].val == "unpaid" &&
-            rowData[0].val == "no_company_discount" && (
-              <td>
-                <button
-                  class="action-btn"
-                  role="button"
-                  onClick={() => link(row.id)}
-                >
-                  ADD PAYMENT
-                </button>
-                {/* <button
+          <td>
+  {rowData[7].val == "unpaid" &&
+            (rowData[0].val == "no_company_discount" ||
+            rowData[1].val ==
+              "no_hmo_discount" )&&(
+                <>
+                  <button
+                    class="action-btn"
+                    role="button"
+                    onClick={() => link(row.id)}
+                  >
+                    ADD PAYMENT
+                  </button>
+                  {/* <button
                   class="action-btn"
                   role="button"
                   onClick={() => editBooking(row.id, row.customer_id)}
                 >
                   UPDATE BOOKING
                 </button> */}
-                {(userId == 10 || userId == 18) && (
-                  <>
-                    <br />
-                    <button
-                      class="action-btn"
-                      role="button"
-                      onClick={() => editPatient(row.customer_id)}
-                    >
-                      UPDATE PATIENT
-                    </button>
-                  </>
-                )}
-                {(userId == 10 || userId == 18) && (
-                  <>
-                    <br />
-                    <button
-                      class="action-btn"
-                      role="button"
-                      onClick={() => deleteBooking(row.id)}
-                    >
-                      DELETE BOOKING
-                    </button>
-                  </>
-                )}
-              </td>
-            )}
-          {(rowData[6].val == "paid" ||
-            rowData[0].val === "with_company_discount") && (
-            <td>
+                  {(userId == 10 || userId == 18) && (
+                    <>
+                      <br />
+                      <button
+                        class="action-btn"
+                        role="button"
+                        onClick={() => editPatient(row.customer_id)}
+                      >
+                        UPDATE PATIENT
+                      </button>
+                    </>
+                  )}
+                  {(userId == 10 || userId == 18) && (
+                    <>
+                      <br />
+                      <button
+                        class="action-btn"
+                        role="button"
+                        onClick={() => deleteBooking(row.id)}
+                      >
+                        DELETE BOOKING
+                      </button>
+                    </>
+                  )}
+                </>
+              )}
+          {(rowData[7].val == "paid" ||
+            rowData[0].val === "with_company_discount" ||
+            rowData[0].val === "with_hmo_discount") && (
+            <>
               <button
                 class="action-btn"
                 role="button"
@@ -257,8 +262,10 @@ function Table({
                   </button>
                 </>
               )}
-            </td>
+            </>
           )}
+          </td>
+        
         </tr>
       )
     } else if (type === "medtech") {
@@ -2415,7 +2422,7 @@ function Table({
         <div className="search-table-container row">
           <div className="col-sm-12 d-flex justify-content-end">
             <select
-            name="year"
+              name="year"
               value={year}
               onChange={setFilter}
               disabled={roleId === "12"}
