@@ -97,7 +97,7 @@ function  Registration() {
               bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
-              bookingDetails.hmo_discount = booking.discount_code === null ? "NONE" : booking.discount_code; //tochange
+              bookingDetails.hmo_discount = booking.hmo_discount === null ? "NONE" : booking.hmo_discount; //tochange
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               
           
