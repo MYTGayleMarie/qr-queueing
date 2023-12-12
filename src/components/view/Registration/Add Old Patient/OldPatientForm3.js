@@ -119,6 +119,7 @@ function OldPatientForm3({
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([])
   React.useEffect(() => {
+    
     axios({
       method: "post",
       url: window.$link + "lab_tests/getAll",
@@ -151,6 +152,8 @@ function OldPatientForm3({
           testDetails.price =
             hmoDetails.pricelist === "hmo" ? test.hmo_price : test.price
           testDetails.type = "lab"
+        
+        
           setAllLabServices((oldArray) => [...oldArray, testDetails]) // append each item to services
         })
       })
@@ -261,6 +264,8 @@ function OldPatientForm3({
       })
   }, [])
 
+
+
   //Packages category
   const preEmploymentPackageBasic = allPackages.filter(
     (item) => item.category === "package1"
@@ -290,11 +295,14 @@ function OldPatientForm3({
   React.useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+   
   document.body.style = "background: white;"
 
   //states
   const [discountCode, setDiscountCode] = useState("")
-
+ 
+  console.log("hmo", hmoDetails)
   //customer details
   const [firstName, setFirstName] = useState("")
   const [middleName, setMiddleName] = useState("")
@@ -448,7 +456,7 @@ function OldPatientForm3({
           location_value = "Mobile Charge"
         }
 
-        let hmo_details = hmoDetails.is_hmo === "yes"? {...hmoDetails}:{}
+        let hmo_details = hmoDetails.is_hmo === "yes" ? { ...hmoDetails } : {}
 
         axios({
           method: "post",
@@ -492,7 +500,7 @@ function OldPatientForm3({
             remarks: "",
             added_by: userId,
             extraction_date: extractionDate,
-            ...hmo_details
+            ...hmo_details,
           },
         })
           .then(function (response) {
@@ -688,6 +696,7 @@ function OldPatientForm3({
         requester: userId,
       },
     }).then(function (response) {
+      console.log("response discount", response)
       setDiscountCode(response.data.data.discount.discount_code)
     })
   }, [discountDetails])
@@ -1059,6 +1068,21 @@ function OldPatientForm3({
                 </span>
               </div>
             )}
+          
+
+            {hmoDetails.is_hmo === "yes" && (
+              <div className="col d-flex justify-content-end">
+                <span className="total-price">
+                  <b>
+                    HMO DISCOUNT P
+                    {hmoDetails.discount_amount.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
+            )}
 
             {totalMDCharge != 0 && (
               <div className="col d-flex justify-content-end">
@@ -1103,7 +1127,34 @@ function OldPatientForm3({
             </div>
 
             <div className="row">
-              {isCompany == false &&
+              {hmoDetails.is_hmo === "yes" &&
+                // discountedTotalPrice != 0 &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                         (( totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge)) -
+                          parseFloat(hmoDetails.discount_amount)) -
+                          (((( totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge)) -
+                          parseFloat(hmoDetails.discount_amount)) * discount) / 100)
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                      <b>
+                       
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {hmoDetails.is_hmo === "no" && isCompany == false &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1123,7 +1174,7 @@ function OldPatientForm3({
                     </span>
                   </div>
                 )}
-              {isCompany == false && isPackage == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == false && isPackage == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1141,7 +1192,7 @@ function OldPatientForm3({
                   </span>
                 </div>
               )}
-              {isCompany == false && isService == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == false && isService == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1159,7 +1210,7 @@ function OldPatientForm3({
                   </span>
                 </div>
               )}
-              {isCompany == false &&
+              {hmoDetails.is_hmo === "no" &&isCompany == false &&
                 isService != true &&
                 totalPrice != 0 &&
                 isPackage != true &&
@@ -1181,7 +1232,7 @@ function OldPatientForm3({
                     </span>
                   </div>
                 )}
-              {isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&isCompany == true &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1201,7 +1252,7 @@ function OldPatientForm3({
                     </span>
                   </div>
                 )}
-              {isCompany == true && isPackage == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == true && isPackage == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1219,7 +1270,7 @@ function OldPatientForm3({
                   </span>
                 </div>
               )}
-              {isCompany == true && isService == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == true && isService == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1237,7 +1288,7 @@ function OldPatientForm3({
                   </span>
                 </div>
               )}
-              {isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&isCompany == true &&
                 isService != true &&
                 isPackage != true &&
                 totalPrice != 0 &&

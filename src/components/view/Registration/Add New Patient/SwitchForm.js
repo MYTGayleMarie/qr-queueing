@@ -58,6 +58,8 @@ function SwitchForm() {
     hmo_code: "",
     pricelist: "",
     discount_id: "",
+    discount_amount:"",
+    discount_type:"monetary"
   })
   const [hmoCompanies, setHmoCompanies] = useState([])
   const [hmoDiscounts, setHmoDiscounts] = useState([])

@@ -1023,6 +1023,20 @@ function Form2({
                     </b>
                   </span>
                 )}
+
+            {hmoDetails.is_hmo === "yes" && (
+              <div className="col d-flex justify-content-end">
+                <span className="total-price">
+                  <b>
+                    HMO DISCOUNT P
+                    {hmoDetails.discount_amount.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </b>
+                </span>
+              </div>
+            )}
               </div>
             </div>
 
@@ -1069,7 +1083,35 @@ function Form2({
             </div>
 
             <div className="row">
-              {isCompany == false &&
+               {hmoDetails.is_hmo === "yes" &&
+                // discountedTotalPrice != 0 &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                         (( totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge)) -
+                          parseFloat(hmoDetails.discount_amount)) -
+                          (((( totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge)) -
+                          parseFloat(hmoDetails.discount_amount)) * discount) / 100)
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                      <b>
+                       
+                      </b>
+                    </span>
+                  </div>
+                )}
+           
+              {hmoDetails.is_hmo === "no" &&isCompany == false &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1089,7 +1131,7 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {isCompany == false && isPackage == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == false && isPackage == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1107,7 +1149,7 @@ function Form2({
                   </span>
                 </div>
               )}
-              {isCompany == false && isService == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == false && isService == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1125,7 +1167,7 @@ function Form2({
                   </span>
                 </div>
               )}
-              {isCompany == false &&
+              {hmoDetails.is_hmo === "no" &&isCompany == false &&
                 isService != true &&
                 totalPrice != 0 &&
                 isPackage != true &&
@@ -1147,7 +1189,7 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&isCompany == true &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1167,7 +1209,7 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {isCompany == true && isPackage == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == true && isPackage == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1185,7 +1227,7 @@ function Form2({
                   </span>
                 </div>
               )}
-              {isCompany == true && isService == true && totalPrice != 0 && (
+              {hmoDetails.is_hmo === "no" &&isCompany == true && isService == true && totalPrice != 0 && (
                 <div className="col d-flex justify-content-end">
                   <span className="total-price">
                     <b>
@@ -1203,7 +1245,7 @@ function Form2({
                   </span>
                 </div>
               )}
-              {isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&isCompany == true &&
                 isService != true &&
                 isPackage != true &&
                 totalPrice != 0 &&

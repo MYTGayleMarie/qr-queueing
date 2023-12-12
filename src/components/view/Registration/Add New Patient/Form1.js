@@ -248,6 +248,14 @@ function AddPatient({
     if (name === "hmo_id") {
       fetchHMODiscounts(e.id)
     }
+    if(name === "hmo_code"){
+       setHmoDetails({ ...hmoDetails, [name]: e.id, discount_amount:e.percentage })
+     
+    }
+    if(name === "discount_id"){
+       setHmoDetails({ ...hmoDetails, [name]: e.id})
+       fetchDiscounts(e.id)
+    }
   }
 
   //get all companies with HMO
@@ -308,6 +316,35 @@ function AddPatient({
       })
   }
 
+   async function fetchDiscounts(id) {
+    axios({
+      method: "post",
+      url: window.$link + "discounts/show/"+id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        company_id: id,
+      },
+    })
+      .then(function (response) {
+         setCompanyId(response.data.data.discount.company_id)
+        setDiscount(response.data.data.discount.percentage)
+        setDiscountDetails(response.data.data.discount_details)
+        if (response.data.is_package === "1") {
+          setIsPackage("1")
+        }
+        if (response.data.is_service === "1") {
+          setIsService("1")
+        }
+      })
+      .catch(function (error) {
+        setHmoDiscounts([])
+        console.log("error", error)
+      })
+  }
+
   React.useEffect(() => {
     axios({
       method: "post",
@@ -352,7 +389,7 @@ function AddPatient({
       .catch(function (error) {
         console.log(error)
       })
-  }, [discountId])
+  }, [customer.discountId])
 
   React.useEffect(() => {
     setCompanyRemarks("")
