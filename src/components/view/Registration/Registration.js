@@ -97,7 +97,7 @@ function  Registration() {
               bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
-              bookingDetails.hmo_discount = booking.hmo_discount === null ? "NONE" : booking.hmo_discount; //tochange
+        
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
               
           
@@ -198,7 +198,7 @@ function  Registration() {
             type={'registration'}
             tableData={patientData}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT','', 'BOOKING ID', 'PATIENT ID','PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT','HMO DISCOUNT', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT','', 'BOOKING ID', 'PATIENT ID','PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
