@@ -1086,13 +1086,11 @@ function Form2({
                       <b>
                         GRANDTOTAL P{" "}
                         {(
-                          totalPrice +
+                          totalPrice -
+                          parseFloat(hmoDetails.discount_amount) +
                           parseFloat(serviceFee) +
                           parseFloat(totalMDCharge) -
-                          parseFloat(hmoDetails.discount_amount) -
-                          ((totalPrice +
-                            parseFloat(serviceFee) +
-                            parseFloat(totalMDCharge) -
+                          ((totalPrice -
                             parseFloat(hmoDetails.discount_amount)) *
                             discount) /
                             100
@@ -1100,6 +1098,7 @@ function Form2({
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}
+                      
                       </b>
                       <b></b>
                     </span>
