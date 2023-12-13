@@ -179,10 +179,9 @@ function Table({
             </td>
           ))}
           <td>
-  {rowData[7].val == "unpaid" &&
-            (rowData[0].val == "no_company_discount" ||
-            rowData[1].val ==
-              "no_hmo_discount" )&&(
+            {rowData[7].val == "unpaid" &&
+              (rowData[0].val == "no_company_discount" &&
+                rowData[1].val == "no_hmo_discount") && (
                 <>
                   <button
                     class="action-btn"
@@ -224,48 +223,47 @@ function Table({
                   )}
                 </>
               )}
-          {(rowData[7].val == "paid" ||
-            rowData[0].val === "with_company_discount" ||
-            rowData[0].val === "with_hmo_discount") && (
-            <>
-              <button
-                class="action-btn"
-                role="button"
-                onClick={() => print(row.id)}
-              >
-                PRINT BOOKING
-              </button>
-              {(userId == 10 ||
-                userId == 18 ||
-                userId == 5 ||
-                userId == 11) && (
-                <>
-                  <br />
-                  <button
-                    class="action-btn"
-                    role="button"
-                    onClick={() => editPatient(row.customer_id)}
-                  >
-                    UPDATE PATIENT
-                  </button>
-                </>
-              )}
-              {(userId == 10 || userId == 18) && (
-                <>
-                  <br />
-                  <button
-                    class="action-btn"
-                    role="button"
-                    onClick={() => deleteBooking(row.id)}
-                  >
-                    DELETE BOOKING
-                  </button>
-                </>
-              )}
-            </>
-          )}
+            {(rowData[7].val === "paid" ||
+              rowData[0].val === "with_company_discount" ||
+              rowData[1].val === "with_hmo_discount") && (
+              <>
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() => print(row.id)}
+                >
+                  PRINT BOOKING
+                </button>
+                {(userId == 10 ||
+                  userId == 18 ||
+                  userId == 5 ||
+                  userId == 11) && (
+                  <>
+                    <br />
+                    <button
+                      class="action-btn"
+                      role="button"
+                      onClick={() => editPatient(row.customer_id)}
+                    >
+                      UPDATE PATIENT
+                    </button>
+                  </>
+                )}
+                {(userId == 10 || userId == 18) && (
+                  <>
+                    <br />
+                    <button
+                      class="action-btn"
+                      role="button"
+                      onClick={() => deleteBooking(row.id)}
+                    >
+                      DELETE BOOKING
+                    </button>
+                  </>
+                )}
+              </>
+            )}
           </td>
-        
         </tr>
       )
     } else if (type === "medtech") {
