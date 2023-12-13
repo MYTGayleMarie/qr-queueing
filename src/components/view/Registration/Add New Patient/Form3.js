@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Button, Modal } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
-import { Navigate } from "react-router-dom";
+import React, { useState } from "react"
+import axios from "axios"
+import { Button, Modal } from "react-bootstrap"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common"
+import { Navigate } from "react-router-dom"
 
 //css
-import "./Form3.css";
+import "./Form3.css"
 
 //components
-import Navbar from "../../../Navbar";
-import Header from "../../../Header.js";
-import ServiceItems from "../../../ServiceItems";
+import Navbar from "../../../Navbar"
+import Header from "../../../Header.js"
+import ServiceItems from "../../../ServiceItems"
 import {
   getAnnualWellnessPackageBasic,
   getPregnancyLabPackage,
@@ -43,20 +43,20 @@ import {
   getUltrasound,
   getPromo,
   getOtherTests,
-} from "../../../../services/services";
+} from "../../../../services/services"
 
 /*********************************
  * FUNCTIONS
  ********************************/
 
 //VARIABLES
-var itemDetails;
-var newLabTotal = 0;
-var newPackageTotal = 0;
-var labDiscountedTotal = 0;
-var packageDiscountedTotal = 0;
-const userToken = getToken();
-const userId = getUser();
+var itemDetails
+var newLabTotal = 0
+var newPackageTotal = 0
+var labDiscountedTotal = 0
+var packageDiscountedTotal = 0
+const userToken = getToken()
+const userId = getUser()
 
 // //Packages
 // const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -117,7 +117,7 @@ function Form2({
   discountDetails,
   extractionDate,
   setExtractionDate,
-    hmoDetails,
+  hmoDetails,
   setHmoDetails,
   setHmoCompanies,
   hmoCompanies,
@@ -125,7 +125,7 @@ function Form2({
   setHmoDiscounts,
 }) {
   //get all lab tests
-  const [allLabServices, setAllLabServices] = useState([]);
+  const [allLabServices, setAllLabServices] = useState([])
   React.useEffect(() => {
     axios({
       method: "post",
@@ -138,13 +138,13 @@ function Form2({
       },
     })
       .then((response) => {
-        console.log(response);
+        console.log(response)
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
-          .sort((x, y) => x.id - y.id);
+          .sort((x, y) => x.id - y.id)
         // console.log(tests)
         tests.map((test, index) => {
-          var testDetails = {};
+          var testDetails = {}
           // if (test.id == 129){ //otherTest
           //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+23;
           // } else if (test.id == 119||test.id==120||test.id==121||test.id == 117){ //promo
@@ -153,74 +153,74 @@ function Form2({
           //     testDetails.key = test.name.replace(/[2)}{(,&-\s/]/g, '')+"_"+test.category_id;
           // }
           testDetails.key =
-            test.name.replace(/[2)}{(.,&-\s/]/g, "") + "_" + test.category_id;
-          testDetails.name = test.name;
-          testDetails.categoryId = test.category_id;
-          testDetails.labTestId = test.id;
-          testDetails.price = hmoDetails.pricelist === "hmo" ? test.hmo_price : test.price;
-          testDetails.type = "lab";
-          setAllLabServices((oldArray) => [...oldArray, testDetails]); // append each item to services
-        });
+            test.name.replace(/[2)}{(.,&-\s/]/g, "") + "_" + test.category_id
+          testDetails.name = test.name
+          testDetails.categoryId = test.category_id
+          testDetails.labTestId = test.id
+          testDetails.price =
+            hmoDetails.pricelist === "hmo" ? test.hmo_price : test.price
+          testDetails.type = "lab"
+          setAllLabServices((oldArray) => [...oldArray, testDetails]) // append each item to services
+        })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
+
 
   // // Lab Tests Categories
   const clinicalMicroscopy = allLabServices.filter(
     (item) => item.categoryId == 1
-  );
+  )
   const clinicalUrinalysis = allLabServices.filter(
     (item) => item.categoryId == 23
-  );
+  )
   const clinicalFecalysis = allLabServices.filter(
     (item) => item.categoryId == 24
-  );
-  const hematology = allLabServices.filter((item) => item.categoryId == 2);
-  const coaguation = allLabServices.filter((item) => item.categoryId == 25);
+  )
+  const hematology = allLabServices.filter((item) => item.categoryId == 2)
+  const coaguation = allLabServices.filter((item) => item.categoryId == 25)
   const electrolytes = allLabServices.filter(
     (item) => item.categoryId == 3 || item.categoryId == 4
-  );
-  const glucoseTests = allLabServices.filter((item) => item.categoryId == 5);
+  )
+  const glucoseTests = allLabServices.filter((item) => item.categoryId == 5)
   const kidneyFunctionTests = allLabServices.filter(
     (item) => item.categoryId == 6
-  );
-  const lipidProfile = allLabServices.filter((item) => item.categoryId == 7);
-  const pancreaticTests = allLabServices.filter((item) => item.categoryId == 8);
+  )
+  const lipidProfile = allLabServices.filter((item) => item.categoryId == 7)
+  const pancreaticTests = allLabServices.filter((item) => item.categoryId == 8)
   const liverFunctionTests = allLabServices.filter(
     (item) => item.categoryId == 9
-  );
-  const immunology = allLabServices.filter((item) => item.categoryId == 11);
+  )
+  const immunology = allLabServices.filter((item) => item.categoryId == 11)
   const hepatitisProfileScreening = allLabServices.filter(
     (item) => item.categoryId == 12
-  );
-  const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13);
-  const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14);
-  const histopathology = allLabServices.filter((item) => item.categoryId == 15);
-  const COVIDRapidTests = allLabServices.filter(
-    (item) => item.categoryId == 16
-  );
-  const microbiology = allLabServices.filter((item) => item.categoryId == 17);
-  const xray = allLabServices.filter((item) => item.categoryId == 18);
-  const cardiology = allLabServices.filter((item) => item.categoryId == 19);
+  )
+  const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13)
+  const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14)
+  const histopathology = allLabServices.filter((item) => item.categoryId == 15)
+  const COVIDRapidTests = allLabServices.filter((item) => item.categoryId == 16)
+  const microbiology = allLabServices.filter((item) => item.categoryId == 17)
+  const xray = allLabServices.filter((item) => item.categoryId == 18)
+  const cardiology = allLabServices.filter((item) => item.categoryId == 19)
   const medicalCertificate = allLabServices.filter(
     (item) => item.categoryId == 20
-  );
-  const ultrasound = allLabServices.filter((item) => item.categoryId == 21);
+  )
+  const ultrasound = allLabServices.filter((item) => item.categoryId == 21)
   const promo = allLabServices.filter(
     (item) =>
       item.labTestId == 119 ||
       item.labTestId == 120 ||
       item.labTestId == 121 ||
       item.labTestId == 117
-  );
+  )
   const otherTests = allLabServices.filter(
     (item) => item.categoryId == 29 || item.categoryId == 22
-  );
+  )
 
   //get all packages
-  const [allPackages, setAllPackages] = useState([]);
+  const [allPackages, setAllPackages] = useState([])
   React.useEffect(() => {
     axios({
       method: "post",
@@ -233,100 +233,98 @@ function Form2({
       },
     })
       .then((response) => {
-        const packagesArray = response.data.packages.sort(
-          (x, y) => x.id - y.id
-        );
-        console.log(packagesArray);
+        const packagesArray = response.data.packages.sort((x, y) => x.id - y.id)
+       
         packagesArray.map((item, index) => {
           // console.log(item)
-          var packageDetails = {};
-          var packageCode = "";
+          var packageDetails = {}
+          var packageCode = ""
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
-            packageCode = "package1";
+            packageCode = "package1"
           } else if (
             item.id == 9 ||
             item.id == 10 ||
             item.id == 11 ||
             item.id == 45
           ) {
-            packageCode = "package2";
+            packageCode = "package2"
           } else if (item.id == 4) {
-            packageCode = "package3";
+            packageCode = "package3"
           } else if (item.id == 12 || item.id == 13 || item.id == 14) {
-            packageCode = "package4";
+            packageCode = "package4"
           } else {
-            packageCode = "package" + item.id;
+            packageCode = "package" + item.id
           }
-          packageDetails.category = packageCode;
+          packageDetails.category = packageCode
           packageDetails.key =
             item.name.replace(/[1234567890)}{(,-\s/]/g, "") +
             item.id +
             "_" +
-            "package";
-          packageDetails.name = item.name;
+            "package"
+          packageDetails.name = item.name
 
-          packageDetails.labTestId = item.id;
-          packageDetails.price = item.price;
-          packageDetails.type = "package";
-          setAllPackages((oldArray) => [...oldArray, packageDetails]); // append each item to packages
-        });
+          packageDetails.labTestId = item.id
+          packageDetails.price = item.price
+          packageDetails.type = "package"
+          setAllPackages((oldArray) => [...oldArray, packageDetails]) // append each item to packages
+        })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   //Packages category
   const preEmploymentPackageBasic = allPackages.filter(
     (item) => item.category === "package1"
-  );
+  )
   const preEmploymentPackageDiscount = allPackages.filter(
     (item) => item.category === "package2"
-  );
+  )
   const pregnancyLabPackage = allPackages.filter(
     (item) => item.category === "package3"
-  );
+  )
   const annualWellnessPackageBasic = allPackages.filter(
     (item) => item.category === "package4"
-  );
+  )
   const thyroidTestPackage = allPackages.filter(
     (item) => item.category === "package5"
-  );
+  )
   const annualWellnessPackagePremium = allPackages.filter(
     (item) => item.category === "package6"
-  );
+  )
   const liverFunctionTest = allPackages.filter(
     (item) => item.category === "package7"
-  );
+  )
   const diabetesAndCholesterolPackage = allPackages.filter(
     (item) => item.category === "package8"
-  );
+  )
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  document.body.style = "background: white;";
+    window.scrollTo(0, 0)
+  }, [])
+  document.body.style = "background: white;"
 
-  const [bookingId, setBookingId] = useState("");
+  const [bookingId, setBookingId] = useState("")
 
   //states
-  const [discountCode, setDiscountCode] = useState("");
+  const [discountCode, setDiscountCode] = useState("")
 
   //Redirection
-  const [redirect, setRedirect] = useState(false);
-  const [print, setPrint] = useState(false);
+  const [redirect, setRedirect] = useState(false)
+  const [print, setPrint] = useState(false)
 
   //Single Click
-  const [isClicked, setClicked] = useState(false);
+  const [isClicked, setClicked] = useState(false)
 
-  var totalMDCharge = 0;
+  var totalMDCharge = 0
 
   if (mdCharge.physical_exam == true) {
-    totalMDCharge += 50.0;
+    totalMDCharge += 50.0
   }
 
   if (mdCharge.medical_certificate == true) {
-    totalMDCharge += 50.0;
+    totalMDCharge += 50.0
   }
 
   //functions
@@ -339,17 +337,17 @@ function Form2({
           labTestId: data.labTestId,
           price: data.price,
           type: data.type,
-        };
-        return itemDetails;
+        }
+        return itemDetails
       }
-    });
+    })
   }
 
   function submit(e, customer, location, services, totalPrice) {
-    e.preventDefault();
+    e.preventDefault()
 
     if (isClicked == false) {
-      setClicked(true);
+      setClicked(true)
       axios({
         method: "post",
         url: window.$link + "customers/create",
@@ -378,50 +376,50 @@ function Form2({
         },
       }).then(function (response) {
         // console.log(response);
-        toast.success(response.data.message.success);
-        var packageId = [];
-        var packagePrices = [];
-        var testId = [];
-        var labPrices = [];
-        var location_value = "";
+        toast.success(response.data.message.success)
+        var packageId = []
+        var packagePrices = []
+        var testId = []
+        var labPrices = []
+        var location_value = ""
 
         services.map((data, index) => {
           if (data.type === "package") {
-            packageId.push(data.labTestId);
-            packagePrices.push(data.price);
+            packageId.push(data.labTestId)
+            packagePrices.push(data.price)
           } else if (data.type === "lab") {
-            testId.push(data.labTestId);
-            labPrices.push(data.price);
+            testId.push(data.labTestId)
+            labPrices.push(data.price)
           }
-        });
+        })
 
-        var prices = labPrices.concat(packagePrices);
+        var prices = labPrices.concat(packagePrices)
 
-        var extractedDates = [];
-        var testStarts = [];
-        var testFinishes = [];
-        var resultDates = [];
-        var fileResults = [];
-        var finalMdCharge = [];
+        var extractedDates = []
+        var testStarts = []
+        var testFinishes = []
+        var resultDates = []
+        var fileResults = []
+        var finalMdCharge = []
 
         if (mdCharge.physical_exam == true) {
-          finalMdCharge.push("physical exam");
+          finalMdCharge.push("physical exam")
         }
         if (mdCharge.medical_certificate == true) {
-          finalMdCharge.push("medical certificate");
+          finalMdCharge.push("medical certificate")
         }
 
         if (location === "3") {
-          location_value = "Company";
+          location_value = "Company"
         }
         if (location === "0" || location === "1" || location === "2") {
-          location_value = "Home Service";
+          location_value = "Home Service"
         }
         if (location === "4") {
-          location_value = "Mobile Charge";
+          location_value = "Mobile Charge"
         }
 
-         let hmo_details = hmoDetails.is_hmo === "yes"? {...hmoDetails}:{}
+        let hmo_details = hmoDetails.is_hmo === "yes" ? { ...hmoDetails } : {}
 
         axios({
           method: "post",
@@ -438,7 +436,7 @@ function Form2({
             type: customer.serviceLocation,
             result: customer.result,
             total_amount: totalPrice,
-            discount_reference_no: customer.discountDetail,
+            discount_reference_no: customer.senior_id !== "" ? customer.senior_id : customer.pwd_id !== "" ? customer.pwd_id:"",
             home_service_fee: serviceFee,
             service_location: location_value,
             md_charge: finalMdCharge,
@@ -464,49 +462,49 @@ function Form2({
             remarks: "",
             added_by: userId,
             extraction_date: extractionDate,
-            ...hmo_details
+            ...hmo_details,
           },
         }).then(function (response) {
           // console.log(response);
-          setBookingId(response.data.data.booking_id);
-          toast.success(response.data.message.success);
+          setBookingId(response.data.data.booking_id)
+          toast.success(response.data.message.success)
 
           if (isCompany === false) {
             setTimeout(function () {
-              setRedirect(true);
-            }, 2000);
+              setRedirect(true)
+            }, 2000)
           } else {
-            setPrint(true);
+            setPrint(true)
           }
-        });
-        handleClose();
-      });
+        })
+        handleClose()
+      })
     }
   }
 
   //Modal
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   //Checked Services
-  var totalPrice = 0;
-  var discountedTotalPrice = 0;
-  const asArray = Object.entries(service);
-  const checkedServices = asArray.filter(([key, value]) => value == true);
-  var checkedServicesDetails = [];
+  var totalPrice = 0
+  var discountedTotalPrice = 0
+  const asArray = Object.entries(service)
+  const checkedServices = asArray.filter(([key, value]) => value == true)
+  var checkedServicesDetails = []
 
   checkedServices.map((data, index) => {
-    var categoryDetails = data[0].split("_");
-    var categoryId = parseInt(categoryDetails[1]);
+    var categoryDetails = data[0].split("_")
+    var categoryId = parseInt(categoryDetails[1])
 
     //packages
     switch (categoryDetails[1]) {
       case "package":
-        getDetails(allPackages, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(allPackages, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       // case 'package1':
       //   getDetails(preEmploymentPackageBasic, data[0]);
       //   checkedServicesDetails.push(itemDetails);
@@ -544,108 +542,108 @@ function Form2({
     //lab
     switch (categoryId) {
       case 1:
-        getDetails(clinicalMicroscopy, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalMicroscopy, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 2:
-        getDetails(hematology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(hematology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 3:
-        getDetails(electrolytes, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(electrolytes, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 4:
-        getDetails(electrolytes, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(electrolytes, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 5:
-        getDetails(glucoseTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(glucoseTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 6:
-        getDetails(kidneyFunctionTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(kidneyFunctionTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 7:
-        getDetails(lipidProfile, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(lipidProfile, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 8:
-        getDetails(pancreaticTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(pancreaticTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 9:
-        getDetails(liverFunctionTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(liverFunctionTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 11:
-        getDetails(immunology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(immunology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 12:
-        getDetails(hepatitisProfileScreening, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(hepatitisProfileScreening, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 13:
-        getDetails(thyroidProfile, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(thyroidProfile, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 14:
-        getDetails(tumorMarkers, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(tumorMarkers, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 15:
-        getDetails(histopathology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(histopathology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 16:
-        getDetails(COVIDRapidTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(COVIDRapidTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 17:
-        getDetails(microbiology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(microbiology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 18:
-        getDetails(xray, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(xray, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 19:
-        getDetails(cardiology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(cardiology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 20:
-        getDetails(medicalCertificate, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(medicalCertificate, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 21:
-        getDetails(ultrasound, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(ultrasound, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       // case 22:
       //   getDetails(promo, data[0]);
       //   checkedServicesDetails.push(itemDetails);
       //   break;
       case 22:
-        getDetails(otherTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(otherTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 23:
-        getDetails(clinicalUrinalysis, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalUrinalysis, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 24:
-        getDetails(clinicalFecalysis, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalFecalysis, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
 
-        case 25:
-          getDetails(coaguation, data[0]);
-          checkedServicesDetails.push(itemDetails);
-          break;
+      case 25:
+        getDetails(coaguation, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
     }
-  });
+  })
 
   React.useEffect(() => {
     axios({
@@ -658,43 +656,43 @@ function Form2({
         requester: userId,
       },
     }).then(function (response) {
-      setDiscountCode(response.data.data.discount.discount_code);
-    });
-  }, [discountDetails]);
+      setDiscountCode(response.data.data.discount.discount_code)
+    })
+  }, [discountDetails])
 
   //Total discount labs/packages
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
-        labDiscountedTotal = 0;
-        packageDiscountedTotal = 0;
+        labDiscountedTotal = 0
+        packageDiscountedTotal = 0
       }
       if (discountDetails != null) {
         discountDetails.map((detail) => {
           if (data.type == "lab" && detail.type == "service") {
             if (data.labTestId == detail.source_id) {
-              discountedTotalPrice += parseFloat(data.price);
+              discountedTotalPrice += parseFloat(data.price)
             }
           } else if (data.type == "package" && detail.type == "package") {
             if (data.packageId == detail.source_id) {
-              discountedTotalPrice += parseFloat(data.price);
+              discountedTotalPrice += parseFloat(data.price)
             }
           }
-        });
+        })
       }
-    });
+    })
   }
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
-        newLabTotal = 0;
-        labDiscountedTotal = 0;
-        newPackageTotal = 0;
-        packageDiscountedTotal = 0;
-        setLabPrice(0);
-        setPackagePrice(0);
+        newLabTotal = 0
+        labDiscountedTotal = 0
+        newPackageTotal = 0
+        packageDiscountedTotal = 0
+        setLabPrice(0)
+        setPackagePrice(0)
       }
 
       if (data.type == "lab") {
@@ -704,13 +702,13 @@ function Form2({
               detail.source_id != data.labTestId &&
               detail.type == "service"
             ) {
-              newLabTotal += parseFloat(data.price);
-              setLabPrice(newLabTotal);
+              newLabTotal += parseFloat(data.price)
+              setLabPrice(newLabTotal)
             }
-          });
+          })
         } else {
-          newLabTotal += parseFloat(data.price);
-          setLabPrice(newLabTotal);
+          newLabTotal += parseFloat(data.price)
+          setLabPrice(newLabTotal)
         }
       } else if (data.type == "package") {
         if (discountDetails != null) {
@@ -719,23 +717,23 @@ function Form2({
               detail.source_id != data.labTestId &&
               detail.type == "package"
             ) {
-              newPackageTotal += parseFloat(data.price);
-              setPackagePrice(newPackageTotal);
+              newPackageTotal += parseFloat(data.price)
+              setPackagePrice(newPackageTotal)
             }
-          });
+          })
         } else {
-          newPackageTotal += parseFloat(data.price);
-          setPackagePrice(newPackageTotal);
+          newPackageTotal += parseFloat(data.price)
+          setPackagePrice(newPackageTotal)
         }
       }
-      totalPrice += parseFloat(data.price);
-    });
+      totalPrice += parseFloat(data.price)
+    })
   }
 
   if (print == true) {
-    return <Navigate to={"/print-booking/" + bookingId} />;
+    return <Navigate to={"/print-booking/" + bookingId} />
   } else if (redirect == true) {
-    return <Navigate to={"/add-payment/" + bookingId} />;
+    return <Navigate to={"/add-payment/" + bookingId} />
   }
 
   return (
@@ -788,7 +786,6 @@ function Form2({
                 formData={service}
                 setForm={setServices}
               />
-
 
               <ServiceItems
                 category="ELECTROLYTES"
@@ -1023,7 +1020,8 @@ function Form2({
                     </b>
                   </span>
                 )}
-
+              </div>
+            </div>
             {hmoDetails.is_hmo === "yes" && (
               <div className="col d-flex justify-content-end">
                 <span className="total-price">
@@ -1037,9 +1035,6 @@ function Form2({
                 </span>
               </div>
             )}
-              </div>
-            </div>
-
             {totalMDCharge != 0 && (
               <div className="col d-flex justify-content-end">
                 <span className="total-price">
@@ -1083,7 +1078,7 @@ function Form2({
             </div>
 
             <div className="row">
-               {hmoDetails.is_hmo === "yes" &&
+              {hmoDetails.is_hmo === "yes" &&
                 // discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1091,27 +1086,28 @@ function Form2({
                       <b>
                         GRANDTOTAL P{" "}
                         {(
-                         (( totalPrice +
+                          totalPrice +
                           parseFloat(serviceFee) +
-                          parseFloat(totalMDCharge)) -
-                          parseFloat(hmoDetails.discount_amount)) -
-                          (((( totalPrice +
-                          parseFloat(serviceFee) +
-                          parseFloat(totalMDCharge)) -
-                          parseFloat(hmoDetails.discount_amount)) * discount) / 100)
+                          parseFloat(totalMDCharge) -
+                          parseFloat(hmoDetails.discount_amount) -
+                          ((totalPrice +
+                            parseFloat(serviceFee) +
+                            parseFloat(totalMDCharge) -
+                            parseFloat(hmoDetails.discount_amount)) *
+                            discount) /
+                            100
                         ).toLocaleString("en-US", {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}
                       </b>
-                      <b>
-                       
-                      </b>
+                      <b></b>
                     </span>
                   </div>
                 )}
-           
-              {hmoDetails.is_hmo === "no" &&isCompany == false &&
+
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == false &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1131,43 +1127,50 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {hmoDetails.is_hmo === "no" &&isCompany == false && isPackage == true && totalPrice != 0 && (
-                <div className="col d-flex justify-content-end">
-                  <span className="total-price">
-                    <b>
-                      GRANDTOTAL P{" "}
-                      {(
-                        totalPrice +
-                        parseFloat(serviceFee) +
-                        parseFloat(totalMDCharge) -
-                        (packagePrice * discount) / 100
-                      ).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </b>
-                  </span>
-                </div>
-              )}
-              {hmoDetails.is_hmo === "no" &&isCompany == false && isService == true && totalPrice != 0 && (
-                <div className="col d-flex justify-content-end">
-                  <span className="total-price">
-                    <b>
-                      GRANDTOTAL P{" "}
-                      {(
-                        totalPrice +
-                        parseFloat(serviceFee) +
-                        parseFloat(totalMDCharge) -
-                        (labPrice * discount) / 100
-                      ).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </b>
-                  </span>
-                </div>
-              )}
-              {hmoDetails.is_hmo === "no" &&isCompany == false &&
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == false &&
+                isPackage == true &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          (packagePrice * discount) / 100
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == false &&
+                isService == true &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) -
+                          (labPrice * discount) / 100
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == false &&
                 isService != true &&
                 totalPrice != 0 &&
                 isPackage != true &&
@@ -1189,7 +1192,8 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {hmoDetails.is_hmo === "no" &&isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == true &&
                 discountedTotalPrice != 0 &&
                 totalPrice != 0 && (
                   <div className="col d-flex justify-content-end">
@@ -1209,43 +1213,50 @@ function Form2({
                     </span>
                   </div>
                 )}
-              {hmoDetails.is_hmo === "no" &&isCompany == true && isPackage == true && totalPrice != 0 && (
-                <div className="col d-flex justify-content-end">
-                  <span className="total-price">
-                    <b>
-                      GRANDTOTAL P{" "}
-                      {(
-                        totalPrice +
-                        parseFloat(serviceFee) +
-                        parseFloat(totalMDCharge) +
-                        (packagePrice - discount)
-                      ).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </b>
-                  </span>
-                </div>
-              )}
-              {hmoDetails.is_hmo === "no" &&isCompany == true && isService == true && totalPrice != 0 && (
-                <div className="col d-flex justify-content-end">
-                  <span className="total-price">
-                    <b>
-                      GRANDTOTAL P{" "}
-                      {(
-                        totalPrice +
-                        parseFloat(serviceFee) +
-                        parseFloat(totalMDCharge) +
-                        (labPrice - discount)
-                      ).toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </b>
-                  </span>
-                </div>
-              )}
-              {hmoDetails.is_hmo === "no" &&isCompany == true &&
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == true &&
+                isPackage == true &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) +
+                          (packagePrice - discount)
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == true &&
+                isService == true &&
+                totalPrice != 0 && (
+                  <div className="col d-flex justify-content-end">
+                    <span className="total-price">
+                      <b>
+                        GRANDTOTAL P{" "}
+                        {(
+                          totalPrice +
+                          parseFloat(serviceFee) +
+                          parseFloat(totalMDCharge) +
+                          (labPrice - discount)
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </b>
+                    </span>
+                  </div>
+                )}
+              {hmoDetails.is_hmo === "no" &&
+                isCompany == true &&
                 isService != true &&
                 isPackage != true &&
                 totalPrice != 0 &&
@@ -1324,7 +1335,7 @@ function Form2({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Form2;
+export default Form2

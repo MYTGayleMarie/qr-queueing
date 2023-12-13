@@ -86,6 +86,7 @@ function AddPatient({
   function proceed() {
     if (
       fname != "" &&
+      mname !== "" &&
       lname != "" &&
       sex != "" &&
       birthDate != "" &&
@@ -95,20 +96,31 @@ function AddPatient({
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
-      ((isSenior && !/^$|\s+/.test(senior_id) && discountId!=="") || !isSenior) &&
-      ((isPWD && !/^$|\s+/.test(pwd_id)  && discountId!=="") || !isPWD) &&
+      ((isSenior &&
+        !/^$|\s+/.test(senior_id) &&
+        (discountId !== "" || hmoDetails.discount_id !== "")) ||
+        !isSenior) &&
+      ((isPWD &&
+        !/^$|\s+/.test(pwd_id) &&
+        (discountId !== "" || hmoDetails.discount_id !== "")) ||
+        !isPWD) &&
       ((serviceLocation === "home service" &&
         location !== "" &&
         serviceFee !== "" &&
         serviceFee !== 0) ||
-        serviceLocation === "clinic")
+        serviceLocation === "clinic") &&
+      (hmoDetails.is_hmo === "no" ||
+        (hmoDetails.is_hmo === "yes" &&
+          hmoDetails.hmo_id !== "" &&
+          hmoDetails.hmo_code !== "" &&
+          hmoDetails.pricelist !== ""))
     ) {
       return (
         <div className="d-flex justify-content-end mb-5">
           <button
             className="proceed-btn"
             onClick={() => {
-               navigation.next()
+              navigation.next()
               // if (hmoDetails.is_hmo === "no") {
               //   navigation.next()
               // } else {
@@ -243,18 +255,37 @@ function AddPatient({
   }
   //event handler for hmo select buttons
   function handleSelectChange(e, name) {
-    setHmoDetails({ ...hmoDetails, [name]: e.id })
+    if (e === null) {
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "" })
+        setDiscount(0)
+        setDiscountDetails(null)
+        setCompanyId("")
+        setIsService("")
+        setIsPackage("")
+      }
+      if (name === "hmo_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "", hmo_code: "", discount_amount:"",hmo_discount_details:{} })
+      }
+    } else {
+      setHmoDetails({ ...hmoDetails, [name]: e.id })
 
-    if (name === "hmo_id") {
-      fetchHMODiscounts(e.id)
-    }
-    if(name === "hmo_code"){
-       setHmoDetails({ ...hmoDetails, [name]: e.id, discount_amount:e.percentage })
-     
-    }
-    if(name === "discount_id"){
-       setHmoDetails({ ...hmoDetails, [name]: e.id})
-       fetchDiscounts(e.id)
+      if (name === "hmo_id") {
+        fetchHMODiscounts(e.id)
+          setHmoDetails({ ...hmoDetails, [name]: e.id, hmo_code:"",discount_amount:"", hmo_discount_details:{} })
+      }
+      if (name === "hmo_code") {
+        setHmoDetails({
+          ...hmoDetails,
+          [name]: e.id,
+          discount_amount: e.percentage,
+          hmo_discount_details:e
+        })
+      }
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: e.id })
+        fetchDiscounts(e.id)
+      }
     }
   }
 
@@ -316,10 +347,10 @@ function AddPatient({
       })
   }
 
-   async function fetchDiscounts(id) {
+  async function fetchDiscounts(id) {
     axios({
       method: "post",
-      url: window.$link + "discounts/show/"+id,
+      url: window.$link + "discounts/show/" + id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -329,7 +360,7 @@ function AddPatient({
       },
     })
       .then(function (response) {
-         setCompanyId(response.data.data.discount.company_id)
+        setCompanyId(response.data.data.discount.company_id)
         setDiscount(response.data.data.discount.percentage)
         setDiscountDetails(response.data.data.discount_details)
         if (response.data.is_package === "1") {
@@ -357,7 +388,18 @@ function AddPatient({
       },
     })
       .then(function (response) {
-        setDiscountList(response.data.discounts)
+        let discount_list = []
+        response.data.discounts.map((data) => {
+          discount_list.push({
+            ...data,
+            label: `${data.description} (${data.discount_code})`,
+            value: data.id,
+            id: data.id,
+          })
+        })
+        console.log("discountList", discount_list)
+        setDiscountList(discount_list)
+        // setDiscountList(response.data.discounts)
       })
       .catch(function (error) {
         // console.log(error);
@@ -389,7 +431,7 @@ function AddPatient({
       .catch(function (error) {
         console.log(error)
       })
-  }, [customer.discountId])
+  }, [discountId])
 
   React.useEffect(() => {
     setCompanyRemarks("")
@@ -559,7 +601,7 @@ function AddPatient({
               </div>
               <div className="col-sm-4">
                 <label for="fname" className="form-label font-large">
-                  MIDDLE NAME
+                  MIDDLE NAME <span className="required">*</span>
                 </label>
 
                 <input
@@ -855,7 +897,7 @@ function AddPatient({
                       className="basic-single"
                       classNamePrefix="select"
                       onChange={(e) => handleSelectChange(e, "hmo_id")}
-                      isClearable={false}
+                      isClearable={true}
                       isRtl={false}
                       isSearchable={true}
                       name="hmo"
@@ -877,6 +919,7 @@ function AddPatient({
                       isSearchable={true}
                       name="hmo"
                       options={hmoDiscounts}
+                      value={hmoDetails.hmo_discount_details}
                     />
                   </div>
                   <div className="col-sm-5 input-group-sm mt-3">
@@ -925,7 +968,7 @@ function AddPatient({
                       classNamePrefix="select"
                       id="discount_code"
                       onChange={(e) => handleSelectChange(e, "discount_id")}
-                      isClearable={false}
+                      isClearable={true}
                       isRtl={false}
                       isSearchable={true}
                       options={discountList.filter((data) => data.id === "7")}
@@ -934,6 +977,7 @@ function AddPatient({
                 </>
               )}
             </div>
+
             {hmoDetails.is_hmo === "no" && (
               <div className="row mt-4">
                 <div className="col-sm-6">
