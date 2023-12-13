@@ -131,7 +131,7 @@ function OldPatientForm3({
       },
     })
       .then((response) => {
-        console.log("hmo", hmoDetails)
+       
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
           .sort((x, y) => x.id - y.id)
@@ -301,8 +301,7 @@ function OldPatientForm3({
 
   //states
   const [discountCode, setDiscountCode] = useState("")
- 
-  console.log("hmo", hmoDetails)
+
   //customer details
   const [firstName, setFirstName] = useState("")
   const [middleName, setMiddleName] = useState("")
@@ -476,7 +475,7 @@ function OldPatientForm3({
             result: customer.result,
             total_amount: totalPrice,
             grand_total: "",
-            discount_reference_no: customer.discountDetail,
+            discount_reference_no: seniorId !== "" ? seniorId : pwdId !== "" ? pwdId:"",
             home_service_fee: serviceFee,
             md_charge: finalMdCharge,
             status: "pending",
@@ -696,7 +695,7 @@ function OldPatientForm3({
         requester: userId,
       },
     }).then(function (response) {
-      console.log("response discount", response)
+   
       setDiscountCode(response.data.data.discount.discount_code)
     })
   }, [discountDetails])

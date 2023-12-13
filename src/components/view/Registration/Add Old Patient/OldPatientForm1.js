@@ -151,7 +151,7 @@ function OldPatientForm1({
   async function fetchDiscounts(id) {
     axios({
       method: "post",
-      url: window.$link + "discounts/show/"+id,
+      url: window.$link + "discounts/show/" + id,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -161,7 +161,7 @@ function OldPatientForm1({
       },
     })
       .then(function (response) {
-         setCompanyId(response.data.data.discount.company_id)
+        setCompanyId(response.data.data.discount.company_id)
         setDiscount(response.data.data.discount.percentage)
         setDiscountDetails(response.data.data.discount_details)
         if (response.data.is_package === "1") {
@@ -238,7 +238,12 @@ function OldPatientForm1({
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
-      referral != ""
+      referral != "" &&
+      (hmoDetails.is_hmo === "no" ||
+        (hmoDetails.is_hmo === "yes" &&
+          hmoDetails.hmo_id !== "" &&
+          hmoDetails.hmo_code !== "" &&
+          hmoDetails.pricelist !== ""))
     ) {
       if (discountId !== "7") {
         return (
@@ -247,7 +252,7 @@ function OldPatientForm1({
               <button
                 className="proceed-btn"
                 onClick={() => {
-                   navigation.next()
+                  navigation.next()
                   // if (hmoDetails.is_hmo === "no") {
                   //   navigation.next()
                   // } else {
@@ -293,20 +298,38 @@ function OldPatientForm1({
   }
   //event handler for hmo select buttons
   function handleSelectChange(e, name) {
-    setHmoDetails({ ...hmoDetails, [name]: e.id })
+    if (e === null) {
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "" })
+        setDiscount(0)
+        setDiscountDetails(null)
+        setCompanyId("")
+        setIsService("")
+        setIsPackage("")
+      }
+      if (name === "hmo_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "", hmo_code: "", discount_amount:"",hmo_discount_details:{} })
+      }
+    } else {
+      setHmoDetails({ ...hmoDetails, [name]: e.id })
 
-    if (name === "hmo_id") {
-      fetchHMODiscounts(e.id)
+      if (name === "hmo_id") {
+        fetchHMODiscounts(e.id)
+          setHmoDetails({ ...hmoDetails, [name]: e.id, hmo_code:"",discount_amount:"", hmo_discount_details:{} })
+      }
+      if (name === "hmo_code") {
+        setHmoDetails({
+          ...hmoDetails,
+          [name]: e.id,
+          discount_amount: e.percentage,
+          hmo_discount_details:e
+        })
+      }
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: e.id })
+        fetchDiscounts(e.id)
+      }
     }
-    if(name === "hmo_code"){
-       setHmoDetails({ ...hmoDetails, [name]: e.id, discount_amount:e.percentage })
-     
-    }
-    if(name === "discount_id"){
-       setHmoDetails({ ...hmoDetails, [name]: e.id})
-       fetchDiscounts(e.id)
-    }
-
   }
 
   function homeServiceFeeDisplay() {
@@ -442,7 +465,6 @@ function OldPatientForm1({
   }, [])
 
   React.useEffect(() => {
-    console.log("entered")
     if (discountId === "") {
       setDiscount(0)
       setDiscountDetails(null)
@@ -453,7 +475,7 @@ function OldPatientForm1({
 
     axios({
       method: "post",
-      url: window.$link + "discounts/show/" + hmoDetails.is_hmo === "yes"?hmoDetails.discount_id:discountId,
+      url: window.$link + "discounts/show/" + discountId,
       withCredentials: false,
       params: {
         api_key: window.$api_key,
@@ -461,7 +483,7 @@ function OldPatientForm1({
         requester: userId,
       },
     })
-      .then( function (response) {
+      .then(function (response) {
         setCompanyId(response.data.data.discount.company_id)
         setDiscount(response.data.data.discount.percentage)
         setDiscountDetails(response.data.data.discount_details)
@@ -475,7 +497,7 @@ function OldPatientForm1({
       .catch(function (error) {
         console.log(error)
       })
-  }, [customer.discountId])
+  }, [discountId])
 
   React.useEffect(() => {
     setCompanyRemarks("")
@@ -707,6 +729,7 @@ function OldPatientForm1({
                       isSearchable={true}
                       name="hmo"
                       options={hmoDiscounts}
+                        value={hmoDetails.hmo_discount_details}
                     />
                   </div>
                   <div className="col-sm-5 input-group-sm mt-3">
@@ -755,7 +778,7 @@ function OldPatientForm1({
                       classNamePrefix="select"
                       id="discount_code"
                       onChange={(e) => handleSelectChange(e, "discount_id")}
-                      isClearable={false}
+                      isClearable={true}
                       isRtl={false}
                       isSearchable={true}
                       options={discountList.filter((data) => data.id === "7")}
