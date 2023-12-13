@@ -142,6 +142,8 @@ function AddPayment() {
   const [loadingCust, setLoadingCust] = useState(false)
   const [loadingBooking, setLoadingBooking] = useState(false)
 
+  const [hmo, setHmo] = useState(0)
+
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -195,6 +197,7 @@ function AddPayment() {
         setEncodedOn(response.data.added_on)
         setReferral(response.data.doctors_referal)
         setResult(response.data.result)
+        setHmo(response.data.hmo_discount)
         totalAmount = response.data.total_amount
         discount = response.data.discount
         customer = response.data.customer_id
@@ -1435,6 +1438,7 @@ function AddPayment() {
             deleteService={handleRemove}
             withDiscount={seniorPwdId}
             total={total}
+            hmo={hmo}
             setTotal={setTotal}
             grandTotal={grandTotal}
             serviceFee={serviceFee}
@@ -1581,6 +1585,7 @@ function AddPayment() {
               encodedOn={encodedOn}
               referral={referral}
               discountCode={discountCode}
+              hmo={hmo}
               setPrintReadyFinal={setPrintReadyFinal}
             />
           </div>
