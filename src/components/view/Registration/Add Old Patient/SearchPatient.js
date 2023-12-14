@@ -15,16 +15,18 @@ const patientData = [];
 
 const userToken = getToken();
 const userId = getUser();
+var customer_id = "";
 var id = "";
 
 function SearchPatient() {
+
 
     document.body.style = 'background: white;';
     const [patientName, setPatientName] = useState("");
     const [patients, setPatients] = useState([]);
     const [redirectBooking, setRedirectBooking] = useState(false);
     const [redirectViewHistory, setRedirectViewHistory] = useState(false);
-
+  const [redirectEdit, setRedirectEdit] = useState(false)
     function search() {
         patients.length = 0;
         axios({
@@ -58,6 +60,20 @@ function SearchPatient() {
         id = customerId;
         setRedirectBooking(true);
     }
+
+     function editPatient(customerId) {
+    // id = bookingId;
+    customer_id = customerId
+    setRedirectEdit(true);
+  }
+
+  if(redirectEdit === true) {
+    console.log(id)
+    var link =  "/update-patient/" + customer_id;
+    return (
+        <Navigate to ={link}/>
+    )
+  }
 
     if(redirectBooking == true) {
         var link =  "/add-booking/" + id;
@@ -108,6 +124,8 @@ function SearchPatient() {
                     link={addBooking}
                     givenClass={'search-mobile'}
                     View={viewHistory}
+                    userId={userId}
+                      editPatient={editPatient}
                 />            
             </Fragment>
             </div>

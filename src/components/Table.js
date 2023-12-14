@@ -968,20 +968,38 @@ function Table({
             </td>
           ))}
           <td>
+            {console.log("userid", userId, userId == 18)}
             <button
-              class="button-10"
+              class="action-btn"
+              // class="button-10"
               role="button"
               onClick={() => link(row.id)}
             >
               ADD BOOKING
             </button>
+            <br/>
             <button
-              class="button-10"
+              class="action-btn"
               role="button"
               onClick={() => View(row.id)}
             >
               VIEW HISTORY
             </button>
+            {(userId == 10 ||
+                  userId == 18 ||
+                  userId == 5 ||
+                  userId == 11) && (
+                  <>
+                    <br />
+                    <button
+                      class="action-btn"
+                      role="button"
+                      onClick={() => editPatient(row.id)}
+                    >
+                      UPDATE PATIENT
+                    </button>
+                  </>
+                )}
           </td>
         </tr>
       )
