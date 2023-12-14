@@ -154,6 +154,9 @@ function UpdatePatient() {
 
         setSeniorId(customer.data.senior_id);
         setPwdId(customer.data.pwd_id);
+        if(customer.data.pwd_id !== "" && customer.data.pwd_id !== null){
+          setIsPWD(true)
+        }
       })
       .catch(function (error) {
         console.log(error);
