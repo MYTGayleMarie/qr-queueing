@@ -55,8 +55,14 @@ function accountingNavbar(showNavbar, setShowNavbar) {
             <Link to="/company-discounts" className="sub-link">
               <li class="sub-list">COMPANY DISCOUNT</li>
             </Link>
+            <Link to="/hmo-discounts" className="sub-link">
+              <li class="sub-list">HMO DISCOUNT</li>
+            </Link>
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
+            </Link>
+            <Link to="/hmo-invoices" className="sub-link">
+              <li class="sub-list">HMO INVOICE</li>
             </Link>
           </ul>
         </li>
@@ -432,6 +438,9 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
             </Link>
+            <Link to="/hmo-invoices" className="sub-link">
+              <li class="sub-list">HMO INVOICE</li>
+            </Link>
           </ul>
         </li>
         <a href="https://myt-support.com/" target="_blank" class="nav-link">
@@ -528,6 +537,9 @@ function registrationNavbar(showNavbar, setshowNavbar) {
           <ul class="sub-menu">
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
+            </Link>
+            <Link to="/hmo-invoices" className="sub-link">
+              <li class="sub-list">HMO INVOICE</li>
             </Link>
           </ul>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
@@ -670,8 +682,14 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <Link to="/company-discounts" className="sub-link">
                 <li class="sub-list">COMPANY DISCOUNT</li>
               </Link>
+              <Link to="/hmo-discounts" className="sub-link">
+                <li class="sub-list">HMO DISCOUNT</li>
+              </Link>
               <Link to="/company-invoices" className="sub-link">
                 <li class="sub-list">COMPANY INVOICE</li>
+              </Link>
+              <Link to="/hmo-invoices" className="sub-link">
+                <li class="sub-list">HMO INVOICE</li>
               </Link>
             </ul>
           </li>
@@ -1007,8 +1025,14 @@ function companySideNav() {
       <Link to="/company-discounts">
         <span class="mx-2 nav-item">COMPANY DISCOUNT</span>
       </Link>
+      <Link to="/hmo-discounts">
+        <span class="mx-2 nav-item">HMO DISCOUNT</span>
+      </Link>
       <Link to="/company-invoices">
         <span class="mx-2 nav-item">COMPANY INVOICE</span>
+      </Link>
+      <Link to="/hmo-invoices">
+        <span class="mx-2 nav-item">HMO INVOICE</span>
       </Link>
     </div>
   )
