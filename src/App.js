@@ -117,6 +117,8 @@ import ExtractionUpdate from "./components/View/ExtractionMod/ExtractionUpdate.j
 import ECGManager from "./components/View/ECG/ECGManager.jsx";
 import ECGExtractionUpdate from "./components/View/ECG/ECGExtractionUpdate.jsx";
 import XRAYExtractionUpdate from "./components/View/XRAY/XRAYExtractionUpdate.jsx";
+import HMOInvoices from "./components/View/Companies/HMOInvoices.jsx";
+import HMODiscounts from "./components/View/Companies/HMODiscounts.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -319,6 +321,10 @@ function App() {
             element={token ? <CompanyDiscounts /> : <Navigate to="/" />}
           />
           <Route
+            path="/hmo-discounts"
+            element={token ? <HMODiscounts /> : <Navigate to="/" />}
+          />
+          <Route
             path="/add-company"
             element={token ? <AddCompany /> : <Navigate to="/" />}
           />
@@ -333,6 +339,10 @@ function App() {
           <Route
             path="/company-invoices"
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo-invoices"
+            element={token ? <HMOInvoices /> : <Navigate to="/" />}
           />
           {/** With date filter */}
           <Route
