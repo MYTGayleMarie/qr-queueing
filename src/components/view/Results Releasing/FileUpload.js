@@ -59,6 +59,7 @@ export default function FileUpload({
   const [MDSuggestions, setMDSuggestions] = useState([])
   const [allMD, setAllMD] = useState([])
   const [renderMDSuggest, setRenderMDSuggest] = useState(true)
+  const [hasFile2, setHasFile2] = useState(false)
 
   const [showXrayUpload, setShowXrayUpload] = useState(false)
   const [images, setImages] = useState([])
@@ -107,6 +108,14 @@ export default function FileUpload({
             const labDetail = lab.data.filter(
               (details) => details.id == servicesData[0].id
             )
+
+            console.log("hasfile2", labDetail[0])
+            if(labDetail[0].result_id_2 !== null){
+              setHasFile2(true)
+            }
+            else{
+              setHasFile2(false)
+            }
 
             if (labDetail[0].file) {
               setWithResults(true)
@@ -517,7 +526,7 @@ export default function FileUpload({
   }
 
   // Redirect to View pdf results
-  if (redirectPdf == true) {
+  if (redirectPdf === true) {
     let location = window.location.origin
     let type = servicesData[0].type
     let bookId = bookingId
@@ -537,7 +546,7 @@ export default function FileUpload({
     setRedirectPdf(false)
   }
   // Redirect to View pdf results
-  if (redirectImage == true) {
+  if (redirectImage === true) {
     let location = window.location.origin
     let type = servicesData[0].type
     let bookId = bookingId
@@ -581,7 +590,7 @@ export default function FileUpload({
                     View Results
                   </button>
                   <br />
-                  {title === "XRAY" && (
+                  {title === "XRAY" && hasFile2===true &&(
                     <button
                       className="upload-res-btn blue mt-2"
                       onClick={handleViewResultsImage}
