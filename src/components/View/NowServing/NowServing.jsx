@@ -56,7 +56,7 @@ export default function NowServing() {
     if (response.data) {
       let data = response.data.now_serving
       setRecords(response.data.now_serving)
-      // setInitialList(data.filter((val) => val.serving_type === "2d echo"))
+      setInitialList(data.filter((val) => val.serving_type === "2d-echo"))
       setECGList(data.filter((val) => val.serving_type === "ecg"))
       setXRAYList(data.filter((val) => val.serving_type === "xray"))
     } else {
