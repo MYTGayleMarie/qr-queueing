@@ -119,6 +119,10 @@ import ECGExtractionUpdate from "./components/View/ECG/ECGExtractionUpdate.jsx";
 import XRAYExtractionUpdate from "./components/View/XRAY/XRAYExtractionUpdate.jsx";
 import HMOInvoices from "./components/View/Companies/HMOInvoices.jsx";
 import HMODiscounts from "./components/View/Companies/HMODiscounts.jsx";
+import AddInvoiceHmo from "./components/View/Companies/AddInvoiceHmo.jsx";
+import TwoDEcho from "./components/View/2DEcho/index.js";
+import EchoExtractionUpdate from "./components/View/2DEcho/EchoExtractionUpdate.jsx";
+import AddInvoicePaymentHmo from "./components/View/Companies/AddInvoicePaymentHmo.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -350,12 +354,20 @@ function App() {
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
           />
           <Route
+            path="/hmo-invoices/:dateFrom/:dateTo"
+            element={token ? <HMOInvoices /> : <Navigate to="/" />}
+          />
+          <Route
             path="/review-invoice/:id/:discountId"
             element={token ? <ReviewCompanyInvoices /> : <Navigate to="/" />}
           />
           <Route
             path="/add-invoice/:id/:discount"
             element={token ? <AddInvoice /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo/add-invoice/:id/:discount"
+            element={token ? <AddInvoiceHmo /> : <Navigate to="/" />}
           />
           {/* <Route
             path="/add-invoice-payment/:id/:companyId"
@@ -365,6 +377,10 @@ function App() {
           <Route
             path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
+            element={token ? <AddInvoicePaymentHmo /> : <Navigate to="/" />}
           />
           <Route
             path="/discounts"
@@ -695,6 +711,15 @@ function App() {
           <Route
             path="/ecg/:bookingId/:queueId"
             element={token ? <ECGExtractionUpdate /> : <Navigate to="/" />}
+          />
+
+          <Route
+            path="/2d-echo"
+            element={token ? <TwoDEcho /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/2d-echo/:bookingId/:queueId"
+            element={token ? <EchoExtractionUpdate /> : <Navigate to="/" />}
           />
           {/* Now Serving */}
           <Route
