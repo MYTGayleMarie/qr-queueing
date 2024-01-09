@@ -60,7 +60,8 @@ export default function HMOInvoices() {
       },
     })
       .then(function (response) {
-        response.data.company_invoices.map((row, index) => {
+        console.log(response.data)
+        response.data.hmo_invoices.map((row, index) => {
           var companyDetails = {}
 
           if (filteredData.status_filter == "unpaid" && row.is_paid === "0") {
@@ -112,7 +113,8 @@ export default function HMOInvoices() {
             companyDetails.total = row.sum_total
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID"
+            companyDetails.payment_status =
+              row.is_paid === 1 ? "PAID" : "UNPAID"
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails])
           }
@@ -141,7 +143,7 @@ export default function HMOInvoices() {
     return (
       <Navigate
         to={
-          "/add-invoice-payment/" +
+          "/hmo/add-invoice-payment/" +
           id +
           "/" +
           company_id +
