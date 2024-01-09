@@ -1865,7 +1865,7 @@ function AddInvoicePayment() {
           {console.log("1853", grandTotal)}
 
           {haslogs &&
-            parseFloat(paidAmount) < parseFloat(grandTotal) && (
+            parseFloat(paidAmount) <= parseFloat(grandTotal) && (//to delet =
               <div className="payment-cont">
                 <h1 className="payment-label">ADD PAYMENT</h1>
 
@@ -1928,6 +1928,7 @@ function AddInvoicePayment() {
           <hr />
           <div className="row pt-4">
             <div className="col-sm-12 d-flex justify-content-center">
+              
               {hasPay == true && printButton()}
               {hasPay == false && printInvoiceButton()}
               {hasPay == false && emailButton()}
