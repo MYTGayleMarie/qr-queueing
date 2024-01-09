@@ -23,7 +23,7 @@ export default function ECGExtractionUpdate() {
   const navigate = useNavigate()
 
   async function fetchExtraction() {
-    const response = await getSingleLabExtractionPatient(bookingId)
+    const response = await getSingleLabExtractionPatient(bookingId, 94)
 
     if (response.data) {
       setDetails(response.data.bookings[0])
@@ -39,7 +39,7 @@ export default function ECGExtractionUpdate() {
   }
 
   async function handleUpdateBooking() {
-    const response = await updateExtractionLabPatientBulk(details)
+    const response = await updateExtractionLabPatientBulk(details, 94)
     if (response.data) {
       const queueResponse = await changeStatus(queueId, "done")
       toast.success(response.data.message.success.toUpperCase())

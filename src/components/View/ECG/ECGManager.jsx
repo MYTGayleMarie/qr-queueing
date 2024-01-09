@@ -53,7 +53,7 @@ function ECGManager() {
   }
 
   async function fetchRecords() {
-    const response = await getLabExtractionPatients()
+    const response = await getLabExtractionPatients(94)
     if (response.data) {
       setRecords(response.data.bookings)
       setIsReady(true)

@@ -42,7 +42,7 @@ export const getSingleExtractionPatient = async (booking_id) => {
     return { error: error.response }
   }
 }
-export const getLabExtractionPatients = async () => {
+export const getLabExtractionPatients = async (id) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
@@ -55,6 +55,7 @@ export const getLabExtractionPatients = async () => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
+        lab_test_id:id
       }
     )
 
@@ -63,7 +64,7 @@ export const getLabExtractionPatients = async () => {
     return { error: error.response }
   }
 }
-export const getSingleLabExtractionPatient = async (booking_id) => {
+export const getSingleLabExtractionPatient = async (booking_id,id) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
@@ -76,6 +77,7 @@ export const getSingleLabExtractionPatient = async (booking_id) => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
+        lab_test_id:id
       }
     )
 
@@ -199,7 +201,7 @@ export const updateExtractionXRAYPatientBulk = async (data) => {
     return { error: error.response }
   }
 }
-export const updateExtractionLabPatientBulk = async (data) => {
+export const updateExtractionLabPatientBulk = async (data,id) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
@@ -214,7 +216,7 @@ export const updateExtractionLabPatientBulk = async (data) => {
         token: getToken().replace(/['"]+/g, ""),
         extracted_on: new Date(),
         // status: "done",
-        booking: data.booking_id,
+        booking: data.booking_id,lab_test_id:id
       }
     )
 
