@@ -1050,7 +1050,32 @@ function Table({
           ))}
         </tr>
       )
-    } else if (type === "add-invoice") {
+    } 
+    else if (
+      // type === "payment-invoices" ||
+      type === "payment-invoices-print-hmo"
+    ) {
+      console.log("rowData",rowData)
+      return (
+        <tr key={row.id} style={{ color: "black" }}>
+          {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
+
+          {rowData.map((data, index) => (
+            <td key={index} data-heading={data.key} className={data.val}>
+              {data.val}
+              {/* {isNaN(data.val) != true && index != 0 && index != 3
+                ? "P " +
+                  parseFloat(data.val).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })
+                : data.val} */}
+            </td>
+          ))}
+        </tr>
+      )
+    } 
+    else if (type === "add-invoice") {
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -3513,7 +3538,7 @@ function Table({
         />
       </div>
     )
-  } else if (type === "payment-invoices-print") {
+  } else if (type === "payment-invoices-print" || type === "payment-invoices-print-hmo") {
     return (
       <div className="table-container">
         <div className="search-table-container d-flex justify-content-end"></div>
