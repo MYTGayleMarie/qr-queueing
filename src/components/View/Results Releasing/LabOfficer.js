@@ -325,8 +325,10 @@ export default function LabOfficer() {
       lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "[P] Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "HBSag (Hepatitis B Antigen)" ||
+      lab_test == "Hbsag Test Promo Group (15 PAX OR MORE)" ||
       lab_test == "[P] HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label == "Hbsag Test Promo Group (15 PAX OR MORE)" ||
       selectedLab.label == "[P] HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "Anti HCV" ||
       selectedLab.label == "[P] Anti HCV" ||
@@ -688,6 +690,7 @@ export default function LabOfficer() {
   var label_test = ""
   selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+  selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
   selectedLab.label === "Anti HCV" ? (
     (label_test = "Hepatitis Profile Tests")
@@ -1054,6 +1057,7 @@ export default function LabOfficer() {
           if (
             selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
             selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+            selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
             selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
             selectedLab.label === "Anti HCV"
           ) {
@@ -1344,6 +1348,7 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Fecalysis" &&
         selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
         selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+        selectedLab.label !== "Hbsag Test Promo Group (15 PAX OR MORE)" &&
         selectedLab.label !== "Anti HCV" &&
         selectedLab.label !== "[P] Anti HCV" &&
         selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
@@ -1367,6 +1372,7 @@ export default function LabOfficer() {
         selectedLab.label === "Anti HAV" ||
         selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
         selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+        selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
         selectedLab.label === "Anti HCV" ||
         selectedLab.label === "[P] Anti HCV" ||
         selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
@@ -1483,6 +1489,7 @@ export default function LabOfficer() {
         if (
           selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
           selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+          selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
           selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
           selectedLab.label === "Anti HCV"
         ) {
@@ -1587,6 +1594,7 @@ export default function LabOfficer() {
     if (
       selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
       selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
       selectedLab.label === "Anti HCV"
     ) {
@@ -1689,6 +1697,7 @@ export default function LabOfficer() {
     if (
       selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
       selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
       selectedLab.label === "Anti HCV"
     ) {
@@ -1829,6 +1838,7 @@ export default function LabOfficer() {
       setLabTestData(labResultsData.labTestHPylori)
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
+      e.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
       e.label === "[P] HBSag (Hepatitis B Antigen)" ||
       e.label === "Anti HCV"
     ) {
@@ -2073,6 +2083,8 @@ export default function LabOfficer() {
                           : selectedLab.label.toUpperCase() ===
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
+                              "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+                            selectedLab.label.toUpperCase() ===
                               "[P] HBSAG (HEPATITIS B ANTIGEN)" ||
                             // selectedLab.label.toUpperCase() === "ANTI-HAV" ||
                             selectedLab.label.toUpperCase() === "ANTI HCV"
@@ -2090,6 +2102,8 @@ export default function LabOfficer() {
                               "[P] HBSag (Hepatitis B Antigen)" ||
                             selectedLab.label ===
                               "HBSag (Hepatitis B Antigen)" ||
+                            selectedLab.label ===
+                              "Hbsag Test Promo Group (15 PAX OR MORE)" ||
                             selectedLab.label === "Anti HCV" ||
                             selectedLab.label === "[P] Anti HCV" ||
                             selectedLab.label ===
@@ -2408,6 +2422,8 @@ export default function LabOfficer() {
                             "Anti HBs/HBSab (Hepatitis B Antibody)" &&
                           selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !==
                             "[P] HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !==
                             "Hepatitis B Surface Antigen (HbsAg)" &&
@@ -2421,6 +2437,8 @@ export default function LabOfficer() {
                           selectedLab.label !==
                             "[P] HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
                           selectedLab.label !== "Anti HCV" &&
                           selectedLab.label !== "[P] Anti HCV" &&
                           selectedLab.label !==
@@ -2463,6 +2481,8 @@ export default function LabOfficer() {
                             "Anti HBs/HBSab (Hepatitis B Antibody)" &&
                           selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !==
                             "Hepatitis B Surface Antigen (HbsAg)" &&
                           selectedLab.label !== "Anti-HAV" &&
                           selectedLab.label !==
@@ -2481,6 +2501,8 @@ export default function LabOfficer() {
                           selectedLab.label !==
                             "[P] HBSag (Hepatitis B Antigen)" &&
                           selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
                           selectedLab.label !== "Anti HCV" &&
                           selectedLab.label !== "[P] Anti HCV" &&
                           selectedLab.label !==
@@ -2682,6 +2704,8 @@ export default function LabOfficer() {
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
                               selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                              selectedLab.label !==
                                 "Hepatitis B Surface Antigen (HbsAg)" &&
                               selectedLab.label !== "Anti-HAV" &&
                               selectedLab.label !== "Anti HCV" &&
@@ -2692,6 +2716,8 @@ export default function LabOfficer() {
                                 "[P] HBSag (Hepatitis B Antigen)" &&
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
                               selectedLab.label !== "Anti HCV" &&
                               selectedLab.label !== "[P] Anti HCV" &&
                               selectedLab.label !==
@@ -2755,6 +2781,8 @@ export default function LabOfficer() {
                                 "[P] HBSag (Hepatitis B Antigen)" &&
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
                               selectedLab.label !== "Anti HCV" &&
                               selectedLab.label !== "[P] Anti HCV" &&
                               selectedLab.label !==
@@ -2768,6 +2796,8 @@ export default function LabOfficer() {
                               selectedLab.label !== "Gram Stain" &&
                               selectedLab.label !==
                                 "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
                               selectedLab.label !== "Anti-HCV" &&
                               selectedLab.label !== "Anti HCV" &&
                               selectedLab.label !==
@@ -3011,7 +3041,6 @@ export default function LabOfficer() {
                 {/* <div className="row"> */}
 
                 {allOptions.map((data) => {
-                
                   return (
                     <Button
                       className="m-2"
@@ -3037,6 +3066,7 @@ export default function LabOfficer() {
                     >
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
+                      data.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                       data.label === "Anti HCV" ? (
                         "Hepatitis Profile Tests"
@@ -3085,6 +3115,7 @@ export default function LabOfficer() {
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
               selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+              selectedLab.label !== "Hbsag Test Promo Group (15 PAX OR MORE)" &&
               selectedLab.label !== "Anti HCV" &&
               selectedLab.label !== "[P] Anti HCV" &&
               selectedLab.label !==
@@ -3108,6 +3139,8 @@ export default function LabOfficer() {
                 : selectedLab.label === "Anti HAV" ||
                   selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
                   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                  selectedLab.label ===
+                    "Hbsag Test Promo Group (15 PAX OR MORE)" ||
                   selectedLab.label === "Anti HCV" ||
                   selectedLab.label === "[P] Anti HCV" ||
                   selectedLab.label ===
