@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment, useState, useEffect } from "react"
 import axios from "axios"
 import { Navigate } from "react-router-dom"
 import { getToken, getUser, removeUserSession } from "../../../utilities/Common"
@@ -36,7 +36,7 @@ export default function HMODiscounts() {
   const [redirect, setRedirect] = useState("")
   const [isReady, setIsReady] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     discount.length = 0
     axios({
       method: "post",
@@ -49,9 +49,7 @@ export default function HMODiscounts() {
       },
     })
       .then(function (response) {
-        console.log("hmo response", response.data)
         response.data.map((data, index) => {
-          // console.log(company.data);
           if (data.company_id !== null || data.company !== null) {
             var info = {}
             info.company_id = data.company_id
@@ -79,7 +77,7 @@ export default function HMODiscounts() {
   }
 
   if (redirect == true) {
-    var link = "/add-invoice/" + id + "/" + discount_code
+    var link = "/hmo/add-invoice/" + id + "/" + discount_code
     return <Navigate to={link} />
   }
 
