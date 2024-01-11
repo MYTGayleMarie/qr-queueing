@@ -130,6 +130,7 @@ function OldPatientForm3({
       },
     })
       .then((response) => {
+        console.log("response", response)
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
           .sort((x, y) => x.id - y.id)
@@ -194,6 +195,7 @@ function OldPatientForm3({
   const microbiology = allLabServices.filter((item) => item.categoryId == 17)
   const xray = allLabServices.filter((item) => item.categoryId == 18)
   const cardiology = allLabServices.filter((item) => item.categoryId == 19)
+  const obgyne = allLabServices.filter((item) => item.categoryId == 26)
   const medicalCertificate = allLabServices.filter(
     (item) => item.categoryId == 20
   )
@@ -676,6 +678,10 @@ function OldPatientForm3({
         getDetails(coaguation, data[0])
         checkedServicesDetails.push(itemDetails)
         break
+      case 26:
+        getDetails(obgyne, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
     }
   })
 
@@ -940,6 +946,13 @@ function OldPatientForm3({
               <ServiceItems
                 category="ULTRASOUND"
                 items={ultrasound}
+                formData={service}
+                setForm={setServices}
+              />
+
+                <ServiceItems
+                category="OB GYNE ULTRASOUND"
+                items={obgyne}
                 formData={service}
                 setForm={setServices}
               />
