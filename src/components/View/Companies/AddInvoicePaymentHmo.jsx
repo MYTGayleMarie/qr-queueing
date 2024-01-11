@@ -1939,7 +1939,7 @@ function AddInvoicePaymentHmo() {
               {hasPay == true && printButton()}
               {hasPay == false && printInvoiceButton()}
               {hasPay == false && emailButton()}
-              {printChargeSlip()}
+              {/* {printChargeSlip()} */}
             </div>
           </div>
           <div className="d-flex justify-content-end back-btn-container">
