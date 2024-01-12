@@ -48,6 +48,13 @@ export class InvoiceToPrintHmo extends React.PureComponent {
                 {this.props.address}
               </span>
             </div>
+
+            <div className="col-12">
+              <span className="" style={{ fontSize: "15px" }}>
+                {" "}
+                {this.props.remarks}
+              </span>
+            </div>
           </div>
 
           <div className="invoice-line" />
