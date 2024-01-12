@@ -1047,12 +1047,7 @@ function Table({
           ))}
         </tr>
       )
-    } else if (
-      // type === "payment-invoices" ||
-      type === "payment-invoices-print-hmo"
-    ) {
-      console.log("rowData", rowData)
-      console.log("row", row)
+    } else if (type === "payment-invoices-print-hmo") {
       return (
         <tr key={row.id} style={{ color: "black" }}>
           <td className="text-center">{row.key}</td>
