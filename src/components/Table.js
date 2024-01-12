@@ -166,7 +166,7 @@ function Table({
         </tr>
       )
     } else if (type === "registration") {
-      console.log("rowdata", rowData)
+      
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -968,7 +968,7 @@ function Table({
             </td>
           ))}
           <td>
-            {console.log("userid", userId, userId == 18)}
+          
             <button
               class="action-btn"
               // class="button-10"
@@ -1133,6 +1133,65 @@ function Table({
             </td>
           ))} */}
           <td>
+            <button
+              class="action-btn"
+              role="button"
+              onClick={() => link(row.invoice_id, row.company_id)}
+            >
+              {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
+            </button>
+          </td>
+        </tr>
+      )
+    } else if (type === "hmo-invoices") {
+      return (
+        <tr key={row.id}>
+          <td>{row.date}</td>
+          <td>{row.description}</td>
+          <td>
+            {row.discountCode.split("|").map((data) => {
+              return (
+                <>
+                  {data}
+                  <br />
+                </>
+              )
+            })}
+          </td>
+          <td>
+            {row.total.split("|").map((data) => {
+              return (
+                <>
+                  P {data}
+                  <br />
+                </>
+              )
+            })}
+          </td>
+          <td>{row.payment_status}</td>
+          <td>TO BE ADDED</td> 
+
+          <td>
+          {/* To add invoice status */}
+            {roleId === "4" && (
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.invoice_id, row.company_id)}
+              >
+                REVIEW
+              </button>
+            )}
+            {/* To add invoice status */}
+            {roleId === "3" && (
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.invoice_id, row.company_id)}
+              >
+                VIEW DETAILS
+              </button>
+            )}
             <button
               class="action-btn"
               role="button"
@@ -3401,6 +3460,69 @@ function Table({
       </div>
     )
   } else if (type === "company-invoices") {
+    const { from_date, to_date, status_filter, done } = filteredData
+    return (
+      <div className="table-container">
+        <div className="search-table-container d-flex justify-content-end">
+          <input
+            type="date"
+            className="from-date search"
+            name="from_date"
+            value={from_date}
+            onChange={setFilter}
+          />
+          <input
+            type="date"
+            className="to-date search"
+            name="to_date"
+            value={to_date}
+            onChange={setFilter}
+          />
+          {roleId !== "3" && (
+            <select name="status_filter" onChange={setFilter}>
+              <option value="unpaid">UNPAID</option>
+              <option value="paid">PAID</option>
+              <option value="all">ALL</option>
+            </select>
+          )}
+          <button
+            className="filter-btn"
+            name="done"
+            onClick={setRender != null ? (e) => setRender(!render) : ""}
+          >
+            FILTER
+          </button>
+        </div>
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {headingColumns.map((col, index) => (
+                <th key={index} className={index == 3 ? "company_name" : ""}>
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {!isReady && useLoader ? (
+              <TableLoader3 tableHeaders={headingColumns} data={data} />
+            ) : (
+              data
+            )}
+          </tbody>
+        </table>
+        <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    )
+  } else if (type === "hmo-invoices") {
     const { from_date, to_date, status_filter, done } = filteredData
     return (
       <div className="table-container">
