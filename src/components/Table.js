@@ -180,8 +180,8 @@ function Table({
           ))}
           <td>
             {rowData[7].val == "unpaid" &&
-              (rowData[0].val == "no_company_discount" &&
-                rowData[1].val == "no_hmo_discount") && (
+              rowData[0].val == "no_company_discount" &&
+              rowData[1].val == "no_hmo_discount" && (
                 <>
                   <button
                     class="action-btn"
@@ -977,7 +977,7 @@ function Table({
             >
               ADD BOOKING
             </button>
-            <br/>
+            <br />
             <button
               class="action-btn"
               role="button"
@@ -985,21 +985,18 @@ function Table({
             >
               VIEW HISTORY
             </button>
-            {(userId == 10 ||
-                  userId == 18 ||
-                  userId == 5 ||
-                  userId == 11) && (
-                  <>
-                    <br />
-                    <button
-                      class="action-btn"
-                      role="button"
-                      onClick={() => editPatient(row.id)}
-                    >
-                      UPDATE PATIENT
-                    </button>
-                  </>
-                )}
+            {(userId == 10 || userId == 18 || userId == 5 || userId == 11) && (
+              <>
+                <br />
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() => editPatient(row.id)}
+                >
+                  UPDATE PATIENT
+                </button>
+              </>
+            )}
           </td>
         </tr>
       )
@@ -1050,32 +1047,22 @@ function Table({
           ))}
         </tr>
       )
-    } 
-    else if (
+    } else if (
       // type === "payment-invoices" ||
       type === "payment-invoices-print-hmo"
     ) {
-      console.log("rowData",rowData)
+      console.log("rowData", rowData)
+      console.log("row", row)
       return (
         <tr key={row.id} style={{ color: "black" }}>
-          {/* <td><input type="checkbox" name={index} className="table-checkbox" value={index} onClick={setChecked}/></td> */}
-
-          {rowData.map((data, index) => (
-            <td key={index} data-heading={data.key} className={data.val}>
-              {data.val}
-              {/* {isNaN(data.val) != true && index != 0 && index != 3
-                ? "P " +
-                  parseFloat(data.val).toLocaleString("en-US", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                : data.val} */}
-            </td>
-          ))}
+          <td className="text-center">{row.key}</td>
+          <td className="text-center">{row.name}</td>
+          <td className="text-center">{row.date}</td>
+          <td className="text-left">{row.lab_services}</td>
+          <td className="text-right">{row.price}</td>
         </tr>
       )
-    } 
-    else if (type === "add-invoice") {
+    } else if (type === "add-invoice") {
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -3538,7 +3525,10 @@ function Table({
         />
       </div>
     )
-  } else if (type === "payment-invoices-print" || type === "payment-invoices-print-hmo") {
+  } else if (
+    type === "payment-invoices-print" ||
+    type === "payment-invoices-print-hmo"
+  ) {
     return (
       <div className="table-container">
         <div className="search-table-container d-flex justify-content-end"></div>
