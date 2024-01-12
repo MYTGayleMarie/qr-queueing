@@ -1178,7 +1178,7 @@ function AddInvoicePaymentHmo() {
           </div>
         </div>
         <div className="row d-flex justify-content-end mt-4">
-          {paymentStatus == "paid" && printButton()}
+          {/* {paymentStatus == "paid" && printButton()} */}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE PAYMENT{" "}
           </button>
