@@ -59,21 +59,51 @@ export class InvoiceToPrintHmo extends React.PureComponent {
 
             <div className="invoice-line" />
           </div>
-          <div className="invoice-table-cont-hmo">
-            <Table
-              type={"payment-invoices-print-hmo"}
-              tableData={this.props.invoices}
-              rowsPerPage={4}
-              headingColumns={[
-                "NO",
-                "NAME",
-                "DATE OF SERVICE",
-                "LAB SERVICES",
-                "TOTAL DUE",
-              ]}
-              givenClass={"company-mobile"}
-              // setChecked={setChecked}
-            />
+          <div className="">
+            <div className="search-table-container d-flex justify-content-end"></div>
+            <table className="table-container__table table-container__table--break-sm">
+              <thead>
+                <tr>
+                  <th width={5}> NO</th>
+                  <th width={20}> NAME</th>
+                  <th width={10}> DATE OF SERVICE</th>
+                  <th width={50}> LAB SERVICES</th>
+                  <th width={15}> TOTAL DUE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {" "}
+                {this.props.invoices.map((row) => {
+                  return (
+                    <tr>
+                      <td className="text-center" width={5}>
+                        {row.key}
+                      </td>
+                      <td className="text-left" width={20}>
+                        {row.name}
+                      </td>
+                      <td className="text-center" width={10}>
+                        {row.date}
+                      </td>
+                      <td className="text-left" width={20}>
+                        {row.lab_services}
+                      </td>
+                      <td className="text-right" width={15}>
+                        {row.price}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="">
+            <table>
+              <thead>
+                <tr></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
 
           <div className="invoice-footer p-1">
@@ -98,12 +128,12 @@ export class InvoiceToPrintHmo extends React.PureComponent {
                 <br />
                 <span>
                   {" "}
-                  ACCOUNT NAME: <strong>Quest & reliance Diagnostics</strong>
+                  ACCOUNT NAME: <strong>Quest & Reliance Diagnostics</strong>
                 </span>
                 <br />
                 <span>
                   {" "}
-                  ACCOUNT NUMBER: <strong>002803017190</strong>
+                  ACCOUNT NUMBER: <strong>002808017390</strong>
                 </span>
                 <br />
                 <br />
@@ -129,19 +159,22 @@ export class InvoiceToPrintHmo extends React.PureComponent {
                 <span className="received-from-label">
                   {" "}
                   PREPARED BY <br />
+                  <br />
                   <span className="not-bold">{this.props.user}</span>
                 </span>
                 <br />
                 <br />
                 <span className="received-from-label">
                   {" "}
-                  RECEIVED BY <br /> ________________________
+                  RECEIVED BY <br />
+                  <br /> ________________________
                 </span>
               </div>
               <div className="col-6">
                 <span className="received-from-label">
                   {" "}
                   APPROVED BY <br />
+                  <br />
                   ________________________
                 </span>
               </div>
