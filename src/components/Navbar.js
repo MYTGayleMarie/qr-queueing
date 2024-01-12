@@ -55,14 +55,9 @@ function accountingNavbar(showNavbar, setShowNavbar) {
             <Link to="/company-discounts" className="sub-link">
               <li class="sub-list">COMPANY DISCOUNT</li>
             </Link>
-            <Link to="/hmo-discounts" className="sub-link">
-              <li class="sub-list">HMO DISCOUNT</li>
-            </Link>
+
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
-            </Link>
-            <Link to="/hmo-invoices" className="sub-link">
-              <li class="sub-list">HMO INVOICE</li>
             </Link>
           </ul>
         </li>
@@ -435,6 +430,9 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
           <span class="mx-2">Companies</span>
           <ul class="sub-menu">
+             <Link to="/hmo-discounts" className="sub-link">
+              <li class="sub-list">HMO DISCOUNTS</li>
+            </Link>
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
             </Link>
@@ -1025,15 +1023,22 @@ function companySideNav() {
       <Link to="/company-discounts">
         <span class="mx-2 nav-item">COMPANY DISCOUNT</span>
       </Link>
-      <Link to="/hmo-discounts">
-        <span class="mx-2 nav-item">HMO DISCOUNT</span>
-      </Link>
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === 3 ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === 4) && (
+        <Link to="/hmo-discounts">
+          <span class="mx-2 nav-item">HMO DISCOUNT</span>
+        </Link>
+      )}
       <Link to="/company-invoices">
         <span class="mx-2 nav-item">COMPANY INVOICE</span>
       </Link>
-      <Link to="/hmo-invoices">
-        <span class="mx-2 nav-item">HMO INVOICE</span>
-      </Link>
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === 3 ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === 4) && (
+        <Link to="/hmo-invoices">
+          <span class="mx-2 nav-item">HMO INVOICE</span>
+        </Link>
+      )}
+   
     </div>
   )
 }
