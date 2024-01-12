@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import {
   formatPrice,
@@ -352,7 +352,7 @@ function AddInvoicePaymentHmo() {
 
   React.useEffect(() => {
     info.length = 0
-    console.log("id hmo", id)
+
     axios({
       method: "post",
       url: window.$link + "Company_invoices/hmo_show/" + id,
@@ -364,7 +364,6 @@ function AddInvoicePaymentHmo() {
       },
     })
       .then(function (response) {
-        console.log("ci show", response.data.data.soas)
         setHasLogs(true)
         var invoice = response.data.data.soas
 
@@ -388,12 +387,12 @@ function AddInvoicePaymentHmo() {
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success")
           setGrandTotal(invoice.total)
-          console.log("invoice total", invoice.total)
+
           setPay(invoice.total)
           setDiscountCode(invoice[0].discount_code)
           setPaidAmount(invoice.paid_amount)
           setPayments(payments)
-          console.log("385 payments", payments)
+
           setInfoId(invoice[0].id)
           setHasPay(
             paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
@@ -415,14 +414,14 @@ function AddInvoicePaymentHmo() {
       })
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     info.length = 0
 
     const tempData = groupArrayOfObjects(Object.values(invoiceData), "price")
 
     delete tempData["undefined"]
     var keys = Object.keys(tempData)
-    console.log("tempdata", tempData)
+
     keys.map((data, index) => {
       var info = {}
 
@@ -1876,9 +1875,6 @@ function AddInvoicePaymentHmo() {
               </div>
             </div>
           )}
-          {console.log("1853", payments[0])}
-          {console.log("1853", paidAmount)}
-          {console.log("1853", grandTotal)}
 
           {haslogs && parseFloat(paidAmount) < parseFloat(grandTotal) && (
             <div className="payment-cont">
@@ -2219,7 +2215,23 @@ function AddInvoicePaymentHmo() {
           contactNo={contactNo}
           address={address}
           contactPerson={contactPerson}
-          invoices={info}
+          invoices={[
+            ...info,
+            {
+              key: "",
+              name: "",
+              date: "",
+              lab_services: <strong>TOTAL BILL</strong>,
+              price: (
+                <strong>
+                  {parseFloat(grandTotal).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </strong>
+              ),
+            },
+          ]}
           grandTotal={grandTotal}
           remarks={companyRemarks}
           user={user}
