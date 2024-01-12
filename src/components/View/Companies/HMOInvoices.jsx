@@ -60,7 +60,6 @@ export default function HMOInvoices() {
       },
     })
       .then(function (response) {
-        console.log(response.data)
         response.data.hmo_invoices.map((row, index) => {
           var companyDetails = {}
 
@@ -180,7 +179,7 @@ export default function HMOInvoices() {
             />
             <Table
               clickable={true}
-              type={"company-invoices"}
+              type={"hmo-invoices"}
               tableData={finalCompanyData?.sort((a, b) =>
                 new Date(a.date) > new Date(b.date)
                   ? 1
@@ -190,15 +189,12 @@ export default function HMOInvoices() {
               )}
               rowsPerPage={4}
               headingColumns={[
-                // "COMPANY ID",
-                // "ID",
                 "INVOICE DATE",
                 "COMPANY NAME",
-                // "DISCOUNT ID",
                 "DISCOUNT CODE",
-                // "REMARKS",
                 "TOTAL",
                 "PAYMENT STATUS",
+                "INVOICE STATUS",
                 "ACTION",
               ]}
               filteredData={filteredData}
