@@ -1051,7 +1051,7 @@ function Table({
       return (
         <tr key={row.id} style={{ color: "black" }}>
           <td className="text-center">{row.key}</td>
-          <td className="text-center">{row.name}</td>
+          <td className="text-left">{row.name}</td>
           <td className="text-center">{row.date}</td>
           <td className="text-left">{row.lab_services}</td>
           <td className="text-right">{row.price}</td>
