@@ -77,7 +77,8 @@ export default function HMOInvoices() {
             companyDetails.total = row.sum_total
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            companyDetails.payment_status = row.is_paid == 1 ? "PAID" : "UNPAID"
+            companyDetails.payment_status =
+              row.is_paid == "1" ? "PAID" : "UNPAID"
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails])
           } else if (
@@ -114,7 +115,7 @@ export default function HMOInvoices() {
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             companyDetails.payment_status =
-              row.is_paid === 1 ? "PAID" : "UNPAID"
+              row.is_paid === "1" ? "PAID" : "UNPAID"
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails])
           }
