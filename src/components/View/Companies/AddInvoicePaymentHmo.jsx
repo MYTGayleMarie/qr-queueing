@@ -98,6 +98,7 @@ function AddInvoicePaymentHmo() {
   const [serviceFee, setServiceFee] = useState(0)
   const [mdCharge, setMdCharge] = useState(0)
   const [remarks, setRemarks] = useState("")
+  const [companyRemarks, setCompanyRemarks] = useState("")
   const [discount, setDiscount] = useState(0)
   const [paymentStatus, setPaymentStatus] = useState("")
   const [seniorPwdId, setID] = useState("")
@@ -270,6 +271,7 @@ function AddInvoicePaymentHmo() {
         setEmail(company.data.company_email)
         setAddress(company.data.address)
         setContactPerson(company.data.contact_person)
+        setCompanyRemarks(company.data.remarks)
         setLoadingCompany(true)
       })
       .then(function (error) {
@@ -660,7 +662,8 @@ function AddInvoicePaymentHmo() {
         params: {
           token: userToken,
           api_key: window.$api_key,
-          invoice_no: infoId,
+          is_hmo: 1,
+          invoice_no: id,
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
@@ -692,7 +695,8 @@ function AddInvoicePaymentHmo() {
         params: {
           token: userToken,
           api_key: window.$api_key,
-          invoice_no: infoId,
+          is_hmo: 1,
+          invoice_no: id,
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
@@ -727,7 +731,8 @@ function AddInvoicePaymentHmo() {
         params: {
           token: userToken,
           api_key: window.$api_key,
-          invoice_no: infoId,
+          is_hmo: 1,
+          invoice_no: id,
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: payment,
@@ -764,7 +769,8 @@ function AddInvoicePaymentHmo() {
         params: {
           token: userToken,
           api_key: window.$api_key,
-          invoice_no: infoId,
+          is_hmo: 1,
+          invoice_no: id,
           type: payment,
           amount: pay,
           other_source: source,
@@ -796,7 +802,8 @@ function AddInvoicePaymentHmo() {
         params: {
           token: userToken,
           api_key: window.$api_key,
-          invoice_no: infoId,
+          is_hmo: 1,
+          invoice_no: id,
           // prices: [info[0].price],
           // totals: [info[0].total],
           type: "bank transfer",
@@ -1020,7 +1027,7 @@ function AddInvoicePaymentHmo() {
     var formattedDate = date.toDateString().split(" ")
 
     return (
-      <div className="paymentDetails">
+      <div className="paymentDetails mt-3">
         <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
         {payments.map((data) => {
           return (
@@ -2214,6 +2221,7 @@ function AddInvoicePaymentHmo() {
           contactPerson={contactPerson}
           invoices={info}
           grandTotal={grandTotal}
+          remarks={companyRemarks}
           user={user}
         />
       </div>
