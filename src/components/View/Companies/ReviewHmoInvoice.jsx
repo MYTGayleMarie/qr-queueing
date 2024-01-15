@@ -846,7 +846,7 @@ function ReviewInvoiceHmo() {
   //Invoice Print
   function printInvoiceButton() {
     return (
-      <button className="invoice-btn" onClick={handlePrint}>
+      <button className="print-invoice hmo-btn" onClick={handlePrint}>
         <FontAwesomeIcon
           icon={"print"}
           alt={"print"}
@@ -1875,8 +1875,14 @@ function ReviewInvoiceHmo() {
                     </span>
                   </div>
                 </div>
-                <div className="row justify-content-end">
-                  {printInvoiceButton()}
+                <div className="row justify-content-end mt-5">
+                  <div className="col-2">
+                    <button className="hmo-btn disapprove">DISAPPROVE</button>
+                  </div>
+                  <div className="col-2">
+                    <button className="hmo-btn approve">APPROVE</button>
+                  </div>
+                  <div className="col-2">{printInvoiceButton()}</div>
                 </div>
               </div>
             </div>
