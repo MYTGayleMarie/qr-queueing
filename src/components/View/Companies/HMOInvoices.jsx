@@ -99,6 +99,7 @@ export default function HMOInvoices() {
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             companyDetails.payment_status = "PAID"
+            companyDetails.invoice_status = row.invoice_status?.toUpperCase()
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails])
           } else if (filteredData.status_filter == "all") {
@@ -117,6 +118,7 @@ export default function HMOInvoices() {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             companyDetails.payment_status =
               row.is_paid === "1" ? "PAID" : "UNPAID"
+            companyDetails.invoice_status = row.invoice_status?.toUpperCase()
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails])
           }
