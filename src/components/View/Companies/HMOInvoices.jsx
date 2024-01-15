@@ -43,6 +43,7 @@ export default function HMOInvoices() {
   const [status, setStatus] = useState("unpaid")
   const [printReadyFinal, setPrintReadyFinal] = useState(false)
   const [isReady, setIsReady] = useState(false)
+  const [toView, setToView] = useState(false)
 
   React.useEffect(() => {
     finalCompanyData.length = 0
@@ -132,18 +133,41 @@ export default function HMOInvoices() {
       })
   }, [render])
 
-  function addPayment(invoiceId, companyId, discountCode, discountId) {
+  function addPayment(invoiceId, companyId, discountCode, discountId, type) {
     id = invoiceId
     company_id = companyId
     discount_id = discountId
-    setToAddPayment(true)
+    if (type === "pay") {
+      setToAddPayment(true)
+      setToView(false)
+    } else {
+      setToAddPayment(false)
+      setToView(true)
+    }
   }
 
-  if (toAddPayment == true) {
+  if (toAddPayment === true) {
     return (
       <Navigate
         to={
           "/hmo/add-invoice-payment/" +
+          id +
+          "/" +
+          company_id +
+          "/" +
+          filteredData.from_date +
+          "/" +
+          filteredData.to_date
+        }
+      />
+    )
+  }
+
+  if (toView === true) {
+    return (
+      <Navigate
+        to={
+          "/hmo-invoices/review/" +
           id +
           "/" +
           company_id +

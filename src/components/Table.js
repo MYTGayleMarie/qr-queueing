@@ -166,7 +166,6 @@ function Table({
         </tr>
       )
     } else if (type === "registration") {
-      
       return (
         <tr key={row.id}>
           {rowData.map((data, index) => (
@@ -968,7 +967,6 @@ function Table({
             </td>
           ))}
           <td>
-          
             <button
               class="action-btn"
               // class="button-10"
@@ -1169,33 +1167,46 @@ function Table({
             })}
           </td>
           <td>{row.payment_status}</td>
-          <td>TO BE ADDED</td> 
+          <td>TO BE ADDED</td>
 
           <td>
-          {/* To add invoice status */}
+            {/* To add invoice status */}
             {roleId === "4" && (
-              <button
-                class="action-btn"
-                role="button"
-                onClick={() => link(row.invoice_id, row.company_id)}
-              >
-                REVIEW
-              </button>
+              <div>
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() => link(row.invoice_id, row.company_id,"","", "review")}
+                >
+                  REVIEW
+                </button>
+                <br />
+              </div>
             )}
+
             {/* To add invoice status */}
             {roleId === "3" && (
-              <button
-                class="action-btn"
-                role="button"
-                onClick={() => link(row.invoice_id, row.company_id)}
-              >
-                VIEW DETAILS
-              </button>
+              <div>
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() => link(row.invoice_id, row.company_id,"","", "view")}
+                >
+                  VIEW DETAILS
+                </button>
+                <br />
+              </div>
             )}
             <button
               class="action-btn"
               role="button"
-              onClick={() => link(row.invoice_id, row.company_id)}
+              onClick={() =>
+                link(
+                  row.invoice_id,
+                  row.company_id,"","",
+                  row.payment_status == "PAID" ? "view" : "pay"
+                )
+              }
             >
               {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
             </button>
