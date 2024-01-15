@@ -52,6 +52,10 @@ export default function NowServing() {
 
   async function fetchNowServing() {
     // setIsReady(false);
+    setEchoList([])
+    setECGList([])
+    setXRAYList([])
+    setLabList([])
     const response = await fetchServing()
     console.log(response.data)
     if (response.data) {
