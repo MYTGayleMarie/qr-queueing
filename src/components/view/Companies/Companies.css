@@ -78,3 +78,7 @@
 .hmo-btn.disapprove {
   background-color: var(--danger-color);
 }
+
+.hmo-btn {
+    cursor: pointer;
+}
