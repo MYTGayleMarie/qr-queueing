@@ -386,16 +386,18 @@ function AddInvoicePaymentHmo() {
 
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success")
-          setGrandTotal(invoice.total)
+          setGrandTotal(response.data.data.total)
 
-          setPay(invoice.total)
+          setPay(response.data.data.total)
           setDiscountCode(invoice[0].discount_code)
-          setPaidAmount(invoice.paid_amount)
+          setPaidAmount(response.data.data.paid_amount)
           setPayments(payments)
 
           setInfoId(invoice[0].id)
           setHasPay(
-            paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
+            paymentTotal > 0.0 || paymentTotal >= response.data.data.total
+              ? true
+              : false
           )
         })
 
@@ -422,17 +424,17 @@ function AddInvoicePaymentHmo() {
     delete tempData["undefined"]
     var keys = Object.keys(tempData)
 
-    keys.map((data, index) => {
+    invoiceData.map((data, index) => {
       var info = {}
 
-      var date = new Date(tempData[data][0].added_on)
+      var date = new Date(data.added_on)
       var formattedDate = date.toDateString().split(" ")
       info.key = index + 1
-      info.name = tempData[data][0].customer
+      info.name = data.customer
       info.date =
         formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-      info.lab_services = tempData[data][0].lab_services
-      info.price = formatPrice(parseFloat(tempData[data][0].price))
+      info.lab_services = data.lab_services
+      info.price = formatPrice(parseFloat(data.price))
 
       setInfo((oldArray) => [...oldArray, info])
     })
@@ -1774,7 +1776,7 @@ function AddInvoicePaymentHmo() {
   }
 
   if (redirect == true) {
-    return <Navigate to={"/hmo-invoices"} />
+    return <Navigate to={"/hmo-discounts"} />
   }
 
   if (redirectBack === true) {
@@ -1782,7 +1784,7 @@ function AddInvoicePaymentHmo() {
       var link = "/hmo-invoices/" + dateFrom + "/" + dateTo
       return <Navigate to={link} />
     } else {
-      var link = "/hmo-invoices"
+      var link = "/hmo-discounts"
       return <Navigate to={link} />
     }
   }
