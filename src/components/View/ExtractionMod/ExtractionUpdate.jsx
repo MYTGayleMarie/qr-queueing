@@ -26,7 +26,7 @@ export default function ExtractionUpdate() {
 
   async function fetchExtraction() {
     const response = await getSingleLabExtractionPatient(bookingId, 8)
-    console.log("response", response.data.bookings)
+
     if (response.data) {
       setDetails(response.data.bookings[0])
       var lab_tests = response.data.bookings[0].lab_test.split("|")
