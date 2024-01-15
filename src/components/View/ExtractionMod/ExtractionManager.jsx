@@ -29,7 +29,7 @@ function ExtractionManager() {
   function handleExtractionClick(row) {
     const data = {
       booking_id: row.booking_id,
-      serving_type: "",
+      serving_type: "lab",
       customer_id: row.customer_id,
     }
     generateQueue(data)
