@@ -17,6 +17,7 @@ import Table from "../../Table.js"
 import { RingLoader } from "react-spinners"
 import { InvoiceToPrintHmo } from "./InvoiceToPrintHmo.jsx"
 import { approveHMO, disapproveHMO } from "../../../Helpers/APIs/hmoAPI.jsx"
+import { refreshPage } from "../Results Releasing/LabOfficer.js"
 
 //variables
 const userToken = getToken()
@@ -626,6 +627,9 @@ function ReviewInvoiceHmo() {
       }, 2000)
     } else {
       toast.error(response.error.data.messages.error)
+      setTimeout(() => {
+        refreshPage()
+      }, 2000)
     }
   }
 
@@ -638,6 +642,9 @@ function ReviewInvoiceHmo() {
       }, 2000)
     } else {
       toast.error(response.error.data.messages.error)
+      setTimeout(() => {
+        refreshPage()
+      }, 2000)
     }
   }
 
