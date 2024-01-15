@@ -1167,16 +1167,17 @@ function Table({
             })}
           </td>
           <td>{row.payment_status}</td>
-          <td>TO BE ADDED</td>
+          <td>{row.invoice_status}</td>
 
           <td>
-            {/* To add invoice status */}
-            {roleId === "4" && (
+            {roleId === "4" && row.invoice_status === "PENDING" && (
               <div>
                 <button
                   class="action-btn"
                   role="button"
-                  onClick={() => link(row.invoice_id, row.company_id,"","", "review")}
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "review")
+                  }
                 >
                   REVIEW
                 </button>
@@ -1184,32 +1185,45 @@ function Table({
               </div>
             )}
 
-            {/* To add invoice status */}
-            {roleId === "3" && (
+            {row.invoice_status === "APPROVED" && (
               <div>
                 <button
                   class="action-btn"
                   role="button"
-                  onClick={() => link(row.invoice_id, row.company_id,"","", "view")}
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "view")
+                  }
+                >
+                  PRINT INVOICE
+                </button>
+                <br />
+              </div>
+            )}
+            {roleId === "3" && row.invoice_status === "PENDING" && (
+              <div>
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "view")
+                  }
                 >
                   VIEW DETAILS
                 </button>
                 <br />
               </div>
             )}
-            <button
-              class="action-btn"
-              role="button"
-              onClick={() =>
-                link(
-                  row.invoice_id,
-                  row.company_id,"","",
-                  row.payment_status == "PAID" ? "view" : "pay"
-                )
-              }
-            >
-              {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
-            </button>
+            {row.invoice_status ==="APPROVED" && row.payment_status !== "PAID" && (
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() =>
+                  link(row.invoice_id, row.company_id, "", "", "pay")
+                }
+              >
+                ADD PAYMENT
+              </button>
+            )}
           </td>
         </tr>
       )
