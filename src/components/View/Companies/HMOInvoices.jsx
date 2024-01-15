@@ -46,6 +46,7 @@ export default function HMOInvoices() {
   const [toView, setToView] = useState(false)
 
   React.useEffect(() => {
+    setFinalCompanyData([])
     finalCompanyData.length = 0
     axios({
       method: "post",
