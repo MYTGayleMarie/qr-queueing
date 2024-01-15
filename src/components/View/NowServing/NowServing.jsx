@@ -25,7 +25,8 @@ var formattedPresentData = presentDate.toISOString().split("T")[0]
 export default function NowServing() {
   const [ECGList, setECGList] = useState([])
   const [XRAYList, setXRAYList] = useState([])
-  const [initialList, setInitialList] = useState([])
+  const [echoList, setEchoList] = useState([])
+  const [labList, setLabList] = useState([])
   document.body.style = "background: white;"
   const [records, setRecords] = useState([])
   const { dateFrom, dateTo } = useParams()
@@ -56,9 +57,10 @@ export default function NowServing() {
     if (response.data) {
       let data = response.data.now_serving
       setRecords(response.data.now_serving)
-      setInitialList(data.filter((val) => val.serving_type === "2d-echo"))
+      setEchoList(data.filter((val) => val.serving_type === "2d-echo"))
       setECGList(data.filter((val) => val.serving_type === "ecg"))
       setXRAYList(data.filter((val) => val.serving_type === "xray"))
+      setLabList(data.filter((val) => val.serving_type === "lab"))
     } else {
       setRecords([])
     }
@@ -110,15 +112,25 @@ export default function NowServing() {
             </div>
           </div>
           <div className="row justify-content-center mt-5">
-            <div className="col">
+            <div className="col-6">
+              <div className="row justify-content-center">
+                <div className="col-12 text-center align-center queue-attendee">
+                  LAB
+                </div>
+                <div className="col-12 text-center align-center mt-2 p-5">
+                  <div className="queue-div">
+                    <span className="booking-no">{labList[0]?.booking_id}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
               <div className="row justify-content-center">
                 <div className="col-12 text-center align-center queue-attendee">
                   XRAY
                 </div>
                 <div className="col-12 text-center align-center mt-2 p-5">
                   <div className="queue-div">
-                    <span className="queue-no">{XRAYList[0]?.id}</span>
-                    <br />
                     <span className="booking-no">
                       {XRAYList[0]?.booking_id}
                     </span>
@@ -126,31 +138,29 @@ export default function NowServing() {
                 </div>
               </div>
             </div>
-            <div className="col">
+            <div className="col-6">
               <div className="row justify-content-center">
                 <div className="col-12 text-center align-center queue-attendee">
                   ECG
                 </div>
                 <div className="col-12 text-center align-center mt-2 p-5">
                   <div className="queue-div">
-                    <span className="queue-no">{ECGList[0]?.id}</span>
-                    <br />
+                    {/* <span className="queue-no">{ECGList[0]?.id}</span> */}
+                    {/* <br /> */}
                     <span className="booking-no">{ECGList[0]?.booking_id}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col">
+            <div className="col-6">
               <div className="row justify-content-center">
                 <div className="col-12 text-center align-center queue-attendee">
-                  2D ECHO
+                  2D ECHO/ULTRASOUND
                 </div>
                 <div className="col-12 text-center align-center mt-2 p-5">
                   <div className="queue-div">
-                    <span className="queue-no">{initialList[0]?.id}</span>
-                    <br />
                     <span className="booking-no">
-                      {initialList[0]?.booking_id}
+                      {echoList[0]?.booking_id}
                     </span>
                   </div>
                 </div>
