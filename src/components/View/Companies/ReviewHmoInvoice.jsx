@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { formatPrice, getToken, getUser } from "../../../utilities/Common"
+import {
+  formatPrice,
+  getRoleId,
+  getToken,
+  getUser,
+} from "../../../utilities/Common"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
 import { Button, Col, Row } from "react-bootstrap"
@@ -34,6 +39,7 @@ function ReviewInvoiceHmo() {
   document.body.style = "background: white;"
 
   const navigate = useNavigate()
+  const [roleId, setRoleId] = useState(getRoleId().replace(/^"(.*)"$/, "$1"))
 
   //Invoice details
   const { id, companyId, discountID, dateFrom, dateTo } = useParams()
@@ -50,7 +56,7 @@ function ReviewInvoiceHmo() {
   const [discountDescription, setDiscountDescription] = useState("")
   const [user, setUser] = useState("")
   const [invoiceData, setInvoiceData] = useState([])
-  const [invoiceStatus, setInvoiceStatus] = useState(false)
+  const [invoiceStatus, setInvoiceStatus] = useState("")
 
   //Payment details
   const [payment, setPayment] = useState("")
@@ -308,7 +314,7 @@ function ReviewInvoiceHmo() {
 
         setInvoiceData(invoice)
         // setInvoiceStatus((old) => !old);
-        setInvoiceStatus(!invoiceStatus)
+        setInvoiceStatus(response.data.data.invoice_status)
         setDiscountId(invoice[0].discount_id)
         var payments = response.data.data.payments
 
@@ -669,7 +675,7 @@ function ReviewInvoiceHmo() {
         <div className="active-cont">
           <Header
             type="thin"
-            title="REVIEW HMO INVOICE"
+            title={`INVOICE #${id}`}
             addInvoice={handleShow}
           />
           <ToastContainer />
@@ -810,19 +816,26 @@ function ReviewInvoiceHmo() {
                   </div>
                 </div>
                 <div className="row justify-content-end mt-5">
-                  <div className="col-2">
-                    <button
-                      className="hmo-btn disapprove"
-                      onClick={handleDisapprove}
-                    >
-                      DISAPPROVE
-                    </button>
-                  </div>
-                  <div className="col-2">
-                    <button className="hmo-btn approve" onClick={handleApprove}>
-                      APPROVE
-                    </button>
-                  </div>
+                  {invoiceStatus === "pending" && roleId === "4" && (
+                    <div>
+                      <div className="col-2">
+                        <button
+                          className="hmo-btn disapprove"
+                          onClick={handleDisapprove}
+                        >
+                          DISAPPROVE
+                        </button>
+                      </div>
+                      <div className="col-2">
+                        <button
+                          className="hmo-btn approve"
+                          onClick={handleApprove}
+                        >
+                          APPROVE
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div className="col-2">{printInvoiceButton()}</div>
                 </div>
               </div>
