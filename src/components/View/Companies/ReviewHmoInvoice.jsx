@@ -16,7 +16,7 @@ import Navbar from "../../Navbar"
 import Table from "../../Table.js"
 import { RingLoader } from "react-spinners"
 import { InvoiceToPrintHmo } from "./InvoiceToPrintHmo.jsx"
-import { disapproveHMO } from "../../../Helpers/APIs/hmoAPI.jsx"
+import { approveHMO, disapproveHMO } from "../../../Helpers/APIs/hmoAPI.jsx"
 
 //variables
 const userToken = getToken()
@@ -629,6 +629,18 @@ function ReviewInvoiceHmo() {
     }
   }
 
+  const handleApprove = async () => {
+    const response = await approveHMO(id)
+    if (response.data) {
+      toast.success(response.data.message.success)
+      setTimeout(() => {
+        navigate("/hmo-invoices")
+      }, 2000)
+    } else {
+      toast.error(response.error.data.messages.error)
+    }
+  }
+
   if (redirect == true) {
     return <Navigate to={"/hmo-invoices"} />
   }
@@ -800,7 +812,9 @@ function ReviewInvoiceHmo() {
                     </button>
                   </div>
                   <div className="col-2">
-                    <button className="hmo-btn approve">APPROVE</button>
+                    <button className="hmo-btn approve" onClick={handleApprove}>
+                      APPROVE
+                    </button>
                   </div>
                   <div className="col-2">{printInvoiceButton()}</div>
                 </div>
