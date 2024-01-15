@@ -3685,6 +3685,15 @@ function Table({
           </thead>
           <tbody>{data}</tbody>
         </table>
+         <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
       </div>
     )
   } else if (type === "report") {
