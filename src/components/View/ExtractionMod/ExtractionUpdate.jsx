@@ -1,7 +1,10 @@
 import { Fragment, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import {
+  getLabExtractionPatients,
   getSingleExtractionPatient,
+  getSingleLabExtractionPatient,
+  skipPatient,
   updateExtractionLabPatientBulk,
   updateExtractionPatient,
   updateExtractionPatientBulk,
@@ -22,7 +25,7 @@ export default function ExtractionUpdate() {
   const navigate = useNavigate()
 
   async function fetchExtraction() {
-    const response = await getSingleExtractionPatient(bookingId)
+    const response = await getSingleLabExtractionPatient(bookingId, 8)
     console.log("response", response.data.bookings)
     if (response.data) {
       setDetails(response.data.bookings[0])
@@ -45,6 +48,21 @@ export default function ExtractionUpdate() {
       if (queueResponse.data) {
         navigate("/extraction")
       }
+    } else {
+      toast.error(response.error.data.messages.error)
+      setTimeout(() => {
+        refreshPage()
+      }, 2000)
+    }
+  }
+
+  async function handleSkipPatient() {
+    const response = await skipPatient(queueId)
+    if (response.data) {
+      toast.success(response.data.message.toUpperCase())
+      setTimeout(() => {
+        navigate("/extraction")
+      }, 2000)
     } else {
       toast.error(response.error.data.messages.error)
       setTimeout(() => {
@@ -76,29 +94,52 @@ export default function ExtractionUpdate() {
             <div className="row justify-content-center">
               <div className="col-12">
                 <div className="p-5">
-                  <h5>
-                    <strong>PATIENT DETAILS</strong>
-                  </h5>
-                  <br />
-
                   <div className="row">
-                    <div className="col-4">
+                    <div className="col-9">
+                      <h5>
+                        <strong>PATIENT DETAILS</strong>
+                      </h5>
+                    </div>
+                    <div className="col-3">
+                      <Button
+                        className="mt-2"
+                        // size="sm"
+                        style={{
+                          width: "100%",
+                          cursor: "pointer",
+                          background: "var(--blue-brand)",
+                          borderColor: "var(--blue-brand)",
+                        }}
+                        onClick={handleSkipPatient}
+                      >
+                        SKIP
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="row mt-5">
+                    <div className="col-6">
                       <span>
-                        Name:{" "}
+                        PATIENT ID: <strong>{details.customer_id}</strong>
+                      </span>
+                    </div>
+                    <div className="col-6">
+                      <span>
+                        AGE: <strong>{`${details.age}`}</strong>
+                      </span>
+                    </div>
+                    <div className="col-6">
+                      <span>
+                        NAME:{" "}
                         <strong>{`${details.first_name?.toUpperCase()} ${
                           details.middle_name
                         } ${details.last_name}`}</strong>
                       </span>
                     </div>
 
-                    <div className="col-4">
+                    <div className="col-6">
                       <span>
-                        Age: <strong>{`${details.age}`}</strong>
-                      </span>
-                    </div>
-                    <div className="col-4">
-                      <span>
-                        Birthdate:{" "}
+                        BIRTHDATE:{" "}
                         <strong>{`${formatDate(details.birthdate)}`}</strong>
                       </span>
                     </div>
@@ -133,7 +174,7 @@ export default function ExtractionUpdate() {
                         }}
                         onClick={handleUpdateBooking}
                       >
-                        Extracted
+                        DONE
                       </Button>
                     </div>
                   ) : (
