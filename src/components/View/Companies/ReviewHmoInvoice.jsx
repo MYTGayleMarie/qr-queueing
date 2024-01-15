@@ -313,7 +313,7 @@ function ReviewInvoiceHmo() {
         var invoice = response.data.data.soas
 
         setInvoiceData(invoice)
-        // setInvoiceStatus((old) => !old);
+
         setInvoiceStatus(response.data.data.invoice_status)
         setDiscountId(invoice[0].discount_id)
         var payments = response.data.data.payments
@@ -331,16 +331,18 @@ function ReviewInvoiceHmo() {
 
         const promisePrint = new Promise((resolve, reject) => {
           resolve("Success")
-          setGrandTotal(invoice.total)
+          setGrandTotal(response.data.data.total)
 
-          setPay(invoice.total)
+          setPay(response.data.data.total)
           setDiscountCode(invoice[0].discount_code)
-          setPaidAmount(invoice.paid_amount)
+          setPaidAmount(response.data.data.paid_amount)
           setPayments(payments)
 
-          setInfoId(invoice[0].id)
+          // setInfoId(invoice[0].id)
           setHasPay(
-            paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
+            paymentTotal > 0.0 || paymentTotal >= response.data.data.total
+              ? true
+              : false
           )
         })
 
@@ -365,19 +367,18 @@ function ReviewInvoiceHmo() {
     const tempData = groupArrayOfObjects(Object.values(invoiceData), "price")
 
     delete tempData["undefined"]
-    var keys = Object.keys(tempData)
 
-    keys.map((data, index) => {
+    invoiceData.map((data, index) => {
       var info = {}
 
-      var date = new Date(tempData[data][0].added_on)
+      var date = new Date(data.added_on)
       var formattedDate = date.toDateString().split(" ")
       info.key = index + 1
-      info.name = tempData[data][0].customer
+      info.name = data.customer
       info.date =
         formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-      info.lab_services = tempData[data][0].lab_services
-      info.price = formatPrice(parseFloat(tempData[data][0].price))
+      info.lab_services = data.lab_services
+      info.price = formatPrice(parseFloat(data.price))
 
       setInfo((oldArray) => [...oldArray, info])
     })
@@ -817,7 +818,7 @@ function ReviewInvoiceHmo() {
                 </div>
                 <div className="row justify-content-end mt-5">
                   {invoiceStatus === "pending" && roleId === "4" && (
-                    <div>
+                    <>
                       <div className="col-2">
                         <button
                           className="hmo-btn disapprove"
@@ -834,7 +835,7 @@ function ReviewInvoiceHmo() {
                           APPROVE
                         </button>
                       </div>
-                    </div>
+                    </>
                   )}
                   <div className="col-2">{printInvoiceButton()}</div>
                 </div>
