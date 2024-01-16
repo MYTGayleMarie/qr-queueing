@@ -1,35 +1,40 @@
-import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage } from "../../../utilities/Common";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import { Button, Col, Modal, Row } from "react-bootstrap";
-import "react-toastify/dist/ReactToastify.css";
-import { Navigate } from "react-router-dom";
-import { useForm, useStep } from "react-hooks-helper";
-import { useReactToPrint } from "react-to-print";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InvoiceToPrint } from "./InvoiceToPrint";
-import { ReceiptToPrint } from "./ReceiptToPrint";
+import React, { useState, useRef } from "react"
+import { useParams } from "react-router-dom"
+import {
+  formatPrice,
+  getToken,
+  getUser,
+  refreshPage,
+} from "../../../utilities/Common"
+import axios from "axios"
+import { ToastContainer, toast } from "react-toastify"
+import { Button, Col, Modal, Row } from "react-bootstrap"
+import "react-toastify/dist/ReactToastify.css"
+import { Navigate } from "react-router-dom"
+import { useForm, useStep } from "react-hooks-helper"
+import { useReactToPrint } from "react-to-print"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { InvoiceToPrint } from "./InvoiceToPrint"
+import { ReceiptToPrint } from "./ReceiptToPrint"
 
 //components
-import Header from "../../Header.js";
-import Navbar from "../../Navbar";
-import Table from "../../Table.js";
-import { ChargeSlip } from "./ChargeSlip";
-import ModalPopUp from "../../../components/Modal/UploadModal";
-import { ConsoleView } from "react-device-detect";
-import { RingLoader } from "react-spinners";
+import Header from "../../Header.js"
+import Navbar from "../../Navbar"
+import Table from "../../Table.js"
+import { ChargeSlip } from "./ChargeSlip"
+import ModalPopUp from "../../../components/Modal/UploadModal"
+import { ConsoleView } from "react-device-detect"
+import { RingLoader } from "react-spinners"
 
 //variables
-const userToken = getToken();
-const userId = getUser();
-const checkedData = {};
+const userToken = getToken()
+const userId = getUser()
+const checkedData = {}
 
 const CashPaymentDetails = {
   type: "",
   amount: "",
-};
+}
 
 const CardPaymentDetails = {
   type: "",
@@ -41,7 +46,7 @@ const CardPaymentDetails = {
   check_no: "",
   check_bank: "",
   check_date: "",
-};
+}
 
 const CheckPaymentDetails = {
   type: "",
@@ -49,144 +54,144 @@ const CheckPaymentDetails = {
   check_no: "",
   check_bank: "",
   check_date: "",
-};
+}
 
 function groupArrayOfObjects(list, key) {
   return list.reduce(function (rv, x) {
-    (rv[x[key]] = rv[x[key]] || []).push(x);
-    return rv;
-  }, {});
+    ;(rv[x[key]] = rv[x[key]] || []).push(x)
+    return rv
+  }, {})
 }
 function AddInvoicePayment() {
-  document.body.style = "background: white;";
+  document.body.style = "background: white;"
 
   //Invoice details
-  const { id, companyId, discountID, dateFrom, dateTo } = useParams();
+  const { id, companyId, discountID, dateFrom, dateTo } = useParams()
 
-  const [redirect, setRedirect] = useState(false);
-  const [redirectBack, setRedirectBack] = useState(false);
-  const [info, setInfo] = useState([]);
-  const [infoId, setInfoId] = useState("");
-  const [checked, setChecked] = useForm(checkedData);
-  const [haslogs, setHasLogs] = useState(false);
-  const [paidAmount, setPaidAmount] = useState("");
-  const [discountCode, setDiscountCode] = useState("");
-  const [payments, setPayments] = useState("");
-  const [discountId, setDiscountId] = useState("");
-  const [discountDescription, setDiscountDescription] = useState("");
-  const [user, setUser] = useState("");
-  const [invoiceData, setInvoiceData] = useState([]);
-  const [invoiceStatus, setInvoiceStatus] = useState(false);
-  const [isBilled, setIsBilled] = useState(false);
+  const [redirect, setRedirect] = useState(false)
+  const [redirectBack, setRedirectBack] = useState(false)
+  const [info, setInfo] = useState([])
+  const [infoId, setInfoId] = useState("")
+  const [checked, setChecked] = useForm(checkedData)
+  const [haslogs, setHasLogs] = useState(false)
+  const [paidAmount, setPaidAmount] = useState("")
+  const [discountCode, setDiscountCode] = useState("")
+  const [payments, setPayments] = useState("")
+  const [discountId, setDiscountId] = useState("")
+  const [discountDescription, setDiscountDescription] = useState("")
+  const [user, setUser] = useState("")
+  const [invoiceData, setInvoiceData] = useState([])
+  const [invoiceStatus, setInvoiceStatus] = useState(false)
+  const [isBilled, setIsBilled] = useState(false)
 
   //Payment details
-  const [payment, setPayment] = useState("");
-  const [total, setTotal] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
-  const [pay, setPay] = useState(0);
-  const [tax, setTax] = useState(0);
-  const [cardTax, setCardTax] = useState(0);
-  const [checkTax, setCheckTax] = useState(0);
-  const [othersTax, setOthersTax] = useState(0);
-  const [serviceFee, setServiceFee] = useState(0);
-  const [mdCharge, setMdCharge] = useState(0);
-  const [remarks, setRemarks] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [seniorPwdId, setID] = useState("");
-  const [hasPay, setHasPay] = useState(false);
+  const [payment, setPayment] = useState("")
+  const [total, setTotal] = useState(0)
+  const [grandTotal, setGrandTotal] = useState(0)
+  const [pay, setPay] = useState(0)
+  const [tax, setTax] = useState(0)
+  const [cardTax, setCardTax] = useState(0)
+  const [checkTax, setCheckTax] = useState(0)
+  const [othersTax, setOthersTax] = useState(0)
+  const [serviceFee, setServiceFee] = useState(0)
+  const [mdCharge, setMdCharge] = useState(0)
+  const [remarks, setRemarks] = useState("")
+  const [discount, setDiscount] = useState(0)
+  const [paymentStatus, setPaymentStatus] = useState("")
+  const [seniorPwdId, setID] = useState("")
+  const [hasPay, setHasPay] = useState(false)
 
   //Company details
-  const [name, setName] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
-  const [selectedCode, setSelectedCode] = useState("");
-  const [discountCodes, setDiscountCodes] = useState("");
+  const [name, setName] = useState("")
+  const [contactNo, setContactNo] = useState("")
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState("")
+  const [contactPerson, setContactPerson] = useState("")
+  const [selectedCode, setSelectedCode] = useState("")
+  const [discountCodes, setDiscountCodes] = useState("")
 
   //Redirection
-  const [toAddPayment, setToAddPayment] = useState(false);
-  const [toAddInvoice, setToAddInvoice] = useState(false);
+  const [toAddPayment, setToAddPayment] = useState(false)
+  const [toAddInvoice, setToAddInvoice] = useState(false)
 
   //Add Invoice Modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   //Check states
-  const [checkNo, setCheckNo] = useState("");
-  const [checkBank, setCheckBank] = useState("");
-  const [checkDate, setCheckDate] = useState("");
+  const [checkNo, setCheckNo] = useState("")
+  const [checkBank, setCheckBank] = useState("")
+  const [checkDate, setCheckDate] = useState("")
 
   //Card states
-  const [cardNo, setCardNo] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [cardType, setCardType] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cardBank, setCardBank] = useState("");
+  const [cardNo, setCardNo] = useState("")
+  const [cardName, setCardName] = useState("")
+  const [cardType, setCardType] = useState("")
+  const [cardExpiry, setCardExpiry] = useState("")
+  const [cardBank, setCardBank] = useState("")
 
   //Others states
-  const [source, setSource] = useState("");
-  const [reference, setReference] = useState("");
+  const [source, setSource] = useState("")
+  const [reference, setReference] = useState("")
 
   //Print state
-  const [printData, setPrintData] = useState(false);
+  const [printData, setPrintData] = useState(false)
 
   //Print Invoice
-  const [isprinted, setIsPrinted] = useState(false);
-  const handlePrintClose = () => setIsPrinted(false);
-  const handlePrintShow = () => setIsPrinted(true);
+  const [isprinted, setIsPrinted] = useState(false)
+  const handlePrintClose = () => setIsPrinted(false)
+  const handlePrintShow = () => setIsPrinted(true)
 
-  const [isprint, setIsPrint] = useState(false);
-  const handlePrintedClose = () => setIsPrint(false);
-  const handlePrintedShow = () => setIsPrint(true);
+  const [isprint, setIsPrint] = useState(false)
+  const handlePrintedClose = () => setIsPrint(false)
+  const handlePrintedShow = () => setIsPrint(true)
 
-  const [isprintCheck, setIsPrintCheck] = useState(false);
-  const handlePrintedCheckClose = () => setIsPrintCheck(false);
-  const handlePrintedCheckShow = () => setIsPrintCheck(true);
+  const [isprintCheck, setIsPrintCheck] = useState(false)
+  const handlePrintedCheckClose = () => setIsPrintCheck(false)
+  const handlePrintedCheckShow = () => setIsPrintCheck(true)
 
-  const [isprintCard, setIsPrintCard] = useState(false);
-  const handlePrintedCardClose = () => setIsPrintCard(false);
-  const handlePrintedCardShow = () => setIsPrintCard(true);
+  const [isprintCard, setIsPrintCard] = useState(false)
+  const handlePrintedCardClose = () => setIsPrintCard(false)
+  const handlePrintedCardShow = () => setIsPrintCard(true)
 
   //Print Receipt
-  const [isprintedReceipt, setIsPrintedReceipt] = useState(false);
-  const handlePrintReceiptClose = () => setIsPrintedReceipt(false);
-  const handlePrintReceiptShow = () => setIsPrintedReceipt(true);
+  const [isprintedReceipt, setIsPrintedReceipt] = useState(false)
+  const handlePrintReceiptClose = () => setIsPrintedReceipt(false)
+  const handlePrintReceiptShow = () => setIsPrintedReceipt(true)
 
   //check modal
-  const [isModalCheck, setIsModalCheck] = useState(false);
-  const handleCheckClose = () => setIsModalCheck(false);
-  const handleCheckShow = () => setIsModalCheck(true);
+  const [isModalCheck, setIsModalCheck] = useState(false)
+  const handleCheckClose = () => setIsModalCheck(false)
+  const handleCheckShow = () => setIsModalCheck(true)
 
-  const [isModalCard, setIsModalCard] = useState(false);
-  const handleCardClose = () => setIsModalCard(false);
-  const handleCardShow = () => setIsModalCard(true);
+  const [isModalCard, setIsModalCard] = useState(false)
+  const handleCardClose = () => setIsModalCard(false)
+  const handleCardShow = () => setIsModalCard(true)
 
-  const [isModalOthers, setIsModalOthers] = useState(false);
-  const handleOthersClose = () => setIsModalOthers(false);
-  const handleOthersShow = () => setIsModalOthers(true);
+  const [isModalOthers, setIsModalOthers] = useState(false)
+  const handleOthersClose = () => setIsModalOthers(false)
+  const handleOthersShow = () => setIsModalOthers(true)
 
   // Charge SLip
-  const [chargeSlip, setChargeSlip] = useState([]);
-  const [chargeSlipReady, setChargeSlipReady] = useState(false);
+  const [chargeSlip, setChargeSlip] = useState([])
+  const [chargeSlipReady, setChargeSlipReady] = useState(false)
 
-  const [showModal, setShowModal] = useState(false);
-  const [ifYes, setIfYes] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+  const [ifYes, setIfYes] = useState(false)
 
   //For Loaders
-  const [loadingCompany, setLoadingCompany] = useState(false);
-  const [loadingUser, setLoadingUser] = useState(false);
-  const [loadingDiscounts, setLoadingDiscounts] = useState(false);
-  const [loadingInvoices, setloadingInvoices] = useState(false);
-  const [loadingBookingDiscounts, setLoadingBookingDiscounts] = useState(false);
-  const [loadingBookings, setLoadingBookings] = useState(false);
-  const [paidAmountInvoice, setPaidAmountInvoice] = useState(0);
+  const [loadingCompany, setLoadingCompany] = useState(false)
+  const [loadingUser, setLoadingUser] = useState(false)
+  const [loadingDiscounts, setLoadingDiscounts] = useState(false)
+  const [loadingInvoices, setloadingInvoices] = useState(false)
+  const [loadingBookingDiscounts, setLoadingBookingDiscounts] = useState(false)
+  const [loadingBookings, setLoadingBookings] = useState(false)
+  const [paidAmountInvoice, setPaidAmountInvoice] = useState(0)
 
   const handlePrintInvoice = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   //Bank Transfer Details
   const [bankTransferDetails, setBankTransferDetails] = useState({
@@ -196,56 +201,56 @@ function AddInvoicePayment() {
     paid_amount: "",
     withholding_tax: 0,
     remarks: "",
-  });
+  })
 
   function handleBankChange(e) {
-    const { name, value } = e.target;
-    setBankTransferDetails({ ...bankTransferDetails, [name]: value });
+    const { name, value } = e.target
+    setBankTransferDetails({ ...bankTransferDetails, [name]: value })
   }
 
-  const componentRef = useRef();
+  const componentRefPrint = useRef()
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRefPrint.current,
     onAfterPrint: handlePrintShow,
     pageStyle: () => "@page { size: letter;}",
-  });
+  })
 
   const handlePrinted = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRefPrint.current,
     onAfterPrint: setIsPrint,
     pageStyle: () => "@page { size: letter;}",
-  });
+  })
 
   const handlePrintedCheck = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRefPrint.current,
     onAfterPrint: setIsPrintCheck,
     pageStyle: () => "@page { size: letter;}",
-  });
+  })
 
   const handlePrintedCard = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRefPrint.current,
     onAfterPrint: setIsPrintCard,
     pageStyle: () => "@page { size: letter;}",
-  });
+  })
 
-  const acknowledgementRef = useRef();
+  const acknowledgementRef = useRef()
   const handleAcknowledgePrint = useReactToPrint({
     content: () => acknowledgementRef.current,
     onAfterPrint: handlePrintReceiptShow,
     pageStyle: () => "@page { size: letter;}",
-  });
-  const chargeSlipRef = useRef();
+  })
+  const chargeSlipRef = useRef()
   const handleChargeSlipPrint = useReactToPrint({
     content: () => chargeSlipRef.current,
     // onAfterPrint: handlePrintReceiptShow,
     pageStyle: () => "@page { size: letter;}",
-  });
+  })
 
-  const twoGoRef = useRef();
+  const twoGoRef = useRef()
   const handlge2GoPrint = useReactToPrint({
     content: () => twoGoRef.current,
     pageStyle: () => "@page{ size:letter;}",
-  });
+  })
   React.useEffect(() => {
     axios({
       method: "post",
@@ -258,17 +263,17 @@ function AddInvoicePayment() {
       },
     })
       .then(function (company) {
-        setName(company.data.name);
-        setContactNo(company.data.contact_no);
-        setEmail(company.data.company_email);
-        setAddress(company.data.address);
-        setContactPerson(company.data.contact_person);
-        setLoadingCompany(true);
+        setName(company.data.name)
+        setContactNo(company.data.contact_no)
+        setEmail(company.data.company_email)
+        setAddress(company.data.address)
+        setContactPerson(company.data.contact_person)
+        setLoadingCompany(true)
       })
       .then(function (error) {
-        console.log(error);
-        setLoadingCompany(true);
-      });
+        console.log(error)
+        setLoadingCompany(true)
+      })
 
     axios({
       method: "post",
@@ -280,10 +285,10 @@ function AddInvoicePayment() {
         requester: userId,
       },
     }).then(function (response) {
-      setUser(response.data.name);
-      setLoadingUser(true);
-    });
-  }, []);
+      setUser(response.data.name)
+      setLoadingUser(true)
+    })
+  }, [])
 
   // React.useEffect(() => {
   //   axios({
@@ -329,7 +334,7 @@ function AddInvoicePayment() {
               info.type == "print" ||
               (info.type == "email" &&
                 info.response == "Email successfully sent")
-          );
+          )
 
           if (array.length == 0) {
             // setHasLogs(false);
@@ -337,12 +342,12 @@ function AddInvoicePayment() {
         }
       })
       .then(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
-    info.length = 0;
+    info.length = 0
     axios({
       method: "post",
       url: window.$link + "Company_invoices/show/" + id,
@@ -354,79 +359,96 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
-        console.log("ci show", response.data);
-        setHasLogs(true);
-        var invoice = response.data.data.company_invoices;
+     
+        setHasLogs(true)
+        var invoice = response.data.data.company_invoices
 
-        setInvoiceData(invoice);
+        setInvoiceData(invoice)
         // setInvoiceStatus((old) => !old);
-        setInvoiceStatus(!invoiceStatus);
-        setDiscountId(invoice[0].discount_id);
-        var payments = response.data.data.payments;
+        setInvoiceStatus(!invoiceStatus)
+        setDiscountId(invoice[0].discount_id)
+        var payments = response.data.data.payments
 
-        var paymentTotal;
+        var paymentTotal
         if (payments.length < 1) {
-          paymentTotal = parseFloat(0).toFixed(2);
+          paymentTotal = parseFloat(0).toFixed(2)
         } else {
-          var tempTotal = 0.0;
+          var tempTotal = 0.0
           payments.map((data, index) => {
-            tempTotal += parseFloat(data.total);
-          });
-          paymentTotal = parseFloat(tempTotal).toFixed(2);
+            tempTotal += parseFloat(data.total)
+          })
+          paymentTotal = parseFloat(tempTotal).toFixed(2)
         }
 
         const promisePrint = new Promise((resolve, reject) => {
-          resolve("Success");
-          setGrandTotal(invoice.total);
-          console.log("invoice total", invoice.total)
-          setPay(invoice.total);
-          setDiscountCode(invoice[0].discount_code);
-          setPaidAmount(invoice.paid_amount);
-          setPayments(payments);
-          console.log("385 payments", payments)
-          setInfoId(invoice[0].id);
+          // resolve("Success");
+          // setGrandTotal(invoice.total);
+
+          // setPay(invoice.total);
+          // setDiscountCode(invoice[0].discount_code);
+          // setPaidAmount(invoice.paid_amount);
+          // setPayments(payments);
+
+          // setInfoId(invoice[0].id);
+          // setHasPay(
+          //   paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
+          // );
+          resolve("Success")
+          setGrandTotal(response.data.data.total)
+
+          setPay(response.data.data.total)
+          setDiscountCode(invoice[0].discount_code)
+          setPaidAmount(response.data.data.paid_amount)
+          setPayments(payments)
+
+          setInfoId(invoice[0].id)
           setHasPay(
-            paymentTotal > 0.0 || paymentTotal >= invoice.total ? true : false
-          );
-        });
+            paymentTotal > 0.0 || paymentTotal >= response.data.data.total
+              ? true
+              : false
+          )
+        })
 
         promisePrint.then((value) => {
-          setPrintData(true);
-        });
+          setPrintData(true)
+        })
 
-        setDiscountId(invoice[0].discount_id);
-        setloadingInvoices(true);
+        setDiscountId(invoice[0].discount_id)
+        setloadingInvoices(true)
         //   });
       })
       .then(function (error) {
         // setHasLogs(false);
-        console.log(error);
-        setloadingInvoices(true);
-      });
-  }, []);
+        console.log(error)
+        setloadingInvoices(true)
+      })
+  }, [])
 
   React.useEffect(() => {
-    info.length = 0;
+    info.length = 0
 
-    const tempData = groupArrayOfObjects(Object.values(invoiceData), "price");
+    const tempData = groupArrayOfObjects(Object.values(invoiceData), "price")
 
-    delete tempData["undefined"];
-    var keys = Object.keys(tempData);
+    delete tempData["undefined"]
+    var keys = Object.keys(tempData)
 
-    keys.map((data, index) => {
-      var info = {};
+    invoiceData.map((data, index) => {
+    
+      var info = {}
 
-      var date = new Date(tempData[data][0].added_on);
-      var formattedDate = date.toDateString().split(" ");
+      var date = new Date(data.added_on)
+      var formattedDate = date.toDateString().split(" ")
+      info.key = index + 1
+      info.name = data.customer
+      info.code = data.discount_code
       info.date =
-        formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3];
-      info.code = tempData[data][0].discount_code;
-      info.price = parseFloat(data);
-      info.qty = tempData[data].length;
-      info.total = parseFloat(data) * tempData[data].length;
-      setInfo((oldArray) => [...oldArray, info]);
-    });
-  }, [invoiceStatus]);
+        formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
+
+      info.price = formatPrice(parseFloat(data.price))
+
+      setInfo((oldArray) => [...oldArray, info])
+    })
+  }, [invoiceStatus])
 
   React.useEffect(() => {
     axios({
@@ -439,13 +461,13 @@ function AddInvoicePayment() {
         requester: userId,
       },
     }).then(function (response) {
-      setDiscountDescription(response.data.data.discount.description);
-    });
-  }, [discountId]);
+      setDiscountDescription(response.data.data.discount.description)
+    })
+  }, [discountId])
 
   // Get booking under this discount
   React.useEffect(() => {
-    chargeSlip.length = 0;
+    chargeSlip.length = 0
     axios({
       method: "post",
       url: window.$link + "bookings/getAllByDiscountCode",
@@ -459,7 +481,7 @@ function AddInvoicePayment() {
       },
     })
       .then((response) => {
-        var dataLength = response.data.data.particulars.length;
+        var dataLength = response.data.data.particulars.length
         response.data.data.particulars.map((data, index) => {
           // Get Booking Details
           axios({
@@ -473,42 +495,42 @@ function AddInvoicePayment() {
             },
           })
             .then((response) => {
-              var booking = response.data.data.booking;
-              var bookingDetails = response.data.data.booking_details;
-              var info = {};
-              var date = new Date(booking.booking_time);
-              var formattedDate = date.toDateString().split(" ");
-              info.patient_name = booking.customer;
-              info.transaction_no = booking.id;
-              info.patient_address = booking.customer_address;
-              info.patient_contact = booking.contact_no;
-              info.patient_email = booking.customer_email;
-              info.discount_code = booking.discount_code;
+              var booking = response.data.data.booking
+              var bookingDetails = response.data.data.booking_details
+              var info = {}
+              var date = new Date(booking.booking_time)
+              var formattedDate = date.toDateString().split(" ")
+              info.patient_name = booking.customer
+              info.transaction_no = booking.id
+              info.patient_address = booking.customer_address
+              info.patient_contact = booking.contact_no
+              info.patient_email = booking.customer_email
+              info.discount_code = booking.discount_code
               info.date =
                 formattedDate[1] +
                 " " +
                 formattedDate[2] +
                 " " +
-                formattedDate[3];
-              info.doctors_referal = booking.doctors_referal;
-              info.lab_tests = [];
-              const lab_test = groupArrayOfObjects(bookingDetails, "lab_test");
-              delete lab_test["null"];
+                formattedDate[3]
+              info.doctors_referal = booking.doctors_referal
+              info.lab_tests = []
+              const lab_test = groupArrayOfObjects(bookingDetails, "lab_test")
+              delete lab_test["null"]
               Object.keys(lab_test).map((data, index) => {
-                var test = {};
-                test.service = data;
-                test.qty = lab_test[data].length;
-                test.total = lab_test[data].length * lab_test[data][0].price;
-                info.lab_tests.push(test);
-              });
-              info.packages = [];
-              const packages = groupArrayOfObjects(bookingDetails, "package");
+                var test = {}
+                test.service = data
+                test.qty = lab_test[data].length
+                test.total = lab_test[data].length * lab_test[data][0].price
+                info.lab_tests.push(test)
+              })
+              info.packages = []
+              const packages = groupArrayOfObjects(bookingDetails, "package")
 
-              delete packages["null"];
+              delete packages["null"]
               Object.keys(packages).map((data, index) => {
-                var test = {};
-                test.name = data;
-                test.service = "";
+                var test = {}
+                test.name = data
+                test.service = ""
                 axios({
                   method: "post",
                   url:
@@ -525,47 +547,47 @@ function AddInvoicePayment() {
                   .then((response) => {
                     response.data.map((data, index) => {
                       if (response.data.length - 1 == 0) {
-                        test.service += data.lab_test;
+                        test.service += data.lab_test
                       } else {
-                        test.service += data.lab_test + ", ";
+                        test.service += data.lab_test + ", "
                       }
-                    });
+                    })
                   })
                   .catch((err) => {
-                    console.log(err);
-                  });
-                test.qty = packages[data].length;
-                test.total = packages[data].length * packages[data][0].price;
-                info.packages.push(test);
-              });
+                    console.log(err)
+                  })
+                test.qty = packages[data].length
+                test.total = packages[data].length * packages[data][0].price
+                info.packages.push(test)
+              })
 
-              info.total = booking.total_amount;
-              info.discount = booking.discount;
-              info.grand_total = booking.grand_total;
-              setChargeSlip((oldArray) => [...oldArray, info]);
+              info.total = booking.total_amount
+              info.discount = booking.discount
+              info.grand_total = booking.grand_total
+              setChargeSlip((oldArray) => [...oldArray, info])
               if (dataLength - 1 == index) {
-                setTimeout(setChargeSlipReady(true), 5000);
+                setTimeout(setChargeSlipReady(true), 5000)
               }
-              setLoadingBookingDiscounts(true);
+              setLoadingBookingDiscounts(true)
             })
             .catch((err) => {
-              setLoadingBookingDiscounts(true);
-              console.log(err);
-            });
-        });
-        setLoadingBookingDiscounts(true);
+              setLoadingBookingDiscounts(true)
+              console.log(err)
+            })
+        })
+        setLoadingBookingDiscounts(true)
       })
       .catch((error) => {
-        setLoadingBookingDiscounts(true);
-        console.log(error);
-      });
-  }, [discountCode]);
+        setLoadingBookingDiscounts(true)
+        console.log(error)
+      })
+  }, [discountCode])
 
   React.useEffect(() => {
-    var totalAmount;
-    var discount;
-    var customer;
-    var type;
+    var totalAmount
+    var discount
+    var customer
+    var type
 
     axios({
       method: "post",
@@ -578,9 +600,9 @@ function AddInvoicePayment() {
       },
     })
       .then(function (response) {
-        discount = response.data.discount;
-        customer = response.data.customer_id;
-        type = response.data.type;
+        discount = response.data.discount
+        customer = response.data.customer_id
+        type = response.data.type
 
         axios({
           method: "post",
@@ -594,52 +616,42 @@ function AddInvoicePayment() {
         })
           .then(function (customer) {
             //AGE
-            var presentDate = new Date();
-            var birthDate = new Date(customer.data.birthdate);
-            var age = presentDate.getFullYear() - birthDate.getFullYear();
-            var m = presentDate.getMonth() - birthDate.getMonth();
+            var presentDate = new Date()
+            var birthDate = new Date(customer.data.birthdate)
+            var age = presentDate.getFullYear() - birthDate.getFullYear()
+            var m = presentDate.getMonth() - birthDate.getMonth()
             if (
               m < 0 ||
               (m === 0 && presentDate.getDate() < birthDate.getDate())
             ) {
-              age--;
+              age--
             }
-            var info = [];
+            var info = []
 
-            // setPatientId(response.data.customer_id);
-            // setFirstName(customer.data.first_name);
-            // setMiddleName(customer.data.middle_name);
-            // setLastName(customer.data.last_name);
-            // setBirthDate(birthDate.toDateString());
-            // setGender(customer.data.gender);
-            // setAge(age);
-            // setContactNo(customer.data.contact_no);
-            // setEmail(customer.data.email);
-            // setAddress(customer.data.address);
-            setLoadingBookings(true);
+            setLoadingBookings(true)
           })
           .catch(function (error) {
-            setLoadingBookings(true);
-            console.log(error);
-          });
+            setLoadingBookings(true)
+            console.log(error)
+          })
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   function submit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    var invoice_nos = 0;
-    var prices = [];
-    var totals = [];
+    var invoice_nos = 0
+    var prices = []
+    var totals = []
 
     for (let [key, value] of Object.entries(checked)) {
       if (value != false) {
-        invoice_nos.push(info[key].id);
-        prices.push(info[key].price);
-        totals.push(info[key].total);
+        invoice_nos.push(info[key].id)
+        prices.push(info[key].price)
+        totals.push(info[key].total)
       }
     }
 
@@ -665,15 +677,15 @@ function AddInvoicePayment() {
         },
       })
         .then(function (response) {
-          toast.success("Payment Successful!");
+          toast.success("Payment Successful!")
           setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
+            setRedirect(true)
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-          toast.error("Payment Unsuccessful!");
-        });
+          console.log(error)
+          toast.error("Payment Unsuccessful!")
+        })
     }
     if (payment === "check") {
       axios({
@@ -700,15 +712,15 @@ function AddInvoicePayment() {
         },
       })
         .then(function (response) {
-          toast.success("Payment Successful!");
+          toast.success("Payment Successful!")
           setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
+            setRedirect(true)
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-          toast.error("Payment Unsuccessful!");
-        });
+          console.log(error)
+          toast.error("Payment Unsuccessful!")
+        })
     }
     if (payment === "card") {
       axios({
@@ -737,15 +749,15 @@ function AddInvoicePayment() {
         },
       })
         .then(function (response) {
-          toast.success("Payment Successful!");
+          toast.success("Payment Successful!")
           setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
+            setRedirect(true)
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-          toast.error("Payment Unsuccessful!");
-        });
+          console.log(error)
+          toast.error("Payment Unsuccessful!")
+        })
     }
     if (payment === "others") {
       axios({
@@ -769,15 +781,15 @@ function AddInvoicePayment() {
         },
       })
         .then(function (response) {
-          toast.success("Payment Successful!");
+          toast.success("Payment Successful!")
           setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
+            setRedirect(true)
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-          toast.error("Payment Unsuccessful!");
-        });
+          console.log(error)
+          toast.error("Payment Unsuccessful!")
+        })
     }
     if (payment === "bank transfer") {
       axios({
@@ -804,15 +816,15 @@ function AddInvoicePayment() {
         },
       })
         .then(function (response) {
-          toast.success("Payment Successful!");
+          toast.success("Payment Successful!")
           setTimeout(function () {
-            setRedirect(true);
-          }, 2000);
+            setRedirect(true)
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-          toast.error("Payment Unsuccessful!");
-        });
+          console.log(error)
+          toast.error("Payment Unsuccessful!")
+        })
     }
   }
 
@@ -827,7 +839,7 @@ function AddInvoicePayment() {
         tQoken: userToken.replace(/['"]+/g, ""),
         requester: userId,
       },
-    }).then(function (response) {});
+    }).then(function (response) {})
   }
 
   function printLog() {
@@ -840,7 +852,7 @@ function AddInvoicePayment() {
         token: userToken.replace(/['"]+/g, ""),
         requester: userId,
       },
-    }).then(function (response) {});
+    }).then(function (response) {})
   }
 
   function emailInvoice() {
@@ -854,37 +866,37 @@ function AddInvoicePayment() {
         requester: userId,
         emailed_to: email,
       },
-    }).then(function (response) {});
+    }).then(function (response) {})
   }
 
   function closeOthers() {
-    setIsPrint(true);
-    handleOthersClose(false);
+    setIsPrint(true)
+    handleOthersClose(false)
   }
 
   function closeCheck() {
-    setIsPrintCheck(true);
-    handleCheckClose(false);
+    setIsPrintCheck(true)
+    handleCheckClose(false)
   }
 
   function closeCard() {
-    setIsPrintCard(true);
-    handleCardClose(false);
+    setIsPrintCard(true)
+    handleCardClose(false)
   }
 
   function checkAddPayment() {
-    handleCheckClose(false);
-    setPayment("check");
+    handleCheckClose(false)
+    setPayment("check")
   }
 
   function cardAddPayment() {
-    handleCardClose(false);
-    setPayment("card");
+    handleCardClose(false)
+    setPayment("card")
   }
 
   function othersAddPayment() {
-    handleOthersClose(false);
-    setPayment("others");
+    handleOthersClose(false)
+    setPayment("others")
   }
 
   //Invoice Print
@@ -899,7 +911,7 @@ function AddInvoicePayment() {
         />
         PRINT INVOICE
       </button>
-    );
+    )
   }
 
   function printInvoiceButtons() {
@@ -917,7 +929,7 @@ function AddInvoicePayment() {
         />
         PRINT INVOICE
       </button>
-    );
+    )
   }
 
   function printInvoiceButtonCheck() {
@@ -935,7 +947,7 @@ function AddInvoicePayment() {
         />
         PRINT INVOICE
       </button>
-    );
+    )
   }
 
   function printInvoiceButtonCard() {
@@ -953,7 +965,7 @@ function AddInvoicePayment() {
         />
         PRINT INVOICE
       </button>
-    );
+    )
   }
   // Charge Slip
   function printChargeSlip() {
@@ -968,9 +980,9 @@ function AddInvoicePayment() {
           />
           PRINT CHARGE SLIP
         </button>
-      );
+      )
     } else {
-      return <button className="invoice-btn">Loading Charge Slip...</button>;
+      return <button className="invoice-btn">Loading Charge Slip...</button>
     }
   }
   //Acknowledgement Print
@@ -988,7 +1000,7 @@ function AddInvoicePayment() {
         />
         {printData == false ? "Loading Data..." : "PRINT RECEIPT"}
       </button>
-    );
+    )
   }
 
   function emailButton() {
@@ -1002,13 +1014,13 @@ function AddInvoicePayment() {
         />
         EMAIL
       </button>
-    );
+    )
   }
 
   function paymentDetails() {
-    var new_payments = payments[0];
-    var date = new Date(payments[0]?.added_on);
-    var formattedDate = date.toDateString().split(" ");
+    var new_payments = payments[0]
+    var date = new Date(payments[0]?.added_on)
+    var formattedDate = date.toDateString().split(" ")
 
     return (
       <div className="paymentDetails">
@@ -1059,10 +1071,10 @@ function AddInvoicePayment() {
               <br />
               <br />
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 
   function cashForm() {
@@ -1084,9 +1096,9 @@ function AddInvoicePayment() {
               className="form-control"
               placeholder="P"
               onChange={(e) => {
-                const inputValue = e.target.value;
+                const inputValue = e.target.value
                 if (inputValue !== null) {
-                  setPay(inputValue);
+                  setPay(inputValue)
                 }
               }}
             />
@@ -1169,7 +1181,7 @@ function AddInvoicePayment() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   function bankTransferForm() {
@@ -1243,9 +1255,9 @@ function AddInvoicePayment() {
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
-                  const inputValue = e.target.value;
+                  const inputValue = e.target.value
                   if (inputValue !== null) {
-                    setPay(inputValue);
+                    setPay(inputValue)
                   }
                 }}
               />
@@ -1331,7 +1343,7 @@ function AddInvoicePayment() {
           </div>
         </div>
       </>
-    );
+    )
   }
 
   function checkForm() {
@@ -1405,9 +1417,9 @@ function AddInvoicePayment() {
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
-                  const inputValue = e.target.value;
+                  const inputValue = e.target.value
                   if (inputValue !== null) {
-                    setPay(inputValue);
+                    setPay(inputValue)
                   }
                 }}
               />
@@ -1428,7 +1440,7 @@ function AddInvoicePayment() {
                 className="form-control"
                 placeholder="% (in percentage)"
                 onChange={(e) => {
-                  setCheckTax(e.target.value);
+                  setCheckTax(e.target.value)
                 }}
               />
             </Col>
@@ -1492,7 +1504,7 @@ function AddInvoicePayment() {
           </div>
         </div>
       </>
-    );
+    )
   }
 
   function cardForm() {
@@ -1617,7 +1629,7 @@ function AddInvoicePayment() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   function othersForm() {
@@ -1751,24 +1763,24 @@ function AddInvoicePayment() {
           </div>
         </div>
       </>
-    );
+    )
   }
 
   function addInvoice() {
-    setToAddInvoice(true);
+    setToAddInvoice(true)
   }
 
   if (redirect == true) {
-    return <Navigate to={"/company-invoices"} />;
+    return <Navigate to={"/company-invoices"} />
   }
 
   if (redirectBack === true) {
     if (dateFrom !== undefined && dateTo !== undefined) {
-      var link = "/company-invoices/" + dateFrom + "/" + dateTo;
-      return <Navigate to={link} />;
+      var link = "/company-invoices/" + dateFrom + "/" + dateTo
+      return <Navigate to={link} />
     } else {
-      var link = "/company-invoices";
-      return <Navigate to={link} />;
+      var link = "/company-invoices"
+      return <Navigate to={link} />
     }
   }
 
@@ -1835,11 +1847,11 @@ function AddInvoicePayment() {
             tableData={info}
             rowsPerPage={4}
             headingColumns={[
-              "INVOICE DATE",
+              "NO",
+              "NAME",
               "DISCOUNT CODE",
-              "PRICE",
-              "QTY",
-              "TOTAL",
+              "DATE OF SERVICE",
+              "TOTAL DUE"
             ]}
             givenClass={"company-mobile"}
             // setChecked={setChecked}
@@ -1860,12 +1872,10 @@ function AddInvoicePayment() {
               </div>
             </div>
           )}
-          {console.log("1853", payments[0])}
-          {console.log("1853", paidAmount)}
-          {console.log("1853", grandTotal)}
+        
 
           {haslogs &&
-            parseFloat(paidAmount) <= parseFloat(grandTotal) && (//to delet =
+            parseFloat(paidAmount) <= parseFloat(grandTotal) && ( //to delet =
               <div className="payment-cont">
                 <h1 className="payment-label">ADD PAYMENT</h1>
 
@@ -1928,7 +1938,6 @@ function AddInvoicePayment() {
           <hr />
           <div className="row pt-4">
             <div className="col-sm-12 d-flex justify-content-center">
-              
               {hasPay == true && printButton()}
               {hasPay == false && printInvoiceButton()}
               {hasPay == false && emailButton()}
@@ -2200,12 +2209,29 @@ function AddInvoicePayment() {
         style={{ display: "none" }} // This make ComponentToPrint show   only while printing
       >
         <InvoiceToPrint
-          ref={componentRef}
+          ref={componentRefPrint}
           name={name}
           contactNo={contactNo}
           address={address}
           contactPerson={contactPerson}
-          invoices={info}
+          invoices={[
+            ...info,
+            {
+              key: "",
+              name: "",
+              code: "",
+
+              date: <strong>TOTAL BILL</strong>,
+              price: (
+                <strong>
+                  {parseFloat(grandTotal).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </strong>
+              ),
+            },
+          ]}
           grandTotal={grandTotal}
           user={user}
         />
@@ -2234,7 +2260,7 @@ function AddInvoicePayment() {
                 handleClose={() => setShowModal(false)}
             /> */}
     </div>
-  );
+  )
 }
 
-export default AddInvoicePayment;
+export default AddInvoicePayment
