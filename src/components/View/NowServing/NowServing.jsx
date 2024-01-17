@@ -71,9 +71,9 @@ export default function NowServing() {
 
     // setIsReady(true);
   }
-  React.useEffect(() => {
-    setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
-  }, [])
+  // React.useEffect(() => {
+  //   setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
+  // }, [])
 
   React.useEffect(() => {
     fetchNowServing()
