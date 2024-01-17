@@ -124,6 +124,7 @@ import TwoDEcho from "./components/View/2DEcho/index.js";
 import EchoExtractionUpdate from "./components/View/2DEcho/EchoExtractionUpdate.jsx";
 import AddInvoicePaymentHmo from "./components/View/Companies/AddInvoicePaymentHmo.jsx";
 import ReviewInvoiceHmo from "./components/View/Companies/ReviewHmoInvoice.jsx";
+import ReviewCompanyInvoice from "./components/View/Companies/ReviewCompanyInvoice.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -344,6 +345,10 @@ function App() {
           <Route
             path="/company-invoices"
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
+          />
+          <Route
+           path="/company-invoices/review/:id/:companyId/:dateFrom/:dateTo"
+            element={token ? <ReviewCompanyInvoice /> : <Navigate to="/" />}
           />
           <Route
             path="/hmo-invoices"
@@ -729,7 +734,7 @@ function App() {
           {/* Now Serving */}
           <Route
             path="/now-serving"
-            element={token ? <NowServing /> : <Navigate to="/" />}
+            element={ <NowServing />}
           />
         </Routes>
       </Router>
