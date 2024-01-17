@@ -1135,7 +1135,7 @@ function Table({
                <button
                 class="action-btn"
                 role="button"
-                onClick={() => link(row.invoice_id, row.company_id, "","","view")}
+                onClick={() => link(row.invoice_id, row.company_id, "","","pay")}
               >
                 VIEW DETAILS
               </button>
