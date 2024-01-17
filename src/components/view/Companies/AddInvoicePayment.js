@@ -1023,7 +1023,7 @@ function AddInvoicePayment() {
     var formattedDate = date.toDateString().split(" ")
 
     return (
-      <div className="paymentDetails">
+      <div className="paymentDetails mt-3">
         <h3 className="form-categories-header italic">PAYMENT DETAILS</h3>
         {payments.map((data) => {
           return (
@@ -1875,7 +1875,7 @@ function AddInvoicePayment() {
         
 
           {haslogs &&
-            parseFloat(paidAmount) <= parseFloat(grandTotal) && ( //to delet =
+            parseFloat(paidAmount) < parseFloat(grandTotal) && (
               <div className="payment-cont">
                 <h1 className="payment-label">ADD PAYMENT</h1>
 
@@ -1938,9 +1938,9 @@ function AddInvoicePayment() {
           <hr />
           <div className="row pt-4">
             <div className="col-sm-12 d-flex justify-content-center">
-              {hasPay == true && printButton()}
+              {/* {hasPay == true && printButton()}
               {hasPay == false && printInvoiceButton()}
-              {hasPay == false && emailButton()}
+              {hasPay == false && emailButton()} */}
               {printChargeSlip()}
             </div>
           </div>
