@@ -1938,8 +1938,8 @@ function AddInvoicePayment() {
           <hr />
           <div className="row pt-4">
             <div className="col-sm-12 d-flex justify-content-center">
-              {/* {hasPay == true && printButton()}
-              {hasPay == false && printInvoiceButton()}
+              {hasPay == true && printButton()}
+              {/* {hasPay == false && printInvoiceButton()}
               {hasPay == false && emailButton()} */}
               {printChargeSlip()}
             </div>
