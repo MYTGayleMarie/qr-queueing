@@ -1034,7 +1034,7 @@ function Table({
 
           {rowData.map((data, index) => (
             <td key={index} data-heading={data.key} className={data.val}>
-             {data.val}
+              {data.val}
             </td>
           ))}
         </tr>
@@ -1114,24 +1114,43 @@ function Table({
             })}
           </td>
           <td>{row.payment_status}</td>
-          {/* {rowData.map((data, index) => (
-            <td
-              key={index}
-              data-heading={data.key}
-              className={index == 3 ? "company_name" : data.val}
-            >
-           
-              {index == 0 || index == 1 ? "" : data.val}
-            </td>
-          ))} */}
+
           <td>
-            <button
-              class="action-btn"
-              role="button"
-              onClick={() => link(row.invoice_id, row.company_id)}
-            >
-              {row.payment_status == "PAID" ? "VIEW DETAILS" : "ADD PAYMENT"}
-            </button>
+            {row.payment_status !== "PAID" && (
+              <>
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.invoice_id, row.company_id, "","","view")}
+              >
+                PRINT INVOICE
+              </button>
+              <br/>
+           
+              </>
+            )}
+             {row.payment_status === "PAID" && (
+              <>
+             
+               <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.invoice_id, row.company_id, "","","view")}
+              >
+                VIEW DETAILS
+              </button>
+              <br/>
+              </>
+            )}
+            {row.payment_status !== "PAID" && (
+              <button
+                class="action-btn"
+                role="button"
+                onClick={() => link(row.invoice_id, row.company_id,"","", "pay")}
+              >
+                ADD PAYMENT
+              </button>
+            )}
           </td>
         </tr>
       )
@@ -1207,17 +1226,18 @@ function Table({
                 <br />
               </div>
             )}
-            {row.invoice_status ==="APPROVED" && row.payment_status !== "PAID" && (
-              <button
-                class="action-btn"
-                role="button"
-                onClick={() =>
-                  link(row.invoice_id, row.company_id, "", "", "pay")
-                }
-              >
-                ADD PAYMENT
-              </button>
-            )}
+            {row.invoice_status === "APPROVED" &&
+              row.payment_status !== "PAID" && (
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "pay")
+                  }
+                >
+                  ADD PAYMENT
+                </button>
+              )}
           </td>
         </tr>
       )
@@ -3679,7 +3699,7 @@ function Table({
           </thead>
           <tbody>{data}</tbody>
         </table>
-         <TableFooter
+        <TableFooter
           range={range}
           slice={slice}
           setPage={setPage}
