@@ -676,7 +676,7 @@ function ReviewInvoiceHmo() {
         <div className="active-cont">
           <Header
             type="thin"
-            title={`INVOICE #${id}`}
+            title={`HMO INVOICE #${id}`}
             addInvoice={handleShow}
           />
           <ToastContainer />
