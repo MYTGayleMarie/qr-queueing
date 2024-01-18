@@ -115,56 +115,60 @@ export default function NowServing() {
               NOW SERVING
             </div>
           </div>
-          <div className="row justify-content-center mt-5">
-            <div className="col-6">
-              <div className="row justify-content-center">
+          <div className="row justify-content-center mt-2">
+            <div className="col-6 p-5">
+              <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
-                  LAB
+                  EXTRACTION
                 </div>
-                <div className="col-12 text-center align-center mt-2 p-5">
-                  <div className="queue-div">
-                    <span className="booking-no">{labList[0]?.booking_id}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="row justify-content-center">
-                <div className="col-12 text-center align-center queue-attendee">
-                  XRAY
-                </div>
-                <div className="col-12 text-center align-center mt-2 p-5">
+                <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
                     <span className="booking-no">
-                      {XRAYList[0]?.booking_id}
+                      {labList[0]?.booking_id} 123456
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-6">
-              <div className="row justify-content-center">
+            <div className="col-6 p-5">
+              <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
-                  ECG
+                  XRAY
                 </div>
-                <div className="col-12 text-center align-center mt-2 p-5">
+                <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
-                    {/* <span className="queue-no">{ECGList[0]?.id}</span> */}
-                    {/* <br /> */}
-                    <span className="booking-no">{ECGList[0]?.booking_id}</span>
+                    <span className="booking-no">
+                      {XRAYList[0]?.booking_id} 123456
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-6">
-              <div className="row justify-content-center">
+            <div className="col-6 p-5">
+              <div className="row justify-content-center booking-border">
+                <div className="col-12 text-center align-center queue-attendee">
+                  ECG
+                </div>
+                <div className="col-12 text-center align-center p-1">
+                  <div className="queue-div">
+                    {/* <span className="queue-no">{ECGList[0]?.id}</span> */}
+                    {/* <br /> */}
+                    <span className="booking-no">
+                      {ECGList[0]?.booking_id} 123456
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-6 p-5">
+              <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
                   2D ECHO/ULTRASOUND
                 </div>
-                <div className="col-12 text-center align-center mt-2 p-5">
+                <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
                     <span className="booking-no">
-                      {echoList[0]?.booking_id}
+                      {echoList[0]?.booking_id} 123456
                     </span>
                   </div>
                 </div>
