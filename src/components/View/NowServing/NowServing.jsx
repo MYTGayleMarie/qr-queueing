@@ -1,24 +1,12 @@
-import React, { Fragment, useState } from "react"
-import axios from "axios"
-import { getToken, getUser, getRoleId } from "../../../utilities/Common"
+import React, { Fragment, useState, useEffect } from "react"
 import { useForm } from "react-hooks-helper"
-import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import useTable from "../../../utilities/Pagination"
-import TableFooter from "../../TableFooter"
-import { Navigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 //components
-import Header from "../../Header.js"
-import Navbar from "../../Navbar"
-import Table from "../../Table.js"
-import { getAgingReports } from "../../../Helpers/APIs/agingAPI"
 import "./NowServing.css"
 import { fetchServing } from "../../../Helpers/APIs/queueAPI"
-const buttons = []
-const userToken = getToken()
-const userId = getUser()
-var id = ""
+
 var presentDate = new Date()
 var formattedPresentData = presentDate.toISOString().split("T")[0]
 
@@ -35,76 +23,126 @@ export default function NowServing() {
     to_date: dateTo ? dateTo : formattedPresentData,
     done: false,
   })
-  const [render, setRender] = useState([])
-  const [patientData, setPatientData] = useState([])
-  const [redirectBooking, setRedirectBooking] = useState(false)
-  const [role, setRole] = useState("")
-  const [bookingId, setBookingId] = useState("")
-  const [isReady, setIsReady] = useState(false)
+  const [blinks, setBlinks] = useState({
+    extraction: "",
+    ecg: "",
+    xray: "",
+    echo: "",
+  })
 
-  function getTime(date) {
-    return date.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    })
-  }
+  const [blink, setBlink] = useState({
+    extraction: false,
+    ecg: false,
+    xray: false,
+    echo: false,
+  })
+  console.log("labList", labList)
 
   async function fetchNowServing() {
-    // setIsReady(false);
-    setEchoList([])
-    setECGList([])
-    setXRAYList([])
-    setLabList([])
     const response = await fetchServing()
     console.log(response.data)
     if (response.data) {
       let data = response.data.now_serving
       setRecords(response.data.now_serving)
-      setEchoList(data.filter((val) => val.serving_type === "2d-echo"))
-      setECGList(data.filter((val) => val.serving_type === "ecg"))
-      setXRAYList(data.filter((val) => val.serving_type === "xray"))
-      setLabList(data.filter((val) => val.serving_type === "lab"))
+
+      setEchoList(data.filter((val) => val.serving_type === "2d-echo") || [])
+      setECGList(data.filter((val) => val.serving_type === "ecg") || [])
+      setXRAYList(data.filter((val) => val.serving_type === "xray") || [])
+      setLabList(data.filter((val) => val.serving_type === "lab") || [])
+      setBlinks({
+        ...blinks,
+        extraction: data.filter((val) => val.serving_type === "lab")[0]
+          ?.booking_id,
+        ecg: data.filter((val) => val.serving_type === "ecg")[0]?.booking_id,
+        xray: data.filter((val) => val.serving_type === "xray")[0]?.booking_id,
+        echo: data.filter((val) => val.serving_type === "2d-echo")[0]
+          ?.booking_id,
+      })
     } else {
       setRecords([])
+      setEchoList([])
+      setECGList([])
+      setXRAYList([])
+      setLabList([])
     }
-
-    // setIsReady(true);
   }
-  // React.useEffect(() => {
-  //   setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
-  // }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchNowServing()
   }, [])
-
-  React.useEffect(() => {
+  useEffect(() => {
     setInterval(fetchNowServing, 10000)
   }, [])
 
-  function searchBookingId() {
-    id = bookingId
-    setRedirectBooking(true)
-  }
+  useEffect(() => {
+    //check if number is updated in lab
+    if (
+      labList.length > 0 &&
+      blinks.extraction !== "" &&
+      blinks.extraction !== labList[0]?.booking_id
+    ) {
+      setBlink({ ...blink, extraction: true })
+      const timer = setTimeout(() => {
+        setBlinks({ ...blinks, extraction: labList[0]?.booking_id })
+      }, 5000)
 
-  function filter() {}
+      return () => {
+        clearTimeout(timer)
+        setBlink({ ...blink, extraction: false })
+      }
+    }
 
-  function viewBooking(bookingId) {
-    id = bookingId
-    setRedirectBooking(true)
-  }
+    //check if number is updated in xray
+    if (
+      XRAYList.length > 0 &&
+      blinks.xray !== "" &&
+      blinks.xray !== XRAYList[0]?.booking_id
+    ) {
+      setBlink({ ...blink, xray: true })
+      const timer = setTimeout(() => {
+        setBlinks({ ...blinks, xray: XRAYList[0]?.booking_id })
+      }, 5000)
 
-  if (redirectBooking == true) {
-    var link =
-      "/results-view-booking/" +
-      id +
-      "/" +
-      filteredData.from_date +
-      "/" +
-      filteredData.to_date
-    return <Navigate to={link} />
-  }
+      return () => {
+        clearTimeout(timer)
+        setBlink({ ...blink, xray: false })
+      }
+    }
+
+    //check if number is updated in ecg
+    if (
+      ECGList.length > 0 &&
+      blinks.ecg !== "" &&
+      blinks.ecg !== ECGList[0]?.booking_id
+    ) {
+      setBlink({ ...blink, ecg: true })
+      const timer = setTimeout(() => {
+        setBlinks({ ...blinks, ecg: ECGList[0]?.booking_id })
+      }, 5000)
+
+      return () => {
+        clearTimeout(timer)
+        setBlink({ ...blink, ecg: false })
+      }
+    }
+
+    //check if number is updated in echo
+    if (
+      echoList.length > 0 &&
+      blinks.echo !== "" &&
+      blinks.echo !== echoList[0]?.booking_id
+    ) {
+      setBlink({ ...blink, echo: true })
+      const timer = setTimeout(() => {
+        setBlinks({ ...blinks, echo: echoList[0]?.booking_id })
+      }, 5000)
+
+      return () => {
+        clearTimeout(timer)
+        setBlink({ ...blink, echo: false })
+      }
+    }
+  }, [labList, echoList, XRAYList, echoList])
 
   return (
     <div>
@@ -123,8 +161,12 @@ export default function NowServing() {
                 </div>
                 <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
-                    <span className="booking-no">
-                      {labList[0]?.booking_id} 123456
+                    <span
+                      className={
+                        blink.extraction ? "blink booking-no" : "booking-no"
+                      }
+                    >
+                      {labList[0]?.booking_id}
                     </span>
                   </div>
                 </div>
@@ -137,8 +179,10 @@ export default function NowServing() {
                 </div>
                 <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
-                    <span className="booking-no">
-                      {XRAYList[0]?.booking_id} 123456
+                    <span
+                      className={blink.xray ? "blink booking-no" : "booking-no"}
+                    >
+                      {XRAYList[0]?.booking_id}
                     </span>
                   </div>
                 </div>
@@ -151,10 +195,10 @@ export default function NowServing() {
                 </div>
                 <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
-                    {/* <span className="queue-no">{ECGList[0]?.id}</span> */}
-                    {/* <br /> */}
-                    <span className="booking-no">
-                      {ECGList[0]?.booking_id} 123456
+                    <span
+                      className={blink.ecg ? "blink booking-no" : "booking-no"}
+                    >
+                      {ECGList[0]?.booking_id}
                     </span>
                   </div>
                 </div>
@@ -167,8 +211,10 @@ export default function NowServing() {
                 </div>
                 <div className="col-12 text-center align-center p-1">
                   <div className="queue-div">
-                    <span className="booking-no">
-                      {echoList[0]?.booking_id} 123456
+                    <span
+                      className={blink.echo ? "blink booking-no" : "booking-no"}
+                    >
+                      {echoList[0]?.booking_id}
                     </span>
                   </div>
                 </div>
