@@ -46,9 +46,9 @@ export const fetchServing = async () => {
       window.$link + "customers/nowServing",
 
       {
-        requester: getUser(),
-        api_key: window.$api_key,
-        token: getToken().replace(/['"]+/g, ""),
+        // requester: getUser(),
+        // api_key: window.$api_key,
+        // token: getToken().replace(/['"]+/g, ""),
       }
     );
 
