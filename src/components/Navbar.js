@@ -1131,8 +1131,8 @@ function companySideNav() {
       <Link to="/company-discounts">
         <span class="mx-2 nav-item">COMPANY DISCOUNT</span>
       </Link>
-      {(getRoleId().replace(/^"(.*)"$/, "$1") === 3 ||
-        getRoleId().replace(/^"(.*)"$/, "$1") === 4) && (
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === "3" ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === "4") && (
         <Link to="/hmo-discounts">
           <span class="mx-2 nav-item">HMO DISCOUNT</span>
         </Link>
@@ -1140,8 +1140,8 @@ function companySideNav() {
       <Link to="/company-invoices">
         <span class="mx-2 nav-item">COMPANY INVOICE</span>
       </Link>
-      {(getRoleId().replace(/^"(.*)"$/, "$1") === 3 ||
-        getRoleId().replace(/^"(.*)"$/, "$1") === 4) && (
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === "3" ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === "4") && (
         <Link to="/hmo-invoices">
           <span class="mx-2 nav-item">HMO INVOICE</span>
         </Link>
@@ -1845,14 +1845,7 @@ function AdminNavbarTop(
           <span class="mx-2">Queue Manager</span>
         </NavLink> */}
 
-        <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
-          <img
-            src={patientIcon}
-            alt={"patient"}
-            class="patient icon mobile-size-icon"
-          ></img>
-          <span class="mx-2">Patient</span>
-        </NavLink>
+       
         <NavLink to="/cashier" activeClassName="active" class="link">
           <img
             src={cashierIcon}
