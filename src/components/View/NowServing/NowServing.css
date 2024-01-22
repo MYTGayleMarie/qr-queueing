@@ -14,14 +14,14 @@
   color: rgb(65, 158, 163);
 }
 .queue-attendee {
-  font-size: 5vh;
-  font-weight: bold;
+  font-size: 3.5rem;
+  font-weight: bolder;
   color: var(--blue-brand)
 }
 .now-serving {
-  font-size: 6vh;
+  font-size: 7vh;
   font-weight: bold;
-  color: var(--yellow-brand);
+  color: var(--blue-brand);
 }
 
 .queue-div{
@@ -32,6 +32,13 @@
 .booking-border{
   border: 1px solid black;
   border-radius: 10px;
+}
+
+.pl-5{
+  padding-left: 3rem !important;
+}
+.pr-5{
+  padding-right: 3rem !important;
 }
 
 .blink {

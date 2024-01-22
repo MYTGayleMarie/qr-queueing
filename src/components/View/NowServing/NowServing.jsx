@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react"
+import React, { Fragment, useState, useEffect, useRef } from "react"
 import { useForm } from "react-hooks-helper"
 import "react-toastify/dist/ReactToastify.css"
 import { useParams } from "react-router-dom"
@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom"
 //components
 import "./NowServing.css"
 import { fetchServing } from "../../../Helpers/APIs/queueAPI"
+import bellRing from "../../../sounds/bell-sound.mp3"
 
 var presentDate = new Date()
 var formattedPresentData = presentDate.toISOString().split("T")[0]
@@ -36,11 +37,10 @@ export default function NowServing() {
     xray: false,
     echo: false,
   })
-  console.log("labList", labList)
 
   async function fetchNowServing() {
     const response = await fetchServing()
-    console.log(response.data)
+
     if (response.data) {
       let data = response.data.now_serving
       setRecords(response.data.now_serving)
@@ -75,7 +75,9 @@ export default function NowServing() {
   }, [])
 
   useEffect(() => {
-    //check if number is updated in lab
+    let audio = new Audio(bellRing)
+    audio.muted = true
+
     if (
       labList.length > 0 &&
       blinks.extraction !== "" &&
@@ -89,6 +91,8 @@ export default function NowServing() {
       return () => {
         clearTimeout(timer)
         setBlink({ ...blink, extraction: false })
+        audio.muted = false
+        audio.play()
       }
     }
 
@@ -106,6 +110,8 @@ export default function NowServing() {
       return () => {
         clearTimeout(timer)
         setBlink({ ...blink, xray: false })
+        audio.muted = false
+        audio.play()
       }
     }
 
@@ -123,6 +129,8 @@ export default function NowServing() {
       return () => {
         clearTimeout(timer)
         setBlink({ ...blink, ecg: false })
+        audio.muted = false
+        audio.play()
       }
     }
 
@@ -140,6 +148,8 @@ export default function NowServing() {
       return () => {
         clearTimeout(timer)
         setBlink({ ...blink, echo: false })
+        audio.muted = false
+        audio.play()
       }
     }
   }, [labList, echoList, XRAYList, echoList])
@@ -153,8 +163,8 @@ export default function NowServing() {
               NOW SERVING
             </div>
           </div>
-          <div className="row justify-content-center mt-2">
-            <div className="col-6 p-5">
+          <div className="row justify-content-center">
+            <div className="col-6 pl-5 pr-5 mt-4">
               <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
                   EXTRACTION
@@ -172,7 +182,7 @@ export default function NowServing() {
                 </div>
               </div>
             </div>
-            <div className="col-6 p-5">
+            <div className="col-6 pl-5 pr-5 mt-4">
               <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
                   XRAY
@@ -188,7 +198,7 @@ export default function NowServing() {
                 </div>
               </div>
             </div>
-            <div className="col-6 p-5">
+            <div className="col-6 pl-5 pr-5 mt-4">
               <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
                   ECG
@@ -204,7 +214,7 @@ export default function NowServing() {
                 </div>
               </div>
             </div>
-            <div className="col-6 p-5">
+            <div className="col-6 pl-5 pr-5 mt-4">
               <div className="row justify-content-center booking-border">
                 <div className="col-12 text-center align-center queue-attendee">
                   2D ECHO/ULTRASOUND
