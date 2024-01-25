@@ -741,7 +741,7 @@ export class PaymentToPrint extends React.PureComponent {
             }
             return (
               <div className="print-break">
-                {by4.map((by2, index2) => {
+                {/* {by4.map((by2, index2) => {
                   return (
                     <div className="print-row">
                       {by2.map((ticket) => {
@@ -768,7 +768,7 @@ export class PaymentToPrint extends React.PureComponent {
                       })}
                     </div>
                   )
-                })}
+                })} */}
               </div>
             )
           })}
