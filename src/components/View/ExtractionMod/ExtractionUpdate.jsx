@@ -38,6 +38,9 @@ export default function ExtractionUpdate() {
   const [grandTotal, setGrandTotal] = useState(0)
   const [result, setResult] = useState("")
   const [hmo, setHmo] = useState(0)
+  const [bookingDate, setBookingDate] = useState("")
+  const [encodedOn, setEncodedOn] = useState("")
+  const [readyToPrint, setReadyToPrint] = useState(false)
   const navigate = useNavigate()
 
   const componentRef = useRef()
@@ -121,6 +124,7 @@ export default function ExtractionUpdate() {
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
+            setReadyToPrint(true)
           })
           .catch(function (error) {
             console.log(error)
@@ -146,6 +150,8 @@ export default function ExtractionUpdate() {
         setDiscount(response.data.discount)
         setResult(response.data.result)
         setHmo(response.data.hmo_discount)
+        setBookingDate(response.data.booking_time)
+        setEncodedOn(response.data.added_on)
       })
       .catch(function (error) {
         console.log(error)
@@ -247,6 +253,7 @@ export default function ExtractionUpdate() {
                           borderColor: "var(--blue-brand)",
                         }}
                         onClick={handlePrint}
+                        disabled={!readyToPrint}
                       >
                         <FontAwesomeIcon
                           icon={"print"}
@@ -254,7 +261,7 @@ export default function ExtractionUpdate() {
                           aria-hidden="true"
                           className="print-icon"
                         />{" "}
-                        PRINT
+                        {readyToPrint ? "PRINT" : "Loading Data..."}
                       </Button>
                     </div>
                     <div className="col-3">
@@ -368,7 +375,7 @@ export default function ExtractionUpdate() {
           contact={details?.contact_no}
           email={""}
           address={""}
-          bookingDate={""}
+          bookingDate={bookingDate}
           payment={""}
           result={result}
           paymentDataServices={tests}
@@ -379,11 +386,11 @@ export default function ExtractionUpdate() {
           discount={discount}
           grandTotal={grandTotal}
           queue={""}
-          encodedOn={""}
+          encodedOn={encodedOn}
           referral={""}
           discountCode={discountCode}
           hmo={hmo}
-          setPrintReadyFinal={true}
+          setPrintReadyFinal={readyToPrint}
         />
       </div>
     </div>
