@@ -1,28 +1,156 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import {
-  getLabExtractionPatients,
-  getSingleExtractionPatient,
+  fetchBookingDetails,
   getSingleLabExtractionPatient,
   skipPatient,
-  updateExtractionLabPatientBulk,
-  updateExtractionPatient,
   updateExtractionPatientBulk,
 } from "../../../Helpers/APIs/extractionAPI"
 import { ToastContainer, toast } from "react-toastify"
 import Navbar from "../../Navbar"
 import Header from "../../Header"
 import { Button, ListGroup } from "react-bootstrap"
-import { formatDate, refreshPage } from "../../../utilities/Common"
+import {
+  formatDate,
+  getToken,
+  getUser,
+  refreshPage,
+} from "../../../utilities/Common"
 import { RingLoader } from "react-spinners"
 import { changeStatus } from "../../../Helpers/APIs/queueAPI"
+import { useReactToPrint } from "react-to-print"
+import { PaymentToPrint } from "../Cashier/PaymentToPrint"
+import axios from "axios"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+const userToken = getToken()
+const userId = getUser()
 
 export default function ExtractionUpdate() {
   const { bookingId, queueId } = useParams()
   const [loading, setLoading] = useState(true)
   const [details, setDetails] = useState({})
   const [recordsDetails, setRecordsDetails] = useState([])
+  const [tests, setTests] = useState([])
+  const [printServices, setPrintServices] = useState([])
+  const [discount, setDiscount] = useState(0)
+  const [discountCode, setDiscountCode] = useState("")
+  const [grandTotal, setGrandTotal] = useState(0)
+  const [result, setResult] = useState("")
+  const [hmo, setHmo] = useState(0)
   const navigate = useNavigate()
+
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: () => `
+          @page { size: letter;}
+          @media print {
+            .print-break {
+              margin-top: 1rem;
+              display: block;
+              page-break-before: always;
+            }
+          }
+          `,
+  })
+
+  useEffect(() => {
+    printServices.length = 0
+    tests.map((info, index1) => {
+      if (info.category_id == null) {
+        axios({
+          method: "post",
+          url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            requester: userId,
+          },
+        }).then(function (response) {
+          response.data.map((packageCat, index2) => {
+            var serviceDetails = {}
+            axios({
+              method: "post",
+              url: window.$link + "categories/show/" + packageCat.category_id,
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ""),
+                requester: userId,
+              },
+            })
+              .then(function (category) {
+                if (category.data.name == "Electrolytes (NaKCl,iCA)") {
+                  serviceDetails.key = "Electrolytes"
+                } else {
+                  serviceDetails.key = category.data.name
+                    .replace(/\s+/g, "_")
+                    .toLowerCase()
+                }
+                serviceDetails.category = category.data.name
+                serviceDetails.name = packageCat.lab_test
+                setPrintServices((oldArray) => [...oldArray, serviceDetails])
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          })
+        })
+      } else {
+        axios({
+          method: "post",
+          url: window.$link + "categories/show/" + info.category_id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            requester: userId,
+          },
+        })
+          .then(function (category) {
+            var serviceDetails = {}
+            if (category.data.name == "Electrolytes (NaKCl,iCA)") {
+              serviceDetails.key = "Electrolytes"
+            } else {
+              serviceDetails.key = category.data.name
+                .replace(/\s+/g, "_")
+                .toLowerCase()
+            }
+            serviceDetails.category = category.data.name
+            serviceDetails.name = info.lab_test
+            setPrintServices((oldArray) => [...oldArray, serviceDetails])
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    })
+  }, [tests])
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: window.$link + "bookings/show/" + bookingId,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        setGrandTotal(response.data.grand_total)
+        setDiscountCode(response.data.discount_code)
+        setDiscount(response.data.discount)
+        setResult(response.data.result)
+        setHmo(response.data.hmo_discount)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, [])
 
   async function fetchExtraction() {
     const response = await getSingleLabExtractionPatient(bookingId, 8)
@@ -70,8 +198,16 @@ export default function ExtractionUpdate() {
       }, 2000)
     }
   }
+
+  async function fetchDetails() {
+    const response = await fetchBookingDetails(bookingId)
+    if (response.data) {
+      setTests(response.data)
+    }
+  }
   useEffect(() => {
     fetchExtraction()
+    fetchDetails()
   }, [])
   return (
     <div>
@@ -95,7 +231,7 @@ export default function ExtractionUpdate() {
               <div className="col-12">
                 <div className="p-5">
                   <div className="row">
-                    <div className="col-9">
+                    <div className="col-6">
                       <h5>
                         <strong>PATIENT DETAILS</strong>
                       </h5>
@@ -109,6 +245,27 @@ export default function ExtractionUpdate() {
                           cursor: "pointer",
                           background: "var(--blue-brand)",
                           borderColor: "var(--blue-brand)",
+                        }}
+                        onClick={handlePrint}
+                      >
+                        <FontAwesomeIcon
+                          icon={"print"}
+                          alt={"print"}
+                          aria-hidden="true"
+                          className="print-icon"
+                        />{" "}
+                        PRINT
+                      </Button>
+                    </div>
+                    <div className="col-3">
+                      <Button
+                        className="mt-2"
+                        // size="sm"
+                        style={{
+                          width: "100%",
+                          cursor: "pointer",
+                          background: "var(--danger-color)",
+                          borderColor: "var(--danger-color)",
                         }}
                         onClick={handleSkipPatient}
                       >
@@ -189,6 +346,45 @@ export default function ExtractionUpdate() {
             <ToastContainer hideProgressBar={true} />
           </Fragment>
         )}
+      </div>
+
+      <div
+        style={{ display: "none" }} // This make ComponentToPrint show   only while printing
+      >
+        <PaymentToPrint
+          ref={componentRef}
+          patientId={details.customer_id}
+          bookingId={bookingId}
+          name={
+            details.last_name +
+            ", " +
+            details.first_name +
+            " " +
+            details.middle_name
+          }
+          birthdate={details.birthdate}
+          gender={details.gender === "Male" ? "M" : "F"}
+          age={details.age}
+          contact={details?.contact_no}
+          email={""}
+          address={""}
+          bookingDate={""}
+          payment={""}
+          result={result}
+          paymentDataServices={tests}
+          services={printServices}
+          isCompany={true}
+          packages={[]}
+          labTests={[]}
+          discount={discount}
+          grandTotal={grandTotal}
+          queue={""}
+          encodedOn={""}
+          referral={""}
+          discountCode={discountCode}
+          hmo={hmo}
+          setPrintReadyFinal={true}
+        />
       </div>
     </div>
   )
