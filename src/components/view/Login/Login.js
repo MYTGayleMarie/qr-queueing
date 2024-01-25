@@ -72,7 +72,7 @@ function Login() {
 
   if (window.$userToken != null) {
     var roleId = window.$roleId.replace(/^"(.*)"$/, "$1")
-    if (getUser() === "57" || getUser() === "1") {
+    if (getUser() === "57") {
       NavigationRedirection = <Navigate to="/extraction" />
     } else if (getUser() === "55") {
       NavigationRedirection = <Navigate to="/xray" />
