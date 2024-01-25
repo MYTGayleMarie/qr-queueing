@@ -437,31 +437,235 @@ export class PaymentToPrint extends React.PureComponent {
       )
     })
 
-    //generate request ticket
+    //generate request ticket - hide for future purposes
+    // function generateTickets(
+    //   queue,
+    //   patientId,
+    //   bookingId,
+    //   name,
+    //   age,
+    //   gender,
+    //   contact,
+    //   email,
+    //   address,
+    //   referral,
+    //   isCompany,
+    //   payment,
+    //   result,
+    //   serviceName,
+    //   services,
+    //   discountCode,
+    //   type = "normal",
+    //   specialData = []
+    // ) {
+    //   return (
+    //     <div className="print-column">
+    //       <div class="d-flex justify-content-left mx-0">
+    //         <img src={logo} alt={"logo"} className="payment-logo"></img>
+    //         <span className="to-right request-header">
+    //           #{bookingId} Request Form - Patient ID:{patientId}
+    //         </span>
+    //         <span className="to-right-test request-header-test">
+    //           {serviceName}
+    //         </span>
+    //       </div>
+    //       <div className="row mx-0">
+    //         <table className="print-table">
+    //           <tr>
+    //             <td className="print-data-header">
+    //               <span className="header">Booking Date: </span>
+    //               <span className="detail-print">
+    //                 {formattedBookDate[1] +
+    //                   " " +
+    //                   formattedBookDate[2] +
+    //                   " " +
+    //                   formattedBookDate[3] +
+    //                   " " +
+    //                   getTime(bookDate)}
+    //               </span>
+    //             </td>
+    //             <td>
+    //               <span className="header">Name: </span>
+    //               <span className="detail-print">{name}</span>
+    //             </td>
+    //           </tr>
+    //         </table>
+    //         <table className="print-table">
+    //           <tr>
+    //             <td>
+    //               <span className="header">DOB: </span>
+    //               <span className="detail-print">
+    //                 {parseInt(birthDate.getMonth() + 1) +
+    //                   "-" +
+    //                   birthDate.getDate() +
+    //                   "-" +
+    //                   birthDate.getFullYear() +
+    //                   " "}
+    //               </span>{" "}
+    //             </td>
+    //             <td>
+    //               <span className="header">Age: </span>
+    //               <span className="detail-print">{age}</span>
+    //             </td>
+    //             <td>
+    //               <span className="header">Gender:</span>
+    //               <span className="detail-print detail-gender">
+    //                 {gender.toLowerCase() == "female" ? "F" : "M"}
+    //               </span>
+    //             </td>
+    //             <td className="print-data-contact">
+    //               <span className="header">Contact: </span>
+    //               <span className="detail-print">{contact}</span>
+    //             </td>
+    //           </tr>
+    //         </table>
+    //         <table className="print-table">
+    //           <tr>
+    //             <td>
+    //               <span className="header">Email: </span>
+    //               <span className="detail-print">
+    //                 {email == null ? "NONE" : email}{" "}
+    //               </span>
+    //             </td>
+    //             <td>
+    //               <span className="header">Address: </span>
+    //               <span className="detail-print">{address}</span>
+    //             </td>
+    //           </tr>
+    //           <tr>
+    //             <td>
+    //               <span className="header">Physician: </span>
+    //               <span className="detail-print">
+    //                 {referral == null ? "NONE" : referral}{" "}
+    //               </span>
+    //             </td>
+    //             <td>
+    //               <span className="header">Discount Code: </span>
+    //               <span className="detail-print">
+    //                 {discountCode ? discountCode : "None"}
+    //               </span>
+    //             </td>
+    //           </tr>
+    //         </table>
+    //         <table className="print-table">
+    //           <tr>
+    //             <td>
+    //               <span className="header">Diagnosis: </span>
+    //               <span className="detail-print">
+    //                 ______________________________________________________________________________
+    //               </span>
+    //             </td>
+    //           </tr>
+    //         </table>
+    //       </div>
+
+    //       {/* <div className="line"></div> */}
+    //       {type === "normal" && (
+    //         <div className="row mx-0">
+    //           <table className="services-table print-table-double">
+    //             <tr>
+    //               <th>
+    //                 <span className="header">Services</span>
+    //               </th>
+    //             </tr>
+    //             {services}
+    //           </table>
+    //         </div>
+    //       )}
+    //       {type === "special" && (
+    //         <div className="row mx-0 mt-1 mb-2">
+    //           <table className="services-table print-table-double">
+    //             <tr style={{ border: "1px solid black" }}>
+    //               {specialServices.map((val) => {
+    //                 return (
+    //                   <td
+    //                     style={{
+    //                       fontSize: "6px",
+    //                       padding: 3,
+    //                       border: "1px solid black",
+    //                     }}
+    //                     align="center"
+    //                   >
+    //                     {val.name}
+    //                   </td>
+    //                 )
+    //               })}
+    //             </tr>
+    //           </table>
+    //         </div>
+    //       )}
+
+    //       <table className="print-table mx-0">
+    //         <tr>
+    //           <td className="print-table">
+    //             <span className="footer-header mx-0 px-0">
+    //               <b>Payment:</b>
+    //             </span>
+    //             <span className="data">
+    //               {isCompany && discountCode
+    //                 ? " CORPORATE ACCOUNT - " + discountCode
+    //                 : payment
+    //                 ? " " + payment.toUpperCase()
+    //                 : " "}
+    //             </span>
+    //           </td>
+    //         </tr>
+    //         <tr>
+    //           <td className="print-table">
+    //             <span className="footer-header">
+    //               <b>Result:</b>
+    //             </span>
+    //             <span className="data"> {result.toUpperCase()}</span>
+    //           </td>
+    //         </tr>
+    //         <tr>
+    //           <td></td>
+    //         </tr>
+    //         <tr>
+    //           <td></td>
+    //         </tr>
+    //         <tr>
+    //           <td className="print-table">
+    //             <span className="data">
+    //               Encoded on:{" "}
+    //               {formattedEncodedDate[1] +
+    //                 " " +
+    //                 formattedEncodedDate[2] +
+    //                 ", " +
+    //                 getTime(encodedDate)}
+    //             </span>
+    //           </td>
+    //         </tr>
+    //         <tr>
+    //           <td className="print-table">
+    //             <span className="data">
+    //               Printed on:{" "}
+    //               {today[1] + " " + today[2] + ", " + today[3] + ", " + curTime}
+    //             </span>
+    //           </td>
+    //         </tr>
+    //       </table>
+    //     </div>
+    //   )
+    // }
+
+    //Generate Request ticket stub
     function generateTickets(
-      queue,
       patientId,
       bookingId,
       name,
       age,
       gender,
       contact,
-      email,
-      address,
-      referral,
-      isCompany,
-      payment,
       result,
       serviceName,
       services,
-      discountCode,
-      type = "normal",
-      specialData = []
+      discountCode
     ) {
       return (
         <div className="print-column">
           <div class="d-flex justify-content-left mx-0">
-            <img src={logo} alt={"logo"} className="payment-logo"></img>
+            <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
             <span className="to-right request-header">
               #{bookingId} Request Form - Patient ID:{patientId}
             </span>
@@ -469,20 +673,29 @@ export class PaymentToPrint extends React.PureComponent {
               {serviceName}
             </span>
           </div>
+          <div className="row mx-0 mt-1 mb-2">
+            <table className="services-table print-table-double">
+              <tr style={{ border: "1px solid black" }}>
+                <td
+                  style={{
+                    fontSize: "15px",
+                    padding: 3,
+                    border: "1px solid black",
+                    fontWeight: "bold",
+                  }}
+                  align="center"
+                >
+                  {services?.toUpperCase()}
+                </td>
+              </tr>
+            </table>
+          </div>
           <div className="row mx-0">
             <table className="print-table">
               <tr>
-                <td className="print-data-header">
-                  <span className="header">Booking Date: </span>
-                  <span className="detail-print">
-                    {formattedBookDate[1] +
-                      " " +
-                      formattedBookDate[2] +
-                      " " +
-                      formattedBookDate[3] +
-                      " " +
-                      getTime(bookDate)}
-                  </span>
+                <td>
+                  <span className="header">Booking ID: </span>
+                  <span className="detail-print">{bookingId}</span>
                 </td>
                 <td>
                   <span className="header">Name: </span>
@@ -522,129 +735,20 @@ export class PaymentToPrint extends React.PureComponent {
             <table className="print-table">
               <tr>
                 <td>
-                  <span className="header">Email: </span>
-                  <span className="detail-print">
-                    {email == null ? "NONE" : email}{" "}
-                  </span>
-                </td>
-                <td>
-                  <span className="header">Address: </span>
-                  <span className="detail-print">{address}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="header">Physician: </span>
-                  <span className="detail-print">
-                    {referral == null ? "NONE" : referral}{" "}
-                  </span>
-                </td>
-                <td>
                   <span className="header">Discount Code: </span>
                   <span className="detail-print">
                     {discountCode ? discountCode : "None"}
                   </span>
                 </td>
-              </tr>
-            </table>
-            <table className="print-table">
-              <tr>
-                <td>
-                  <span className="header">Diagnosis: </span>
-                  <span className="detail-print">
-                    ______________________________________________________________________________
+                <td className="print-table">
+                  <span className="footer-header">
+                    <b>Result:</b>
                   </span>
+                  <span className="data"> {result.toUpperCase()}</span>
                 </td>
               </tr>
             </table>
           </div>
-
-          {/* <div className="line"></div> */}
-          {type === "normal" && (
-            <div className="row mx-0">
-              <table className="services-table print-table-double">
-                <tr>
-                  <th>
-                    <span className="header">Services</span>
-                  </th>
-                </tr>
-                {services}
-              </table>
-            </div>
-          )}
-          {type === "special" && (
-            <div className="row mx-0 mt-1 mb-2">
-              <table className="services-table print-table-double">
-                <tr style={{ border: "1px solid black" }}>
-                  {specialServices.map((val) => {
-                    return (
-                      <td
-                        style={{
-                          fontSize: "6px",
-                          padding: 3,
-                          border: "1px solid black",
-                        }}
-                        align="center"
-                      >
-                        {val.name}
-                      </td>
-                    )
-                  })}
-                </tr>
-              </table>
-            </div>
-          )}
-
-          <table className="print-table mx-0">
-            <tr>
-              <td className="print-table">
-                <span className="footer-header mx-0 px-0">
-                  <b>Payment:</b>
-                </span>
-                <span className="data">
-                  {isCompany && discountCode
-                    ? " CORPORATE ACCOUNT - " + discountCode
-                    : payment
-                    ? " " + payment.toUpperCase()
-                    : " "}
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td className="print-table">
-                <span className="footer-header">
-                  <b>Result:</b>
-                </span>
-                <span className="data"> {result.toUpperCase()}</span>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td className="print-table">
-                <span className="data">
-                  Encoded on:{" "}
-                  {formattedEncodedDate[1] +
-                    " " +
-                    formattedEncodedDate[2] +
-                    ", " +
-                    getTime(encodedDate)}
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td className="print-table">
-                <span className="data">
-                  Printed on:{" "}
-                  {today[1] + " " + today[2] + ", " + today[3] + ", " + curTime}
-                </span>
-              </td>
-            </tr>
-          </table>
         </div>
       )
     }
@@ -733,7 +837,7 @@ export class PaymentToPrint extends React.PureComponent {
       <div>
         <style>{getPageMargins()}</style>
         <div className="print-area">
-          {ticketsBy2.map((by4, index1) => {
+          {/* {ticketsBy2.map((by4, index1) => {
             if (ticketsBy2.length - 1 === index1) {
               setTimeout(() => {
                 this.props.setPrintReadyFinal(true)
@@ -741,7 +845,7 @@ export class PaymentToPrint extends React.PureComponent {
             }
             return (
               <div className="print-break">
-                {/* {by4.map((by2, index2) => {
+                {by4.map((by2, index2) => {
                   return (
                     <div className="print-row">
                       {by2.map((ticket) => {
@@ -768,31 +872,31 @@ export class PaymentToPrint extends React.PureComponent {
                       })}
                     </div>
                   )
-                })} */}
+                })}
               </div>
             )
-          })}
+          })} */}
 
-          {generateTickets(
-            this.props.queue,
-            this.props.patientId,
-            this.props.bookingId,
-            this.props.name,
-            this.props.age,
-            this.props.gender,
-            this.props.contact,
-            this.props.email,
-            this.props.address,
-            this.props.referral,
-            this.props.isCompany,
-            this.props.payment,
-            this.props.result,
-            "",
-            "",
-            this.props.discountCode,
-            "special",
-            specialServices
-          )}
+          <div className="print-break">
+            {specialServices.map((data, index2) => {
+              return (
+                <div className="print-row">
+                  {generateTickets(
+                    this.props.patientId,
+                    this.props.bookingId,
+                    this.props.name,
+                    this.props.age,
+                    this.props.gender,
+                    this.props.contact,
+                    this.props.result,
+                    "",
+                    data.name,
+                    this.props.discountCode
+                  )}
+                </div>
+              )
+            })}
+          </div>
 
           <br />
 
