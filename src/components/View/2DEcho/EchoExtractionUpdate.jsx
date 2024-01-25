@@ -110,8 +110,8 @@ export default function EchoExtractionUpdate() {
                         style={{
                           width: "100%",
                           cursor: "pointer",
-                          background: "var(--blue-brand)",
-                          borderColor: "var(--blue-brand)",
+                          background: "var(--danger-color)",
+                          borderColor: "var(--danger-color)",
                         }}
                         onClick={handleSkipPatient}
                       >
