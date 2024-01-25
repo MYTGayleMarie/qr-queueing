@@ -1,36 +1,36 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PropTypes from "prop-types";
-import { Navigate } from "react-router";
-import { refreshPage, getRoleId } from "../../../utilities/Common";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import PropTypes from "prop-types"
+import { Navigate } from "react-router"
+import { refreshPage, getRoleId, getUser } from "../../../utilities/Common"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 //css
-import "./Login.css";
+import "./Login.css"
 
 //images
-import clinic from "../../../images/clinic.png";
-import logo from "../../../images/logo.png";
-import axios from "axios";
+import clinic from "../../../images/clinic.png"
+import logo from "../../../images/logo.png"
+import axios from "axios"
 
 function Login() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [click, setClick] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [click, setClick] = useState(false)
 
   const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const [data, setData] = useState({
     email: "",
     password: "",
-  });
+  })
 
-  let NavigationRedirection;
+  let NavigationRedirection
 
   function submit(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (click == false) {
       axios({
         method: "post",
@@ -43,64 +43,69 @@ function Login() {
         },
       })
         .then(function (response) {
-          localStorage.setItem("token", JSON.stringify(response.data.token));
-          localStorage.setItem("user", JSON.stringify(response.data.id));
-          localStorage.setItem(
-            "role_id",
-            JSON.stringify(response.data.role_id)
-          );
+          localStorage.setItem("token", JSON.stringify(response.data.token))
+          localStorage.setItem("user", JSON.stringify(response.data.id))
+          localStorage.setItem("role_id", JSON.stringify(response.data.role_id))
           localStorage.setItem(
             "token_expiry",
             JSON.stringify(response.data.token_expiry)
-          );
-          refreshPage();
+          )
+          refreshPage()
         })
         .catch(function (error) {
-          // console.log(error)
-          toast.error("Invalid Login");
+      
+          toast.error("Invalid Login")
           setTimeout(() => {
-            refreshPage();
-          }, 2000);
-        });
+            refreshPage()
+          }, 2000)
+        })
     }
 
-    setClick(true);
+    setClick(true)
   }
 
   function handle(e) {
-    const newData = { ...data };
-    setData(newData);
-    newData[e.target.id] = e.target.value;
+    const newData = { ...data }
+    setData(newData)
+    newData[e.target.id] = e.target.value
   }
 
   if (window.$userToken != null) {
-    var roleId = window.$roleId.replace(/^"(.*)"$/, "$1");
-    if (roleId === "3") {
-      NavigationRedirection = <Navigate to="/cashier" />;
-    } else if (roleId === "5") {
-      NavigationRedirection = <Navigate to="/medtech" />;
-    } else if (roleId === "6") {
-      NavigationRedirection = <Navigate to="/purchase-order" />;
-    } else if (roleId === "7") {
-      NavigationRedirection = <Navigate to="/items" />;
-    } else if (roleId === "8") {
-      NavigationRedirection = <Navigate to="/companies" />;
-    } else if (roleId === "9") {
-      NavigationRedirection = <Navigate to="/registrationcmodule" />;
-    } else if (roleId === "10") {
-      NavigationRedirection = <Navigate to="/lab" />;
-    } else if (roleId === "11") {
-      NavigationRedirection = <Navigate to="/purchase-order" />;
-    }  else if (roleId === "13") {
-      NavigationRedirection = <Navigate to="/reports-inventory" />;
+    var roleId = window.$roleId.replace(/^"(.*)"$/, "$1")
+    if (getUser() === "57" || getUser() === "1") {
+      NavigationRedirection = <Navigate to="/extraction" />
+    } else if (getUser() === "55") {
+      NavigationRedirection = <Navigate to="/xray" />
+    } else if (getUser() === "56") {
+      NavigationRedirection = <Navigate to="/ecg" />
     } else {
-      NavigationRedirection = <Navigate to="/registration" />;
+      if (roleId === "3") {
+        NavigationRedirection = <Navigate to="/cashier" />
+      } else if (roleId === "5") {
+        NavigationRedirection = <Navigate to="/medtech" />
+      } else if (roleId === "6") {
+        NavigationRedirection = <Navigate to="/purchase-order" />
+      } else if (roleId === "7") {
+        NavigationRedirection = <Navigate to="/items" />
+      } else if (roleId === "8") {
+        NavigationRedirection = <Navigate to="/companies" />
+      } else if (roleId === "9") {
+        NavigationRedirection = <Navigate to="/registrationcmodule" />
+      } else if (roleId === "10") {
+        NavigationRedirection = <Navigate to="/lab" />
+      } else if (roleId === "11") {
+        NavigationRedirection = <Navigate to="/purchase-order" />
+      } else if (roleId === "13") {
+        NavigationRedirection = <Navigate to="/reports-inventory" />
+      } else {
+        NavigationRedirection = <Navigate to="/registration" />
+      }
     }
 
-    return NavigationRedirection;
+    return NavigationRedirection
   }
 
-  document.body.style = "background: white;";
+  document.body.style = "background: white;"
 
   return (
     <>
@@ -178,7 +183,7 @@ function Login() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login
