@@ -20,8 +20,6 @@ function groupArrayOfObjects(list, key) {
 
 export class PaymentToPrint extends React.PureComponent {
   render() {
-   
-
     const presentDate = new Date()
     const curTime = presentDate.getHours() + ":" + presentDate.getMinutes()
     const today = presentDate.toDateString().split(" ")
@@ -45,7 +43,19 @@ export class PaymentToPrint extends React.PureComponent {
       " " +
       getTime(presentDate)
 
-    var groupedServices = groupArrayOfObjects(this.props.services, "key")
+    var specialServices = this.props.services.filter(
+      (data) =>
+        data.name === "Fecalysis" ||
+        data.name === "Urinalysis" ||
+        data.name === "Drug Test"
+    )
+    var remainingServices = this.props.services.filter(
+      (data) =>
+        data.name !== "Fecalysis" &&
+        data.name !== "Urinalysis" &&
+        data.name !== "Drug Test"
+    )
+    var groupedServices = groupArrayOfObjects(remainingServices, "key")
 
     const services_XRAY = Object.keys(groupedServices).map(function (key) {
       var category_name = key.replace(/_/g, " ").toUpperCase()
@@ -427,6 +437,7 @@ export class PaymentToPrint extends React.PureComponent {
       )
     })
 
+    //generate request ticket
     function generateTickets(
       queue,
       patientId,
@@ -443,7 +454,9 @@ export class PaymentToPrint extends React.PureComponent {
       result,
       serviceName,
       services,
-      discountCode
+      discountCode,
+      type = "normal",
+      specialData = []
     ) {
       return (
         <div className="print-column">
@@ -546,18 +559,41 @@ export class PaymentToPrint extends React.PureComponent {
             </table>
           </div>
 
-          <div className="line"></div>
-
-          <div className="row mx-0">
-            <table className="services-table print-table-double">
-              <tr>
-                <th>
-                  <span className="header">Services</span>
-                </th>
-              </tr>
-              {services}
-            </table>
-          </div>
+          {/* <div className="line"></div> */}
+          {type === "normal" && (
+            <div className="row mx-0">
+              <table className="services-table print-table-double">
+                <tr>
+                  <th>
+                    <span className="header">Services</span>
+                  </th>
+                </tr>
+                {services}
+              </table>
+            </div>
+          )}
+          {type === "special" && (
+            <div className="row mx-0 mt-1 mb-2">
+              <table className="services-table print-table-double">
+                <tr style={{ border: "1px solid black" }}>
+                  {specialServices.map((val) => {
+                    return (
+                      <td
+                        style={{
+                          fontSize: "6px",
+                          padding: 3,
+                          border: "1px solid black",
+                        }}
+                        align="center"
+                      >
+                        {val.name}
+                      </td>
+                    )
+                  })}
+                </tr>
+              </table>
+            </div>
+          )}
 
           <table className="print-table mx-0">
             <tr>
@@ -709,7 +745,6 @@ export class PaymentToPrint extends React.PureComponent {
                   return (
                     <div className="print-row">
                       {by2.map((ticket) => {
-                        //    console.log(this.props.discountCode);
                         return generateTickets(
                           this.props.queue,
                           this.props.patientId,
@@ -726,7 +761,9 @@ export class PaymentToPrint extends React.PureComponent {
                           this.props.result,
                           ticket.name,
                           ticket.services,
-                          this.props.discountCode
+                          this.props.discountCode,
+                          "normal",
+                          []
                         )
                       })}
                     </div>
@@ -735,6 +772,27 @@ export class PaymentToPrint extends React.PureComponent {
               </div>
             )
           })}
+
+          {generateTickets(
+            this.props.queue,
+            this.props.patientId,
+            this.props.bookingId,
+            this.props.name,
+            this.props.age,
+            this.props.gender,
+            this.props.contact,
+            this.props.email,
+            this.props.address,
+            this.props.referral,
+            this.props.isCompany,
+            this.props.payment,
+            this.props.result,
+            "",
+            "",
+            this.props.discountCode,
+            "special",
+            specialServices
+          )}
 
           <br />
 
