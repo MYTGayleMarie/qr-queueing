@@ -216,7 +216,7 @@ export default function NowServing() {
             </div>
             <div className="col-6 pl-5 pr-5 mt-4">
               <div className="row justify-content-center booking-border">
-                <div className="col-12 text-center align-center queue-attendee">
+                <div className="col-12 text-center align-center queue-attendee ultrasound">
                   2D ECHO/ULTRASOUND
                 </div>
                 <div className="col-12 text-center align-center p-1">

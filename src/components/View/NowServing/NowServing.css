@@ -18,6 +18,11 @@
   font-weight: bolder;
   color: var(--blue-brand)
 }
+.queue-attendee.ultrasound {
+  font-size: 3.2rem;
+  font-weight: bolder;
+  color: var(--blue-brand)
+}
 .now-serving {
   font-size: 7vh;
   font-weight: bold;
