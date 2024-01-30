@@ -5,7 +5,7 @@ export const generateBulkInvoice = async (
   company_id,
   discount_ids,
   remarks,
-  particulars
+  particulars, is_hmo
 ) => {
   try {
     var params = new URLSearchParams();
@@ -25,6 +25,7 @@ export const generateBulkInvoice = async (
         }),
         remarks: remarks,
         particulars: particulars,
+        is_hmo: is_hmo,
       }
     );
 
