@@ -67,7 +67,6 @@ export default function AddInvoiceBulkHmo() {
   }
 
   async function handleGenerate() {
-    console.log(selectedCompany)
     const response = await generateBulkInvoice(
       selectedCompany.id,
       selectedDiscounts,
