@@ -125,6 +125,7 @@ import EchoExtractionUpdate from "./components/View/2DEcho/EchoExtractionUpdate.
 import AddInvoicePaymentHmo from "./components/View/Companies/AddInvoicePaymentHmo.jsx";
 import ReviewInvoiceHmo from "./components/View/Companies/ReviewHmoInvoice.jsx";
 import ReviewCompanyInvoice from "./components/View/Companies/ReviewCompanyInvoice.jsx";
+import AddInvoiceBulkHmo from "./components/View/Companies/AddInvoiceBulkHmo.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -341,6 +342,10 @@ function App() {
           <Route
             path="/company-invoices/add-invoice-bulk"
             element={token ? <AddInvoiceBulk /> : <Navigate to="/" />}
+          />
+            <Route
+            path="/hmo-invoices/add-invoice-bulk"
+            element={token ? <AddInvoiceBulkHmo /> : <Navigate to="/" />}
           />
           <Route
             path="/company-invoices"
@@ -732,7 +737,7 @@ function App() {
             element={token ? <EchoExtractionUpdate /> : <Navigate to="/" />}
           />
           {/* Now Serving */}
-          {/* Test for test commit */}
+         
           <Route
             path="/now-serving"
             element={ <NowServing />}
