@@ -15,7 +15,7 @@ import Navbar from "../../Navbar"
 import Header from "../../Header.js"
 import Table from "../../Table.js"
 
-const buttons = []
+const buttons = ["bulk-invoice-hmo"]
 const userToken = getToken()
 const userId = getUser()
 var id
