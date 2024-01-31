@@ -1,6 +1,13 @@
 import React, { useState, useRef } from "react"
 import { useParams } from "react-router-dom"
-import { getToken, getUser, refreshPage } from "../../../utilities/Common"
+import {
+  getRole,
+  getToken,
+  getUser,
+  getUserName,
+  getUserRole,
+  refreshPage,
+} from "../../../utilities/Common"
 import { withRouter } from "react-router"
 import axios from "axios"
 import { getTime } from "../../../utilities/Common"
@@ -156,27 +163,27 @@ export class InvoiceToPrintHmo extends React.PureComponent {
 
             <div className="row">
               <div className="col-6">
-                <span className="received-from-label">
-                  {" "}
-                  PREPARED BY <br />
-                  <br />
-                  <span className="not-bold">{this.props.user}</span>
-                </span>
+                <div className="received-from-label"> PREPARED BY</div>
                 <br />
-                <br />
-                <span className="received-from-label">
-                  {" "}
-                  RECEIVED BY <br />
-                  <br /> ________________________
-                </span>
+                <div className="not-bold text-center underline-div">
+                  {getUserName()}
+                </div>
+                <div className="not-bold text-center">{getUserRole()}</div>
               </div>
               <div className="col-6">
-                <span className="received-from-label">
-                  {" "}
-                  APPROVED BY <br />
-                  <br />
-                  ________________________
-                </span>
+                <div className="received-from-label"> APPROVED BY</div>
+                <br />
+                <div className="not-bold text-center underline-div">
+                  <span style={{ opacity: "0" }}>s</span>
+                </div>
+                <div className="not-bold text-center"></div>
+              </div>
+              <div className="col-6 mt-3">
+                <div className="received-from-label"> RECEIVED BY</div>
+                <br />
+                <br />
+                <div className="not-bold text-center underline-div"></div>
+                <div className="not-bold text-center"></div>
               </div>
             </div>
           </div>
