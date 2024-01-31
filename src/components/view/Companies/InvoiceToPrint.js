@@ -1,39 +1,43 @@
-import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage } from "../../../utilities/Common";
-import { withRouter } from "react-router";
-import axios from "axios";
-import { getTime } from "../../../utilities/Common";
+import React, { useState, useRef } from "react"
+import { useParams } from "react-router-dom"
+import {
+  getToken,
+  getUser,
+  getUserName,
+  getUserRole,
+  refreshPage,
+} from "../../../utilities/Common"
+import { withRouter } from "react-router"
+import axios from "axios"
+import { getTime } from "../../../utilities/Common"
 
 //logo image
-import logo from "../../../images/logo-black.png";
+import logo from "../../../images/logo-black.png"
 
 //components
-import Table from "../../Table.js";
+import Table from "../../Table.js"
 
 //css
-import "./InvoicePrint.css";
+import "./InvoicePrint.css"
 
 export class InvoiceToPrint extends React.PureComponent {
-  
   render() {
-    const marginTop = "10px";
-    const marginRight = "10px";
-    const marginBottom = "10px";
-    const marginLeft = "10px";
+    const marginTop = "10px"
+    const marginRight = "10px"
+    const marginBottom = "10px"
+    const marginLeft = "10px"
     const getPageMargins = () => {
-      return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`;
-    };
+      return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`
+    }
     console.log("called invoicetoprint")
 
     return (
       <div>
         <style>{getPageMargins()}</style>
         <img src={logo} alt={"logo"} class="invoice-logo"></img>
-<div className="p-2">
-
-        <div className="invoice-cont-hmo">
-          <div className="row">
+        <div className="p-2">
+          <div className="invoice-cont-hmo">
+            <div className="row">
               <div className="col-12">
                 <span className="label" style={{ fontSize: "15px" }}>
                   BILL TO:{" "}
@@ -60,9 +64,8 @@ export class InvoiceToPrint extends React.PureComponent {
               </div>
             </div>
 
-       
-          <div className="invoice-line" />
-        </div>
+            <div className="invoice-line" />
+          </div>
           <div className="">
             <div className="search-table-container d-flex justify-content-end"></div>
             <table className="table-container__table table-container__table--break-sm">
@@ -101,8 +104,8 @@ export class InvoiceToPrint extends React.PureComponent {
               </tbody>
             </table>
           </div>
-       
-       <div className="invoice-footer p-1">
+
+          <div className="invoice-footer p-1">
             <div
               className="row justify-content-center"
               style={{
@@ -152,37 +155,35 @@ export class InvoiceToPrint extends React.PureComponent {
 
             <div className="row">
               <div className="col-6">
-                <span className="received-from-label">
-                  {" "}
-                  PREPARED BY <br />
-                  <br /> ________________________
-                  {/* <span className="not-bold">{this.props.user}</span> */}
-                  {/* <span style={{ textDecoration: "underline" }}>
-                    Angela Acedillo
-                  </span>
-                  <br />
-                  <span className="not-bold">Cashier</span> */}
-                </span>
+                <div className="received-from-label"> PREPARED BY</div>
                 <br />
-                <br />
-                <span className="received-from-label">
-                  {" "}
-                  RECEIVED BY <br />
-                  <br /> ________________________
-                </span>
+                <div className="not-bold text-center underline-div">
+                  {getUserName()}
+                </div>
+                <div className="not-bold text-center">{getUserRole()}</div>
               </div>
               <div className="col-6">
-                <span className="received-from-label">
-                  {" "}
-                  APPROVED BY <br />
-                  <br />
-                  ________________________
-                </span>
+                <div className="received-from-label"> APPROVED BY</div>
+                <br />
+                <div
+                  className="not-bold text-center underline-div"
+                
+                >
+                   <span style={{ opacity: "0" }}>s</span>
+                </div>
+                <div className="not-bold text-center"></div>
+              </div>
+              <div className="col-6 mt-3">
+                <div className="received-from-label"> RECEIVED BY</div>
+                <br />
+                <br />
+                <div className="not-bold text-center underline-div"></div>
+                <div className="not-bold text-center"></div>
               </div>
             </div>
           </div>
-</div>
+        </div>
       </div>
-    );
+    )
   }
 }
