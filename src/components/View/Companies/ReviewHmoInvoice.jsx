@@ -5,6 +5,8 @@ import {
   getRoleId,
   getToken,
   getUser,
+  getUserName,
+  getUserRole,
 } from "../../../utilities/Common"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
@@ -796,24 +798,30 @@ function ReviewInvoiceHmo() {
 
                 <div className="row">
                   <div className="col-6">
-                    <span className="received-from-label">
-                      {" "}
-                      PREPARED BY <br />
-                      <span className="not-bold">{user}</span>
-                    </span>
+                    <div className="received-from-label"> PREPARED BY</div>
                     <br />
-                    <br />
-                    <span className="received-from-label">
-                      {" "}
-                      RECEIVED BY <br /> ________________________
-                    </span>
+                    <div className="not-bold text-center underline-div">
+                      {getUserName()}
+                    </div>
+                    <div className="not-bold text-center">{getUserRole()}</div>
                   </div>
                   <div className="col-6">
-                    <span className="received-from-label">
-                      {" "}
-                      APPROVED BY <br />
-                      ________________________
-                    </span>
+                    <div className="received-from-label"> APPROVED BY</div>
+                    <br />
+                    <div
+                      className="not-bold text-center underline-div"
+                      style={{ color: "white" }}
+                    >
+                      sample
+                    </div>
+                    <div className="not-bold text-center"></div>
+                  </div>
+                  <div className="col-6 mt-3">
+                    <div className="received-from-label"> RECEIVED BY</div>
+                    <br />
+                    <br />
+                    <div className="not-bold text-center underline-div"></div>
+                    <div className="not-bold text-center"></div>
                   </div>
                 </div>
                 <div className="row justify-content-end mt-5">
