@@ -52,6 +52,12 @@ export const getUserName = () => {
   if (name) return JSON.parse(name);
   else return null;
 };
+//return user's role data from local storage
+export const getUserRole = () => {
+  const role = localStorage.getItem("role");
+  if (role) return JSON.parse(role);
+  else return null;
+};
 
 //return role id from local storage
 export const getRoleId = () => {

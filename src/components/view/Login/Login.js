@@ -45,6 +45,8 @@ function Login() {
         .then(function (response) {
           localStorage.setItem("token", JSON.stringify(response.data.token))
           localStorage.setItem("user", JSON.stringify(response.data.id))
+          localStorage.setItem("name", JSON.stringify(response.data.name))
+          localStorage.setItem("role", JSON.stringify(response.data.role))
           localStorage.setItem("role_id", JSON.stringify(response.data.role_id))
           localStorage.setItem(
             "token_expiry",
@@ -53,7 +55,6 @@ function Login() {
           refreshPage()
         })
         .catch(function (error) {
-      
           toast.error("Invalid Login")
           setTimeout(() => {
             refreshPage()
