@@ -390,7 +390,7 @@ export default function ExtractionUpdate() {
           referral={""}
           discountCode={discountCode}
           hmo={hmo}
-          setPrintReadyFinal={readyToPrint}
+          setPrintReadyFinal={setReadyToPrint}
         />
       </div>
     </div>
