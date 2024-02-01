@@ -53,7 +53,7 @@ function ReportHomeServices() {
           info.booking_number = data.booking_id
           info.booking_date = formatDate(data.booking_date)
           info.address = data.address
-          info.tests = data.lab_tests?.replace("|", ",")
+          info.tests = data.lab_tests?.replaceAll("|", ",")
           info.home_service_fee = data.home_service_fee
           info.total_amount = data.grand_total
             .toString()
