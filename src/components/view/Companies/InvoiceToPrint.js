@@ -10,6 +10,7 @@ import {
 import { withRouter } from "react-router"
 import axios from "axios"
 import { getTime } from "../../../utilities/Common"
+import { adminSign } from "../Supply/Signatures.js"
 
 //logo image
 import logo from "../../../images/logo-black.png"
@@ -165,13 +166,20 @@ export class InvoiceToPrint extends React.PureComponent {
               <div className="col-6">
                 <div className="received-from-label"> APPROVED BY</div>
                 <br />
-                <div
-                  className="not-bold text-center underline-div"
-                
-                >
-                   <span style={{ opacity: "0" }}>s</span>
+                <div className="sign-container">
+                  <div className="overlay">
+                    <img
+                      src={adminSign}
+                      alt="signature"
+                      width={100}
+                      height={50}
+                    />
+                  </div>
+                  <div className="not-bold text-center underline-div">
+                    Leanne Julio
+                  </div>
+                  <div className="not-bold text-center">Admin</div>
                 </div>
-                <div className="not-bold text-center"></div>
               </div>
               <div className="col-6 mt-3">
                 <div className="received-from-label"> RECEIVED BY</div>
