@@ -26,6 +26,7 @@ import { InvoiceToPrintHmo } from "./InvoiceToPrintHmo.jsx"
 import { approveHMO, disapproveHMO } from "../../../Helpers/APIs/hmoAPI.jsx"
 import { refreshPage } from "../Results Releasing/LabOfficer.js"
 import { InvoiceToPrint } from "./InvoiceToPrint.js"
+import { adminSign } from "../Supply/Signatures.js"
 
 //variables
 const userToken = getToken()
@@ -821,13 +822,20 @@ function ReviewCompanyInvoice() {
                   <div className="col-6">
                     <div className="received-from-label"> APPROVED BY</div>
                     <br />
-                    <div
-                      className="not-bold text-center underline-div"
-                      style={{ color: "white" }}
-                    >
-                      sample
+                    <div className="sign-container">
+                      <div className="overlay">
+                        <img
+                          src={adminSign}
+                          alt="signature"
+                          width={100}
+                          height={50}
+                        />
+                      </div>
+                      <div className="not-bold text-center underline-div">
+                        Leanne Julio
+                      </div>
+                      <div className="not-bold text-center">Admin</div>
                     </div>
-                    <div className="not-bold text-center"></div>
                   </div>
                   <div className="col-6 mt-3">
                     <div className="received-from-label"> RECEIVED BY</div>
