@@ -144,3 +144,20 @@
   display: inline-block;
   width: 100%;
 }
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  color: #f1f1f1;
+  width: 100%;
+  opacity: 1;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.sign-container{
+  position: relative;
+}
