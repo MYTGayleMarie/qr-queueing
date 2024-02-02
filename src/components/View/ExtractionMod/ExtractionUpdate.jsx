@@ -243,7 +243,7 @@ export default function ExtractionUpdate() {
                       </h5>
                     </div>
                     <div className="col-3">
-                      {/* <Button
+                      <Button
                         className="mt-2"
                         // size="sm"
                         style={{
@@ -262,7 +262,7 @@ export default function ExtractionUpdate() {
                           className="print-icon"
                         />{" "}
                         {readyToPrint ? "PRINT" : "Loading Data..."}
-                      </Button> */}
+                      </Button>
                     </div>
                     <div className="col-3">
                       <Button
