@@ -159,7 +159,7 @@ export default function ExtractionUpdate() {
   }, [])
 
   async function fetchExtraction() {
-    const response = await getSingleLabExtractionPatient(bookingId, 8)
+    const response = await getSingleLabExtractionPatient(bookingId, "")
 
     if (response.data) {
       setDetails(response.data.bookings[0])
