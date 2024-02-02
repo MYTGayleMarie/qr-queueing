@@ -31,7 +31,7 @@ function PurchaseOrder() {
   document.body.style = "background: white;";
   const { dateFrom, dateTo, statusFilter } = useParams();
   const [filteredData, setFilter] = useForm({
-    from_date: dateFrom ? dateFrom : formattedPresentData,
+    from_date: dateFrom ? dateFrom : new Date("01/02/21").toISOString().split("T")[0],
     to_date: dateTo ? dateTo : formattedPresentData,
     status: statusFilter
       ? statusFilter === "all"

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import DateTimePicker from "react-datetime-picker";
-import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
-import axios from "axios";
-
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import DateTimePicker from "react-datetime-picker"
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common"
+import axios from "axios"
+import Select from "react-select"
 //components
-import Header from "../../../Header.js";
-import Navbar from "../../../Navbar";
+import Header from "../../../Header.js"
+import Navbar from "../../../Navbar"
 
 //css
-import "./OldPatientForm1.css";
+import "./OldPatientForm1.css"
 
-const userToken = getToken();
-const userId = getUser();
+const userToken = getToken()
+const userId = getUser()
 
 function OldPatientForm1({
   customer,
@@ -37,61 +37,41 @@ function OldPatientForm1({
   setDiscountDetails,
   extractionDate,
   setExtractionDate,
+  isSenior,
+  isPWD,
+  setIsSenior,
+  setIsPWD,
+  pwdId,
+  setPwdId,
+  seniorId,
+  setSeniorId,
+  hmoDetails,
+  setHmoDetails,
+  setHmoCompanies,
+  hmoCompanies,
+  hmoDiscounts,
+  setHmoDiscounts,
 }) {
-  document.body.style = "background: white;";
+  document.body.style = "background: white;"
   //customer details
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthday, setBirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [emailadd, setEmail] = useState("");
-  const [homeaddress, setAddress] = useState("");
-  const [pwdId, setPwdId] = useState("");
-  const [seniorId, setSeniorId] = useState("");
-  const { id } = useParams();
+  const [firstName, setFirstName] = useState("")
+  const [middleName, setMiddleName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [birthday, setBirthDate] = useState("")
+  const [gender, setGender] = useState("")
+  const [age, setAge] = useState("")
+  const [contactNo, setContactNo] = useState("")
+  const [emailadd, setEmail] = useState("")
+  const [homeaddress, setAddress] = useState("")
 
-  const [discountList, setDiscountList] = useState([]);
-  const [companyId, setCompanyId] = useState("");
-  const [companyRemarks, setCompanyRemarks] = useState("");
+  const { id } = useParams()
 
-  const [people, setPeople] = useState(0);
-  const [km, setKm] = useState(0);
+  const [discountList, setDiscountList] = useState([])
+  const [companyId, setCompanyId] = useState("")
+  const [companyRemarks, setCompanyRemarks] = useState("")
 
-  useEffect(() => {
-    axios({
-      method: "post",
-      url: window.$link + "customers/show/" + id,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        requester: userId,
-      },
-    })
-      .then(function (customer) {
-        var presentDate = new Date();
-        var birthDate = new Date(customer.data.birthdate);
-        const age = presentDate.getFullYear() - birthDate.getFullYear();
-        setFirstName(customer.data.first_name);
-        setMiddleName(customer.data.middle_name);
-        setLastName(customer.data.last_name);
-        setBirthDate(birthDate.toDateString());
-        setGender(customer.data.gender);
-        setAge(age);
-        setContactNo(customer.data.contact_no);
-        setEmail(customer.data.email);
-        setAddress(customer.data.address);
-        setPwdId(customer.data.pwd_id);
-        setSeniorId(customer.data.senior_id);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
+  const [people, setPeople] = useState(0)
+  const [km, setKm] = useState(0)
   const {
     fname,
     lname,
@@ -108,11 +88,148 @@ function OldPatientForm1({
     result,
     lastmeal,
     homeServiceFee,
-  } = customer;
-  const [activation, setActive] = useState(false);
+  } = customer
+
+  //get all companies with HMO
+  async function fetchHMOCompanies() {
+    axios({
+      method: "post",
+      url: window.$link + "companies/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        let hmos_filter = response.data.companys.filter(
+          (data) => data.is_hmo === "1"
+        )
+        let hmo_list = []
+        hmos_filter.map((data) =>
+          hmo_list.push({ ...data, label: data.name, value: data.id })
+        )
+        setHmoCompanies(hmo_list)
+      })
+      .catch(function (error) {
+        console.log("error", error)
+      })
+  }
+
+  //get all companies with HMO
+  async function fetchHMODiscounts(id) {
+    axios({
+      method: "post",
+      url: window.$link + "discounts/hmo",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        company_id: id,
+      },
+    })
+      .then(function (response) {
+        setHmoDiscounts([])
+        let hmo_discounts = []
+        response.data.map((data) =>
+          hmo_discounts.push({
+            ...data,
+            label: data.discount_code,
+            value: data.id,
+          })
+        )
+        setHmoDiscounts(hmo_discounts)
+      })
+      .catch(function (error) {
+        setHmoDiscounts([])
+        console.log("error", error)
+      })
+  }
+
+  async function fetchDiscounts(id) {
+    axios({
+      method: "post",
+      url: window.$link + "discounts/show/" + id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+        company_id: id,
+      },
+    })
+      .then(function (response) {
+        setCompanyId(response.data.data.discount.company_id)
+        setDiscount(response.data.data.discount.percentage)
+        setDiscountDetails(response.data.data.discount_details)
+        if (response.data.is_package === "1") {
+          setIsPackage("1")
+        }
+        if (response.data.is_service === "1") {
+          setIsService("1")
+        }
+      })
+      .catch(function (error) {
+        setHmoDiscounts([])
+        console.log("error", error)
+      })
+  }
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: window.$link + "customers/show/" + id,
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (customerData) {
+        var presentDate = new Date()
+        var birthDate = new Date(customerData.data.birthdate)
+        const age = presentDate.getFullYear() - birthDate.getFullYear()
+        setFirstName(customerData.data.first_name)
+        setMiddleName(customerData.data.middle_name)
+        setLastName(customerData.data.last_name)
+        setBirthDate(birthDate.toDateString())
+        setGender(customerData.data.gender)
+        setAge(age)
+        setContactNo(customerData.data.contact_no)
+        setEmail(customerData.data.email)
+        setAddress(customerData.data.address)
+        setPwdId(customerData.data.pwd_id)
+        setSeniorId(customerData.data.senior_id)
+        if (customerData.data.pwd_id !== "") {
+          setIsPWD(true)
+        }
+      })
+      .catch(function (error) {
+        console.log("error", error)
+      })
+  }, [])
+
+  React.useEffect(() => {
+    const birthDate2 = new Date(birthday)
+    if (birthday && new Date().getFullYear() - birthDate2.getFullYear() >= 60) {
+      setIsSenior(true)
+    } else {
+      setIsSenior(false)
+    }
+  })
+  React.useEffect(() => {
+    if (isPWD === false) {
+      setPwdId("")
+    }
+  }, [isPWD])
+
+  const [activation, setActive] = useState(false)
 
   function turnActive() {
-    setActive(true);
+    setActive(true)
   }
 
   function proceed() {
@@ -121,18 +238,97 @@ function OldPatientForm1({
       result != "" &&
       dateOfTesting != "" &&
       lastMeal != "" &&
-      referral != ""
+      referral != "" &&
+      (hmoDetails.is_hmo === "no" ||
+        (hmoDetails.is_hmo === "yes" &&
+          hmoDetails.hmo_id !== "" &&
+          hmoDetails.hmo_code !== "" &&
+          hmoDetails.pricelist !== ""))
     ) {
-      return (
-        <div className="row d-flex justify-content-end mb-3">
-          <div className="col-6 align-right text-right">
-            <button className="proceed-btn" onClick={() => navigation.next()}>
-              PROCEED
-            </button>
+      if (discountId !== "7") {
+        return (
+          <div className="row d-flex justify-content-end mb-3">
+            <div className="col-6 align-right text-right">
+              <button
+                className="proceed-btn"
+                onClick={() => {
+                  navigation.next()
+                  // if (hmoDetails.is_hmo === "no") {
+                  //   navigation.next()
+                  // } else {
+                  //   navigation.go("services")
+                  // }
+                }}
+              >
+                PROCEED
+              </button>
+            </div>
+            <div className="col-1"></div>
           </div>
-          <div className="col-1"></div>
-        </div>
-      );
+        )
+      } else if (
+        discountId === "7" &&
+        (!/^$|\s+/.test(seniorId) || !/^$|\s+/.test(pwdId))
+      ) {
+        return (
+          <div className="row d-flex justify-content-end mb-3">
+            <div className="col-6 align-right text-right">
+              <button className="proceed-btn" onClick={() => navigation.next()}>
+                PROCEED
+              </button>
+            </div>
+            <div className="col-1"></div>
+          </div>
+        )
+      } else {
+        return <></>
+      }
+    }
+  }
+
+  //event handler for hmo radio buttons
+  function handleRadioChange(e) {
+    const { name, value } = e.target
+
+    setHmoDetails({ ...hmoDetails, [name]: value })
+
+    if (name === "is_hmo" && value === "yes") {
+      fetchHMOCompanies()
+    }
+  }
+  //event handler for hmo select buttons
+  function handleSelectChange(e, name) {
+    if (e === null) {
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "" })
+        setDiscount(0)
+        setDiscountDetails(null)
+        setCompanyId("")
+        setIsService("")
+        setIsPackage("")
+      }
+      if (name === "hmo_id") {
+        setHmoDetails({ ...hmoDetails, [name]: "", hmo_code: "", discount_amount:"",hmo_discount_details:{} })
+      }
+    } else {
+      setHmoDetails({ ...hmoDetails, [name]: e.id })
+
+      if (name === "hmo_id") {
+        fetchHMODiscounts(e.id)
+          setHmoDetails({ ...hmoDetails, [name]: e.id, hmo_code:"",discount_amount:"", hmo_discount_details:{} })
+      }
+      if (name === "hmo_code") {
+        setHmoDetails({
+          ...hmoDetails,
+          [name]: e.id,
+          discount_amount: e.percentage,
+          hmo_discount_details:e
+        })
+      }
+      if (name === "discount_id") {
+        setHmoDetails({ ...hmoDetails, [name]: e.id })
+        fetchDiscounts(e.id)
+      }
     }
   }
 
@@ -142,7 +338,7 @@ function OldPatientForm1({
         <div className="row date-of-testing-container small-gap">
           <div className="col">
             <label for="result" className="radio-header">
-              SERVICE LOCATION
+              SERVICE LOCATION <span className="required">*</span>
             </label>
             <br />
             <select
@@ -235,9 +431,9 @@ function OldPatientForm1({
             )}
           </div>
         </div>
-      );
+      )
     } else {
-      console.log("Error. No home service fee");
+      console.log("Error. No home service fee")
     }
   }
 
@@ -253,20 +449,28 @@ function OldPatientForm1({
       },
     })
       .then(function (response) {
-        setDiscountList(response.data.discounts);
+        let discount_list = []
+        response.data.discounts.map((data) => {
+          discount_list.push({
+            ...data,
+            label: `${data.description} (${data.discount_code})`,
+            value: data.id,
+          })
+        })
+        setDiscountList(discount_list)
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
-    if (discountId == "") {
-      setDiscount(0);
-      setDiscountDetails(null);
-      setCompanyId("");
-      setIsService("");
-      setIsPackage("");
+    if (discountId === "") {
+      setDiscount(0)
+      setDiscountDetails(null)
+      setCompanyId("")
+      setIsService("")
+      setIsPackage("")
     }
 
     axios({
@@ -280,23 +484,23 @@ function OldPatientForm1({
       },
     })
       .then(function (response) {
-        setCompanyId(response.data.data.discount.company_id);
-        setDiscount(response.data.data.discount.percentage);
-        setDiscountDetails(response.data.data.discount_details);
+        setCompanyId(response.data.data.discount.company_id)
+        setDiscount(response.data.data.discount.percentage)
+        setDiscountDetails(response.data.data.discount_details)
         if (response.data.is_package == "1") {
-          setIsPackage("1");
+          setIsPackage("1")
         }
         if (response.data.is_service == "1") {
-          setIsService("1");
+          setIsService("1")
         }
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, [discountId]);
+        console.log(error)
+      })
+  }, [discountId])
 
   React.useEffect(() => {
-    setCompanyRemarks("");
+    setCompanyRemarks("")
     axios({
       method: "post",
       url: window.$link + "companies/show/" + companyId,
@@ -308,51 +512,51 @@ function OldPatientForm1({
       },
     })
       .then(function (response) {
-        setCompanyRemarks(response.data.remarks);
-        setIsCompany(true);
+        setCompanyRemarks(response.data.remarks)
+        setIsCompany(true)
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, [companyId]);
+        console.log(error)
+      })
+  }, [companyId])
 
   const listOfDiscount = discountList.map((row, index) => {
     return (
       <option key={index} value={row.id}>
         {row.description + " (" + row.discount_code + ")"}
       </option>
-    );
-  });
+    )
+  })
 
   function sinceLastMeal() {
-    var presentDate = new Date();
-    let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000;
+    var presentDate = new Date()
+    let diffInMilliSeconds = Math.abs(presentDate - lastMeal) / 1000
 
     //calculate days
-    const days = Math.floor(diffInMilliSeconds / 86400);
-    diffInMilliSeconds -= days * 86400;
+    const days = Math.floor(diffInMilliSeconds / 86400)
+    diffInMilliSeconds -= days * 86400
 
     // calculate hours
-    const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-    diffInMilliSeconds -= hours * 3600;
+    const hours = Math.floor(diffInMilliSeconds / 3600) % 24
+    diffInMilliSeconds -= hours * 3600
 
     // calculate minutes
-    const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-    diffInMilliSeconds -= minutes * 60;
+    const minutes = Math.floor(diffInMilliSeconds / 60) % 60
+    diffInMilliSeconds -= minutes * 60
 
-    let difference = "";
+    let difference = ""
     if (days > 0) {
-      difference += days === 1 ? `${days} day, ` : `${days} days, `;
+      difference += days === 1 ? `${days} day, ` : `${days} days, `
     }
 
     difference +=
-      hours === 0 || hours === 1 ? `${hours} hour, ` : `${hours} hours, `;
+      hours === 0 || hours === 1 ? `${hours} hour, ` : `${hours} hours, `
 
     difference +=
       minutes === 0 || hours === 1
         ? `${minutes} minutes ago`
-        : `${minutes} minutes ago`;
-    return difference;
+        : `${minutes} minutes ago`
+    return difference
   }
 
   return (
@@ -441,10 +645,9 @@ function OldPatientForm1({
             <div className="row">
               <div className="col-sm-12 input-group-sm">
                 <span className="first-name label">
-                  REFERRAL <i>(required)</i>
+                  REFERRAL <span className="required">*</span>
                 </span>
                 <br />
-
                 <input
                   type="text"
                   className="form-control full input-group"
@@ -457,30 +660,205 @@ function OldPatientForm1({
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-6 input-group-sm">
-                <span className="first-name label">DISCOUNT CODE</span>
-                <br />
-
-                <select
-                  className="select-input full form-select form-select-sm"
-                  id="discount_code"
-                  name="discountId"
-                  value={discountId}
-                  onChange={setPersonal}
-                >
-                  <option value="">None</option>
-                  {listOfDiscount}
-                </select>
-              </div>
-              <div className="col-sm-6 input-group-sm">
-                <span className="first-name label">DISCOUNT REMARKS</span>
-                <br />
-
-                <span className="remarks ">
-                  {companyRemarks != "" && companyRemarks}
+              <div className="col-sm-12 input-group-sm">
+                <span className="first-name label">
+                  Is this an HMO Patient? <span className="required">*</span>
                 </span>
+                <br />
+
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoYes"
+                    value="yes"
+                    checked={hmoDetails.is_hmo === "yes"}
+                    onChange={handleRadioChange}
+                  />
+                  <label class="form-check-label" for="hmoYes">
+                    YES
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="is_hmo"
+                    id="hmoNo"
+                    value="no"
+                    checked={hmoDetails.is_hmo === "no"}
+                    onChange={handleRadioChange}
+                  />
+                  <label class="form-check-label" for="hmoNo">
+                    NO
+                  </label>
+                </div>
               </div>
+              {hmoDetails.is_hmo === "yes" && (
+                <>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      onChange={(e) => handleSelectChange(e, "hmo_id")}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={hmoCompanies}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-2">
+                    <span className="first-name label">
+                      HMO Discount <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      onChange={(e) => handleSelectChange(e, "hmo_code")}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="hmo"
+                      options={hmoDiscounts}
+                        value={hmoDetails.hmo_discount_details}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Price <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceCash"
+                        value="cash"
+                        checked={hmoDetails.pricelist === "cash"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceCash">
+                        CASH
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="pricelist"
+                        id="priceHMO"
+                        value="hmo"
+                        checked={hmoDetails.pricelist === "hmo"}
+                        onChange={handleRadioChange}
+                      />
+                      <label class="form-check-label" for="priceHMO">
+                        HMO
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-sm-5 input-group-sm mt-3">
+                    <span className="first-name label">
+                      Discount Code <span className="required">*</span>
+                    </span>
+                    <br />
+
+                    <Select
+                      className="basic-single"
+                      classNamePrefix="select"
+                      id="discount_code"
+                      onChange={(e) => handleSelectChange(e, "discount_id")}
+                      isClearable={true}
+                      isRtl={false}
+                      isSearchable={true}
+                      options={discountList.filter((data) => data.id === "7")}
+                    />
+                  </div>
+                </>
+              )}
             </div>
+            {hmoDetails.is_hmo === "no" && (
+              <div className="row">
+                <div className="col-sm-12 input-group-sm">
+                  <span className="first-name label">DISCOUNT CODE</span>
+                  <br />
+
+                  <select
+                    className="select-input full form-select form-select-sm"
+                    id="discount_code"
+                    name="discountId"
+                    value={discountId}
+                    onChange={setPersonal}
+                  >
+                    <option value="">None</option>
+                    {listOfDiscount}
+                  </select>
+                </div>
+              </div>
+            )}
+            {discountId === "7" ||
+              (hmoDetails.discount_id === "7" && (
+                <div className="row">
+                  <div className="col-sm-6 input-group-sm">
+                    <input
+                      type="checkbox"
+                      name="is_pwd"
+                      value="isPWD"
+                      id="mdCharge"
+                      checked={isPWD}
+                      onChange={(e) => setIsPWD(e.target.checked)}
+                    />
+                    <label for="mdCharge" className="booking-label">
+                      Person With Disabilities
+                    </label>
+                    <br />
+                    <span className="first-name label">
+                      PWD ID <span className="required">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      id="pwd_id"
+                      name="pwdId"
+                      placeholder="ID Should not contain any spaces..."
+                      className="full-input"
+                      value={!isPWD ? "" : pwdId}
+                      disabled={!isPWD}
+                      onChange={(e) => setPwdId(e.target.value)}
+                      required
+                      style={{ background: !isPWD ? "whitesmoke" : "" }}
+                    />
+                  </div>
+                  <div className="col-sm-5 input-group-sm">
+                    <br />
+                    <span className="first-name label">
+                      SENIOR CITIZEN ID <span className="required">*</span>
+                    </span>
+
+                    <input
+                      type="text"
+                      id="senior_id"
+                      name="seniorId"
+                      className="full-input"
+                      placeholder="ID Should not contain any spaces..."
+                      value={!isSenior ? "" : seniorId}
+                      onChange={(e) => setSeniorId(e.target.value)}
+                      disabled={!isSenior}
+                      style={{ background: !isSenior ? "whitesmoke" : "" }}
+                      required
+                    />
+                  </div>
+                </div>
+              ))}
             <div className="row">
               <div className="col-sm-12 input-group-sm">
                 <span className="first-name label">DISCOUNT DETAIL</span>
@@ -498,7 +876,9 @@ function OldPatientForm1({
             </div>
             <div className="row">
               <div className="col-sm-6 input-group-sm">
-                <span className="radio-header">LOCATION OF SERVICE</span>
+                <span className="radio-header">
+                  LOCATION OF SERVICE <span className="required">*</span>
+                </span>
                 <br />
 
                 <div className="row">
@@ -539,7 +919,9 @@ function OldPatientForm1({
                 </div>
               </div>
               <div className="col-sm-6 input-group-sm">
-                <span className="radio-header">RESULTS</span>
+                <span className="radio-header">
+                  RESULTS <span className="required">*</span>{" "}
+                </span>
                 <br />
 
                 <div className="row">
@@ -642,7 +1024,7 @@ function OldPatientForm1({
             <div className="row mb-3">
               <div className="col-sm-6 input-group-sm">
                 <span className="first-name label">
-                  DATE OF TESTING <i>(required)</i>
+                  DATE OF TESTING <span className="required">*</span>
                 </span>
                 <br />
 
@@ -650,7 +1032,7 @@ function OldPatientForm1({
               </div>
               <div className="col-sm-6 input-group-sm">
                 <span className="first-name label">
-                  DATE OF EXTRACTION <i>(required)</i>
+                  DATE OF EXTRACTION <span className="required">*</span>
                 </span>
                 <br />
 
@@ -665,7 +1047,7 @@ function OldPatientForm1({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default OldPatientForm1;
+export default OldPatientForm1

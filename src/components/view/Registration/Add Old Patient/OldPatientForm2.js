@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react"
+import axios from "axios"
 
 //components
-import Navbar from "../../../Navbar";
-import Header from "../../../Header.js";
-import { getToken, getUser, refreshPage } from "../../../../utilities/Common";
-import ServiceItems from "../../../ServiceItems";
+import Navbar from "../../../Navbar"
+import Header from "../../../Header.js"
+import { getToken, getUser, refreshPage } from "../../../../utilities/Common"
+import ServiceItems from "../../../ServiceItems"
 import {
   getAnnualWellnessPackageBasic,
   getPregnancyLabPackage,
@@ -34,16 +34,16 @@ import {
   getCardiology,
   getMedicalCertificate,
   getUltrasound,
-} from "../../../../services/services";
+} from "../../../../services/services"
 
 //VARIABLES
-var itemDetails;
-var newLabTotal = 0;
-var newPackageTotal = 0;
-var labDiscountedTotal = 0;
-var packageDiscountedTotal = 0;
-const userToken = getToken();
-const userId = getUser();
+var itemDetails
+var newLabTotal = 0
+var newPackageTotal = 0
+var labDiscountedTotal = 0
+var packageDiscountedTotal = 0
+const userToken = getToken()
+const userId = getUser()
 
 // //Package
 // const preEmploymentPackageBasic = getPreEmploymentBasic();
@@ -96,11 +96,11 @@ function OldPatientForm2({
   mdCharge,
   discountDetails,
 }) {
-  document.body.style = "background: white;";
-  window.scrollTo(0, 0);
+  document.body.style = "background: white;"
+  window.scrollTo(0, 0)
 
   //get all lab tests
-  const [allLabServices, setAllLabServices] = useState([]);
+  const [allLabServices, setAllLabServices] = useState([])
   React.useEffect(() => {
     axios({
       method: "post",
@@ -115,77 +115,75 @@ function OldPatientForm2({
       .then((response) => {
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
-          .sort((x, y) => x.id - y.id);
+          .sort((x, y) => x.id - y.id)
         tests.map((test, index) => {
-          var testDetails = {};
+          var testDetails = {}
           testDetails.key =
-            test.name.replace(/[2)}{(.,&-\s/]/g, "") + "_" + test.category_id;
-          testDetails.name = test.name;
-          testDetails.categoryId = test.category_id;
-          testDetails.labTestId = test.id;
-          testDetails.price = test.price;
-          testDetails.type = "lab";
-          setAllLabServices((oldArray) => [...oldArray, testDetails]); // append each item to services
-        });
+            test.name.replace(/[2)}{(.,&-\s/]/g, "") + "_" + test.category_id
+          testDetails.name = test.name
+          testDetails.categoryId = test.category_id
+          testDetails.labTestId = test.id
+          testDetails.price = test.price
+          testDetails.type = "lab"
+          setAllLabServices((oldArray) => [...oldArray, testDetails]) // append each item to services
+        })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   // // Lab Tests Categories
   const clinicalMicroscopy = allLabServices.filter(
     (item) => item.categoryId == 1
-  );
+  )
   const clinicalUrinalysis = allLabServices.filter(
     (item) => item.categoryId == 23
-  );
+  )
   const clinicalFecalysis = allLabServices.filter(
     (item) => item.categoryId == 24
-  );
-  const hematology = allLabServices.filter((item) => item.categoryId == 2);
+  )
+  const hematology = allLabServices.filter((item) => item.categoryId == 2)
   const electrolytes = allLabServices.filter(
     (item) => item.categoryId == 3 || item.categoryId == 4
-  );
-  const glucoseTests = allLabServices.filter((item) => item.categoryId == 5);
+  )
+  const glucoseTests = allLabServices.filter((item) => item.categoryId == 5)
   const kidneyFunctionTests = allLabServices.filter(
     (item) => item.categoryId == 6
-  );
-  const lipidProfile = allLabServices.filter((item) => item.categoryId == 7);
-  const pancreaticTests = allLabServices.filter((item) => item.categoryId == 8);
+  )
+  const lipidProfile = allLabServices.filter((item) => item.categoryId == 7)
+  const pancreaticTests = allLabServices.filter((item) => item.categoryId == 8)
   const liverFunctionTests = allLabServices.filter(
     (item) => item.categoryId == 9
-  );
-  const immunology = allLabServices.filter((item) => item.categoryId == 11);
+  )
+  const immunology = allLabServices.filter((item) => item.categoryId == 11)
   const hepatitisProfileScreening = allLabServices.filter(
     (item) => item.categoryId == 12
-  );
-  const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13);
-  const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14);
-  const histopathology = allLabServices.filter((item) => item.categoryId == 15);
-  const COVIDRapidTests = allLabServices.filter(
-    (item) => item.categoryId == 16
-  );
-  const microbiology = allLabServices.filter((item) => item.categoryId == 17);
-  const xray = allLabServices.filter((item) => item.categoryId == 18);
-  const cardiology = allLabServices.filter((item) => item.categoryId == 19);
+  )
+  const thyroidProfile = allLabServices.filter((item) => item.categoryId == 13)
+  const tumorMarkers = allLabServices.filter((item) => item.categoryId == 14)
+  const histopathology = allLabServices.filter((item) => item.categoryId == 15)
+  const COVIDRapidTests = allLabServices.filter((item) => item.categoryId == 16)
+  const microbiology = allLabServices.filter((item) => item.categoryId == 17)
+  const xray = allLabServices.filter((item) => item.categoryId == 18)
+  const cardiology = allLabServices.filter((item) => item.categoryId == 19)
   const medicalCertificate = allLabServices.filter(
     (item) => item.categoryId == 20
-  );
-  const ultrasound = allLabServices.filter((item) => item.categoryId == 21);
+  )
+  const ultrasound = allLabServices.filter((item) => item.categoryId == 21)
   const promo = allLabServices.filter(
     (item) =>
       item.labTestId == 119 ||
       item.labTestId == 120 ||
       item.labTestId == 121 ||
       item.labTestId == 117
-  );
+  )
   const otherTests = allLabServices.filter(
     (item) => item.categoryId == 29 || item.categoryId == 22
-  );
+  )
 
   //get all packages
-  const [allPackages, setAllPackages] = useState([]);
+  const [allPackages, setAllPackages] = useState([])
   React.useEffect(() => {
     axios({
       method: "post",
@@ -198,76 +196,74 @@ function OldPatientForm2({
       },
     })
       .then((response) => {
-        const packagesArray = response.data.packages.sort(
-          (x, y) => x.id - y.id
-        );
+        const packagesArray = response.data.packages.sort((x, y) => x.id - y.id)
 
         packagesArray.map((item, index) => {
-          var packageDetails = {};
-          var packageCode = "";
+          var packageDetails = {}
+          var packageCode = ""
           if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 44) {
-            packageCode = "package1";
+            packageCode = "package1"
           } else if (
             item.id == 9 ||
             item.id == 10 ||
             item.id == 11 ||
             item.id == 45
           ) {
-            packageCode = "package2";
+            packageCode = "package2"
           } else if (item.id == 4) {
-            packageCode = "package3";
+            packageCode = "package3"
           } else if (item.id == 12 || item.id == 13 || item.id == 14) {
-            packageCode = "package4";
+            packageCode = "package4"
           } else {
-            packageCode = "package" + item.id;
+            packageCode = "package" + item.id
           }
-          packageDetails.category = packageCode;
+          packageDetails.category = packageCode
           packageDetails.key =
             item.name.replace(/[1234567890)}{(,-\s/]/g, "") +
             item.id +
             "_" +
-            "package";
-          packageDetails.name = item.name;
+            "package"
+          packageDetails.name = item.name
 
-          packageDetails.labTestId = item.id;
-          packageDetails.price = item.price;
-          packageDetails.type = "package";
-          setAllPackages((oldArray) => [...oldArray, packageDetails]); // append each item to packages
-        });
+          packageDetails.labTestId = item.id
+          packageDetails.price = item.price
+          packageDetails.type = "package"
+          setAllPackages((oldArray) => [...oldArray, packageDetails]) // append each item to packages
+        })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   //Packages category
   const preEmploymentPackageBasic = allPackages.filter(
     (item) => item.category === "package1"
-  );
+  )
   const preEmploymentPackageDiscount = allPackages.filter(
     (item) => item.category === "package2"
-  );
+  )
   const pregnancyLabPackage = allPackages.filter(
     (item) => item.category === "package3"
-  );
+  )
   const annualWellnessPackageBasic = allPackages.filter(
     (item) => item.category === "package4"
-  );
+  )
   const thyroidTestPackage = allPackages.filter(
     (item) => item.category === "package5"
-  );
+  )
   const annualWellnessPackagePremium = allPackages.filter(
     (item) => item.category === "package6"
-  );
+  )
   const liverFunctionTest = allPackages.filter(
     (item) => item.category === "package7"
-  );
+  )
   const diabetesAndCholesterolPackage = allPackages.filter(
     (item) => item.category === "package8"
-  );
+  )
 
   //states
-  const [appliedTo, setAppliedTo] = useState([]);
+  const [appliedTo, setAppliedTo] = useState([])
   //functions
   function getDetails(categoryItems, checkedItem) {
     categoryItems.map((data, index) => {
@@ -278,37 +274,37 @@ function OldPatientForm2({
           labTestId: data.labTestId,
           price: data.price,
           type: data.type,
-        };
-        return itemDetails;
+        }
+        return itemDetails
       }
-    });
+    })
   }
 
   //Checked Services
-  var totalPrice = 0;
-  var discountedTotalPrice = 0;
-  const asArray = Object.entries(service);
-  const checkedServices = asArray.filter(([key, value]) => value == true);
-  var checkedServicesDetails = [];
-  var totalMDCharge = 0;
+  var totalPrice = 0
+  var discountedTotalPrice = 0
+  const asArray = Object.entries(service)
+  const checkedServices = asArray.filter(([key, value]) => value == true)
+  var checkedServicesDetails = []
+  var totalMDCharge = 0
   if (mdCharge.physical_exam == true) {
-    totalMDCharge += 50.0;
+    totalMDCharge += 50.0
   }
 
   if (mdCharge.medical_certificate == true) {
-    totalMDCharge += 50.0;
+    totalMDCharge += 50.0
   }
 
   checkedServices.map((data, index) => {
-    var categoryDetails = data[0].split("_");
-    var categoryId = parseInt(categoryDetails[1]);
+    var categoryDetails = data[0].split("_")
+    var categoryId = parseInt(categoryDetails[1])
 
     // packages
     switch (categoryDetails[1]) {
       case "package":
-        getDetails(allPackages, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(allPackages, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       // case 'package1':
       //   getDetails(preEmploymentPackageBasic, data[0]);
       //   checkedServicesDetails.push(itemDetails);
@@ -346,108 +342,108 @@ function OldPatientForm2({
     //lab
     switch (categoryId) {
       case 1:
-        getDetails(clinicalMicroscopy, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalMicroscopy, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 2:
-        getDetails(hematology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(hematology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 3:
-        getDetails(electrolytes, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(electrolytes, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 4:
-        getDetails(electrolytes, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(electrolytes, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 5:
-        getDetails(glucoseTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(glucoseTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 6:
-        getDetails(kidneyFunctionTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(kidneyFunctionTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 7:
-        getDetails(lipidProfile, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(lipidProfile, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 8:
-        getDetails(pancreaticTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(pancreaticTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 9:
-        getDetails(liverFunctionTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(liverFunctionTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 11:
-        getDetails(immunology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(immunology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 12:
-        getDetails(hepatitisProfileScreening, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(hepatitisProfileScreening, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 13:
-        getDetails(thyroidProfile, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(thyroidProfile, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 14:
-        getDetails(tumorMarkers, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(tumorMarkers, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 15:
-        getDetails(histopathology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(histopathology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 16:
-        getDetails(COVIDRapidTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(COVIDRapidTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 17:
-        getDetails(microbiology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(microbiology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 18:
-        getDetails(xray, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(xray, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 19:
-        getDetails(cardiology, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(cardiology, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 20:
-        getDetails(medicalCertificate, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(medicalCertificate, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 21:
-        getDetails(ultrasound, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(ultrasound, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       // case 22:
       //     getDetails(promo, data[0]);
       //     checkedServicesDetails.push(itemDetails);
       // break;
       case 22:
-        getDetails(otherTests, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(otherTests, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 23:
-        getDetails(clinicalUrinalysis, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalUrinalysis, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
       case 24:
-        getDetails(clinicalFecalysis, data[0]);
-        checkedServicesDetails.push(itemDetails);
-        break;
+        getDetails(clinicalFecalysis, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
     }
-  });
+  })
 
   React.useEffect(() => {
     if (discountDetails != null) {
       discountDetails.map((data, index) => {
-        appliedTo.length = 0;
+        appliedTo.length = 0
         if (data.type == "service") {
           axios({
             method: "post",
@@ -459,8 +455,8 @@ function OldPatientForm2({
               requester: userId,
             },
           }).then(function (response) {
-            setAppliedTo((oldArray) => [...oldArray, response.data.name]);
-          });
+            setAppliedTo((oldArray) => [...oldArray, response.data.name])
+          })
         } else {
           axios({
             method: "post",
@@ -472,46 +468,46 @@ function OldPatientForm2({
               requester: userId,
             },
           }).then(function (response) {
-            setAppliedTo((oldArray) => [...oldArray, response.data.name]);
-          });
+            setAppliedTo((oldArray) => [...oldArray, response.data.name])
+          })
         }
-      });
+      })
     }
-  }, [discountDetails]);
+  }, [discountDetails])
 
   //Total discount labs/packages
   checkedServicesDetails.map((data, index) => {
     //To insert condition for discount for specific labs/packages
     if (index == 0) {
-      labDiscountedTotal = 0;
-      packageDiscountedTotal = 0;
+      labDiscountedTotal = 0
+      packageDiscountedTotal = 0
     }
 
     if (discountDetails != null) {
       discountDetails.map((detail) => {
         if (data.type === "lab" && detail.type == "service") {
           if (data.labTestId == detail.source_id) {
-            discountedTotalPrice += parseFloat(data.price);
+            discountedTotalPrice += parseFloat(data.price)
           }
         } else if (data.type === "package" && detail.type == "package") {
           if (data.packageId == detail.source_id) {
-            discountedTotalPrice += parseFloat(data.price);
+            discountedTotalPrice += parseFloat(data.price)
           }
         }
-      });
+      })
     }
-  });
+  })
 
   if (typeof checkedServicesDetails[0] !== "undefined") {
     checkedServicesDetails.map((data, index) => {
       //To insert condition for discount for specific labs/packages
       if (index == 0) {
-        newLabTotal = 0;
-        labDiscountedTotal = 0;
-        newPackageTotal = 0;
-        packageDiscountedTotal = 0;
-        setLabPrice(0);
-        setPackagePrice(0);
+        newLabTotal = 0
+        labDiscountedTotal = 0
+        newPackageTotal = 0
+        packageDiscountedTotal = 0
+        setLabPrice(0)
+        setPackagePrice(0)
       }
 
       if (data.type === "lab") {
@@ -521,13 +517,13 @@ function OldPatientForm2({
               detail.source_id != data.labTestId &&
               detail.type == "service"
             ) {
-              newLabTotal += parseFloat(data.price);
-              setLabPrice(newLabTotal);
+              newLabTotal += parseFloat(data.price)
+              setLabPrice(newLabTotal)
             }
-          });
+          })
         } else {
-          newLabTotal += parseFloat(data.price);
-          setLabPrice(newLabTotal);
+          newLabTotal += parseFloat(data.price)
+          setLabPrice(newLabTotal)
         }
       } else if (data.type === "package") {
         if (discountDetails != null) {
@@ -536,17 +532,17 @@ function OldPatientForm2({
               detail.source_id != data.labTestId &&
               detail.type == "package"
             ) {
-              newPackageTotal += parseFloat(data.price);
-              setPackagePrice(newPackageTotal);
+              newPackageTotal += parseFloat(data.price)
+              setPackagePrice(newPackageTotal)
             }
-          });
+          })
         } else {
-          newPackageTotal += parseFloat(data.price);
-          setPackagePrice(newPackageTotal);
+          newPackageTotal += parseFloat(data.price)
+          setPackagePrice(newPackageTotal)
         }
       }
-      totalPrice += parseFloat(data.price);
-    });
+      totalPrice += parseFloat(data.price)
+    })
   }
 
   return (
@@ -697,11 +693,11 @@ function OldPatientForm2({
                     for only{" "}
                     {appliedTo.map((data, index) => {
                       if (appliedTo.length == 1) {
-                        return data;
+                        return data
                       } else if (appliedTo.length - 1 == index) {
-                        return ", and " + data;
+                        return ", and " + data
                       } else {
-                        return data + ", ";
+                        return data + ", "
                       }
                     })}
                   </span>
@@ -948,7 +944,7 @@ function OldPatientForm2({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default OldPatientForm2;
+export default OldPatientForm2

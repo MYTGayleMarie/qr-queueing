@@ -18,30 +18,29 @@
     font-size: 1rem;
     color:#ffffff;
     margin: 3px;
-    left: 39%;
+    /* left: 39%; */
     /* top: 100%; */
 }
 .email-input{
-    position: absolute;
     width: 20%;
     padding: 6px 20px;
     border-radius: 6px;
     font-size: 1rem;
     color:#55073A;
     margin: 3px;
-    left: 48%;
+    /* left: 48%; */
 }
 .pass-input{
-    position: absolute;
     width: 20%;
     padding: 6px 20px;
     border-radius: 6px;
     font-size: 1rem;
     color:#55073A;
     margin: 3px;
-    left: 69%;
+    left: 20%;
 }
 .send-btn{
+  cursor: pointer;
      position: absolute;
     /*padding: 6px 20px;
     border-radius: 20px;

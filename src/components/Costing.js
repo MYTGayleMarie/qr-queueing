@@ -28,6 +28,7 @@ function Costing({
   paymentStatus,
   paidAmount,
   paymentBreakdown = {},
+  hmo=""
 }) {
   var totalCost = 0;
   var labTotal = 0;
@@ -44,6 +45,7 @@ function Costing({
     }
 
     setTotal(total);
+
 
     return (
       <div class="row">
@@ -84,6 +86,28 @@ function Costing({
     );
   });
 
+  function hmoPrice() {
+    
+
+       hmo = parseFloat(hmo).toFixed(2);
+    
+
+    // console.log(discount)
+
+    return (
+      <div>
+    <div className="row">
+          <div className="col-sm-4">
+            <span class="summary-total-label">HMO DISCOUNT</span>
+          </div>
+          <div className="col-sm-5 align-right text-right">
+            <span className="amount">P {parseFloat(hmo).toFixed(2)}</span>
+          </div>
+          <div className="col-sm-3"></div>
+        </div>
+      </div>
+    );
+  }
   function discountedPrice() {
     if (withDiscount != "") {
       const discount = labTotal.toFixed(2) * 0.2;
@@ -168,7 +192,9 @@ function Costing({
           </div>
         )}
 
-        <div>{discount != "" && discountedPrice()}</div>
+        <div>{discount !== "" && discountedPrice()}</div>
+        <div>{parseFloat(hmo) > 0 && hmoPrice()}</div>
+       
 
         <div className="row">
           <div className="col-sm-4">

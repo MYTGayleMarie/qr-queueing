@@ -76,7 +76,7 @@ export default function AddInvoiceBulk() {
       navigate("/company-discounts");
     }
     if (response.error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error(response.error.data.messages.error);
     }
   }
 

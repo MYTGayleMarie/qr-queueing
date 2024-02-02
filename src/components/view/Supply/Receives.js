@@ -153,9 +153,7 @@ function Receives() {
             <Table
               type={"receives"}
               clickable={true}
-              tableData={poData.sort((a, b) =>
-                a.id > b.id ? 1 : b.id > a.id ? -1 : 0
-              )}
+              tableData={poData}
               rowsPerPage={4}
               headingColumns={[
                 "RECEIVE ID",

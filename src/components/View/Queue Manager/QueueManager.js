@@ -41,6 +41,7 @@ function QueueManager() {
   const [redirectDelete, setRedirectDelete] = useState(false);
   const [role, setRole] = useState("");
   const [isReady, setIsReady] = useState(false);
+  const [queueNo, setQueueNo] = useState("")
 
   function getTime(date) {
     return date.toLocaleString("en-US", {
@@ -106,9 +107,12 @@ function QueueManager() {
 
   function filter() {}
 
-  function addBooking(customerId) {
+  function addBooking(customerId, row) {
+    queueAttender(row, "pending")
     id = customerId;
+    setQueueNo(row.queueNumber)
     setRedirectPay(true);
+ 
   }
 
   function printBooking(bookingId) {
@@ -152,7 +156,7 @@ function QueueManager() {
   }
 
   if (redirectPay == true) {
-    var link = "/queuemanager/add-booking/" + id;
+    var link = "/queuemanager/add-booking/" + id+"/"+queueNo;
     return <Navigate to={link} />;
   }
 

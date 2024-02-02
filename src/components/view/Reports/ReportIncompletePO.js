@@ -44,6 +44,48 @@ export default function ReportIncompletePO() {
   const [posTempData, setPoTempData] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
+
+  //async function
+  async function fetchSuppliers(tempPos){
+    await axios({
+      method: "post",
+      url: window.$link + "suppliers/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+      
+        requester: userId,
+      },
+    }).then((supplier) => {
+    
+      let po_temp_data = [...tempPos]
+      let suppliers_list = supplier.data.suppliers
+
+      po_temp_data.map((data,index)=>{
+ var info = {};
+ let supplier_name = suppliers_list.filter(supplier=>
+  supplier.id === data.supplier_id)[0]?.name
+      info.po_number = data.id;
+      var date = new Date(data.added_on);
+      var formattedDate = date.toDateString().split(" ");
+      info.po_date =
+        formattedDate[1] +
+        " " +
+        formattedDate[2] +
+        " " +
+        formattedDate[3];
+      info.supplier = supplier_name;
+      info.total_amount = data.grand_total;
+      setIncompletePo((oldArray) => [...oldArray, info]);
+      })
+
+     setPrintReadyFinal(true);
+            setIsReady(true);
+    });
+  }
+
+
   // table data
 
   React.useEffect(() => {
@@ -62,51 +104,55 @@ export default function ReportIncompletePO() {
       },
     })
       .then((pos) => {
-        // console.log(pos)
+      
         const incomplete = pos.data.pos;
+   
         setPoTempData(incomplete);
+        fetchSuppliers(incomplete)
         // Getting poItems in each pos
-        incomplete.map(async (pos, index) => {
-          await axios({
-            method: "post",
-            url: window.$link + "suppliers/show/" + pos.supplier_id,
-            withCredentials: false,
-            params: {
-              api_key: window.$api_key,
-              token: userToken.replace(/['"]+/g, ""),
-              date_from: filteredData.from_date,
-              date_to: filteredData.to_date,
-              requester: userId,
-            },
-          }).then((supplier) => {
-            var info = {};
-            info.po_number = pos.id;
-            var date = new Date(pos.added_on);
-            var formattedDate = date.toDateString().split(" ");
-            info.po_date =
-              formattedDate[1] +
-              " " +
-              formattedDate[2] +
-              " " +
-              formattedDate[3];
-            info.supplier = supplier.data.name;
-            info.total_amount = pos.grand_total;
-            setIncompletePo((oldArray) => [...oldArray, info]);
-          });
+        // incomplete.map(async (pos, index) => {
+        //   // await axios({
+        //   //   method: "post",
+        //   //   url: window.$link + "suppliers/show/" + pos.supplier_id,
+        //   //   withCredentials: false,
+        //   //   params: {
+        //   //     api_key: window.$api_key,
+        //   //     token: userToken.replace(/['"]+/g, ""),
+        //   //     date_from: filteredData.from_date,
+        //   //     date_to: filteredData.to_date,
+        //   //     requester: userId,
+        //   //   },
+        //   // }).then((supplier) => {
+        //   //   var info = {};
+        //   //   info.po_number = pos.id;
+        //   //   var date = new Date(pos.added_on);
+        //   //   var formattedDate = date.toDateString().split(" ");
+        //   //   info.po_date =
+        //   //     formattedDate[1] +
+        //   //     " " +
+        //   //     formattedDate[2] +
+        //   //     " " +
+        //   //     formattedDate[3];
+        //   //   info.supplier = supplier.data.name;
+        //   //   info.total_amount = pos.grand_total;
+        //   //   setIncompletePo((oldArray) => [...oldArray, info]);
+        //   // });
 
-          // Set status for printing
-          if (incomplete.length - 1 == index) {
-            setPrintReadyFinal(true);
-            setIsReady(true);
-          }
-        });
+        //   // Set status for printing
+        //   if (incomplete.length - 1 == index) {
+        //     setPrintReadyFinal(true);
+        //     setIsReady(true);
+        //   }
+        // });
       })
       .catch((error) => {
         console.log(error);
       });
   }, [render]);
 
-  console.log(incompletePo);
+ 
+
+
 
   function review(poId) {
     id = poId;

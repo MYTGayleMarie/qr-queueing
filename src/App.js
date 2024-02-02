@@ -107,6 +107,25 @@ import ExtractionManager from "./components/View/ExtractionMod/ExtractionManager
 import AddInvoiceBulk from "./components/View/Companies/AddInvoiceBulk";
 import NowServing from "./components/View/NowServing/NowServing";
 import UpdatePatient from "./components/View/UpdatePatient/UpdatePatient";
+import PrintLab from "./components/View/Laboratory Releasing/PrintLab";
+import ReportsReleasingItem from "./components/View/Reports/ReportsReleasingItem";
+
+import EditBookingSwitch from "./components/View/EditBooking/EditBooking/EditBookingSwitch";
+import ViewImg from "./components/View/Results Releasing/ViewImg";
+import XrayManager from "./components/View/XRAY/Manager";
+import ExtractionUpdate from "./components/View/ExtractionMod/ExtractionUpdate.jsx";
+import ECGManager from "./components/View/ECG/ECGManager.jsx";
+import ECGExtractionUpdate from "./components/View/ECG/ECGExtractionUpdate.jsx";
+import XRAYExtractionUpdate from "./components/View/XRAY/XRAYExtractionUpdate.jsx";
+import HMOInvoices from "./components/View/Companies/HMOInvoices.jsx";
+import HMODiscounts from "./components/View/Companies/HMODiscounts.jsx";
+import AddInvoiceHmo from "./components/View/Companies/AddInvoiceHmo.jsx";
+import TwoDEcho from "./components/View/2DEcho/index.js";
+import EchoExtractionUpdate from "./components/View/2DEcho/EchoExtractionUpdate.jsx";
+import AddInvoicePaymentHmo from "./components/View/Companies/AddInvoicePaymentHmo.jsx";
+import ReviewInvoiceHmo from "./components/View/Companies/ReviewHmoInvoice.jsx";
+import ReviewCompanyInvoice from "./components/View/Companies/ReviewCompanyInvoice.jsx";
+import AddInvoiceBulkHmo from "./components/View/Companies/AddInvoiceBulkHmo.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -237,8 +256,12 @@ function App() {
             element={token ? <QueueManager /> : <Navigate to="/" />}
           />
           <Route
-            path="/queuemanager/add-booking/:id"
+            path="/queuemanager/add-booking/:id/:queueNumber"
             element={token ? <QMSwitchForm2 /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/edit-booking/:id/:bookingID"
+            element={token ? <EditBookingSwitch /> : <Navigate to="/" />}
           />
           {/** With date filter */}
           <Route
@@ -264,8 +287,16 @@ function App() {
             element={token ? <ViewPdf /> : <Navigate to="/" />}
           />
           <Route
+            path="/View-results/xray/:type/:bookingId/:packageId/:serviceId"
+            element={token ? <ViewImg /> : <Navigate to="/" />}
+          />
+          <Route
             path="/laboratory-officer/:id/:dateFrom/:dateTo"
             element={token ? <LabOfficer /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/print-lab/:bookingID/:id/:labBookId/:type/:dateFrom/:dateTo"
+            element={token ? <PrintLab /> : <Navigate to="/" />}
           />
           <Route
             path="/update-patient/:id"
@@ -297,6 +328,10 @@ function App() {
             element={token ? <CompanyDiscounts /> : <Navigate to="/" />}
           />
           <Route
+            path="/hmo-discounts"
+            element={token ? <HMODiscounts /> : <Navigate to="/" />}
+          />
+          <Route
             path="/add-company"
             element={token ? <AddCompany /> : <Navigate to="/" />}
           />
@@ -308,14 +343,30 @@ function App() {
             path="/company-invoices/add-invoice-bulk"
             element={token ? <AddInvoiceBulk /> : <Navigate to="/" />}
           />
+            <Route
+            path="/hmo-invoices/add-invoice-bulk"
+            element={token ? <AddInvoiceBulkHmo /> : <Navigate to="/" />}
+          />
           <Route
             path="/company-invoices"
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
+          />
+          <Route
+           path="/company-invoices/review/:id/:companyId/:dateFrom/:dateTo"
+            element={token ? <ReviewCompanyInvoice /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo-invoices"
+            element={token ? <HMOInvoices /> : <Navigate to="/" />}
           />
           {/** With date filter */}
           <Route
             path="/company-invoices/:dateFrom/:dateTo"
             element={token ? <CompanyInvoiceManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo-invoices/:dateFrom/:dateTo"
+            element={token ? <HMOInvoices /> : <Navigate to="/" />}
           />
           <Route
             path="/review-invoice/:id/:discountId"
@@ -325,6 +376,10 @@ function App() {
             path="/add-invoice/:id/:discount"
             element={token ? <AddInvoice /> : <Navigate to="/" />}
           />
+          <Route
+            path="/hmo/add-invoice/:id/:discount"
+            element={token ? <AddInvoiceHmo /> : <Navigate to="/" />}
+          />
           {/* <Route
             path="/add-invoice-payment/:id/:companyId"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
@@ -333,6 +388,14 @@ function App() {
           <Route
             path="/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
             element={token ? <AddInvoicePayment /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo/add-invoice-payment/:id/:companyId/:dateFrom/:dateTo"
+            element={token ? <AddInvoicePaymentHmo /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/hmo-invoices/review/:id/:companyId/:dateFrom/:dateTo"
+            element={token ? <ReviewInvoiceHmo /> : <Navigate to="/" />}
           />
           <Route
             path="/discounts"
@@ -479,6 +542,10 @@ function App() {
           <Route
             path="/reports-transaction"
             element={token ? <ReportTransaction /> : <Navigate to="/" />}
+          />
+           <Route
+            path="/reports-releasing-item"
+            element={token ? <ReportsReleasingItem /> : <Navigate to="/" />}
           />
           <Route
             path="/reports-services-packages"
@@ -639,10 +706,41 @@ function App() {
             path="/extraction"
             element={token ? <ExtractionManager /> : <Navigate to="/" />}
           />
+          <Route
+            path="/extraction/:bookingId/:queueId"
+            element={token ? <ExtractionUpdate /> : <Navigate to="/" />}
+          />
+      
+          <Route
+            path="/xray"
+            element={token ? <XrayManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/xray/:bookingId/:queueId"
+            element={token ? <XRAYExtractionUpdate /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/ecg"
+            element={token ? <ECGManager /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/ecg/:bookingId/:queueId"
+            element={token ? <ECGExtractionUpdate /> : <Navigate to="/" />}
+          />
+
+          <Route
+            path="/2d-echo"
+            element={token ? <TwoDEcho /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/2d-echo/:bookingId/:queueId"
+            element={token ? <EchoExtractionUpdate /> : <Navigate to="/" />}
+          />
           {/* Now Serving */}
+         
           <Route
             path="/now-serving"
-            element={token ? <NowServing /> : <Navigate to="/" />}
+            element={ <NowServing />}
           />
         </Routes>
       </Router>

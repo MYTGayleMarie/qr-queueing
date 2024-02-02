@@ -146,6 +146,7 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
     const ultrasound = allLabServices.filter(item=>item.categoryId == 21) 
     const promo = allLabServices.filter(item=>item.labTestId == 119 || item.labTestId == 120 ||item.labTestId == 121 ||item.labTestId == 117)
     const otherTests = allLabServices.filter(item=>item.categoryId == 22)
+    const coaguation = allLabServices.filter(item=>item.categoryId == 25)
 
     //get all packages
     const [allPackages, setAllPackages] = useState([])
@@ -218,6 +219,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
     const [middleName, setMiddleName] = useState("");
     const [lastName, setLastName] = useState("");
     const [birthday, setBirthDate] = useState("");
+    const [senior, setSenior] = useState("");
+    const [pwd, setPWD] = useState("")
     const [gender, setGender] = useState("");
     const [contactNo, setContactNo] = useState("");
     const [emailadd, setEmail] = useState("");
@@ -268,6 +271,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
         setContactNo(customer.data.contact_no);
         setEmail(customer.data.email);
         setAddress(customer.data.address);
+        setSenior(customer.data.senior_id);
+        setPWD(customer.data.pwd_id)
 
     }).catch(function (error) {
         console.log(error);
@@ -317,6 +322,8 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
                 emergency_contact_no: '',
                 relation_w_contact: '',
                 last_meal: lastMeal,
+                senior_id: senior,
+                pwd_id: pwd,
                 remarks: '',
                 updated_by: userId,
             }
@@ -587,6 +594,10 @@ function OldPatientForm3CModule({ service, customer,packagePrice, labPrice,  set
                 getDetails(clinicalFecalysis, data[0]);
                 checkedServicesDetails.push(itemDetails);
             break;
+            case 25:
+                getDetails(coaguation, data[0]);
+                checkedServicesDetails.push(itemDetails);
+            break;
         }
 
     });
@@ -724,6 +735,12 @@ if(typeof checkedServicesDetails[0] !== 'undefined') {
                 <ServiceItems 
                 category='HEMATOLOGY'
                 items={hematology} 
+                formData={service}
+                setForm={setServices}
+                />
+                 <ServiceItems 
+                category='COAGUATION'
+                items={coaguation} 
                 formData={service}
                 setForm={setServices}
                 />

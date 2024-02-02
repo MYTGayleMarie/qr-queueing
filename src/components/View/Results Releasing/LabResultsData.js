@@ -11,6 +11,7 @@ const labResultsData = {
     "Dengue",
     "Syphilis/RPR/VDRL",
     "HIV Screening (Anti HIV)",
+    "Anti HCV",
     "H. Pylori Ag",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",
@@ -23,6 +24,9 @@ const labResultsData = {
     "Antigen Rapid Swab (Nasal)", 
     "CEA",
     "VITAMIN D",
+    "Anti HAV",
+    "Hbsag Test Promo Group (15 PAX OR MORE)",
+    "Clotting & Bleeding Time"
   ],
 
   urinalysisColorOptions: [
@@ -318,6 +322,25 @@ const labResultsData = {
     },
   ],
 
+  labTestClotting: [
+    {
+      lab_test: "Bleeding_Time",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 1,
+      preferred_to: 3,
+    },
+    {
+      lab_test: "Clotting_Time",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 3,
+      preferred_to: 6,
+    },
+   
+  ],
   labTestUrinalysis: [
     {
       lab_test: "Color",
@@ -381,7 +404,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "RBC",
@@ -390,7 +413,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Epithelial Cells",
@@ -505,7 +528,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "RBC",
@@ -514,7 +537,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 2.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Epithelial Cells",
@@ -588,7 +611,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 1.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "Fat Globules",
@@ -658,6 +681,30 @@ const labResultsData = {
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
+    {
+      lab_test: "Time Collected",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Lot #",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "Expiry Date",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    }
   ],
 
   labTestSpermAnalysis: [
@@ -799,7 +846,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 5.0,
+      preferred_to: 0.0,
     },
     {
       lab_test: "RBC",
@@ -809,7 +856,7 @@ const labResultsData = {
       unit: "/HPF",
       preferred: " ",
       preferred_from: 0.0,
-      preferred_to: 5.0,
+      preferred_to: 0.0,
     },
   ],
 
@@ -842,7 +889,7 @@ const labResultsData = {
 
   labTestKOH: [
     {
-      lab_test: "KOH, Nail Scrapping, Conjunctival Scrapping",
+      lab_test: "KOH, Nail Scraping, Conjunctival Scrapping",
       result: "-",
       unit: "",
       preferred: " ",
@@ -900,6 +947,25 @@ const labResultsData = {
     },
   ],
 
+  labTestHAV: [
+    {
+      lab_test: "IgG",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "IgM",
+      result: "-",
+      unit: " ",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+  ],
+
   labTestHPylori: [
     {
       lab_test: "H. Pylori",
@@ -929,21 +995,21 @@ const labResultsData = {
       preferred_to: 0.0,
     },
     {
-      lab_test: "Anti-HCV",
+      lab_test: "Anti HCV",
       result: "-",
       unit: "",
       preferred: " ",
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
-    {
-      lab_test: "Anti-HAV",
-      result: "-",
-      unit: "",
-      preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
-    },
+    // {
+    //   lab_test: "Anti-HAV",
+    //   result: "-",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
     // {
     //   lab_test: "Hepatitis B Surface Antigen Test (HBSag)",
     //   result: "-",
@@ -979,14 +1045,14 @@ const labResultsData = {
       preferred_from: 0.0,
       preferred_to: 0.0,
     },
-    {
-      lab_test: "Anti-HAV",
-      result: "-",
-      unit: "",
-      preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
-    },
+    // {
+    //   lab_test: "Anti-HAV",
+    //   result: "-",
+    //   unit: "",
+    //   preferred: " ",
+    //   preferred_from: 0.0,
+    //   preferred_to: 0.0,
+    // },
   ],
 
   labTestThyroid: [
@@ -1137,8 +1203,8 @@ const labResultsData = {
       result: "-",
       unit: "ng / mL",
       preferred: " ",
-      preferred_from: 0.0,
-      preferred_to: 0.0,
+      preferred_from: 30.0,
+      preferred_to: 100.0,
     },
   ],
 };

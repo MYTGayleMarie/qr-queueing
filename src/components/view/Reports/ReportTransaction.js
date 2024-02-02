@@ -28,6 +28,7 @@ const filterData = {
   from_date: formattedPresentData,
   to_date: formattedPresentData,
   done: false,
+  payment_status:""
 };
 
 
@@ -54,13 +55,14 @@ function ReportTransaction() {
         requester: userId,
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
+        payment_status:filteredData.payment_status
       },
     })
       .then(function (response) {
-        console.log(response.data.data.bookings)
+      
         setIsReady(false)
         var bookingDetailsResponse = response.data.data.booking_details
-        console.log(bookingDetailsResponse)
+        
         response.data.data.bookings.map((booking, index) => {
           
             
@@ -82,7 +84,7 @@ function ReportTransaction() {
                   if(bookingDetailsResponse[booking.id] != null){
                     var finalArray = bookingDetailsResponse[booking.id];
                   }
-                  console.log(finalArray)
+                  
 
 
                   finalArray.map((test,index) => {
@@ -109,6 +111,7 @@ function ReportTransaction() {
                   bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
                   bookingDetails.paid_amount = booking.paid_amount === null || booking.paid_amount === 0 ? 0 : booking.paid_amount;
                   bookingDetails.results = (booking.result).toUpperCase();
+                  bookingDetails.encoded = booking.encoded_by.toUpperCase();
                   
                   // bookingDetails.total_amount = "P " + booking.grand_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   setPatientData(oldArray => [...oldArray, bookingDetails]);
@@ -139,7 +142,7 @@ function ReportTransaction() {
             buttons={buttons} 
             tableName={'Transaction Report'}
             tableData={patientData}
-            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP']}
+            tableHeaders={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP', 'ENCODED BY']}
             status={printReadyFinal}
              />
              <div className='spinner d-flex justify-content-center'>
@@ -149,7 +152,7 @@ function ReportTransaction() {
             type={'transaction'}
             tableData={patientData}
             rowsPerPage={10}
-            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP']}
+            headingColumns={['BOOKING ID', 'NAME', 'BOOKING DATE', 'SERVICE TYPE', 'TESTS', 'PAYMENT TYPE', 'DISCOUNT', 'PAID AMOUNT', 'MODE OF PICKUP', 'ENCODED BY']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

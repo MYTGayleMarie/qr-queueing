@@ -47,8 +47,10 @@ function CompanyInvoiceManager() {
   const [status, setStatus] = useState("unpaid");
   const [printReadyFinal, setPrintReadyFinal] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [toView, setToView] = useState(false)
 
   React.useEffect(() => {
+    setFinalCompanyData([])
     finalCompanyData.length = 0;
     axios({
       method: "post",
@@ -64,13 +66,15 @@ function CompanyInvoiceManager() {
       },
     })
       .then(function (response) {
+
         response.data.company_invoices.map((row, index) => {
+         
           var companyDetails = {};
 
-          if (filteredData.status_filter == "unpaid" && row.is_paid === "0") {
+          if (filteredData.status_filter === "unpaid" && row.is_paid === "0") {
             companyDetails.company_id =row.company_id;
             companyDetails.id = row.id;
-            companyDetails.invoice_id = row.invoice_id.split("|")[0];
+            companyDetails.invoice_id = row.invoice_id?.split("|")[0];
             companyDetails.date = new Date(row.added_on).toDateString();
             companyDetails.description = row.company_name;
             companyDetails.discount_id = row.discount_id;
@@ -81,7 +85,7 @@ function CompanyInvoiceManager() {
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
-              row.is_paid == 1 ? "PAID" : "UNPAID";
+              row.is_paid === "1" ? "PAID" : "UNPAID";
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails]);
           } else if (
@@ -103,7 +107,7 @@ function CompanyInvoiceManager() {
             companyDetails.payment_status = "PAID";
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails]);
-          } else if (filteredData.status_filter == "all") {
+          } else if (filteredData.status_filter === "all") {
             companyDetails.company_id = row.company_id;
             companyDetails.id = row.id;
             companyDetails.invoice_id = row?.invoice_id?.split("|")[0];
@@ -118,7 +122,7 @@ function CompanyInvoiceManager() {
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             companyDetails.payment_status =
-              row.is_paid == 1 ? "PAID" : "UNPAID";
+              row.is_paid === "1" ? "PAID" : "UNPAID";
 
             setFinalCompanyData((oldArray) => [...oldArray, companyDetails]);
           }
@@ -136,18 +140,44 @@ function CompanyInvoiceManager() {
       });
   }, [render]);
 
-  function addPayment(invoiceId, companyId, discountCode, discountId) {
-    id = invoiceId;
+  function addPayment(invoiceId, companyId, discountCode, discountId, type) {
+    if(type === "pay"){
+ id = invoiceId;
     company_id = companyId;
     discount_id = discountId;
     setToAddPayment(true);
+    setToView(false)
+    }else{
+       id = invoiceId;
+    company_id = companyId;
+    discount_id = discountId;
+    setToAddPayment(false);
+    setToView(true)
+    }
+   
   }
 
-  if (toAddPayment == true) {
+  if (toAddPayment === true) {
     return (
       <Navigate
         to={
           "/add-invoice-payment/" +
+          id +
+          "/" +
+          company_id + 
+          "/"+
+          filteredData.from_date +
+          "/" +
+          filteredData.to_date
+        }
+      />
+    );
+  }
+  if (toView === true) {
+    return (
+      <Navigate
+        to={
+          "/company-invoices/review/" +
           id +
           "/" +
           company_id + 

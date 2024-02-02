@@ -3,8 +3,12 @@
 }
 
 .booking-form {
-  margin: 10%;
+  margin: 2.5% 8% 3% 8%;
   width: 85%;
+}
+
+.required{
+  color: red;
 }
 
 .form-categories-header {
@@ -16,7 +20,7 @@
 .form-categories-subheader {
   color: #bfbc4b;
   font-size: 1.8em;
-  margin-left: 2rem;
+  margin-left: 0rem;
 }
 
 .italic {

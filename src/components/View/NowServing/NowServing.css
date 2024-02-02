@@ -1,7 +1,12 @@
 .queue-no {
-  font-size: 30vh;
-  font-weight: bold;
-  color: rgb(65, 158, 163);
+  font-size: 15vh !important;
+  font-weight: bolder;
+  color: rgb(206, 48, 31);
+}
+.booking-no {
+  font-size: 16vh !important;
+  font-weight: bolder;
+    color: rgb(206, 48, 31);
 }
 .queue-patient {
   font-size: 5vh;
@@ -9,7 +14,44 @@
   color: rgb(65, 158, 163);
 }
 .queue-attendee {
-  font-size: 5vh;
+  font-size: 3.5rem;
+  font-weight: bolder;
+  color: var(--blue-brand)
+}
+.queue-attendee.ultrasound {
+  font-size: 3.2rem;
+  font-weight: bolder;
+  color: var(--blue-brand)
+}
+.now-serving {
+  font-size: 7vh;
   font-weight: bold;
-  color: rgb(191, 188, 75);
+  color: var(--blue-brand);
+}
+
+.queue-div{
+  background:  rgb(222, 222, 222);
+  border-radius: 10px;
+}
+
+.booking-border{
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.pl-5{
+  padding-left: 3rem !important;
+}
+.pr-5{
+  padding-right: 3rem !important;
+}
+
+.blink {
+  animation: blinker 0.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }

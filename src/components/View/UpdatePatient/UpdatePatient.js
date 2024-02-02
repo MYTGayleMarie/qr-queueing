@@ -105,7 +105,9 @@ function UpdatePatient() {
       patientDetails.sex != "" &&
       patientDetails.birthDate != "" &&
       patientDetails.contactNum != "" &&
-      patientDetails.address != ""
+      patientDetails.address != "" &&
+      ((isSenior && !(/^$|\s+/.test(seniorId))) || !isSenior) &&
+      ((isPWD && !(/^$|\s+/.test(pwdId))) || !isPWD)
     ) {
       return (
         <div className="d-flex justify-content-end">
@@ -150,8 +152,11 @@ function UpdatePatient() {
           address: customer.data.address,
         });
 
-        setSeniorId(customer.senior_id);
-        setPwdId(customer.pwd_id);
+        setSeniorId(customer.data.senior_id);
+        setPwdId(customer.data.pwd_id);
+        if(customer.data.pwd_id !== "" && customer.data.pwd_id !== null){
+          setIsPWD(true)
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -206,6 +211,12 @@ function UpdatePatient() {
   function handleDetailChange(e) {
     const { name, value } = e.target;
     setPatientDetails({ ...patientDetails, [name]: value });
+    if(name==="seniorId"){
+      setSeniorId(value)
+    }
+    if(name==="pwdId"){
+      setPwdId(value)
+    }
   }
 
   // auto suggest address
@@ -304,17 +315,17 @@ function UpdatePatient() {
                 <div className="row mb-0 pb-0">
                   <div className="col-sm-4">
                     <label for="fname" className="form-label font-large">
-                      FIRST NAME <i>(required)</i>
+                      FIRST NAME <span className="required">*</span>
                     </label>
                   </div>
                   <div className="col-sm-4">
                     <label for="fname" className="form-label font-large">
-                      MIDDLE NAME <i>(required)</i>
+                      MIDDLE NAME <span className="required">*</span>
                     </label>
                   </div>
                   <div className="col-sm-4">
                     <label for="lname" className="form-label font-large">
-                      LAST NAME <i>(required)</i>
+                      LAST NAME <span className="required">*</span>
                     </label>
                   </div>
                 </div>
@@ -357,17 +368,17 @@ function UpdatePatient() {
                 <div className="row mb-0 pb-0">
                   <div className="col-sm-4">
                     <label for="fname" className="form-label font-large">
-                      SEX <i>(required)</i>
+                      SEX <span className="required">*</span>
                     </label>
                   </div>
                   <div className="col-sm-4">
                     <label for="fname" className="form-label font-large">
-                      DATE OF BIRTH <i>(required)</i>
+                      DATE OF BIRTH <span className="required">*</span>
                     </label>
                   </div>
                   <div className="col-sm-4">
                     <label for="lname" className="form-label font-large">
-                      SENIOR CITIZEN ID {isSenior && <i>(required)</i>}
+                      SENIOR CITIZEN ID {isSenior && <span className="required">*</span>}
                     </label>
                   </div>
                 </div>
@@ -401,6 +412,8 @@ function UpdatePatient() {
                       id="senior_id"
                       name="seniorId"
                       className="full-input"
+                      placeholder="ID Should not contain any spaces..."
+
                       value={!isSenior ? "" : seniorId}
                       onChange={handleDetailChange}
                       disabled={!isSenior}
@@ -413,7 +426,7 @@ function UpdatePatient() {
                   <div className="col-sm-6"></div>
                   <div className="col-sm-6">
                     <label for="fname" className="form-label font-large">
-                      PWD ID {isPWD && <i>(required)</i>}
+                      PWD ID {isPWD && <span className="required">*</span>}
                     </label>
                   </div>
                 </div>
@@ -424,6 +437,7 @@ function UpdatePatient() {
                       name="is_pwd"
                       value="isPWD"
                       id="mdCharge"
+                   
                       checked={isPWD}
                       onChange={(e) => setIsPWD(e.target.checked)}
                     />
@@ -437,6 +451,7 @@ function UpdatePatient() {
                       type="text"
                       id="pwd_id"
                       name="pwdId"
+                         placeholder="ID Should not contain any spaces..."
                       className="full-input"
                       value={!isPWD ? "" : pwdId}
                       disabled={!isPWD}
@@ -454,7 +469,7 @@ function UpdatePatient() {
                   </div>
                   <div className="col-sm-6">
                     <label for="fname" className="form-label font-large">
-                      CONTACT NUMBER <i>(required)</i>
+                      CONTACT NUMBER <span className="required">*</span>
                     </label>
                   </div>
                 </div>
@@ -486,7 +501,7 @@ function UpdatePatient() {
                 <div className="row">
                   <div className="col-sm-12">
                     <label for="address" className="form-label font-large">
-                      ADDRESS <i>(required)</i>
+                      ADDRESS <span className="required">*</span>
                     </label>
                   </div>
 

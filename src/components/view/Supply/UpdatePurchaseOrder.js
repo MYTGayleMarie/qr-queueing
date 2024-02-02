@@ -6,7 +6,7 @@ import { getToken, getUser, removeUserSession } from '../../../utilities/Common'
 import { useForm } from 'react-hooks-helper';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Select from 'react-select';
 //css
 import './AddPurchaseOrder.css';
 
@@ -33,7 +33,9 @@ function UpdatePurchaseOrder() {
   const [editForwarder, setEditForwarder] = useState("");
   const [editRemarks, setEditRemarks] = useState("");
   const [poItems, setPoItems] = useState([]);
-  
+  const [selectedSuppliers, setSelectedSuppliers] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+
   //redirection
   const [redirect, setRedirect] = useState(false);
   
@@ -51,6 +53,45 @@ function UpdatePurchaseOrder() {
     remarks: "",
   };
 
+ async function fetchSuppliers(supplierID){
+  axios({
+    method: 'post',
+    url: window.$link + 'suppliers/getAll',
+    withCredentials: false, 
+    params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ''),
+        requester: userId,
+    }
+}).then(function (response) {
+
+    response.data.suppliers.map((data, index) => {
+        var supplierInfo = {};
+
+        supplierInfo.value = data.id;
+        supplierInfo.label = data.name;
+        // supplierInfo.address = data.address;
+        // supplierInfo.phone = data.contact_no;
+        // supplierInfo.email = ''; //to add email
+        // supplierInfo.tin = data.tin;
+        // supplierInfo.remarks = data.remarks;
+
+        setSuppliers(oldArray => [...oldArray, supplierInfo]);
+        
+        if(data.id === supplierID){
+          console.log("entered", data)
+          var edit_supplier = {label:data.name, value:data.id}
+          // setEditSupplier(edit_supplier)
+          setSelectedSuppliers(edit_supplier)
+        }
+    });
+
+}).catch(function(error) {
+    console.log(error);
+});
+ }
+
+ console.log("suppliers", suppliers)
     //Fetch PO details
     React.useEffect(() => {
         poItems.length = 0;
@@ -66,13 +107,14 @@ function UpdatePurchaseOrder() {
         }).then(function (response) {
             console.log(response.data)
             setEditSupplier(response.data.supplier_id);
+            
             setEditPurchaseDate(response.data.purchase_date);
             setEditDeliveryDate(response.data.delivery_date);
             setEditDeliveryAddress(response.data.delivery_address);
             setEditRequisitioner(response.data.requisitioner);
             setEditForwarder(response.data.forwarder);
             setEditRemarks(response.data.remarks);
-
+fetchSuppliers(response.data.supplier_id)
         }).catch(function (error) {
             console.log(error);
         });
@@ -92,8 +134,9 @@ function UpdatePurchaseOrder() {
                 var itemData = {};
                 itemData.order_quantity = data.qty;
                 itemData.unit = data.unit;
-                itemData.item = data.item;
+                itemData.item = data.item_id;
                 itemData.cost = data.cost;
+                
                 itemData.item_discount = data.discount;
                 setPoItems(oldArray => [...oldArray, itemData]);
               });
@@ -102,7 +145,7 @@ function UpdatePurchaseOrder() {
           })
 
     },[]);
-
+console.log("selectedSupplier",selectedSuppliers)
 
   const [items, setItems] = useState(poItems);
 
@@ -201,7 +244,7 @@ function UpdatePurchaseOrder() {
         params: {
           api_key: window.$api_key,
           token: userToken.replace(/['"]+/g, ''),
-          supplier: editSupplier,
+          supplier: selectedSuppliers.value,
           purchase_date: editPurchaseDate,
           delivery_date: editDeliveryDate,
           delivery_address: editDeliveryAddress,
@@ -226,33 +269,38 @@ function UpdatePurchaseOrder() {
           toast.warning("Oops something went wrong...");
       })
 }
-
+console.log("items", items)
   var purchaseItems = items.map((row, index) => {
-    return (
+    
+    return ( 
                     <tr key={index}>
-                        <td>
-                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
+                        <td className='input-group input-group-sm'>
+                          <input type="number" name="order_quantity" id="order_quantity" value={row.order_quantity} onChange={(e) => handleItemChange(e, index)} className="form-control qty" style={{width:"80%"}} />
                         </td>
                         <td>
-                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
-                        </td>
+                        <div className='input-group input-group-sm'>
+                          <input type="text" name="unit" id="unit" value={row.unit} onChange={(e) => handleItemChange(e, index)} className="form-control unit" />
+                          </div></td>
+                       
                         <td>
-                          <select className='purchase-select' name="item" id="item" onChange={(e) => handleItemChange(e, index)}>
+                          <select className='form-select form-select-sm' name="item" id="item" onChange={(e) => handleItemChange(e, index)} value={row.item}>
                             <option  value="">Select Item</option>
                             {itemInfo.map((data,info) => {
                                 return <option value={data.id}>{data.name}</option>
                             })}
                           </select>
                         </td>
-                        <td>
-                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="purchase-item"/>
-                        </td>
-                        <td>
-                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="purchase-item" />
-                        </td>
+                        <td >
+                           <div className='input-group input-group-sm'>
+                          <input type="number" name="cost" id="cost" value={row.cost} onChange={(e) => handleItemChange(e, index)} className="form-control cost"/>
+                        </div></td>
+                        <td >
+                           <div className='input-group input-group-sm'>
+                          <input type="number" name="item_discount" id="item_discount" value={row.item_discount} onChange={(e) => handleItemChange(e, index)} className="form-control total" />
+                        </div></td>
                         <td>
                         {items.length !== 1 && (
-                          <button className="delete-purchase-btn" onClick={() => removeItems(index)}>
+                          <button className="btn btn-danger btn-sm" onClick={() => removeItems(index)}>
                             DELETE
                           </button> 
                         )}
@@ -273,25 +321,61 @@ function UpdatePurchaseOrder() {
     <div>
       <Navbar />
       <div className="active-cont">
-        <Header type="thin" title="ADD PURCHASE ORDER" />
+        <Header type="thin" title="EDIT PURCHASE ORDER" />
         <ToastContainer/>
 
         <h1 className="item-header">PURCHASE ORDER INFO</h1>
           <div className="item-details-cont">
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-id-label">PURCHASE DATE</span>
               </div>
               <div className="col-sm-8">
                 <input type="date" name="purchase_date" className="item-name-input" value={editPurchaseDate} onChange={(e) => setEditPurchaseDate(e.target.value)}/>
               </div>
+            </div> */}
+            <div className="row mb-2">
+              <div className="col-sm-3 pt-1">
+                <span className="item-id-label">PURCHASE DATE</span>
+              </div>
+              <div className="col-sm-7">
+                <div className='input-group input-group-sm'>
+                <input type="date" name="purchase_date" className="form-control" value={editPurchaseDate} onChange={(e) => setEditPurchaseDate(e.target.value)}/>
+                </div>
+                
+              </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">SUPPLIER</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="supplier" className="item-name-input" value={editSupplier} onChange={(e) => setEditSupplier(e.target.value)}/>
+              </div>
+            </div> */}
+              <div className="row">
+              <div className="col-sm-3 pt-2">
+                <span className="item-id-label">SUPPLIER</span>
+              </div>
+              <div className="col-sm-7">
+                {console.log("selectedSuppliers 357", selectedSuppliers)}
+                <Select 
+                // styles={{control: customControlStyles}}
+                  isSearchable
+                  value={selectedSuppliers}
+                  onChange={setSelectedSuppliers}
+                  options={suppliers}
+                  
+                  // className="supplier-input"
+                />
+                {/* <select name="supplier" className="item-supplier-input" onChange={setInfo}>
+                <option value="" selected disabled>Choose here</option>
+                  {suppliers.map((data,index) => {
+                    return (
+                      <option value={data.id}>{data.name}</option>
+                    )
+                  })}
+                </select> */}
               </div>
             </div>
             {/* <div className="row">
@@ -307,12 +391,15 @@ function UpdatePurchaseOrder() {
           <h1 className="item-header">ADDITIONAL INFO</h1>
 
           <div className="item-details-cont">
-            <div className="row">
-              <div className="col-sm-4">
+            
+            <div className="row mb-2">
+              <div className="col-sm-3 pt-1">
                 <span className="item-id-label">DELIVERY DATE</span>
               </div>
-              <div className="col-sm-8">
-                <input type="date" name="delivery_date" className="item-name-input" value={editDeliveryDate} onChange={(e) => setEditDeliveryDate(e.target.value)}/>
+              <div className="col-sm-7">
+              <div className='input-group input-group-sm'>
+                <input type="date" name="delivery_date" className="form-control" value={editDeliveryDate} onChange={(e) => setEditDeliveryDate(e.target.value)}/>
+              </div>
               </div>
             </div>
             {/* <div className="row">
@@ -323,20 +410,30 @@ function UpdatePurchaseOrder() {
                 <input type="text" name="requisitioner" className="item-name-input" value={editRequisitioner} onChange={(e) => setEditRequisitioner(e.target.value)}/>
               </div>
             </div> */}
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">DELIVERY ADDRESS</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="delivery_address" className="item-name-input" value={editDeliveryAddress} onChange={(e) => setEditDeliveryAddress(e.target.value)}/>
               </div>
-            </div>
-            <div className="row">
+            </div> */}
+            {/* <div className="row">
               <div className="col-sm-4">
                 <span className="item-name-label">REMARKS</span>
               </div>
               <div className="col-sm-8">
                 <input type="text" name="remarks" className="item-name-input" value={editRemarks} onChange={(e) => setEditRemarks(e.target.value)}/>
+              </div>
+            </div> */}
+            <div className="row">
+              <div className="col-sm-3 pt-1">
+                <span className="item-name-label">REMARKS</span>
+              </div>
+              <div className="col-sm-7">
+              <div className='input-group input-group-sm'>
+                <input type="text" name="remarks" className="form-control" value={editRemarks} onChange={(e) => setEditRemarks(e.target.value)}/>
+              </div>
               </div>
             </div>
           </div>
@@ -362,7 +459,7 @@ function UpdatePurchaseOrder() {
         
             </div>
           </div>
-        <div className="row d-flex justify-content-center">
+        <div className="row d-flex justify-content-center mb-4">
           <button className="add-items-btn" onClick={addItems}>
             ADD ITEM
           </button>

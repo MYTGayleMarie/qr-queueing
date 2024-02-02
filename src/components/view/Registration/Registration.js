@@ -20,6 +20,7 @@ const buttons = ['add-new-patient', 'add-old-patient'];
 const userToken = getToken();
 const userId = getUser();
 var id = "";
+var customer_id = "";
 var presentDate = new Date();
 var formattedPresentData = presentDate.toISOString().split('T')[0];
 
@@ -29,7 +30,7 @@ const filterData = {
   done: false,
 };
 
-function Registration() {
+function  Registration() {
 
   document.body.style = 'background: white;';
   const [filteredData, setFilter] = useForm(filterData);
@@ -40,6 +41,7 @@ function Registration() {
   const [redirectPrint, setRedirectPrint] = useState(false);
   const [redirectDelete, setRedirectDelete] = useState(false);
   const [redirectEdit, setRedirectEdit] = useState(false)
+  const [redirectEditBooking, setRedirectEditBooking] = useState(false)
   const [role, setRole] = useState('');
   const [isReady, setIsReady] = useState(false)
 
@@ -84,9 +86,10 @@ function Registration() {
 
               var booking_service = booking.type.toUpperCase();
 
-              // console.log(booking);
+          
 
               bookingDetails.withDiscount = booking.discount_detail;
+              bookingDetails.withHMO = booking.hmo_detail;
               bookingDetails.id = booking.id;
               bookingDetails.customer_id = booking.customer_id;
               bookingDetails.name = booking.first_name + ' ' + booking.middle_name + ' ' + booking.last_name;
@@ -94,7 +97,9 @@ function Registration() {
               bookingDetails.serviceType = booking_service;
               bookingDetails.paymentStatus = booking.payment_status;
               bookingDetails.discount_code = booking.discount_code === null ? "NONE" : booking.discount_code;
+        
               bookingDetails.addedOn = formatAddedOn[1] + " " + formatAddedOn[2] + ", " + getTime(addedOn);
+              
           
               setPatientData(oldArray => [...oldArray, bookingDetails]);
               setIsReady(true)
@@ -119,32 +124,41 @@ function Registration() {
 
   function filter() {}
 
-  function addPayment(bookingId) {
+  function addPayment(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId;
     setRedirectPay(true);
   }
 
-  function printPayment(bookingId) {
+  function printPayment(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId;
     setRedirectPrint(true);
   }
-  function deleteBooking(bookingId) {
+  function deleteBooking(bookingId, customerId) {
     id = bookingId;
+    customer_id = customerId
     setRedirectDelete(true);
   }
-  function editBooking(bookingId) {
-    id = bookingId;
+  // function editBooking(bookingId,customerId) {
+  //   id = bookingId;
+  //   customer_id = customerId
+  //   setRedirectEditBooking(true);
+  // }
+  function editPatient(customerId) {
+    // id = bookingId;
+    customer_id = customerId
     setRedirectEdit(true);
   }
 
-  if(redirectDelete == true) {
+  if(redirectDelete === true) {
     var link =  "/delete-booking/" + id;
     return (
         <Navigate to ={link}/>
     )
   }
 
-  if(redirectPrint == true) {
+  if(redirectPrint === true) {
     var link =  "/add-payment/" + id;
     return (
         <Navigate to ={link}/>
@@ -152,19 +166,27 @@ function Registration() {
   }
 
 
-  if(redirectPay == true) {
+  if(redirectPay === true) {
     var link =  "/add-payment/" + id;
     return (
         <Navigate to ={link}/>
     )
   }
 
-  if(redirectEdit == true) {
-    var link =  "/update-patient/" + id;
+  if(redirectEdit === true) {
+    console.log(id)
+    var link =  "/update-patient/" + customer_id;
     return (
         <Navigate to ={link}/>
     )
   }
+  // if(redirectEditBooking === true) {
+  //   console.log(id)
+  //   var link =  "/edit-booking/" +customer_id+"/"+ id;
+  //   return (
+  //       <Navigate to ={link}/>
+  //   )
+  // }
 
    return (
     <div>
@@ -176,7 +198,7 @@ function Registration() {
             type={'registration'}
             tableData={patientData}
             rowsPerPage={20}
-            headingColumns={['WITH DISCOUNT', 'BOOKING ID', 'PATIENT ID','PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
+            headingColumns={['WITH DISCOUNT','', 'BOOKING ID', 'PATIENT ID','PATIENT NAME', 'BOOKING DATE', 'SERVICE TYPE', 'PAYMENT STATUS','DISCOUNT', 'ADDED ON', 'ACTION']}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}
@@ -187,7 +209,8 @@ function Registration() {
             print={printPayment}
             role={role}
             userId={userId}
-            editBooking={editBooking}
+            // editBooking={editBooking}
+            editPatient={editPatient}
             deleteBooking={deleteBooking}
             useLoader={true}
             isReady={isReady}

@@ -1,38 +1,39 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react"
+import { Link, NavLink } from "react-router-dom"
 import {
   getRoleId,
   refreshPage,
   removeUserSession,
   getUser,
-} from "../utilities/Common";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from "../utilities/Common"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 //css
-import "./Navbar.css";
+import "./Navbar.css"
 
 //icon images
-import registrationIcon from "../images/icons/registration-icon.png";
-import patientIcon from "../images/icons/patient-icon.png";
-import cashierIcon from "../images/icons/cashier-icon.png";
-import extractionIcon from "../images/icons/extraction-icon.png";
-import imagingIcon from "../images/icons/imaging-icon.png";
-import medTechIcon from "../images/icons/med-tech-icon.png";
-import usersIcon from "../images/icons/users-icon.png";
-import labIcon from "../images/icons/lab-icon.png";
-import cmoduleIcon from "../images/icons/cmodule-icon.png";
-import companiesIcon from "../images/icons/companies-icon.png";
-import discountIcon from "../images/icons/discount-icon.png";
-import supplyIcon from "../images/icons/supply-icon.png";
-import reportIcon from "../images/icons/report-icon.png";
-import logoutIcon from "../images/icons/logout.png";
-import servicesIcon from "../images/icons/services-icon.png";
-import queueIcon from "../images/icons/queue.png";
+import registrationIcon from "../images/icons/registration-icon.png"
+import patientIcon from "../images/icons/patient-icon.png"
+import cashierIcon from "../images/icons/cashier-icon.png"
+import extractionIcon from "../images/icons/extraction-icon.png"
+import imagingIcon from "../images/icons/imaging-icon.png"
+import medTechIcon from "../images/icons/med-tech-icon.png"
+import usersIcon from "../images/icons/users-icon.png"
+import labIcon from "../images/icons/lab-icon.png"
+import cmoduleIcon from "../images/icons/cmodule-icon.png"
+import companiesIcon from "../images/icons/companies-icon.png"
+import discountIcon from "../images/icons/discount-icon.png"
+import supplyIcon from "../images/icons/supply-icon.png"
+import reportIcon from "../images/icons/report-icon.png"
+import logoutIcon from "../images/icons/logout.png"
+import servicesIcon from "../images/icons/services-icon.png"
+import service from "../images/icons/service.png"
+import queueIcon from "../images/icons/queue.png"
 
 //logo image
-import logo from "../images/logo.png";
-import { Nav } from "react-bootstrap";
-let showNavbar;
+import logo from "../images/logo.png"
+import { Nav } from "react-bootstrap"
+let showNavbar
 
 function accountingNavbar(showNavbar, setShowNavbar) {
   return (
@@ -54,6 +55,7 @@ function accountingNavbar(showNavbar, setShowNavbar) {
             <Link to="/company-discounts" className="sub-link">
               <li class="sub-list">COMPANY DISCOUNT</li>
             </Link>
+
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
             </Link>
@@ -71,6 +73,10 @@ function accountingNavbar(showNavbar, setShowNavbar) {
               <li class="sub-list">PURCHASE ORDER</li>
             </Link>
           </ul>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </li>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -78,7 +84,7 @@ function accountingNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function supplyNavbar(showNavbar, setShowNavbar) {
@@ -102,6 +108,10 @@ function supplyNavbar(showNavbar, setShowNavbar) {
               <li class="sub-list">ITEMS</li>
             </Link>
           </ul>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </li>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -109,7 +119,7 @@ function supplyNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function resultsReleasingNavbar(showNavbar, setShowNavbar) {
@@ -127,6 +137,10 @@ function resultsReleasingNavbar(showNavbar, setShowNavbar) {
             <img src={medTechIcon} alt={"medTech"} class="medTech icon"></img>
             <span class="mx-2">Results Releasing</span>
           </li>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </NavLink>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -134,7 +148,7 @@ function resultsReleasingNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function labReleasingNavbar(showNavbar, setShowNavbar) {
@@ -153,6 +167,10 @@ function labReleasingNavbar(showNavbar, setShowNavbar) {
             <img src={labIcon} alt={"lab"} class="lab icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
           </li>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </NavLink>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -160,7 +178,7 @@ function labReleasingNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
@@ -179,6 +197,10 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
             <img src={labIcon} alt={"lab"} class="lab icon"></img>
             <span class="mx-2">Laboratory Releasing</span>
           </li>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </NavLink>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -186,7 +208,7 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 // function queueManagerNavbar(showNavbar, setShowNavbar) {
@@ -205,7 +227,7 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
 //             <img src={labIcon} alt={"lab"} class="lab icon"></img>
 //             <span class="mx-2">Laboratory Releasing</span>
 //           </li>
-//         </NavLink>
+//</NavLink>
 //         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
 //           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
 //           <span class="mx-2">Log Out</span>
@@ -231,6 +253,10 @@ function cModuleNavbar(showNavbar, setShowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </NavLink>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -238,7 +264,7 @@ function cModuleNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function purchasingNavbar(showNavbar, setShowNavbar) {
@@ -291,6 +317,19 @@ function purchasingNavbar(showNavbar, setShowNavbar) {
               <li class="sub-list">Services and Packages</li>
             </Link>
           </ul>
+          <ul class="sub-menu">
+            <Link to="/reports-home-services" className="sub-link">
+              <li class="sub-list">Home Service</li>
+            </Link>
+          </ul>
+        </li>
+        <li href="https://myt-support.com/" target="_blank" class="nav-link">
+          <img src={service} alt={"service"} class="logout icon"></img>
+          <span class="mx-2">Support</span>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </li>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -298,7 +337,7 @@ function purchasingNavbar(showNavbar, setShowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function cashierNavbar(showNavbar, setshowNavbar) {
@@ -327,12 +366,12 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={"queue"} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={"patient"} class="patient icon"></img>
@@ -365,7 +404,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -374,7 +413,7 @@ function cashierNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink
           to="/registrationcmodule"
@@ -391,18 +430,28 @@ function cashierNavbar(showNavbar, setshowNavbar) {
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
           <span class="mx-2">Companies</span>
           <ul class="sub-menu">
+            <Link to="/hmo-discounts" className="sub-link">
+              <li class="sub-list">HMO DISCOUNTS</li>
+            </Link>
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
             </Link>
+            <Link to="/hmo-invoices" className="sub-link">
+              <li class="sub-list">HMO INVOICE</li>
+            </Link>
           </ul>
         </li>
+        <a href="https://myt-support.com/" target="_blank" class="nav-link">
+          <img src={service} alt={"service"} class="logout icon"></img>
+          <span class="mx-2">Support</span>
+        </a>
         {/* <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={'logout'} class="logout icon"></img>
           <span class="mx-2">Log Out</span>
         </li> */}
       </ul>
     </div>
-  );
+  )
 }
 
 function registrationNavbar(showNavbar, setshowNavbar) {
@@ -431,12 +480,12 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Patient</span>
           </li>
         </NavLink>
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={queueIcon} alt={"queue"} class="queue icon"></img>
             <span class="mx-2">Queue Manager</span>
           </li>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
           <li href="#" class="nav-link cashier-nav">
             <img src={patientIcon} alt={'patient'} class="patient icon"></img>
@@ -469,7 +518,7 @@ function registrationNavbar(showNavbar, setshowNavbar) {
           </li>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -478,7 +527,7 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <li href="#" class="nav-link supply-nav">
           <img src={companiesIcon} alt={"companies"} class="supply icon"></img>
@@ -487,7 +536,14 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             <Link to="/company-invoices" className="sub-link">
               <li class="sub-list">COMPANY INVOICE</li>
             </Link>
+            <Link to="/hmo-invoices" className="sub-link">
+              <li class="sub-list">HMO INVOICE</li>
+            </Link>
           </ul>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
         </li>
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
           <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
@@ -495,7 +551,7 @@ function registrationNavbar(showNavbar, setshowNavbar) {
         </li>
       </ul>
     </div>
-  );
+  )
 }
 
 function adminNavbar(showNavbar, setshowNavbar) {
@@ -531,12 +587,12 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Patient</span>
             </li>
           </NavLink>
-          <NavLink to="/queuemanager" activeClassName="active" class="link">
+          {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
             <li href="#" class="nav-link cashier-nav">
               <img src={queueIcon} alt={"queue"} class="queue icon"></img>
               <span class="mx-2">Queue Manager</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
 
           <li href="#" class="nav-link cashier-nav">
@@ -562,6 +618,46 @@ function adminNavbar(showNavbar, setshowNavbar) {
             <span class="mx-2">Imaging</span>
           </li>
         </NavLink> */}
+          <NavLink to="/extraction" activeClassName="active" class="link">
+            <li href="/extraction" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">LAB</span>
+            </li>
+          </NavLink>
+          <NavLink to="/xray" activeClassName="active" class="link">
+            <li href="/xray" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">XRAY</span>
+            </li>
+          </NavLink>
+          <NavLink to="/ecg" activeClassName="active" class="link">
+            <li href="/ecg" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">ECG</span>
+            </li>
+          </NavLink>
+          <NavLink to="/2d-echo" activeClassName="active" class="link">
+            <li href="/2d-echo" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">2D ECHO/ULTRASOUND</span>
+            </li>
+          </NavLink>
           <NavLink to="/medtech" activeClassName="active" class="link">
             <li href="/medtech" class="nav-link imaging-nav">
               <img src={medTechIcon} alt={"medTech"} class="medTech icon"></img>
@@ -587,7 +683,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink> */}
 
-          <NavLink
+          {/* <NavLink
             to="/registrationcmodule"
             activeClassName="active"
             class="link"
@@ -596,7 +692,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
               <span class="mx-2">Customer Module</span>
             </li>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/aging-report" activeClassName="active" class="link">
             <li href="/aging-report" class="nav-link imaging-nav">
               <img src={cashierIcon} alt={"medTech"} class="medTech icon"></img>
@@ -624,8 +720,14 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <Link to="/company-discounts" className="sub-link">
                 <li class="sub-list">COMPANY DISCOUNT</li>
               </Link>
+              <Link to="/hmo-discounts" className="sub-link">
+                <li class="sub-list">HMO DISCOUNT</li>
+              </Link>
               <Link to="/company-invoices" className="sub-link">
                 <li class="sub-list">COMPANY INVOICE</li>
+              </Link>
+              <Link to="/hmo-invoices" className="sub-link">
+                <li class="sub-list">HMO INVOICE</li>
               </Link>
             </ul>
           </li>
@@ -681,7 +783,10 @@ function adminNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Users</span>
             </li>
           </NavLink>
-
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -689,7 +794,7 @@ function adminNavbar(showNavbar, setshowNavbar) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 function supervisorNavbar(showNavbar, setshowNavbar) {
@@ -762,7 +867,10 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
               <span class="mx-2">Reports</span>
             </li>
           </NavLink>
-
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -770,9 +878,123 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
+
+function specificNavbars(showNavbar, setshowNavbar) {
+  return (
+    <div
+      class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+      id="sidebar"
+    >
+      <ul class="nav flex-column text-white w-100">
+        <div class="d-flex justify-content-center">
+          <img src={logo} alt={"logo"} class="navbar-logo"></img>
+        </div>
+
+        {getUser() === "57" && (
+          <NavLink to="/extraction" activeClassName="active" class="link">
+            <li href="/extraction" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">LAB</span>
+            </li>
+          </NavLink>
+        )}
+        {getUser() === "55" && (
+          <NavLink to="/xray" activeClassName="active" class="link">
+            <li href="/xray" class="nav-link imaging-nav">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="medTech icon"
+              ></img>
+              <span class="mx-2">XRAY</span>
+            </li>
+          </NavLink>
+        )}
+        {getUser() === "56" && (
+          <>
+            <NavLink to="/ecg" activeClassName="active" class="link">
+              <li href="/ecg" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">ECG</span>
+              </li>
+            </NavLink>
+            <NavLink to="/2d-echo" activeClassName="active" class="link">
+              <li href="/2d-echo" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">2D ECHO/ULTRASOUND</span>
+              </li>
+            </NavLink>
+          </>
+        )}
+        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+          <span class="mx-2">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  )
+}
+function inventoryNavbar(showNavbar, setshowNavbar) {
+  return (
+    <div
+      class="side-navbar d-flex justify-content-between flex-wrap flex-column active-nav"
+      id="sidebar"
+    >
+      <ul class="nav flex-column text-white w-100">
+        <div class="d-flex justify-content-center">
+          <img src={logo} alt={"logo"} class="navbar-logo"></img>
+        </div>
+
+        <li href="#" class="nav-link supply-nav">
+          <img
+            src={reportIcon}
+            alt={"supply"}
+            class="supply icon supply-icon"
+          ></img>
+          <span class="mx-2">Reports</span>
+          <ul class="sub-menu">
+            <Link to="/reports-inventory" className="sub-link">
+              <li class="sub-list">Inventory</li>
+            </Link>
+          </ul>
+          <ul class="sub-menu">
+            <Link to="/reports-item-history" className="sub-link">
+              <li class="sub-list">Item</li>
+            </Link>
+          </ul>
+          <ul class="sub-menu">
+            <Link to="/reports-incomplete-po" className="sub-link">
+              <li class="sub-list">Incomplete POs</li>
+            </Link>
+          </ul>
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
+        </li>
+        <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
+          <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
+          <span class="mx-2">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  )
+}
 function receivingNavbar(showNavbar, setshowNavbar) {
   return (
     <div>
@@ -797,7 +1019,10 @@ function receivingNavbar(showNavbar, setshowNavbar) {
               </Link>
             </ul>
           </li>
-
+          <a href="https://myt-support.com/" target="_blank" class="nav-link">
+            <img src={service} alt={"service"} class="logout icon"></img>
+            <span class="mx-2">Support</span>
+          </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
             <img src={logoutIcon} alt={"logout"} class="logout icon"></img>
             <span class="mx-2">Log Out</span>
@@ -805,7 +1030,7 @@ function receivingNavbar(showNavbar, setshowNavbar) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 function supplySideNav() {
@@ -827,7 +1052,7 @@ function supplySideNav() {
         <span class="mx-2 nav-item">SUPPLIERS</span>
       </Link>
     </div>
-  );
+  )
 }
 function reportSideNav() {
   return (
@@ -835,8 +1060,28 @@ function reportSideNav() {
       <Link to="/reports-services-packages">
         <span class="mx-2 nav-item">Services and Packages</span>
       </Link>
+      <Link to="/reports-home-services">
+        <span class="mx-2 nav-item">Home Service</span>
+      </Link>
     </div>
-  );
+  )
+}
+function inventoryReportSideNav() {
+  return (
+    <div className="reports-show-nav">
+      <Link to="/reports-inventory" className="sub-link">
+        <span class="mx-2 nav-item">Inventory</span>
+      </Link>
+
+      <Link to="/reports-item-history" className="sub-link">
+        <span class="mx-2 nav-item">Item</span>
+      </Link>
+
+      <Link to="/reports-incomplete-po" className="sub-link">
+        <span class="mx-2 nav-item">Incomplete POs</span>
+      </Link>
+    </div>
+  )
 }
 function supplyReceivingSideNav() {
   return (
@@ -848,7 +1093,7 @@ function supplyReceivingSideNav() {
         <span class="mx-2 nav-item">RECEIVES</span>
       </Link>
     </div>
-  );
+  )
 }
 
 function supplyItemSideNav() {
@@ -861,7 +1106,7 @@ function supplyItemSideNav() {
         <span class="mx-2 nav-item">ITEMS</span>
       </Link>
     </div>
-  );
+  )
 }
 
 function accountingSideNav() {
@@ -874,7 +1119,7 @@ function accountingSideNav() {
         <span class="mx-2 nav-item">RECEIVES</span>
       </Link>
     </div>
-  );
+  )
 }
 
 function companySideNav() {
@@ -886,11 +1131,23 @@ function companySideNav() {
       <Link to="/company-discounts">
         <span class="mx-2 nav-item">COMPANY DISCOUNT</span>
       </Link>
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === "3" ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === "4") && (
+        <Link to="/hmo-discounts">
+          <span class="mx-2 nav-item">HMO DISCOUNT</span>
+        </Link>
+      )}
       <Link to="/company-invoices">
         <span class="mx-2 nav-item">COMPANY INVOICE</span>
       </Link>
+      {(getRoleId().replace(/^"(.*)"$/, "$1") === "3" ||
+        getRoleId().replace(/^"(.*)"$/, "$1") === "4") && (
+        <Link to="/hmo-invoices">
+          <span class="mx-2 nav-item">HMO INVOICE</span>
+        </Link>
+      )}
     </div>
-  );
+  )
 }
 
 function companyRegSideNav() {
@@ -900,7 +1157,7 @@ function companyRegSideNav() {
         <span class="mx-2 nav-item">COMPANY INVOICE</span>
       </Link>
     </div>
-  );
+  )
 }
 
 function caretDown() {
@@ -911,7 +1168,7 @@ function caretDown() {
       aria-hidden="true"
       className="caret-icon"
     />
-  );
+  )
 }
 
 function caretUp() {
@@ -922,7 +1179,7 @@ function caretUp() {
       aria-hidden="true"
       className="caret-icon"
     />
-  );
+  )
 }
 
 function AccountingNavbarTop(
@@ -991,7 +1248,7 @@ function AccountingNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function SupplyNavbarTop(
@@ -1042,7 +1299,7 @@ function SupplyNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function ResultsReleasingNavbarTop(
@@ -1085,7 +1342,7 @@ function ResultsReleasingNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function LabReleasingNavbarTop(
@@ -1129,7 +1386,7 @@ function LabReleasingNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function QueueManagerNavbarTop(
@@ -1173,7 +1430,7 @@ function QueueManagerNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 // function CModuleNavbarTop(showNavbar, showMobileNavBar, showSupply, setShowSupply) {
@@ -1202,6 +1459,58 @@ function QueueManagerNavbarTop(
 // </div>
 //   )
 // }
+function InventoryNavbarTop(
+  showNavbar,
+  showMobileNavBar,
+  showSupply,
+  setShowSupply,
+  showReport,
+  setShowReport
+) {
+  return (
+    <div class="navbar">
+      <div class="logo-mobile">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+      <div id="nav-icon">
+        <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+      </div>
+      <div id="side-nav">
+        <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+        <div class="side-nav-content">
+          <div
+            className="reports-show-nav"
+            onClick={(e) => setShowReport(!showReport)}
+          >
+            <img
+              src={reportIcon}
+              alt={"supply"}
+              class="supply icon mobile-size-icon"
+            ></img>
+            <span class="mx-2">Reports</span>
+            <span>
+              {showReport == true && caretUp()}
+              {showReport == false && caretDown()}
+            </span>
+            {showReport == true && inventoryReportSideNav()}
+          </div>
+          <a href="#" class="nav-link" onClick={removeUserSession}>
+            <img
+              src={logoutIcon}
+              alt={"logout"}
+              class="logout icon mobile-size-icon"
+            ></img>
+            <span class="mx-2 logout-text">Log Out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
 function PurchasingNavbarTop(
   showNavbar,
   showMobileNavBar,
@@ -1268,7 +1577,7 @@ function PurchasingNavbarTop(
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function CashierNavbarTop(
@@ -1331,7 +1640,7 @@ function CashierNavbarTop(
         </NavLink>
       </div>
     </div>
-  );
+  )
 }
 
 function RegisterNavbarTop(
@@ -1371,14 +1680,14 @@ function RegisterNavbarTop(
           <span class="mx-2">Patient</span>
         </NavLink>
 
-        <NavLink to="/queuemanager" activeClassName="active" class="link">
+        {/* <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
             alt={"queue"}
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
         {/* <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
             <img src={patientIcon} alt={'patient'} class="patient icon mobile-size-icon"></img>
@@ -1405,8 +1714,14 @@ function RegisterNavbarTop(
             <span class="mx-2">Laboratory Releasing</span>
           </li>
         </NavLink> */}
+        <NavLink to="/services" activeClassName="active" class="link">
+          <li href="#" class="nav-link users-nav">
+            <img src={servicesIcon} alt={"users"} class="users icon"></img>
+            <span class="mx-2">Services</span>
+          </li>
+        </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1415,9 +1730,9 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1426,7 +1741,7 @@ function RegisterNavbarTop(
             <img src={cmoduleIcon} alt={"cmodule"} class="cmodule icon"></img>
             <span class="mx-2">Customer Module</span>
           </li>
-        </NavLink>
+        </NavLink> */}
 
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
@@ -1438,7 +1753,7 @@ function RegisterNavbarTop(
         </a>
       </div>
     </div>
-  );
+  )
 }
 
 function LaboratoryReleasingNavbarTop(
@@ -1479,7 +1794,7 @@ function LaboratoryReleasingNavbarTop(
         </a>
       </div>
     </div>
-  );
+  )
 }
 
 function AdminNavbarTop(
@@ -1520,7 +1835,7 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Patient</span>
         </NavLink>
-
+        {/* 
         <NavLink to="/queuemanager" activeClassName="active" class="link">
           <img
             src={queueIcon}
@@ -1528,16 +1843,9 @@ function AdminNavbarTop(
             class="queue icon mobile-size-icon"
           ></img>
           <span class="mx-2">Queue Manager</span>
-        </NavLink>
+        </NavLink> */}
 
-        <NavLink to="/add-old-patientcm" activeClassName="active" class="link">
-          <img
-            src={patientIcon}
-            alt={"patient"}
-            class="patient icon mobile-size-icon"
-          ></img>
-          <span class="mx-2">Patient</span>
-        </NavLink>
+       
         <NavLink to="/cashier" activeClassName="active" class="link">
           <img
             src={cashierIcon}
@@ -1571,7 +1879,7 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Laboratory Releasing</span>
         </NavLink>
-
+        {/* 
         <NavLink
           to="/registrationcmodule"
           activeClassName="active"
@@ -1583,9 +1891,18 @@ function AdminNavbarTop(
             class="cmodule icon mobile-size-icon"
           ></img>
           <span class="mx-2">Customer Module</span>
+        </NavLink> */}
+
+        <NavLink to="/services" activeClassName="active" class="link">
+          <img
+            src={servicesIcon}
+            alt={"users"}
+            class="users icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Services</span>
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/registrationcmodule"
           activeClassName="active"
           class="link"
@@ -1596,7 +1913,7 @@ function AdminNavbarTop(
             class="cmodule icon mobile-size-icon"
           ></img>
           <span class="mx-2">Customer Module</span>
-        </NavLink>
+        </NavLink> */}
 
         <div class="side-nav-content">
           <div
@@ -1658,7 +1975,10 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-1">Users</span>
         </NavLink>
-
+        <a href="https://myt-support.com/" target="_blank" class="nav-link">
+          <img src={service} alt={"service"} class="logout icon"></img>
+          <span class="mx-2">Support</span>
+        </a>
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
             src={logoutIcon}
@@ -1669,7 +1989,7 @@ function AdminNavbarTop(
         </a>
       </div>
     </div>
-  );
+  )
 }
 function supervisorNavbarTop(
   showNavbar,
@@ -1747,7 +2067,7 @@ function supervisorNavbarTop(
         </a>
       </div>
     </div>
-  );
+  )
 }
 
 function receivingNavbarTop(
@@ -1802,50 +2122,50 @@ function receivingNavbarTop(
         </a>
       </div>
     </div>
-  );
+  )
 }
 
 function Navbar() {
-  const [role, setRole] = useState("");
-  const [showNavbar, setshowNavbar] = useState(false);
-  const [showMobileSideBar, setShowMobileSideBar] = useState(true);
-  const [width, setWidth] = useState(window.innerWidth);
-  const [showSupply, setShowSupply] = useState(false);
-  const [showReport, setShowReport] = useState(false);
-  const [showCompany, setShowCompany] = useState(false);
+  const [role, setRole] = useState("")
+  const [showNavbar, setshowNavbar] = useState(false)
+  const [showMobileSideBar, setShowMobileSideBar] = useState(true)
+  const [width, setWidth] = useState(window.innerWidth)
+  const [showSupply, setShowSupply] = useState(false)
+  const [showReport, setShowReport] = useState(false)
+  const [showCompany, setShowCompany] = useState(false)
 
   const handleWindowSizeChange = () => {
-    setWidth(window.innerWidth);
-  };
+    setWidth(window.innerWidth)
+  }
 
   function showMobileNavBar() {
     if (showMobileSideBar == true) {
-      document.getElementById("side-nav").style.width = "100%";
-      setShowMobileSideBar(!showMobileSideBar);
+      document.getElementById("side-nav").style.width = "100%"
+      setShowMobileSideBar(!showMobileSideBar)
     } else {
-      document.getElementById("side-nav").style.width = "0%";
-      setShowMobileSideBar(!showMobileSideBar);
+      document.getElementById("side-nav").style.width = "0%"
+      setShowMobileSideBar(!showMobileSideBar)
     }
   }
 
   React.useEffect(() => {
-    setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
-  }, []);
+    setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
+  }, [])
 
   React.useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
+    window.addEventListener("resize", handleWindowSizeChange)
     return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
+      window.removeEventListener("resize", handleWindowSizeChange)
+    }
+  }, [])
 
   React.useEffect(() => {
     if (width > 1000) {
-      setshowNavbar(true);
+      setshowNavbar(true)
     } else {
-      setshowNavbar(false);
+      setshowNavbar(false)
     }
-  }, [width]);
+  }, [width])
 
   return (
     <div>
@@ -1932,6 +2252,16 @@ function Navbar() {
           showCompany,
           setShowCompany
         )}
+      {showNavbar == false &&
+        role == 13 &&
+        InventoryNavbarTop(
+          showNavbar,
+          showMobileNavBar,
+          showSupply,
+          setShowSupply,
+          showCompany,
+          setShowCompany
+        )}
       {/* {showNavbar == false && role == 10  && LaboratoryReleasingNavbarTop(showNavbar,showMobileNavBar,showSupply, setShowSupply)} */}
 
       {showNavbar == true &&
@@ -1965,8 +2295,17 @@ function Navbar() {
       {showNavbar == true &&
         role == 11 &&
         receivingNavbar(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 13 &&
+        inventoryNavbar(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 14 &&
+        specificNavbars(showNavbar, setshowNavbar)}
+      {showNavbar == true &&
+        role == 15 &&
+        specificNavbars(showNavbar, setshowNavbar)}
     </div>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

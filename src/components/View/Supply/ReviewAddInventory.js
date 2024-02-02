@@ -18,8 +18,6 @@ const userToken = getToken();
 const userId = getUser();
 const roleId = getRoleId();
 
-console.log(roleId)
-
 function ReviewAddInventory() {
     document.body.style = 'background: white;';
 
@@ -103,7 +101,7 @@ function ReviewAddInventory() {
     //components
     const listItems = items.map((data,index) => {
         return (
-        <div className="row">
+        <div className="row poItemsRow">
             <div className="col-sm-5">
                 {data.item_name}
             </div>

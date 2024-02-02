@@ -1,33 +1,34 @@
-import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { getToken, getUser, refreshPage } from "../../../utilities/Common";
-import axios from "axios";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getAllLabServices, getAllPackages } from "../../../services/services";
-import { Navigate } from "react-router-dom";
-import { useReactToPrint } from "react-to-print";
-import { PaymentToPrint } from "./PaymentToPrint";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useRef } from "react"
+import { useParams } from "react-router-dom"
+import { getToken, getUser, refreshPage } from "../../../utilities/Common"
+import axios from "axios"
+import { Button, Col, Form, Modal, Row } from "react-bootstrap"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { getAllLabServices, getAllPackages } from "../../../services/services"
+import { Navigate } from "react-router-dom"
+import { useReactToPrint } from "react-to-print"
+import { PaymentToPrint } from "./PaymentToPrint"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Select from "react-select"
 
 //css
-import "./AddPayment.css";
+import "./AddPayment.css"
 
 //components
-import Navbar from "../../Navbar";
-import Header from "../../Header.js";
-import PersonalDetails from "../../PersonalDetails";
-import Costing from "../../Costing";
-import { RingLoader } from "react-spinners";
+import Navbar from "../../Navbar"
+import Header from "../../Header.js"
+import PersonalDetails from "../../PersonalDetails"
+import Costing from "../../Costing"
+import { RingLoader } from "react-spinners"
 
-const userToken = getToken();
-const userId = getUser();
+const userToken = getToken()
+const userId = getUser()
 
 const CashPaymentDetails = {
   type: "",
   amount: "",
-};
+}
 
 const CardPaymentDetails = {
   type: "",
@@ -39,7 +40,7 @@ const CardPaymentDetails = {
   check_no: "",
   check_bank: "",
   check_date: "",
-};
+}
 
 const CheckPaymentDetails = {
   type: "",
@@ -47,101 +48,103 @@ const CheckPaymentDetails = {
   check_no: "",
   check_bank: "",
   check_date: "",
-};
+}
 
 function AddPayment() {
-  document.body.style = "background: white;";
+  document.body.style = "background: white;"
 
-  const [payment, setPayment] = useState("");
-  const [total, setTotal] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
-  const [pay, setPay] = useState(0);
-  const [serviceFee, setServiceFee] = useState(0);
-  const [mdCharge, setMdCharge] = useState(0);
-  const [remarks, setRemarks] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const { id } = useParams();
-  const [labTests, setLabTests] = useState([]);
-  const [packages, setPackages] = useState([]);
-  const [click, setClick] = useState(false);
-  const [paidAmount, setPaidAmount] = useState(0);
+  const [payment, setPayment] = useState("")
+  const [total, setTotal] = useState(0)
+  const [grandTotal, setGrandTotal] = useState(0)
+  const [pay, setPay] = useState(0)
+  const [serviceFee, setServiceFee] = useState(0)
+  const [mdCharge, setMdCharge] = useState(0)
+  const [remarks, setRemarks] = useState("")
+  const [discount, setDiscount] = useState(0)
+  const { id } = useParams()
+  const [labTests, setLabTests] = useState([])
+  const [packages, setPackages] = useState([])
+  const [click, setClick] = useState(false)
+  const [paidAmount, setPaidAmount] = useState(0)
 
   //customer details
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [seniorPwdId, setseniorPwdId] = useState("");
-  const [senior_id, setSeniorId] = useState("");
-  const [pwd_id, setPWDId] = useState("");
-  const [patientId, setPatientId] = useState("");
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [paymentType, setPaymentType] = useState("");
-  const [referral, setReferral] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [middleName, setMiddleName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [birthDate, setBirthDate] = useState("")
+  const [gender, setGender] = useState("")
+  const [age, setAge] = useState("")
+  const [contactNo, setContactNo] = useState("")
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState("")
+  const [seniorPwdId, setseniorPwdId] = useState("")
+  const [senior_id, setSeniorId] = useState("")
+  const [pwd_id, setPWDId] = useState("")
+  const [patientId, setPatientId] = useState("")
+  const [paymentStatus, setPaymentStatus] = useState("")
+  const [paymentType, setPaymentType] = useState("")
+  const [referral, setReferral] = useState("")
 
   //services
-  const [services, setServices] = useState([]);
-  const [bookingDate, setBookingDate] = useState("");
-  const [result, setResult] = useState("");
-  const [printServices, setPrintServices] = useState([]);
-  const [queue, setQueue] = useState([]);
-  const [queueNumber, setQueueNumber] = useState("");
-  const [encodedOn, setEncodedOn] = useState("");
+  const [services, setServices] = useState([])
+  const [bookingDate, setBookingDate] = useState("")
+  const [result, setResult] = useState("")
+  const [printServices, setPrintServices] = useState([])
+  const [queue, setQueue] = useState([])
+  const [queueNumber, setQueueNumber] = useState("")
+  const [encodedOn, setEncodedOn] = useState("")
 
   //print
-  const [printData, setPrintData] = useState(false);
+  const [printData, setPrintData] = useState(false)
 
-  const [cashTax, setCashTax] = useState(0);
+  const [cashTax, setCashTax] = useState(0)
   //check states
-  const [checkNo, setCheckNo] = useState("");
-  const [checkBank, setCheckBank] = useState("");
-  const [checkDate, setCheckDate] = useState("");
-  const [checkTax, setCheckTax] = useState(0);
+  const [checkNo, setCheckNo] = useState("")
+  const [checkBank, setCheckBank] = useState("")
+  const [checkDate, setCheckDate] = useState("")
+  const [checkTax, setCheckTax] = useState(0)
   //card states
-  const [cardNo, setCardNo] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [cardType, setCardType] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cardBank, setCardBank] = useState("");
-  const [cardTax, setCardTax] = useState(0);
+  const [cardNo, setCardNo] = useState("")
+  const [cardName, setCardName] = useState("")
+  const [cardType, setCardType] = useState("")
+  const [cardExpiry, setCardExpiry] = useState("")
+  const [cardBank, setCardBank] = useState("")
+  const [cardTax, setCardTax] = useState(0)
 
   //others states
-  const [source, setSource] = useState("");
-  const [reference, setReference] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  const [printReadyFinal, setPrintReadyFinal] = useState(false);
-  const [othersTax, setOthersTax] = useState(0);
+  const [source, setSource] = useState("")
+  const [reference, setReference] = useState("")
+  const [redirect, setRedirect] = useState(false)
+  const [printReadyFinal, setPrintReadyFinal] = useState(false)
+  const [othersTax, setOthersTax] = useState(0)
 
   //add Test states
-  const [addTestType, setAddTestType] = useState("");
-  const [test, setTest] = useState("");
+  const [addTestType, setAddTestType] = useState("")
+  const [test, setTest] = useState("")
 
   //Modal
-  const [show, setShow] = useState(false);
-  const [showRemove, setShowRemove] = useState(false);
-  const [serviceId, setServiceId] = useState("");
+  const [show, setShow] = useState(false)
+  const [showRemove, setShowRemove] = useState(false)
+  const [serviceId, setServiceId] = useState("")
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
-  const handleRemoveClose = () => setShowRemove(false);
-  const handleRemoveShow = () => setShowRemove(true);
+  const handleRemoveClose = () => setShowRemove(false)
+  const handleRemoveShow = () => setShowRemove(true)
 
   //Discount
-  const [discountList, setDiscountList] = useState([]);
-  const [discountCode, setDiscountCode] = useState("");
-  const [discountDetail, setDiscountDetail] = useState("");
+  const [discountList, setDiscountList] = useState([])
+  const [discountCode, setDiscountCode] = useState("")
+  const [discountDetail, setDiscountDetail] = useState("")
 
   //Loaders
-  const [loadingCust, setLoadingCust] = useState(false);
-  const [loadingBooking, setLoadingBooking] = useState(false);
+  const [loadingCust, setLoadingCust] = useState(false)
+  const [loadingBooking, setLoadingBooking] = useState(false)
 
-  const componentRef = useRef();
+  const [hmo, setHmo] = useState(0)
+
+  const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle: () => `
@@ -154,20 +157,20 @@ function AddPayment() {
             }
           }
           `,
-  });
+  })
 
   function handleRemove(service_id) {
-    handleRemoveShow();
-    setServiceId(service_id);
+    handleRemoveShow()
+    setServiceId(service_id)
   }
 
-  var amount = 0;
+  var amount = 0
 
   React.useEffect(() => {
-    var totalAmount;
-    var discount;
-    var customer;
-    var type;
+    var totalAmount
+    var discount
+    var customer
+    var type
 
     axios({
       method: "post",
@@ -180,24 +183,25 @@ function AddPayment() {
       },
     })
       .then(function (response) {
-        setDiscountDetail(response.data.discount_detail);
-        setPaidAmount(response.data.paid_amount);
-        setPaymentStatus(response.data.payment_status);
-        setPaymentType(response.data.payment_type);
-        setTotal(response.data.total_amount);
-        setGrandTotal(response.data.grand_total);
-        setServiceFee(response.data.home_service_fee);
-        setMdCharge(response.data.md_charge);
-        setDiscountCode(response.data.discount_code);
-        setDiscount(response.data.discount);
-        setBookingDate(response.data.booking_time);
-        setEncodedOn(response.data.added_on);
-        setReferral(response.data.doctors_referal);
-        setResult(response.data.result);
-        totalAmount = response.data.total_amount;
-        discount = response.data.discount;
-        customer = response.data.customer_id;
-        type = response.data.type;
+        setDiscountDetail(response.data.discount_detail)
+        setPaidAmount(response.data.paid_amount)
+        setPaymentStatus(response.data.payment_status)
+        setPaymentType(response.data.payment_type)
+        setTotal(response.data.total_amount)
+        setGrandTotal(response.data.grand_total)
+        setServiceFee(response.data.home_service_fee)
+        setMdCharge(response.data.md_charge)
+        setDiscountCode(response.data.discount_code)
+        setDiscount(response.data.discount)
+        setBookingDate(response.data.booking_time)
+        setEncodedOn(response.data.added_on)
+        setReferral(response.data.doctors_referal)
+        setResult(response.data.result)
+        setHmo(response.data.hmo_discount)
+        totalAmount = response.data.total_amount
+        discount = response.data.discount
+        customer = response.data.customer_id
+        type = response.data.type
 
         axios({
           method: "post",
@@ -211,45 +215,45 @@ function AddPayment() {
         })
           .then(function (customer) {
             //AGE
-            var presentDate = new Date();
-            var birthDate = new Date(customer.data.birthdate);
-            var age = presentDate.getFullYear() - birthDate.getFullYear();
-            var m = presentDate.getMonth() - birthDate.getMonth();
+            var presentDate = new Date()
+            var birthDate = new Date(customer.data.birthdate)
+            var age = presentDate.getFullYear() - birthDate.getFullYear()
+            var m = presentDate.getMonth() - birthDate.getMonth()
             if (
               m < 0 ||
               (m === 0 && presentDate.getDate() < birthDate.getDate())
             ) {
-              age--;
+              age--
             }
 
-            setPatientId(response.data.customer_id);
-            setFirstName(customer.data.first_name);
-            setMiddleName(customer.data.middle_name);
-            setLastName(customer.data.last_name);
-            setBirthDate(birthDate.toDateString());
-            setGender(customer.data.gender);
-            setAge(age);
-            setContactNo(customer.data.contact_no);
-            setEmail(customer.data.email);
-            setAddress(customer.data.address);
-            setSeniorId(customer.data.senior_id);
-            setPWDId(customer.data.pwd_id);
-            setLoadingCust(true);
+            setPatientId(response.data.customer_id)
+            setFirstName(customer.data.first_name)
+            setMiddleName(customer.data.middle_name)
+            setLastName(customer.data.last_name)
+            setBirthDate(birthDate.toDateString())
+            setGender(customer.data.gender)
+            setAge(age)
+            setContactNo(customer.data.contact_no)
+            setEmail(customer.data.email)
+            setAddress(customer.data.address)
+            setSeniorId(customer.data.senior_id)
+            setPWDId(customer.data.pwd_id)
+            setLoadingCust(true)
           })
           .catch(function (error) {
-            setLoadingCust(true);
-            console.log(error);
-          });
+            setLoadingCust(true)
+            console.log(error)
+          })
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
-    var presentDate = new Date();
-    var formattedPresentData = presentDate.toISOString().split("T")[0];
-    queue.length = 0;
+    var presentDate = new Date()
+    var formattedPresentData = presentDate.toISOString().split("T")[0]
+    queue.length = 0
     //Queue
     axios({
       method: "post",
@@ -264,34 +268,34 @@ function AddPayment() {
       },
     })
       .then(function (response) {
-        const arrangedObj = response.data.bookings.sort((a, b) => a.id - b.id);
+        const arrangedObj = response.data.bookings.sort((a, b) => a.id - b.id)
 
         arrangedObj.map((booking, index) => {
-          var bookingInfo = {};
-          bookingInfo.queue = index + 1;
-          bookingInfo.id = booking.id;
-          setQueue((oldArray) => [...oldArray, bookingInfo]);
-        });
+          var bookingInfo = {}
+          bookingInfo.queue = index + 1
+          bookingInfo.id = booking.id
+          setQueue((oldArray) => [...oldArray, bookingInfo])
+        })
       })
       .then(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
     queue.map((data, index) => {
       if (data.id == id) {
-        setQueueNumber(data.queue.toString());
+        setQueueNumber(data.queue.toString())
       }
-    });
+    })
 
     if (queueNumber == "") {
-      setQueueNumber("0");
+      setQueueNumber("0")
     }
-  }, [queue]);
+  }, [queue])
 
   React.useEffect(() => {
-    services.length = 0;
+    services.length = 0
     axios({
       method: "post",
       url: window.$link + "bookings/getBookingDetails/" + id,
@@ -303,17 +307,17 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
-        setLoadingBooking(true);
-        setServices(booking.data);
+        setLoadingBooking(true)
+        setServices(booking.data)
       })
       .catch(function (error) {
-        setLoadingBooking(true);
-        console.log(error);
-      });
-  }, []);
+        setLoadingBooking(true)
+        console.log(error)
+      })
+  }, [])
 
   React.useEffect(() => {
-    printServices.length = 0;
+    printServices.length = 0
     services.map((info, index1) => {
       if (info.category_id == null) {
         axios({
@@ -327,7 +331,7 @@ function AddPayment() {
           },
         }).then(function (response) {
           response.data.map((packageCat, index2) => {
-            var serviceDetails = {};
+            var serviceDetails = {}
             axios({
               method: "post",
               url: window.$link + "categories/show/" + packageCat.category_id,
@@ -340,15 +344,15 @@ function AddPayment() {
             })
               .then(function (category) {
                 if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes";
+                  serviceDetails.key = "Electrolytes"
                 } else {
                   serviceDetails.key = category.data.name
                     .replace(/\s+/g, "_")
-                    .toLowerCase();
+                    .toLowerCase()
                 }
-                serviceDetails.category = category.data.name;
-                serviceDetails.name = packageCat.lab_test;
-                setPrintServices((oldArray) => [...oldArray, serviceDetails]);
+                serviceDetails.category = category.data.name
+                serviceDetails.name = packageCat.lab_test
+                setPrintServices((oldArray) => [...oldArray, serviceDetails])
 
                 if (
                   services.length - 1 == index1 &&
@@ -357,16 +361,16 @@ function AddPayment() {
                   birthDate != null &&
                   encodedOn != null
                 ) {
-                  setPrintData(true);
+                  setPrintData(true)
                 }
-                setLoadingBooking(true);
+                setLoadingBooking(true)
               })
               .catch(function (error) {
-                setLoadingBooking(true);
-                console.log(error);
-              });
-          });
-        });
+                setLoadingBooking(true)
+                console.log(error)
+              })
+          })
+        })
       } else {
         axios({
           method: "post",
@@ -379,17 +383,17 @@ function AddPayment() {
           },
         })
           .then(function (category) {
-            var serviceDetails = {};
+            var serviceDetails = {}
             if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes";
+              serviceDetails.key = "Electrolytes"
             } else {
               serviceDetails.key = category.data.name
                 .replace(/\s+/g, "_")
-                .toLowerCase();
+                .toLowerCase()
             }
-            serviceDetails.category = category.data.name;
-            serviceDetails.name = info.lab_test;
-            setPrintServices((oldArray) => [...oldArray, serviceDetails]);
+            serviceDetails.category = category.data.name
+            serviceDetails.name = info.lab_test
+            setPrintServices((oldArray) => [...oldArray, serviceDetails])
 
             if (
               services.length - 1 == index1 &&
@@ -397,29 +401,29 @@ function AddPayment() {
               birthDate != null &&
               encodedOn != null
             ) {
-              setPrintData(true);
-              setLoadingBooking(true);
+              setPrintData(true)
             }
+            setLoadingBooking(true)
           })
           .catch(function (error) {
-            setLoadingBooking(true);
-            console.log(error);
-          });
+            setLoadingBooking(true)
+            console.log(error)
+          })
       }
-    });
-  }, [services]);
+    })
+  }, [services])
 
   React.useEffect(() => {
-    printServices.length = 0;
-    labTests.length = 0;
-    packages.length = 0;
+    printServices.length = 0
+    labTests.length = 0
+    packages.length = 0
     services.map((info, index1) => {
       if (info.type === "package") {
-        let packageInfo = {};
-        packageInfo.name = info.package;
-        packageInfo.qty = "1";
-        packageInfo.price = info.price;
-        packageInfo.details = "";
+        let packageInfo = {}
+        packageInfo.name = info.package
+        packageInfo.qty = "1"
+        packageInfo.price = info.price
+        packageInfo.details = ""
         axios({
           method: "post",
           url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
@@ -432,12 +436,12 @@ function AddPayment() {
         }).then(function (response) {
           response.data.map((packageCat, index2) => {
             if (index2 < response.data.length - 1) {
-              packageInfo.details += packageCat.lab_test + ", ";
+              packageInfo.details += packageCat.lab_test + ", "
             } else {
-              packageInfo.details += packageCat.lab_test;
+              packageInfo.details += packageCat.lab_test
             }
 
-            var serviceDetails = {};
+            var serviceDetails = {}
             axios({
               method: "post",
               url: window.$link + "categories/show/" + packageCat.category_id,
@@ -450,23 +454,24 @@ function AddPayment() {
             })
               .then(function (category) {
                 if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes";
+                  serviceDetails.key = "Electrolytes"
                 } else {
                   serviceDetails.key = category.data.name
                     .replace(/\s+/g, "_")
-                    .toLowerCase();
+                    .toLowerCase()
                 }
-                serviceDetails.category = category.data.name;
-                serviceDetails.name = packageCat.lab_test;
-                setLoadingBooking(true);
+                serviceDetails.category = category.data.name
+                serviceDetails.name = packageCat.lab_test
+
+                setLoadingBooking(true)
               })
               .catch(function (error) {
-                setLoadingBooking(true);
-                console.log(error);
-              });
-          });
-        });
-        setPackages((prev) => [...prev, packageInfo]);
+                setLoadingBooking(true)
+                console.log(error)
+              })
+          })
+        })
+        setPackages((prev) => [...prev, packageInfo])
       } else {
         axios({
           method: "post",
@@ -479,27 +484,27 @@ function AddPayment() {
           },
         })
           .then(function (category) {
-            var serviceDetails = {};
+            var serviceDetails = {}
             if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes";
+              serviceDetails.key = "Electrolytes"
             } else {
               serviceDetails.key = category.data.name
                 .replace(/\s+/g, "_")
-                .toLowerCase();
+                .toLowerCase()
             }
-            serviceDetails.category = category.data.name;
-            serviceDetails.name = info.lab_test;
-            let labTest = { name: info.lab_test, qty: "1", price: info.price };
-            setLabTests((prev) => [...prev, labTest]);
-            setLoadingBooking(true);
+            serviceDetails.category = category.data.name
+            serviceDetails.name = info.lab_test
+            let labTest = { name: info.lab_test, qty: "1", price: info.price }
+            setLabTests((prev) => [...prev, labTest])
+            setLoadingBooking(true)
           })
           .catch(function (error) {
-            setLoadingBooking(true);
-            console.log(error);
-          });
+            setLoadingBooking(true)
+            console.log(error)
+          })
       }
-    });
-  }, [services]);
+    })
+  }, [services])
 
   function removeService() {
     axios({
@@ -514,14 +519,14 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
-        setServices(services);
-        setTotal(total);
-        handleRemoveClose();
+        setServices(services)
+        setTotal(total)
+        handleRemoveClose()
       })
       .catch(function (error) {
-        console.log(error);
-        handleRemoveClose();
-      });
+        console.log(error)
+        handleRemoveClose()
+      })
 
     axios({
       method: "post",
@@ -534,18 +539,18 @@ function AddPayment() {
       },
     })
       .then(function (booking) {
-        setServices(booking.data);
+        setServices(booking.data)
       })
       .catch(function (error) {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
   //GET OPTION DETAILS
-  const [labOptions, setLabOptions] = useState([]);
-  const [packageOptions, setPackageOptions] = useState([]);
+  const [labOptions, setLabOptions] = useState([])
+  const [packageOptions, setPackageOptions] = useState([])
   React.useEffect(() => {
-    labOptions.length = 0;
+    labOptions.length = 0
     axios({
       method: "post",
       url: window.$link + "/lab_tests/getAll",
@@ -560,19 +565,19 @@ function AddPayment() {
         response.data.lab_tests
           .filter((info) => info.is_deleted === "0")
           .map((data) => {
-            var info = {};
+            var info = {}
 
-            info.labTestId = data.id;
-            info.price = data.price;
-            info.name = data.name;
-            info.type = "lab";
+            info.labTestId = data.id
+            info.price = data.price
+            info.name = data.name
+            info.type = "lab"
 
-            setLabOptions((oldArray) => [...oldArray, info]);
-          });
+            setLabOptions((oldArray) => [...oldArray, info])
+          })
       })
       .then(function (error) {
-        console.log(error);
-      });
+        console.log(error)
+      })
 
     axios({
       method: "post",
@@ -586,152 +591,154 @@ function AddPayment() {
     })
       .then(function (response) {
         response.data.packages.map((data) => {
-          var info = {};
-          info.labTestId = data.id;
-          info.price = data.price;
-          info.name = data.name;
-          info.type = "package";
+          var info = {}
+          info.labTestId = data.id
+          info.price = data.price
+          info.name = data.name
+          info.type = "package"
 
-          setPackageOptions((oldArray) => [...oldArray, info]);
-        });
+          setPackageOptions((oldArray) => [...oldArray, info])
+        })
       })
       .then(function (error) {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
+
+  /* set test options to lab services array */
   function showAvailableLab() {
-    // const labServices = getAllLabServices();
-    const orderedServices = labOptions.sort(function (a, b) {
-      var textA = a.name.toUpperCase();
-      var textB = b.name.toUpperCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
+    const orderedServices = []
+    labOptions.sort(function (a, b) {
+      var textA = a.name.toUpperCase()
+      var textB = b.name.toUpperCase()
+      return textA < textB ? -1 : textA > textB ? 1 : 0
+    })
+    labOptions.map((data) => {
+      orderedServices.push({
+        ...data,
+        label: data.name,
+        value: data.labTestId + "_" + data.price + "_" + data.type,
+      })
+    })
 
     return (
-      <div>
-        <label for="input-label">TEST:</label>
-        <select
-          className="input-select"
-          id="test"
-          name="test"
-          onChange={(e) => setTest(e.target.value)}
-        >
-          <option value="" selected disabled hidden>
-            CHOOSE CLINICAL SERVICE
-          </option>
-          {orderedServices.map((option, index) => (
-            <option
-              value={option.labTestId + "_" + option.price + "_" + option.type}
-            >
-              {option.name}
-            </option>
-          ))}
-        </select>
+      <div className="row">
+        <div className="col-2">
+          <label for="input-label">TEST:</label>
+        </div>
+        <div className="col-6">
+          <Select
+            onChange={setTest}
+            options={orderedServices}
+            className="input-multi"
+            isMulti={true}
+            isSearchable={true}
+            placeholder={"Choose Package..."}
+          />
+        </div>
       </div>
-    );
+    )
   }
 
+  /* set test options to lab packages array */
   function showAvailablePackages() {
-    // const packages = getAllPackages();
-    const orderedServices = packageOptions.sort(function (a, b) {
-      var textA = a.name.toUpperCase();
-      var textB = b.name.toUpperCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
+    const orderedServices = []
+    packageOptions.sort(function (a, b) {
+      var textA = a.name.toUpperCase()
+      var textB = b.name.toUpperCase()
+      return textA < textB ? -1 : textA > textB ? 1 : 0
+    })
+    packageOptions.map((data) => {
+      orderedServices.push({
+        ...data,
+        label: data.name,
+        value: data.labTestId + "_" + data.price + "_" + data.type,
+      })
+    })
 
     return (
-      <div>
-        <label for="input-label">TEST:</label>
-        <select
-          className="input-select"
-          id="test"
-          name="test"
-          onChange={(e) => setTest(e.target.value)}
-        >
-          <option value="" selected disabled hidden>
-            CHOOSE PACKAGE
-          </option>
-          {orderedServices.map((option, index) => (
-            <option
-              value={option.labTestId + "_" + option.price + "_" + option.type}
-            >
-              {option.name}
-            </option>
-          ))}
-        </select>
+      <div className="row">
+        <div className="col-2">
+          <label for="input-label">TEST:</label>
+        </div>
+
+        <div className="col-6">
+          <Select
+            onChange={(e) => setTest([e])}
+            options={orderedServices}
+            className="input-multi"
+            // isMulti={true}
+            isSearchable={true}
+            placeholder={"Choose Package..."}
+          />
+        </div>
       </div>
-    );
+    )
   }
 
   function addService() {
-    const key = test.split("_");
-    const testId = key[0];
-    const price = key[1];
-    const type = key[2];
+    let packagePayload = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ""),
+      type: test[0].type,
+      package_tests: test.map((data) => {
+        return data.labTestId
+      }),
+      package_prices: test.map((data) => {
+        return data.price
+      }),
+      status: "PENDING",
+      package_extracted_dates: [],
+      package_test_starts: [],
+      package_test_finishes: [],
+      package_result_dates: [],
+      package_file_results: [],
+      added_by: userId,
+    }
+    let labPayload = {
+      api_key: window.$api_key,
+      token: userToken.replace(/['"]+/g, ""),
+      type: test[0].type,
+      lab_tests: test.map((data) => {
+        return data.labTestId
+      }),
+      lab_prices: test.map((data) => {
+        return data.price
+      }),
+      status: "PENDING",
+      lab_extracted_dates: [],
+      lab_test_starts: [],
+      lab_test_finishes: [],
+      lab_result_dates: [],
+      lab_file_results: [],
+      added_by: userId,
+    }
 
-    var extractedDates = [];
-    var testStarts = [];
-    var testFinishes = [];
-    var resultDates = [];
-    var fileResults = [];
-
-    if (type == "lab") {
+    if (test.length > 0) {
       axios({
         method: "post",
         url: window.$link + "Bookingdetails/add/" + id,
         withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          type: type,
-          lab_tests: [testId],
-          lab_prices: [price],
-          status: "PENDING",
-          lab_extracted_dates: [],
-          lab_test_starts: [],
-          lab_test_finishes: [],
-          lab_result_dates: [],
-          lab_file_results: [],
-          added_by: userId,
-        },
-      })
-        .then(function (booking) {})
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else if (type == "package") {
-      axios({
-        method: "post",
-        url: window.$link + "Bookingdetails/add/" + id,
-        withCredentials: false,
-        params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ""),
-          type: type,
-          package_tests: [testId],
-          package_prices: [price],
-          status: "PENDING",
-          package_extracted_dates: [],
-          package_test_starts: [],
-          package_test_finishes: [],
-          package_result_dates: [],
-          package_file_results: [],
-          added_by: userId,
-        },
+        params: test[0].type === "lab" ? labPayload : packagePayload,
       })
         .then(function (booking) {
-          // console.log(booking);
+          toast.success(booking.data.message.success)
+          setTimeout(() => {
+            refreshPage()
+          }, 2000)
         })
         .catch(function (error) {
-          console.log(error);
-        });
+          console.log("error lab", error)
+        })
+    } else {
+      toast.error("Please select a test.")
     }
   }
 
   function submit(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (click === false) {
-      setClick(true);
+      setClick(true)
       if (payment === "cash") {
         axios({
           method: "post",
@@ -748,19 +755,19 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: cashTax,
+            withholding_tax: cashTax,
           },
         })
           .then(function (response) {
-            var date = new Date();
+            var date = new Date()
             // console.log(response)
-            toast.success("Payment Successful!");
-            refreshPage();
+            toast.success("Payment Successful!")
+            refreshPage()
           })
           .catch(function (error) {
-            console.log(error);
-            toast.error("Payment Unsuccessful!");
-          });
+            console.log(error)
+            toast.error("Payment Unsuccessful!")
+          })
       }
       if (payment === "check") {
         axios({
@@ -781,18 +788,18 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: checkTax,
+            withholding_tax: checkTax,
           },
         })
           .then(function (response) {
             // console.log(response);
-            toast.success("Payment Successful!");
-            refreshPage();
+            toast.success("Payment Successful!")
+            refreshPage()
           })
           .catch(function (error) {
-            console.log(error);
-            toast.error("Payment Unsuccessful!");
-          });
+            console.log(error)
+            toast.error("Payment Unsuccessful!")
+          })
       }
       if (payment === "card") {
         axios({
@@ -815,18 +822,18 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: cardTax,
+            withholding_tax: cardTax,
           },
         })
           .then(function (response) {
             // console.log(response);
-            toast.success("Payment Successful!");
-            refreshPage();
+            toast.success("Payment Successful!")
+            refreshPage()
           })
           .catch(function (error) {
-            console.log(error);
-            toast.error("Payment Unsuccessful!");
-          });
+            console.log(error)
+            toast.error("Payment Unsuccessful!")
+          })
       }
       if (payment === "others") {
         axios({
@@ -846,18 +853,18 @@ function AddPayment() {
             grand_total: grandTotal,
             remarks: remarks,
             added_by: userId,
-            withholdingtax: othersTax,
+            withholding_tax: othersTax,
           },
         })
           .then(function (response) {
             // console.log(response);
-            toast.success("Payment Successful!");
-            refreshPage();
+            toast.success("Payment Successful!")
+            refreshPage()
           })
           .catch(function (error) {
-            console.log(error);
-            toast.error("Payment Unsuccessful!");
-          });
+            console.log(error)
+            toast.error("Payment Unsuccessful!")
+          })
       }
     }
   }
@@ -873,7 +880,7 @@ function AddPayment() {
         />
         PRINT
       </button>
-    );
+    )
   }
 
   function cashForm() {
@@ -895,9 +902,9 @@ function AddPayment() {
               className="form-control"
               placeholder="P"
               onChange={(e) => {
-                const inputValue = e.target.value;
+                const inputValue = e.target.value
                 if (inputValue !== null) {
-                  setPay(inputValue);
+                  setPay(inputValue)
                 }
               }}
             />
@@ -931,7 +938,7 @@ function AddPayment() {
               className="form-control"
               placeholder="P"
               onChange={(e) => {
-                setCashTax(e.target.value);
+                setCashTax(e.target.value)
               }}
             />
           </Col>
@@ -964,7 +971,7 @@ function AddPayment() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   function checkForm() {
@@ -1054,7 +1061,7 @@ function AddPayment() {
               className="form-control"
               placeholder="P"
               onChange={(e) => {
-                setCheckTax(e.target.value);
+                setCheckTax(e.target.value)
               }}
             />
           </Col>
@@ -1078,16 +1085,13 @@ function AddPayment() {
           </Col>
         </Row>
         <div className="row d-flex justify-content-end mt-4">
-          {paymentStatus == "paid" &&
-            queueNumber != "" &&
-            printData == true &&
-            printButton()}
+          {printData == true && printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE BOOKING
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   function cardForm() {
@@ -1208,7 +1212,7 @@ function AddPayment() {
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
-                  setCardTax(e.target.value);
+                  setCardTax(e.target.value)
                 }}
               />
             </Col>
@@ -1242,7 +1246,7 @@ function AddPayment() {
           </div>
         </div>
       </>
-    );
+    )
   }
 
   function othersForm() {
@@ -1283,7 +1287,7 @@ function AddPayment() {
                 className="form-control"
                 placeholder="P"
                 onChange={(e) => {
-                  setOthersTax(e.target.value);
+                  setOthersTax(e.target.value)
                 }}
               />
             </Col>
@@ -1347,11 +1351,11 @@ function AddPayment() {
           </div>
         </div>
       </>
-    );
+    )
   }
 
   if (redirect == true) {
-    return <Navigate to="/cashier" />;
+    return <Navigate to="/cashier" />
   }
 
   return (
@@ -1434,6 +1438,7 @@ function AddPayment() {
             deleteService={handleRemove}
             withDiscount={seniorPwdId}
             total={total}
+            hmo={hmo}
             setTotal={setTotal}
             grandTotal={grandTotal}
             serviceFee={serviceFee}
@@ -1455,7 +1460,7 @@ function AddPayment() {
             </div>
           )}
 
-          {((paymentStatus == "paid" &&
+          {/* {((paymentStatus == "paid" &&
             queueNumber != "" &&
             printData == true) ||
             discountDetail === "with_company_discount") && (
@@ -1472,7 +1477,21 @@ function AddPayment() {
                 <button className="save-btn">Loading Data...</button>
               </div>
             </div>
-          )}
+          )} */}
+
+          <div className="row">
+            {printData && (
+              <div className="col-sm-12 d-flex justify-content-end">
+                {printButton()}
+              </div>
+            )}
+
+            {!printData && (
+              <div className="col-sm-12 d-flex justify-content-end">
+                <button className="save-btn">Loading Data...</button>
+              </div>
+            )}
+          </div>
 
           {paymentStatus != "paid" && (
             <div className="payment-cont">
@@ -1535,78 +1554,6 @@ function AddPayment() {
               <p>{payment === "check" && checkForm()}</p>
               <p>{payment === "card" && cardForm()}</p>
               <p>{payment === "others" && othersForm()}</p>
-              {/* </form> */}
-              <ToastContainer hideProgressBar={true} />
-
-              <Modal show={showRemove} onHide={handleRemoveClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>SUBMIT</Modal.Title>
-                </Modal.Header>
-                <form>
-                  <Modal.Body>
-                    Are you sure you want to remove service?
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleRemoveClose}>
-                      Close
-                    </Button>
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      onClick={removeService}
-                    >
-                      Submit
-                    </Button>
-                  </Modal.Footer>
-                </form>
-              </Modal>
-
-              <Modal show={show} onHide={handleClose} size="xl">
-                <Modal.Header closeButton>
-                  <Modal.Title className="w-100 add-test-header">
-                    ADD TESTS
-                  </Modal.Title>
-                </Modal.Header>
-                <form>
-                  <Modal.Body>
-                    <label for="input-label">SERVICE:</label>
-
-                    <select
-                      className="input-select"
-                      id="service"
-                      name="service"
-                      onChange={(e) => setAddTestType(e.target.value)}
-                    >
-                      <option value="" selected disabled hidden>
-                        CHOOSE TYPE
-                      </option>
-                      <option value="CLINICAL SERVICES">
-                        CLINICAL SERVICES
-                      </option>
-                      <option value="PACKAGES">PACKAGES</option>
-                    </select>
-
-                    <br />
-
-                    <p>
-                      {addTestType === "CLINICAL SERVICES" &&
-                        showAvailableLab()}
-                    </p>
-                    <p>
-                      {addTestType === "PACKAGES" && showAvailablePackages()}
-                    </p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <button
-                      type="submit"
-                      className="add-tests-btn"
-                      onClick={() => addService()}
-                    >
-                      Submit
-                    </button>
-                  </Modal.Footer>
-                </form>
-              </Modal>
             </div>
           )}
 
@@ -1627,6 +1574,7 @@ function AddPayment() {
               bookingDate={bookingDate}
               payment={paymentType}
               result={result}
+              paymentDataServices={services}
               services={printServices}
               isCompany={true}
               packages={packages}
@@ -1637,6 +1585,7 @@ function AddPayment() {
               encodedOn={encodedOn}
               referral={referral}
               discountCode={discountCode}
+              hmo={hmo}
               setPrintReadyFinal={setPrintReadyFinal}
             />
           </div>
@@ -1653,8 +1602,73 @@ function AddPayment() {
           </div>
         </div>
       )}
+
+      {/* </form> */}
+      <ToastContainer hideProgressBar={true} />
+
+      <Modal show={showRemove} onHide={handleRemoveClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>SUBMIT</Modal.Title>
+        </Modal.Header>
+        <form>
+          <Modal.Body>Are you sure you want to remove service?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleRemoveClose}>
+              Close
+            </Button>
+            <Button type="submit" variant="primary" onClick={removeService}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        centered
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="w-100 add-test-header">ADD TESTS</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row mb-2">
+            <div className="col-2">
+              <label for="input-label">SERVICE:</label>
+            </div>
+            <div className="col-6">
+              <select
+                className="form-select"
+                id="service"
+                name="service"
+                onChange={(e) => setAddTestType(e.target.value)}
+              >
+                <option value="" selected disabled hidden>
+                  CHOOSE TYPE
+                </option>
+                <option value="CLINICAL SERVICES">CLINICAL SERVICES</option>
+                <option value="PACKAGES">PACKAGES</option>
+              </select>
+            </div>
+          </div>
+
+          <p>{addTestType === "CLINICAL SERVICES" && showAvailableLab()}</p>
+          <p>{addTestType === "PACKAGES" && showAvailablePackages()}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            // type="submit"
+            className="add-tests-btn"
+            onClick={addService}
+          >
+            Submit
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
-  );
+  )
 }
 
-export default AddPayment;
+export default AddPayment

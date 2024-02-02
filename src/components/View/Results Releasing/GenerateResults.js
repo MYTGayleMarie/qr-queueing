@@ -29,6 +29,7 @@ import Image10 from "../../../images/med_tech/Image10.png";
 import Image11 from "../../../images/med_tech/OSMA.png";
 import image12 from "../../../images/med_tech/image12.png";
 import image11 from "../../../images/med_tech/image11.png";
+import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png";
 import DummyImg from "../../../images/med_tech/dummy.png";
 import Watermark from "../../../images/Watermark.png";
 import Teal from "../../../images/backgrounds/TealHeader.png";
@@ -290,6 +291,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
 
     setLabReady(true);
   }, []);
+  
 
   // Function to get Booking Details get Details
   React.useEffect(() => {
@@ -402,7 +404,10 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         return "PRC LIC. NO.: 0085308";
       } else if (userId === "48") {
         return "PRC LIC. NO.: 0109437";
-      } else {
+      }else if (userId === "50") {
+        return "PRC LIC. NO.: 0052556";
+      } 
+       else {
         // setMedTechPRC("PRC LIC. NO.: 0112611");
         setMedTechPRC("No PRC LIC. NO.");
       }
@@ -427,7 +432,9 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         return "PRC LIC. NO.: 0085308";
       } else if (userId === "48") {
         return "PRC LIC. NO.: 0109437";
-      }
+      }else if (userId === "50") {
+        return "PRC LIC. NO.: 0052556";
+      } 
        else {
         setMedTechPRC("No PRC LIC. NO.");
       }
@@ -506,7 +513,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setHasImage(true);
         return (
           <img
-            src={Image9}
+            src={Image4}
             alt="MedTech"
             className="mt-5"
             width={100}
@@ -611,7 +618,7 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
         setHasImage(true);
         return (
           <img
-            src={Image9}
+            src={Image4}
             alt="MedTech"
             className="mt-5"
             width={100}
@@ -640,7 +647,19 @@ export default function GenerateResults({ servicesData, title, bookingId }) {
             height={50}
           />
         );
-      } else {
+      }else if (userId === "50") {
+        setHasImage(true);
+        return (
+          <img
+            src={bonjoc}
+            alt="MedTech"
+            className="mt-5"
+            width={100}
+            height={50}
+          />
+        );
+      }
+       else {
         setHasImage(false);
         return <div className="mt-5"></div>;
       }

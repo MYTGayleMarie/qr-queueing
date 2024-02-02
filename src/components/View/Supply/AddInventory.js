@@ -123,7 +123,7 @@ function AddInventory() {
       <div className="active-cont">
         <Header type="thin" title="ADD INVENTORY" />
         <ToastContainer hideProgressBar={true} />
-        <div className="booking-form">
+        <div className="inventory-form">
           <h2 className="inventory-header italic">COUNT DETAILS</h2>
            <div className="row">
               <div className="col-sm-6">
@@ -137,7 +137,7 @@ function AddInventory() {
           {
             items.map((row, index) => {
             return(
-                    <div className="row">
+                    <div className="row inventory-row">
                         <div className="col-sm-6">
                           <label for={row.item_name} className="service-item">{row.item_name}</label>
                         </div>

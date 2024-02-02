@@ -70,7 +70,6 @@ function ReportSales() {
       },
     }).then((response) => {
       //  setIsReady(false)
-
       setGeneralSalesSummary(response.data.data.sales);
       setIsReady(true);
       var totals = [];
@@ -139,10 +138,12 @@ function ReportSales() {
           const sales_Array = response.data.data.sales;
           sales_Array.map((arr, index1) => {
             arr.map((method, index2) => {
+             
               if (method.accounts != null) {
                 var date = new Date(method.payment_date);
                 var formattedDate = date.toDateString().split(" ");
                 method.accounts.map((account, index3) => {
+                  
                   var info = {};
                   info.date =
                     formattedDate[1] +
@@ -153,6 +154,7 @@ function ReportSales() {
                   info.method = method.type;
                   info.account = account.name;
                   info.amount = account.amount;
+                  info.tender_total = method.grand_total
                   if (method.type != "credit") {
                     temp_total += parseFloat(info.amount);
                   }
@@ -196,7 +198,7 @@ function ReportSales() {
     let tempData = salesData.concat(sales);
 
     setByDate(Object.values(groupArrayOfObjects(tempData, "date")));
-
+ 
     // setIsReady(true)
   }, [salesData]);
 
@@ -295,7 +297,7 @@ function ReportSales() {
             type={"sales"}
             tableData={byDate}
             rowsPerPage={100}
-            headingColumns={["DATE", "METHOD,  ACCOUNT,  AMOUNT", "TOTAL"]}
+            headingColumns={["DATE", "METHOD,  ACCOUNT,  AMOUNT", "TOTAL PER TENDER", "TOTAL"]}
             filteredData={filteredData}
             setFilter={setFilter}
             filter={filter}

@@ -158,6 +158,7 @@ const MultipleUpload = (bookingId, details) => {
         withCredentials: false, 
         params: {
             api_key: window.$api_key,
+            // file_name:filenames,
             token: userToken.replace(/['"]+/g, ''),
             requester: userId,
             booking_id: bookingId.bookingId,
@@ -206,10 +207,6 @@ const MultipleUpload = (bookingId, details) => {
          <input  className="addfile-res-btn" type="file" accept="application/pdf" multiple onChange={uploadFileHandler}/>
          {/* <button className="multipleupload-res-btn" type='submit' onClick={()=>navigate('/dashboard')}>Upload</button> */}
          <button className="multipleupload-res-btn" type='submit' onClick={()=>setAttemptCancel(true)} >Upload</button>
-
-         {/* <input className="email-input" type='text' placeholder='Email'></input>
-         <input className="pass-input" type='text' placeholder='Passcode'></input>
-         <button className="send-btn" type='send'>Send Out</button> */}
          {!fileSize && <p style={{color:'red'}}>File size exceeded!!</p>}
          {fileUploadProgress && <p style={{color:'red'}}>Uploading File(s)</p>}
         {fileUploadResponse!=null && <p style={{color:'green'}}>{fileUploadResponse}</p>}

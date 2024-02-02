@@ -1,3 +1,10 @@
+:root {
+  --blue-brand: #419ea3;
+  --blue-brand-hover: #55bfc5;
+  --yellow-brand: #dbd975;
+  --danger-color: #d72c2c;
+}
+
 .App {
   text-align: center;
   overflow-x: hidden !important;
@@ -60,6 +67,18 @@
 .App-link {
   color: #61dafb;
 }
+
+.serve-now-btn {
+  border-radius: 10px;
+  background-color: var(--blue-brand);
+  color: whitesmoke;
+  text-transform: capitalize;
+  border:none;
+  width: 100%;
+}
+/* .serve-now-btn:hover{
+  background-color: var(--blue-brand--hover) !important;
+} */
 
 @keyframes App-logo-spin {
   from {

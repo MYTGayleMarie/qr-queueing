@@ -59,6 +59,17 @@ function Header({
           </button>
         );
       }
+      if (button === "bulk-invoice-hmo") {
+        return (
+          <button
+            className="edit-profile"
+            onClick={() => navigate("/hmo-invoices/add-invoice-bulk")}
+          >
+            {" "}
+            GENERATE BULK HMO INVOICE
+          </button>
+        );
+      }
       if (button === "export-excel") {
         if (status == true && typeData == "sales") {
           var salesData = [];

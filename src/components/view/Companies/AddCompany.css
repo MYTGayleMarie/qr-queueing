@@ -1,3 +1,7 @@
 .form-wrapper {
     padding: 2%;
 }
+
+.required{
+    color: red;
+}

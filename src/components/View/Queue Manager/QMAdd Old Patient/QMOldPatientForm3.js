@@ -39,6 +39,7 @@ import {
   getOtherTests,
 } from "../../../../services/services";
 import { ConsoleView } from "react-device-detect";
+import { changeStatus } from "../../../../Helpers/APIs/queueAPI";
 
 /*********************************
  * FUNCTIONS
@@ -137,8 +138,16 @@ function QMOldPatientForm3({
     lastmeal,
     homeServiceFee,
   } = customer;
+  const { queueNumber} = useParams()
+  console.log("queue Num",queueNumber)
   //get all lab tests
   const [allLabServices, setAllLabServices] = useState([]);
+
+  async function queueAttender(status) {
+    const response = await changeStatus(queueNumber, status);
+
+  }
+
   React.useEffect(() => {
     axios({
       method: "post",
@@ -534,6 +543,7 @@ function QMOldPatientForm3({
             });
           })
           .then(function (response) {
+            queueAttender("attending")
             setBookingId(response.data.data.booking_id);
             toast.success(response.data.message.success);
 

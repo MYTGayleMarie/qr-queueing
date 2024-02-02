@@ -118,6 +118,7 @@ function Form2CModule({ service, customer, packagePrice, labPrice,  setPackagePr
     const clinicalUrinalysis = allLabServices.filter(item=>item.categoryId == 23)
     const clinicalFecalysis = allLabServices.filter(item=>item.categoryId == 24)
     const hematology = allLabServices.filter(item=>item.categoryId == 2)
+    const coaguation = allLabServices.filter(item=>item.categoryId == 25)
     const electrolytes = allLabServices.filter(item=>item.categoryId == 3 || item.categoryId == 4)
     const glucoseTests = allLabServices.filter(item=>item.categoryId == 5)
     const kidneyFunctionTests = allLabServices.filter(item=>item.categoryId == 6)
@@ -344,6 +345,10 @@ console.log(checkedServicesDetails)
       break;
       case 24:
         getDetails(clinicalFecalysis, data[0]);
+        checkedServicesDetails.push(itemDetails);
+      break;
+      case 25:
+        getDetails(coaguation, data[0]);
         checkedServicesDetails.push(itemDetails);
       break;
     }

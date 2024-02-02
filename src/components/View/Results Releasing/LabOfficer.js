@@ -1,65 +1,71 @@
-import React, { Fragment, useEffect, useState, useRef, useMemo } from "react";
-import axios from "axios";
+import React, { Fragment, useEffect, useState, useRef, useMemo } from "react"
+import axios from "axios"
 import {
   getToken,
   getUser,
   getRoleId,
   formatDate,
-} from "../../../utilities/Common";
-import { useForm } from "react-hooks-helper";
-import { useReactToPrint } from "react-to-print";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import useTable from "../../../utilities/Pagination";
-import TableFooter from "../../TableFooter";
-import { Navigate, useParams } from "react-router-dom";
-import Select from "react-select";
-import { Button, Modal } from "react-bootstrap";
-import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
-import GenerateResults from "./GenerateResults";
+} from "../../../utilities/Common"
+import { useForm } from "react-hooks-helper"
+import { useLocation } from "react-router-dom"
+import { useReactToPrint } from "react-to-print"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import useTable from "../../../utilities/Pagination"
+import TableFooter from "../../TableFooter"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
+import Select from "react-select"
+import { Button, Modal } from "react-bootstrap"
+import "react-quill/dist/quill.snow.css"
+import ReactQuill from "react-quill"
+import GenerateResults from "./GenerateResults"
 
-import "./FileUpload.css";
-import "./MedTech.css";
-import "./LabOfficer.css";
+import "./FileUpload.css"
+import "./MedTech.css"
+import "./LabOfficer.css"
 
 //components
-import Header from "../../Header.js";
-import Navbar from "../../Navbar";
-import Table from "../../Table.js";
-import labResultsData from "./LabResultsData.js";
-import { SkewLoader } from "react-spinners";
+import Header from "../../Header.js"
+import Navbar from "../../Navbar"
+import Table from "../../Table.js"
+import labResultsData from "./LabResultsData.js"
+import { SkewLoader } from "react-spinners"
 
-import Logo from "../../../images/logo.png";
+import Logo from "../../../images/logo.png"
 
 // Import Signature Images
-import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png";
-import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png";
-import Image3 from "../../../images/med_tech/DEVIO_ANECA.png";
-// import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png";
-import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png";
-import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png";
+import Image1 from "../../../images/med_tech/ABIERAS_JENNIFER.png"
+import Image2 from "../../../images/med_tech/AJEDO_GENIEVIEV.png"
+import Image3 from "../../../images/med_tech/DEVIO_ANECA.png"
+import Image4 from "../../../images/med_tech/VIVERO_CHARLENE.png"
+import Image5 from "../../../images/med_tech/CORTEZ_SAMANTHA.png"
+import Image6 from "../../../images/med_tech/MATAGANAS_ARIZA.png"
 // import Image7 from "../../../images/med_tech/BONJOC_JEREMY.png";
 // import Image8 from "../../../images/med_tech/MAJESELA_ABALORIO.png";
-import Image9 from "../../../images/med_tech/image9.png";
-import Image10 from "../../../images/med_tech/Image10.png";
-import Image11 from "../../../images/med_tech/OSMA.png";
-import image11 from "../../../images/med_tech/image11.png";
-import image12 from "../../../images/med_tech/image12.png";
-import DummyImg from "../../../images/med_tech/dummy.png";
-import Watermark from "../../../images/Watermark.png";
-import Teal from "../../../images/backgrounds/TealHeader.png";
-import { setISODay } from "date-fns";
+import Image9 from "../../../images/med_tech/image9.png"
+import Image10 from "../../../images/med_tech/Image10.png"
+import Image11 from "../../../images/med_tech/OSMA.png"
+import image11 from "../../../images/med_tech/image11.png"
+import image12 from "../../../images/med_tech/image12.png"
+import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
+import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
+import DummyImg from "../../../images/med_tech/dummy.png"
+import Watermark from "../../../images/Watermark.png"
+import Teal from "../../../images/backgrounds/TealHeader.png"
+import { setISODay } from "date-fns"
+import html2canvas from "html2canvas"
+import { jsPDF } from "jspdf"
+import { isString } from "util"
 
-const buttons = ["add-new-patient", "add-old-patient"];
-const userToken = getToken();
-const userId = getUser();
-var bookingId = "";
+const buttons = ["add-new-patient", "add-old-patient"]
+const userToken = getToken()
+const userId = getUser()
+var bookingId = ""
 // var id = "";
 // var result = "";
 // var unit = "";
-var presentDate = new Date();
-var formattedPresentData = presentDate.toISOString().split("T")[0];
+var presentDate = new Date()
+var formattedPresentData = presentDate.toISOString().split("T")[0]
 
 var monthNames = [
   "JANUARY",
@@ -74,20 +80,24 @@ var monthNames = [
   "OCTOBER",
   "NOVEMBER",
   "DECEMBER",
-];
+]
 
 export const refreshPage = () => {
-  window.location.reload();
-};
+  window.location.reload()
+}
 
 export default function LabOfficer() {
-  document.body.style = "background: white;";
-  const { id, dateFrom, dateTo } = useParams();
+  document.body.style = "background: white;"
+  const { id, dateFrom, dateTo } = useParams()
   const [filteredData, setFilter] = useForm({
     from_date: dateFrom ? dateFrom : formattedPresentData,
     to_date: dateTo ? dateTo : formattedPresentData,
     done: false,
-  });
+  })
+  const [editDetails, setEditDetails] = useState({
+    name: "",
+    value: "",
+  })
 
   const monthNames = [
     "January",
@@ -102,85 +112,90 @@ export default function LabOfficer() {
     "October",
     "November",
     "December",
-  ];
+  ]
   // Patient details
-  const [editingLab, setEditingLab] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [senior_id, setSeniorId] = useState("");
-  const [pwd_id, setPWDId] = useState("");
-  const componentRef = useRef();
+  const [editingLab, setEditingLab] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [middleName, setMiddleName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [birthDate, setBirthDate] = useState("")
+  const [gender, setGender] = useState("")
+  const [age, setAge] = useState("")
+  const [contactNo, setContactNo] = useState("")
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState("")
+  const [senior_id, setSeniorId] = useState("")
+  const [pwd_id, setPWDId] = useState("")
+  const componentRef = useRef()
+  const pdfRef = useRef()
 
   // Lab Tests
-  const [services, setServices] = useState([]);
-  const [labTests, setLabTests] = useState([]);
-  const [labTestData, setLabTestData] = useState([]);
+  const [services, setServices] = useState([])
+  const [labTests, setLabTests] = useState([])
+  const [labTestData, setLabTestData] = useState([])
   const [selectedLab, setSelectedLab] = useState({
     label: "",
-  });
-  const [isDataFetched, setIsDataFetched] = useState(false);
-  const [labOptions, setLabOptions] = useState([]);
-  const [labOptionsPackage, setLabOptionsPackage] = useState([]);
-  const allOptions = (labOptions || []).concat(labOptionsPackage || []);
-  const [loading, setLoading] = useState(true);
-  const [redirect, setRedirect] = useState(false);
-  const [testIndex, setTestIndex] = useState();
-  const [isApproved, setIsApproved] = useState("");
-  const [withResults, setWithResults] = useState(false);
+  })
+  const [isDataFetched, setIsDataFetched] = useState(false)
+  const [labOptions, setLabOptions] = useState([])
+  const [labOptionsPackage, setLabOptionsPackage] = useState([])
+  const allOptions = labOptions.concat(labOptionsPackage)
+  const [loading, setLoading] = useState(true)
+  const [redirect, setRedirect] = useState(false)
+  const [testIndex, setTestIndex] = useState()
+  const [isApproved, setIsApproved] = useState("")
+  const [withResults, setWithResults] = useState(false)
 
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(false)
   // Lab Test options
-  const [labTestOptions, setLabTestOptions] = useState([]);
-  const [isDropdown, setIsDropdown] = useState(false);
+  const [labTestOptions, setLabTestOptions] = useState([])
+  const [isDropdown, setIsDropdown] = useState(false)
 
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("")
 
   //Edit Modal
-  const [show, setShow] = useState(false);
-  const [labName, setLabName] = useState("");
-  const [result, setResult] = useState("");
-  const handleClose = () => setShow(false);
+  const [show, setShow] = useState(false)
+  const [labName, setLabName] = useState("")
+  const [result, setResult] = useState("")
+  const handleClose = () => setShow(false)
 
   // Remarks textbox
-  const [editable, setEditable] = useState(false);
-  const [remarks, setRemarks] = useState("");
-  const [saveRemarks, setSaveRemarks] = useState("");
+  const [editable, setEditable] = useState(false)
+  const [remarks, setRemarks] = useState("")
+  const [saveRemarks, setSaveRemarks] = useState("")
 
   // For Package details result
-  const [packageDetailId, setPackageDetailId] = useState([]);
+  const [packageDetailId, setPackageDetailId] = useState([])
 
   // For Show PDF Modal
-  const [showPDF, setShowPDF] = useState(false);
-  const [remark, setRemark] = useState("");
-  const handleRedirect = () => setRedirect(true);
+  const [showPDF, setShowPDF] = useState(false)
+  const [remark, setRemark] = useState("")
+  const handleRedirect = () => setRedirect(true)
 
   // Doctor Remarks
-  const [medTech, setMedTech] = useState("");
-  const [medTechPRC, setMedTechPRC] = useState("");
-  const [clinicPatho, setClinicPatho] = useState("");
-  const [clinicPathoPRC, setClinicPathoPRC] = useState("");
+  const [medTech, setMedTech] = useState("")
+  const [medTechPRC, setMedTechPRC] = useState("")
+  const [clinicPatho, setClinicPatho] = useState("")
+  const [clinicPathoPRC, setClinicPathoPRC] = useState("")
 
   //Redirect
-  const [redirectBack, setRedirectBack] = useState(false);
+  const [redirectBack, setRedirectBack] = useState(false)
 
-  const [hasImage, setHasImage] = useState(true);
+  const [serologyGroup, setSerologyGroup] = useState([])
+  const [thyroidGroup, setThyroidGroup] = useState([])
+  const navigateto = useNavigate()
+
+  const [hasImage, setHasImage] = useState(true)
   function getTime(date) {
     return date.toLocaleString("en-US", {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
-    });
+    })
   }
   function update(lab_test) {
-    setEditingLab(lab_test);
-    setIsDropdown(false);
+    setEditingLab(lab_test)
+    setIsDropdown(false)
 
     // For dropdowns in Edit modal
     if (
@@ -188,22 +203,22 @@ export default function LabOfficer() {
       selectedLab.label == "[P] Urinalysis"
     ) {
       if (lab_test == "Color") {
-        setLabTestOptions(labResultsData.urinalysisColorOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.urinalysisColorOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Transparency") {
-        setLabTestOptions(labResultsData.urinalysisTransparencyOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.urinalysisTransparencyOptions)
+        setIsDropdown(true)
       } else if (
         lab_test == "Pregnancy Test" ||
         lab_test == "Pregnancy_Test" ||
         lab_test == "Serum Pregnancy Test" ||
         lab_test == "Serum_Pregnancy_Test"
       ) {
-        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.urinalysisPregnancyTestOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Protein" || lab_test == "Sugar") {
-        setLabTestOptions(labResultsData.urinalysisSugarProteinOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.urinalysisSugarProteinOptions)
+        setIsDropdown(true)
       } else if (
         lab_test == "Epithelial Cells" ||
         lab_test == "Bacteria" ||
@@ -214,169 +229,213 @@ export default function LabOfficer() {
         lab_test == "Amorphous_Urates/Phosphate" ||
         lab_test == "Mucus_Threads"
       ) {
-        setLabTestOptions(labResultsData.MicroscopicExamOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.MicroscopicExamOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (selectedLab.label == "Serum Pregnancy Test") {
       if (
         lab_test === "Serum Pregnancy Test" ||
         lab_test === "Serum_Pregnancy_Test"
       ) {
-        setLabTestOptions(labResultsData.posNegTestOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.posNegTestOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
-    } else if (selectedLab.label == "Antigen Rapid Swab (Nasal)") {
+    } else if (
+      selectedLab.label == "Antigen Rapid Swab (Nasal)" ||
+      selectedLab.label == "[P] Antigen Rapid Swab (Nasal)"
+    ) {
       if (lab_test === "COVID Antigen Rapid Test") {
-        setLabTestOptions(labResultsData.posNegTestOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.posNegTestOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (selectedLab.label == "H. Pylori Ag") {
       if (lab_test === "H. Pylori") {
-        setLabTestOptions(labResultsData.posNegTestOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.posNegTestOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (selectedLab.label == "HIV Screening (Anti HIV)") {
       if (lab_test === "Anti-HIV") {
-        setLabTestOptions(labResultsData.reactiveNonReactiveOptions2);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions2)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (
       selectedLab.label == "Fecalysis" ||
       selectedLab.label == "[P] Fecalysis"
     ) {
       if (lab_test == "Color") {
-        setLabTestOptions(labResultsData.fecalysisColorOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.fecalysisColorOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Consistency") {
-        setLabTestOptions(labResultsData.fecalysisConsistencyOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.fecalysisConsistencyOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Fat Globules") {
-        setLabTestOptions(labResultsData.MicroscopicExamOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.MicroscopicExamOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Intestinal Ova/Parasite seen") {
-        setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.fecalysisOvaParasiteOptions)
+        setIsDropdown(true)
       } else if (lab_test == "Cyst/Trophozoite") {
-        setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.fecalysisCystTrophozoiteOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (
       lab_test == "Fecal Occult Blood" ||
       lab_test == "Pregnancy Test" ||
       lab_test == "Serum "
     ) {
-      setLabTestOptions(labResultsData.posNegOptions);
-      setIsDropdown(true);
+      setLabTestOptions(labResultsData.posNegOptions)
+      setIsDropdown(true)
     } else if (
       selectedLab.label == "Gram Staining" ||
       selectedLab.label == "[P] Gram Staining"
     ) {
       if (lab_test == "Epitheleal Cells") {
-        setLabTestOptions(labResultsData.MicroscopicExamOptions);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.MicroscopicExamOptions)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (
-      lab_test == "NS1 AG" ||
-      lab_test == "IgG" ||
-      lab_test == "IgM" ||
-      lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, ANTI-HCV, ANTI-HAV"
+      (lab_test == "NS1 AG" ||
+        lab_test == "IgG" ||
+        lab_test == "IgM" ||
+        lab_test == "HEPATITIS B SURFACE ANTIBODY TEST, Anti HCV, ANTI-HAV") &&
+      selectedLab.label !== "Anti HAV"
     ) {
-      setLabTestOptions(labResultsData.posNegOptions2);
-      setIsDropdown(true);
+      setLabTestOptions(labResultsData.posNegOptions2)
+      setIsDropdown(true)
     } else if (lab_test == "Syphilis/RPR/VDRL" || lab_test == "H. Pylori") {
-      setLabTestOptions(labResultsData.posNegOptions);
-      setIsDropdown(true);
+      setLabTestOptions(labResultsData.posNegOptions)
+      setIsDropdown(true)
     } else if (
       lab_test == "Anti-HIV" ||
+      lab_test == "[P] Anti-HIV" ||
       lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
+      lab_test == "[P] Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "HBSag (Hepatitis B Antigen)" ||
+      lab_test == "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+      lab_test == "[P] HBSag (Hepatitis B Antigen)" ||
       selectedLab.label == "HBSag (Hepatitis B Antigen)" ||
-      selectedLab.label == "Anti-HCV" ||
-      selectedLab.label == "Anti-HAV" ||
-      selectedLab.label == "Hepatitis B Surface Antibody Test"
+      selectedLab.label == "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+      selectedLab.label == "[P] HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label == "Anti HCV" ||
+      selectedLab.label == "[P] Anti HCV" ||
+      selectedLab.label == "Hepatitis B Surface Antibody Test" ||
+      selectedLab.label == "[P] Hepatitis B Surface Antibody Test"
     ) {
-      setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
-      setIsDropdown(true);
-      if (lab_test == "Hepatitis B Surface Antibody Test") {
-        setLabTestOptions(labResultsData.posNegOptions2);
+      setLabTestOptions(labResultsData.reactiveNonReactiveOptions)
+      setIsDropdown(true)
+      if (
+        lab_test == "Hepatitis B Surface Antibody Test" ||
+        lab_test == "Hepatitis B Surface Antibody Test"
+      ) {
+        setLabTestOptions(labResultsData.posNegOptions2)
       }
-      if (lab_test == "Anti-HAV	" || lab_test == "Anti-HCV") {
-        setLabTestOptions(labResultsData.posNegOptions2);
+      if (lab_test == "Anti HCV" || lab_test == "[P] Anti HCV") {
+        setLabTestOptions(labResultsData.posNegOptions2)
       }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
-      if (lab_test == "Hepatitis B Surface Antigen (HbsAg)") {
-        setLabTestOptions(labResultsData.reactiveNonReactiveOptions);
-        setIsDropdown(true);
-      } else if (lab_test == "Hepatitis B Surface Antibody Test") {
-        setLabTestOptions(labResultsData.posNegOptions2);
-      } else if (lab_test == "Anti-HCV") {
-        setLabTestOptions(labResultsData.posNegOptions2);
-        setIsDropdown(true);
-      } else if (lab_test == "Anti-HAV	" || lab_test == "Anti-HAV") {
-        setLabTestOptions(labResultsData.posNegOptions2);
-        setIsDropdown(true);
+      if (
+        lab_test == "Hepatitis B Surface Antigen (HbsAg)" ||
+        "[P] Hepatitis B Surface Antigen (HbsAg)"
+      ) {
+        setLabTestOptions(labResultsData.reactiveNonReactiveOptions)
+        setIsDropdown(true)
+      } else if (
+        lab_test == "Hepatitis B Surface Antibody Test" ||
+        lab_test == "[P] Hepatitis B Surface Antibody Test"
+      ) {
+        setLabTestOptions(labResultsData.posNegOptions2)
+      } else if (lab_test == "Anti HCV" || lab_test == "[P] Anti HCV") {
+        setLabTestOptions(labResultsData.posNegOptions2)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
     } else if (selectedLab.label == "Dengue") {
       if (lab_test === "NS1 Ag" || lab_test === "IgG" || lab_test === "IgM") {
-        setLabTestOptions(labResultsData.posNegOptions2);
-        setIsDropdown(true);
+        setLabTestOptions(labResultsData.posNegOptions2)
+        setIsDropdown(true)
       } else {
-        setIsDropdown(false);
+        setIsDropdown(false)
       }
+    } else if (selectedLab.label === "Anti HAV") {
+      setLabTestOptions(labResultsData.posNegTestOptions)
+      setIsDropdown(true)
     } else {
-      setIsDropdown(false);
+      setIsDropdown(false)
     }
 
     // For default value in Edit modal
     labTestData.map((row) => {
       if (lab_test == row.lab_test) {
-        setResult(row.result);
-        return row;
+        setResult(row.result)
+        return row
       }
-      return row;
-    });
-    setLabName(lab_test);
+      return row
+    })
+    setLabName(lab_test)
 
-    setShow(true);
+    setShow(true)
   }
 
   const submit = (e) => {
-    e.preventDefault();
+    if (editDetails.name !== "Ph") {
+      e.preventDefault()
 
-    const updatedData = labTestData.map((row) => {
-      if (row.lab_test === labName) {
-        row.result = result;
-        return row;
+      const updatedData = labTestData.map((row) => {
+        if (row.lab_test === labName) {
+          row.result = result
+          return row
+        }
+        return row
+      })
+
+      setLabTestData(updatedData)
+
+      setShow(false)
+    } else if (editDetails.name === "Ph") {
+      if (
+        parseFloat(editDetails.value) >= 5.0 &&
+        parseFloat(editDetails.value) <= 9.0
+      ) {
+        e.preventDefault()
+
+        const updatedData = labTestData.map((row) => {
+          if (row.lab_test === labName) {
+            row.result = result
+            return row
+          }
+          return row
+        })
+
+        setLabTestData(updatedData)
+
+        setShow(false)
+      } else {
+        toast.error("PH should be between 5.0 to 9.0")
       }
-      return row;
-    });
-
-    setLabTestData(updatedData);
-
-    setShow(false);
-  };
+    } else {
+    }
+  }
 
   //fetch Medtech
   //fetch Medtech
   React.useEffect(() => {
-    setClinicPatho("JENNIFER D. ABIERAS");
-    setClinicPathoPRC("PRC LIC. NO.: 0085469");
+    setClinicPatho("JENNIFER D. ABIERAS")
+    setClinicPathoPRC("PRC LIC. NO.: 0085469")
     if (medTech === "") {
       axios({
         method: "get",
@@ -389,161 +448,189 @@ export default function LabOfficer() {
         },
       })
         .then((response) => {
-          setMedTech(response.data.name);
+          setMedTech(response.data.name)
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
-  }, []);
+  }, [])
 
   function choosePRC(prc_id) {
     if (prc_id === "24") {
-      return "PRC LIC. NO.: 0052932";
+      return "PRC LIC. NO.: 0052932"
     } else if (prc_id === "25") {
-      return "PRC LIC. NO.: 0085690";
+      return "PRC LIC. NO.: 0085690"
     } else if (prc_id === "26") {
-      return "PRC LIC. NO.: 0092410";
+      return "PRC LIC. NO.: 0092410"
     } else if (prc_id === "23") {
-      return "PRC LIC. NO.: 0112611";
+      return "PRC LIC. NO.: 0112611"
     } else if (prc_id === "27") {
-      return "PRC LIC. NO.: 0109359";
+      return "PRC LIC. NO.: 0109359"
     } else if (prc_id === "28") {
-      return "PRC LIC. NO.: 0094539";
+      return "PRC LIC. NO.: 0094539"
     } else if (prc_id === "29") {
-      return "PRC LIC. NO.: 0093629";
+      return "PRC LIC. NO.: 0093629"
     } else if (prc_id === "30") {
-      return "PRC LIC. NO.: 0094334";
+      return "PRC LIC. NO.: 0094334"
     } else if (prc_id === "45") {
-      return "PRC LIC. NO.: 0085308";
+      return "PRC LIC. NO.: 0085308"
     } else if (prc_id === "48") {
-      return "PRC LIC. NO.: 0109437";
+      return "PRC LIC. NO.: 0109437"
+    } else if (prc_id === "50") {
+      return "PRC LIC. NO.: 0052556"
+    } else if (prc_id === "53") {
+      return "PRC LIC. NO.: 0115984"
     } else {
-      return "No PRC No.";
+      return "No PRC No."
     }
   }
 
   function chooseImage(prc_sig) {
     if (prc_sig === "23") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image9}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "24") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image2}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "25") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image6}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "26") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image5}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={50}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "27") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image10}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={50}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "28") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image3}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "29") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
-          src={Image9}
+          src={Image4}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "30") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={Image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "45") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={image11}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
     } else if (prc_sig === "48") {
-      setHasImage(true);
+      setHasImage(true)
       return (
         <img
           src={image12}
           alt="MedTech"
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
         />
-      );
+      )
+    } else if (prc_sig === "50") {
+      setHasImage(true)
+      return (
+        <img
+          src={bonjoc}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      )
+    } else if (prc_sig === "53") {
+      setHasImage(true)
+      return (
+        <img
+          src={jillian}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={100}
+          height={50}
+        />
+      )
     }
     // else{
     //   setHasImage(true);
@@ -552,7 +639,7 @@ export default function LabOfficer() {
     //       src={Image10}
     //       alt="MedTech"
     //       // className="mt-5"
-    //       style={{ marginTop: "3rem" }}
+    //       style={{ marginTop: "1.5rem" }}
     //       width={70}
     //       height={60}
     //     />
@@ -571,14 +658,14 @@ export default function LabOfficer() {
       //   />
       // );
       // {
-      setHasImage(false);
+      setHasImage(false)
 
       return (
         <div
           // className="mt-5"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "0.5rem" }}
         ></div>
-      );
+      )
     }
     // if (prc_sig === "23") {
     //   return Image9;
@@ -600,12 +687,12 @@ export default function LabOfficer() {
     //   return Image9;
     // }
   }
-  var label_test = "";
+  var label_test = ""
   selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
   selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+  selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
   selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-  selectedLab.label === "Anti-HAV" ||
-  selectedLab.label === "Anti-HCV" ? (
+  selectedLab.label === "Anti HCV" ? (
     (label_test = "Hepatitis Profile Tests")
   ) : (
     <>
@@ -617,13 +704,32 @@ export default function LabOfficer() {
         ? (label_test = "Thyroid Profile Tests")
         : (label_test = selectedLab.label)}
     </>
-  );
-  const fileName = lastName + ", " + firstName + "-" + label_test;
+  )
+  const fileName = lastName + ", " + firstName + "-" + label_test
   const printHandle = useReactToPrint({
     // onAfterPrint: handleRedirect,
     documentTitle: fileName,
-    onAfterPrint: refreshPage,
     content: () => componentRef.current,
+    onAfterPrint: () => {
+      refreshPage()
+      // navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      // console.log(document.querySelector("#capture"))
+      // html2canvas(document.querySelector("#capture")).then(canvas => {
+      // // html2canvas(componentRef.current).then(canvas => {
+      //   const imgData = canvas.toDataURL('image/png');
+      //   const a = document.createElement('a');
+      //   a.href = imgData;
+      //   a.download = 'image.png';
+      //   a.click();
+
+      // const imgData = canvas.toDataURL('image/png');
+      // const pdf = new jsPDF();
+      // pdf.addImage(imgData, 'PNG', 0, 0);
+      // pdf.save("download.pdf");
+      // });
+    },
+    // onAfterPrint: refreshPage,
+
     pageStyle: () => `
           @page { size: letter; margin: 0.5in;margin-bottom:0in}
           @media print {
@@ -638,7 +744,7 @@ export default function LabOfficer() {
             }
           }
           `,
-  });
+  })
 
   React.useEffect(() => {
     //for customer id
@@ -653,36 +759,36 @@ export default function LabOfficer() {
       },
     })
       .then((response) => {
-        setFirstName(response.data.data.booking.first_name);
-        setMiddleName(response.data.data.booking.middle_name);
-        setLastName(response.data.data.booking.last_name);
+        setFirstName(response.data.data.booking.first_name)
+        setMiddleName(response.data.data.booking.middle_name)
+        setLastName(response.data.data.booking.last_name)
 
-        var temp = new Date(response.data.data.booking.birthdate);
+        var temp = new Date(response.data.data.booking.birthdate)
 
         var date_temp =
           monthNames[temp.getMonth()] +
           " " +
           temp.getDate() +
           ", " +
-          temp.getFullYear();
-        setBirthDate(date_temp);
+          temp.getFullYear()
+        setBirthDate(date_temp)
 
-        setGender(response.data.data.booking.gender);
+        setGender(response.data.data.booking.gender)
 
-        var presentDate = new Date();
-        var age = presentDate.getFullYear() - temp.getFullYear();
-        var m = presentDate.getMonth() - temp.getMonth();
+        var presentDate = new Date()
+        var age = presentDate.getFullYear() - temp.getFullYear()
+        var m = presentDate.getMonth() - temp.getMonth()
         if (m < 0 || (m === 0 && presentDate.getDate() < temp.getDate())) {
-          age--;
+          age--
         }
-        setAge(age);
+        setAge(age)
 
-        setContactNo(response.data.data.booking.contact_no);
-        setEmail(response.data.data.booking.customer_email);
-        setAddress(response.data.data.booking.customer_address);
+        setContactNo(response.data.data.booking.contact_no)
+        setEmail(response.data.data.booking.customer_email)
+        setAddress(response.data.data.booking.customer_address)
       })
-      .catch((error) => {});
-  }, []);
+      .catch((error) => {})
+  }, [])
 
   // Function to get Booking Details get Details
   React.useEffect(() => {
@@ -698,16 +804,16 @@ export default function LabOfficer() {
         },
       })
         .then((booking) => {
-          setRemark(booking.data.data.booking_detail[0]?.remarks ?? "");
+          setRemark(booking.data.data.booking_detail[0]?.remarks ?? "")
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
-  }, []);
+  }, [])
 
   React.useEffect(() => {
-    setIsDataFetched(false);
+    setIsDataFetched(false)
     // Lab Options
     axios({
       method: "post",
@@ -719,42 +825,68 @@ export default function LabOfficer() {
         requester: userId,
       },
     }).then((booking) => {
-      setServices(booking.data);
-      var thyroid = booking.data.filter((data) => data.category_id === "13");
-      var serology = booking.data.filter((data) => data.category_id === "12");
+      setServices(booking.data)
+      var thyroid = booking.data.filter((data) => data.category_id === "13")
+      var serology = booking.data.filter(
+        (data) => data.category_id === "12" && data.lab_test !== "Anti HAV"
+      )
+      setThyroidGroup(thyroid)
+      setSerologyGroup(serology)
+
       var booking_wo_serology_thyroid = booking.data.filter(
-        (data) => data.category_id !== "12" && data.category_id !== "13"
-      );
+        (data) =>
+          ((data.category_id === "12" && data.lab_test === "Anti HAV") ||
+            data.category_id !== "12") &&
+          data.category_id !== "13"
+      )
 
       if (serology.length > 0) {
-        booking_wo_serology_thyroid.push(serology[0]);
+        booking_wo_serology_thyroid.push(serology[0])
       }
+
       if (thyroid.length > 0) {
-        booking_wo_serology_thyroid.push(thyroid[0]);
+        booking_wo_serology_thyroid.push(thyroid[0])
       }
+
       const labOptions = booking_wo_serology_thyroid
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
+            console.log("lab test", data)
             return {
               label: data.lab_test,
               id: data.id,
               type: data.type,
-            };
+              extracted_on: data.extracted_on,
+            }
           }
-          return null;
+          return null
         })
-        .filter((option) => option !== null);
+        .filter((option) => option !== null)
 
-      setLabOptions(labOptions);
-    });
+      setLabOptions(labOptions)
+    })
 
     if (selectedLab.id != null) {
-      setIsDataFetched(false);
-      setIsReady(false);
+      // var url_id;
+      // setIsReady(false);
+      // if(selectedLab.type === "package"){
+      //   url_id = selectedLab.booking_id
+      // }
+      // else{
+      //   url_id = selectedLab.id
+      // }
+
+      //recent merge conflict sept 21
+      let paramID = selectedLab.id
+      if (selectedLab?.type === "package") {
+        paramID = selectedLab.booking_detail_id
+      }
+      setIsDataFetched(false)
+      setIsReady(false)
       axios({
         method: "get",
-        url: window.$link + "Bookingdetails/getDetailsResult/" + selectedLab.id,
+        url: window.$link + "Bookingdetails/getDetailsResult/" + paramID,
         withCredentials: false,
         params: {
           api_key: window.$api_key,
@@ -763,64 +895,68 @@ export default function LabOfficer() {
         },
       })
         .then((response) => {
-          var data = response.data.data;
-          var packageDetailId = selectedLab.booking_id;
+          var data = response.data.data
+          var packageDetailId = selectedLab.booking_id
 
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
-              setLabTestData(data.booking_detail_results);
+              setLabTestData(data.booking_detail_results)
             } else if (data.booking_package_details_results[packageDetailId]) {
               setLabTestData(
                 data.booking_package_details_results[packageDetailId]
-              );
+              )
             } else {
-              handleLab(selectedLab);
+              handleLab(selectedLab)
             }
           } else if (
             data.booking_package_details_results[packageDetailId] == null
           ) {
-            handleLab(selectedLab);
+            handleLab(selectedLab)
           } else if (data.booking_package_details_results !== {}) {
             setLabTestData(
               data.booking_package_details_results[packageDetailId]
-            );
+            )
             if (selectedLab.result_approval === "approved") {
-              setIsApproved("approved");
+              setIsApproved("approved")
             } else if (selectedLab.result_approval === "disapproved") {
-              setIsApproved("disapproved");
+              setIsApproved("disapproved")
             } else {
-              setIsApproved("");
+              setIsApproved("")
             }
           } else {
-            handleLab(selectedLab);
+            handleLab(selectedLab)
           }
 
           const index = services.findIndex(
             (service) => service.lab_test === selectedLab.label
-          );
+          )
           if (services[index] !== undefined) {
             if (services[index].result_approval === "approved") {
-              setIsApproved("approved");
+              setIsApproved("approved")
             } else if (services[index].result_approval === "disapproved") {
-              setIsApproved("disapproved");
+              setIsApproved("disapproved")
             } else {
-              setIsApproved("");
+              setIsApproved("")
             }
           }
-          setIsReady(true);
-          setIsDataFetched(true);
+          setIsReady(true)
+          setIsDataFetched(true)
         })
         .catch((error) => {
-          setIsReady(true);
-          console.log(error);
+          setIsReady(true)
+          console.log("error here", error)
+          console.log("error status here", error.response.status === 404)
+          if (error?.response?.status === 404) {
+            handleLab(selectedLab)
+          }
 
-          handleLab(selectedLab);
-        });
+          // handleLab(selectedLab);
+        })
     }
-  }, [selectedLab]);
+  }, [selectedLab])
 
   React.useEffect(() => {
-    setIsReady(false);
+    setIsReady(false)
     axios({
       method: "get",
       url: window.$link + "/Bookingdetails/getDetails/" + selectedLab.id,
@@ -832,108 +968,165 @@ export default function LabOfficer() {
       },
     })
       .then(function (response) {
-        setRemarks(response.data.data.booking_detail[0].remarks);
-        setIsReady(true);
+        setRemarks(response.data.data.booking_detail[0].remarks)
+        setIsReady(true)
       })
       .catch(function (error) {
-        setIsReady(true);
-        console.log(error);
-      });
-  }, [selectedLab]);
+        setIsReady(true)
+        console.log(error)
+      })
+  }, [selectedLab])
 
   // Modal Result and Unit edit
   React.useEffect(() => {
-    const packageDetailId = selectedLab.booking_id;
-    // Store in different arrays the units, results, and lab names
-    const resultsArray = labTestData.map((row) => row.result);
-    const unitArray = labTestData.map((row) => row.unit);
-    const namesArray = labTestData.map((row) => row.lab_test);
-    const preferredArray = labTestData.map((row) => row.preferred);
-    const preferredFromArray = labTestData.map((row) => row.preferred_from);
-    const preferredToArray = labTestData.map((row) => row.preferred_to);
+    if (labTestData.length > 0) {
+      const packageDetailId = selectedLab.booking_id
+      // Store in different arrays the units, results, and lab names
+      const resultsArray = labTestData.map((row) => row.result)
+      const unitArray = labTestData.map((row) => row.unit)
+      const namesArray = labTestData.map((row) => row.lab_test)
+      const preferredArray = labTestData.map((row) => row.preferred)
+      const preferredFromArray = labTestData.map((row) => row.preferred_from)
+      const preferredToArray = labTestData.map((row) => row.preferred_to)
 
-    // axios parameter for editResults
-    const params = {
-      api_key: window.$api_key,
-      token: userToken.replace(/['"]+/g, ""),
-      booking: id,
-      requester: userId,
-    };
+      // axios parameter for editResults
+      const params = {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        booking: id,
+        requester: userId,
+      }
 
-    if (selectedLab.type != "lab") {
-      params.booking = packageDetailId;
-    }
+      if (selectedLab.type != "lab") {
+        params.booking = packageDetailId
+      }
 
-    // params for unit
-    namesArray.forEach((lab, index) => {
-      const unitParam = `unit_${lab}`;
-      params[unitParam] = unitArray[index];
-    });
+      // params for unit
+      namesArray.forEach((lab, index) => {
+        const unitParam = `unit_${lab}`
+        params[unitParam] = unitArray[index]
+      })
 
-    // params for labtests
-    namesArray.forEach((lab, index) => {
-      const labParam = `lab_tests[${index}]`;
-      params[labParam] = namesArray[index].replaceAll(" ", "_");
-    });
+      // params for labtests
+      namesArray.forEach((lab, index) => {
+        const labParam = `lab_tests[${index}]`
+        params[labParam] = namesArray[index].replaceAll(" ", "_")
+      })
 
-    // params for results
-    namesArray.forEach((lab, index) => {
-      const resultParam = `result_${lab.replaceAll(" ", "_")}`;
+      // params for results
+      namesArray.forEach((lab, index) => {
+        const resultParam = `result_${lab.replaceAll(" ", "_")}`
 
-      params[resultParam] = resultsArray[index];
-    });
+        params[resultParam] = resultsArray[index]
+      })
 
-    // params for preferred
-    namesArray.forEach((lab, index) => {
-      const preferredParam = `preferred_${lab}`;
-      params[preferredParam] = preferredArray[index];
-    });
+      // params for preferred
+      namesArray.forEach((lab, index) => {
+        const preferredParam = `preferred_${lab}`
+        params[preferredParam] = preferredArray[index]
+      })
 
-    // params for preferred_from
-    namesArray.forEach((lab, index) => {
-      const preferredFromParam = `preferred_from_${lab}`;
-      params[preferredFromParam] = preferredFromArray[index];
-    });
+      // params for preferred_from
+      namesArray.forEach((lab, index) => {
+        const preferredFromParam = `preferred_from_${lab}`
+        params[preferredFromParam] = preferredFromArray[index]
+      })
 
-    // params for preferred_to
-    namesArray.forEach((lab, index) => {
-      const preferredToParam = `preferred_to_${lab}`;
-      params[preferredToParam] = preferredToArray[index];
-    });
-
-    if (selectedLab.id != null) {
-      if (selectedLab.type == "lab") {
-        axios({
-          method: "post",
-          url: window.$link + "/Bookingdetails/editResult/" + selectedLab.id,
-          withCredentials: false,
-          params,
-        })
-          .then(function (response) {})
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else {
-        axios({
-          method: "post",
-          url:
-            window.$link +
-            "/Bookingpackage_details/editResult/" +
-            packageDetailId,
-          withCredentials: false,
-          params,
-        })
-          .then(function (response) {})
-          .catch(function (error) {
-            console.log(error);
-          });
+      // params for preferred_to
+      namesArray.forEach((lab, index) => {
+        const preferredToParam = `preferred_to_${lab}`
+        params[preferredToParam] = preferredToArray[index]
+      })
+      /*
+  {selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                      selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                      selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                      selectedLab.label === "Anti HCV" ? (
+                        "Hepatitis Profile Tests"
+                      ) : (
+                        <>
+                          {selectedLab.label === "T4" ||
+                          selectedLab.label === "T3" ||
+                          selectedLab.label === "FT4" ||
+                          selectedLab.label === "FT3" ||
+                          selectedLab.label === "TSH"
+                            ? "Thyroid Profile Tests"
+ */
+      if (selectedLab.id != null) {
+        if (selectedLab.type == "lab") {
+          if (
+            selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+            selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+            selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+            selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+            selectedLab.label === "Anti HCV"
+          ) {
+            serologyGroup.map((data) => {
+              axios({
+                method: "post",
+                url: window.$link + "/Bookingdetails/editResult/" + data.id,
+                withCredentials: false,
+                params,
+              })
+                .then(function (response) {})
+                .catch(function (error) {
+                  console.log(error)
+                })
+            })
+          } else if (
+            selectedLab.label === "T4" ||
+            selectedLab.label === "T3" ||
+            selectedLab.label === "FT4" ||
+            selectedLab.label === "FT3" ||
+            selectedLab.label === "TSH"
+          ) {
+            thyroidGroup.map((data) => {
+              axios({
+                method: "post",
+                url: window.$link + "/Bookingdetails/editResult/" + data.id,
+                withCredentials: false,
+                params,
+              })
+                .then(function (response) {})
+                .catch(function (error) {
+                  console.log(error)
+                })
+            })
+          } else {
+            axios({
+              method: "post",
+              url:
+                window.$link + "/Bookingdetails/editResult/" + selectedLab.id,
+              withCredentials: false,
+              params,
+            })
+              .then(function (response) {})
+              .catch(function (error) {
+                console.log(error)
+              })
+          }
+        } else {
+          axios({
+            method: "post",
+            url:
+              window.$link +
+              "/Bookingpackage_details/editResult/" +
+              packageDetailId,
+            withCredentials: false,
+            params,
+          })
+            .then(function (response) {})
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
       }
     }
-  }, [labTestData]);
+  }, [labTestData])
 
   // Lab tests
   React.useEffect(() => {
-    labTests.length = 0;
+    labTests.length = 0
     services.map((info, index1) => {
       // if service is package
       if (info.category_id == null) {
@@ -952,22 +1145,23 @@ export default function LabOfficer() {
               labResultsData.testsToCheck.includes(data.lab_test)
                 ? {
                     label: "[P] " + data.lab_test,
-                    id: data.booking_detail_id,
+                    id: data.id,
                     booking_id: data.id,
+                    booking_detail_id: data.booking_detail_id,
                     type: data.type ? data.type : "package",
                     result_approval: data.result_approval,
                     approver: data.approver,
                     approved_id: data.approved_by,
                   }
                 : null
-            );
+            )
 
             setLabOptionsPackage(
               labPackageOptions.filter((option) => option !== null)
-            );
+            )
 
             response.data.map((packageCat, index2) => {
-              var serviceDetails = {};
+              var serviceDetails = {}
               axios({
                 method: "post",
                 url: window.$link + "categories/show/" + packageCat.category_id,
@@ -979,26 +1173,26 @@ export default function LabOfficer() {
                 },
               }).then((category) => {
                 if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes";
+                  serviceDetails.key = "Electrolytes"
                 } else {
                   serviceDetails.key = category.data.name
                     .replace(/\s+/g, "_")
-                    .toLowerCase();
+                    .toLowerCase()
                 }
-                serviceDetails.category = category.data.name;
-                serviceDetails.name = packageCat.lab_test;
-                serviceDetails.type = "package";
-                serviceDetails.id = packageCat.id;
-                serviceDetails.test_id = packageCat.test_id;
-                serviceDetails.packageId = info.id;
+                serviceDetails.category = category.data.name
+                serviceDetails.name = packageCat.lab_test
+                serviceDetails.type = "package"
+                serviceDetails.id = packageCat.id
+                serviceDetails.test_id = packageCat.test_id
+                serviceDetails.packageId = info.id
                 // serviceDetails.md =
                 //setLabTests(oldArray=>[...oldArray, serviceDetails]);
-              });
-            });
+              })
+            })
           })
           .catch((error) => {
             // console.log(error)
-          });
+          })
       }
       // if service is lab test
       else {
@@ -1013,36 +1207,36 @@ export default function LabOfficer() {
           },
         })
           .then((category) => {
-            var serviceDetails = {};
+            var serviceDetails = {}
             if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes";
+              serviceDetails.key = "Electrolytes"
             } else {
               serviceDetails.key = category.data.name
                 .replace(/\s+/g, "_")
-                .toLowerCase();
+                .toLowerCase()
             }
 
-            serviceDetails.category = category.data.name;
-            serviceDetails.name = info.lab_test;
-            serviceDetails.type = "lab";
-            serviceDetails.packageId = "0";
-            serviceDetails.id = info.id;
-            serviceDetails.test_id = info.test_id;
-            serviceDetails.md = info.md;
+            serviceDetails.category = category.data.name
+            serviceDetails.name = info.lab_test
+            serviceDetails.type = "lab"
+            serviceDetails.packageId = "0"
+            serviceDetails.id = info.id
+            serviceDetails.test_id = info.test_id
+            serviceDetails.md = info.md
             //setLabTests(oldArray=>[...oldArray, serviceDetails]);
           })
           .catch((error) => {
             // console.log(error)
-          });
+          })
       }
-    });
-  }, [services]);
+    })
+  }, [services])
 
   // Categorize lab test
   const xray = labTests.filter(
     (info) => info.key === "xray" || info.key === "radiology"
-  );
-  const ecg = labTests.filter((info) => info.key === "cardiology");
+  )
+  const ecg = labTests.filter((info) => info.key === "cardiology")
 
   /****************/
   const hematology = labTests.filter(
@@ -1051,13 +1245,13 @@ export default function LabOfficer() {
       info.test_id !== "8" &&
       info.test_id !== "13" &&
       info.test_id !== "15"
-  );
+  )
 
-  const cbc = labTests.filter((info) => info.test_id === "8");
+  const cbc = labTests.filter((info) => info.test_id === "8")
 
-  const esr = labTests.filter((info) => info.test_id === "13");
+  const esr = labTests.filter((info) => info.test_id === "13")
 
-  const clotting = labTests.filter((info) => info.test_id === "15");
+  const clotting = labTests.filter((info) => info.test_id === "15")
 
   /****************/
 
@@ -1071,18 +1265,18 @@ export default function LabOfficer() {
       info.key === "liver_function_tests" ||
       info.key === "kidney_function_tests" ||
       info.key === "pancreatic_test"
-  );
+  )
   const thyroid_profile = labTests.filter(
     (info) => info.key === "thyroid_profile"
-  );
-  const tumor_markers = labTests.filter((info) => info.key === "tumor_markers");
+  )
+  const tumor_markers = labTests.filter((info) => info.key === "tumor_markers")
 
   const serology = labTests.filter(
     (info) =>
       info.key === "serology" ||
       info.key === "immunology" ||
       info.key === "hepatitis_profile_screening"
-  );
+  )
 
   /****************/
 
@@ -1091,60 +1285,60 @@ export default function LabOfficer() {
       info.key === "clinical_microscopy_urinalysis" &&
       info.test_id !== "7" &&
       info.test_id !== "130"
-  );
+  )
 
-  const spermAnalysis = labTests.filter((info) => info.test_id === "7");
+  const spermAnalysis = labTests.filter((info) => info.test_id === "7")
 
-  const serumPT = labTests.filter((info) => info.test_id === "130");
+  const serumPT = labTests.filter((info) => info.test_id === "130")
 
   /****************/
 
   const clinicalFecalysis = labTests.filter(
     (info) => info.key === "clinical_microscopy_fecalysis"
-  );
+  )
 
   // const fecalysis = labTests.filter((info)=>info.test_id==="4")
 
   /****************/
 
-  const ultrasound = labTests.filter((info) => info.key === "ultrasound");
+  const ultrasound = labTests.filter((info) => info.key === "ultrasound")
 
   /****************/
 
   // Previously others
   const histopathology = labTests.filter(
     (info) => info.key === "histopathology"
-  );
-  const microbiology = labTests.filter((info) => info.key === "microbiology");
+  )
+  const microbiology = labTests.filter((info) => info.key === "microbiology")
   // const {id} = useParams();
-  const [data, setData] = useState([]);
-  const [render, setRender] = useState("");
+  const [data, setData] = useState([])
+  const [render, setRender] = useState("")
 
   const others = labTests.filter(
     (info) => info.key === "other_tests" || info.key === "covid_rapid_tests"
-  );
-  const [uploadsData, setUploadsData] = useState([]);
-  const [download, setDOwnload] = useState("");
-  const [rows, setRows] = useState([]);
-  const [showConfirm, setShowConfirm] = React.useState(false);
+  )
+  const [uploadsData, setUploadsData] = useState([])
+  const [download, setDOwnload] = useState("")
+  const [rows, setRows] = useState([])
+  const [showConfirm, setShowConfirm] = React.useState(false)
 
   const labTestDataWithResults = useMemo(() => {
-    if (!labTestData) return [];
+    if (!labTestData) return []
 
     return labTestData.map((result) => {
-      setWithResults(true);
-      let reference_range = "";
+      setWithResults(true)
+      let reference_range = ""
 
       if (result.preferred_from != 0.0 || result.preferred_to != 0.0) {
         if (result.preferred_to == 999.99) {
-          reference_range = ">=" + result.preferred_from;
+          reference_range = ">=" + result.preferred_from
         } else {
-          reference_range = result.preferred_from + " - " + result.preferred_to;
+          reference_range = result.preferred_from + " - " + result.preferred_to
         }
       } else if (result.preferred != " ") {
-        reference_range = result.preferred;
+        reference_range = result.preferred
       } else {
-        reference_range = "";
+        reference_range = ""
       }
 
       if (
@@ -1152,26 +1346,59 @@ export default function LabOfficer() {
         selectedLab.label !== "[P] Urinalysis" &&
         selectedLab.label !== "Fecalysis" &&
         selectedLab.label !== "[P] Fecalysis" &&
+        selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+        selectedLab.label !== "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+        selectedLab.label !== "Anti HCV" &&
+        selectedLab.label !== "[P] Anti HCV" &&
+        selectedLab.label !== "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+        selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+        selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+        selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)" &&
         selectedLab.label !== "Syphilis/RPR/VDRL" &&
         selectedLab.label !== "KOH" &&
         selectedLab.label !== "Gram Stain" &&
-        selectedLab.label !== "HIV Screening (Anti HIV)"
+        selectedLab.label !== "Clotting & Bleeding Time" &&
+        selectedLab.label !== "HIV Screening (Anti HIV)" &&
+        selectedLab.label !== "Anti HAV"
       ) {
         return {
           lab_test: result.lab_test,
           result: result.result,
           unit: result.unit,
           reference_range: reference_range,
-        };
+        }
+      } else if (
+        selectedLab.label === "Anti HAV" ||
+        selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
+        selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+        selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+        selectedLab.label === "Anti HCV" ||
+        selectedLab.label === "[P] Anti HCV" ||
+        selectedLab.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+        selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+        selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+        selectedLab.label === "[P] Hepatitis B Surface Antigen (HbsAg)"
+      ) {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+        }
+      } else if (selectedLab.label === "Clotting & Bleeding Time") {
+        return {
+          lab_test: result.lab_test,
+          result: result.result,
+          reference_range: reference_range + " MINUTES",
+        }
       } else {
         return {
           lab_test: result.lab_test,
           result: result.result,
           unit: result.unit,
-        };
+        }
       }
-    });
-  }, [labTestData]);
+    })
+  }, [labTestData])
 
   // Get Multiple Uploads
   async function getUploads() {
@@ -1187,17 +1414,17 @@ export default function LabOfficer() {
         },
       })
         .then(function (response) {
-          setData(response.data.message.booking_attachments);
+          setData(response.data.message.booking_attachments)
         })
         .catch(function (error) {
-          setData(error);
-        });
+          setData(error)
+        })
     }
   }
 
   React.useEffect(() => {
-    setRole(getRoleId().replace(/^"(.*)"$/, "$1"));
-  }, []);
+    setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
+  }, [])
 
   // Save Remarks to database
   React.useEffect(() => {
@@ -1213,162 +1440,420 @@ export default function LabOfficer() {
       },
     })
       .then(function (response) {
-        setSelectedLab.remarks(remarks);
+        setSelectedLab.remarks(remarks)
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  }, [saveRemarks]);
+        console.log(error)
+      })
+  }, [saveRemarks])
 
   function filter() {}
 
   if (redirectBack === true) {
     if (dateFrom !== undefined && dateTo !== undefined) {
-      var link = "/lab/" + dateFrom + "/" + dateTo;
-      return <Navigate to={link} />;
+      var link = "/lab/" + dateFrom + "/" + dateTo
+      return <Navigate to={link} />
     } else {
-      var link = "/lab";
-      return <Navigate to={link} />;
+      var link = "/lab"
+      return <Navigate to={link} />
+    }
+  }
+  // FUNCTION TO SEND LETTER TO EMAIL
+  function handleSendEmail() {
+    const pdf = new jsPDF()
+    html2canvas(pdfRef.current, {
+      ignoreElements: function (element) {
+        return element.classList.contains("exclude")
+      },
+    }).then(function (canvas) {
+      const imgData = canvas.toDataURL("image/jpeg", 0.4)
+      pdf.addImage(imgData, "PNG", 10, 10, 180, 170, "", "FAST")
+      const pdfData = pdf.output("arraybuffer")
+      var url_link = ""
+      const pdfArray = new Uint8Array(pdfData)
+      const pdfBlob = new Blob([pdfArray], { type: "application/pdf" })
+      // sendEmail(pdfBlob);1
+
+      // Convert the pdfBlob to a base64 encoded string
+      const reader = new FileReader()
+      if (selectedLab.type == "lab") {
+        url_link = "Bookingdetails/uploadResults/"
+      } else {
+        url_link = "Bookingpackage_details/uploadResults/"
+      }
+      reader.onloadend = function () {
+        const base64String = reader.result.split(",")[1] // Get the base64 part
+        const pdf = "data:application/pdf;base64," + base64String
+        const formData = new FormData()
+        formData.append("file", pdf)
+        if (
+          selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+          selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+          selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+          selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+          selectedLab.label === "Anti HCV"
+        ) {
+          serologyGroup.map((data) => {
+            axios({
+              method: "post",
+              url: window.$link + url_link + data.id,
+              data: formData,
+              headers: { "Content-Type": "multipart/form-data" },
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ""),
+                added_by: userId,
+              },
+            })
+              .then((response) => {
+                toast.success("Uploaded successfully!")
+                setTimeout(() => {
+                  // refreshPage();
+                }, 2000)
+              })
+              .catch(function (error) {
+                console.log("Error")
+                console.log(error)
+                toast.error("Error Approval")
+              })
+          })
+        } else if (
+          selectedLab.label === "T4" ||
+          selectedLab.label === "T3" ||
+          selectedLab.label === "FT4" ||
+          selectedLab.label === "FT3" ||
+          selectedLab.label === "TSH"
+        ) {
+          thyroidGroup.map((data) => {
+            axios({
+              method: "post",
+              url: window.$link + url_link + data.id,
+              data: formData,
+              headers: { "Content-Type": "multipart/form-data" },
+              withCredentials: false,
+              params: {
+                api_key: window.$api_key,
+                token: userToken.replace(/['"]+/g, ""),
+                added_by: userId,
+              },
+            })
+              .then((response) => {
+                toast.success("Uploaded successfully!")
+                setTimeout(() => {
+                  // refreshPage();
+                }, 2000)
+              })
+              .catch(function (error) {
+                console.log("Error")
+                console.log(error)
+                toast.error("Error Approval")
+              })
+          })
+        } else {
+          axios({
+            method: "post",
+            url: window.$link + url_link + selectedLab.id,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ""),
+              added_by: userId,
+            },
+          })
+            .then((response) => {
+              toast.success("Uploaded successfully!")
+              setTimeout(() => {
+                // refreshPage();
+              }, 2000)
+            })
+            .catch(function (error) {
+              console.log("Error")
+              console.log(error)
+              toast.error("Error Approval")
+            })
+        }
+      }
+      reader.readAsDataURL(pdfBlob)
+    })
+  }
+  const handleApproved = () => {
+    var link = ""
+    if (selectedLab.type === "lab") {
+      link =
+        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id
+    } else {
+      link =
+        window.$link +
+        "Bookingpackage_details/updateResultApproval/" +
+        selectedLab.id
+    }
+
+    if (
+      selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+      selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+      selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+      selectedLab.label === "Anti HCV"
+    ) {
+      serologyGroup.map((data) => {
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "approved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Approved")
+            handleSendEmail()
+            setShowPDF(false)
+            printHandle()
+            // handlePrint();
+            // refreshPage();
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
+      })
+    } else if (
+      selectedLab.label === "T4" ||
+      selectedLab.label === "T3" ||
+      selectedLab.label === "FT4" ||
+      selectedLab.label === "FT3" ||
+      selectedLab.label === "TSH"
+    ) {
+      thyroidGroup.map((data) => {
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "approved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Approved")
+            handleSendEmail()
+            setShowPDF(false)
+            printHandle()
+            // handlePrint();
+            // refreshPage();
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
+      })
+    } else {
+      axios({
+        method: "post",
+        url: link,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+          updated_by: userId,
+          result_approval: "approved",
+        },
+      })
+        .then(function (response) {
+          toast.success("Results are Approved")
+          handleSendEmail()
+          setShowPDF(false)
+          printHandle()
+          // handlePrint();
+          // refreshPage();
+        })
+        .catch(function (error) {
+          console.log(error)
+          toast.error("Error Approval")
+        })
     }
   }
 
-  const handleApproved = () => {
-    var link = "";
-    if (selectedLab.type === "lab") {
-      link =
-        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
-    } else {
-      link =
-        window.$link +
-        "Bookingpackage_details/updateResultApproval/" +
-        selectedLab.booking_id;
-    }
-    axios({
-      method: "post",
-      url: link,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        updated_by: userId,
-        result_approval: "approved",
-      },
-    })
-      .then(function (response) {
-        toast.success("Results are Approved");
-        setShowPDF(false);
-        handlePrint();
-        // refreshPage();
-      })
-      .catch(function (error) {
-        console.log(error);
-        toast.error("Error Approval");
-      });
-  };
-
   const handleDisapproved = () => {
-    var link = "";
+    var link = ""
     if (selectedLab.type === "lab") {
       link =
-        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id;
+        window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id
     } else {
       link =
         window.$link +
         "Bookingpackage_details/updateResultApproval/" +
-        selectedLab.booking_id;
+        selectedLab.id
     }
-    axios({
-      method: "post",
-      url: link,
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        updated_by: userId,
-        result_approval: "disapproved",
-      },
-    })
-      .then(function (response) {
-        toast.success("Results are Disapproved");
-        setShowPDF(false);
-        refreshPage();
+
+    if (
+      selectedLab.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+      selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+      selectedLab.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+      selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+      selectedLab.label === "Anti HCV"
+    ) {
+      serologyGroup.map((data) => {
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "disapproved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Disapproved")
+            setShowPDF(false)
+            refreshPage()
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
       })
-      .catch(function (error) {
-        console.log(error);
-        toast.error("Error Approval");
-      });
-  };
+    } else if (
+      selectedLab.label === "T4" ||
+      selectedLab.label === "T3" ||
+      selectedLab.label === "FT4" ||
+      selectedLab.label === "FT3" ||
+      selectedLab.label === "TSH"
+    ) {
+      thyroidGroup.map((data) => {
+        axios({
+          method: "post",
+          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          withCredentials: false,
+          params: {
+            api_key: window.$api_key,
+            token: userToken.replace(/['"]+/g, ""),
+            updated_by: userId,
+            result_approval: "disapproved",
+          },
+        })
+          .then(function (response) {
+            toast.success("Results are Disapproved")
+            setShowPDF(false)
+            refreshPage()
+          })
+          .catch(function (error) {
+            console.log(error)
+            toast.error("Error Approval")
+          })
+      })
+    } else {
+      axios({
+        method: "post",
+        url: link,
+        withCredentials: false,
+        params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ""),
+          updated_by: userId,
+          result_approval: "disapproved",
+        },
+      })
+        .then(function (response) {
+          toast.success("Results are Disapproved")
+          setShowPDF(false)
+          refreshPage()
+        })
+        .catch(function (error) {
+          console.log(error)
+          toast.error("Error Approval")
+        })
+    }
+  }
 
   function handleLab(e) {
     //setLabTests(e.target.value)
 
     if (selectedLab.result_approval === "approved") {
-      setIsApproved("approved");
+      setIsApproved("approved")
     } else if (selectedLab.result_approval === "disapproved") {
-      setIsApproved("disapproved");
+      setIsApproved("disapproved")
     } else {
-      setIsApproved("");
+      setIsApproved("")
     }
 
     if (e.label === "Urinalysis" || e.label === "[P] Urinalysis") {
-      setLabTestData(labResultsData.labTestUrinalysisNoPreg);
+      setLabTestData(labResultsData.labTestUrinalysisNoPreg)
     } else if (e.label === "Fecalysis" || e.label === "[P] Fecalysis") {
-      setLabTestData(labResultsData.labTestFecalysis);
+      setLabTestData(labResultsData.labTestFecalysis)
     } else if (
       e.label === "Fecal Occult Blood" ||
       e.label === "[P] Fecal Occult Blood"
     ) {
-      setLabTestData(labResultsData.labTestFecalOccultBlood);
+      setLabTestData(labResultsData.labTestFecalOccultBlood)
     } else if (
       e.label === "Pregnancy Test (RPK Lateral Flow)" ||
       e.label === "[P] Pregnancy Test (RPK Lateral Flow)"
     ) {
-      setLabTestData(labResultsData.labTestPregnancyTest);
+      setLabTestData(labResultsData.labTestPregnancyTest)
     } else if (
       e.label === "Serum Pregnancy Test" ||
       e.label === "[P] Serum Pregnancy Test"
     ) {
-      setLabTestData(labResultsData.labTestSerumPregnancyTest);
-    } else if (e.label === "Antigen Rapid Swab (Nasal)") {
-      setLabTestData(labResultsData.labTestCovidAntigenTest);
+      setLabTestData(labResultsData.labTestSerumPregnancyTest)
+    } else if (
+      e.label === "Antigen Rapid Swab (Nasal)" ||
+      e.label === "[P] Antigen Rapid Swab (Nasal)"
+    ) {
+      setLabTestData(labResultsData.labTestCovidAntigenTest)
     } else if (
       e.label === "Sperm Analysis" ||
       e.label === "[P] Sperm Analysis"
     ) {
-      setLabTestData(labResultsData.labTestSpermAnalysis);
+      setLabTestData(labResultsData.labTestSpermAnalysis)
     } else if (e.label === "Gram Stain" || e.label === "[P] Gram Stain") {
-      setLabTestData(labResultsData.labTestGramStain);
+      setLabTestData(labResultsData.labTestGramStain)
     } else if (e.label === "KOH" || e.label === "[P] KOH") {
-      setLabTestData(labResultsData.labTestKOH);
+      setLabTestData(labResultsData.labTestKOH)
     } else if (e.label === "Dengue" || e.label === "[P] Dengue") {
-      setLabTestData(labResultsData.labTestDengue);
+      setLabTestData(labResultsData.labTestDengue)
     } else if (
       e.label === "Syphilis/RPR/VDRL" ||
       e.label === "[P] Syphilis/RPR/VDRL"
     ) {
-      setLabTestData(labResultsData.labTestSyphilis);
+      setLabTestData(labResultsData.labTestSyphilis)
     } else if (
       e.label === "HIV Screening (Anti HIV)" ||
       e.label === "[P] HIV SCreening (Anti HIV)"
     ) {
-      setLabTestData(labResultsData.labTestHIVScreening);
+      setLabTestData(labResultsData.labTestHIVScreening)
     } else if (e.label === "H. Pylori Ag") {
-      setLabTestData(labResultsData.labTestHPylori);
+      setLabTestData(labResultsData.labTestHPylori)
     } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
-      setLabTestData(labResultsData.labTestHPylori);
+      setLabTestData(labResultsData.labTestHPylori)
     } else if (
       e.label === "HBSag (Hepatitis B Antigen)" ||
-      e.label === "[P] HBSag (Hepatitis B Antigen)"
+      e.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+      e.label === "[P] HBSag (Hepatitis B Antigen)" ||
+      e.label === "Anti HCV"
     ) {
       // setLabTestData(labResultsData.labTestHepatitisB);
-      setLabTestData(labResultsData.labTestHepatitisA);
+      setLabTestData(labResultsData.labTestHepatitisA)
+    } else if (e.label === "Anti HAV") {
+      // setLabTestData(labResultsData.labTestHepatitisB);
+      setLabTestData(labResultsData.labTestHAV)
     } else if (
       e.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
       e.label === "[P] Anti HBs/HBSab (Hepatitis B Antibody)"
     ) {
-      setLabTestData(labResultsData.labTestHepatitisA);
+      setLabTestData(labResultsData.labTestHepatitisA)
     } else if (e.label === "TSH" || e.label === "[P] TSH") {
-      setLabTestData(labResultsData.labTestThyroid);
+      setLabTestData(labResultsData.labTestThyroid)
       // } else if (e.label === "FT4" || e.label === "[P] FT4") {
       //   setLabTestData(labResultsData.labTestThyroid);
       // } else if (e.label === "FT3" || e.label === "[P] FT3") {
@@ -1391,25 +1876,27 @@ export default function LabOfficer() {
         "[P] T4",
       ].includes(e.label)
     ) {
-      setLabTestData(labResultsData.labTestThyroid);
+      setLabTestData(labResultsData.labTestThyroid)
     } else if (e.label === "PSA" || e.label === "[P] PSA") {
-      setLabTestData(labResultsData.labTestPSA);
+      setLabTestData(labResultsData.labTestPSA)
     } else if (e.label === "CEA" || e.label === "[P] CEA") {
-      setLabTestData(labResultsData.labTestCEA);
+      setLabTestData(labResultsData.labTestCEA)
     } else if (e.label === "VITAMIN D" || e.label === "[P] VITAMIN D") {
-      setLabTestData(labResultsData.labTestVitaminD);
+      setLabTestData(labResultsData.labTestVitaminD)
+    } else if (e.label === "Clotting & Bleeding Time") {
+      setLabTestData(labResultsData.labTestClotting)
     } else {
-      setLabTestData([]);
+      setLabTestData([])
     }
-    setIsDataFetched(true);
+    setIsDataFetched(true)
   }
 
-  const { from_date, to_date, done } = filteredData;
+  const { from_date, to_date, done } = filteredData
 
   function edit(itemId, itemUnit) {
     // id = itemId;
     // unit = itemUnit;
-    setRedirect(true);
+    setRedirect(true)
   }
 
   // let labTestDataWithResults = labTestData.map((result) => {
@@ -1455,7 +1942,7 @@ export default function LabOfficer() {
               height={100}
             /> */}
           </div>
-          <div className="box pt-5">
+          <div className="box pt-2">
             <img
               src={Image1}
               alt="MedTech"
@@ -1499,12 +1986,46 @@ export default function LabOfficer() {
           </div>
         </div>
       </div>
-    );
-  };
+    )
+  }
+
+  const renderResult = (
+    result_user,
+    preferred_user,
+    preferred_from_user,
+    preferred_to_user
+  ) => {
+    const containsLetters = /[a-zA-Z]/.test(result_user)
+    const parsedResult = parseFloat(result_user)
+    const parsedPreferredFrom = parseFloat(preferred_from_user)
+    const parsedPreferredTo = parseFloat(preferred_to_user)
+    if (
+      selectedLab.label.toUpperCase() === "FECALYSIS" ||
+      selectedLab.label.toUpperCase() === "[P] FECALYSIS"
+    ) {
+      return <span>{result_user}</span>
+    } else {
+      if (preferred_user === " " && containsLetters) {
+        return <span>{result_user}</span>
+      } else if (
+        parsedResult < parsedPreferredFrom &&
+        parsedPreferredFrom !== 0.0
+      ) {
+        return <span className="red">{result_user + " L"}</span>
+      } else if (
+        parsedResult > parsedPreferredTo &&
+        parsedPreferredTo !== 0.0
+      ) {
+        return <span className="red">{result_user + " H"}</span>
+      } else {
+        return <span>{result_user}</span>
+      }
+    }
+  }
 
   const LaboratoryResultsTable = () => {
     return (
-      <div style={{ backgroundColor: "white", width: "900px" }}>
+      <div style={{ backgroundColor: "white", width: "900px" }} ref={pdfRef}>
         <div class="bg">
           <div>
             <div ref={componentRef}>
@@ -1556,14 +2077,17 @@ export default function LabOfficer() {
                         selectedLab.label.toUpperCase() === "URINALYSIS" ||
                         selectedLab.label.toUpperCase() === "[P] URINALYSIS"
                           ? "CLINICAL MICROSCOPY - URINALYSIS"
-                          : selectedLab.label.toUpperCase() === "FECALYSIS"
+                          : selectedLab.label.toUpperCase() === "FECALYSIS" ||
+                            selectedLab.label.toUpperCase() === "[P] FECALYSIS"
                           ? "CLINICAL MICROSCOPY - FECALYSIS"
                           : selectedLab.label.toUpperCase() ===
                               "HBSAG (HEPATITIS B ANTIGEN)" ||
                             selectedLab.label.toUpperCase() ===
+                              "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+                            selectedLab.label.toUpperCase() ===
                               "[P] HBSAG (HEPATITIS B ANTIGEN)" ||
-                            selectedLab.label.toUpperCase() === "ANTIHAV" ||
-                            selectedLab.label.toUpperCase() === "ANTIHCV"
+                            // selectedLab.label.toUpperCase() === "ANTI-HAV" ||
+                            selectedLab.label.toUpperCase() === "ANTI HCV"
                           ? "SEROLOGY"
                           : selectedLab.label.toUpperCase() === "FT4" ||
                             selectedLab.label.toUpperCase() === "FT3" ||
@@ -1573,6 +2097,31 @@ export default function LabOfficer() {
                           ? "THYROID PROFILE"
                           : selectedLab.label.toUpperCase() === "SPERM ANALYSIS"
                           ? "CLINICAL MICROSCOPY - SPERM ANALYSIS"
+                          : selectedLab.label === "Anti HAV" ||
+                            selectedLab.label ===
+                              "[P] HBSag (Hepatitis B Antigen)" ||
+                            selectedLab.label ===
+                              "HBSag (Hepatitis B Antigen)" ||
+                            selectedLab.label ===
+                              "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+                            selectedLab.label === "Anti HCV" ||
+                            selectedLab.label === "[P] Anti HCV" ||
+                            selectedLab.label ===
+                              "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                            selectedLab.label ===
+                              "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                            selectedLab.label ===
+                              "Hepatitis B Surface Antigen (HbsAg)" ||
+                            selectedLab.label ===
+                              "[P] Hepatitis B Surface Antigen (HbsAg)"
+                          ? "CLINICAL SEROLOGY"
+                          : selectedLab.label === "Clotting & Bleeding Time"
+                          ? "HEMATOLOGY"
+                          : selectedLab.label ===
+                              "Antigen Rapid Swab (Nasal)" ||
+                            selectedLab.label ===
+                              "[P] Antigen Rapid Swab (Nasal)"
+                          ? "ANTIGEN RAPID SWAB NASAL"
                           : selectedLab.label.toUpperCase()}
                       </>
                     )}
@@ -1581,10 +2130,10 @@ export default function LabOfficer() {
                 <div className="laboratory-space"></div>
                 <div class="tb">
                   <div class="row">
-                    <div class="col details_title">
+                    <div class="col-2 details_title">
                       <span>NAME :</span>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                       <span>
                         {lastName.toUpperCase()}, {firstName.toUpperCase()}{" "}
                         {middleName.toUpperCase()}
@@ -1601,10 +2150,10 @@ export default function LabOfficer() {
                     </div>
                   </div>
                   <div class="row" style={{ marginTop: "2px" }}>
-                    <div class="col details_title">
+                    <div class="col-2 details_title">
                       <span>AGE :</span>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                       <span>{age}</span>
                     </div>
                     <div class="col details_title">
@@ -1615,10 +2164,10 @@ export default function LabOfficer() {
                     </div>
                   </div>
                   <div class="row" style={{ marginTop: "2px" }}>
-                    <div class="col details_title">
+                    <div class="col-2 details_title">
                       <span>GENDER :</span>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                       <span>{gender.toUpperCase()}</span>
                     </div>
                     <div class="col details_title">
@@ -1629,10 +2178,10 @@ export default function LabOfficer() {
                     </div>
                   </div>
                   <div class="row" style={{ marginTop: "2px" }}>
-                    <div class="col details_title">
+                    <div class="col-2 details_title">
                       <span>PATIENT ID :</span>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                       <span>{id}</span>
                     </div>
                     <div class="col details_title">
@@ -1652,81 +2201,20 @@ export default function LabOfficer() {
 
                 <div>
                   <br />
-                  <div className="tb mid">
-                    <div className="row bd">
-                      <div className="col">
-                        <span>
-                          <b>TEST</b>
-                        </span>
-                      </div>
-                      <div className="col">
-                        <span>
-                          <b>RESULT</b>
-                        </span>
-                      </div>
-                      {selectedLab.label !== "Urinalysis" &&
-                        selectedLab.label !== "[P] Urinalysis" &&
-                        selectedLab.label !== "Fecalysis" &&
-                        selectedLab.label !== "[P] Fecalysis" &&
-                        selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                        selectedLab.label !== "KOH" &&
-                        selectedLab.label !== "H. Pylori Ag" &&
-                        selectedLab.label !==
-                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
-                        selectedLab.label !==
-                          "Hepatitis B Surface Antigen (HbsAg)" &&
-                        selectedLab.label !== "Anti-HAV" &&
-                        selectedLab.label !== "Anti-HCV" &&
-                        // selectedLab.label === "TSH" &&
-                        // selectedLab.label === "FT3" &&
-                        // selectedLab.label === "FT4" &&
-                        // selectedLab.label === "T3" &&
-                        // selectedLab.label === "T4" &&
-                        selectedLab.label !== "Gram Stain" &&
-                        selectedLab.label !==
-                          "Pregnancy Test (RPK Lateral Flow)" &&
-                        selectedLab.label !== "Fecal Occult Blood" &&
-                        selectedLab.label !== "HIV Screening (Anti HIV)" &&
-                        selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                        selectedLab.label !== "Serum Pregnancy Test" && (
+                  {selectedLab.label === "Antigen Rapid Swab (Nasal)" ||
+                  selectedLab.label === "[P] Antigen Rapid Swab (Nasal)" ? (
+                    <>
+                      <div className="tb mid">
+                        <div className="row bd">
                           <div className="col">
                             <span>
-                              <b>UNIT</b>
+                              <b>RESULT</b>
                             </span>
                           </div>
-                        )}
-                      {selectedLab.label !== "Urinalysis" &&
-                        selectedLab.label !== "[P] Urinalysis" &&
-                        selectedLab.label !== "Fecalysis" &&
-                        selectedLab.label !== "[P] Fecalysis" &&
-                        selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                        selectedLab.label !== "KOH" &&
-                        selectedLab.label !==
-                          "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                        selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
-                        selectedLab.label !==
-                          "Hepatitis B Surface Antigen (HbsAg)" &&
-                        selectedLab.label !== "Anti-HAV" &&
-                        selectedLab.label !==
-                          "Pregnancy Test (RPK Lateral Flow)" &&
-                        selectedLab.label !== "Anti-HCV" &&
-                        selectedLab.label !== "H. Pylori Ag" &&
-                        selectedLab.label !== "Fecal Occult Blood" &&
-                        selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
-                        selectedLab.label !== "Serum Pregnancy Test" &&
-                        selectedLab.label !== "Gram Stain" &&
-                        selectedLab.label !== "HIV Screening (Anti HIV)" && (
-                          <div className="col">
-                            <span>
-                              <b>REFERENCE RANGE</b>
-                            </span>
-                          </div>
-                        )}
-                    </div>
+                        </div>
 
-                    {labTestData.map((result, resultIndex) => (
-                      <>
+                        {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
                         <div
                           className="row"
                           style={{
@@ -1734,106 +2222,427 @@ export default function LabOfficer() {
                             width: "100%",
                             marginLeft: "1px",
                           }}
-                          key={resultIndex}
+                          // key={resultIndex}
                         >
-                          <div className="col">
-                            {selectedLab.label !== "TSH" &&
-                            selectedLab.label !== "FT3" &&
-                            selectedLab.label !== "FT4" &&
-                            selectedLab.label !== "T3" &&
-                            selectedLab.label !== "T4" &&
-                            (resultIndex === 0 ||
-                              result["test_type"] !==
-                                labTestData[resultIndex - 1]["test_type"]) ? (
-                              <div className="space-between">
-                                <h5
-                                  style={{
-                                    fontStyle: "italic",
-                                    marginTop: "10px",
-                                  }}
-                                >
-                                  <u>{result["test_type"]}</u>
-                                </h5>
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-6">Test Performed:</div>
+                              <div className="col-6">
+                                SARS CoV-2 Antigen Rapid Test
                               </div>
-                            ) : (
-                              ""
-                            )}
-                            {selectedLab.label !== "TSH" &&
-                            selectedLab.label !== "FT3" &&
-                            selectedLab.label !== "FT4" &&
-                            selectedLab.label !== "T3" &&
-                            selectedLab.label !== "T4" &&
-                            (resultIndex === 0 ||
-                              result["test_type_2"] !==
-                                labTestData[resultIndex - 1]["test_type_2"]) ? (
-                              <div className="space-between">
-                                <h6
-                                  style={{
-                                    fontStyle: "italic",
-                                    marginTop: "10px",
-                                  }}
-                                >
-                                  {result["test_type_2"]}
-                                </h6>
+
+                              <div className="col-6">
+                                Brand of Antigen Kit Used:
                               </div>
-                            ) : (
-                              ""
-                            )}
-                            <div className="space-between">
-                              <span>{result["lab_test"]}</span>
+                              <div className="col-6">
+                                STANDARD Q COVID-19 Ag
+                              </div>
+
+                              <div className="col-6">Time Collected:</div>
+                              <div className="col-6">
+                                {labTestData[1]?.result}
+                              </div>
+
+                              <div className="col-6">Lot #:</div>
+                              <div className="col-6">
+                                {labTestData[2]?.result}
+                              </div>
+
+                              <div className="col-6">Expiry Date:</div>
+                              <div className="col-6">
+                                {labTestData[3]?.result}
+                              </div>
+
+                              <div className="col-6">Test Principle:</div>
+                              <div className="col-6">
+                                Rapid Chromatographic Immunoassay
+                              </div>
                             </div>
                           </div>
+                        </div>
+                        <div className="row mt-4">
+                          <div className="col-6">
+                            <h5>TEST RESULT</h5>
+                          </div>
+                          <div className="col-6">
+                            <h5>{labTestData[0]?.result}</h5>
+                          </div>
+                        </div>
+                        {/* </>
+                    ))} */}
+                      </div>
+                    </>
+                  ) : selectedLab.label === "Anti HAV" ? (
+                    <>
+                      <div className="tb mid">
+                        <div className="row bd">
                           <div className="col">
-                            {/* Add Blank space for headers */}
-                            {selectedLab.label !== "TSH" &&
-                            selectedLab.label !== "FT3" &&
-                            selectedLab.label !== "FT4" &&
-                            selectedLab.label !== "T3" &&
-                            selectedLab.label !== "T4" &&
-                            (resultIndex === 0 ||
-                              result["test_type"] !==
-                                labTestData[resultIndex - 1]["test_type"]) ? (
-                              <div className="space-between">
-                                <h5
-                                  style={{
-                                    fontStyle: "italic",
-                                    marginTop: "10px",
-                                    color: "rgba(0, 0, 0, 0)",
-                                  }}
-                                >
-                                  {result["test_type"]}
-                                </h5>
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>ANTIBODY</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* {labTestData.map((result, resultIndex) => (
+                      <> */}
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                          // key={resultIndex}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4 pt-3">
+                                <h5>ANTI-HAV</h5>
                               </div>
-                            ) : (
-                              ""
-                            )}
-                            {selectedLab.label !== "TSH" &&
-                            selectedLab.label !== "FT3" &&
-                            selectedLab.label !== "FT4" &&
-                            selectedLab.label !== "T3" &&
-                            selectedLab.label !== "T4" &&
-                            (resultIndex === 0 ||
-                              result["test_type_2"] !==
-                                labTestData[resultIndex - 1]["test_type_2"]) ? (
-                              <div className="space-between">
-                                <h6
-                                  style={{
-                                    fontStyle: "italic",
-                                    marginTop: "10px",
-                                    color: "rgba(0, 0, 0, 0)",
-                                    marginLeft: "0 px",
-                                  }}
-                                >
-                                  {result["test_type_2"]}
-                                </h6>
+                              <div className="col-4">
+                                <div className="row">
+                                  <div className="col-12">IgG</div>
+                                  <div className="col-12">IgM</div>
+                                </div>
                               </div>
-                            ) : (
-                              ""
-                            )}
-                            {/* RESULTS */}
-                            {result["result"] !== "" ? (
-                              <>
-                                {result["preferred"] == " " ? (
+                              <div className="col-4">
+                                <div className="row">
+                                  <div className="col-12">
+                                    {labTestData[0]?.result}
+                                  </div>
+                                  <div className="col-12">
+                                    {labTestData[1]?.result}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* </>
+                    ))} */}
+                      </div>
+                    </>
+                  ) : selectedLab.label === "Clotting & Bleeding Time" ? (
+                    <>
+                      <div className="tb mid">
+                        <div className="row bd">
+                          <div className="col">
+                            <span>
+                              <b>TEST</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>RESULT</b>
+                            </span>
+                          </div>
+                          <div className="col">
+                            <span>
+                              <b>REFERENCE RANGE</b>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="row"
+                          style={{
+                            marginTop: "1px",
+                            width: "100%",
+                            marginLeft: "1px",
+                          }}
+                        >
+                          <div className="col align-center text-center mt-1">
+                            <div className="row">
+                              <div className="col-4">BLEEDING TIME</div>
+                              <div className="col-4">
+                                {labTestData[0]?.result}
+                              </div>
+                              <div className="col-4">
+                                1-3 MINUTES{" "}
+                                <span style={{ color: "red" }}>
+                                  {parseInt(labTestData[0]?.result) < 1
+                                    ? "(L)"
+                                    : parseInt(labTestData[0]?.result) > 3
+                                    ? "(H)"
+                                    : ""}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-4">CLOTTING TIME</div>
+                              <div className="col-4">
+                                {labTestData[1]?.result}
+                              </div>
+                              <div className="col-4">
+                                3-6 MINUTES{" "}
+                                <span style={{ color: "red" }}>
+                                  {parseInt(labTestData[1]?.result) < 3
+                                    ? "(L)"
+                                    : parseInt(labTestData[1]?.result) > 6
+                                    ? "(H)"
+                                    : ""}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="tb mid">
+                      <div className="row bd">
+                        <div className="col">
+                          <span>
+                            <b>TEST</b>
+                          </span>
+                        </div>
+                        <div className="col">
+                          <span>
+                            <b>RESULT</b>
+                          </span>
+                        </div>
+                        {selectedLab.label !== "Urinalysis" &&
+                          selectedLab.label !== "[P] Urinalysis" &&
+                          selectedLab.label !== "Fecalysis" &&
+                          selectedLab.label !== "[P] Fecalysis" &&
+                          selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                          selectedLab.label !== "KOH" &&
+                          selectedLab.label !== "H. Pylori Ag" &&
+                          selectedLab.label !==
+                            "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !==
+                            "[P]Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "Anti-HAV" &&
+                          selectedLab.label !== "[P] Anti-HAV" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !== "Anti HAV" &&
+                          selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !==
+                            "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !==
+                            "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !==
+                            "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !==
+                            "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                          // selectedLab.label === "TSH" &&
+                          // selectedLab.label === "FT3" &&
+                          // selectedLab.label === "FT4" &&
+                          // selectedLab.label === "T3" &&
+                          // selectedLab.label === "T4" &&
+                          selectedLab.label !== "Gram Stain" &&
+                          selectedLab.label !==
+                            "Pregnancy Test (RPK Lateral Flow)" &&
+                          selectedLab.label !== "Fecal Occult Blood" &&
+                          selectedLab.label !== "HIV Screening (Anti HIV)" &&
+                          selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !==
+                            "[P] Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !== "Serum Pregnancy Test" && (
+                            <div className="col">
+                              <span>
+                                <b>UNIT</b>
+                              </span>
+                            </div>
+                          )}
+                        {selectedLab.label !== "Urinalysis" &&
+                          selectedLab.label !== "[P] Urinalysis" &&
+                          selectedLab.label !== "Fecalysis" &&
+                          selectedLab.label !== "[P] Fecalysis" &&
+                          selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                          selectedLab.label !== "KOH" &&
+                          selectedLab.label !==
+                            "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !==
+                            "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "Anti-HAV" &&
+                          selectedLab.label !==
+                            "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "[P] Anti-HAV" &&
+                          selectedLab.label !==
+                            "Pregnancy Test (RPK Lateral Flow)" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !== "H. Pylori Ag" &&
+                          selectedLab.label !== "Anti HAV" &&
+                          selectedLab.label !==
+                            "[P] HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+                          selectedLab.label !==
+                            "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                          selectedLab.label !== "Anti HCV" &&
+                          selectedLab.label !== "[P] Anti HCV" &&
+                          selectedLab.label !==
+                            "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !==
+                            "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                          selectedLab.label !==
+                            "Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !==
+                            "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                          selectedLab.label !== "Fecal Occult Blood" &&
+                          selectedLab.label !== "Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !==
+                            "[P] Antigen Rapid Swab (Nasal)" &&
+                          selectedLab.label !== "Serum Pregnancy Test" &&
+                          selectedLab.label !== "Gram Stain" &&
+                          selectedLab.label !== "HIV Screening (Anti HIV)" && (
+                            <div className="col">
+                              <span>
+                                <b>REFERENCE RANGE</b>
+                              </span>
+                            </div>
+                          )}
+                      </div>
+
+                      {labTestData.map((result, resultIndex) => (
+                        <>
+                          <div
+                            className="row"
+                            style={{
+                              marginTop: "1px",
+                              width: "100%",
+                              marginLeft: "1px",
+                            }}
+                            key={resultIndex}
+                          >
+                            <div className="col">
+                              {selectedLab.label !== "TSH" &&
+                              selectedLab.label !== "FT3" &&
+                              selectedLab.label !== "FT4" &&
+                              selectedLab.label !== "T3" &&
+                              selectedLab.label !== "T4" &&
+                              (resultIndex === 0 ||
+                                result["test_type"] !==
+                                  labTestData[resultIndex - 1]["test_type"]) ? (
+                                <div className="space-between">
+                                  <h5
+                                    style={{
+                                      fontStyle: "italic",
+                                      marginTop: "10px",
+                                    }}
+                                  >
+                                    <u>{result["test_type"]}</u>
+                                  </h5>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {selectedLab.label !== "TSH" &&
+                              selectedLab.label !== "FT3" &&
+                              selectedLab.label !== "FT4" &&
+                              selectedLab.label !== "T3" &&
+                              selectedLab.label !== "T4" &&
+                              (resultIndex === 0 ||
+                                result["test_type_2"] !==
+                                  labTestData[resultIndex - 1][
+                                    "test_type_2"
+                                  ]) ? (
+                                <div className="space-between">
+                                  <h6
+                                    style={{
+                                      fontStyle: "italic",
+                                      marginTop: "10px",
+                                    }}
+                                  >
+                                    {result["test_type_2"]}
+                                  </h6>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              <div className="space-between">
+                                <span>
+                                  {result["lab_test"].replace("_", " ")}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="col">
+                              {/* Add Blank space for headers */}
+                              {selectedLab.label !== "TSH" &&
+                              selectedLab.label !== "FT3" &&
+                              selectedLab.label !== "FT4" &&
+                              selectedLab.label !== "T3" &&
+                              selectedLab.label !== "T4" &&
+                              (resultIndex === 0 ||
+                                result["test_type"] !==
+                                  labTestData[resultIndex - 1]["test_type"]) ? (
+                                <div className="space-between">
+                                  <h5
+                                    style={{
+                                      fontStyle: "italic",
+                                      marginTop: "10px",
+                                      color: "rgba(0, 0, 0, 0)",
+                                    }}
+                                  >
+                                    {result["test_type"]}
+                                  </h5>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {selectedLab.label !== "TSH" &&
+                              selectedLab.label !== "FT3" &&
+                              selectedLab.label !== "FT4" &&
+                              selectedLab.label !== "T3" &&
+                              selectedLab.label !== "T4" &&
+                              (resultIndex === 0 ||
+                                result["test_type_2"] !==
+                                  labTestData[resultIndex - 1][
+                                    "test_type_2"
+                                  ]) ? (
+                                <div className="space-between">
+                                  <h6
+                                    style={{
+                                      fontStyle: "italic",
+                                      marginTop: "10px",
+                                      color: "rgba(0, 0, 0, 0)",
+                                      marginLeft: "0 px",
+                                    }}
+                                  >
+                                    {result["test_type_2"]}
+                                  </h6>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {/* RESULTS */}
+                              {result["result"] !== "" ? (
+                                <>
+                                  {/* {result["preferred"] == " " ? (
                                   result["preferred"] == result["result"] ? (
                                     <span>{result["result"]}</span>
                                   ) : (
@@ -1852,8 +2661,8 @@ export default function LabOfficer() {
                                     <span class="red">
                                       {result["result"] + " (L)"}
                                     </span>
-                                  ) : result["result"] >
-                                    result["preferred_to"] ? (
+                                  ) : (result["result"] >
+                                    result["preferred_to"]) ? (
                                     <span class="red">
                                       {result["result"] + " (H)"}
                                     </span>
@@ -1862,150 +2671,216 @@ export default function LabOfficer() {
                                   )
                                 ) : (
                                   <span> {result["result"]}</span>
-                                )}
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
-                            selectedLab.label.toUpperCase() !==
-                              "[P] URINALYSIS" &&
-                            selectedLab.label.toUpperCase() !== "FECALYSIS" &&
-                            selectedLab.label.toUpperCase() !==
-                              "[P] FECALYSIS" &&
-                            selectedLab.label !==
-                              "Antigen Rapid Swab (Nasal)" &&
-                            selectedLab.label !== "Serum Pregnancy Test" &&
-                            selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                            selectedLab.label !== "H. Pylori Ag" &&
-                            selectedLab.label !== "KOH" &&
-                            selectedLab.label !==
-                              "Anti HBs/HBSab (Hepatitis B Antibody)" &&
-                            selectedLab.label !==
-                              "HBSag (Hepatitis B Antigen)" &&
-                            selectedLab.label !==
-                              "Hepatitis B Surface Antigen (HbsAg)" &&
-                            selectedLab.label !== "Anti-HAV" &&
-                            selectedLab.label !== "Anti-HCV" &&
-                            selectedLab.label !==
-                              "Pregnancy Test (RPK Lateral Flow)" &&
-                            selectedLab.label !== "Fecal Occult Blood" &&
-                            selectedLab.label !== "Gram Stain" &&
-                            selectedLab.label !==
-                              "HIV Screening (Anti HIV)" && (
-                              <div className="col">
-                                {console.log("result", result["result"])}
-                                {console.log("pref from", result["preferred_from"])}
-                                {console.log("pref to", result["preferred_to"])}
-                                {/* { result["preferred_from"] != 0.0 ||
+                                )} */}
+                                  {renderResult(
+                                    result["result"],
+                                    result["preferred"],
+                                    result["preferred_from"],
+                                    result["preferred_to"]
+                                  )}
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                            {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
+                              selectedLab.label.toUpperCase() !==
+                                "[P] URINALYSIS" &&
+                              selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                              selectedLab.label.toUpperCase() !==
+                                "[P] FECALYSIS" &&
+                              selectedLab.label !==
+                                "Antigen Rapid Swab (Nasal)" &&
+                              selectedLab.label !==
+                                "[P] Antigen Rapid Swab (Nasal)" &&
+                              selectedLab.label !==
+                                "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !== "Serum Pregnancy Test" &&
+                              selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                              selectedLab.label !== "H. Pylori Ag" &&
+                              selectedLab.label !== "KOH" &&
+                              selectedLab.label !==
+                                "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !==
+                                "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                              selectedLab.label !==
+                                "Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !== "Anti-HAV" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !==
+                                "Pregnancy Test (RPK Lateral Flow)" &&
+                              selectedLab.label !== "Anti HAV" &&
+                              selectedLab.label !==
+                                "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HCV" &&
+                              selectedLab.label !==
+                                "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !==
+                                "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !==
+                                "Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !==
+                                "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !== "Fecal Occult Blood" &&
+                              selectedLab.label !== "Gram Stain" &&
+                              selectedLab.label !==
+                                "HIV Screening (Anti HIV)" && (
+                                <div className="col">
+                                  <div className="space-between">
+                                    <h6
+                                      style={{
+                                        fontStyle: "italic",
+                                        marginTop: "10px",
+                                        color: "rgba(0, 0, 0, 0)",
+                                        marginLeft: "0 px",
+                                      }}
+                                    ></h6>
+                                  </div>
+
+                                  {/* { result["preferred_from"] != 0.0 ||
                                   result["preferred_to"] != 0.0 ? ( */}
-                                {result["result"] === "-" || (parseFloat(result["result"]) >=
-                                  parseFloat(result["preferred_from"]) &&
-                                parseFloat(result["result"]) <=
-                                  parseFloat(result["preferred_to"])) ? (
-                                  <span>{result["unit"]}</span>
-                                ) : (
-                                  <span class="red">{result["unit"]}</span>
-                                )}
-                              </div>
-                            )}
-
-                          {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
-                            selectedLab.label.toUpperCase() !==
-                              "[P] URINALYSIS" &&
-                            selectedLab.label.toUpperCase() !== "FECALYSIS" &&
-                            selectedLab.label.toUpperCase() !==
-                              "[P] FECALYSIS" &&
-                            selectedLab.label !==
-                              "Antigen Rapid Swab (Nasal)" &&
-                            selectedLab.label !== "Serum Pregnancy Test" &&
-                            selectedLab.label !== "H. Pylori Ag" &&
-                            selectedLab.label !== "Syphilis/RPR/VDRL" &&
-                            selectedLab.label !== "KOH" &&
-                            selectedLab.label !==
-                              "Pregnancy Test (RPK Lateral Flow)" &&
-                            selectedLab.label !== "Gram Stain" &&
-                            selectedLab.label !==
-                              "HBSag (Hepatitis B Antigen)" &&
-                            selectedLab.label !== "Fecal Occult Blood" &&
-                            selectedLab.label !==
-                              "HIV Screening (Anti HIV)" && (
-                              <div className="col">
-                                <span>
-                                  {selectedLab.label !== "TSH" &&
-                                  selectedLab.label !== "FT3" &&
-                                  selectedLab.label !== "FT4" &&
-                                  selectedLab.label !== "T3" &&
-                                  selectedLab.label !== "T4" &&
-                                  (resultIndex === 0 ||
-                                    result["test_type"] !==
-                                      labTestData[resultIndex - 1][
-                                        "test_type"
-                                      ]) ? (
-                                    <div className="space-between">
-                                      <h5
-                                        style={{
-                                          fontStyle: "italic",
-                                          marginTop: "10px",
-                                          color: "rgba(0, 0, 0, 0)",
-                                        }}
-                                      >
-                                        {result["test_type"]}
-                                      </h5>
-                                    </div>
+                                  {result["result"] === "-" ||
+                                  (parseFloat(result["result"]) >=
+                                    parseFloat(result["preferred_from"]) &&
+                                    parseFloat(result["result"]) <=
+                                      parseFloat(result["preferred_to"])) ? (
+                                    <span>{result["unit"]} </span>
                                   ) : (
-                                    ""
+                                    <span>{result["unit"]}</span>
                                   )}
-                                  {selectedLab.label !== "TSH" &&
-                                  selectedLab.label !== "FT3" &&
-                                  selectedLab.label !== "FT4" &&
-                                  selectedLab.label !== "T3" &&
-                                  selectedLab.label !== "T4" &&
-                                  (resultIndex === 0 ||
-                                    result["test_type_2"] !==
-                                      labTestData[resultIndex - 1][
-                                        "test_type_2"
-                                      ]) ? (
-                                    <div className="space-between">
-                                      <h6
-                                        style={{
-                                          fontStyle: "italic",
-                                          marginTop: "10px",
-                                          color: "rgba(0, 0, 0, 0)",
-                                        }}
-                                      >
-                                        {result["test_type_2"]}
-                                      </h6>
-                                    </div>
-                                  ) : (
-                                    ""
-                                  )}
+                                </div>
+                              )}
 
-                                  {result["preferred"] != " "
-                                    ? result["preferred"]
-                                    : result["preferred_from"] != 0.0 ||
-                                      result["preferred_to"] != 0.0
-                                    ? result["preferred_to"] == 999.99
-                                      ? ">=" +
-                                        parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2)
-                                      : parseFloat(
-                                          result["preferred_from"]
-                                        ).toFixed(2) +
-                                        "-" +
-                                        parseFloat(
-                                          result["preferred_to"]
-                                        ).toFixed(2)
-                                    : ""}
-                                </span>
-                              </div>
-                            )}
-                        </div>
-                      </>
-                    ))}
-                  </div>
+                            {selectedLab.label.toUpperCase() !== "URINALYSIS" &&
+                              selectedLab.label.toUpperCase() !==
+                                "[P] URINALYSIS" &&
+                              selectedLab.label.toUpperCase() !== "FECALYSIS" &&
+                              selectedLab.label.toUpperCase() !==
+                                "[P] FECALYSIS" &&
+                              selectedLab.label !==
+                                "Antigen Rapid Swab (Nasal)" &&
+                              selectedLab.label !==
+                                "[P] Antigen Rapid Swab (Nasal)" &&
+                              selectedLab.label !== "Serum Pregnancy Test" &&
+                              selectedLab.label !== "H. Pylori Ag" &&
+                              selectedLab.label !== "Syphilis/RPR/VDRL" &&
+                              selectedLab.label !== "KOH" &&
+                              selectedLab.label !==
+                                "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Pregnancy Test (RPK Lateral Flow)" &&
+                              selectedLab.label !== "Anti HAV" &&
+                              selectedLab.label !==
+                                "[P] HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !== "[P] Anti HCV" &&
+                              selectedLab.label !==
+                                "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !==
+                                "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !==
+                                "Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !==
+                                "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+                              selectedLab.label !== "Gram Stain" &&
+                              selectedLab.label !==
+                                "HBSag (Hepatitis B Antigen)" &&
+                              selectedLab.label !==
+                                "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+                              selectedLab.label !== "Anti-HCV" &&
+                              selectedLab.label !== "Anti HCV" &&
+                              selectedLab.label !==
+                                "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+                              selectedLab.label !== "Fecal Occult Blood" &&
+                              selectedLab.label !==
+                                "HIV Screening (Anti HIV)" && (
+                                <div className="col">
+                                  <span>
+                                    {selectedLab.label !== "TSH" &&
+                                    selectedLab.label !== "FT3" &&
+                                    selectedLab.label !== "FT4" &&
+                                    selectedLab.label !== "T3" &&
+                                    selectedLab.label !== "T4" &&
+                                    (resultIndex === 0 ||
+                                      result["test_type"] !==
+                                        labTestData[resultIndex - 1][
+                                          "test_type"
+                                        ]) ? (
+                                      <div className="space-between">
+                                        <h5
+                                          style={{
+                                            fontStyle: "italic",
+                                            marginTop: "10px",
+                                            color: "rgba(0, 0, 0, 0)",
+                                          }}
+                                        >
+                                          {result["test_type"]}
+                                        </h5>
+                                      </div>
+                                    ) : (
+                                      ""
+                                    )}
+                                    {selectedLab.label !== "TSH" &&
+                                    selectedLab.label !== "FT3" &&
+                                    selectedLab.label !== "FT4" &&
+                                    selectedLab.label !== "T3" &&
+                                    selectedLab.label !== "T4" &&
+                                    (resultIndex === 0 ||
+                                      result["test_type_2"] !==
+                                        labTestData[resultIndex - 1][
+                                          "test_type_2"
+                                        ]) ? (
+                                      <div className="space-between">
+                                        <h6
+                                          style={{
+                                            fontStyle: "italic",
+                                            marginTop: "10px",
+                                            color: "rgba(0, 0, 0, 0)",
+                                          }}
+                                        >
+                                          {result["test_type_2"]}
+                                        </h6>
+                                      </div>
+                                    ) : (
+                                      ""
+                                    )}
+
+                                    {result["preferred"] != " "
+                                      ? result["preferred"]
+                                      : result["preferred_from"] != 0.0 ||
+                                        result["preferred_to"] != 0.0
+                                      ? result["preferred_to"] == 999.99
+                                        ? ">=" +
+                                          parseFloat(
+                                            result["preferred_from"]
+                                          ).toFixed(2)
+                                        : parseFloat(
+                                            result["preferred_from"]
+                                          ).toFixed(2) +
+                                          "-" +
+                                          parseFloat(
+                                            result["preferred_to"]
+                                          ).toFixed(2)
+                                      : ""}
+                                  </span>
+                                </div>
+                              )}
+                          </div>
+                        </>
+                      ))}
+                    </div>
+                  )}
                   <hr
                     style={{
                       border: "2px solid black",
@@ -2036,27 +2911,47 @@ export default function LabOfficer() {
           </div>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const handlePrint = () => {
     if (componentRef.current) {
-      printHandle();
+      let paramID = selectedLab.id
+      if (selectedLab.type === "package") {
+        paramID = selectedLab.booking_detail_id
+      }
+      navigateto(
+        "/print-lab/" +
+          id +
+          "/" +
+          paramID +
+          "/" +
+          selectedLab.booking_id +
+          "/" +
+          selectedLab.type +
+          "/" +
+          dateFrom +
+          "/" +
+          dateTo,
+        { state: { selectedLab } }
+      )
+      // navigateto("/print-lab/"+id+"/"+selectedLab.id+"/"+selectedLab.booking_id+"/"+selectedLab.type, {state:{selectedLab}})
+      // printHandle();
     } else {
-      console.log("Component is not rendered yet!");
+      console.log("Component is not rendered yet!")
     }
-  };
+  }
 
   // Remarks handle textbox
   const handleEdit = () => {
-    setEditable(true);
-  };
+    setEditable(true)
+  }
 
   const handleSave = () => {
-    setEditable(false);
+    setEditable(false)
 
-    setSaveRemarks(remarks);
-  };
+    setSaveRemarks(remarks)
+  }
 
   return (
     <div>
@@ -2144,9 +3039,8 @@ export default function LabOfficer() {
                 <br />
 
                 {/* <div className="row"> */}
+
                 {allOptions.map((data) => {
-                  {
-                  }
                   return (
                     <Button
                       className="m-2"
@@ -2165,15 +3059,16 @@ export default function LabOfficer() {
                         !isDataFetched &&
                         !selectedLab.label !== data.label &&
                         selectedLab.label !== ""
+                        // || data.extracted_on === null
                       }
                       // onChange={() => setSelectedLab(data)}
                       onClick={() => setSelectedLab(data)}
                     >
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
+                      data.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
-                      data.label === "Anti-HAV" ||
-                      data.label === "Anti-HCV" ? (
+                      data.label === "Anti HCV" ? (
                         "Hepatitis Profile Tests"
                       ) : (
                         <>
@@ -2187,7 +3082,7 @@ export default function LabOfficer() {
                         </>
                       )}
                     </Button>
-                  );
+                  )
                 })}
                 {/* </div> */}
 
@@ -2203,6 +3098,7 @@ export default function LabOfficer() {
               </div>
             </div>
           </div>
+
           <Table
             type={"med-tech"}
             clickable={true}
@@ -2217,11 +3113,57 @@ export default function LabOfficer() {
               selectedLab.label !== "Fecalysis" &&
               selectedLab.label !== "[P] Fecalysis" &&
               selectedLab.label !== "Syphilis/RPR/VDRL" &&
+              selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
+              selectedLab.label !== "HBSag (Hepatitis B Antigen)" &&
+              selectedLab.label !== "Hbsag Test Promo Group (15 PAX OR MORE)" &&
+              selectedLab.label !== "Anti HCV" &&
+              selectedLab.label !== "[P] Anti HCV" &&
+              selectedLab.label !==
+                "[P] Anti HBs/HBSab (Hepatitis B Antibody)" &&
+              selectedLab.label !== "Anti HBs/HBSab (Hepatitis B Antibody)" &&
+              selectedLab.label !== "Hepatitis B Surface Antigen (HbsAg)" &&
+              selectedLab.label !== "[P] Hepatitis B Surface Antigen (HbsAg)" &&
+              selectedLab.label !== "[P] HBSag (Hepatitis B Antigen)" &&
               selectedLab.label !== "KOH" &&
               selectedLab.label !== "Gram Stain" &&
-              selectedLab.label !== "HIV Screening (Anti HIV)"
-                ? ["LAB NAME", "RESULTS", "UNIT", "REFERENCE RANGE", "ACTION"]
-                : ["LAB NAME", "RESULTS", "UNIT", "ACTION"]
+              selectedLab.label !== "Clotting & Bleeding Time" &&
+              selectedLab.label !== "HIV Screening (Anti HIV)" &&
+              selectedLab.label !== "Anti HAV"
+                ? [
+                    "LAB NAME",
+                    "RESULTS",
+                    "UNIT",
+                    "REFERENCE RANGE",
+                    isApproved !== "approved" && "ACTION",
+                  ]
+                : selectedLab.label === "Anti HAV" ||
+                  selectedLab.label === "[P] HBSag (Hepatitis B Antigen)" ||
+                  selectedLab.label === "HBSag (Hepatitis B Antigen)" ||
+                  selectedLab.label ===
+                    "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+                  selectedLab.label === "Anti HCV" ||
+                  selectedLab.label === "[P] Anti HCV" ||
+                  selectedLab.label ===
+                    "[P] Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                  selectedLab.label ===
+                    "Anti HBs/HBSab (Hepatitis B Antibody)" ||
+                  selectedLab.label === "Hepatitis B Surface Antigen (HbsAg)" ||
+                  selectedLab.label ===
+                    "[P] Hepatitis B Surface Antigen (HbsAg)"
+                ? ["LAB NAME", "RESULTS", isApproved !== "approved" && "ACTION"]
+                : selectedLab.label === "Clotting & Bleeding Time"
+                ? [
+                    "LAB NAME",
+                    "RESULTS",
+                    "REFERENCE RANGE",
+                    isApproved !== "approved" && "ACTION",
+                  ]
+                : [
+                    "LAB NAME",
+                    "RESULTS",
+                    "UNIT",
+                    isApproved !== "approved" && "ACTION",
+                  ]
             }
             filteredData={filteredData}
             //dropdownData={labTests}
@@ -2234,6 +3176,7 @@ export default function LabOfficer() {
             userId={userId}
             useLoader={true}
             isReady={isReady}
+            isLabApproved={isApproved}
           />
 
           <Modal show={show} onHide={handleClose} animation={false} centered>
@@ -2256,7 +3199,7 @@ export default function LabOfficer() {
                       )}
                       defaultValue={result}
                       onChange={(selectedOption) => {
-                        setResult(selectedOption.value);
+                        setResult(selectedOption.value)
                       }}
                       // label={result}
                     />
@@ -2265,20 +3208,26 @@ export default function LabOfficer() {
                       type="text"
                       className="results-input"
                       defaultValue={result}
+                      maxLength={editingLab === "Ph" ? 3 : 100}
                       onChange={(e) => {
-                        var value = e.target.value;
+                        var value = e.target.value
                         if (editingLab === "Ph") {
                           value = parseFloat(e.target.value)
                             .toFixed(1)
-                            .toString();
+                            .toString()
                         } else if (editingLab === "Specific Gravity") {
                           value = parseFloat(e.target.value)
                             .toFixed(3)
-                            .toString();
+                            .toString()
                         } else {
-                          value = e.target.value;
+                          value = e.target.value
                         }
-                        setResult(value);
+                        setEditDetails({
+                          ...editDetails,
+                          name: editingLab,
+                          value: value,
+                        })
+                        setResult(value)
                       }}
                     />
                   )}
@@ -2369,6 +3318,7 @@ export default function LabOfficer() {
 
               <button
                 className="filter-btn mb-3"
+                // onClick={() => handleApproved()}
                 onClick={() => handleApproved()}
                 disabled={isApproved === "approved"}
                 style={{
@@ -2422,5 +3372,5 @@ export default function LabOfficer() {
         </div>
       </div>
     </div>
-  );
+  )
 }

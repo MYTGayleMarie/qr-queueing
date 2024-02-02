@@ -253,3 +253,7 @@ div.suggestions-list::-webkit-scrollbar-thumb:hover {
   background-color: #ececec;
     
 }
+
+.required{
+  color:red;
+}

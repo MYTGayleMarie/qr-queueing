@@ -33,23 +33,20 @@ export default function ViewHistory(){
   const [services, setServices] = useState("");
 
 
-  
-  React.useEffect(()=>{
-   
+    React.useEffect(() => {
     axios({
-      method: 'post',
-      url: window.$link + 'bookings/getBookingsByCustomer/' + id,
-      withCredentials: false, 
+      method: "post",
+      url: window.$link + "customers/show/" + id,
+      withCredentials: false,
       params: {
-          api_key: window.$api_key,
-          token: userToken.replace(/['"]+/g, ''),
-          requester: userId,
-      }      
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
     })
-    .then((response)=>{
-      // console.log(response)
-      // Customer details
-      const customer = response.data.data.customer;
+      .then(function (response) {
+           // Customer details
+      const customer = response.data;
       setFirstName(customer.first_name);
       setMiddleName(customer.middle_name);
       setLastName(customer.last_name);
@@ -71,6 +68,49 @@ export default function ViewHistory(){
       setAddress(customer.address);
       setSeniorId(customer.senior_id);
       setPWDId(customer.pwd_id); 
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+  
+  React.useEffect(()=>{
+   
+    axios({
+      method: 'post',
+      url: window.$link + 'bookings/getBookingsByCustomer/' + id,
+      withCredentials: false, 
+      params: {
+          api_key: window.$api_key,
+          token: userToken.replace(/['"]+/g, ''),
+          requester: userId,
+      }      
+    })
+    .then((response)=>{
+      // console.log("response",response)
+      // // Customer details
+      // const customer = response.data.data.customer;
+      // setFirstName(customer.first_name);
+      // setMiddleName(customer.middle_name);
+      // setLastName(customer.last_name);
+
+      // var birthDate = new Date(customer.birthdate);
+      // setBirthDate(birthDate.toDateString());
+
+      // setGender(customer.gender);
+
+      // var presentDate = new Date();
+      // var age = presentDate.getFullYear() - birthDate.getFullYear();
+      // var m = presentDate.getMonth() - birthDate.getMonth();
+      // if (m < 0 || (m === 0 && presentDate.getDate() < birthDate.getDate())) 
+      //   {age--;}
+      // setAge(age);
+
+      // setContactNo(customer.contact_no);
+      // setEmail(customer.email);
+      // setAddress(customer.address);
+      // setSeniorId(customer.senior_id);
+      // setPWDId(customer.pwd_id); 
 
        //patient history
        patientHistory.length=0;
