@@ -390,6 +390,7 @@ export default function ExtractionUpdate() {
           referral={""}
           discountCode={discountCode}
           hmo={hmo}
+          view={"phlebo"}
           setPrintReadyFinal={setReadyToPrint}
         />
       </div>
