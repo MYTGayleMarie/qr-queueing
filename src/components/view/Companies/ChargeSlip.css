@@ -19,11 +19,11 @@
   }
   .slip-label {
     margin-top: 0.5px;
-    font-size: 10px ;
+    font-size: medium ;
   }
 
   .slip-detail {
-    font-size: 8px ;
+    font-size: medium ;
     font-weight: 600;
     margin-left: 5px;
   }
