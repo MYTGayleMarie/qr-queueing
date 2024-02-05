@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getToken, getUser, refreshPage } from "../../../utilities/Common"
 import axios from "axios"
@@ -66,6 +66,7 @@ function AddPayment() {
   const [packages, setPackages] = useState([])
   const [click, setClick] = useState(false)
   const [paidAmount, setPaidAmount] = useState(0)
+   const [readyToPrint, setReadyToPrint] = useState(false)
 
   //customer details
   const [firstName, setFirstName] = useState("")
@@ -250,37 +251,37 @@ function AddPayment() {
       })
   }, [])
 
-  React.useEffect(() => {
-    var presentDate = new Date()
-    var formattedPresentData = presentDate.toISOString().split("T")[0]
-    queue.length = 0
-    //Queue
-    axios({
-      method: "post",
-      url: window.$link + "bookings/getAll",
-      withCredentials: false,
-      params: {
-        api_key: window.$api_key,
-        token: userToken.replace(/['"]+/g, ""),
-        requester: userId,
-        date_from: formattedPresentData,
-        date_to: formattedPresentData,
-      },
-    })
-      .then(function (response) {
-        const arrangedObj = response.data.bookings.sort((a, b) => a.id - b.id)
+  // React.useEffect(() => {
+  //   var presentDate = new Date()
+  //   var formattedPresentData = presentDate.toISOString().split("T")[0]
+  //   queue.length = 0
+  //   //Queue
+  //   axios({
+  //     method: "post",
+  //     url: window.$link + "bookings/getAll",
+  //     withCredentials: false,
+  //     params: {
+  //       api_key: window.$api_key,
+  //       token: userToken.replace(/['"]+/g, ""),
+  //       requester: userId,
+  //       date_from: formattedPresentData,
+  //       date_to: formattedPresentData,
+  //     },
+  //   })
+  //     .then(function (response) {
+  //       const arrangedObj = response.data.bookings.sort((a, b) => a.id - b.id)
 
-        arrangedObj.map((booking, index) => {
-          var bookingInfo = {}
-          bookingInfo.queue = index + 1
-          bookingInfo.id = booking.id
-          setQueue((oldArray) => [...oldArray, bookingInfo])
-        })
-      })
-      .then(function (error) {
-        console.log(error)
-      })
-  }, [])
+  //       arrangedObj.map((booking, index) => {
+  //         var bookingInfo = {}
+  //         bookingInfo.queue = index + 1
+  //         bookingInfo.id = booking.id
+  //         setQueue((oldArray) => [...oldArray, bookingInfo])
+  //       })
+  //     })
+  //     .then(function (error) {
+  //       console.log(error)
+  //     })
+  // }, [])
 
   React.useEffect(() => {
     queue.map((data, index) => {
@@ -316,10 +317,11 @@ function AddPayment() {
       })
   }, [])
 
-  React.useEffect(() => {
+ 
+  useEffect(() => {
     printServices.length = 0
     services.map((info, index1) => {
-      if (info.category_id == null) {
+      if (info.category_id === null) {
         axios({
           method: "post",
           url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
@@ -353,20 +355,10 @@ function AddPayment() {
                 serviceDetails.category = category.data.name
                 serviceDetails.name = packageCat.lab_test
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
-
-                if (
-                  services.length - 1 == index1 &&
-                  response.data.length - 1 == index2 &&
-                  bookingDate != null &&
-                  birthDate != null &&
-                  encodedOn != null
-                ) {
-                  setPrintData(true)
-                }
-                setLoadingBooking(true)
+                setReadyToPrint(true)
+                setPrintData(true)
               })
               .catch(function (error) {
-                setLoadingBooking(true)
                 console.log(error)
               })
           })
@@ -384,7 +376,7 @@ function AddPayment() {
         })
           .then(function (category) {
             var serviceDetails = {}
-            if (category.data.name == "Electrolytes (NaKCl,iCA)") {
+            if (category.data.name === "Electrolytes (NaKCl,iCA)") {
               serviceDetails.key = "Electrolytes"
             } else {
               serviceDetails.key = category.data.name
@@ -394,118 +386,17 @@ function AddPayment() {
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
-
-            if (
-              services.length - 1 == index1 &&
-              bookingDate != null &&
-              birthDate != null &&
-              encodedOn != null
-            ) {
-              setPrintData(true)
-            }
-            setLoadingBooking(true)
+            setReadyToPrint(true)
+            setPrintData(true)
           })
           .catch(function (error) {
-            setLoadingBooking(true)
             console.log(error)
           })
       }
     })
   }, [services])
 
-  React.useEffect(() => {
-    printServices.length = 0
-    labTests.length = 0
-    packages.length = 0
-    services.map((info, index1) => {
-      if (info.type === "package") {
-        let packageInfo = {}
-        packageInfo.name = info.package
-        packageInfo.qty = "1"
-        packageInfo.price = info.price
-        packageInfo.details = ""
-        axios({
-          method: "post",
-          url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        }).then(function (response) {
-          response.data.map((packageCat, index2) => {
-            if (index2 < response.data.length - 1) {
-              packageInfo.details += packageCat.lab_test + ", "
-            } else {
-              packageInfo.details += packageCat.lab_test
-            }
-
-            var serviceDetails = {}
-            axios({
-              method: "post",
-              url: window.$link + "categories/show/" + packageCat.category_id,
-              withCredentials: false,
-              params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ""),
-                requester: userId,
-              },
-            })
-              .then(function (category) {
-                if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes"
-                } else {
-                  serviceDetails.key = category.data.name
-                    .replace(/\s+/g, "_")
-                    .toLowerCase()
-                }
-                serviceDetails.category = category.data.name
-                serviceDetails.name = packageCat.lab_test
-
-                setLoadingBooking(true)
-              })
-              .catch(function (error) {
-                setLoadingBooking(true)
-                console.log(error)
-              })
-          })
-        })
-        setPackages((prev) => [...prev, packageInfo])
-      } else {
-        axios({
-          method: "post",
-          url: window.$link + "categories/show/" + info.category_id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        })
-          .then(function (category) {
-            var serviceDetails = {}
-            if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes"
-            } else {
-              serviceDetails.key = category.data.name
-                .replace(/\s+/g, "_")
-                .toLowerCase()
-            }
-            serviceDetails.category = category.data.name
-            serviceDetails.name = info.lab_test
-            let labTest = { name: info.lab_test, qty: "1", price: info.price }
-            setLabTests((prev) => [...prev, labTest])
-            setLoadingBooking(true)
-          })
-          .catch(function (error) {
-            setLoadingBooking(true)
-            console.log(error)
-          })
-      }
-    })
-  }, [services])
-
+ 
   function removeService() {
     axios({
       method: "post",
@@ -964,7 +855,7 @@ function AddPayment() {
         <div className="row d-flex justify-content-end mt-4">
           {paymentStatus == "paid" &&
             queueNumber != "" &&
-            printData == true &&
+            printData == true  &&
             printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE BOOKING
@@ -1586,6 +1477,7 @@ function AddPayment() {
               referral={referral}
               discountCode={discountCode}
               hmo={hmo}
+              view={"cashier"}
               setPrintReadyFinal={setPrintReadyFinal}
             />
           </div>
