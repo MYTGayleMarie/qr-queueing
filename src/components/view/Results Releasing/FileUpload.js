@@ -109,7 +109,7 @@ export default function FileUpload({
               (details) => details.id == servicesData[0].id
             )
 
-            console.log("hasfile2", labDetail[0])
+          
             if(labDetail[0].result_id_2 !== null){
               setHasFile2(true)
             }
@@ -173,8 +173,6 @@ export default function FileUpload({
   //   // var selectedFile=document.getElementById("pdftobase64").files
   //   var selectedFile = title === "XRAY" ? e : e.target.files
   //   // Check if file is empty
-  //   console.log("length", selectedFile.length)
-  //   console.log("selectedFile", selectedFile)
 
   //   if (selectedFile.length > 0 || title === "XRAY") {
   //     setFileLength(selectedFile.length)
@@ -185,12 +183,9 @@ export default function FileUpload({
   //     var base64
   //     fileReader.onload = function (fileLoadedEvent) {
   //       base64 = fileLoadedEvent.target.result
-  //       console.log("fileLoaded", fileLoadedEvent.target.result)
   //       setFile(base64)
   //     }
-  //     console.log("base64", base64)
   //     fileReader.readAsDataURL(fileToLoad)
-  //     console.log("fileReader", fileReader)
   //     if (title === "XRAY") {
   //       handleClose()
   //     }
@@ -218,7 +213,7 @@ export default function FileUpload({
     }
   }
   function convertToBase64Image(e) {
-    console.log()
+    
     var selectedFile = e
     // Check if file is empty
 
@@ -239,7 +234,7 @@ export default function FileUpload({
       handleClose()
     }
   }
-  console.log(image)
+
 
   // Function to handle file selection
   const handleFileChange = (event, index) => {
@@ -284,44 +279,123 @@ export default function FileUpload({
     // setSelectedFile(file);
   }
 
-  // Function to generate and download the PDF
-  const generatePDF = () => {
-    const pdf = new jsPDF()
+  // Function to generate and download the PDF 
+  //old
+  // const generatePDF = () => {
+  //   const pdf = new jsPDF()
 
-    const addImageToPDF = (imgData, idx) => {
-      return new Promise((resolve, reject) => {
-        let img = new Image()
-        img.onload = () => {
-          const imgWidth = 180
-          const imgHeight = (img.height * imgWidth) / img.width
-          const margin = 15
-          if (idx !== 0) {
-            pdf.addPage()
-          }
-          pdf.addImage(imgData, "JPEG", margin, 40, imgWidth, imgHeight)
-          resolve()
-        }
-        img.onerror = reject
-        img.src = imgData
-      })
-    }
+  //   const addImageToPDF = (imgData, idx) => {
+  //     return new Promise((resolve, reject) => {
+  //       let img = new Image()
+  //       img.onload = () => {
+  //         const imgWidth = 180
+  //         const imgHeight = (img.height * imgWidth) / img.width
+  //         const margin = 15
+  //         if (idx !== 0) {
+  //           pdf.addPage()
+  //         }
+  //         pdf.addImage(imgData, "JPEG", margin, 40, imgWidth, imgHeight)
+  //         resolve()
+  //       }
+  //       img.onerror = reject
+  //       img.src = imgData
+  //     })
+  //   }
 
-    Promise.all(images.map(addImageToPDF))
-      .then(() => {
+  //   Promise.all(images.map(addImageToPDF))
+  //     .then(() => {
       
-        // Instead of saving the file, you convert it to a Blob
-        const pdfBlob = pdf.output("blob")
-        const pdfFile = new File([pdfBlob], "combined_images.pdf", {
-          type: "application/pdf",
-        })
+  //       // Instead of saving the file, you convert it to a Blob
+  //       const pdfBlob = pdf.output("blob")
+  //       const pdfFile = new File([pdfBlob], "combined_images.pdf", {
+  //         type: "application/pdf",
+  //       })
 
-        convertToBase64Image(pdfFile)
-      })
+  //       convertToBase64Image(pdfFile)
+  //     })
 
-      .catch((error) => {
-        console.error("Error loading images:", error)
-      })
+  //     .catch((error) => {
+  //       console.error("Error loading images:", error)
+  //     })
+  // }
+
+  //new
+  const generatePDF = () => {
+  const pdf = new jsPDF()
+
+  const compressImage = (imgData, quality = 0.5) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => {
+        // Create an off-screen canvas
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+
+        // Set canvas dimensions to image dimensions
+        canvas.width = img.width
+        canvas.height = img.height
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0, img.width, img.height)
+
+        // Compress the image and get the new image data
+        canvas.toBlob((blob) => {
+          resolve(blob)
+        }, 'image/jpeg', quality) // Adjust the quality as needed
+      }
+      img.onerror = () => reject(new Error('Failed to load image for compression'))
+      img.src = imgData
+    })
   }
+
+  const addImageToPDF = (imgData, idx) => {
+    return compressImage(imgData).then((compressedBlob) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          const compressedImgData = event.target.result
+          const img = new Image()
+          img.onload = () => {
+            const imgWidth = 180
+            const imgHeight = (img.height * imgWidth) / img.width
+            const margin = 15
+            if (idx !== 0) {
+              pdf.addPage()
+            }
+
+            // Log the size difference
+            console.log(`Original size: ${Math.round(imgData.length / 1024)} KB`)
+            console.log(`Compressed size: ${Math.round(compressedBlob.size / 1024)} KB`)
+
+            pdf.addImage(compressedImgData, "JPEG", margin, 40, imgWidth, imgHeight)
+            resolve()
+          }
+          img.onerror = () => reject(new Error('Failed to load compressed image for PDF'))
+          img.src = compressedImgData
+        }
+        reader.onerror = () => reject(new Error('Failed to read compressed blob'))
+        reader.readAsDataURL(compressedBlob)
+      })
+    })
+  }
+
+  Promise.all(images.map(addImageToPDF))
+    .then(() => {
+      // Instead of saving the file, you convert it to a Blob
+      const pdfBlob = pdf.output("blob")
+      const pdfFile = new File([pdfBlob], "combined_images.pdf", {
+        type: "application/pdf",
+      })
+
+      convertToBase64Image(pdfFile)
+    })
+    .catch((error) => {
+      console.error("Error loading images:", error)
+    })
+}
+
+
+
 
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray) {
