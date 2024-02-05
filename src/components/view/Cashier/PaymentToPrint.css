@@ -3,6 +3,10 @@
 }
 
 .print-table{
+  /* line-height: 60% !important; */
+  padding:1%;
+}
+.print-table-stub{
   line-height: 60% !important;
   padding:0;
 }
@@ -95,6 +99,7 @@
     font-weight: bold;
     margin-left: 3%;
     font-size: 30px !important;
+    text-align: right;
 }
 
 .payment-row {
@@ -201,7 +206,7 @@
  }
 
  .slip-span{
-  font-size: 0.4em !important;
+  font-size: medium !important;
   margin-top:0 !important;
  }
 
@@ -211,7 +216,7 @@
    } */
 
  .bold-slip-span{
-    font-size: 0.4em !important;
+    font-size: medium !important;
     margin-top:0 !important;
     font-weight: bold;
    }
@@ -238,7 +243,7 @@
 .charge-slip{
   padding-top: 1%;
   padding-left: 0.5rem !important;
-  margin:0px !important;
+  /* margin:0px !important; */
   width: 80% !important;
   min-height:230px !important;
 
@@ -296,7 +301,7 @@
 .charge-slip-table{
   width:100%;
   padding: 0 0.5rem;
-  margin:0;
+  /* margin:0; */
 }
 /* .charge-slip-footer{
   padding-left:0.5rem;
