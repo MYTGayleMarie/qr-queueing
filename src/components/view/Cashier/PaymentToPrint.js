@@ -700,21 +700,27 @@ export class PaymentToPrint extends React.PureComponent {
       return (
         <div className="print-column">
           <div class="d-flex row justify-content-left mx-0">
-            <div className="col">
+            <div className="col-2">
               <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
             </div>
-            <div className="col-6">
+            <div className="col mt-1">
               <span className="to-right request-header">
-                #{bookingId} Request Form - Patient ID:{patientId}
+              Request Form - Patient ID:{patientId}
               </span>
             </div>
-
-            <div className="col-4 text-right">
-              <span className=" request-header-test">
+             <div className="col text-right">
+              <span className="request-header-test">
                 BOOKING #<strong>{bookingId}</strong>
               </span>
             </div>
           </div>
+          {/* <div className="row justify-content-end">
+            <div className="col text-right">
+              <span className="request-header-test">
+                BOOKING #<strong>{bookingId}</strong>
+              </span>
+            </div>
+          </div> */}
 
           <div className="row mx-0 mt-1 mb-2">
             <table className="services-table print-table-double">
@@ -869,7 +875,6 @@ export class PaymentToPrint extends React.PureComponent {
       ticketsBy4.push(chunk)
     }
 
-
     // split tickets by 4 into 1
     const tixLen = 1
     for (let i = 0; i < ticketsBy4.length; i++) {
@@ -912,218 +917,225 @@ export class PaymentToPrint extends React.PureComponent {
       <div>
         <style>{getPageMargins()}</style>
         <div className="print-area">
-        {this.props.view === "cashier" &&
-        <>
-          {ticketsBy2Special.map((by4, index1) => {
-            return (
-              <div className="print-break">
-                {by4.map((by2, index2) => {
-                  return (
-                    <div className="print-row">
-                      {by2.map((data, index) => {
-                        return generateTickets(
-                          this.props.patientId,
-                          this.props.bookingId,
-                          this.props.name,
-                          this.props.age,
-                          this.props.gender,
-                          this.props.contact,
-                          this.props.result,
-                          data[0]?.category,
-                          by2[index],
-                          this.props.discountCode,
-                          "special"
-                        )
-                      })}
+          {this.props.view === "cashier" && (
+            <>
+              {ticketsBy2Special.map((by4, index1) => {
+                return (
+                  <div className="print-break">
+                    {by4.map((by2, index2) => {
+                      return (
+                        <div className="print-row">
+                          {by2.map((data, index) => {
+                            return generateTickets(
+                              this.props.patientId,
+                              this.props.bookingId,
+                              this.props.name,
+                              this.props.age,
+                              this.props.gender,
+                              this.props.contact,
+                              this.props.result,
+                              data[0]?.category,
+                              by2[index],
+                              this.props.discountCode,
+                              "special"
+                            )
+                          })}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+              <br />
+              <div className="row justify-content-center">
+                {/* Charge slip */}
+                <div className="col-12 charge-slip" id="charge-slip">
+                  <div class="d-flex justify-content-left">
+                    <img src={logo} alt={"logo"} class="small-logo"></img>
+                    <span className="to-right slip-span">
+                      Quest and Reliance Diagnostics
+                    </span>
+                    <span className="to-right slip-span">09998886694</span>
+                    <span className="to-right slip-span">
+                      Marasbaras Tacloban City
+                    </span>
+                  </div>
+                  <div className="row slip-header">
+                    <div className="row m-0 p-0">
+                      {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
+                      <table className="slip-table print-table">
+                        <tr className="print-table">
+                          <td>
+                            <span className="slip-label slip-span">
+                              Patient Name:
+                            </span>
+                            <span className="slip-detail slip-span">
+                              {this.props.name}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="slip-label slip-span">
+                              Birthdate:
+                            </span>
+                            <span className="slip-detail slip-span">
+                              {this.props.birthdate}
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
                     </div>
-                  )
-                })}
-              </div>
-            )
-          })}
-          <br />
-          <div className="row justify-content-center">
-            {/* Charge slip */}
-            <div className="col-12 charge-slip" id="charge-slip">
-              <div class="d-flex justify-content-left">
-                <img src={logo} alt={"logo"} class="small-logo"></img>
-                <span className="to-right slip-span">
-                  Quest and Reliance Diagnostics
-                </span>
-                <span className="to-right slip-span">09998886694</span>
-                <span className="to-right slip-span">
-                  Marasbaras Tacloban City
-                </span>
-              </div>
-              <div className="row slip-header">
-                <div className="row m-0 p-0">
-                  {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
-                  <table className="slip-table print-table">
-                    <tr className="print-table">
-                      <td>
-                        <span className="slip-label slip-span">
-                          Patient Name:
-                        </span>
-                        <span className="slip-detail slip-span">
-                          {this.props.name}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="slip-label slip-span">Birthdate:</span>
-                        <span className="slip-detail slip-span">
-                          {this.props.birthdate}
-                        </span>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <div className="row">
-                  <table className="slip-table print-table">
-                    <tr className="print-table">
-                      <td>
-                        <span className="slip-label slip-span">
-                          Transaction No.:
-                        </span>
-                        <span className="slip-detail slip-span">
-                          {this.props.bookingID}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="slip-label slip-span">Date:</span>
-                        <span className="slip-detail slip-span">
-                          {this.props.bookingDate}
-                        </span>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
+                    <div className="row">
+                      <table className="slip-table print-table">
+                        <tr className="print-table">
+                          <td>
+                            <span className="slip-label slip-span">
+                              Transaction No.:
+                            </span>
+                            <span className="slip-detail slip-span">
+                              {this.props.bookingID}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="slip-label slip-span">Date:</span>
+                            <span className="slip-detail slip-span">
+                              {this.props.bookingDate}
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
 
-              <div className="row charge-slip-table mb-0 mr-0">
-                <table className="print-table">
-                  <thead className="particulars">
-                    <tr>
-                      <th className="slip-detail slip-span">Particulars</th>
-                      <th className="slip-detail slip-span">Qty</th>
-                      <th className="slip-detail bold-slip-span">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.paymentDataServices.map((data, index) => (
-                      <tr className="print-table">
-                        <td className="slip-label slip-span">
-                          {data.lab_test}
-                        </td>
-                        <td className="slip-label slip-span">1</td>
-                        <td
-                          className="slip-label bold-slip-span text-right"
-                          align="right"
-                        >
-                          P {parseFloat(data.price).toFixed(2)}
-                        </td>
-                      </tr>
-                    ))}
+                  <div className="row charge-slip-table mb-0 mr-0">
+                    <table className="print-table">
+                      <thead className="particulars">
+                        <tr>
+                          <th className="slip-detail slip-span">Particulars</th>
+                          <th className="slip-detail slip-span">Qty</th>
+                          <th className="slip-detail bold-slip-span">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.props.paymentDataServices.map((data, index) => (
+                          <tr className="print-table">
+                            <td className="slip-label slip-span">
+                              {data.lab_test}
+                            </td>
+                            <td className="slip-label slip-span">1</td>
+                            <td
+                              className="slip-label bold-slip-span text-right"
+                              align="right"
+                            >
+                              P {parseFloat(data.price).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
 
-                    {this.props.packages.map((data, index) => (
-                      <tr className="print-table">
-                        <td className="slip-label slip-span">
-                          {data.name}
-                          <br />
-                          <span className="slip-span-details">
-                            {data.details} [P]
-                          </span>
-                        </td>
-                        <td className="slip-label slip-span">{data.qty}</td>
-                        <td className="slip-label bold-slip-span">
-                          P {parseFloat(data.price).toFixed(2)}
-                        </td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td></td>
-                      <td className="slip-label bold-slip-span">
-                        Discount Fee:
-                      </td>
-                      <td
-                        className="slip-label bold-slip-span text-right"
-                        align="right"
-                      >
-                        {" "}
-                        {parseFloat(this.props.discount).toFixed(2) == null
-                          ? "NONE"
-                          : formatPrice(
-                              parseFloat(this.props.discount).toFixed(2)
-                            )}
-                      </td>
-                    </tr>
-                    {parseFloat(this.props.hmo) > 1 && (
-                      <tr>
-                        <td></td>
-                        <td className="slip-label bold-slip-span">
-                          HMO Discount:
-                        </td>
-                        <td
-                          className="slip-label bold-slip-span text-right"
-                          align="right"
-                        >
-                          {" "}
-                          {formatPrice(parseFloat(this.props.hmo).toFixed(2))}
-                        </td>
-                      </tr>
-                    )}
-                    <tr>
-                      <td></td>
-                      {this.props.grandTotal > 0 && (
-                        <>
-                          <td className="slip-label bold-slip-span">Total:</td>
+                        {this.props.packages.map((data, index) => (
+                          <tr className="print-table">
+                            <td className="slip-label slip-span">
+                              {data.name}
+                              <br />
+                              <span className="slip-span-details">
+                                {data.details} [P]
+                              </span>
+                            </td>
+                            <td className="slip-label slip-span">{data.qty}</td>
+                            <td className="slip-label bold-slip-span">
+                              P {parseFloat(data.price).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                        <tr>
+                          <td></td>
+                          <td className="slip-label bold-slip-span">
+                            Discount Fee:
+                          </td>
                           <td
                             className="slip-label bold-slip-span text-right"
                             align="right"
                           >
-                            {formatPrice(this.props.grandTotal)}
+                            {" "}
+                            {parseFloat(this.props.discount).toFixed(2) == null
+                              ? "NONE"
+                              : formatPrice(
+                                  parseFloat(this.props.discount).toFixed(2)
+                                )}
                           </td>
-                        </>
-                      )}
-                    </tr>
-                  </tbody>
-                </table>
+                        </tr>
+                        {parseFloat(this.props.hmo) > 1 && (
+                          <tr>
+                            <td></td>
+                            <td className="slip-label bold-slip-span">
+                              HMO Discount:
+                            </td>
+                            <td
+                              className="slip-label bold-slip-span text-right"
+                              align="right"
+                            >
+                              {" "}
+                              {formatPrice(
+                                parseFloat(this.props.hmo).toFixed(2)
+                              )}
+                            </td>
+                          </tr>
+                        )}
+                        <tr>
+                          <td></td>
+                          {this.props.grandTotal > 0 && (
+                            <>
+                              <td className="slip-label bold-slip-span">
+                                Total:
+                              </td>
+                              <td
+                                className="slip-label bold-slip-span text-right"
+                                align="right"
+                              >
+                                {formatPrice(this.props.grandTotal)}
+                              </td>
+                            </>
+                          )}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="row charge-slip-table mb-0 mr-0">
+                    <table className="print-table">
+                      <tr className="print-table">
+                        <td className="slip-label slip-span" width="40%">
+                          Requested By:
+                        </td>
+                        {/* <td className="slip-label">{requested_by}</td> */}
+                        <td className="slip-label slip-span">Admin</td>
+                      </tr>
+                      <tr className="print-table">
+                        <td className="slip-label slip-span">Prepared By:</td>
+                        {/* <td className="slip-label">{prepared_by}</td> */}
+                        <td className="slip-label slip-span">Admin</td>
+                      </tr>
+                      <tr className="print-table">
+                        <td className="slip-label slip-span">
+                          Requested Time & Date:
+                        </td>
+                        {/* <td className="slip-label">{request_time}</td> */}
+                        <td className="slip-label slip-span">{dateTime}</td>
+                      </tr>
+                      <tr className="print-table">
+                        <td className="slip-label slip-span">
+                          Received Time & Date:
+                        </td>
+                        {/* <td className="slip-label">{received_time}</td> */}
+                        <td className="slip-label slip-span">{dateTime}</td>
+                      </tr>
+                    </table>
+                    <p className="slip-label slip-span p-0 m-0">
+                      Outpatient Requisition Slip
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="row charge-slip-table mb-0 mr-0">
-                <table className="print-table">
-                  <tr className="print-table">
-                    <td className="slip-label slip-span" width="40%">
-                      Requested By:
-                    </td>
-                    {/* <td className="slip-label">{requested_by}</td> */}
-                    <td className="slip-label slip-span">Admin</td>
-                  </tr>
-                  <tr className="print-table">
-                    <td className="slip-label slip-span">Prepared By:</td>
-                    {/* <td className="slip-label">{prepared_by}</td> */}
-                    <td className="slip-label slip-span">Admin</td>
-                  </tr>
-                  <tr className="print-table">
-                    <td className="slip-label slip-span">
-                      Requested Time & Date:
-                    </td>
-                    {/* <td className="slip-label">{request_time}</td> */}
-                    <td className="slip-label slip-span">{dateTime}</td>
-                  </tr>
-                  <tr className="print-table">
-                    <td className="slip-label slip-span">
-                      Received Time & Date:
-                    </td>
-                    {/* <td className="slip-label">{received_time}</td> */}
-                    <td className="slip-label slip-span">{dateTime}</td>
-                  </tr>
-                </table>
-                <p className="slip-label slip-span p-0 m-0">
-                  Outpatient Requisition Slip
-                </p>
-              </div>
-            </div>
-          </div>
-        </>}
+            </>
+          )}
 
           {this.props.view === "phlebo" && (
             <>
