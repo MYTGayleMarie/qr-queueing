@@ -2,6 +2,7 @@ import React, { Component, useEffect } from "react"
 import { render } from "react-dom"
 import { useParams } from "react-router-dom"
 import {
+  formatDate,
   formatPrice,
   getToken,
   getUser,
@@ -770,12 +771,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <td>
                   <span className="header">DOB: </span>
                   <span className="detail-print">
-                    {parseInt(birthDate.getMonth() + 1) +
-                      "-" +
-                      birthDate.getDate() +
-                      "-" +
-                      birthDate.getFullYear() +
-                      " "}
+                    {formatDate(birthDate)}
                   </span>{" "}
                 </td>
 
@@ -800,10 +796,11 @@ export class PaymentToPrint extends React.PureComponent {
                   </span>
                 </td>
                 <td className="print-table-stub">
+                  {/* <span className="footer-header"> */}
                   <span className="footer-header">
                     <b>Result:</b>
                   </span>
-                  <span className="data"> {result.toUpperCase()}</span>
+                  <span className="detail-print"> {result.toUpperCase()}</span>
                 </td>
               </tr>
             </table>
