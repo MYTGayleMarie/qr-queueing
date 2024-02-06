@@ -706,10 +706,10 @@ export class PaymentToPrint extends React.PureComponent {
             </div>
             <div className="col mt-1">
               <span className="to-right request-header">
-              Request Form - Patient ID:{patientId}
+                Request Form - Patient ID:{patientId}
               </span>
             </div>
-             <div className="col text-right">
+            <div className="col text-right">
               <span className="request-header-test">
                 BOOKING #<strong>{bookingId}</strong>
               </span>
@@ -756,47 +756,43 @@ export class PaymentToPrint extends React.PureComponent {
           <div className="row mx-0">
             <table className="print-table-stub">
               <tr>
-                <td>
+                <td width={50}>
                   <span className="header">Name: </span>
                   <span className="detail-print">{name}</span>
                 </td>
-                <td>
+                <td width={25}>
                   <span className="header">Age: </span>
                   <span className="detail-print">{age}</span>
                 </td>
+                <td width={25}>
+                  <span className="header">Gender:</span>
+                  <span className="detail-print detail-gender">
+                    {gender.toLowerCase() == "female" ? "F" : "M"}
+                  </span>
+                </td>
               </tr>
-            </table>
-            <table className="print-table-stub">
+          
               <tr>
-                <td>
+                <td width={50}>
                   <span className="header">DOB: </span>
                   <span className="detail-print">
                     {formatDate(birthDate)}
                   </span>{" "}
                 </td>
 
-                <td>
-                  <span className="header">Gender:</span>
-                  <span className="detail-print detail-gender">
-                    {gender.toLowerCase() == "female" ? "F" : "M"}
-                  </span>
-                </td>
-                <td className="print-data-contact">
+                <td width={50}>
                   <span className="header">Contact: </span>
                   <span className="detail-print">{contact}</span>
                 </td>
               </tr>
-            </table>
-            <table className="print-table-stub">
-              <tr>
-                <td>
+               <tr>
+                <td width={50}>
                   <span className="header">Discount Code: </span>
                   <span className="detail-print">
                     {discountCode ? discountCode : "None"}
                   </span>
                 </td>
-                <td className="print-table-stub">
-                  {/* <span className="footer-header"> */}
+                <td width={50}>
                   <span className="footer-header">
                     <b>Result:</b>
                   </span>
@@ -804,6 +800,7 @@ export class PaymentToPrint extends React.PureComponent {
                 </td>
               </tr>
             </table>
+        
           </div>
         </div>
       )
