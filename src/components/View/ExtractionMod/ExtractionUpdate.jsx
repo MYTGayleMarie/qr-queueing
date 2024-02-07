@@ -47,14 +47,20 @@ export default function ExtractionUpdate() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle: () => `
-          @page { size: letter;}
-          @media print {
-            .print-break {
-              margin-top: 1rem;
-              display: block;
-              page-break-before: always;
-            }
-          }
+    @page {
+  size: auto;
+  margin: 20mm;
+}
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: avoid;
+    page-break-inside:avoid !important;
+  }
+
+  
+}
           `,
   })
 

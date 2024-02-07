@@ -684,7 +684,7 @@ export class PaymentToPrint extends React.PureComponent {
     //   )
     // }
 
-    //Generate Request ticket stub - revert as of now
+    //Generate Request ticket stub
     function generateTickets(
       patientId,
       bookingId,
@@ -696,10 +696,15 @@ export class PaymentToPrint extends React.PureComponent {
       serviceName,
       services,
       discountCode,
-      type
+      type,
+      viewType
     ) {
       return (
-        <div className="print-column">
+        <div
+          className={
+            viewType === "phlebo" ? "print-column-phlebo" : "print-column"
+          }
+        >
           <div class="d-flex row justify-content-left mx-0">
             <div className="col-2">
               <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
@@ -805,6 +810,136 @@ export class PaymentToPrint extends React.PureComponent {
       )
     }
 
+    //Generate Request ticket stub POS view
+    function generateTicketsPOS(
+      patientId,
+      bookingId,
+      name,
+      age,
+      gender,
+      contact,
+      result,
+      serviceName,
+      services,
+      discountCode,
+      type,
+      viewType
+    ) {
+      return (
+        <div className="print-column-phlebo">
+          <div class="d-flex row justify-content-left mx-0">
+            <div className="col-6">
+              <img
+                src={logo}
+                alt={"logo"}
+                className="payment-logo-phlebo mt-1"
+              ></img>
+            </div>
+
+            <div className="col-6 text-right">
+              <span className="request-header-phlebo">
+                BOOKING #<strong>{bookingId}</strong>
+              </span>
+            </div>
+            <div className="col-12 text-left align-left">
+              <span className="request-header-phlebo text-left">
+                Request Form-Patient ID:{patientId}
+              </span>
+            </div>
+          </div>
+          {/* <div className="row justify-content-end">
+            <div className="col text-right">
+              <span className="request-header-test">
+                BOOKING #<strong>{bookingId}</strong>
+              </span>
+            </div>
+          </div> */}
+
+          <div className="row mx-0 mt-1 mb-2">
+            <table className="services-table print-table-double">
+              <tr style={{ border: "1px solid black" }}>
+                <td align="center" className="p-4">
+                  <span
+                    style={{
+                      fontSize: "15px",
+                      padding: 5,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {serviceName?.toUpperCase()}
+                  </span>
+                  <br />
+                  <span className="mt-1">
+                    {type === "special" && (
+                      <>
+                        <td>
+                          <span className="data">
+                            {services.map((val) => val.name).join(", ")}
+                          </span>
+                        </td>
+                      </>
+                    )}
+                    {type === "normal" && services}
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div className="row mx-0 mt-3">
+            <table className="print-table-stub">
+              <tr>
+                <td width={100}>
+                  <span className="header-phlebo">Name: </span>
+                  <span className="detail-print-phlebo">{name}</span>
+                </td>
+              </tr>
+              <tr>
+                <td width={25}>
+                  <span className="header-phlebo">Age: </span>
+                  <span className="detail-print-phlebo">{age}</span>
+                </td>
+                <td width={100}>
+                  <span className="header-phlebo">DOB: </span>
+                  <span className="detail-print-phlebo">
+                    {formatDate(birthDate)}
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td width={25}>
+                  <span className="header-phlebo">Gender:</span>
+                  <span className="detail-print-phlebo detail-gender">
+                    {gender.toLowerCase() == "female" ? "F" : "M"}
+                  </span>
+                </td>
+
+                <td width={100}>
+                  <span className="header-phlebo">Contact: </span>
+                  <span className="detail-print-phlebo">{contact}</span>
+                </td>
+              </tr>
+              <tr>
+                <td width={25}>
+                  <span className="header-phlebo">
+                    <b>Result:</b>
+                  </span>
+                  <span className="detail-print-phlebo">
+                    {result.toUpperCase()}
+                  </span>
+                </td>
+                <td width={100}>
+                  <span className="header-phlebo">Discount Code: </span>
+                  <span className="detail-print-phlebo">
+                    {discountCode ? discountCode : "None"}
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      )
+    }
     const tickets = [
       {
         name: "XRAY-ECG",
@@ -930,7 +1065,8 @@ export class PaymentToPrint extends React.PureComponent {
                               data[0]?.category,
                               by2[index],
                               this.props.discountCode,
-                              "special"
+                              "special",
+                              "cashier"
                             )
                           })}
                         </div>
@@ -1129,17 +1265,20 @@ export class PaymentToPrint extends React.PureComponent {
               </div>
             </>
           )}
+        </div>
 
+        <div>
           {this.props.view === "phlebo" && (
             <>
               {ticketsBy1.map((by4, index1) => {
                 return (
-                  <div className="print-break">
+                  <div className="page-break">
+                  {/* <div> */}
                     {groupedSpecial.map((data, index) => {
                       return (
                         <div className="print-row">
                           {" "}
-                          {generateTickets(
+                          {generateTicketsPOS(
                             this.props.patientId,
                             this.props.bookingId,
                             this.props.name,
@@ -1150,7 +1289,8 @@ export class PaymentToPrint extends React.PureComponent {
                             data[0]?.category,
                             groupedSpecial[index],
                             this.props.discountCode,
-                            "special"
+                            "special",
+                            "phlebo"
                           )}
                         </div>
                       )
@@ -1160,7 +1300,7 @@ export class PaymentToPrint extends React.PureComponent {
                       return (
                         <div className="print-row">
                           {by1.map((data, index) => {
-                            return generateTickets(
+                            return generateTicketsPOS(
                               this.props.patientId,
                               this.props.bookingId,
                               this.props.name,
@@ -1171,7 +1311,8 @@ export class PaymentToPrint extends React.PureComponent {
                               data.name,
                               data.services,
                               this.props.discountCode,
-                              "normal"
+                              "normal",
+                              "phlebo"
                             )
                           })}
                         </div>
