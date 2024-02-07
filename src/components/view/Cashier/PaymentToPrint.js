@@ -771,7 +771,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </span>
                 </td>
               </tr>
-          
+
               <tr>
                 <td width={50}>
                   <span className="header">DOB: </span>
@@ -785,7 +785,7 @@ export class PaymentToPrint extends React.PureComponent {
                   <span className="detail-print">{contact}</span>
                 </td>
               </tr>
-               <tr>
+              <tr>
                 <td width={50}>
                   <span className="header">Discount Code: </span>
                   <span className="detail-print">
@@ -800,7 +800,6 @@ export class PaymentToPrint extends React.PureComponent {
                 </td>
               </tr>
             </table>
-        
           </div>
         </div>
       )
@@ -1020,7 +1019,7 @@ export class PaymentToPrint extends React.PureComponent {
                               className="slip-label bold-slip-span text-right"
                               align="right"
                             >
-                              P {parseFloat(data.price).toFixed(2)}
+                              {formatPrice(parseFloat(data.price).toFixed(2))}
                             </td>
                           </tr>
                         ))}
@@ -1036,7 +1035,7 @@ export class PaymentToPrint extends React.PureComponent {
                             </td>
                             <td className="slip-label slip-span">{data.qty}</td>
                             <td className="slip-label bold-slip-span">
-                              P {parseFloat(data.price).toFixed(2)}
+                              {formatPrice(parseFloat(data.price).toFixed(2))}
                             </td>
                           </tr>
                         ))}
