@@ -472,6 +472,7 @@ function PrintBooking() {
             grandTotal={grandTotal}
             labTests={labTests}
             packages={packages}
+             view={"cashier"}
             setPrintReadyFinal={setPrintReadyFinal}
           />
         </div>

@@ -47,14 +47,20 @@ export default function ExtractionUpdate() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle: () => `
-          @page { size: letter;}
-          @media print {
-            .print-break {
-              margin-top: 1rem;
-              display: block;
-              page-break-before: always;
-            }
-          }
+    @page {
+  size: auto;
+  margin: 20mm;
+}
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: avoid;
+    page-break-inside:avoid !important;
+  }
+
+  
+}
           `,
   })
 
@@ -159,7 +165,7 @@ export default function ExtractionUpdate() {
   }, [])
 
   async function fetchExtraction() {
-    const response = await getSingleLabExtractionPatient(bookingId, 8)
+    const response = await getSingleLabExtractionPatient(bookingId, "")
 
     if (response.data) {
       setDetails(response.data.bookings[0])
@@ -243,7 +249,7 @@ export default function ExtractionUpdate() {
                       </h5>
                     </div>
                     <div className="col-3">
-                      {/* <Button
+                      <Button
                         className="mt-2"
                         // size="sm"
                         style={{
@@ -262,7 +268,7 @@ export default function ExtractionUpdate() {
                           className="print-icon"
                         />{" "}
                         {readyToPrint ? "PRINT" : "Loading Data..."}
-                      </Button> */}
+                      </Button>
                     </div>
                     <div className="col-3">
                       <Button
@@ -390,6 +396,7 @@ export default function ExtractionUpdate() {
           referral={""}
           discountCode={discountCode}
           hmo={hmo}
+          view={"phlebo"}
           setPrintReadyFinal={setReadyToPrint}
         />
       </div>
