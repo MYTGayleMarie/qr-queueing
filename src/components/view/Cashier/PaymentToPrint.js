@@ -888,11 +888,13 @@ export class PaymentToPrint extends React.PureComponent {
           <div className="row mx-0 mt-3">
             <table className="print-table-stub">
               <tr>
-                <td width={100}>
+                <td width="100%">
                   <span className="header-phlebo">Name: </span>
                   <span className="detail-print-phlebo">{name}</span>
                 </td>
               </tr>
+            </table>
+            <table className="print-table-stub">
               <tr>
                 <td width={25}>
                   <span className="header-phlebo">Age: </span>
@@ -1033,9 +1035,9 @@ export class PaymentToPrint extends React.PureComponent {
       ticketsBy2Special.push(arr)
     }
 
-    const marginTop = "10px"
+    const marginTop = "0px"
     const marginRight = "10px"
-    const marginBottom = "10px"
+    const marginBottom = "0px"
     const marginLeft = "20px"
     const getPageMargins = () => {
       return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`
@@ -1273,29 +1275,7 @@ export class PaymentToPrint extends React.PureComponent {
               {ticketsBy1.map((by4, index1) => {
                 return (
                   <div className="page-break">
-                  {/* <div> */}
-                    {groupedSpecial.map((data, index) => {
-                      return (
-                        <div className="print-row">
-                          {" "}
-                          {generateTicketsPOS(
-                            this.props.patientId,
-                            this.props.bookingId,
-                            this.props.name,
-                            this.props.age,
-                            this.props.gender,
-                            this.props.contact,
-                            this.props.result,
-                            data[0]?.category,
-                            groupedSpecial[index],
-                            this.props.discountCode,
-                            "special",
-                            "phlebo"
-                          )}
-                        </div>
-                      )
-                    })}
-
+                    {/* <div> */}
                     {by4.map((by1, index2) => {
                       return (
                         <div className="print-row">
@@ -1315,6 +1295,27 @@ export class PaymentToPrint extends React.PureComponent {
                               "phlebo"
                             )
                           })}
+                        </div>
+                      )
+                    })}
+                    {groupedSpecial.map((data, index) => {
+                      return (
+                        <div className="print-row">
+                          {" "}
+                          {generateTicketsPOS(
+                            this.props.patientId,
+                            this.props.bookingId,
+                            this.props.name,
+                            this.props.age,
+                            this.props.gender,
+                            this.props.contact,
+                            this.props.result,
+                            data[0]?.category,
+                            groupedSpecial[index],
+                            this.props.discountCode,
+                            "special",
+                            "phlebo"
+                          )}
                         </div>
                       )
                     })}
