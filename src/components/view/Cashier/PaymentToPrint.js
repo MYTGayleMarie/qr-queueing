@@ -794,7 +794,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </span>
                 </td>
                 <td width={50}>
-                  <span className="footer-header">
+                  <span className="header">
                     <b>Result:</b>
                   </span>
                   <span className="detail-print"> {result.toUpperCase()}</span>

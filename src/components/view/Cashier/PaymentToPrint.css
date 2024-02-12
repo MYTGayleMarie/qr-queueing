@@ -7,7 +7,7 @@
   padding: 1%;
 }
 .print-table-stub {
-  line-height: 60% !important;
+  /* line-height: 60% !important; */
   padding: 0;
 }
 
@@ -39,7 +39,7 @@
 .header {
   font-weight: bold;
   color: black;
-  font-size: 7px;
+  font-size: 15px;
 }
 .header-phlebo {
   font-weight: bold;
@@ -72,7 +72,7 @@
 }
 
 .detail-print {
-  font-size: 0.5em;
+  font-size: 15px;
 }
 .detail-print-phlebo {
   font-size: 10px;
