@@ -1076,62 +1076,41 @@ export class PaymentToPrint extends React.PureComponent {
               <br />
               <div className="row justify-content-center">
                 {/* Charge slip */}
+
                 <div className="col-12 charge-slip" id="charge-slip">
-                  <div class="d-flex justify-content-left">
-                    <img src={logo} alt={"logo"} class="small-logo"></img>
-                    <span className="to-right slip-span">
-                      Quest and Reliance Diagnostics
-                    </span>
-                    <span className="to-right slip-span">09998886694</span>
-                    <span className="to-right slip-span">
-                      Marasbaras Tacloban City
-                    </span>
-                  </div>
-                  <div className="row slip-header">
-                    <div className="row m-0 p-0">
-                      {/* <h3 className="m-0 p-0 slip-title">Laboratory Details</h3> */}
-                      <table className="slip-table print-table">
-                        <tr className="print-table">
-                          <td>
-                            <span className="slip-label slip-span">
-                              Patient Name:
-                            </span>
-                            <span className="slip-detail slip-span">
-                              {this.props.name}
-                            </span>
-                          </td>
-                          <td>
-                            <span className="slip-label slip-span">
-                              Birthdate:
-                            </span>
-                            <span className="slip-detail slip-span">
-                              {this.props.birthdate}
-                            </span>
-                          </td>
-                        </tr>
-                      </table>
+                  <div className="row justify-content-between">
+                    <div className="col-7">
+                      <img src={logo} alt={"logo"} class="payment-logo" />
                     </div>
-                    <div className="row">
-                      <table className="slip-table print-table">
-                        <tr className="print-table">
-                          <td>
-                            <span className="slip-label slip-span">
-                              Transaction No.:
-                            </span>
-                            <span className="slip-detail slip-span">
-                              {this.props.bookingID}
-                            </span>
-                          </td>
-                          <td>
-                            <span className="slip-label slip-span">Date:</span>
-                            <span className="slip-detail slip-span">
-                              {this.props.bookingDate}
-                            </span>
-                          </td>
-                        </tr>
-                      </table>
+
+                    <div className="col-5 text-right">
+                      <div style={{ fontSize: "20px" }}>BOOKING</div>
+                    </div>
+                    <div className="col-6 font-small">
+                      <span>Quest and Reliance Diagnostics</span>
+                      <br />
+                      <span>Marasbaras Tacloban City</span>
+                      <br />
+                      <span>09998886694</span>
+                    </div>
+                    <div className="col-6 text-right">
+                      <h1>
+                        <strong># {this.props.bookingId}</strong>
+                      </h1>
+                    </div>
+                    <div className="col-8 mt-2">
+                      Patient Name: <strong>{this.props.name}</strong>
+                    </div>
+
+                    <div className="col-4 mt-2">
+                      Birthdate: <strong>{this.props.birthdate}</strong>
+                    </div>
+                    <div className="col-12 mt-2">
+                      Date:{" "}
+                      <strong>{formatDate(this.props.bookingDate)}</strong>
                     </div>
                   </div>
+                  <div class="d-flex justify-content-left"></div>
 
                   <div className="row charge-slip-table mb-0 mr-0">
                     <table className="print-table">
