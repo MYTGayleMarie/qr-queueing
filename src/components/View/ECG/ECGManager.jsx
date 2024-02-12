@@ -70,7 +70,7 @@ function ECGManager() {
         <Fragment>
           <Header
             type="thick"
-            title="EXTRACTION MANAGER (ECG)"
+            title="ECG"
             buttons={buttons}
             tableData={patientData}
           />
