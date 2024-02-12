@@ -310,6 +310,8 @@ function AddPayment() {
       .then(function (booking) {
         setLoadingBooking(true)
         setServices(booking.data)
+        setPackages(booking.data.filter(data=>data.type==="package"))
+        
       })
       .catch(function (error) {
         setLoadingBooking(true)
@@ -1465,7 +1467,7 @@ function AddPayment() {
               bookingDate={bookingDate}
               payment={paymentType}
               result={result}
-              paymentDataServices={services}
+              paymentDataServices={services.filter(data=>data.type!=="package")}
               services={printServices}
               isCompany={true}
               packages={packages}

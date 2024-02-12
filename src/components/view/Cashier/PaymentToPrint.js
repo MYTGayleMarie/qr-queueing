@@ -1136,18 +1136,19 @@ export class PaymentToPrint extends React.PureComponent {
                             </td>
                           </tr>
                         ))}
-
+                        
                         {this.props.packages.map((data, index) => (
                           <tr className="print-table">
                             <td className="slip-label slip-span">
-                              {data.name}
-                              <br />
+                              {data.package} [P]
+                              {/* <br />
                               <span className="slip-span-details">
                                 {data.details} [P]
-                              </span>
+                              </span> */}
                             </td>
-                            <td className="slip-label slip-span">{data.qty}</td>
-                            <td className="slip-label bold-slip-span">
+                            <td className="slip-label slip-span">1</td>
+                            {/* <td className="slip-label slip-span">{data.qty}</td> */}
+                            <td className="slip-label bold-slip-span text-right"  align="right">
                               {formatPrice(parseFloat(data.price).toFixed(2))}
                             </td>
                           </tr>
