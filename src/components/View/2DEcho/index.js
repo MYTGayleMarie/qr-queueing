@@ -70,7 +70,7 @@ function TwoDEcho() {
         <Fragment>
           <Header
             type="thick"
-            title="EXTRACTION MANAGER (2D ECHO)"
+            title="2D ECHO/ULTRASOUND"
             buttons={buttons}
             tableData={patientData}
           />
