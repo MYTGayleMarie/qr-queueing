@@ -67,6 +67,10 @@
 .data {
   font-size: 1em;
 }
+.data-chem {
+  font-size: 0.9em;
+  text-align: left !important;
+}
 .data-phlebo {
   font-size: 0.9em;
 }
