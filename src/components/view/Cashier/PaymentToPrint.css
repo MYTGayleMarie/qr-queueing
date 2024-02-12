@@ -79,8 +79,8 @@
 }
 
 .payment-logo {
-  width: 40px;
-  height: 15px;
+  width: 70px;
+  height: 25px;
   /* margin-left: -2%; */
 }
 
@@ -187,7 +187,7 @@
 }
 
 .request-header {
-  font-size: 10px;
+  font-size: 15px !important;
   margin-top: 1%;
 }
 .request-header-phlebo {
@@ -196,7 +196,7 @@
 }
 
 .request-header-test {
-  font-size: 15px !important;
+  font-size: 30px !important;
   margin-top: 3%;
 }
 

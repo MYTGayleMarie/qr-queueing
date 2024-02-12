@@ -700,13 +700,9 @@ export class PaymentToPrint extends React.PureComponent {
       viewType
     ) {
       return (
-        <div
-          className={
-            viewType === "phlebo" ? "print-column-phlebo" : "print-column"
-          }
-        >
+        <div className={"print-column-phlebo"}>
           <div class="d-flex row justify-content-left mx-0">
-            <div className="col-2">
+            <div className="col-2 mt-2">
               <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
             </div>
             <div className="col mt-1">
@@ -1024,8 +1020,8 @@ export class PaymentToPrint extends React.PureComponent {
       ticketsBy4Special.push(chunk)
     }
 
-    // split tickets by 4 into 2
-    const tixLenSpecial = 2
+    // split tickets by 4 into 1
+    const tixLenSpecial = 1
     for (let i = 0; i < ticketsBy4Special.length; i++) {
       let arr = []
       for (let j = 0; j < ticketsBy4Special[i].length; j += tixLenSpecial) {
