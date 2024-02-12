@@ -228,176 +228,7 @@ export class PaymentToPrint extends React.PureComponent {
 
       return (
         <tr className="print-table-double">
-          {category_name == "SEROLOGY" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row">
-                  {category_services.split(",").map((data) => {
-                    return (
-                     <div className="col-12">
-                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <span className="data-chem">{data}</span>
-                      </div>
-                     </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-          {category_name == "IMMUNOLOGY" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <span className="data-chem">{data}</span>
-                      </div>
-                        </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-          {category_name == "THYROID PROFILE" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-          {category_name == "TUMOR MARKERS" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-          {category_name == "HEPATITIS PROFILE SCREENING" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-          {category_name == "CHEMISTRY" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
           {category_name == "ELECTROLYTES" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
-
-          {category_name == "LIPID PROFILE" && (
             <>
               <td>
                 {/* <span className="data">{category_services}</span> */}
@@ -445,30 +276,6 @@ export class PaymentToPrint extends React.PureComponent {
               </td>
             </>
           )}
-          {category_name == "LIVER FUNCTION TESTS" && (
-            <>
-              <td>
-                {/* <span className="data">{category_services}</span> */}
-                <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
-                    return (
-                      <div className="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <span className="data-chem">{data}</span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </td>
-            </>
-          )}
           {category_name == "KIDNEY FUNCTION TESTS" && (
             <>
               <td>
@@ -493,7 +300,7 @@ export class PaymentToPrint extends React.PureComponent {
               </td>
             </>
           )}
-          {category_name == "COAGUATION STUDIES" && (
+          {category_name == "LIPID PROFILE" && (
             <>
               <td>
                 {/* <span className="data">{category_services}</span> */}
@@ -518,6 +325,200 @@ export class PaymentToPrint extends React.PureComponent {
             </>
           )}
           {category_name == "PANCREATIC TEST" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "LIVER FUNCTION TESTS" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "CHEMISTRY" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+
+          {category_name == "SEROLOGY" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "IMMUNOLOGY" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "HEPATITIS PROFILE SCREENING" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "THYROID PROFILE" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+
+          {category_name == "COAGUATION STUDIES" && (
+            <>
+              <td>
+                {/* <span className="data">{category_services}</span> */}
+                <div className="row justify-content-start">
+                  {category_services.split(",").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+          {category_name == "TUMOR MARKERS" && (
             <>
               <td>
                 {/* <span className="data">{category_services}</span> */}
@@ -1160,6 +1161,10 @@ export class PaymentToPrint extends React.PureComponent {
       )
     }
     const tickets = [
+        {
+        name: "CHEM-SERO",
+        services: services_Serology,
+      },
       {
         name: "XRAY-ECG",
         services: services_XRAY,
@@ -1176,10 +1181,7 @@ export class PaymentToPrint extends React.PureComponent {
       //     name: 'COAGUATION',
       //     services: services_Coaguation
       // },
-      {
-        name: "CHEM-SERO",
-        services: services_Serology,
-      },
+    
       {
         name: "CLINIC - URINALYSIS",
         services: services_Clinical_Urinalysis,
