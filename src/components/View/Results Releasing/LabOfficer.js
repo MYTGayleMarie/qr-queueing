@@ -263,7 +263,7 @@ export default function LabOfficer() {
       }
     } else if (selectedLab.label == "HIV Screening (Anti HIV)") {
       if (lab_test === "Anti-HIV") {
-        setLabTestOptions(labResultsData.reactiveNonReactiveOptions2)
+        setLabTestOptions(labResultsData.posNegTestOptions)
         setIsDropdown(true)
       } else {
         setIsDropdown(false)
@@ -320,7 +320,6 @@ export default function LabOfficer() {
       setLabTestOptions(labResultsData.posNegOptions)
       setIsDropdown(true)
     } else if (
-      lab_test == "Anti-HIV" ||
       lab_test == "[P] Anti-HIV" ||
       lab_test == "Hepatitis B Surface Antigen Test (HBSag)" ||
       lab_test == "[P] Hepatitis B Surface Antigen Test (HBSag)" ||
@@ -339,7 +338,8 @@ export default function LabOfficer() {
       setIsDropdown(true)
       if (
         lab_test == "Hepatitis B Surface Antibody Test" ||
-        lab_test == "Hepatitis B Surface Antibody Test"
+        lab_test == "Hepatitis B Surface Antibody Test" ||
+        lab_test == "Anti-HIV"
       ) {
         setLabTestOptions(labResultsData.posNegOptions2)
       }
@@ -3066,7 +3066,8 @@ export default function LabOfficer() {
                     >
                       {data.label === "Anti HBs/HBSab (Hepatitis B Antibody)" ||
                       data.label === "HBSag (Hepatitis B Antigen)" ||
-                      data.label === "Hbsag Test Promo Group (15 PAX OR MORE)" ||
+                      data.label ===
+                        "Hbsag Test Promo Group (15 PAX OR MORE)" ||
                       data.label === "Hepatitis B Surface Antigen (HbsAg)" ||
                       data.label === "Anti HCV" ? (
                         "Hepatitis Profile Tests"
