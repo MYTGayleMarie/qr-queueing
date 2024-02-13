@@ -294,8 +294,8 @@ const labResultsData = {
 
   reactiveNonReactiveOptions: [
     {
-      value: "NON REACTIVE",
-      label: "NON REACTIVE",
+      value: "NONREACTIVE",
+      label: "NONREACTIVE",
     },
     {
       value: "REACTIVE",
@@ -309,8 +309,8 @@ const labResultsData = {
 
   reactiveNonReactiveOptions2: [
     {
-      value: "NON REACTIVE",
-      label: "NON REACTIVE",
+      value: "NONREACTIVE",
+      label: "NONREACTIVE",
     },
     {
       value: "REACTIVE",
