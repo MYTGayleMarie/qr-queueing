@@ -204,7 +204,7 @@ export class PaymentToPrint extends React.PureComponent {
         if (groupedServices[key].length - 1 == index) {
           category_services += info.name
         } else {
-          category_services += info.name + ", "
+          category_services += info.name + "|"
         }
       })
 
@@ -233,7 +233,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -257,7 +257,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -281,7 +281,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -305,7 +305,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -329,7 +329,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -353,7 +353,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -377,7 +377,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -402,7 +402,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -426,7 +426,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -450,7 +450,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -474,7 +474,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -499,7 +499,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
@@ -523,7 +523,7 @@ export class PaymentToPrint extends React.PureComponent {
               <td>
                 {/* <span className="data">{category_services}</span> */}
                 <div className="row justify-content-start">
-                  {category_services.split(",").map((data) => {
+                  {category_services.split("|").map((data) => {
                     return (
                       <div className="col-12">
                         <div class="form-check">
