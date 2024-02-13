@@ -100,7 +100,7 @@ export class PaymentToPrint extends React.PureComponent {
         if (groupedServices[key].length - 1 == index) {
           category_services += info.name
         } else {
-          category_services += info.name + ", "
+          category_services += info.name + "|"
         }
       })
 
@@ -117,21 +117,69 @@ export class PaymentToPrint extends React.PureComponent {
           {category_name == "XRAY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
           {category_name == "CARDIOLOGY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
           {category_name == "RADIOLOGY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
@@ -149,7 +197,7 @@ export class PaymentToPrint extends React.PureComponent {
         if (groupedServices[key].length - 1 == index) {
           category_services += info.name
         } else {
-          category_services += info.name + ", "
+          category_services += info.name + "|"
         }
       })
 
@@ -162,7 +210,23 @@ export class PaymentToPrint extends React.PureComponent {
           {category_name == "HEMATOLOGY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
@@ -555,7 +619,7 @@ export class PaymentToPrint extends React.PureComponent {
           if (groupedServices[key].length - 1 == index) {
             category_services += info.name
           } else {
-            category_services += info.name + ", "
+            category_services += info.name + "|"
           }
         })
 
@@ -568,7 +632,23 @@ export class PaymentToPrint extends React.PureComponent {
             {category_name == "CLINICAL MICROSCOPY URINALYSIS" && (
               <>
                 <td>
-                  <span className="data">{category_services}</span>
+                  <div className="row justify-content-start">
+                    {category_services.split("|").map((data) => {
+                      return (
+                        <div className="col-12">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckDefault"
+                            />
+                            <span className="data-chem">{data}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </td>
               </>
             )}
@@ -586,7 +666,7 @@ export class PaymentToPrint extends React.PureComponent {
           if (groupedServices[key].length - 1 == index) {
             category_services += info.name
           } else {
-            category_services += info.name + ", "
+            category_services += info.name + "|"
           }
         })
 
@@ -599,7 +679,23 @@ export class PaymentToPrint extends React.PureComponent {
             {category_name == "CLINICAL MICROSCOPY FECALYSIS" && (
               <>
                 <td>
-                  <span className="data">{category_services}</span>
+                  <div className="row justify-content-start">
+                    {category_services.split("|").map((data) => {
+                      return (
+                        <div className="col-12">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckDefault"
+                            />
+                            <span className="data-chem">{data}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </td>
               </>
             )}
@@ -618,7 +714,7 @@ export class PaymentToPrint extends React.PureComponent {
         if (groupedServices[key].length - 1 == index) {
           category_services += info.name
         } else {
-          category_services += info.name + ", "
+          category_services += info.name + "|"
         }
       })
 
@@ -631,7 +727,23 @@ export class PaymentToPrint extends React.PureComponent {
           {category_name == "ULTRASOUND" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
@@ -647,7 +759,7 @@ export class PaymentToPrint extends React.PureComponent {
         if (groupedServices[key].length - 1 == index) {
           category_services += info.name
         } else {
-          category_services += info.name + ", "
+          category_services += info.name + "|"
         }
       })
 
@@ -665,28 +777,92 @@ export class PaymentToPrint extends React.PureComponent {
           {category_name == "OTHER TESTS" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
           {category_name == "MICROBIOLOGY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
           {category_name == "HISTOPATHOLOGY" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
           {category_name == "COVID RAPID TESTS" && (
             <>
               <td>
-                <span className="data">{category_services}</span>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <div className="col-12">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <span className="data-chem">{data}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </td>
             </>
           )}
@@ -1087,18 +1263,39 @@ export class PaymentToPrint extends React.PureComponent {
                     {serviceName?.toUpperCase()}
                   </span>
                   <br />
-                  <span className="mt-1">
-                    {type === "special" && (
-                      <>
-                        <td>
-                          <span className="data">
-                            {services.map((val) => val.name).join(", ")}
-                          </span>
-                        </td>
-                      </>
-                    )}
-                    {type === "normal" && services}
-                  </span>
+                  <div className="row justify-content-center">
+                    <div className="col-12 text-left">
+                      {type === "special" && (
+                        <>
+                          <td>
+                            <span className="data">
+                              {/* {services.map((val) => val.name).join(", ")} */}
+                              <div className="row justify-content-start">
+                                {services.map((data) => {
+                                  return (
+                                    <div className="col-12">
+                                      <div class="form-check">
+                                        <input
+                                          class="form-check-input"
+                                          type="checkbox"
+                                          value=""
+                                          id="flexCheckDefault"
+                                        />
+                                        <span className="data-chem">
+                                          {data.name}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </span>
+                          </td>
+                        </>
+                      )}
+                      {type === "normal" && services}
+                    </div>
+                  </div>
                 </td>
               </tr>
             </table>
@@ -1161,7 +1358,7 @@ export class PaymentToPrint extends React.PureComponent {
       )
     }
     const tickets = [
-        {
+      {
         name: "CHEM-SERO",
         services: services_Serology,
       },
@@ -1181,15 +1378,15 @@ export class PaymentToPrint extends React.PureComponent {
       //     name: 'COAGUATION',
       //     services: services_Coaguation
       // },
-    
-      {
-        name: "CLINIC - URINALYSIS",
-        services: services_Clinical_Urinalysis,
-      },
-      {
-        name: "CLINIC - FECALYSIS",
-        services: services_Clinical_Fecalysis,
-      },
+
+      // {
+      //   name: "CLINIC - URINALYSIS",
+      //   services: services_Clinical_Urinalysis,
+      // },
+      // {
+      //   name: "CLINIC - FECALYSIS",
+      //   services: services_Clinical_Fecalysis,
+      // },
       {
         name: "ULTRASOUND",
         services: services_Ultrasound,

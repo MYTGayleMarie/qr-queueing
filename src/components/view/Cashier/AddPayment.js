@@ -66,7 +66,7 @@ function AddPayment() {
   const [packages, setPackages] = useState([])
   const [click, setClick] = useState(false)
   const [paidAmount, setPaidAmount] = useState(0)
-   const [readyToPrint, setReadyToPrint] = useState(false)
+  const [readyToPrint, setReadyToPrint] = useState(false)
 
   //customer details
   const [firstName, setFirstName] = useState("")
@@ -310,8 +310,7 @@ function AddPayment() {
       .then(function (booking) {
         setLoadingBooking(true)
         setServices(booking.data)
-        setPackages(booking.data.filter(data=>data.type==="package"))
-        
+        setPackages(booking.data.filter((data) => data.type === "package"))
       })
       .catch(function (error) {
         setLoadingBooking(true)
@@ -319,7 +318,6 @@ function AddPayment() {
       })
   }, [])
 
- 
   useEffect(() => {
     printServices.length = 0
     services.map((info, index1) => {
@@ -398,7 +396,6 @@ function AddPayment() {
     })
   }, [services])
 
- 
   function removeService() {
     axios({
       method: "post",
@@ -857,7 +854,7 @@ function AddPayment() {
         <div className="row d-flex justify-content-end mt-4">
           {paymentStatus == "paid" &&
             queueNumber != "" &&
-            printData == true  &&
+            printData == true &&
             printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE BOOKING
@@ -1467,7 +1464,9 @@ function AddPayment() {
               bookingDate={bookingDate}
               payment={paymentType}
               result={result}
-              paymentDataServices={services.filter(data=>data.type!=="package")}
+              paymentDataServices={services.filter(
+                (data) => data.type !== "package"
+              )}
               services={printServices}
               isCompany={true}
               packages={packages}
