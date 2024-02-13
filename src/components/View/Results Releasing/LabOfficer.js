@@ -343,7 +343,11 @@ export default function LabOfficer() {
       ) {
         setLabTestOptions(labResultsData.posNegOptions2)
       }
-      if (lab_test == "Anti HCV" || lab_test == "[P] Anti HCV") {
+      if (
+        lab_test == "Anti HCV" ||
+        lab_test == "[P] Anti HCV" ||
+        lab_test == "Anti-HCV"
+      ) {
         setLabTestOptions(labResultsData.posNegOptions2)
       }
     } else if (selectedLab.label == "Anti HBs/HBSag (Hepatitis B Antibody)") {
