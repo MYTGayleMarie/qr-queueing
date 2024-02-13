@@ -10,6 +10,10 @@
   /* line-height: 60% !important; */
   padding: 0;
 }
+.print-table-stub-pos {
+  line-height: 60% !important;
+  padding: 0;
+}
 
 .print-table-double {
   line-height: 120% !important;

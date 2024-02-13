@@ -1104,7 +1104,7 @@ export class PaymentToPrint extends React.PureComponent {
             </table>
           </div>
           <div className="row mx-0 mt-3">
-            <table className="print-table-stub">
+            <table className="print-table-stub-pos">
               <tr>
                 <td width="100%">
                   <span className="header-phlebo">Name: </span>
@@ -1112,7 +1112,7 @@ export class PaymentToPrint extends React.PureComponent {
                 </td>
               </tr>
             </table>
-            <table className="print-table-stub">
+            <table className="print-table-stub-pos">
               <tr>
                 <td width={25}>
                   <span className="header-phlebo">Age: </span>
