@@ -811,6 +811,32 @@ function Reports() {
                     />
                   </Col>
                 </Row>
+                <Row>
+                  <Col lg={3} md={3}>
+                    <SmallOutlineButtonReport
+                      title={"LAB REPORT"}
+                      link={"/reports/lab"}
+                    />
+                  </Col>
+                  <Col lg={3} md={3}>
+                    <SmallOutlineButtonReport
+                      title={"XRAY REPORT"}
+                      link={"/reports/xray"}
+                    />
+                  </Col>
+                  <Col lg={3} md={3}>
+                    <SmallOutlineButtonReport
+                      title={"ECG REPORT"}
+                      link={"/reports/ecg"}
+                    />
+                  </Col>
+                  <Col lg={3} md={3}>
+                    <SmallOutlineButtonReport
+                      title={"2D ECHO REPORT"}
+                      link={"/reports/2d-echo"}
+                    />
+                  </Col>
+                </Row>
               </Fragment>
             </div>
           )}

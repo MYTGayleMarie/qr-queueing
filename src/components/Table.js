@@ -19,10 +19,12 @@ import { useNavigate } from "react-router-dom"
 import TableLoader8 from "./TableLoader8"
 import {
   formatDate,
+  formatDateWithTime,
   formatPrice,
   getRole,
   getRoleId,
 } from "../utilities/Common"
+import { formatTimeStr } from "antd/es/statistic/utils"
 
 function Table({
   clickable,
@@ -283,6 +285,34 @@ function Table({
             </button>
           </td>
         </tr>
+      )
+    } else if (type === "lab-report") {
+      return (
+        <tr
+          key={row.booking_id}
+          style={{ cursor: "pointer" }}
+          className={
+            selectedRowExtraction !== {} &&
+            selectedRowExtraction.booking_id === row.booking_id
+              ? "selected-extraction"
+              : ""
+          }
+        >
+          <td>{row.booking_id}</td>
+          <td>
+            {row.first_name} {row.middle_name} {row.last_name}
+          </td>
+
+          <td>{row.lab_test.split("|").join(", ")}</td>
+          <td>{formatDateWithTime(row.extracted_on)}</td>
+        </tr>
+        // <tr key={row.id}>
+        //   {rowData.map((data, index) => (
+        //     <td key={index} data-heading={data.key} className={data.val}>
+        //       {data.val}
+        //     </td>
+        //   ))}
+        // </tr>
       )
     } else if (type === "extraction") {
       return (
@@ -1118,35 +1148,39 @@ function Table({
           <td>
             {row.payment_status !== "PAID" && (
               <>
-              <button
-                class="action-btn"
-                role="button"
-                onClick={() => link(row.invoice_id, row.company_id, "","","view")}
-              >
-                PRINT INVOICE
-              </button>
-              <br/>
-           
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "view")
+                  }
+                >
+                  PRINT INVOICE
+                </button>
+                <br />
               </>
             )}
-             {row.payment_status === "PAID" && (
+            {row.payment_status === "PAID" && (
               <>
-             
-               <button
-                class="action-btn"
-                role="button"
-                onClick={() => link(row.invoice_id, row.company_id, "","","pay")}
-              >
-                VIEW DETAILS
-              </button>
-              <br/>
+                <button
+                  class="action-btn"
+                  role="button"
+                  onClick={() =>
+                    link(row.invoice_id, row.company_id, "", "", "pay")
+                  }
+                >
+                  VIEW DETAILS
+                </button>
+                <br />
               </>
             )}
             {row.payment_status !== "PAID" && (
               <button
                 class="action-btn"
                 role="button"
-                onClick={() => link(row.invoice_id, row.company_id,"","", "pay")}
+                onClick={() =>
+                  link(row.invoice_id, row.company_id, "", "", "pay")
+                }
               >
                 ADD PAYMENT
               </button>
@@ -3059,6 +3093,71 @@ function Table({
           >
             FILTER
           </button>
+        </div>
+
+        <table className={tableClass}>
+          <thead>
+            <tr>
+              {headingColumns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {!isReady && useLoader ? (
+              <TableLoader7 tableHeaders={headingColumns} />
+            ) : (
+              data
+            )}
+          </tbody>
+        </table>
+        <TableFooter
+          range={range}
+          slice={slice}
+          setPage={setPage}
+          page={page}
+          footerClass={givenClass}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    )
+  } else if (type === "lab-report") {
+    const { from_date, to_date } = filteredData
+    return (
+      <div className="table-container">
+        <div className="search-table-container d-flex justify-content-end">
+           {totalCount != null && totalCount !== undefined && (
+            <div className="col-sm-2">
+              <div className="total-count-container">
+                <span className="total-count-header-table">TOTAL: </span>
+                <span className="total-count-data">{totalCount}</span>
+              </div>
+            </div>
+          )}
+          <div className={"col-sm-10 d-flex justify-content-end"}>
+            <input
+              type="date"
+              className="from-date search"
+              name="from_date"
+              value={from_date}
+              onChange={setFilter}
+            />
+            <input
+              type="date"
+              className="to-date search"
+              name="to_date"
+              value={to_date}
+              onChange={setFilter}
+            />
+            <button
+              className="filter-btn"
+              name="done"
+              onClick={setRender != null ? (e) => setRender(!render) : ""}
+            >
+              FILTER
+            </button>
+          </div>
         </div>
 
         <table className={tableClass}>
