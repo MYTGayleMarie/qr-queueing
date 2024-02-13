@@ -28,6 +28,20 @@ export const formatDate = (date) => {
   return stringDate[1] + " " + stringDate[2] + ", " + stringDate[3];
 };
 
+export const formatDateWithTime = (date) => {
+  var formatDate = new Date(date);
+  var stringDate = formatDate.toDateString().split(" ");
+  return (
+    stringDate[1] +
+    " " +
+    stringDate[2] +
+    ", " +
+    stringDate[3] +
+    " " +
+    formatDate.toLocaleTimeString().replace(/(.*)\D\d+/, "$1")
+  );
+};
+
 export const formatPrice = (p) => {
   var result = parseFloat(p)
     .toFixed(2)
