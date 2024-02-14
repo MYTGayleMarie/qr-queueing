@@ -144,6 +144,7 @@ function AddPayment() {
   const [loadingBooking, setLoadingBooking] = useState(false)
 
   const [hmo, setHmo] = useState(0)
+  const [hmoCode, setHmoCode] = useState(0)
 
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
@@ -199,6 +200,8 @@ function AddPayment() {
         setReferral(response.data.doctors_referal)
         setResult(response.data.result)
         setHmo(response.data.hmo_discount)
+        setHmoCode(response.data.hmo_code)
+        console.log("bookings/show", response.data)
         totalAmount = response.data.total_amount
         discount = response.data.discount
         customer = response.data.customer_id
@@ -1370,10 +1373,30 @@ function AddPayment() {
           )} */}
 
           <div className="row">
+            {console.log(
+              "conditions",
+              paymentStatus,
+              discountDetail,
+              printData,
+              hmo
+            )}
             {printData && (
-              <div className="col-sm-12 d-flex justify-content-end">
+              <>
+                {discountDetail === "with_company_discount" ||
+                hmoCode !== null ? (
+                  <div className="col-sm-12 d-flex justify-content-end">
                 {printButton()}
               </div>
+                ) : (
+                  <>
+                    {paymentStatus === "paid" && (
+                       <div className="col-sm-12 d-flex justify-content-end">
+                {printButton()}
+              </div>
+                    )}
+                  </>
+                )}
+              </>
             )}
 
             {!printData && (
