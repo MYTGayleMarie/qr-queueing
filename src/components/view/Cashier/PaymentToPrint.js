@@ -1494,7 +1494,8 @@ export class PaymentToPrint extends React.PureComponent {
                 )
               })}
               <br />
-              <div className="row justify-content-center">
+             <div className="page-break print-break">
+               <div className="row justify-content-center">
                 {/* Charge slip */}
 
                 <div className="col-12 charge-slip" id="charge-slip">
@@ -1664,6 +1665,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </div>
                 </div>
               </div>
+             </div>
             </>
           )}
         </div>
