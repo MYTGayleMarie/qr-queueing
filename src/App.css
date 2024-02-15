@@ -76,6 +76,14 @@
   border:none;
   width: 100%;
 }
+.serve-now-btn.view {
+  border-radius: 10px;
+  background-color: var(--yellow-brand);
+  color: black;
+  text-transform: capitalize;
+  border:none;
+  width: 100%;
+}
 /* .serve-now-btn:hover{
   background-color: var(--blue-brand--hover) !important;
 } */
