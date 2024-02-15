@@ -35,6 +35,10 @@ function ExtractionManager() {
     generateQueue(data)
   }
 
+  function redirectExtraction(row) {
+    navigate(`${row.booking_id}/${row.queue_no}`)
+  }
+
   async function generateQueue(data) {
     const response = await generateExtractionQueue(data)
     if (response.data) {
@@ -94,6 +98,7 @@ function ExtractionManager() {
                 userId={userId}
                 useLoader={true}
                 isReady={isReady}
+                redirectExtraction={redirectExtraction}
               />
             </div>
           </div>
