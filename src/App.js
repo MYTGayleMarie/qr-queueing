@@ -126,6 +126,10 @@ import AddInvoicePaymentHmo from "./components/View/Companies/AddInvoicePaymentH
 import ReviewInvoiceHmo from "./components/View/Companies/ReviewHmoInvoice.jsx";
 import ReviewCompanyInvoice from "./components/View/Companies/ReviewCompanyInvoice.jsx";
 import AddInvoiceBulkHmo from "./components/View/Companies/AddInvoiceBulkHmo.jsx";
+import LabReport from "./components/View/Reports/LabReport.jsx";
+import XRAYReport from "./components/View/Reports/XRAYReport.jsx";
+import ECGReport from "./components/View/Reports/ECGReport.jsx";
+import EchoReport from "./components/View/Reports/EchoReport.jsx";
 
 function App() {
   document.title = "QR Diagnostics System";
@@ -736,6 +740,24 @@ function App() {
             path="/2d-echo/:bookingId/:queueId"
             element={token ? <EchoExtractionUpdate /> : <Navigate to="/" />}
           />
+
+          <Route
+            path="/reports/lab"
+            element={token ? <LabReport /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/reports/xray"
+            element={token ? <XRAYReport /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/reports/ecg"
+            element={token ? <ECGReport /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/reports/2d-echo"
+            element={token ? <EchoReport /> : <Navigate to="/" />}
+          />
+
           {/* Now Serving */}
          
           <Route

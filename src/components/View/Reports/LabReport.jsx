@@ -3,21 +3,22 @@ import Navbar from "../../Navbar"
 import Header from "../../Header"
 import Table from "../../Table.js"
 import { ToastContainer, toast } from "react-toastify"
-import { getRoleId, getUser, refreshPage } from "../../../utilities/Common"
+import { useNavigate } from "react-router-dom"
+import { getRoleId, getUser, refreshPage } from "../../../utilities/Common.js"
 import {
   getExtractionPatients,
-  getLabExtractionPatients,
-} from "../../../Helpers/APIs/extractionAPI"
-import { useNavigate } from "react-router-dom"
+  getExtractionReport,
+} from "../../../Helpers/APIs/extractionAPI.js"
 import { generateExtractionQueue } from "../../../Helpers/APIs/queueAPI.js"
+import { useForm } from "react-hooks-helper"
 const buttons = []
 const patientData = ""
 
 const userId = getUser()
 
-function ECGManager() {
+function LabReport() {
   const navigate = useNavigate()
-  const [filteredData, setFilter] = useState({
+  const [filteredData, setFilter] = useForm({
     from_date: "",
     to_date: "",
     done: false,
@@ -31,7 +32,7 @@ function ECGManager() {
   function handleExtractionClick(row) {
     const data = {
       booking_id: row.booking_id,
-      serving_type: "ecg",
+      serving_type: "lab",
       customer_id: row.customer_id,
     }
     generateQueue(data)
@@ -52,14 +53,11 @@ function ECGManager() {
     }
   }
 
-  function redirectExtraction(row) {
-    navigate(`${row.booking_id}/${row.queue_no}`)
-  }
-
   async function fetchRecords() {
-    const response = await getLabExtractionPatients(94)
+    setRecords([])
+    const response = await getExtractionReport(filteredData, "lab")
     if (response.data) {
-      setRecords(response.data.bookings)
+      setRecords(response.data.data)
       setIsReady(true)
     }
   }
@@ -67,6 +65,10 @@ function ECGManager() {
     fetchRecords()
     setRole(getRoleId().replace(/^"(.*)"$/, "$1"))
   }, [])
+
+  useEffect(() => {
+    fetchRecords()
+  }, [render])
   return (
     <div>
       <Navbar />
@@ -74,21 +76,21 @@ function ECGManager() {
         <Fragment>
           <Header
             type="thick"
-            title="ECG"
+            title="LAB REPORT"
             buttons={buttons}
             tableData={patientData}
           />
           <div className="row">
             <div className="col-12">
               <Table
-                type={"ecg"}
+                type={"lab-report"}
                 onExtractionClick={handleExtractionClick}
                 tableData={records.sort((a, b) =>
                   a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                 )}
                 rowsPerPage={20}
                 selectedRowExtraction={selectedRow}
-                headingColumns={["BOOKING ID", "NAME", "EXTRACTION DATE", ""]}
+                headingColumns={["BOOKING NO", "NAME", "SERVICES", "TIME"]}
                 filteredData={filteredData}
                 setFilter={setFilter}
                 setRender={setRender}
@@ -100,7 +102,7 @@ function ECGManager() {
                 userId={userId}
                 useLoader={true}
                 isReady={isReady}
-                redirectExtraction={redirectExtraction}
+                totalCount={records.length}
               />
             </div>
           </div>
@@ -112,4 +114,4 @@ function ECGManager() {
   )
 }
 
-export default ECGManager
+export default LabReport

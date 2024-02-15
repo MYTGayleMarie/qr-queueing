@@ -13,7 +13,6 @@ export const getExtractionPatients = async () => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-       
       }
     )
     return { data: response.data }
@@ -29,12 +28,11 @@ export const getSingleExtractionPatient = async (booking_id) => {
     params.append("api_key", window.$api_key)
     params.append("token", getToken().replace(/['"]+/g, ""))
     const response = await postAPICall(
-      window.$link + "bookings/extractionManager/"+booking_id,
+      window.$link + "bookings/extractionManager/" + booking_id,
       {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-       
       }
     )
     return { data: response.data }
@@ -55,7 +53,7 @@ export const getLabExtractionPatients = async (id) => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-        lab_test_id:id
+        lab_test_id: id,
       }
     )
 
@@ -64,20 +62,20 @@ export const getLabExtractionPatients = async (id) => {
     return { error: error.response }
   }
 }
-export const getSingleLabExtractionPatient = async (booking_id,id) => {
+export const getSingleLabExtractionPatient = async (booking_id, id) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
     params.append("api_key", window.$api_key)
     params.append("token", getToken().replace(/['"]+/g, ""))
     const response = await postAPICall(
-      window.$link + "bookings/labExtraction/"+booking_id,
+      window.$link + "bookings/labExtraction/" + booking_id,
 
       {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-        lab_test_id:id
+        lab_test_id: id,
       }
     )
 
@@ -114,7 +112,7 @@ export const getSingleXRAYExtractionPatients = async (booking_id) => {
     params.append("api_key", window.$api_key)
     params.append("token", getToken().replace(/['"]+/g, ""))
     const response = await postAPICall(
-      window.$link + "bookings/xrayExtraction/"+booking_id,
+      window.$link + "bookings/xrayExtraction/" + booking_id,
 
       {
         requester: getUser(),
@@ -201,7 +199,7 @@ export const updateExtractionXRAYPatientBulk = async (data) => {
     return { error: error.response }
   }
 }
-export const updateExtractionLabPatientBulk = async (data,id) => {
+export const updateExtractionLabPatientBulk = async (data, id) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
@@ -216,7 +214,8 @@ export const updateExtractionLabPatientBulk = async (data,id) => {
         token: getToken().replace(/['"]+/g, ""),
         extracted_on: new Date(),
         // status: "done",
-        booking: data.booking_id,lab_test_id:id
+        booking: data.booking_id,
+        lab_test_id: id,
       }
     )
 
@@ -239,7 +238,7 @@ export const skipPatient = async (queue_id) => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-        queue_id:queue_id
+        queue_id: queue_id,
       }
     )
 
@@ -249,20 +248,45 @@ export const skipPatient = async (queue_id) => {
   }
 }
 
-export const fetchBookingDetails = async (booking_id) => {
+export const fetchBookingDetails = async (booking_id, role) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
     params.append("api_key", window.$api_key)
     params.append("token", getToken().replace(/['"]+/g, ""))
     const response = await postAPICall(
-      window.$link + "bookings/getBookingDetails/"+booking_id,
+      window.$link + "bookings/getBookingDetails/" + booking_id,
 
       {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
-        
+        role:role
+      }
+    )
+
+    return { data: response.data }
+  } catch (error) {
+    return { error: error.response }
+  }
+}
+
+export const getExtractionReport = async (data, department) => {
+  try {
+    var params = new URLSearchParams()
+    params.append("requester", getUser())
+    params.append("api_key", window.$api_key)
+    params.append("token", getToken().replace(/['"]+/g, ""))
+    const response = await postAPICall(
+      window.$link + "reports/extraction",
+
+      {
+        api_key: window.$api_key,
+        token: getToken().replace(/['"]+/g, ""),
+        requester: getUser(),
+        department: department,
+        date_from: data.from_date,
+        date_to: data.to_date
       }
     )
 

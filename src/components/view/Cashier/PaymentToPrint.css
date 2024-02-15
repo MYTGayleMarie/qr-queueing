@@ -7,6 +7,10 @@
   padding: 1%;
 }
 .print-table-stub {
+  /* line-height: 60% !important; */
+  padding: 0;
+}
+.print-table-stub-pos {
   line-height: 60% !important;
   padding: 0;
 }
@@ -39,7 +43,7 @@
 .header {
   font-weight: bold;
   color: black;
-  font-size: 7px;
+  font-size: 15px;
 }
 .header-phlebo {
   font-weight: bold;
@@ -67,21 +71,29 @@
 .data {
   font-size: 1em;
 }
+.data-chem {
+  font-size: 0.7em;
+  text-align: left !important;
+}
 .data-phlebo {
   font-size: 0.9em;
 }
 
 .detail-print {
-  font-size: 0.5em;
+  font-size: 15px;
 }
 .detail-print-phlebo {
   font-size: 10px;
 }
 
 .payment-logo {
-  width: 40px;
-  height: 15px;
+  width: 65px;
+  height: 25px;
   /* margin-left: -2%; */
+}
+
+.font-small{
+  font-size: small;
 }
 
 .payment-logo-phlebo {
@@ -187,7 +199,7 @@
 }
 
 .request-header {
-  font-size: 10px;
+  font-size: 15px !important;
   margin-top: 1%;
 }
 .request-header-phlebo {
@@ -196,7 +208,7 @@
 }
 
 .request-header-test {
-  font-size: 15px !important;
+  font-size: 30px !important;
   margin-top: 3%;
 }
 
@@ -268,7 +280,7 @@
   padding-top: 1%;
   padding-left: 0.5rem !important;
   /* margin:0px !important; */
-  width: 80% !important;
+  width: 90% !important;
   min-height: 230px !important;
 }
 

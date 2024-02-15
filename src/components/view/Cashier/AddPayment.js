@@ -66,7 +66,7 @@ function AddPayment() {
   const [packages, setPackages] = useState([])
   const [click, setClick] = useState(false)
   const [paidAmount, setPaidAmount] = useState(0)
-   const [readyToPrint, setReadyToPrint] = useState(false)
+  const [readyToPrint, setReadyToPrint] = useState(false)
 
   //customer details
   const [firstName, setFirstName] = useState("")
@@ -144,6 +144,7 @@ function AddPayment() {
   const [loadingBooking, setLoadingBooking] = useState(false)
 
   const [hmo, setHmo] = useState(0)
+  const [hmoCode, setHmoCode] = useState(0)
 
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
@@ -199,6 +200,8 @@ function AddPayment() {
         setReferral(response.data.doctors_referal)
         setResult(response.data.result)
         setHmo(response.data.hmo_discount)
+        setHmoCode(response.data.hmo_code)
+      
         totalAmount = response.data.total_amount
         discount = response.data.discount
         customer = response.data.customer_id
@@ -310,6 +313,7 @@ function AddPayment() {
       .then(function (booking) {
         setLoadingBooking(true)
         setServices(booking.data)
+        setPackages(booking.data.filter((data) => data.type === "package"))
       })
       .catch(function (error) {
         setLoadingBooking(true)
@@ -317,7 +321,6 @@ function AddPayment() {
       })
   }, [])
 
- 
   useEffect(() => {
     printServices.length = 0
     services.map((info, index1) => {
@@ -396,7 +399,6 @@ function AddPayment() {
     })
   }, [services])
 
- 
   function removeService() {
     axios({
       method: "post",
@@ -855,7 +857,7 @@ function AddPayment() {
         <div className="row d-flex justify-content-end mt-4">
           {paymentStatus == "paid" &&
             queueNumber != "" &&
-            printData == true  &&
+            printData == true &&
             printButton()}
           <button className="save-btn" onClick={(e) => submit(e)}>
             SAVE BOOKING
@@ -1371,10 +1373,24 @@ function AddPayment() {
           )} */}
 
           <div className="row">
+           
             {printData && (
-              <div className="col-sm-12 d-flex justify-content-end">
+              <>
+                {discountDetail === "with_company_discount" ||
+                hmoCode !== null ? (
+                  <div className="col-sm-12 d-flex justify-content-end">
                 {printButton()}
               </div>
+                ) : (
+                  <>
+                    {paymentStatus === "paid" && (
+                       <div className="col-sm-12 d-flex justify-content-end">
+                {printButton()}
+              </div>
+                    )}
+                  </>
+                )}
+              </>
             )}
 
             {!printData && (
@@ -1465,7 +1481,9 @@ function AddPayment() {
               bookingDate={bookingDate}
               payment={paymentType}
               result={result}
-              paymentDataServices={services}
+              paymentDataServices={services.filter(
+                (data) => data.type !== "package"
+              )}
               services={printServices}
               isCompany={true}
               packages={packages}
