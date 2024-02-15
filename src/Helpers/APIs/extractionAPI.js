@@ -248,7 +248,7 @@ export const skipPatient = async (queue_id) => {
   }
 }
 
-export const fetchBookingDetails = async (booking_id) => {
+export const fetchBookingDetails = async (booking_id, role) => {
   try {
     var params = new URLSearchParams()
     params.append("requester", getUser())
@@ -261,6 +261,7 @@ export const fetchBookingDetails = async (booking_id) => {
         requester: getUser(),
         api_key: window.$api_key,
         token: getToken().replace(/['"]+/g, ""),
+        role:role
       }
     )
 

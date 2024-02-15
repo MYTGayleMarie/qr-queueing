@@ -212,7 +212,7 @@ export default function ExtractionUpdate() {
   }
 
   async function fetchDetails() {
-    const response = await fetchBookingDetails(bookingId)
+    const response = await fetchBookingDetails(bookingId, "phlebo")
     if (response.data) {
       setTests(response.data)
     }
