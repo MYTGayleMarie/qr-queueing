@@ -71,6 +71,7 @@ function Table({
   selectedRowExtraction,
   queueAttender,
   isLabApproved = "",
+  redirectExtraction
 }) {
   const navigate = useNavigate()
   //PAGINATION
@@ -332,13 +333,31 @@ function Table({
           </td>
           <td>{formatDate(new Date(row.extraction_date))}</td>
           <td>
+            {row.queue_status === "attending" ? (
+              <button
+                className="serve-now-btn view p-1"
+                onClick={() => redirectExtraction(row)}
+              >
+                VIEW
+              </button>
+            ) : (
+              <button
+                className="serve-now-btn p-1"
+                onClick={() => onExtractionClick(row)}
+              >
+                SERVE NOW
+              </button>
+            )}
+          </td>
+
+          {/* <td>
             <button
               className="serve-now-btn p-1"
               onClick={() => onExtractionClick(row)}
             >
               SERVE NOW
             </button>
-          </td>
+          </td> */}
         </tr>
         // <tr key={row.id}>
         //   {rowData.map((data, index) => (
@@ -3127,7 +3146,7 @@ function Table({
     return (
       <div className="table-container">
         <div className="search-table-container d-flex justify-content-end">
-           {totalCount != null && totalCount !== undefined && (
+          {totalCount != null && totalCount !== undefined && (
             <div className="col-sm-2">
               <div className="total-count-container">
                 <span className="total-count-header-table">TOTAL: </span>
