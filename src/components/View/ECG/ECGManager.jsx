@@ -52,6 +52,10 @@ function ECGManager() {
     }
   }
 
+  function redirectExtraction(row) {
+    navigate(`${row.booking_id}/${row.queue_no}`)
+  }
+
   async function fetchRecords() {
     const response = await getLabExtractionPatients(94)
     if (response.data) {
@@ -96,6 +100,7 @@ function ECGManager() {
                 userId={userId}
                 useLoader={true}
                 isReady={isReady}
+                redirectExtraction={redirectExtraction}
               />
             </div>
           </div>

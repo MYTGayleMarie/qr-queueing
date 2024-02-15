@@ -71,7 +71,7 @@ function Table({
   selectedRowExtraction,
   queueAttender,
   isLabApproved = "",
-  redirectExtraction
+  redirectExtraction,
 }) {
   const navigate = useNavigate()
   //PAGINATION
@@ -349,23 +349,7 @@ function Table({
               </button>
             )}
           </td>
-
-          {/* <td>
-            <button
-              className="serve-now-btn p-1"
-              onClick={() => onExtractionClick(row)}
-            >
-              SERVE NOW
-            </button>
-          </td> */}
         </tr>
-        // <tr key={row.id}>
-        //   {rowData.map((data, index) => (
-        //     <td key={index} data-heading={data.key} className={data.val}>
-        //       {data.val}
-        //     </td>
-        //   ))}
-        // </tr>
       )
     } else if (type === "extraction-details") {
       return (
@@ -425,21 +409,23 @@ function Table({
           </td>
           <td>{formatDate(new Date(row.extraction_date))}</td>
           <td>
-            <button
-              className="serve-now-btn p-1"
-              onClick={() => onExtractionClick(row)}
-            >
-              SERVE NOW
-            </button>
+            {row.queue_status === "attending" ? (
+              <button
+                className="serve-now-btn view p-1"
+                onClick={() => redirectExtraction(row)}
+              >
+                VIEW
+              </button>
+            ) : (
+              <button
+                className="serve-now-btn p-1"
+                onClick={() => onExtractionClick(row)}
+              >
+                SERVE NOW
+              </button>
+            )}
           </td>
         </tr>
-        // <tr key={row.id}>
-        //   {rowData.map((data, index) => (
-        //     <td key={index} data-heading={data.key} className={data.val}>
-        //       {data.val}
-        //     </td>
-        //   ))}
-        // </tr>
       )
     } else if (type === "aging") {
       return (
