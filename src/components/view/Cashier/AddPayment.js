@@ -21,6 +21,7 @@ import Header from "../../Header.js"
 import PersonalDetails from "../../PersonalDetails"
 import Costing from "../../Costing"
 import { RingLoader } from "react-spinners"
+import { formatDate } from "date-fns"
 
 const userToken = getToken()
 const userId = getUser()
@@ -67,6 +68,7 @@ function AddPayment() {
   const [click, setClick] = useState(false)
   const [paidAmount, setPaidAmount] = useState(0)
   const [readyToPrint, setReadyToPrint] = useState(false)
+  const [packageTests, setPackageTests] = useState([])
 
   //customer details
   const [firstName, setFirstName] = useState("")
@@ -234,7 +236,7 @@ function AddPayment() {
             setFirstName(customer.data.first_name)
             setMiddleName(customer.data.middle_name)
             setLastName(customer.data.last_name)
-            setBirthDate(birthDate.toDateString())
+            setBirthDate(birthDate.toDateString("en-US").replace(/\s(\d{4})$/, ', $1'))
             setGender(customer.data.gender)
             setAge(age)
             setContactNo(customer.data.contact_no)
@@ -357,7 +359,11 @@ function AddPayment() {
                 }
                 serviceDetails.category = category.data.name
                 serviceDetails.name = packageCat.lab_test
+                serviceDetails.type = "package"
+                serviceDetails.booking_detail_id = packageCat.booking_detail_id
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
+                setPackageTests((oldArray) => [...oldArray, serviceDetails])
+               
                 setReadyToPrint(true)
                 setPrintData(true)
               })
@@ -388,7 +394,9 @@ function AddPayment() {
             }
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
+             serviceDetails.type = "lab"
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
+      
             setReadyToPrint(true)
             setPrintData(true)
           })
@@ -1373,7 +1381,6 @@ function AddPayment() {
           )} */}
 
           <div className="row">
-           
             {printData && (
               <>
                 {discountDetail === "with_company_discount" ||
@@ -1497,6 +1504,7 @@ function AddPayment() {
               hmo={hmo}
               view={"cashier"}
               setPrintReadyFinal={setPrintReadyFinal}
+              packageTests={packageTests}
             />
           </div>
         </div>
