@@ -1107,7 +1107,8 @@ export class PaymentToPrint extends React.PureComponent {
       viewType
     ) {
       return (
-        <div className={"print-column-phlebo"}>
+        // phlebo to be able to stretch to 100
+        <div className={"print-column"}>
           <div class="d-flex row justify-content-left mx-0">
             <div className="col-2 mt-2">
               <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
@@ -1169,7 +1170,57 @@ export class PaymentToPrint extends React.PureComponent {
           </div>
           <div className="row mx-0">
             <table className="print-table-stub">
+              {/* for 50% display */}
               <tr>
+                <td>
+                  <span className="header">Name: </span>
+                  <span className="detail-print">{name}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Age: </span>
+                  <span className="detail-print">{age}</span>
+                </td>
+                <td>
+                  <span className="header">Gender:</span>
+                  <span className="detail-print">
+                    {gender.toLowerCase() == "female" ? "F" : "M"}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">DOB: </span>
+                  <span className="detail-print">
+                    {formatDate(birthDate)}
+                  </span>{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Contact: </span>
+                  <span className="detail-print">{contact}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Discount Code: </span>
+                  <span className="detail-print">
+                    {discountCode ? discountCode : "None"}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">
+                    <b>Result:</b>
+                  </span>
+                  <span className="detail-print"> {result.toUpperCase()}</span>
+                </td>
+              </tr>
+              {/* for 100% display */}
+              {/* <tr>
                 <td width={50}>
                   <span className="header">Name: </span>
                   <span className="detail-print">{name}</span>
@@ -1212,7 +1263,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </span>
                   <span className="detail-print"> {result.toUpperCase()}</span>
                 </td>
-              </tr>
+              </tr> */}
             </table>
           </div>
         </div>
@@ -1510,7 +1561,8 @@ export class PaymentToPrint extends React.PureComponent {
               })}
               <br />
               <div className="page-break print-break">
-                <div className="row justify-content-center">
+                <div style={{width:"50%"}}>
+                  <div className="row justify-content-center">
                   {/* Charge slip */}
 
                   <div className="col-12 charge-slip" id="charge-slip">
@@ -1534,6 +1586,7 @@ export class PaymentToPrint extends React.PureComponent {
                           <strong># {this.props.bookingId}</strong>
                         </h1>
                       </div>
+                      {/* for whole
                       <div className="col-8 mt-2">
                         Patient Name: <strong>{this.props.name}</strong>
                       </div>
@@ -1544,7 +1597,19 @@ export class PaymentToPrint extends React.PureComponent {
                       <div className="col-12 mt-2">
                         Date:{" "}
                         <strong>{formatDate(this.props.bookingDate)}</strong>
+                      </div> */}
+                       {/* for half*/}
+                      <div className="col-12 mt-2">
+                        Patient Name: <strong>{this.props.name}</strong>
                       </div>
+
+                      <div className="col-12 mt-2">
+                        Birthdate: <strong>{this.props.birthdate}</strong>
+                      </div>
+                      <div className="col-12 mt-2">
+                        Date:{" "}
+                        <strong>{formatDate(this.props.bookingDate)}</strong>
+                      </div> 
                     </div>
                     <div class="d-flex justify-content-left"></div>
 
@@ -1592,7 +1657,7 @@ export class PaymentToPrint extends React.PureComponent {
                                   )
                                   .map((test) => {
                                     return (
-                                      <div style={{textIndent:"20px"}}>
+                                      <div style={{ textIndent: "20px" }}>
                                         {`• ${test.name} `} <br />
                                       </div>
                                     )
@@ -1696,6 +1761,7 @@ export class PaymentToPrint extends React.PureComponent {
                       </p>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </>

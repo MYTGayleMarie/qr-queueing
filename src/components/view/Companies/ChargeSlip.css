@@ -17,7 +17,9 @@
   .slip-title {
     font-size:8px ;
   }
-  .slip-label {
+
+  /* for whole */
+  /* .slip-label {
     margin-top: 0.5px;
     font-size: medium ;
   }
@@ -26,7 +28,21 @@
     font-size: medium ;
     font-weight: 600;
     margin-left: 5px;
-  }
+  } */
+
+  /* for half */
+
+     .slip-label {
+       margin-top: 0.5px;
+       font-size:xx-small;
+     }
+  
+     .slip-detail {
+       font-size:xx-small;
+       font-weight: 600;
+       margin-left: 5px;
+     }
+     /* -----end half */
   .slip-header{
     margin:0px;
     padding:0px;
