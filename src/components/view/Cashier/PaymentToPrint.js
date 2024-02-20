@@ -98,9 +98,9 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + info.type === "package" ? " [P]":""
         } else {
-          category_services += info.name + "|"
+          category_services += info.name + info.type === "package" ? " [P]":"" + "|"
         }
       })
 
@@ -195,9 +195,9 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + info.type === "package" ? " [P]":""
         } else {
-          category_services += info.name + "|"
+          category_services += info.name + info.type === "package" ? " [P]":"" + "|"
         }
       })
 
@@ -240,10 +240,10 @@ export class PaymentToPrint extends React.PureComponent {
 
     //     groupedServices[key].map((info, index) => {
     //         if(groupedServices[key].length - 1 == index) {
-    //             category_services += info.name;
+    //             category_services += info.name + info.type === "package" ? " [P]":"";
     //         }
     //         else {
-    //             category_services += info.name + ", ";
+    //             category_services += info.name + info.type === "package" ? " [P]":"" + ", ";
     //         }
     //     });
 
@@ -266,9 +266,9 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + info.type === "package" ? " [P]":""
         } else {
-          category_services += info.name + "|"
+          category_services += info.name + info.type === "package" ? " [P]":"" + "|"
         }
       })
 
@@ -617,9 +617,9 @@ export class PaymentToPrint extends React.PureComponent {
 
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
-            category_services += info.name
+            category_services += info.name + info.type === "package" ? " [P]":""
           } else {
-            category_services += info.name + "|"
+            category_services += info.name + info.type === "package" ? " [P]":"" + "|"
           }
         })
 
@@ -664,9 +664,9 @@ export class PaymentToPrint extends React.PureComponent {
 
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
-            category_services += info.name
+            category_services += info.name + info.type === "package" ? " [P]":""
           } else {
-            category_services += info.name + "|"
+            category_services += info.name + info.type === "package" ? " [P]":"" + "|"
           }
         })
 
@@ -712,9 +712,9 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + info.type === "package" ? " [P]":""
         } else {
-          category_services += info.name + "|"
+          category_services += info.name + info.type === "package" ? " [P]":"" + "|"
         }
       })
 
@@ -757,9 +757,9 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + info.type === "package" ? " [P]":""
         } else {
-          category_services += info.name + "|"
+          category_services += info.name + info.type === "package" ? " [P]":"" + "|"
         }
       })
 
@@ -1141,7 +1141,7 @@ export class PaymentToPrint extends React.PureComponent {
                       <>
                         <td>
                           <span className="data">
-                            {services.map((val) => val.name).join(", ")}
+                            {services.map((val) => val.name + (val.type === "package"? " [P]":"")).join(", ")}
                           </span>
                         </td>
                       </>
