@@ -2128,7 +2128,7 @@ function Table({
       </div>
     )
   } else if (type === "services-packages-2") {
-    const { from_date, to_date, status } = filteredData
+    const { from_date, to_date, status, payment_type } = filteredData
 
     return (
       <div className="table-container">
@@ -2153,6 +2153,7 @@ function Table({
             }
           >
             <input
+            style={{margin:"5px"}}
               type="date"
               className="from-date search"
               name="from_date"
@@ -2161,6 +2162,7 @@ function Table({
               disabled={roleId === "12"}
             />
             <input
+            style={{margin:"5px"}}
               type="date"
               className="to-date search"
               name="to_date"
@@ -2168,12 +2170,19 @@ function Table({
               onChange={setFilter}
               disabled={roleId === "12"}
             />
-            <select name="status" onChange={setFilter}>
+            <select name="status" onChange={setFilter} style={{margin:"5px"}}>
               <option value="all" selected>
                 ALL
               </option>
               <option value="service">SERVICES</option>
               <option value="package">PACKAGES</option>
+            </select>
+            <select name="payment_type" onChange={setFilter} style={{margin:"5px"}}>
+              <option value="all" selected>
+                ALL
+              </option>
+              <option value="cash">CASH</option>
+              <option value="credit">CREDIT</option>
             </select>
             <button
               className="filter-btn"
