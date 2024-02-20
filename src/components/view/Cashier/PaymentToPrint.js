@@ -98,10 +98,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name + info.type === "package" ? " [P]" : ""
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
           category_services +=
-            info.name + info.type === "package" ? " [P]" : "" + "|"
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -196,10 +196,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name + info.type === "package" ? " [P]" : ""
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
           category_services +=
-            info.name + info.type === "package" ? " [P]" : "" + "|"
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -268,10 +268,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name + info.type === "package" ? " [P]" : ""
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
           category_services +=
-            info.name + info.type === "package" ? " [P]" : "" + "|"
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -621,10 +621,10 @@ export class PaymentToPrint extends React.PureComponent {
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
             category_services +=
-              info.name + info.type === "package" ? " [P]" : ""
+              info.name + (info.type === "package" ? " [P]" : "")
           } else {
             category_services +=
-              info.name + info.type === "package" ? " [P]" : "" + "|"
+              info.name + (info.type === "package" ? " [P]" : "") + "|"
           }
         })
 
@@ -670,10 +670,10 @@ export class PaymentToPrint extends React.PureComponent {
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
             category_services +=
-              info.name + info.type === "package" ? " [P]" : ""
+              info.name + (info.type === "package" ? " [P]" : "")
           } else {
             category_services +=
-              info.name + info.type === "package" ? " [P]" : "" + "|"
+              info.name + (info.type === "package" ? " [P]" : "") + "|"
           }
         })
 
@@ -719,10 +719,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name + info.type === "package" ? " [P]" : ""
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
           category_services +=
-            info.name + info.type === "package" ? " [P]" : "" + "|"
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -765,10 +765,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name + info.type === "package" ? " [P]" : ""
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
           category_services +=
-            info.name + info.type === "package" ? " [P]" : "" + "|"
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
