@@ -240,19 +240,33 @@
   vertical-align: top;
   border: 1px solid black;
 }
-
+/* for whole
 .slip-span {
   font-size: medium !important;
   margin-top: 0 !important;
-}
+} */
+/* for half*/
+.slip-span {
+  font-size: smaller !important;
+  word-wrap: break-word;
+  margin-top: 0 !important;
+} 
 
 /* .charge-slip-span{
     font-size: 6px !important;
     margin-top:0 !important;
    } */
 
-.bold-slip-span {
+   /* for whole */
+/* .bold-slip-span {
   font-size: medium !important;
+  margin-top: 0 !important;
+  font-weight: bold;
+} */
+
+   /* for half */
+.bold-slip-span {
+  font-size: smaller !important;
   margin-top: 0 !important;
   font-weight: bold;
 }

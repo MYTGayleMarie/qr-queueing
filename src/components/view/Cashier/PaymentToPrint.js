@@ -98,9 +98,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
-          category_services += info.name + "|"
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -195,9 +196,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
-          category_services += info.name + "|"
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -240,10 +242,10 @@ export class PaymentToPrint extends React.PureComponent {
 
     //     groupedServices[key].map((info, index) => {
     //         if(groupedServices[key].length - 1 == index) {
-    //             category_services += info.name;
+    //             category_services += info.name + info.type === "package" ? " [P]":"";
     //         }
     //         else {
-    //             category_services += info.name + ", ";
+    //             category_services += info.name + info.type === "package" ? " [P]":"" + ", ";
     //         }
     //     });
 
@@ -266,9 +268,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
-          category_services += info.name + "|"
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -617,9 +620,11 @@ export class PaymentToPrint extends React.PureComponent {
 
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
-            category_services += info.name
+            category_services +=
+              info.name + (info.type === "package" ? " [P]" : "")
           } else {
-            category_services += info.name + "|"
+            category_services +=
+              info.name + (info.type === "package" ? " [P]" : "") + "|"
           }
         })
 
@@ -664,9 +669,11 @@ export class PaymentToPrint extends React.PureComponent {
 
         groupedServices[key].map((info, index) => {
           if (groupedServices[key].length - 1 == index) {
-            category_services += info.name
+            category_services +=
+              info.name + (info.type === "package" ? " [P]" : "")
           } else {
-            category_services += info.name + "|"
+            category_services +=
+              info.name + (info.type === "package" ? " [P]" : "") + "|"
           }
         })
 
@@ -712,9 +719,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
-          category_services += info.name + "|"
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -757,9 +765,10 @@ export class PaymentToPrint extends React.PureComponent {
 
       groupedServices[key].map((info, index) => {
         if (groupedServices[key].length - 1 == index) {
-          category_services += info.name
+          category_services += info.name + (info.type === "package" ? " [P]" : "")
         } else {
-          category_services += info.name + "|"
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
         }
       })
 
@@ -1098,7 +1107,8 @@ export class PaymentToPrint extends React.PureComponent {
       viewType
     ) {
       return (
-        <div className={"print-column-phlebo"}>
+        // phlebo to be able to stretch to 100
+        <div className={"print-column"}>
           <div class="d-flex row justify-content-left mx-0">
             <div className="col-2 mt-2">
               <img src={logo} alt={"logo"} className="payment-logo mt-1"></img>
@@ -1141,7 +1151,13 @@ export class PaymentToPrint extends React.PureComponent {
                       <>
                         <td>
                           <span className="data">
-                            {services.map((val) => val.name).join(", ")}
+                            {services
+                              .map(
+                                (val) =>
+                                  val.name +
+                                  (val.type === "package" ? " [P]" : "")
+                              )
+                              .join(", ")}
                           </span>
                         </td>
                       </>
@@ -1154,7 +1170,57 @@ export class PaymentToPrint extends React.PureComponent {
           </div>
           <div className="row mx-0">
             <table className="print-table-stub">
+              {/* for 50% display */}
               <tr>
+                <td>
+                  <span className="header">Name: </span>
+                  <span className="detail-print">{name}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Age: </span>
+                  <span className="detail-print">{age}</span>
+                </td>
+                <td>
+                  <span className="header">Gender:</span>
+                  <span className="detail-print">
+                    {gender.toLowerCase() == "female" ? "F" : "M"}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">DOB: </span>
+                  <span className="detail-print">
+                    {formatDate(birthDate)}
+                  </span>{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Contact: </span>
+                  <span className="detail-print">{contact}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">Discount Code: </span>
+                  <span className="detail-print">
+                    {discountCode ? discountCode : "None"}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span className="header">
+                    <b>Result:</b>
+                  </span>
+                  <span className="detail-print"> {result.toUpperCase()}</span>
+                </td>
+              </tr>
+              {/* for 100% display */}
+              {/* <tr>
                 <td width={50}>
                   <span className="header">Name: </span>
                   <span className="detail-print">{name}</span>
@@ -1197,7 +1263,7 @@ export class PaymentToPrint extends React.PureComponent {
                   </span>
                   <span className="detail-print"> {result.toUpperCase()}</span>
                 </td>
-              </tr>
+              </tr> */}
             </table>
           </div>
         </div>
@@ -1494,178 +1560,210 @@ export class PaymentToPrint extends React.PureComponent {
                 )
               })}
               <br />
-             <div className="page-break print-break">
-               <div className="row justify-content-center">
-                {/* Charge slip */}
+              <div className="page-break print-break">
+                <div style={{width:"50%"}}>
+                  <div className="row justify-content-center">
+                  {/* Charge slip */}
 
-                <div className="col-12 charge-slip" id="charge-slip">
-                  <div className="row justify-content-between">
-                    <div className="col-7">
-                      <img src={logo} alt={"logo"} class="payment-logo" />
-                    </div>
+                  <div className="col-12 charge-slip" id="charge-slip">
+                    <div className="row justify-content-between">
+                      <div className="col-7">
+                        <img src={logo} alt={"logo"} class="payment-logo" />
+                      </div>
 
-                    <div className="col-5 text-right">
-                      <div style={{ fontSize: "20px" }}>BOOKING</div>
-                    </div>
-                    <div className="col-6 font-small">
-                      <span>Quest and Reliance Diagnostics</span>
-                      <br />
-                      <span>Marasbaras Tacloban City</span>
-                      <br />
-                      <span>09998886694</span>
-                    </div>
-                    <div className="col-6 text-right">
-                      <h1>
-                        <strong># {this.props.bookingId}</strong>
-                      </h1>
-                    </div>
-                    <div className="col-8 mt-2">
-                      Patient Name: <strong>{this.props.name}</strong>
-                    </div>
+                      <div className="col-5 text-right">
+                        <div style={{ fontSize: "20px" }}>BOOKING</div>
+                      </div>
+                      <div className="col-6 font-small">
+                        <span>Quest and Reliance Diagnostics</span>
+                        <br />
+                        <span>Marasbaras Tacloban City</span>
+                        <br />
+                        <span>09998886694</span>
+                      </div>
+                      <div className="col-6 text-right">
+                        <h1>
+                          <strong># {this.props.bookingId}</strong>
+                        </h1>
+                      </div>
+                      {/* for whole
+                      <div className="col-8 mt-2">
+                        Patient Name: <strong>{this.props.name}</strong>
+                      </div>
 
-                    <div className="col-4 mt-2">
-                      Birthdate: <strong>{this.props.birthdate}</strong>
-                    </div>
-                    <div className="col-12 mt-2">
-                      Date:{" "}
-                      <strong>{formatDate(this.props.bookingDate)}</strong>
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-left"></div>
+                      <div className="col-4 mt-2">
+                        Birthdate: <strong>{this.props.birthdate}</strong>
+                      </div>
+                      <div className="col-12 mt-2">
+                        Date:{" "}
+                        <strong>{formatDate(this.props.bookingDate)}</strong>
+                      </div> */}
+                       {/* for half*/}
+                      <div className="col-12 mt-2">
+                        Patient Name: <strong>{this.props.name}</strong>
+                      </div>
 
-                  <div className="row charge-slip-table mb-0 mr-0">
-                    <table className="print-table">
-                      <thead className="particulars">
-                        <tr>
-                          <th className="slip-detail slip-span">Particulars</th>
-                          <th className="slip-detail slip-span">Qty</th>
-                          <th className="slip-detail bold-slip-span">Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.props.paymentDataServices.map((data, index) => (
-                          <tr className="print-table">
-                            <td className="slip-label slip-span">
-                              {data.lab_test}
-                            </td>
-                            <td className="slip-label slip-span">1</td>
-                            <td
-                              className="slip-label bold-slip-span text-right"
-                              align="right"
-                            >
-                              {formatPrice(parseFloat(data.price).toFixed(2))}
-                            </td>
+                      <div className="col-12 mt-2">
+                        Birthdate: <strong>{this.props.birthdate}</strong>
+                      </div>
+                      <div className="col-12 mt-2">
+                        Date:{" "}
+                        <strong>{formatDate(this.props.bookingDate)}</strong>
+                      </div> 
+                    </div>
+                    <div class="d-flex justify-content-left"></div>
+
+                    <div className="row charge-slip-table mb-0 mr-0">
+                      <table className="print-table">
+                        <thead className="particulars">
+                          <tr>
+                            <th className="slip-detail slip-span">
+                              Particulars
+                            </th>
+                            <th className="slip-detail slip-span">Qty</th>
+                            <th className="slip-detail bold-slip-span">
+                              Price
+                            </th>
                           </tr>
-                        ))}
-
-                        {this.props.packages.map((data, index) => (
-                          <tr className="print-table">
-                            <td className="slip-label slip-span">
-                              {data.package} [P]
-                              {/* <br />
-                              <span className="slip-span-details">
-                                {data.details} [P]
-                              </span> */}
-                            </td>
-                            <td className="slip-label slip-span">1</td>
-                            {/* <td className="slip-label slip-span">{data.qty}</td> */}
-                            <td
-                              className="slip-label bold-slip-span text-right"
-                              align="right"
-                            >
-                              {formatPrice(parseFloat(data.price).toFixed(2))}
-                            </td>
-                          </tr>
-                        ))}
-                        <tr>
-                          <td></td>
-                          <td className="slip-label bold-slip-span">
-                            Discount Fee:
-                          </td>
-                          <td
-                            className="slip-label bold-slip-span text-right"
-                            align="right"
-                          >
-                            {" "}
-                            {parseFloat(this.props.discount).toFixed(2) == null
-                              ? "NONE"
-                              : formatPrice(
-                                  parseFloat(this.props.discount).toFixed(2)
-                                )}
-                          </td>
-                        </tr>
-                        {parseFloat(this.props.hmo) > 1 && (
+                        </thead>
+                        <tbody>
+                          {this.props.paymentDataServices.map((data, index) => (
+                            <tr className="print-table">
+                              <td className="slip-label slip-span">
+                                {data.lab_test}
+                              </td>
+                              <td className="slip-label slip-span">1</td>
+                              <td
+                                className="slip-label bold-slip-span text-right"
+                                align="right"
+                              >
+                                {formatPrice(parseFloat(data.price).toFixed(2))}
+                              </td>
+                            </tr>
+                          ))}
+                          {this.props.packages.map((data, index) => (
+                            <tr className="print-table">
+                              <td className="slip-label slip-span">
+                                {data.package} {data.id} [P] <br />
+                                {/* {this.props.packageTests
+                                  .filter(
+                                    (val) => data.id === val.booking_detail_id
+                                  )
+                                  .map((test) => test.name)
+                                  .join(", ")} */}
+                                {this.props.packageTests
+                                  .filter(
+                                    (val) => data.id === val.booking_detail_id
+                                  )
+                                  .map((test) => {
+                                    return (
+                                      <div style={{ textIndent: "20px" }}>
+                                        {`• ${test.name} `} <br />
+                                      </div>
+                                    )
+                                  })}
+                              </td>
+                              <td className="slip-label slip-span">1</td>
+                              {/* <td className="slip-label slip-span">{data.qty}</td> */}
+                              <td
+                                className="slip-label bold-slip-span text-right"
+                                align="right"
+                              >
+                                {formatPrice(parseFloat(data.price).toFixed(2))}
+                              </td>
+                            </tr>
+                          ))}
                           <tr>
                             <td></td>
                             <td className="slip-label bold-slip-span">
-                              HMO Discount:
+                              Discount Fee:
                             </td>
                             <td
                               className="slip-label bold-slip-span text-right"
                               align="right"
                             >
                               {" "}
-                              {formatPrice(
-                                parseFloat(this.props.hmo).toFixed(2)
-                              )}
+                              {parseFloat(this.props.discount).toFixed(2) ==
+                              null
+                                ? "NONE"
+                                : formatPrice(
+                                    parseFloat(this.props.discount).toFixed(2)
+                                  )}
                             </td>
                           </tr>
-                        )}
-                        <tr>
-                          <td></td>
-                          {this.props.grandTotal > 0 && (
-                            <>
+                          {parseFloat(this.props.hmo) > 1 && (
+                            <tr>
+                              <td></td>
                               <td className="slip-label bold-slip-span">
-                                Total:
+                                HMO Discount:
                               </td>
                               <td
                                 className="slip-label bold-slip-span text-right"
                                 align="right"
                               >
-                                {formatPrice(this.props.grandTotal)}
+                                {" "}
+                                {formatPrice(
+                                  parseFloat(this.props.hmo).toFixed(2)
+                                )}
                               </td>
-                            </>
+                            </tr>
                           )}
+                          <tr>
+                            <td></td>
+                            {this.props.grandTotal > 0 && (
+                              <>
+                                <td className="slip-label bold-slip-span">
+                                  Total:
+                                </td>
+                                <td
+                                  className="slip-label bold-slip-span text-right"
+                                  align="right"
+                                >
+                                  {formatPrice(this.props.grandTotal)}
+                                </td>
+                              </>
+                            )}
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="row charge-slip-table mb-0 mr-0">
+                      <table className="print-table">
+                        <tr className="print-table">
+                          <td className="slip-label slip-span" width="40%">
+                            Requested By:
+                          </td>
+                          {/* <td className="slip-label">{requested_by}</td> */}
+                          <td className="slip-label slip-span">Admin</td>
                         </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="row charge-slip-table mb-0 mr-0">
-                    <table className="print-table">
-                      <tr className="print-table">
-                        <td className="slip-label slip-span" width="40%">
-                          Requested By:
-                        </td>
-                        {/* <td className="slip-label">{requested_by}</td> */}
-                        <td className="slip-label slip-span">Admin</td>
-                      </tr>
-                      <tr className="print-table">
-                        <td className="slip-label slip-span">Prepared By:</td>
-                        {/* <td className="slip-label">{prepared_by}</td> */}
-                        <td className="slip-label slip-span">Admin</td>
-                      </tr>
-                      <tr className="print-table">
-                        <td className="slip-label slip-span">
-                          Requested Time & Date:
-                        </td>
-                        {/* <td className="slip-label">{request_time}</td> */}
-                        <td className="slip-label slip-span">{dateTime}</td>
-                      </tr>
-                      <tr className="print-table">
-                        <td className="slip-label slip-span">
-                          Received Time & Date:
-                        </td>
-                        {/* <td className="slip-label">{received_time}</td> */}
-                        <td className="slip-label slip-span">{dateTime}</td>
-                      </tr>
-                    </table>
-                    <p className="slip-label slip-span p-0 m-0">
-                      Outpatient Requisition Slip
-                    </p>
+                        <tr className="print-table">
+                          <td className="slip-label slip-span">Prepared By:</td>
+                          {/* <td className="slip-label">{prepared_by}</td> */}
+                          <td className="slip-label slip-span">Admin</td>
+                        </tr>
+                        <tr className="print-table">
+                          <td className="slip-label slip-span">
+                            Requested Time & Date:
+                          </td>
+                          {/* <td className="slip-label">{request_time}</td> */}
+                          <td className="slip-label slip-span">{dateTime}</td>
+                        </tr>
+                        <tr className="print-table">
+                          <td className="slip-label slip-span">
+                            Received Time & Date:
+                          </td>
+                          {/* <td className="slip-label">{received_time}</td> */}
+                          <td className="slip-label slip-span">{dateTime}</td>
+                        </tr>
+                      </table>
+                      <p className="slip-label slip-span p-0 m-0">
+                        Outpatient Requisition Slip
+                      </p>
+                    </div>
                   </div>
                 </div>
+                </div>
               </div>
-             </div>
             </>
           )}
         </div>

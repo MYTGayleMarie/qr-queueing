@@ -31,6 +31,7 @@ function ReportServicesPackages() {
     from_date: dateFrom ? dateFrom : formattedPresentData,
     to_date: dateTo ? dateTo : formattedPresentData,
     status: "all",
+    payment_type:"all"
   });
   const [render, setRender] = useState(false);
   const [redirectView, setRedirectView] = useState(false);
@@ -53,6 +54,7 @@ function ReportServicesPackages() {
         date_from: filteredData.from_date,
         date_to: filteredData.to_date,
         type: filteredData.status, //filteredData.status
+        payment_type: filteredData.payment_type
       },
     }).then(function (response) {
       var servicesData = response.data.data.data;
