@@ -1561,7 +1561,7 @@ export class PaymentToPrint extends React.PureComponent {
               })}
               <br />
               <div className="page-break print-break">
-                <div style={{width:"50%"}}>
+                <div style={{width:"50%", border:"2px solid black"}}>
                   <div className="row justify-content-center">
                   {/* Charge slip */}
 
