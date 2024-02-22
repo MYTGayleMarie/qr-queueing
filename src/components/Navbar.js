@@ -952,6 +952,16 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">ECG</span>
               </li>
             </NavLink>
+            <NavLink to="/reports/ecg" activeClassName="active" class="link">
+              <li href="/reports/ecg" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">ECG REPORT</span>
+              </li>
+            </NavLink>
             <NavLink to="/2d-echo" activeClassName="active" class="link">
               <li href="/2d-echo" class="nav-link imaging-nav">
                 <img
@@ -960,6 +970,16 @@ function specificNavbars(showNavbar, setshowNavbar) {
                   class="medTech icon"
                 ></img>
                 <span class="mx-2">2D ECHO/ULTRASOUND</span>
+              </li>
+            </NavLink>
+             <NavLink to="/reports/2d-echo" activeClassName="active" class="link">
+              <li href="/reports/2d-echo" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">2D ECHO REPORT</span>
               </li>
             </NavLink>
           </>
