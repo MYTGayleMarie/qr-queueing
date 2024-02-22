@@ -881,7 +881,6 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
   )
 }
 
-
 function specificNavbars(showNavbar, setshowNavbar) {
   return (
     <div
@@ -893,17 +892,29 @@ function specificNavbars(showNavbar, setshowNavbar) {
           <img src={logo} alt={"logo"} class="navbar-logo"></img>
         </div>
 
-        {getUser() === "57" && (
-          <NavLink to="/extraction" activeClassName="active" class="link">
-            <li href="/extraction" class="nav-link imaging-nav">
-              <img
-                src={extractionIcon}
-                alt={"medTech"}
-                class="medTech icon"
-              ></img>
-              <span class="mx-2">LAB</span>
-            </li>
-          </NavLink>
+        {(getUser() === "57") && (
+          <>
+            <NavLink to="/extraction" activeClassName="active" class="link">
+              <li href="/extraction" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">LAB</span>
+              </li>
+            </NavLink>{" "}
+            <NavLink to="/reports/lab" activeClassName="active" class="link">
+              <li href="/reports/lab" class="nav-link imaging-nav">
+                <img
+                  src={extractionIcon}
+                  alt={"medTech"}
+                  class="medTech icon"
+                ></img>
+                <span class="mx-2">LAB REPORT</span>
+              </li>
+            </NavLink>
+          </>
         )}
         {getUser() === "55" && (
           <NavLink to="/xray" activeClassName="active" class="link">
@@ -1845,7 +1856,6 @@ function AdminNavbarTop(
           <span class="mx-2">Queue Manager</span>
         </NavLink> */}
 
-       
         <NavLink to="/cashier" activeClassName="active" class="link">
           <img
             src={cashierIcon}
@@ -2299,7 +2309,7 @@ function Navbar() {
         role == 13 &&
         inventoryNavbar(showNavbar, setshowNavbar)}
       {showNavbar == true &&
-        role == 14 &&
+        (role === 14) &&
         specificNavbars(showNavbar, setshowNavbar)}
       {showNavbar == true &&
         role == 15 &&
