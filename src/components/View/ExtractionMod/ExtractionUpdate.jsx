@@ -103,6 +103,7 @@ export default function ExtractionUpdate() {
                     .toLowerCase()
                 }
                 serviceDetails.category = category.data.name
+
                 serviceDetails.name = packageCat.lab_test
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
               })
@@ -133,6 +134,7 @@ export default function ExtractionUpdate() {
             }
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
+            serviceDetails.type = info.type
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
             setReadyToPrint(true)
           })
@@ -326,7 +328,7 @@ export default function ExtractionUpdate() {
                           borderColor: "var(--blue-brand)",
                         }}
                         onClick={handlePrint}
-                        disabled={!readyToPrint && !printed}
+                        disabled={!readyToPrint}
                       >
                         <FontAwesomeIcon
                           icon={"print"}
@@ -348,6 +350,7 @@ export default function ExtractionUpdate() {
                           // : "#419EA3",
                         }}
                         onClick={handleUpdateBooking}
+                        disabled={!printed}
                       >
                         DONE
                       </Button>
