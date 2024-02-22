@@ -41,10 +41,14 @@ export default function ExtractionUpdate() {
   const [bookingDate, setBookingDate] = useState("")
   const [encodedOn, setEncodedOn] = useState("")
   const [readyToPrint, setReadyToPrint] = useState(false)
+  const [printed, setPrinted] = useState(false)
   const navigate = useNavigate()
 
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
+    onAfterPrint: () => {
+      setPrinted(true)
+    },
     content: () => componentRef.current,
     pageStyle: () => `
     @page {
@@ -322,7 +326,7 @@ export default function ExtractionUpdate() {
                           borderColor: "var(--blue-brand)",
                         }}
                         onClick={handlePrint}
-                        disabled={!readyToPrint}
+                        disabled={!readyToPrint && !printed}
                       >
                         <FontAwesomeIcon
                           icon={"print"}
