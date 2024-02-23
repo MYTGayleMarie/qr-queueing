@@ -1352,6 +1352,7 @@ function AddPayment() {
             discount={discount}
             paidAmount={paidAmount}
             toPay={paymentStatus == "paid" ? false : true}
+            packageOptions={packageOptions}
           />
 
           {paymentStatus != "paid" && (
