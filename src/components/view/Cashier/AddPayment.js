@@ -394,7 +394,7 @@ function AddPayment() {
             }
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
-             serviceDetails.type = "lab"
+             serviceDetails.type = info.type
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
       
             setReadyToPrint(true)
@@ -1381,6 +1381,9 @@ function AddPayment() {
           )} */}
 
           <div className="row">
+            <div className="col-sm-12 d-flex justify-content-end">
+                {printButton()}
+              </div>
             {printData && (
               <>
                 {discountDetail === "with_company_discount" ||
