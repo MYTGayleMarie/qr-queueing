@@ -137,6 +137,7 @@ function OldPatientForm2({
   const clinicalMicroscopy = allLabServices.filter(
     (item) => item.categoryId == 1
   )
+  const coaguation = allLabServices.filter((item) => item.categoryId == 25)
   const clinicalUrinalysis = allLabServices.filter(
     (item) => item.categoryId == 23
   )
@@ -167,6 +168,7 @@ function OldPatientForm2({
   const microbiology = allLabServices.filter((item) => item.categoryId == 17)
   const xray = allLabServices.filter((item) => item.categoryId == 18)
   const cardiology = allLabServices.filter((item) => item.categoryId == 19)
+  const obgyne = allLabServices.filter((item) => item.categoryId == 26)
   const medicalCertificate = allLabServices.filter(
     (item) => item.categoryId == 20
   )
@@ -435,6 +437,15 @@ function OldPatientForm2({
         break
       case 24:
         getDetails(clinicalFecalysis, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
+      case 25:
+        getDetails(coaguation, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
+
+      case 26:
+        getDetails(obgyne, data[0])
         checkedServicesDetails.push(itemDetails)
         break
     }
