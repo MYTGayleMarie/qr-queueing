@@ -138,7 +138,7 @@ function Form2({
       },
     })
       .then((response) => {
-        console.log(response)
+        
         const tests = response.data.lab_tests
           .filter((test) => test.is_deleted != 1)
           .sort((x, y) => x.id - y.id)
@@ -167,7 +167,6 @@ function Form2({
         console.log(error)
       })
   }, [])
-
 
   // // Lab Tests Categories
   const clinicalMicroscopy = allLabServices.filter(
@@ -204,6 +203,7 @@ function Form2({
   const microbiology = allLabServices.filter((item) => item.categoryId == 17)
   const xray = allLabServices.filter((item) => item.categoryId == 18)
   const cardiology = allLabServices.filter((item) => item.categoryId == 19)
+  const obgyne = allLabServices.filter((item) => item.categoryId == 26)
   const medicalCertificate = allLabServices.filter(
     (item) => item.categoryId == 20
   )
@@ -234,7 +234,7 @@ function Form2({
     })
       .then((response) => {
         const packagesArray = response.data.packages.sort((x, y) => x.id - y.id)
-       
+
         packagesArray.map((item, index) => {
           // console.log(item)
           var packageDetails = {}
@@ -436,7 +436,12 @@ function Form2({
             type: customer.serviceLocation,
             result: customer.result,
             total_amount: totalPrice,
-            discount_reference_no: customer.senior_id !== "" ? customer.senior_id : customer.pwd_id !== "" ? customer.pwd_id:"",
+            discount_reference_no:
+              customer.senior_id !== ""
+                ? customer.senior_id
+                : customer.pwd_id !== ""
+                ? customer.pwd_id
+                : "",
             home_service_fee: serviceFee,
             service_location: location_value,
             md_charge: finalMdCharge,
@@ -640,6 +645,11 @@ function Form2({
 
       case 25:
         getDetails(coaguation, data[0])
+        checkedServicesDetails.push(itemDetails)
+        break
+
+      case 26:
+        getDetails(obgyne, data[0])
         checkedServicesDetails.push(itemDetails)
         break
     }
@@ -907,6 +917,13 @@ function Form2({
               />
 
               <ServiceItems
+                category="OB GYNE ULTRASOUND"
+                items={obgyne}
+                formData={service}
+                setForm={setServices}
+              />
+
+              <ServiceItems
                 category="TEST PROMOS"
                 items={promo}
                 formData={service}
@@ -1098,7 +1115,6 @@ function Form2({
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}
-                      
                       </b>
                       <b></b>
                     </span>
