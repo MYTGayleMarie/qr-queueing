@@ -19,8 +19,8 @@ const userId = getUser()
 function ECGReport() {
   const navigate = useNavigate()
   const [filteredData, setFilter] = useForm({
-    from_date: "",
-    to_date: "",
+    from_date: new Date().toLocaleDateString("en-CA"),
+    to_date: new Date().toLocaleDateString("en-CA"),
     done: false,
   })
   const [render, setRender] = useState([])
