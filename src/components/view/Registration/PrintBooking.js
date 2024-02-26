@@ -62,6 +62,7 @@ function PrintBooking() {
   const [discountCode, setDiscountCode] = useState("")
   const [companyCode, setCompanyCode] = useState("")
   const [paidAmount, setPaidAmount] = useState(0)
+    const [paymentType, setPaymentType] = useState("")
 
   //other states
   const [redirect, setRedirect] = useState(false)
@@ -71,6 +72,8 @@ function PrintBooking() {
   const [packageTests, setPackageTests] = useState([])
   const [packageOptions, setPackageOptions] = useState([])
 
+
+    const [printData, setPrintData] = useState(false)
   //get customer details
   React.useEffect(() => {
     axios({
@@ -91,6 +94,7 @@ function PrintBooking() {
         setTotal(response.data.total_amount)
         setDiscount(response.data.discount)
         setGrandTotal(response.data.grand_total)
+        setPaymentType(response.data.payment_type)
         setPaidAmount(response.data.paid_amount)
         setPaymentBreakdown(response.data)
         if (response.data.discount_code !== "") {
@@ -204,7 +208,8 @@ function PrintBooking() {
     labTests.length = 0
     packages.length = 0
     services.map((info, index1) => {
-      if (info.type === "package") {
+      // if (info.type === "package") {
+      if (info.category_id === null) {
         let packageInfo = {}
         packageInfo.name = info.package
         packageInfo.qty = "1"
@@ -252,6 +257,8 @@ function PrintBooking() {
                 serviceDetails.booking_detail_id = packageCat.booking_detail_id
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
                 setPackageTests((oldArray) => [...oldArray, serviceDetails])
+
+                    setPrintData(true)
               })
               .catch(function (error) {
                 console.log(error)
@@ -283,9 +290,12 @@ function PrintBooking() {
             serviceDetails.name = info.lab_test
             serviceDetails.type = info.type
             serviceDetails.package = info.package
-            let labTest = { name: info.lab_test, qty: "1", price: info.price }
+            // let labTest = { name: info.lab_test, qty: "1", price: info.price }
+       
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
-            setLabTests((prev) => [...prev, labTest])
+            // setLabTests((prev) => [...prev, labTest])
+
+            setPrintData(true)
           })
           .catch(function (error) {
             console.log(error)
@@ -481,53 +491,87 @@ function PrintBooking() {
           discount={discount}
           toPay={false}
           paymentBreakdown={paymentBreakdown}
+          packageOptions={packageOptions}
         />
 
         <div
           style={{ display: "none" }} // This make ComponentToPrint show   only while printing
         >
           <PaymentToPrint
-            bookingID={id}
-            ref={componentRef}
-            patientId={patientId}
-            bookingId={id}
-            name={lastName + ", " + firstName + " " + middleName}
-            birthdate={birthDate}
-            gender={gender}
-            age={age}
-            contact={contactNo}
-            address={address}
-            bookingDate={bookingDate}
-            payment={payment}
-            result={result}
-            services={printServices}
-            paymentDataServices={services.filter(
-              (data) => data.type !== "package"
-            )}
-            encodedOn={encodedOn}
-            queue={queueNumber}
-            isCompany={true}
-            discount={discount}
-            discountCode={discountCode}
-            grandTotal={grandTotal}
-            labTests={labTests}
-            packages={packages}
-            view={"cashier"}
-            setPrintReadyFinal={setPrintReadyFinal}
+
+              ref={componentRef}
+              patientId={patientId}
+              bookingId={id}
+              name={lastName + ", " + firstName + " " + middleName}
+              birthdate={birthDate}
+              gender={gender}
+              age={age}
+              contact={contactNo}
+              email={email}
+              address={address}
+              bookingDate={bookingDate}
+              payment={paymentType}
+              result={result}
+              paymentDataServices={services.filter(
+                (data) => data.type !== "package"
+              )}
+              services={printServices}
+              isCompany={true}
+              packages={packages}
+              labTests={labTests}
+              discount={discount}
+              grandTotal={grandTotal}
+              queue={queueNumber}
+              encodedOn={encodedOn}
+              // referral={referral}
+              discountCode={discountCode}
+              // hmo={hmo}
+              view={"cashier"}
+              setPrintReadyFinal={setPrintReadyFinal}
+              packageTests={packageTests}
+              packageOptions={packageOptions}
+            
+
+
+         
+           
+           
+        
+            // bookingDate={bookingDate}
+            // payment={payment}
+            // result={result}
+            // services={printServices}
+            // paymentDataServices={services.filter(
+            //   (data) => data.type !== "package"
+            // )}
+            // encodedOn={encodedOn}
+            // queue={queueNumber}
+            // isCompany={true}
+            // discount={discount}
+            // discountCode={discountCode}
+            // grandTotal={grandTotal}
+            // labTests={labTests}
+            // packages={packages}
+            // view={"cashier"}
+            // setPrintReadyFinal={setPrintReadyFinal}
+            // packageTests={packageTests}
+            // packageOptions={packageOptions}
           />
         </div>
 
         <div className="row d-flex justify-content-center booking-print">
-          {queueNumber != "" && printReadyFinal == true && (
-            <div className="row">
+          {/* {queueNumber != "" && printReadyFinal == true && ( */}
+          {printData == true && (
+            <div className="row mb-3">
               <div className="col-sm-12 d-flex justify-content-end">
                 {printButton()}
               </div>
             </div>
           )}
 
-          {printReadyFinal == false && (
-            <div className="row">
+          {/* {printReadyFinal == false && ( */}
+          {printData == false && (
+            <div className="row mb-3">
               <div className="col-sm-12 d-flex justify-content-end">
                 <button className="save-btn">Loading Data...</button>
               </div>
