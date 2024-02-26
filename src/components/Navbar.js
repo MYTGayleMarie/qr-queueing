@@ -74,7 +74,11 @@ function accountingNavbar(showNavbar, setShowNavbar) {
             </Link>
           </ul>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </li>
@@ -109,7 +113,11 @@ function supplyNavbar(showNavbar, setShowNavbar) {
             </Link>
           </ul>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </li>
@@ -138,7 +146,11 @@ function resultsReleasingNavbar(showNavbar, setShowNavbar) {
             <span class="mx-2">Results Releasing</span>
           </li>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </NavLink>
@@ -168,7 +180,11 @@ function labReleasingNavbar(showNavbar, setShowNavbar) {
             <span class="mx-2">Laboratory Releasing</span>
           </li>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </NavLink>
@@ -198,7 +214,11 @@ function laboratoryReleasingNavbar(showNavbar, setShowNavbar) {
             <span class="mx-2">Laboratory Releasing</span>
           </li>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </NavLink>
@@ -254,7 +274,11 @@ function cModuleNavbar(showNavbar, setShowNavbar) {
             <span class="mx-2">Customer Module</span>
           </li>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </NavLink>
@@ -327,7 +351,11 @@ function purchasingNavbar(showNavbar, setShowNavbar) {
           <img src={service} alt={"service"} class="logout icon"></img>
           <span class="mx-2">Support</span>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </li>
@@ -541,7 +569,11 @@ function registrationNavbar(showNavbar, setshowNavbar) {
             </Link>
           </ul>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </li>
@@ -784,7 +816,11 @@ function adminNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
@@ -868,7 +904,11 @@ function supervisorNavbar(showNavbar, setshowNavbar) {
             </li>
           </NavLink>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
@@ -972,7 +1012,11 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">2D ECHO/ULTRASOUND</span>
               </li>
             </NavLink>
-             <NavLink to="/reports/2d-echo" activeClassName="active" class="link">
+            <NavLink
+              to="/reports/2d-echo"
+              activeClassName="active"
+              class="link"
+            >
               <li href="/reports/2d-echo" class="nav-link imaging-nav">
                 <img
                   src={extractionIcon}
@@ -1026,7 +1070,11 @@ function inventoryNavbar(showNavbar, setshowNavbar) {
             </Link>
           </ul>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
         </li>
@@ -1063,7 +1111,11 @@ function receivingNavbar(showNavbar, setshowNavbar) {
             </ul>
           </li>
           <a href="https://myt-support.com/" target="_blank" class="nav-link">
-            <img src={service} alt={"service"} class="logout icon"></img>
+            <img
+              src={service}
+              alt={"service"}
+              class="supply icon supply-icon"
+            ></img>
             <span class="mx-2">Support</span>
           </a>
           <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
@@ -1896,6 +1948,38 @@ function AdminNavbarTop(
           ></img>
           <span class="mx-2">Cashier</span>
         </NavLink>
+        <NavLink to="/extraction" activeClassName="active" class="link">
+          <img
+            src={extractionIcon}
+            alt={"medTech"}
+            class="cashier icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">LAB</span>
+        </NavLink>
+        <NavLink to="/xray" activeClassName="active" class="link">
+          <img
+            src={extractionIcon}
+            alt={"medTech"}
+            class="cashier icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">XRAY</span>
+        </NavLink>
+        <NavLink to="/ecg" activeClassName="active" class="link">
+          <img
+            src={extractionIcon}
+            alt={"medTech"}
+            class="cashier icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">ECG</span>
+        </NavLink>
+        <NavLink to="/2d-echo" activeClassName="active" class="link">
+          <img
+            src={extractionIcon}
+            alt={"medTech"}
+            class="cashier icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">2D ECHO/ULTRASOUND</span>
+        </NavLink>
         {/* <NavLink to="/extraction" activeClassName="active" class="link">
             <img src={extractionIcon} alt={'extraction'} class="extraction icon mobile-size-icon"></img>
             <span class="mx-2">Extraction</span>
@@ -2018,7 +2102,7 @@ function AdminNavbarTop(
           <span class="mx-1">Users</span>
         </NavLink>
         <a href="https://myt-support.com/" target="_blank" class="nav-link">
-          <img src={service} alt={"service"} class="logout icon"></img>
+          <img src={service} alt={"service"} class="users icon mobile-size-icon"></img>
           <span class="mx-2">Support</span>
         </a>
         <a href="#" class="nav-link" onClick={removeUserSession}>
