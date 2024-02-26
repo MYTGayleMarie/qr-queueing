@@ -53,12 +53,15 @@ function Costing({
     "package"
   )
 
-  if (packages.length) {
+  if (packages.length > 0) {
+    
     packages.map((val) => {
       let package_obj = packageOptions.filter(
-        (value) => value.name === val[0].package
+        (value) => value.name === val[0]?.package
       )[0]
-      lab_services.push({ ...package_obj, lab_test: package_obj.name + " [P]" })
+
+      
+      lab_services.push({ ...package_obj, lab_test: package_obj?.name + " [P]" })
     })
   }
 
