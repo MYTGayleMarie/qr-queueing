@@ -292,9 +292,9 @@
 
 .charge-slip {
   padding-top: 1%;
-  padding-left: 0.5rem !important;
+  /* padding-left: 0.5rem !important; */
   /* margin:0px !important; */
-  width: 90% !important;
+  width: 95% !important;
   min-height: 230px !important;
 }
 
