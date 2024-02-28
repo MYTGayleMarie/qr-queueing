@@ -3,14 +3,6 @@
 }
 
 .print-table {
-  /* line-height: 60% !important; */
-  padding: 1%;
-}
-.print-table-stub {
-  /* line-height: 60% !important; */
-  padding: 0;
-}
-.print-table-stub-pos {
   line-height: 60% !important;
   padding: 0;
 }
@@ -19,10 +11,12 @@
   line-height: 120% !important;
 }
 
+
 .print-table-services {
   line-height: -50% !important;
   padding: 5px;
 }
+
 
 .table-header {
   color: black;
@@ -43,12 +37,7 @@
 .header {
   font-weight: bold;
   color: black;
-  font-size: 15px;
-}
-.header-phlebo {
-  font-weight: bold;
-  color: black;
-  font-size: 10px;
+  font-size: 7px;
 }
 
 .header-services {
@@ -69,34 +58,17 @@
 }
 
 .data {
-  font-size: 1em;
+  font-size: 0.5em;
 }
 .data-chem {
-  font-size: 0.7em;
-  text-align: left !important;
-}
-.data-phlebo {
-  font-size: 0.9em;
+  font-size: 0.5em;
 }
 
 .detail-print {
-  font-size: 15px;
-}
-.detail-print-phlebo {
-  font-size: 10px;
+  font-size: 0.5em;
 }
 
 .payment-logo {
-  width: 65px;
-  height: 25px;
-  /* margin-left: -2%; */
-}
-
-.font-small{
-  font-size: small;
-}
-
-.payment-logo-phlebo {
   width: 40px;
   height: 20px;
   /* margin-left: -2%; */
@@ -112,12 +84,6 @@
   max-width: 50%;
   border: 2px solid black;
 }
-.print-column-phlebo {
-  flex: 50%;
-  padding: 1%;
-  max-width: 100%;
-  border: 2px solid black;
-}
 
 .print-column-blank {
   flex: 50%;
@@ -125,14 +91,13 @@
 }
 
 .to-right {
-  /* margin-left: 3%; */
+  margin-left: 3%;
 }
 
 .to-right-test {
   font-weight: bold;
   margin-left: 3%;
   font-size: 30px !important;
-  text-align: right;
 }
 
 .payment-row {
@@ -199,16 +164,12 @@
 }
 
 .request-header {
-  font-size: 15px !important;
-  margin-top: 1%;
-}
-.request-header-phlebo {
   font-size: 10px;
   margin-top: 1%;
 }
 
 .request-header-test {
-  font-size: 30px !important;
+  font-size: 10px !important;
   margin-top: 3%;
 }
 
@@ -223,6 +184,7 @@
 .print-data-address {
   width: 170px !important;
 }
+
 
 /***TABLE***/
 .table {
@@ -240,33 +202,19 @@
   vertical-align: top;
   border: 1px solid black;
 }
-/* for whole
+
 .slip-span {
-  font-size: medium !important;
+  font-size: 0.4em !important;
   margin-top: 0 !important;
-} */
-/* for half*/
-.slip-span {
-  font-size: smaller !important;
-  word-wrap: break-word;
-  margin-top: 0 !important;
-} 
+}
 
 /* .charge-slip-span{
     font-size: 6px !important;
     margin-top:0 !important;
    } */
 
-   /* for whole */
-/* .bold-slip-span {
-  font-size: medium !important;
-  margin-top: 0 !important;
-  font-weight: bold;
-} */
-
-   /* for half */
 .bold-slip-span {
-  font-size: smaller !important;
+  font-size: 0.4em !important;
   margin-top: 0 !important;
   font-weight: bold;
 }
@@ -280,10 +228,12 @@
   font-size: 5px !important;
   margin-top: 0 !important;
 }
+
 .claim-span {
   font-size: 5px !important;
   margin-top: 5px !important;
 }
+
 .bold-claim-span {
   font-size: 5px !important;
   margin-top: 5px !important;
@@ -292,10 +242,11 @@
 
 .charge-slip {
   padding-top: 1%;
-  /* padding-left: 0.5rem !important; */
-  /* margin:0px !important; */
-  width: 95% !important;
+  padding-left: 0.5rem !important;
+  margin: 0px !important;
+  width: 80% !important;
   min-height: 230px !important;
+
 }
 
 .claim-stub-rotate {
@@ -308,12 +259,15 @@
   width: 20rem;
   height: 13rem;
 }
+
 .with-border {
   border: 2px solid black;
 }
+
 .no-border {
   border: none !important;
 }
+
 .claim-stub-inner {
   font-size: 3px !important;
   padding: 5% 0;
@@ -328,6 +282,7 @@
   width: 20%;
   /* min-width: fit-content; */
 }
+
 .row-column {
   display: flex;
   width: 50%;
@@ -344,18 +299,15 @@
 .large-logo {
   width: 50px !important;
   height: 35px !important;
-  margin-left: -2.7%;
+  margin-left: -2.7%
 }
 
 .charge-slip-table {
   width: 100%;
   padding: 0 0.5rem;
-  /* margin:0; */
+  margin: 0;
 }
+
 /* .charge-slip-footer{
   padding-left:0.5rem;
 } */
-
-.no-page-break {
-  page-break-inside: avoid !important;
-}
