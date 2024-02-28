@@ -87,8 +87,9 @@ function Costing({
           <div className="col-sm-1 ">
             <button
               className="delete-btn"
-              onClick={() => deleteService(row.id)}
+              onClick={() => deleteService(row.type === "package" ? row.labTestId:row.id)}
             >
+              
               <FontAwesomeIcon
                 icon={"minus-square"}
                 alt={"minus"}
