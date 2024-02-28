@@ -91,7 +91,7 @@ export class InvoiceToPrint extends React.PureComponent {
                         {row.name}
                       </td>
                       <td className="text-center" width={10}>
-                        {row.code}
+                        {row.discount_code}
                       </td>
                       <td className="text-left" width={20}>
                         {row.date}

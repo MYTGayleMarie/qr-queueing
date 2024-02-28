@@ -24,10 +24,10 @@ import "./InvoicePrint.css"
 
 export class InvoiceToPrintHmo extends React.PureComponent {
   render() {
-    const marginTop = "10px"
+    const marginTop = "40px"
     const marginRight = "10px"
     const marginBottom = "10px"
-    const marginLeft = "10px"
+    const marginLeft = "40px"
     const getPageMargins = () => {
       return `@page { margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft} !important; }`
     }

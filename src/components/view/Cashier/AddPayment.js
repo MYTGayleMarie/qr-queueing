@@ -203,7 +203,7 @@ function AddPayment() {
         setResult(response.data.result)
         setHmo(response.data.hmo_discount)
         setHmoCode(response.data.hmo_code)
-      
+
         totalAmount = response.data.total_amount
         discount = response.data.discount
         customer = response.data.customer_id
@@ -236,7 +236,9 @@ function AddPayment() {
             setFirstName(customer.data.first_name)
             setMiddleName(customer.data.middle_name)
             setLastName(customer.data.last_name)
-            setBirthDate(birthDate.toDateString("en-US").replace(/\s(\d{4})$/, ', $1'))
+            setBirthDate(
+              birthDate.toDateString("en-US").replace(/\s(\d{4})$/, ", $1")
+            )
             setGender(customer.data.gender)
             setAge(age)
             setContactNo(customer.data.contact_no)
@@ -363,7 +365,7 @@ function AddPayment() {
                 serviceDetails.booking_detail_id = packageCat.booking_detail_id
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
                 setPackageTests((oldArray) => [...oldArray, serviceDetails])
-               
+
                 setReadyToPrint(true)
                 setPrintData(true)
               })
@@ -394,9 +396,10 @@ function AddPayment() {
             }
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
-             serviceDetails.type = "lab"
+            serviceDetails.type = info.type
+            serviceDetails.package = info.package
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
-      
+
             setReadyToPrint(true)
             setPrintData(true)
           })
@@ -1349,6 +1352,7 @@ function AddPayment() {
             discount={discount}
             paidAmount={paidAmount}
             toPay={paymentStatus == "paid" ? false : true}
+            packageOptions={packageOptions}
           />
 
           {paymentStatus != "paid" && (
@@ -1381,19 +1385,22 @@ function AddPayment() {
           )} */}
 
           <div className="row">
+            {/* <div className="col-sm-12 d-flex justify-content-end">
+                    {printButton()}
+                  </div> */}
             {printData && (
               <>
                 {discountDetail === "with_company_discount" ||
                 hmoCode !== null ? (
                   <div className="col-sm-12 d-flex justify-content-end">
-                {printButton()}
-              </div>
+                    {printButton()}
+                  </div>
                 ) : (
                   <>
                     {paymentStatus === "paid" && (
-                       <div className="col-sm-12 d-flex justify-content-end">
-                {printButton()}
-              </div>
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        {printButton()}
+                      </div>
                     )}
                   </>
                 )}
@@ -1505,6 +1512,7 @@ function AddPayment() {
               view={"cashier"}
               setPrintReadyFinal={setPrintReadyFinal}
               packageTests={packageTests}
+              packageOptions={packageOptions}
             />
           </div>
         </div>

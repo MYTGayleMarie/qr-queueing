@@ -390,9 +390,10 @@ function ReviewCompanyInvoice() {
       var formattedDate = date.toDateString().split(" ")
       info.key = index + 1
       info.name = data.customer
+      info.discount_code = data.discount_code
       info.date =
         formattedDate[1] + " " + formattedDate[2] + " " + formattedDate[3]
-      info.lab_services = data.lab_services
+      // info.lab_services = data.lab_services
       info.price = formatPrice(parseFloat(data.price))
 
       setInfo((oldArray) => [...oldArray, info])

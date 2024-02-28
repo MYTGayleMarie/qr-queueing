@@ -1,16 +1,32 @@
-import React, { useState } from "react";
-import { formatDate, getToken, getUser } from "../utilities/Common";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
+import React, { useState } from "react"
+import { formatDate, getToken, getUser } from "../utilities/Common"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import axios from "axios"
 
 //css
-import "./Costing.css";
+import "./Costing.css"
 
 //icons
-import cancelIcon from "../images/cancel.png";
+import cancelIcon from "../images/cancel.png"
 
-const userToken = getToken();
-const userId = getUser();
+const userToken = getToken()
+const userId = getUser()
+
+function groupByAndConvertToArrayOfArrays(arr, key) {
+  const grouped = arr.reduce((acc, obj) => {
+    const property = obj[key]
+
+    if (!acc[property]) {
+      acc[property] = []
+    }
+
+    acc[property].push(obj)
+    return acc
+  }, {})
+
+  const result = Object.values(grouped)
+  return result
+}
 
 function Costing({
   data,
@@ -28,24 +44,42 @@ function Costing({
   paymentStatus,
   paidAmount,
   paymentBreakdown = {},
-  hmo=""
+  hmo = "",
+  packageOptions = [],
 }) {
-  var totalCost = 0;
-  var labTotal = 0;
+  var lab_services = data.filter((val) => val.type === "lab")
+  var packages = groupByAndConvertToArrayOfArrays(
+    data.filter((val) => val.type === "package"),
+    "package"
+  )
 
-  const summary = data.map((row, index) => {
+  if (packages.length > 0) {
+    
+    packages.map((val) => {
+      let package_obj = packageOptions.filter(
+        (value) => value.name === val[0]?.package
+      )[0]
+
+      
+      lab_services.push({ ...package_obj, lab_test: package_obj?.name + " [P]" })
+    })
+  }
+
+  var totalCost = 0
+  var labTotal = 0
+
+  const summary = lab_services.map((row, index) => {
     if (row.price == null) {
-      totalCost += parseFloat(0);
+      totalCost += parseFloat(0)
     } else {
-      totalCost += parseFloat(row.price);
+      totalCost += parseFloat(row.price)
     }
 
     if (row.type == "lab") {
-      labTotal += parseFloat(row.price);
+      labTotal += parseFloat(row.price)
     }
 
-    setTotal(total);
-
+    setTotal(total)
 
     return (
       <div class="row">
@@ -53,8 +87,9 @@ function Costing({
           <div className="col-sm-1 ">
             <button
               className="delete-btn"
-              onClick={() => deleteService(row.id)}
+              onClick={() => deleteService(row.type === "package" ? row.labTestId:row.id)}
             >
+              
               <FontAwesomeIcon
                 icon={"minus-square"}
                 alt={"minus"}
@@ -83,20 +118,15 @@ function Costing({
         </div>
         <div className="col-sm-3"></div>
       </div>
-    );
-  });
+    )
+  })
 
   function hmoPrice() {
-    
-
-       hmo = parseFloat(hmo).toFixed(2);
-    
-
-    // console.log(discount)
+    hmo = parseFloat(hmo).toFixed(2)
 
     return (
       <div>
-    <div className="row">
+        <div className="row">
           <div className="col-sm-4">
             <span class="summary-total-label">HMO DISCOUNT</span>
           </div>
@@ -106,15 +136,13 @@ function Costing({
           <div className="col-sm-3"></div>
         </div>
       </div>
-    );
+    )
   }
   function discountedPrice() {
     if (withDiscount != "") {
-      const discount = labTotal.toFixed(2) * 0.2;
+      const discount = labTotal.toFixed(2) * 0.2
     }
-    const grandTotal = parseFloat(total).toFixed(2) - discount;
-
-    // console.log(discount)
+    const grandTotal = parseFloat(total).toFixed(2) - discount
 
     return (
       <div>
@@ -128,7 +156,7 @@ function Costing({
           <div className="col-sm-3"></div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -194,7 +222,6 @@ function Costing({
 
         <div>{discount !== "" && discountedPrice()}</div>
         <div>{parseFloat(hmo) > 0 && hmoPrice()}</div>
-       
 
         <div className="row">
           <div className="col-sm-4">
@@ -299,7 +326,7 @@ function Costing({
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Costing;
+export default Costing

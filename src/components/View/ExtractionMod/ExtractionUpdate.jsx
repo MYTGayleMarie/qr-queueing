@@ -41,10 +41,14 @@ export default function ExtractionUpdate() {
   const [bookingDate, setBookingDate] = useState("")
   const [encodedOn, setEncodedOn] = useState("")
   const [readyToPrint, setReadyToPrint] = useState(false)
+  const [printed, setPrinted] = useState(false)
   const navigate = useNavigate()
 
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
+    onAfterPrint: () => {
+      setPrinted(true)
+    },
     content: () => componentRef.current,
     pageStyle: () => `
     @page {
@@ -99,6 +103,7 @@ export default function ExtractionUpdate() {
                     .toLowerCase()
                 }
                 serviceDetails.category = category.data.name
+
                 serviceDetails.name = packageCat.lab_test
                 setPrintServices((oldArray) => [...oldArray, serviceDetails])
               })
@@ -129,6 +134,7 @@ export default function ExtractionUpdate() {
             }
             serviceDetails.category = category.data.name
             serviceDetails.name = info.lab_test
+            serviceDetails.type = info.type
             setPrintServices((oldArray) => [...oldArray, serviceDetails])
             setReadyToPrint(true)
           })
@@ -243,33 +249,12 @@ export default function ExtractionUpdate() {
               <div className="col-12">
                 <div className="p-5">
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-8">
                       <h5>
                         <strong>PATIENT DETAILS</strong>
                       </h5>
                     </div>
-                    <div className="col-3">
-                      <Button
-                        className="mt-2"
-                        // size="sm"
-                        style={{
-                          width: "100%",
-                          cursor: "pointer",
-                          background: "var(--blue-brand)",
-                          borderColor: "var(--blue-brand)",
-                        }}
-                        onClick={handlePrint}
-                        disabled={!readyToPrint}
-                      >
-                        <FontAwesomeIcon
-                          icon={"print"}
-                          alt={"print"}
-                          aria-hidden="true"
-                          className="print-icon"
-                        />{" "}
-                        {readyToPrint ? "PRINT" : "Loading Data..."}
-                      </Button>
-                    </div>
+
                     <div className="col-3">
                       <Button
                         className="mt-2"
@@ -316,7 +301,7 @@ export default function ExtractionUpdate() {
                   </div>
                 </div>
               </div>
-              <div className="col-8">
+              <div className="col-8 text-center">
                 <div className="extraction-details">
                   <div className="extraction-header">LAB TESTS</div>
                   <ListGroup defaultActiveKey="#link1">
@@ -332,17 +317,40 @@ export default function ExtractionUpdate() {
                   </ListGroup>
                   {recordsDetails.length > 0 ? (
                     <div className="p-2">
+                      {/* <div className="col-3"> */}
+                      {/* <Button
+                        className="mt-2 m-1 p-2"
+                    
+                        style={{
+                          width: "45%",
+                          cursor: "pointer",
+                          background: "var(--blue-brand)",
+                          borderColor: "var(--blue-brand)",
+                        }}
+                        onClick={handlePrint}
+                        disabled={!readyToPrint}
+                      >
+                        <FontAwesomeIcon
+                          icon={"print"}
+                          alt={"print"}
+                          aria-hidden="true"
+                          className="print-icon"
+                        />{" "}
+                        {readyToPrint ? "PRINT" : "Loading Data..."}
+                      </Button> */}
+                      {/* </div> */}
                       <Button
-                        className="mt-2"
+                        className="mt-2 m-1 p-2"
                         // size="sm"
                         style={{
-                          width: "100%",
+                          width: "45%",
                           background: "#bfbc4b",
                           // : "#419EA3",
                           borderColor: "#bfbc4b",
                           // : "#419EA3",
                         }}
                         onClick={handleUpdateBooking}
+                        // disabled={!printed}
                       >
                         DONE
                       </Button>
@@ -361,7 +369,7 @@ export default function ExtractionUpdate() {
         )}
       </div>
 
-      <div
+      {/* <div
         style={{ display: "none" }} // This make ComponentToPrint show   only while printing
       >
         <PaymentToPrint
@@ -399,7 +407,7 @@ export default function ExtractionUpdate() {
           view={"phlebo"}
           setPrintReadyFinal={setReadyToPrint}
         />
-      </div>
+      </div> */}
     </div>
   )
 }
