@@ -318,9 +318,9 @@ export default function ExtractionUpdate() {
                   {recordsDetails.length > 0 ? (
                     <div className="p-2">
                       {/* <div className="col-3"> */}
-                      <Button
+                      {/* <Button
                         className="mt-2 m-1 p-2"
-                        // size="sm"
+                    
                         style={{
                           width: "45%",
                           cursor: "pointer",
@@ -337,7 +337,7 @@ export default function ExtractionUpdate() {
                           className="print-icon"
                         />{" "}
                         {readyToPrint ? "PRINT" : "Loading Data..."}
-                      </Button>
+                      </Button> */}
                       {/* </div> */}
                       <Button
                         className="mt-2 m-1 p-2"
@@ -350,7 +350,7 @@ export default function ExtractionUpdate() {
                           // : "#419EA3",
                         }}
                         onClick={handleUpdateBooking}
-                        disabled={!printed}
+                        // disabled={!printed}
                       >
                         DONE
                       </Button>
@@ -369,7 +369,7 @@ export default function ExtractionUpdate() {
         )}
       </div>
 
-      <div
+      {/* <div
         style={{ display: "none" }} // This make ComponentToPrint show   only while printing
       >
         <PaymentToPrint
@@ -407,7 +407,7 @@ export default function ExtractionUpdate() {
           view={"phlebo"}
           setPrintReadyFinal={setReadyToPrint}
         />
-      </div>
+      </div> */}
     </div>
   )
 }
