@@ -1385,6 +1385,9 @@ function AddPayment() {
           )} */}
 
           <div className="row">
+            <div className="col-sm-12 d-flex justify-content-end">
+                    {printButton()}
+                  </div>
             {printData && (
               <>
                 {discountDetail === "with_company_discount" ||
