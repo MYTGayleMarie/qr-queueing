@@ -245,7 +245,7 @@ function OldPatientForm1({
           hmoDetails.hmo_code !== "" &&
           hmoDetails.pricelist !== ""))
     ) {
-      if (discountId !== "7") {
+      if (discountId !== "7" && hmoDetails.discount_id !== "7") {
         return (
           <div className="row d-flex justify-content-end mb-3">
             <div className="col-6 align-right text-right">
@@ -267,7 +267,7 @@ function OldPatientForm1({
           </div>
         )
       } else if (
-        discountId === "7" &&
+        (discountId === "7" || hmoDetails.discount_id  === "7") &&
         (!/^$|\s+/.test(seniorId) || !/^$|\s+/.test(pwdId))
       ) {
         return (
@@ -804,12 +804,13 @@ function OldPatientForm1({
                     {listOfDiscount}
                   </select>
                 </div>
+             
               </div>
             )}
-            {discountId === "7" ||
-              (hmoDetails.discount_id === "7" && (
+            {(discountId === "7" ||
+              hmoDetails.discount_id === "7") && (
                 <div className="row">
-                  <div className="col-sm-6 input-group-sm">
+                  <div className="col-sm-5 input-group-sm">
                     <input
                       type="checkbox"
                       name="is_pwd"
@@ -858,7 +859,7 @@ function OldPatientForm1({
                     />
                   </div>
                 </div>
-              ))}
+              )}
             <div className="row">
               <div className="col-sm-12 input-group-sm">
                 <span className="first-name label">DISCOUNT DETAIL</span>
