@@ -723,17 +723,18 @@ export class PaymentToPrint extends React.PureComponent {
                   <div className="row justify-content-start">
                     {category_services.split("|").map((data) => {
                       return (
-                        <div className="col-12">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <span className="data-chem">{data}</span>
-                          </div>
-                        </div>
+                         <span className="data-chem">{data}</span>
+                        // <div className="col-12">
+                        //   <div class="form-check">
+                        //     <input
+                        //       class="form-check-input"
+                        //       type="checkbox"
+                        //       value=""
+                        //       id="flexCheckDefault"
+                        //     />
+                        //     <span className="data-chem">{data}</span>
+                        //   </div>
+                        // </div>
                       )
                     })}
                   </div>
@@ -772,17 +773,18 @@ export class PaymentToPrint extends React.PureComponent {
                   <div className="row justify-content-start">
                     {category_services.split("|").map((data) => {
                       return (
-                        <div className="col-12">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <span className="data-chem">{data}</span>
-                          </div>
-                        </div>
+                         <span className="data-chem">{data}</span>
+                        // <div className="col-12">
+                        //   <div class="form-check">
+                        //     <input
+                        //       class="form-check-input"
+                        //       type="checkbox"
+                        //       value=""
+                        //       id="flexCheckDefault"
+                        //     />
+                        //     <span className="data-chem">{data}</span>
+                        //   </div>
+                        // </div>
                       )
                     })}
                   </div>
@@ -1540,14 +1542,14 @@ export class PaymentToPrint extends React.PureComponent {
       //     services: services_Coaguation
       // },
 
-      // {
-      //   name: "CLINIC - URINALYSIS",
-      //   services: services_Clinical_Urinalysis,
-      // },
-      // {
-      //   name: "CLINIC - FECALYSIS",
-      //   services: services_Clinical_Fecalysis,
-      // },
+      {
+        name: "CLINIC - URINALYSIS",
+        services: services_Clinical_Urinalysis,
+      },
+      {
+        name: "CLINIC - FECALYSIS",
+        services: services_Clinical_Fecalysis,
+      },
       {
         name: "ULTRASOUND",
         services: services_Ultrasound,
