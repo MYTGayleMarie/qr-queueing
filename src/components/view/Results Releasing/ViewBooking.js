@@ -256,6 +256,9 @@ export default function ViewBooking() {
                 serviceDetails.packageId = info.id
                 serviceDetails.approver = info.approved_by
                 serviceDetails.emailed_by = info.emailed_by
+                serviceDetails.booking_detail_id = info.booking_detail_id
+                serviceDetails.booking_package_detail_id =
+                  info.booking_package_detail_id
 
                 // serviceDetails.md =
                 setLabTests((oldArray) => [...oldArray, serviceDetails])
@@ -281,13 +284,16 @@ export default function ViewBooking() {
         serviceDetails.category_id = info.category_id
         serviceDetails.category = category?.name
         serviceDetails.name = info.lab_test
-        serviceDetails.type = "lab"
+        serviceDetails.type = info.type
         serviceDetails.packageId = "0"
         serviceDetails.id = info.id
         serviceDetails.test_id = info.test_id
         serviceDetails.md = info.md
         serviceDetails.approver = info.approved_by
         serviceDetails.emailed_by = info.emailed_by
+        serviceDetails.booking_detail_id = info.booking_detail_id
+        serviceDetails.booking_package_detail_id =
+          info.booking_package_detail_id
         setLabTests((oldArray) => [...oldArray, serviceDetails])
       }
     })
@@ -326,7 +332,6 @@ export default function ViewBooking() {
         .then(function (response) {
           setLoading(false) // Hide loading indicator
           toast.success("Email Successfully sent!")
-         
         })
         .catch(function (error) {
           setLoading(false) // Hide loading indicator
