@@ -856,11 +856,12 @@ export default function LabOfficer() {
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
-            console.log("lab test", data)
             return {
               label: data.lab_test,
-              id: data.id,
+              id:
+                data.type === "lab" ? data.id : data.booking_package_detail_id,
               type: data.type,
+              detail_id: data.booking_detail_id,
               extracted_on: data.extracted_on,
             }
           }
@@ -882,10 +883,11 @@ export default function LabOfficer() {
       // }
 
       //recent merge conflict sept 21
-      let paramID = selectedLab.id
-      if (selectedLab?.type === "package") {
-        paramID = selectedLab.booking_detail_id
-      }
+      let paramID =
+        selectedLab.type === "lab" ? selectedLab.id : selectedLab.detail_id
+      // if (selectedLab?.type === "package") {
+      //   paramID = selectedLab.booking_detail_id
+      // }
       setIsDataFetched(false)
       setIsReady(false)
       axios({
@@ -900,7 +902,7 @@ export default function LabOfficer() {
       })
         .then((response) => {
           var data = response.data.data
-          var packageDetailId = selectedLab.booking_id
+          var packageDetailId = selectedLab.id
 
           if (data.booking_detail_results !== null) {
             if (selectedLab.type == "lab") {
@@ -984,7 +986,8 @@ export default function LabOfficer() {
   // Modal Result and Unit edit
   React.useEffect(() => {
     if (labTestData.length > 0) {
-      const packageDetailId = selectedLab.booking_id
+      const packageDetailId = selectedLab.id
+      // const packageDetailId = selectedLab.booking_id
       // Store in different arrays the units, results, and lab names
       const resultsArray = labTestData.map((row) => row.result)
       const unitArray = labTestData.map((row) => row.unit)
@@ -1585,6 +1588,7 @@ export default function LabOfficer() {
   }
   const handleApproved = () => {
     var link = ""
+
     if (selectedLab.type === "lab") {
       link =
         window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id
@@ -1605,7 +1609,7 @@ export default function LabOfficer() {
       serologyGroup.map((data) => {
         axios({
           method: "post",
-          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          url: link,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -1637,7 +1641,7 @@ export default function LabOfficer() {
       thyroidGroup.map((data) => {
         axios({
           method: "post",
-          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          url: link,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -1688,6 +1692,7 @@ export default function LabOfficer() {
 
   const handleDisapproved = () => {
     var link = ""
+
     if (selectedLab.type === "lab") {
       link =
         window.$link + "/Bookingdetails/updateResultApproval/" + selectedLab.id
