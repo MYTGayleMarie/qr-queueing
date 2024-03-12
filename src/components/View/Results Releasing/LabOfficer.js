@@ -1713,7 +1713,7 @@ export default function LabOfficer() {
       serologyGroup.map((data) => {
         axios({
           method: "post",
-          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          url: link,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -1742,7 +1742,7 @@ export default function LabOfficer() {
       thyroidGroup.map((data) => {
         axios({
           method: "post",
-          url: window.$link + "/Bookingdetails/updateResultApproval/" + data.id,
+          url: link,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
