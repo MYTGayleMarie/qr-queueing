@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react"
 import axios from "axios"
 import { Navigate } from "react-router-dom"
 import {
+  formatDate,
   getRole,
   getRoleId,
   getToken,
@@ -38,6 +39,8 @@ export default function FileUpload({
   const [redirectPdf, setRedirectPdf] = useState(false)
   const [redirectImage, setRedirectImage] = useState(false)
   const [upload, setUpload] = useState(false)
+  const [uploader, setUploader] = useState()
+  const [uploadDate, setUploadDate] = useState()
 
   // md
   const [doctorName, setDoctorName] = useState("")
@@ -108,7 +111,14 @@ export default function FileUpload({
             const labDetail = lab.data.filter(
               (details) => details.id == servicesData[0].id
             )
-
+            setUploader(
+              labDetail[0]?.uploaded_by ? labDetail[0]?.uploaded_by : ""
+            )
+            setUploadDate(
+              labDetail[0]?.uploaded_on
+                ? formatDate(new Date(labDetail[0]?.uploaded_on))
+                : ""
+            )
             if (labDetail[0].result_id_2 !== null) {
               setHasFile2(true)
             } else {
@@ -146,6 +156,14 @@ export default function FileUpload({
           .then((packages) => {
             const packageDetail = packages.data.filter(
               (details) => details.id == servicesData[0].id
+            )
+            setUploader(
+              packageDetail[0]?.uploaded_by ? packageDetail[0]?.uploaded_by : ""
+            )
+            setUploadDate(
+              packageDetail[0]?.uploaded_on
+                ? formatDate(new Date(packageDetail[0]?.uploaded_on))
+                : ""
             )
             //check if package contains a second result
             if (packageDetail[0].result_id_2 !== null) {
@@ -668,6 +686,11 @@ export default function FileUpload({
             {servicesData.map((info, index) => (
               <div className={"details" + info.id}>{info.name}</div>
             ))}
+            {uploader !== "" && (
+              <div className="upload-details">
+                UPLOADED BY: {uploader}| UPLOADED ON: {formatDate(uploadDate)}
+              </div>
+            )}
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
