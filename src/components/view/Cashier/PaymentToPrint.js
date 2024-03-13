@@ -92,7 +92,7 @@ export class PaymentToPrint extends React.PureComponent {
 
     //new
     // var groupedServices = groupArrayOfObjects(remainingServices, "key")
-    
+
     //reverted
     var groupedServices = groupArrayOfObjects(this.props.services, "key")
 
@@ -130,8 +130,8 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
-                      //reverted 
+                      <span className="data-chem">{data}</span>
+                      //reverted
                       //<div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -155,7 +155,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -179,7 +179,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -229,7 +229,61 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
+                      // <div className="col-12">
+                      //   <div class="form-check">
+                      //     <input
+                      //       class="form-check-input"
+                      //       type="checkbox"
+                      //       value=""
+                      //       id="flexCheckDefault"
+                      //     />
+                      //     <span className="data-chem">{data}</span>
+                      //   </div>
+                      // </div>
+                    )
+                  })}
+                </div>
+              </td>
+            </>
+          )}
+        </tr>
+      )
+    })
+
+    //tests for ob ultraosund
+     const ob_ultrasound = Object.keys(groupedServices).map(function (
+      key
+    ) {
+      var category_name = key.replace(/_/g, " ").toUpperCase()
+      var category_services = ""
+
+      groupedServices[key].map((info, index) => {
+        if (groupedServices[key].length - 1 == index) {
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "")
+        } else {
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
+        }
+      })
+
+    
+
+      if (category_name !== "OB GYNE ULTRASOUND") {
+        return ""
+      }
+
+
+      return (
+        <tr className="print-table-double">
+          {category_name == "OB GYNE ULTRASOUND" && (
+            <>
+              <td>
+                <div className="row justify-content-start">
+                  {category_services.split("|").map((data) => {
+                    return (
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -318,7 +372,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -343,7 +397,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -368,7 +422,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -393,7 +447,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -418,7 +472,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -443,7 +497,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -468,7 +522,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -494,7 +548,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -519,7 +573,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -544,7 +598,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -569,7 +623,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -595,7 +649,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -620,7 +674,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -669,17 +723,18 @@ export class PaymentToPrint extends React.PureComponent {
                   <div className="row justify-content-start">
                     {category_services.split("|").map((data) => {
                       return (
-                        <div className="col-12">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <span className="data-chem">{data}</span>
-                          </div>
-                        </div>
+                         <span className="data-chem">{data}</span>
+                        // <div className="col-12">
+                        //   <div class="form-check">
+                        //     <input
+                        //       class="form-check-input"
+                        //       type="checkbox"
+                        //       value=""
+                        //       id="flexCheckDefault"
+                        //     />
+                        //     <span className="data-chem">{data}</span>
+                        //   </div>
+                        // </div>
                       )
                     })}
                   </div>
@@ -718,17 +773,18 @@ export class PaymentToPrint extends React.PureComponent {
                   <div className="row justify-content-start">
                     {category_services.split("|").map((data) => {
                       return (
-                        <div className="col-12">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <span className="data-chem">{data}</span>
-                          </div>
-                        </div>
+                         <span className="data-chem">{data}</span>
+                        // <div className="col-12">
+                        //   <div class="form-check">
+                        //     <input
+                        //       class="form-check-input"
+                        //       type="checkbox"
+                        //       value=""
+                        //       id="flexCheckDefault"
+                        //     />
+                        //     <span className="data-chem">{data}</span>
+                        //   </div>
+                        // </div>
                       )
                     })}
                   </div>
@@ -768,7 +824,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -821,7 +877,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -845,7 +901,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -869,7 +925,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -893,7 +949,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <div className="row justify-content-start">
                   {category_services.split("|").map((data) => {
                     return (
-                       <span className="data-chem">{data}</span>
+                      <span className="data-chem">{data}</span>
                       // <div className="col-12">
                       //   <div class="form-check">
                       //     <input
@@ -1126,7 +1182,6 @@ export class PaymentToPrint extends React.PureComponent {
         </div>
       )
     }
-
 
     // NEWW
     // //Generate Request ticket stub
@@ -1478,19 +1533,23 @@ export class PaymentToPrint extends React.PureComponent {
         name: "HEMO-BTY",
         services: services_Hematology,
       },
+      {
+        name: "OB-ULTRASOUND",
+        services: ob_ultrasound,
+      },
       //   {
       //     name: 'COAGUATION',
       //     services: services_Coaguation
       // },
 
-      // {
-      //   name: "CLINIC - URINALYSIS",
-      //   services: services_Clinical_Urinalysis,
-      // },
-      // {
-      //   name: "CLINIC - FECALYSIS",
-      //   services: services_Clinical_Fecalysis,
-      // },
+      {
+        name: "CLINIC - URINALYSIS",
+        services: services_Clinical_Urinalysis,
+      },
+      {
+        name: "CLINIC - FECALYSIS",
+        services: services_Clinical_Fecalysis,
+      },
       {
         name: "ULTRASOUND",
         services: services_Ultrasound,
@@ -1556,7 +1615,7 @@ export class PaymentToPrint extends React.PureComponent {
       ticketsBy2Special.push(arr)
     }
 
-        // split tickets into 4
+    // split tickets into 4
     const chunkLen = 4
     for (let i = 0; i < finalTickets.length; i += chunkLen) {
       const chunk = finalTickets.slice(i, i + chunkLen)
@@ -1585,7 +1644,7 @@ export class PaymentToPrint extends React.PureComponent {
     return (
       <div>
         <style>{getPageMargins()}</style>
-         <div className="print-area">
+        <div className="print-area">
           {ticketsBy2.map((by4, index1) => {
             if (ticketsBy2.length - 1 === index1) {
               setTimeout(() => {
@@ -1598,7 +1657,7 @@ export class PaymentToPrint extends React.PureComponent {
                   return (
                     <div className="print-row">
                       {by2.map((ticket) => {
-                        //    console.log(this.props.discountCode);
+                     
                         return generateTickets(
                           this.props.queue,
                           this.props.patientId,
@@ -1712,50 +1771,33 @@ export class PaymentToPrint extends React.PureComponent {
                         <td className="slip-label bold-slip-span">P {parseFloat(data.price).toFixed(2)}</td>
                       </tr>
                     )}   */}
-                      {package_list.map((data, index) => (
-                              <tr className="print-table">
-                                <td className="slip-label slip-span">
-                                  {data[0].package} [P] <br />
-                                  {/* {this.props.packageTests
-                                  .filter(
-                                    (val) => data.id === val.booking_detail_id
-                                  )
-                                  .map((test) => test.name)
-                                  .join(", ")} */}
-                                  {data.map((val) => {
+                    {package_list.map((data, index) => (
+                      <tr className="print-table">
+                        <td className="slip-label slip-span">
+                          {data[0].package} [P] <br />
+                          {/* {data.map((val) => {
                                     return (
                                       <div style={{ textIndent: "20px" }}>
                                         {`• ${val.name} `} <br />
                                       </div>
                                     )
-                                  })}
-                                  {/* {this.props.packageTests
-                                  .filter(
-                                    (val) => data.id === val.booking_detail_id
-                                  )
-                                  .map((test) => {
-                                    return (
-                                     
-                                    )
                                   })} */}
-                                </td>
-                                <td className="slip-label slip-span">1</td>
-                                {/* <td className="slip-label slip-span">{data.qty}</td> */}
-                                <td
-                                  className="slip-label bold-slip-span"
-                               
-                                >
-                                  P {formatPrice(
-                                    parseFloat(
-                                      this.props.packageOptions.filter(
-                                        (val) => val.name === data[0].package
-                                      )[0]?.price
-                                    ).toFixed(2)
-                                  )}
-                                  {/* {formatPrice(parseFloat(data.price).toFixed(2))} */}
-                                </td>
-                              </tr>
-                            ))}
+                        </td>
+                        <td className="slip-label slip-span">1</td>
+                        {/* <td className="slip-label slip-span">{data.qty}</td> */}
+                        <td className="slip-label bold-slip-span">
+                          P{" "}
+                          {formatPrice(
+                            parseFloat(
+                              this.props.packageOptions.filter(
+                                (val) => val.name === data[0].package
+                              )[0]?.price
+                            ).toFixed(2)
+                          )}
+                          {/* {formatPrice(parseFloat(data.price).toFixed(2))} */}
+                        </td>
+                      </tr>
+                    ))}
                     {/* {this.props.packages.map((data, index) => (
                       <tr className="print-table">
                         <td className="slip-label slip-span">
@@ -1894,7 +1936,7 @@ export class PaymentToPrint extends React.PureComponent {
                         <span className="header claim-span">Encoded on: </span>
                         <span className="detail-print bold-claim-span">
                           {formattedEncodedDate[1] +
-                            " " + 
+                            " " +
                             formattedEncodedDate[2] +
                             ", " +
                             getTime(encodedDate)}

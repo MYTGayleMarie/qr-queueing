@@ -11,7 +11,7 @@ import {
   getUser,
 } from "./utilities/Common.js";
 
-//GLOBAL VARIABLES
+// GLOBAL VARIABLES
 // window.$link= "https://blue.qrdiagnosticsph.com/";
 window.$link = "https://blue-dev.qrdiagnosticsph.com/"
 // window.$api_key = "84366d00-3deb-4066-abca-3fb7adf80166";

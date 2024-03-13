@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react"
 import axios from "axios"
 import { Navigate } from "react-router-dom"
 import {
+  formatDate,
   getRole,
   getRoleId,
   getToken,
@@ -38,6 +39,8 @@ export default function FileUpload({
   const [redirectPdf, setRedirectPdf] = useState(false)
   const [redirectImage, setRedirectImage] = useState(false)
   const [upload, setUpload] = useState(false)
+  const [uploader, setUploader] = useState()
+  const [uploadDate, setUploadDate] = useState()
 
   // md
   const [doctorName, setDoctorName] = useState("")
@@ -108,12 +111,17 @@ export default function FileUpload({
             const labDetail = lab.data.filter(
               (details) => details.id == servicesData[0].id
             )
-
-          
-            if(labDetail[0].result_id_2 !== null){
+            setUploader(
+              labDetail[0]?.uploaded_by ? labDetail[0]?.uploaded_by : ""
+            )
+            setUploadDate(
+              labDetail[0]?.uploaded_on
+                ? formatDate(new Date(labDetail[0]?.uploaded_on))
+                : ""
+            )
+            if (labDetail[0].result_id_2 !== null) {
               setHasFile2(true)
-            }
-            else{
+            } else {
               setHasFile2(false)
             }
 
@@ -137,7 +145,7 @@ export default function FileUpload({
           url:
             window.$link +
             "bookings/getBookingPackageDetails/" +
-            servicesData[0].packageId,
+            servicesData[0].booking_detail_id,
           withCredentials: false,
           params: {
             api_key: window.$api_key,
@@ -149,11 +157,25 @@ export default function FileUpload({
             const packageDetail = packages.data.filter(
               (details) => details.id == servicesData[0].id
             )
-
+            setUploader(
+              packageDetail[0]?.uploaded_by ? packageDetail[0]?.uploaded_by : ""
+            )
+            setUploadDate(
+              packageDetail[0]?.uploaded_on
+                ? formatDate(new Date(packageDetail[0]?.uploaded_on))
+                : ""
+            )
+            //check if package contains a second result
+            if (packageDetail[0].result_id_2 !== null) {
+              setHasFile2(true)
+            } else {
+              setHasFile2(false)
+            }
             // check if naa nay result
             if (packageDetail[0].file) {
               setWithResults(true)
             }
+
             if (packageDetail[0].md) {
               setWithMD(true)
               setMDReadOnly(true)
@@ -213,7 +235,6 @@ export default function FileUpload({
     }
   }
   function convertToBase64Image(e) {
-    
     var selectedFile = e
     // Check if file is empty
 
@@ -234,7 +255,6 @@ export default function FileUpload({
       handleClose()
     }
   }
-
 
   // Function to handle file selection
   const handleFileChange = (event, index) => {
@@ -275,11 +295,11 @@ export default function FileUpload({
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
-    console.log(file)
+
     // setSelectedFile(file);
   }
 
-  // Function to generate and download the PDF 
+  // Function to generate and download the PDF
   //old
   // const generatePDF = () => {
   //   const pdf = new jsPDF()
@@ -304,7 +324,7 @@ export default function FileUpload({
 
   //   Promise.all(images.map(addImageToPDF))
   //     .then(() => {
-      
+
   //       // Instead of saving the file, you convert it to a Blob
   //       const pdfBlob = pdf.output("blob")
   //       const pdfFile = new File([pdfBlob], "combined_images.pdf", {
@@ -321,81 +341,96 @@ export default function FileUpload({
 
   //new
   const generatePDF = () => {
-  const pdf = new jsPDF()
+    const pdf = new jsPDF()
 
-  const compressImage = (imgData, quality = 0.5) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => {
-        // Create an off-screen canvas
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-
-        // Set canvas dimensions to image dimensions
-        canvas.width = img.width
-        canvas.height = img.height
-
-        // Draw the image onto the canvas
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-
-        // Compress the image and get the new image data
-        canvas.toBlob((blob) => {
-          resolve(blob)
-        }, 'image/jpeg', quality) // Adjust the quality as needed
-      }
-      img.onerror = () => reject(new Error('Failed to load image for compression'))
-      img.src = imgData
-    })
-  }
-
-  const addImageToPDF = (imgData, idx) => {
-    return compressImage(imgData).then((compressedBlob) => {
+    const compressImage = (imgData, quality = 0.5) => {
       return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = (event) => {
-          const compressedImgData = event.target.result
-          const img = new Image()
-          img.onload = () => {
-            const imgWidth = 180
-            const imgHeight = (img.height * imgWidth) / img.width
-            const margin = 15
-            if (idx !== 0) {
-              pdf.addPage()
-            }
+        const img = new Image()
+        img.onload = () => {
+          // Create an off-screen canvas
+          const canvas = document.createElement("canvas")
+          const ctx = canvas.getContext("2d")
 
-            // Log the size difference
-            console.log(`Original size: ${Math.round(imgData.length / 1024)} KB`)
-            console.log(`Compressed size: ${Math.round(compressedBlob.size / 1024)} KB`)
+          // Set canvas dimensions to image dimensions
+          canvas.width = img.width
+          canvas.height = img.height
 
-            pdf.addImage(compressedImgData, "JPEG", margin, 40, imgWidth, imgHeight)
-            resolve()
-          }
-          img.onerror = () => reject(new Error('Failed to load compressed image for PDF'))
-          img.src = compressedImgData
+          // Draw the image onto the canvas
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+
+          // Compress the image and get the new image data
+          canvas.toBlob(
+            (blob) => {
+              resolve(blob)
+            },
+            "image/jpeg",
+            quality
+          ) // Adjust the quality as needed
         }
-        reader.onerror = () => reject(new Error('Failed to read compressed blob'))
-        reader.readAsDataURL(compressedBlob)
+        img.onerror = () =>
+          reject(new Error("Failed to load image for compression"))
+        img.src = imgData
       })
-    })
+    }
+
+    const addImageToPDF = (imgData, idx) => {
+      return compressImage(imgData).then((compressedBlob) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = (event) => {
+            const compressedImgData = event.target.result
+            const img = new Image()
+            img.onload = () => {
+              const imgWidth = 180
+              const imgHeight = (img.height * imgWidth) / img.width
+              const margin = 15
+              if (idx !== 0) {
+                pdf.addPage()
+              }
+
+              // // Log the size difference
+              // console.log(
+              //   `Original size: ${Math.round(imgData.length / 1024)} KB`
+              // )
+              // console.log(
+              //   `Compressed size: ${Math.round(compressedBlob.size / 1024)} KB`
+              // )
+
+              pdf.addImage(
+                compressedImgData,
+                "JPEG",
+                margin,
+                40,
+                imgWidth,
+                imgHeight
+              )
+              resolve()
+            }
+            img.onerror = () =>
+              reject(new Error("Failed to load compressed image for PDF"))
+            img.src = compressedImgData
+          }
+          reader.onerror = () =>
+            reject(new Error("Failed to read compressed blob"))
+          reader.readAsDataURL(compressedBlob)
+        })
+      })
+    }
+
+    Promise.all(images.map(addImageToPDF))
+      .then(() => {
+        // Instead of saving the file, you convert it to a Blob
+        const pdfBlob = pdf.output("blob")
+        const pdfFile = new File([pdfBlob], "combined_images.pdf", {
+          type: "application/pdf",
+        })
+
+        convertToBase64Image(pdfFile)
+      })
+      .catch((error) => {
+        console.error("Error loading images:", error)
+      })
   }
-
-  Promise.all(images.map(addImageToPDF))
-    .then(() => {
-      // Instead of saving the file, you convert it to a Blob
-      const pdfBlob = pdf.output("blob")
-      const pdfFile = new File([pdfBlob], "combined_images.pdf", {
-        type: "application/pdf",
-      })
-
-      convertToBase64Image(pdfFile)
-    })
-    .catch((error) => {
-      console.error("Error loading images:", error)
-    })
-}
-
-
-
 
   // Function submit base 64
   function submitPdf(base64, labIdArray, packageIdArray) {
@@ -465,6 +500,7 @@ export default function FileUpload({
       })
     }
   }
+
   // function submitPdf(base64, labIdArray, packageIdArray){
   //   base64 = file;
   //   labIdArray = labIds;
@@ -604,7 +640,7 @@ export default function FileUpload({
     let location = window.location.origin
     let type = servicesData[0].type
     let bookId = bookingId
-    let packageId = servicesData[0].packageId
+    let packageId = servicesData[0].booking_detail_id
     let serviceId = servicesData[0].id
     var link =
       location +
@@ -624,7 +660,7 @@ export default function FileUpload({
     let location = window.location.origin
     let type = servicesData[0].type
     let bookId = bookingId
-    let packageId = servicesData[0].packageId
+    let packageId = servicesData[0].booking_detail_id
     let serviceId = servicesData[0].id
     var link =
       location +
@@ -650,6 +686,11 @@ export default function FileUpload({
             {servicesData.map((info, index) => (
               <div className={"details" + info.id}>{info.name}</div>
             ))}
+            {uploader !== "" && (
+              <div className="upload-details">
+                UPLOADED BY: {uploader}| UPLOADED ON: {formatDate(uploadDate)}
+              </div>
+            )}
           </div>
           {/* Upload button */}
           <div className="upload-cont col-sm-8">
@@ -664,7 +705,7 @@ export default function FileUpload({
                     View Results
                   </button>
                   <br />
-                  {title === "XRAY" && hasFile2===true &&(
+                  {title === "XRAY" && hasFile2 === true && (
                     <button
                       className="upload-res-btn blue mt-2"
                       onClick={handleViewResultsImage}
@@ -708,15 +749,15 @@ export default function FileUpload({
                       {" "}
                       {fileName}
                     </p>
-                    
-                        <button className="delete-btn" onClick={removeFile}>
-                          <FontAwesomeIcon
-                            icon={"minus-square"}
-                            alt={"minus"}
-                            aria-hidden="true"
-                            className="delete-icon"
-                          />
-                        </button>
+
+                    <button className="delete-btn" onClick={removeFile}>
+                      <FontAwesomeIcon
+                        icon={"minus-square"}
+                        alt={"minus"}
+                        aria-hidden="true"
+                        className="delete-icon"
+                      />
+                    </button>
 
                     {imageName !== "" && (
                       <Fragment>
@@ -932,8 +973,6 @@ export default function FileUpload({
               />
             </div>
           </div>
-
-          
         </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="secondary" onClick={handleClose}>
