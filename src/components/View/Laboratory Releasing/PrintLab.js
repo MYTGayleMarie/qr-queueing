@@ -759,9 +759,12 @@ function PrintLab() {
                           "CLOTTING & BLEEDING TIME"
                         ? "HEMATOLOGY"
                         : state.selectedLab.label.toUpperCase() ===
-                        "ANTIGEN RAPID SWAB (NASAL)" || state.selectedLab.label.toUpperCase() ===
-                        "[P] ANTIGEN RAPID SWAB (NASAL)"
-                      ? "ANTIGEN RAPID SWAB (NASAL)"
+                            "ANTIGEN RAPID SWAB (NASAL)" ||
+                          state.selectedLab.label.toUpperCase() ===
+                            "[P] ANTIGEN RAPID SWAB (NASAL)"
+                        ? "ANTIGEN RAPID SWAB (NASAL)"
+                        : state.selectedLab.label.toUpperCase() === "DENGUE"
+                        ? "DENGUE RAPID TESTS"
                         : state.selectedLab.label.toUpperCase()}
                     </>
                   )}
@@ -837,7 +840,8 @@ function PrintLab() {
 
               <div>
                 <br />
-                {(state.selectedLab.label === "Antigen Rapid Swab (Nasal)" || state.selectedLab.label === "[P] Antigen Rapid Swab (Nasal)") ?  (
+                {state.selectedLab.label === "Antigen Rapid Swab (Nasal)" ||
+                state.selectedLab.label === "[P] Antigen Rapid Swab (Nasal)" ? (
                   <>
                     <div className="tb mid">
                       <div className="row bd">
@@ -1340,7 +1344,7 @@ function PrintLab() {
                               "[P] FECALYSIS" &&
                             state.selectedLab.label !==
                               "Antigen Rapid Swab (Nasal)" &&
-                              state.selectedLab.label !==
+                            state.selectedLab.label !==
                               "[P] Antigen Rapid Swab (Nasal)" &&
                             state.selectedLab.label !==
                               "Serum Pregnancy Test" &&
