@@ -2131,6 +2131,8 @@ export default function LabOfficer() {
                             selectedLab.label ===
                               "[P] Antigen Rapid Swab (Nasal)"
                           ? "ANTIGEN RAPID SWAB NASAL"
+                          : selectedLab.label.toUpperCase() === "DENGUE"
+                          ? "DENGUE RAPID TESTS"
                           : selectedLab.label.toUpperCase()}
                       </>
                     )}
