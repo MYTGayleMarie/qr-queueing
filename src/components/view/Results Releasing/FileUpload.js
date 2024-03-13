@@ -388,13 +388,13 @@ export default function FileUpload({
                 pdf.addPage()
               }
 
-              // Log the size difference
-              console.log(
-                `Original size: ${Math.round(imgData.length / 1024)} KB`
-              )
-              console.log(
-                `Compressed size: ${Math.round(compressedBlob.size / 1024)} KB`
-              )
+              // // Log the size difference
+              // console.log(
+              //   `Original size: ${Math.round(imgData.length / 1024)} KB`
+              // )
+              // console.log(
+              //   `Compressed size: ${Math.round(compressedBlob.size / 1024)} KB`
+              // )
 
               pdf.addImage(
                 compressedImgData,
