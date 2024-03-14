@@ -49,6 +49,7 @@ import image11 from "../../../images/med_tech/image11.png"
 import image12 from "../../../images/med_tech/image12.png"
 import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
 import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
+import dabilbil from "../../../images/med_tech/Vanessa-Dabilbil.png"
 import DummyImg from "../../../images/med_tech/dummy.png"
 import Watermark from "../../../images/Watermark.png"
 import Teal from "../../../images/backgrounds/TealHeader.png"
@@ -485,7 +486,10 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0052556"
     } else if (prc_id === "53") {
       return "PRC LIC. NO.: 0115984"
-    } else {
+    } else if (prc_id === "58") {
+      return "PRC LIC. NO.: 0072126"
+    }
+     else {
       return "No PRC No."
     }
   }
@@ -633,6 +637,18 @@ export default function LabOfficer() {
           style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
+        />
+      )
+    } else if (prc_sig === "58") {
+      setHasImage(true)
+      return (
+        <img
+          src={dabilbil}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={140}
+          height={70}
         />
       )
     }
