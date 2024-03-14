@@ -255,7 +255,10 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false)
       }
-    } else if (selectedLab.label == "H. Pylori Ag" || selectedLab.label == "H. Pylori Ab") {
+    } else if (
+      selectedLab.label == "H. Pylori Ag" ||
+      selectedLab.label == "H. Pylori Ab"
+    ) {
       if (lab_test === "H. Pylori Ag" || lab_test === "H. Pylori Ab") {
         setLabTestOptions(labResultsData.posNegTestOptions)
         setIsDropdown(true)
@@ -882,10 +885,8 @@ export default function LabOfficer() {
 
       const labOptions = booking_wo_serology_thyroid_pylori
         .map((data) => {
-          console.log("lab_test", data.lab_test)
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
-            console.log("lab_test included", data.lab_test)
             return {
               label: data.lab_test,
               id:
@@ -1399,7 +1400,7 @@ export default function LabOfficer() {
         selectedLab.label !== "HIV Screening (Anti HIV)" &&
         selectedLab.label !== "Anti HAV" &&
         selectedLab.label !== "H. Pylori Ag" &&
-        selectedLab.label !== "H. Pylori Ab" 
+        selectedLab.label !== "H. Pylori Ab"
       ) {
         return {
           lab_test: result.lab_test,
