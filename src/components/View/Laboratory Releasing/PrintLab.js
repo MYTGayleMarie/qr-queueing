@@ -798,8 +798,8 @@ function PrintLab() {
                         ? "ANTIGEN RAPID SWAB (NASAL)"
                         : state.selectedLab.label.toUpperCase() === "DENGUE"
                         ? "DENGUE RAPID TESTS"
-                        : selectedLab.label.toUpperCase() === "H. PYLORI AB" ||
-                          selectedLab.label.toUpperCase() === "H. PYLORI AG"
+                        : state.selectedLab.label.toUpperCase() === "H. PYLORI AB" ||
+                          state.selectedLab.label.toUpperCase() === "H. PYLORI AG"
                         ? "H. PYLORI"
                         : state.selectedLab.label.toUpperCase()}
                     </>
