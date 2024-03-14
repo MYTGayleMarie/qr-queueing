@@ -13,6 +13,7 @@ const labResultsData = {
     "HIV Screening (Anti HIV)",
     "Anti HCV",
     "H. Pylori Ag",
+    "H. Pylori Ab",
     "HBSag (Hepatitis B Antigen)",
     "Anti HBs/HBSab (Hepatitis B Antibody)",
     "TSH",
@@ -968,7 +969,15 @@ const labResultsData = {
 
   labTestHPylori: [
     {
-      lab_test: "H. Pylori",
+      lab_test: "H. Pylori Ag",
+      result: "-",
+      unit: "",
+      preferred: " ",
+      preferred_from: 0.0,
+      preferred_to: 0.0,
+    },
+    {
+      lab_test: "H. Pylori Ab",
       result: "-",
       unit: "",
       preferred: " ",
