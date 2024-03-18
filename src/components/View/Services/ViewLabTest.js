@@ -29,7 +29,7 @@ export default function ViewLabTest() {
   const [name, setName] = useState("")
   const [category, setCategory] = useState("")
   const [price, setPrice] = useState("")
-  const [hmoPrice, sethmoPrice] = useState("")
+  const [hmoPrice, setHmoPrice] = useState("")
   const [remarks, setRemarks] = useState("")
 
   //Edit
@@ -63,12 +63,12 @@ export default function ViewLabTest() {
       .then((response) => {
         setName(response.data.name)
         setPrice(response.data.price)
-        setPrice(response.data.hmo_price)
+        setHmoPrice(response.data.hmo_price)
         setRemarks(response.data.remarks)
 
         setEditName(response.data.name)
         setEditPrice(response.data.price)
-        setEditPrice(response.data.hmo_price)
+        setEditHmoPrice(response.data.hmo_price)
         setEditRemarks(response.data.remarks)
         setEditCategoryId(response.data.category_id)
 
