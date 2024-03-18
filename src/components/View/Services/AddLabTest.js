@@ -124,6 +124,7 @@ export default function AddLabTest() {
           name: labTest.name,
           category: parseInt(labTest.category_id),
           price: labTest.price,
+          hmo_price: labTest.hmo_price,
           remarks: labTest.remarks,
           added_by: userId,
         },
