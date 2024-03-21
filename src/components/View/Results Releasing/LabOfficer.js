@@ -49,6 +49,7 @@ import image11 from "../../../images/med_tech/image11.png"
 import image12 from "../../../images/med_tech/image12.png"
 import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
 import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
+import dabilbil from "../../../images/med_tech/Vanessa-Dabilbil.png"
 import DummyImg from "../../../images/med_tech/dummy.png"
 import Watermark from "../../../images/Watermark.png"
 import Teal from "../../../images/backgrounds/TealHeader.png"
@@ -254,8 +255,11 @@ export default function LabOfficer() {
       } else {
         setIsDropdown(false)
       }
-    } else if (selectedLab.label == "H. Pylori Ag") {
-      if (lab_test === "H. Pylori") {
+    } else if (
+      selectedLab.label == "H. Pylori Ag" ||
+      selectedLab.label == "H. Pylori Ab"
+    ) {
+      if (lab_test === "H. Pylori Ag" || lab_test === "H. Pylori Ab") {
         setLabTestOptions(labResultsData.posNegTestOptions)
         setIsDropdown(true)
       } else {
@@ -485,6 +489,8 @@ export default function LabOfficer() {
       return "PRC LIC. NO.: 0052556"
     } else if (prc_id === "53") {
       return "PRC LIC. NO.: 0115984"
+    } else if (prc_id === "58") {
+      return "PRC LIC. NO.: 0072126"
     } else {
       return "No PRC No."
     }
@@ -633,6 +639,18 @@ export default function LabOfficer() {
           style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
+        />
+      )
+    } else if (prc_sig === "58") {
+      setHasImage(true)
+      return (
+        <img
+          src={dabilbil}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={140}
+          height={70}
         />
       )
     }
@@ -834,25 +852,38 @@ export default function LabOfficer() {
       var serology = booking.data.filter(
         (data) => data.category_id === "12" && data.lab_test !== "Anti HAV"
       )
+
+      //Filter H Pylori Ab and Ag
+      var pylori = booking.data.filter(
+        (data) =>
+          data.lab_test === "H. Pylori Ab" || data.lab_test === "H. Pylori Ag"
+      )
+
       setThyroidGroup(thyroid)
       setSerologyGroup(serology)
 
-      var booking_wo_serology_thyroid = booking.data.filter(
+      var booking_wo_serology_thyroid_pylori = booking.data.filter(
         (data) =>
-          ((data.category_id === "12" && data.lab_test === "Anti HAV") ||
-            data.category_id !== "12") &&
-          data.category_id !== "13"
+          (data.category_id === "12" && data.lab_test === "Anti HAV") ||
+          (data.category_id !== "12" &&
+            data.category_id !== "13" &&
+            data.lab_test !== "H. Pylori Ab" &&
+            data.lab_test !== "H. Pylori Ag")
       )
 
       if (serology.length > 0) {
-        booking_wo_serology_thyroid.push(serology[0])
+        booking_wo_serology_thyroid_pylori.push(serology[0])
       }
 
       if (thyroid.length > 0) {
-        booking_wo_serology_thyroid.push(thyroid[0])
+        booking_wo_serology_thyroid_pylori.push(thyroid[0])
       }
 
-      const labOptions = booking_wo_serology_thyroid
+      if (pylori.length > 0) {
+        booking_wo_serology_thyroid_pylori.push(pylori[0])
+      }
+
+      const labOptions = booking_wo_serology_thyroid_pylori
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
@@ -1367,7 +1398,9 @@ export default function LabOfficer() {
         selectedLab.label !== "Gram Stain" &&
         selectedLab.label !== "Clotting & Bleeding Time" &&
         selectedLab.label !== "HIV Screening (Anti HIV)" &&
-        selectedLab.label !== "Anti HAV"
+        selectedLab.label !== "Anti HAV" &&
+        selectedLab.label !== "H. Pylori Ag" &&
+        selectedLab.label !== "H. Pylori Ab"
       ) {
         return {
           lab_test: result.lab_test,
@@ -1841,7 +1874,7 @@ export default function LabOfficer() {
       e.label === "[P] HIV SCreening (Anti HIV)"
     ) {
       setLabTestData(labResultsData.labTestHIVScreening)
-    } else if (e.label === "H. Pylori Ag") {
+    } else if (e.label === "H. Pylori Ag" || e.label === "H. Pylori Ab") {
       setLabTestData(labResultsData.labTestHPylori)
     } else if (e.label === "H. Pylori" || e.label === "[P] H. Pylori") {
       setLabTestData(labResultsData.labTestHPylori)
@@ -2133,6 +2166,10 @@ export default function LabOfficer() {
                           ? "ANTIGEN RAPID SWAB NASAL"
                           : selectedLab.label.toUpperCase() === "DENGUE"
                           ? "DENGUE RAPID TESTS"
+                          : selectedLab.label.toUpperCase() ===
+                              "H. PYLORI AB" ||
+                            selectedLab.label.toUpperCase() === "H. PYLORI AG"
+                          ? "H. PYLORI"
                           : selectedLab.label.toUpperCase()}
                       </>
                     )}
@@ -2530,6 +2567,9 @@ export default function LabOfficer() {
                             "[P] Antigen Rapid Swab (Nasal)" &&
                           selectedLab.label !== "Serum Pregnancy Test" &&
                           selectedLab.label !== "Gram Stain" &&
+                          selectedLab.label !== "H. Pylori Ag" &&
+                          selectedLab.label !== "H. Pylori Ab" &&
+                          selectedLab.label !== "H. Pylori" &&
                           selectedLab.label !== "HIV Screening (Anti HIV)" && (
                             <div className="col">
                               <span>
@@ -2741,6 +2781,9 @@ export default function LabOfficer() {
                                 "[P] Hepatitis B Surface Antigen (HbsAg)" &&
                               selectedLab.label !== "Fecal Occult Blood" &&
                               selectedLab.label !== "Gram Stain" &&
+                              selectedLab.label !== "H. Pylori Ag" &&
+                              selectedLab.label !== "H. Pylori Ab" &&
+                              selectedLab.label !== "H. Pylori" &&
                               selectedLab.label !==
                                 "HIV Screening (Anti HIV)" && (
                                 <div className="col">
@@ -3090,6 +3133,9 @@ export default function LabOfficer() {
                           data.label === "FT3" ||
                           data.label === "TSH"
                             ? "Thyroid Profile Tests"
+                            : data.label === "H. Pylori Ab" ||
+                              data.label === "H. Pylori Ag"
+                            ? "H. Pylori"
                             : data.label}
                         </>
                       )}
@@ -3140,7 +3186,9 @@ export default function LabOfficer() {
               selectedLab.label !== "Gram Stain" &&
               selectedLab.label !== "Clotting & Bleeding Time" &&
               selectedLab.label !== "HIV Screening (Anti HIV)" &&
-              selectedLab.label !== "Anti HAV"
+              selectedLab.label !== "Anti HAV" &&
+              selectedLab.label === "H. Pylori Ag" &&
+              selectedLab.label === "H. Pylori Ab"
                 ? [
                     "LAB NAME",
                     "RESULTS",

@@ -24,6 +24,7 @@ import image11 from "../../../images/med_tech/image11.png"
 import image12 from "../../../images/med_tech/image12.png"
 import bonjoc from "../../../images/med_tech/BONJOC_JEREMY.png"
 import jillian from "../../../images/med_tech/qr-medtech-jillian.png"
+import dabilbil from "../../../images/med_tech/Vanessa-Dabilbil.png"
 import DummyImg from "../../../images/med_tech/dummy.png"
 import Watermark from "../../../images/Watermark.png"
 import Teal from "../../../images/backgrounds/TealHeader.png"
@@ -268,6 +269,8 @@ function PrintLab() {
       return "PRC LIC. NO.: 0052556"
     } else if (prc_id === "53") {
       return "PRC LIC. NO.: 0115984"
+    } else if (prc_id === "58") {
+      return "PRC LIC. NO.: 0072126"
     } else {
       return "No PRC No."
     }
@@ -416,6 +419,18 @@ function PrintLab() {
           style={{ marginTop: "0.5rem" }}
           width={100}
           height={50}
+        />
+      )
+    } else if (prc_sig === "58") {
+      setHasImage(true)
+      return (
+        <img
+          src={dabilbil}
+          alt="MedTech"
+          // className="mt-5"
+          style={{ marginTop: "0.5rem" }}
+          width={140}
+          height={70}
         />
       )
     }
@@ -573,24 +588,42 @@ function PrintLab() {
       setServices(booking.data)
       var thyroid = booking.data.filter((data) => data.category_id === "13")
       var serology = booking.data.filter((data) => data.category_id === "12")
-      var booking_wo_serology_thyroid = booking.data.filter(
-        (data) => data.category_id !== "12" && data.category_id !== "13"
+
+      //Filter H Pylori Ab and Ag
+      var pylori = booking.data.filter(
+        (data) =>
+          data.lab_test === "H. Pylori Ab" || data.lab_test === "H. Pylori Ag"
+      )
+
+      var booking_wo_serology_thyroid_pylori = booking.data.filter(
+        (data) =>
+          (data.category_id === "12" && data.lab_test === "Anti HAV") ||
+          (data.category_id !== "12" &&
+            data.category_id !== "13" &&
+            data.lab_test !== "H. Pylori Ab" &&
+            data.lab_test !== "H. Pylori Ag")
       )
 
       if (serology.length > 0) {
-        booking_wo_serology_thyroid.push(serology[0])
+        booking_wo_serology_thyroid_pylori.push(serology[0])
       }
       if (thyroid.length > 0) {
-        booking_wo_serology_thyroid.push(thyroid[0])
+        booking_wo_serology_thyroid_pylori.push(thyroid[0])
       }
-      const labOptions = booking_wo_serology_thyroid
+      if (pylori.length > 0) {
+        booking_wo_serology_thyroid_pylori.push(pylori[0])
+      }
+      const labOptions = booking_wo_serology_thyroid_pylori
         .map((data) => {
           // Include only data in sheets
           if (labResultsData.testsToCheck.includes(data.lab_test)) {
             return {
               label: data.lab_test,
-              id: data.id,
+              id:
+                data.type === "lab" ? data.id : data.booking_package_detail_id,
               type: data.type,
+              detail_id: data.booking_detail_id,
+              extracted_on: data.extracted_on,
             }
           }
           return null
@@ -765,6 +798,9 @@ function PrintLab() {
                         ? "ANTIGEN RAPID SWAB (NASAL)"
                         : state.selectedLab.label.toUpperCase() === "DENGUE"
                         ? "DENGUE RAPID TESTS"
+                        : state.selectedLab.label.toUpperCase() === "H. PYLORI AB" ||
+                          state.selectedLab.label.toUpperCase() === "H. PYLORI AG"
+                        ? "H. PYLORI"
                         : state.selectedLab.label.toUpperCase()}
                     </>
                   )}
@@ -1115,6 +1151,9 @@ function PrintLab() {
                           "[P] Antigen Rapid Swab (Nasal)" &&
                         state.selectedLab.label !== "Serum Pregnancy Test" &&
                         state.selectedLab.label !== "Gram Stain" &&
+                        state.selectedLab.label !== "H. Pylori Ag" &&
+                        state.selectedLab.label !== "H. Pylori Ab" &&
+                        state.selectedLab.label !== "H. Pylori" &&
                         state.selectedLab.label !==
                           "HIV Screening (Anti HIV)" && (
                           <div className="col">
@@ -1301,6 +1340,9 @@ function PrintLab() {
                               "Pregnancy Test (RPK Lateral Flow)" &&
                             state.selectedLab.label !== "Fecal Occult Blood" &&
                             state.selectedLab.label !== "Gram Stain" &&
+                            state.selectedLab.label !== "H. Pylori Ag" &&
+                            state.selectedLab.label !== "H. Pylori Ab" &&
+                            state.selectedLab.label !== "H. Pylori" &&
                             state.selectedLab.label !==
                               "Clotting & Bleeding Time" &&
                             state.selectedLab.label !==

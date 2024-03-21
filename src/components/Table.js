@@ -392,7 +392,6 @@ function Table({
             )}
           </td>
         </tr>
-       
       )
     } else if (type === "ecg") {
       return (
@@ -815,13 +814,14 @@ function Table({
     } else if (type === "med-tech" && clickable == true) {
       return (
         <tr key={row.id}>
+     
           {rowData.map((data, index) => (
             <td
               key={index}
               data-heading={data.key}
               className={data.val != null ? data.val.replace(/\s/g, "") : ""}
             >
-              {data.val === null ? "" : data.val}
+              {data.val === null && data.val === "null - null" ? "" : data.val}
             </td>
           ))}
           {isLabApproved !== "approved" && (
@@ -2153,7 +2153,7 @@ function Table({
             }
           >
             <input
-            style={{margin:"5px"}}
+              style={{ margin: "5px" }}
               type="date"
               className="from-date search"
               name="from_date"
@@ -2162,7 +2162,7 @@ function Table({
               disabled={roleId === "12"}
             />
             <input
-            style={{margin:"5px"}}
+              style={{ margin: "5px" }}
               type="date"
               className="to-date search"
               name="to_date"
@@ -2170,14 +2170,22 @@ function Table({
               onChange={setFilter}
               disabled={roleId === "12"}
             />
-            <select name="status" onChange={setFilter} style={{margin:"5px"}}>
+            <select
+              name="status"
+              onChange={setFilter}
+              style={{ margin: "5px" }}
+            >
               <option value="all" selected>
                 ALL
               </option>
               <option value="service">SERVICES</option>
               <option value="package">PACKAGES</option>
             </select>
-            <select name="payment_type" onChange={setFilter} style={{margin:"5px"}}>
+            <select
+              name="payment_type"
+              onChange={setFilter}
+              style={{ margin: "5px" }}
+            >
               <option value="all" selected>
                 ALL
               </option>
