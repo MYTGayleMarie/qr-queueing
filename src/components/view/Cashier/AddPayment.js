@@ -69,6 +69,7 @@ function AddPayment() {
   const [paidAmount, setPaidAmount] = useState(0)
   const [readyToPrint, setReadyToPrint] = useState(false)
   const [packageTests, setPackageTests] = useState([])
+  const [allCategories, setAllCategories] = useState([])
 
   //customer details
   const [firstName, setFirstName] = useState("")
@@ -250,12 +251,9 @@ function AddPayment() {
           })
           .catch(function (error) {
             setLoadingCust(true)
-            console.log(error)
           })
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
   }, [])
 
   // React.useEffect(() => {
@@ -286,7 +284,7 @@ function AddPayment() {
   //       })
   //     })
   //     .then(function (error) {
-  //       console.log(error)
+
   //     })
   // }, [])
 
@@ -321,94 +319,73 @@ function AddPayment() {
       })
       .catch(function (error) {
         setLoadingBooking(true)
-        console.log(error)
       })
   }, [])
 
   useEffect(() => {
     printServices.length = 0
-    services.map((info, index1) => {
-      if (info.category_id === null) {
-        axios({
-          method: "post",
-          url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        }).then(function (response) {
-          response.data.map((packageCat, index2) => {
-            var serviceDetails = {}
-            axios({
-              method: "post",
-              url: window.$link + "categories/show/" + packageCat.category_id,
-              withCredentials: false,
-              params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ""),
-                requester: userId,
-              },
+    if (allCategories.length > 0) {
+      services.map((info, index1) => {
+        if (info.category_id === null) {
+          axios({
+            method: "post",
+            url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ""),
+              requester: userId,
+            },
+          }).then(function (response) {
+            response.data.map((packageCat, index2) => {
+              var serviceDetails = {}
+              var filtered_cat = allCategories.filter(
+                (data) => data.id === packageCat.category_id
+              )[0]
+
+              if (filtered_cat?.name == "Electrolytes (NaKCl,iCA)") {
+                serviceDetails.key = "Electrolytes"
+              } else {
+                serviceDetails.key = filtered_cat?.name
+                  .replace(/\s+/g, "_")
+                  .toLowerCase()
+              }
+              serviceDetails.category = filtered_cat?.name
+              serviceDetails.name = packageCat.lab_test
+              serviceDetails.type = "package"
+              serviceDetails.booking_detail_id = packageCat.booking_detail_id
+              setPrintServices((oldArray) => [...oldArray, serviceDetails])
+              setPackageTests((oldArray) => [...oldArray, serviceDetails])
+
+              setReadyToPrint(true)
+              setPrintData(true)
             })
-              .then(function (category) {
-                if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes"
-                } else {
-                  serviceDetails.key = category.data.name
-                    .replace(/\s+/g, "_")
-                    .toLowerCase()
-                }
-                serviceDetails.category = category.data.name
-                serviceDetails.name = packageCat.lab_test
-                serviceDetails.type = "package"
-                serviceDetails.booking_detail_id = packageCat.booking_detail_id
-                setPrintServices((oldArray) => [...oldArray, serviceDetails])
-                setPackageTests((oldArray) => [...oldArray, serviceDetails])
+          })
+        } else {
+          var filtered_cat = allCategories.filter(
+            (data) => data.id === info.category_id
+          )[0]
 
-                setReadyToPrint(true)
-                setPrintData(true)
-              })
-              .catch(function (error) {
-                console.log(error)
-              })
-          })
-        })
-      } else {
-        axios({
-          method: "post",
-          url: window.$link + "categories/show/" + info.category_id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        })
-          .then(function (category) {
-            var serviceDetails = {}
-            if (category.data.name === "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes"
-            } else {
-              serviceDetails.key = category.data.name
-                .replace(/\s+/g, "_")
-                .toLowerCase()
-            }
-            serviceDetails.category = category.data.name
-            serviceDetails.name = info.lab_test
-            serviceDetails.type = info.type
-            serviceDetails.package = info.package
-            setPrintServices((oldArray) => [...oldArray, serviceDetails])
+          var serviceDetails = {}
+          if (filtered_cat?.name === "Electrolytes (NaKCl,iCA)") {
+            serviceDetails.key = "Electrolytes"
+          } else {
+            serviceDetails.key = filtered_cat?.name
+              .replace(/\s+/g, "_")
+              .toLowerCase()
+          }
+          serviceDetails.category = filtered_cat?.name
+          serviceDetails.name = info.lab_test
+          serviceDetails.type = info.type
+          serviceDetails.package = info.package
+          setPrintServices((oldArray) => [...oldArray, serviceDetails])
 
-            setReadyToPrint(true)
-            setPrintData(true)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
-    })
-  }, [services])
+          setReadyToPrint(true)
+          setPrintData(true)
+        }
+      })
+    }
+  }, [services, allCategories])
 
   function removeService() {
     axios({
@@ -428,7 +405,6 @@ function AddPayment() {
         handleRemoveClose()
       })
       .catch(function (error) {
-        console.log(error)
         handleRemoveClose()
       })
 
@@ -445,9 +421,7 @@ function AddPayment() {
       .then(function (booking) {
         setServices(booking.data)
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
   }
 
   //GET OPTION DETAILS
@@ -479,9 +453,7 @@ function AddPayment() {
             setLabOptions((oldArray) => [...oldArray, info])
           })
       })
-      .then(function (error) {
-        console.log(error)
-      })
+      .then(function (error) {})
 
     axios({
       method: "post",
@@ -504,9 +476,22 @@ function AddPayment() {
           setPackageOptions((oldArray) => [...oldArray, info])
         })
       })
-      .then(function (error) {
-        console.log(error)
+      .then(function (error) {})
+
+    axios({
+      method: "post",
+      url: window.$link + "categories/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        setAllCategories(response.data.categories)
       })
+      .catch(function (error) {})
   }, [])
 
   /* set test options to lab services array */
@@ -631,9 +616,7 @@ function AddPayment() {
             refreshPage()
           }, 2000)
         })
-        .catch(function (error) {
-          console.log("error lab", error)
-        })
+        .catch(function (error) {})
     } else {
       toast.error("Please select a test.")
     }
@@ -664,12 +647,11 @@ function AddPayment() {
         })
           .then(function (response) {
             var date = new Date()
-            // console.log(response)
+
             toast.success("Payment Successful!")
             refreshPage()
           })
           .catch(function (error) {
-            console.log(error)
             toast.error("Payment Unsuccessful!")
           })
       }
@@ -696,12 +678,10 @@ function AddPayment() {
           },
         })
           .then(function (response) {
-            // console.log(response);
             toast.success("Payment Successful!")
             refreshPage()
           })
           .catch(function (error) {
-            console.log(error)
             toast.error("Payment Unsuccessful!")
           })
       }
@@ -730,12 +710,10 @@ function AddPayment() {
           },
         })
           .then(function (response) {
-            // console.log(response);
             toast.success("Payment Successful!")
             refreshPage()
           })
           .catch(function (error) {
-            console.log(error)
             toast.error("Payment Unsuccessful!")
           })
       }
@@ -761,12 +739,10 @@ function AddPayment() {
           },
         })
           .then(function (response) {
-            // console.log(response);
             toast.success("Payment Successful!")
             refreshPage()
           })
           .catch(function (error) {
-            console.log(error)
             toast.error("Payment Unsuccessful!")
           })
       }
@@ -1385,9 +1361,9 @@ function AddPayment() {
           )} */}
 
           <div className="row">
-            {/* <div className="col-sm-12 d-flex justify-content-end">
-                    {printButton()}
-                  </div> */}
+            <div className="col-sm-12 d-flex justify-content-end">
+              {printButton()}
+            </div>
             {printData && (
               <>
                 {discountDetail === "with_company_discount" ||
