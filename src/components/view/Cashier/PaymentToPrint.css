@@ -78,6 +78,7 @@
 .data-chem {
   font-size: 0.7em;
   text-align: left !important;
+  word-break: break-word;
 }
 
 .data-phlebo {

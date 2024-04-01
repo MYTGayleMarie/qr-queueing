@@ -1635,7 +1635,7 @@ export class PaymentToPrint extends React.PureComponent {
 
     const marginTop = "0px"
     // const marginRight = "0px"
-    const marginRight = "10px"
+    const marginRight = "20px"
     const marginBottom = "0px"
     const marginLeft = "20px"
     // const marginLeft = "0px"
