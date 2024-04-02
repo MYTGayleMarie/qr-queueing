@@ -390,7 +390,12 @@ function Table({
               </button>
             ) : (
               <button
-                className="serve-now-btn p-1"
+                className={
+                  isServing.length > 0
+                    ? "serve-now-btn disabled p-1"
+                    : "serve-now-btn p-1"
+                }
+                disabled={isServing.length > 0}
                 onClick={() => onExtractionClick(row)}
               >
                 SERVE NOW
@@ -426,7 +431,12 @@ function Table({
               </button>
             ) : (
               <button
-                className="serve-now-btn p-1"
+                className={
+                  isServing.length > 0
+                    ? "serve-now-btn disabled p-1"
+                    : "serve-now-btn p-1"
+                }
+                disabled={isServing.length > 0}
                 onClick={() => onExtractionClick(row)}
               >
                 SERVE NOW
