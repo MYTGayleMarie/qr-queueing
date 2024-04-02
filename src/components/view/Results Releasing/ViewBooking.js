@@ -206,9 +206,7 @@ export default function ViewBooking() {
       .then((category) => {
         setCategoriesList(category.data.categories)
       })
-      .catch((error) => {
-        // console.log(error)
-      })
+      .catch((error) => {})
   }, [])
 
   // Lab tests
@@ -265,9 +263,7 @@ export default function ViewBooking() {
               })
             })
           })
-          .catch((error) => {
-            // console.log(error)
-          })
+          .catch((error) => {})
       }
       // if service is lab test
       else {
@@ -491,6 +487,12 @@ export default function ViewBooking() {
   hepatitisIndividuals.forEach((test) => selectedTests.add(test.test_id))
   /****************/
 
+  //hepatitis
+  const covidRapidTests = labTests.filter(
+    (info) => info.key === "covid_rapid_tests"
+  )
+  //add to the set
+  covidRapidTests.forEach((test) => selectedTests.add(test.test_id))
   /****************/
   //Histopathology Filter
 
@@ -692,9 +694,7 @@ export default function ViewBooking() {
                               },
                             })
                               .then(function (response) {})
-                              .catch((error) => {
-                                console.log(error)
-                              })
+                              .catch((error) => {})
                           } else {
                             setReady(false)
                             setChecked(false)
@@ -711,9 +711,7 @@ export default function ViewBooking() {
                                 updated_by: userId,
                                 is_ready: "no",
                               },
-                            }).then(function (response) {
-                              console.log(response)
-                            })
+                            }).then(function (response) {})
                           }
                         }}
                       />
@@ -968,12 +966,14 @@ export default function ViewBooking() {
                           <div className="category label mt-3">
                             Hepatitis Profile Screening
                           </div>
-                          <FileUpload
-                            userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
-                            servicesData={hepatitisGroup}
-                            title={"HEPATITIS"}
-                            bookingId={bookingId}
-                          />
+                          {hepatitisGroup.length > 0 && (
+                            <FileUpload
+                              userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                              servicesData={hepatitisGroup}
+                              title={"HEPATITIS"}
+                              bookingId={bookingId}
+                            />
+                          )}
                           {hepatitisIndividuals.map((data) => (
                             <FileUpload
                               userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
@@ -1069,6 +1069,23 @@ export default function ViewBooking() {
                           userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
                           servicesData={[data]}
                           title={"MICROBIOLOGY"}
+                          bookingId={bookingId}
+                        />
+                      ))}
+
+                      <hr className="labtest-line mb-5" />
+                    </>
+                  )}
+                  {/* COVID RAPID TESTS */}
+                  {covidRapidTests.length > 0 && (
+                    <>
+                      <div className="category label">COVID RAPID TESTS</div>
+
+                      {covidRapidTests.map((data) => (
+                        <FileUpload
+                          userRole={getRoleId().replace(/^"(.*)"$/, "$1")}
+                          servicesData={[data]}
+                          title={"COVID RAPID TESTS"}
                           bookingId={bookingId}
                         />
                       ))}

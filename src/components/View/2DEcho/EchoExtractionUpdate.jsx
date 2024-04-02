@@ -41,7 +41,10 @@ export default function EchoExtractionUpdate() {
   }
 
   async function handleUpdateBooking() {
-    const response = await updateExtractionLabPatientBulk(details, 93)
+    const response = await updateExtractionLabPatientBulk(
+      details,
+      details.lab_test_id
+    )
     if (response.data) {
       const queueResponse = await changeStatus(queueId, "done")
       toast.success(response.data.message.success.toUpperCase())

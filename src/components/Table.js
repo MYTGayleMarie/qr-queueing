@@ -72,6 +72,7 @@ function Table({
   queueAttender,
   isLabApproved = "",
   redirectExtraction,
+  isServing,
 }) {
   const navigate = useNavigate()
   //PAGINATION
@@ -342,8 +343,13 @@ function Table({
               </button>
             ) : (
               <button
-                className="serve-now-btn p-1"
+                className={
+                  isServing.length > 0
+                    ? "serve-now-btn disabled p-1"
+                    : "serve-now-btn p-1"
+                }
                 onClick={() => onExtractionClick(row)}
+                disabled={isServing.length > 0}
               >
                 SERVE NOW
               </button>
@@ -384,7 +390,12 @@ function Table({
               </button>
             ) : (
               <button
-                className="serve-now-btn p-1"
+                className={
+                  isServing.length > 0
+                    ? "serve-now-btn disabled p-1"
+                    : "serve-now-btn p-1"
+                }
+                disabled={isServing.length > 0}
                 onClick={() => onExtractionClick(row)}
               >
                 SERVE NOW
@@ -420,7 +431,12 @@ function Table({
               </button>
             ) : (
               <button
-                className="serve-now-btn p-1"
+                className={
+                  isServing.length > 0
+                    ? "serve-now-btn disabled p-1"
+                    : "serve-now-btn p-1"
+                }
+                disabled={isServing.length > 0}
                 onClick={() => onExtractionClick(row)}
               >
                 SERVE NOW
@@ -814,7 +830,6 @@ function Table({
     } else if (type === "med-tech" && clickable == true) {
       return (
         <tr key={row.id}>
-     
           {rowData.map((data, index) => (
             <td
               key={index}

@@ -98,6 +98,9 @@ function ExtractionManager() {
                 userId={userId}
                 useLoader={true}
                 isReady={isReady}
+                isServing={records.filter(
+                  (data) => data.queue_status === "attending"
+                )}
                 redirectExtraction={redirectExtraction}
               />
             </div>

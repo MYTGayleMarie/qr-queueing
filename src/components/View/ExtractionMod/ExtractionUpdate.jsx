@@ -42,6 +42,8 @@ export default function ExtractionUpdate() {
   const [encodedOn, setEncodedOn] = useState("")
   const [readyToPrint, setReadyToPrint] = useState(false)
   const [printed, setPrinted] = useState(false)
+  const [allCategories, setAllCategories] = useState(false)
+
   const navigate = useNavigate()
 
   const componentRef = useRef()
@@ -70,80 +72,60 @@ export default function ExtractionUpdate() {
 
   useEffect(() => {
     printServices.length = 0
-    tests.map((info, index1) => {
-      if (info.category_id == null) {
-        axios({
-          method: "post",
-          url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        }).then(function (response) {
-          response.data.map((packageCat, index2) => {
-            var serviceDetails = {}
-            axios({
-              method: "post",
-              url: window.$link + "categories/show/" + packageCat.category_id,
-              withCredentials: false,
-              params: {
-                api_key: window.$api_key,
-                token: userToken.replace(/['"]+/g, ""),
-                requester: userId,
-              },
-            })
-              .then(function (category) {
-                if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-                  serviceDetails.key = "Electrolytes"
-                } else {
-                  serviceDetails.key = category.data.name
-                    .replace(/\s+/g, "_")
-                    .toLowerCase()
-                }
-                serviceDetails.category = category.data.name
+    if (allCategories.length > 0) {
+      tests.map((info, index1) => {
+        if (info.category_id == null) {
+          axios({
+            method: "post",
+            url: window.$link + "bookings/getBookingPackageDetails/" + info.id,
+            withCredentials: false,
+            params: {
+              api_key: window.$api_key,
+              token: userToken.replace(/['"]+/g, ""),
+              requester: userId,
+            },
+          }).then(function (response) {
+            response.data.map((packageCat, index2) => {
+              var serviceDetails = {}
+              var filtered_cat = allCategories.filter(
+                (data) => data.id === packageCat.category_id
+              )[0]
 
-                serviceDetails.name = packageCat.lab_test
-                setPrintServices((oldArray) => [...oldArray, serviceDetails])
-              })
-              .catch(function (error) {
-                console.log(error)
-              })
+              if (filtered_cat?.name == "Electrolytes (NaKCl,iCA)") {
+                serviceDetails.key = "Electrolytes"
+              } else {
+                serviceDetails.key = filtered_cat?.name
+                  .replace(/\s+/g, "_")
+                  .toLowerCase()
+              }
+              serviceDetails.category = filtered_cat?.name
+
+              serviceDetails.name = packageCat.lab_test
+              setPrintServices((oldArray) => [...oldArray, serviceDetails])
+            })
           })
-        })
-      } else {
-        axios({
-          method: "post",
-          url: window.$link + "categories/show/" + info.category_id,
-          withCredentials: false,
-          params: {
-            api_key: window.$api_key,
-            token: userToken.replace(/['"]+/g, ""),
-            requester: userId,
-          },
-        })
-          .then(function (category) {
-            var serviceDetails = {}
-            if (category.data.name == "Electrolytes (NaKCl,iCA)") {
-              serviceDetails.key = "Electrolytes"
-            } else {
-              serviceDetails.key = category.data.name
-                .replace(/\s+/g, "_")
-                .toLowerCase()
-            }
-            serviceDetails.category = category.data.name
-            serviceDetails.name = info.lab_test
-            serviceDetails.type = info.type
-            setPrintServices((oldArray) => [...oldArray, serviceDetails])
-            setReadyToPrint(true)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
-    })
-  }, [tests])
+        } else {
+          var serviceDetails = {}
+          var filtered_cat = allCategories.filter(
+            (data) => data.id === info.category_id
+          )[0]
+
+          if (filtered_cat?.name == "Electrolytes (NaKCl,iCA)") {
+            serviceDetails.key = "Electrolytes"
+          } else {
+            serviceDetails.key = filtered_cat?.name
+              .replace(/\s+/g, "_")
+              .toLowerCase()
+          }
+          serviceDetails.category = filtered_cat?.name
+          serviceDetails.name = info.lab_test
+          serviceDetails.type = info.type
+          setPrintServices((oldArray) => [...oldArray, serviceDetails])
+          setReadyToPrint(true)
+        }
+      })
+    }
+  }, [tests, allCategories])
 
   useEffect(() => {
     axios({
@@ -165,9 +147,22 @@ export default function ExtractionUpdate() {
         setBookingDate(response.data.booking_time)
         setEncodedOn(response.data.added_on)
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(function (error) {})
+
+    axios({
+      method: "post",
+      url: window.$link + "categories/getAll",
+      withCredentials: false,
+      params: {
+        api_key: window.$api_key,
+        token: userToken.replace(/['"]+/g, ""),
+        requester: userId,
+      },
+    })
+      .then(function (response) {
+        setAllCategories(response.data.categories)
       })
+      .catch(function (error) {})
   }, [])
 
   async function fetchExtraction() {
@@ -318,9 +313,8 @@ export default function ExtractionUpdate() {
                   {recordsDetails.length > 0 ? (
                     <div className="p-2">
                       {/* <div className="col-3"> */}
-                      {/* <Button
+                      <Button
                         className="mt-2 m-1 p-2"
-                    
                         style={{
                           width: "45%",
                           cursor: "pointer",
@@ -337,7 +331,7 @@ export default function ExtractionUpdate() {
                           className="print-icon"
                         />{" "}
                         {readyToPrint ? "PRINT" : "Loading Data..."}
-                      </Button> */}
+                      </Button>
                       {/* </div> */}
                       <Button
                         className="mt-2 m-1 p-2"
@@ -350,7 +344,7 @@ export default function ExtractionUpdate() {
                           // : "#419EA3",
                         }}
                         onClick={handleUpdateBooking}
-                        // disabled={!printed}
+                        disabled={!printed}
                       >
                         DONE
                       </Button>
@@ -369,7 +363,7 @@ export default function ExtractionUpdate() {
         )}
       </div>
 
-      {/* <div
+      <div
         style={{ display: "none" }} // This make ComponentToPrint show   only while printing
       >
         <PaymentToPrint
@@ -407,7 +401,7 @@ export default function ExtractionUpdate() {
           view={"phlebo"}
           setPrintReadyFinal={setReadyToPrint}
         />
-      </div> */}
+      </div>
     </div>
   )
 }

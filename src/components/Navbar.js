@@ -2102,9 +2102,132 @@ function AdminNavbarTop(
           <span class="mx-1">Users</span>
         </NavLink>
         <a href="https://myt-support.com/" target="_blank" class="nav-link">
-          <img src={service} alt={"service"} class="users icon mobile-size-icon"></img>
+          <img
+            src={service}
+            alt={"service"}
+            class="users icon mobile-size-icon"
+          ></img>
           <span class="mx-2">Support</span>
         </a>
+        <a href="#" class="nav-link" onClick={removeUserSession}>
+          <img
+            src={logoutIcon}
+            alt={"logout"}
+            class="logout icon mobile-size-icon"
+          ></img>
+          <span class="mx-2 logout-text">Log Out</span>
+        </a>
+      </div>
+    </div>
+  )
+}
+function specificNavbarTop(
+  showNavbar,
+  showMobileNavBar,
+  showSupply,
+  setShowSupply,
+  showCompany,
+  setShowCompany
+) {
+  return (
+    <div class="navbar">
+      <div class="logo-mobile">
+        <img src={logo} alt={"logo"} class="navbar-logo"></img>
+      </div>
+      <div id="nav-icon">
+        <a href="#" class="open-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+      </div>
+      <div id="side-nav">
+        <a href="#" class="close-btn" onClick={(e) => showMobileNavBar()}>
+          &#9776;
+        </a>
+        {getUser() === "57" && (
+          <>
+            <NavLink to="/extraction" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">LAB</span>
+            </NavLink>
+            <NavLink to="/reports/lab" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">LAB REPORT</span>
+            </NavLink>
+          </>
+        )}
+        {getUser() === "55" && (
+          <>
+            <NavLink to="/xray" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">XRAY</span>
+            </NavLink>
+            <NavLink to="/reports/xray" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">XRAY REPORT</span>
+            </NavLink>
+          </>
+        )}
+        {getUser() === "56" && (
+          <>
+            <NavLink to="/ecg" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">ECG</span>
+            </NavLink>
+            <NavLink to="/reports/ecg" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">ECG REPORT</span>
+            </NavLink>
+            <NavLink to="/2d-echo" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">2D ECHO/ULTRASOUND</span>
+            </NavLink>
+            <NavLink to="/reports/2d-echo" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">2D ECHO REPORT</span>
+            </NavLink>
+          </>
+        )}
+
+        {/* <a href="https://myt-support.com/" target="_blank" class="nav-link">
+          <img
+            src={service}
+            alt={"service"}
+            class="users icon mobile-size-icon"
+          ></img>
+          <span class="mx-2">Support</span>
+        </a> */}
         <a href="#" class="nav-link" onClick={removeUserSession}>
           <img
             src={logoutIcon}
@@ -2314,6 +2437,16 @@ function Navbar() {
       {showNavbar == false &&
         (role == 4 || role == 1) &&
         AdminNavbarTop(
+          showNavbar,
+          showMobileNavBar,
+          showSupply,
+          setShowSupply,
+          showCompany,
+          setShowCompany
+        )}
+      {showNavbar == false &&
+        (role == 14 || role == 15) &&
+        specificNavbarTop(
           showNavbar,
           showMobileNavBar,
           showSupply,
