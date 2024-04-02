@@ -944,7 +944,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">LAB</span>
               </li>
             </NavLink>{" "}
-            {/* <NavLink to="/reports/lab" activeClassName="active" class="link">
+            <NavLink to="/reports/lab" activeClassName="active" class="link">
               <li href="/reports/lab" class="nav-link imaging-nav">
                 <img
                   src={extractionIcon}
@@ -953,7 +953,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 ></img>
                 <span class="mx-2">LAB REPORT</span>
               </li>
-            </NavLink> */}
+            </NavLink>
           </>
         )}
         {getUser() === "55" && (
@@ -968,7 +968,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">XRAY</span>
               </li>
             </NavLink>
-            {/* <NavLink to="/reports/xray" activeClassName="active" class="link">
+            <NavLink to="/reports/xray" activeClassName="active" class="link">
               <li href="/reports/xray" class="nav-link imaging-nav">
                 <img
                   src={extractionIcon}
@@ -977,7 +977,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 ></img>
                 <span class="mx-2">XRAY REPORT</span>
               </li>
-            </NavLink> */}
+            </NavLink>
           </>
         )}
         {getUser() === "56" && (
@@ -992,7 +992,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">ECG</span>
               </li>
             </NavLink>
-            {/* <NavLink to="/reports/ecg" activeClassName="active" class="link">
+            <NavLink to="/reports/ecg" activeClassName="active" class="link">
               <li href="/reports/ecg" class="nav-link imaging-nav">
                 <img
                   src={extractionIcon}
@@ -1001,7 +1001,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 ></img>
                 <span class="mx-2">ECG REPORT</span>
               </li>
-            </NavLink> */}
+            </NavLink>
             <NavLink to="/2d-echo" activeClassName="active" class="link">
               <li href="/2d-echo" class="nav-link imaging-nav">
                 <img
@@ -1012,7 +1012,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 <span class="mx-2">2D ECHO/ULTRASOUND</span>
               </li>
             </NavLink>
-            {/* <NavLink
+            <NavLink
               to="/reports/2d-echo"
               activeClassName="active"
               class="link"
@@ -1025,7 +1025,7 @@ function specificNavbars(showNavbar, setshowNavbar) {
                 ></img>
                 <span class="mx-2">2D ECHO REPORT</span>
               </li>
-            </NavLink> */}
+            </NavLink>
           </>
         )}
         <li href="#" class="nav-link logout-nav" onClick={removeUserSession}>
@@ -2153,6 +2153,14 @@ function specificNavbarTop(
               ></img>
               <span class="mx-2">LAB</span>
             </NavLink>
+            <NavLink to="/reports/lab" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">LAB REPORT</span>
+            </NavLink>
           </>
         )}
         {getUser() === "55" && (
@@ -2164,6 +2172,14 @@ function specificNavbarTop(
                 class="cashier icon mobile-size-icon"
               ></img>
               <span class="mx-2">XRAY</span>
+            </NavLink>
+            <NavLink to="/reports/xray" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">XRAY REPORT</span>
             </NavLink>
           </>
         )}
@@ -2177,6 +2193,14 @@ function specificNavbarTop(
               ></img>
               <span class="mx-2">ECG</span>
             </NavLink>
+            <NavLink to="/reports/ecg" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">ECG REPORT</span>
+            </NavLink>
             <NavLink to="/2d-echo" activeClassName="active" class="link">
               <img
                 src={extractionIcon}
@@ -2184,6 +2208,14 @@ function specificNavbarTop(
                 class="cashier icon mobile-size-icon"
               ></img>
               <span class="mx-2">2D ECHO/ULTRASOUND</span>
+            </NavLink>
+            <NavLink to="/reports/2d-echo" activeClassName="active" class="link">
+              <img
+                src={extractionIcon}
+                alt={"medTech"}
+                class="cashier icon mobile-size-icon"
+              ></img>
+              <span class="mx-2">2D ECHO REPORT</span>
             </NavLink>
           </>
         )}
