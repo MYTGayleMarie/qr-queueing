@@ -227,7 +227,7 @@ export class PaymentToPrint extends React.PureComponent {
             <>
               <td>
                 <div className="row justify-content-start">
-                  {category_services.split("|").map((data) => {
+                  {category_services.split("|").map((data, index) => {
                     return (
                       // <span className="data-chem">{data}</span>
                       <div className="col-12">
@@ -239,6 +239,15 @@ export class PaymentToPrint extends React.PureComponent {
                             id="flexCheckDefault"
                           />
                           <span className="data-chem">{data}</span>
+                          {index ===
+                            category_services.split("|").length - 1 && (
+                            <>
+                              <br />
+                              <br />
+                              <br />
+                              <br />
+                            </>
+                          )}
                         </div>
                       </div>
                     )
@@ -1231,7 +1240,7 @@ export class PaymentToPrint extends React.PureComponent {
                 <td align="center">
                   <span
                     style={{
-                      fontSize: "15px",
+                      fontSize: "13px",
                       padding: 3,
                       fontWeight: "bold",
                     }}
@@ -1530,7 +1539,7 @@ export class PaymentToPrint extends React.PureComponent {
         services: services_Others,
       },
       {
-        name: "HEMO-BTY",
+        name: "HEMA-BTY",
         services: services_Hematology,
       },
       {
@@ -1679,7 +1688,7 @@ export class PaymentToPrint extends React.PureComponent {
               })}
               <br />
               <div className="page-break print-break">
-                <div style={{ width: "50%", border: "2px solid black" }}>
+                <div style={{ width: "40%", border: "2px solid black" }}>
                   <div className="row justify-content-center">
                     {/* Charge slip */}
 
@@ -1690,7 +1699,7 @@ export class PaymentToPrint extends React.PureComponent {
                         </div>
 
                         <div className="col-5 text-right">
-                          <div style={{ fontSize: "20px" }}>BOOKING</div>
+                          <div style={{ fontSize: "15px" }}>BOOKING</div>
                         </div>
                         <div className="col-6 font-small">
                           <span>Quest and Reliance Diagnostics</span>
@@ -1700,9 +1709,9 @@ export class PaymentToPrint extends React.PureComponent {
                           <span>09998886694</span>
                         </div>
                         <div className="col-6 text-right">
-                          <h1>
+                          <h6>
                             <strong># {this.props.bookingId}</strong>
-                          </h1>
+                          </h6>
                         </div>
                         {/* for whole
                       <div className="col-8 mt-2">
@@ -1717,14 +1726,14 @@ export class PaymentToPrint extends React.PureComponent {
                         <strong>{formatDate(this.props.bookingDate)}</strong>
                       </div> */}
                         {/* for half*/}
-                        <div className="col-12 mt-2">
+                        <div className="col-12 mt-2 font-small">
                           Patient Name: <strong>{this.props.name}</strong>
                         </div>
 
-                        <div className="col-12 mt-2">
+                        <div className="col-12 mt-2 font-small">
                           Birthdate: <strong>{this.props.birthdate}</strong>
                         </div>
-                        <div className="col-12 mt-2">
+                        <div className="col-12 mt-2 font-small">
                           Date:{" "}
                           <strong>{formatDate(this.props.bookingDate)}</strong>
                         </div>
@@ -1775,7 +1784,8 @@ export class PaymentToPrint extends React.PureComponent {
                                   .join(", ")} */}
                                   {data.map((val) => {
                                     return (
-                                      <div style={{ textIndent: "20px" }}>
+                                      // <div style={{ textIndent: "20px" }}>
+                                      <div>
                                         {`• ${val.name} `} <br />
                                       </div>
                                     )

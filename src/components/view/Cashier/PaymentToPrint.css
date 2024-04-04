@@ -45,7 +45,7 @@
 .header {
   font-weight: bold;
   color: black;
-  font-size: 15px;
+  font-size: 10px;
 }
 
 .header-phlebo {
@@ -72,13 +72,14 @@
 }
 
 .data {
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
 .data-chem {
-  font-size: 0.7em;
+  font-size: 0.6em;
   text-align: left !important;
   word-break: break-word;
+  font-weight: bold;
 }
 
 .data-phlebo {
@@ -86,7 +87,7 @@
 }
 
 .detail-print {
-  font-size: 15px;
+  font-size: 10px;
 }
 
 .detail-print-phlebo {
@@ -100,7 +101,7 @@
 }
 
 .font-small {
-  font-size: small;
+  font-size: x-small;
 }
 
 .payment-logo-phlebo {
@@ -111,12 +112,15 @@
 
 .print-row {
   display: flex;
+  font-weight:bold;
+  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important; */
 }
 
 .print-column {
-  flex: 50%;
+  flex: 40%;
   padding: 1%;
-  max-width: 50%;
+  max-width: 40%;
   border: 2px solid black;
 }
 
@@ -207,7 +211,7 @@
 }
 
 .request-header {
-  font-size: 15px !important;
+  font-size: 10px !important;
   margin-top: 1%;
 }
 
@@ -217,7 +221,7 @@
 }
 
 .request-header-test {
-  font-size: 30px !important;
+  font-size: 20px !important;
   margin-top: 3%;
 }
 
@@ -257,7 +261,7 @@
 } */
 /* for half*/
 .slip-span {
-  font-size: smaller !important;
+  font-size: x-small !important;
   word-wrap: break-word;
   margin-top: 0 !important;
 }
@@ -276,7 +280,7 @@
 
 /* for half */
 .bold-slip-span {
-  font-size: smaller !important;
+  font-size: x-small !important;
   margin-top: 0 !important;
   font-weight: bold;
 }
