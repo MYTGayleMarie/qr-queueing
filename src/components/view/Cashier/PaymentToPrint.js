@@ -335,7 +335,7 @@ export class PaymentToPrint extends React.PureComponent {
     //             </tr>
     // });
 
-    const services_Serology = Object.keys(groupedServices).map(function (key) {
+    const services_Chemistry = Object.keys(groupedServices).map(function (key) {
       var category_name = key.replace(/_/g, " ").toUpperCase()
       var category_services = ""
 
@@ -350,18 +350,12 @@ export class PaymentToPrint extends React.PureComponent {
       })
 
       if (
-        category_name !== "SEROLOGY" &&
-        category_name !== "COAGUATION STUDIES" &&
-        category_name !== "IMMUNOLOGY" &&
-        category_name !== "THYROID PROFILE" &&
-        category_name !== "TUMOR MARKERS" &&
-        category_name !== "HEPATITIS PROFILE SCREENING" &&
+        category_name !== "LIPID PROFILE" &&
+        category_name !== "KIDNEY FUNCTION TESTS" &&
+        category_name !== "LIVER FUNCTION TESTS" &&
+        category_name !== "GLUCOSE TESTS" &&
         category_name !== "CHEMISTRY" &&
         category_name !== "ELECTROLYTES" &&
-        category_name !== "LIPID PROFILE" &&
-        category_name !== "GLUCOSE TESTS" &&
-        category_name !== "LIVER FUNCTION TESTS" &&
-        category_name !== "KIDNEY FUNCTION TESTS" &&
         category_name !== "PANCREATIC TEST"
       ) {
         return ""
@@ -544,7 +538,37 @@ export class PaymentToPrint extends React.PureComponent {
               </td>
             </>
           )}
+        </tr>
+      )
+    })
+    const services_Serology = Object.keys(groupedServices).map(function (key) {
+      var category_name = key.replace(/_/g, " ").toUpperCase()
+      var category_services = ""
 
+      groupedServices[key].map((info, index) => {
+        if (groupedServices[key].length - 1 == index) {
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "")
+        } else {
+          category_services +=
+            info.name + (info.type === "package" ? " [P]" : "") + "|"
+        }
+      })
+
+      if (
+        category_name !== "HEPATITIS PROFILE SCREENING" &&
+        category_name !== "IMMUNOLOGY" &&
+        // category_name !== "HEMATOLOGY" &&
+        category_name !== "THYROID PROFILE" &&
+        category_name !== "TUMOR MARKERS" &&
+        category_name !== "SEROLOGY" &&
+        category_name !== "COAGUATION STUDIES"
+      ) {
+        return ""
+      }
+
+      return (
+        <tr className="print-table-double">
           {category_name == "SEROLOGY" && (
             <>
               <td>
@@ -1527,7 +1551,11 @@ export class PaymentToPrint extends React.PureComponent {
     }
     const tickets = [
       {
-        name: "CHEM-SERO",
+        name: "CHEMISTRY",
+        services: services_Chemistry,
+      },
+      {
+        name: "SEROLOGY",
         services: services_Serology,
       },
       {
@@ -1614,7 +1642,7 @@ export class PaymentToPrint extends React.PureComponent {
     }
 
     // split tickets by 4 into 1
-    const tixLenSpecial = 1
+    const tixLenSpecial = 2
     for (let i = 0; i < ticketsBy4Special.length; i++) {
       let arr = []
       for (let j = 0; j < ticketsBy4Special[i].length; j += tixLenSpecial) {
@@ -1660,24 +1688,32 @@ export class PaymentToPrint extends React.PureComponent {
             <>
               {ticketsBy2Special.map((by4, index1) => {
                 return (
-                  <div className="print-break">
+                  <div>
                     {by4.map((by2, index2) => {
                       return (
-                        <div className="print-row">
+                        <div>
                           {by2.map((data, index) => {
-                            return generateTickets(
-                              this.props.patientId,
-                              this.props.bookingId,
-                              this.props.name,
-                              this.props.age,
-                              this.props.gender,
-                              this.props.contact,
-                              this.props.result,
-                              data[0]?.category,
-                              by2[index],
-                              this.props.discountCode,
-                              "special",
-                              "cashier"
+                            return (
+                              <div
+                                className={`print-row${
+                                  index % 2 === 0 ? " print-break" : ""
+                                }`}
+                              >
+                                {generateTickets(
+                                  this.props.patientId,
+                                  this.props.bookingId,
+                                  this.props.name,
+                                  this.props.age,
+                                  this.props.gender,
+                                  this.props.contact,
+                                  this.props.result,
+                                  data[0]?.category,
+                                  by2[index],
+                                  this.props.discountCode,
+                                  "special",
+                                  "cashier"
+                                )}
+                              </div>
                             )
                           })}
                         </div>
@@ -1686,6 +1722,39 @@ export class PaymentToPrint extends React.PureComponent {
                   </div>
                 )
               })}
+
+              {/* {ticketsBy2Special.map((by4, index1) => {
+                return (
+                  <div className="print-break">
+                    {by4.map((by2, index2) => {
+                      return (
+                        <div>
+                          {by2.map((data, index) => {
+                            return (
+                              <div className="print-row">
+                                {generateTickets(
+                                  this.props.patientId,
+                                  this.props.bookingId,
+                                  this.props.name,
+                                  this.props.age,
+                                  this.props.gender,
+                                  this.props.contact,
+                                  this.props.result,
+                                  data[0]?.category,
+                                  by2[index],
+                                  this.props.discountCode,
+                                  "special",
+                                  "cashier"
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })} */}
               <br />
               <div className="page-break print-break">
                 <div style={{ width: "40%", border: "2px solid black" }}>
@@ -1699,7 +1768,9 @@ export class PaymentToPrint extends React.PureComponent {
                         </div>
 
                         <div className="col-5 text-right">
-                          <div style={{ fontSize: "15px" }}>BOOKING</div>
+                          <div style={{ fontSize: "20px" }}>
+                            <strong>BOOKING</strong>
+                          </div>
                         </div>
                         <div className="col-6 font-small">
                           <span>Quest and Reliance Diagnostics</span>
@@ -1709,9 +1780,9 @@ export class PaymentToPrint extends React.PureComponent {
                           <span>09998886694</span>
                         </div>
                         <div className="col-6 text-right">
-                          <h6>
+                          <div style={{ fontSize: "20px" }}>
                             <strong># {this.props.bookingId}</strong>
-                          </h6>
+                          </div>
                         </div>
                         {/* for whole
                       <div className="col-8 mt-2">
