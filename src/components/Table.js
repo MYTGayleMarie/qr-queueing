@@ -304,7 +304,8 @@ function Table({
           <td>
             {row.first_name} {row.middle_name} {row.last_name}
           </td>
-
+          <td>{row.age}</td>
+          <td>{formatDate(row.birthdate)}</td>
           <td>{row.lab_test.split("|").join(", ")}</td>
           <td>{formatDateWithTime(row.extracted_on)}</td>
         </tr>

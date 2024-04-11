@@ -811,7 +811,7 @@ function Reports() {
                     />
                   </Col>
                 </Row>
-                {/* <Row>
+                <Row>
                   <Col lg={3} md={3}>
                     <SmallOutlineButtonReport
                       title={"LAB REPORT"}
@@ -836,7 +836,7 @@ function Reports() {
                       link={"/reports/2d-echo"}
                     />
                   </Col>
-                </Row> */}
+                </Row>
               </Fragment>
             </div>
           )}

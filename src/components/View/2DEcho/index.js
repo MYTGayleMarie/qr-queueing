@@ -88,7 +88,12 @@ function TwoDEcho() {
                 )}
                 rowsPerPage={20}
                 selectedRowExtraction={selectedRow}
-                headingColumns={["BOOKING ID", "NAME", "EXTRACTION DATE", ""]}
+                headingColumns={[
+                  "BOOKING ID",
+                  "NAME",
+                  "DATE OF REGISTRATION",
+                  "",
+                ]}
                 filteredData={filteredData}
                 setFilter={setFilter}
                 setRender={setRender}

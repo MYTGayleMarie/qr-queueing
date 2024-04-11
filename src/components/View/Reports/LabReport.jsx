@@ -90,7 +90,14 @@ function LabReport() {
                 )}
                 rowsPerPage={20}
                 selectedRowExtraction={selectedRow}
-                headingColumns={["BOOKING NO", "NAME", "SERVICES", "TIME"]}
+                headingColumns={[
+                  "BOOKING NO",
+                  "NAME",
+                  "AGE",
+                  "BIRTHDATE",
+                  "SERVICES",
+                  "TIME",
+                ]}
                 filteredData={filteredData}
                 setFilter={setFilter}
                 setRender={setRender}
