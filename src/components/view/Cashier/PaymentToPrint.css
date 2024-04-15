@@ -113,8 +113,7 @@
 .print-row {
   display: flex;
   font-weight:bold;
-  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important; */
+  font-family: Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 .print-column {
