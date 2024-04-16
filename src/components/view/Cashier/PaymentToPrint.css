@@ -76,7 +76,7 @@
 }
 
 .data-chem {
-  font-size: 0.6em;
+  font-size: 0.8em;
   text-align: left !important;
   word-break: break-word;
   font-weight: bold;
@@ -113,7 +113,7 @@
 .print-row {
   display: flex;
   font-weight:bold;
-  font-family: Tahoma, Geneva, Verdana, sans-serif !important;
+  /* font-family: Tahoma, Geneva, Verdana, sans-serif !important; */
 }
 
 .print-column {
